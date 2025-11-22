@@ -162,16 +162,10 @@ FILES_OBJ := $(addprefix $(DIR_OBJ)/,$(FILES_SRC_NAMES:.cpp=.o))
 ################################################################
 
 # having repos as a dependency allways does this stuff
-$(NAME) : $(FILES_OBJ)
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@$(MAKE) repos -s
-	@ar -rcs $(NAME) $(FILES_OBJ)
-
 all:
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@$(MAKE) repos -s
-	@$(MAKE) $(FILES_OBJ) -s
-	@$(MAKE) $(NAME)
+	@$(MAKE) repos_clone -s
+	@$(MAKE) $(NAME) -s
 
 clean:
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
@@ -188,6 +182,12 @@ re:
 	@$(MAKE) -s all
 
 .PHONY: all clean fclean re
+
+# I allways thought that NAME was supposed to be the default ?
+# pretty sure its just so the Makefile checks if it needs to be updated
+$(NAME) : $(FILES_OBJ)
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@ar -rcs $(NAME) $(FILES_OBJ)
 
 ################################################################
 
