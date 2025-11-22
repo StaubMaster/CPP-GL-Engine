@@ -1,51 +1,13 @@
 
 
 
-################################################################
-#                           OS Stuff                           #
-################################################################
-
-ifeq ($(OS), Windows_NT)
-	CheckOS := Windows
-else
-	CheckOS := $(shell uname -s)
-endif
-
-FANCY_NAME := Engine
-
-ifeq ($(CheckOS), Windows)
-
-FANCY_ECHO := echo -e
-COLOR_REPO := \e[38;2;127;127;127m
-COLOR_TYPE := \e[38;2;127;255;127m
-COLOR_FILE := \e[38;2;127;127;255m
-COLOR_NONE := \e[m
-
-endif
-
-ifeq ($(CheckOS), Darwin)
-
-FANCY_ECHO := echo
-COLOR_REPO := \033[38;2;127;127;127m
-COLOR_TYPE := \033[38;2;127;255;127m
-COLOR_FILE := \033[38;2;127;127;255m
-COLOR_NONE := \033[m
-
-endif
-
-################################################################
-
-
-
-
-
 NAME := Engine.a
 COMPILER := c++ -std=c++11
 FLAGS := -Wall -Wextra -Werror -D ENGINE_DIR='"$(shell pwd)"'
 
 
 
-FILES_SRC := \
+FILES_SRC_NAMES := \
 \
 	DataStruct/Point3D.cpp \
 	DataStruct/Angle3D.cpp \
@@ -119,13 +81,6 @@ FILES_SRC := \
 	Graphics/Texture/2DArray.cpp \
 	Graphics/Texture/Generate.cpp \
 \
-	DataStruct/Main/PolyHedra/PolyHedra_MainData.cpp \
-	DataStruct/Main/PolyHedra/PolyHedra_MainAttrib.cpp \
-	DataStruct/Main/PolyHedra/PolyHedra_MainBuffer.cpp \
-	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_BufferArray.cpp \
-	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Instances.cpp \
-	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Shader.cpp \
-\
 	DataStruct/Inst/Simple3D/Simple3D_InstData.cpp \
 	DataStruct/Inst/Simple3D/Simple3D_InstAttrib.cpp \
 	DataStruct/Inst/Simple3D/Simple3D_InstBuffer.cpp \
@@ -133,6 +88,13 @@ FILES_SRC := \
 	DataStruct/Inst/Physics3D/Physics3D_InstData.cpp \
 	DataStruct/Inst/Physics3D/Physics3D_InstAttrib.cpp \
 	DataStruct/Inst/Physics3D/Physics3D_InstBuffer.cpp \
+\
+	DataStruct/Main/PolyHedra/PolyHedra_MainData.cpp \
+	DataStruct/Main/PolyHedra/PolyHedra_MainAttrib.cpp \
+	DataStruct/Main/PolyHedra/PolyHedra_MainBuffer.cpp \
+	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_BufferArray.cpp \
+	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Instances.cpp \
+	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Shader.cpp \
 \
 	DataStruct/Main/Waveform/OBJ.cpp \
 	DataStruct/Main/Waveform/OBJ_Main.cpp \
@@ -155,15 +117,43 @@ FILES_SRC := \
 	Window.cpp \
 	Debug.cpp
 
-FILES_OBJ := $(FILES_SRC:.cpp=.o)
-
 DIR_SRC := src/
 DIR_OBJ := obj/
 
-FILES_ABS_OBJ := $(addprefix $(DIR_OBJ)/, $(FILES_OBJ))
-WORKING_FILES_ABS_OBJ := $(addprefix $(DIR_OBJ)/, $(WORKING_FILES_OBJ))
+FILES_SRC := $(addprefix $(DIR_SRC)/,$(FILES_SRC_NAMES))
+FILES_OBJ := $(addprefix $(DIR_OBJ)/,$(FILES_SRC_NAMES:.cpp=.o))
 
 
+
+#	these makefiles suck
+#	currenty it allways makes stuff
+#	instead of checking if it needs to be updatd
+#	and then only making that stuff
+#	
+#	should I check for the .a of repos ?
+#	repos already have rules for _clone and _rm
+#	have one for making librarys ?
+#	for that I first need to check if the repo even exists
+#	else it needs to be cloned
+#
+#	so when comliling
+#	check for repo(s)
+#		if isnt found : clone
+#	check for librarys
+#		if isnt found : compile
+#
+#	how to compile librarys ?
+#	they are only required by the findal Executable
+#	but the actual file target is different by then because paths gets changed
+#	so just have the all target compile the current library
+#	and also all the sub librarys
+#	still leave checking for librarys before compiling
+#
+#	the library target is gotten from the repos
+#	this causes an error when the repos dont exist
+#	so have a check that checks if the directory exists
+#	else leave empty ?
+#
 
 
 
@@ -171,27 +161,29 @@ WORKING_FILES_ABS_OBJ := $(addprefix $(DIR_OBJ)/, $(WORKING_FILES_OBJ))
 #                  Standard Makefile Commands                  #
 ################################################################
 
-$(NAME) : repos $(FILES_ABS_OBJ)
-	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@ar -rcs $(NAME) $(FILES_ABS_OBJ)
+# having repos as a dependency allways does this stuff
+$(NAME) : $(FILES_OBJ)
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@$(MAKE) repos -s
+	@ar -rcs $(NAME) $(FILES_OBJ)
 
-all: repos
-	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@$(MAKE) -s $(REPOS)
-	@$(MAKE) -s $(FILES_ABS_OBJ)
-	@$(MAKE) -s $(NAME)
+all:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@$(MAKE) repos -s
+	@$(MAKE) $(FILES_OBJ) -s
+	@$(MAKE) $(NAME)
 
 clean:
-	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@rm -f $(FILES_ABS_OBJ)
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(FILES_OBJ)
 
 fclean:
-	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
 	@$(MAKE) -s clean
 	@rm -f $(NAME)
 
 re:
-	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
 	@$(MAKE) -s fclean
 	@$(MAKE) -s all
 
@@ -203,8 +195,15 @@ re:
 
 
 
+include fancy.mk
+FANCY_NAME := Engine
+
+
+
+
+
 $(DIR_OBJ)/%.o : $(DIR_SRC)/%.cpp
-	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Compiling: $(COLOR_FILE)$@$(COLOR_NONE)"
+	@$(call fancyEcho,$(FANCY_NAME),Compiling,$@)
 	@mkdir -p $(dir $@)
 	@$(COMPILER) $(FLAGS) $(ARGS_INCLUDES) -c $< -o $@
 
@@ -223,77 +222,31 @@ ARGUMENTS =
 ARGS_LIBRARYS = $(foreach library,$(LIBRARYS),$(library))
 ARGS_INCLUDES = $(foreach include,$(INCLUDES),-I$(include))
 
-librarys: repos_clone
+#	shell true with '' to discard output from cloning repos
+librarys:
+	$(shell true '$(shell $(MAKE) repos_clone -s)')
 	@echo $(LIBRARYS)
 
-includes: repos_clone
+includes:
+	$(shell true '$(shell $(MAKE) repos_clone -s)')
 	@echo $(INCLUDES)
 
-arguments: repos_clone
+arguments:
+	$(shell true '$(shell $(MAKE) repos_clone -s)')
 	@echo $(ARGUMENTS)
 
 .PHONY: librarys includes arguments
 
-################################################################
+test:
+	@echo '$(shell $(MAKE) includes -s)'
 
-
-
-
-
-################################################################
-#                 Interaction with Repositorys                 #
-################################################################
-
-REPOS_DIR := other/
-REPOS = 
-
-repos: repos_clone
-#	$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-#	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Compiling: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@$(foreach repo, $(REPOS), \
-		$(MAKE) -C $(repo) -s ; \
-	)
-
-repos_all: repos_clone
-#	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@$(foreach repo, $(REPOS), \
-		$(MAKE) -C $(repo) -s all ; \
-	)
-
-repos_clean:
-#	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@$(foreach repo, $(REPOS), \
-		if [ -d $(repo) ] ; then \
-			$(MAKE) -C $(repo) -s clean ; \
-		fi ; \
-	)
-
-repos_fclean:
-#	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@$(foreach repo, $(REPOS), \
-		if [ -d $(repo) ] ; then \
-			$(MAKE) -C $(repo) -s fclean ; \
-		fi ; \
-	)
-
-repos_clone:
-#	$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@$(foreach repo, $(REPOS), \
-		$(MAKE) $(repo)_clone -s ; \
-	)
-
-repos_rm:
-#	@$(FANCY_ECHO) "$(COLOR_REPO)$(FANCY_NAME): $(COLOR_TYPE)Target: $(COLOR_FILE)$@$(COLOR_NONE)"
-	@$(foreach repo, $(REPOS), \
-		$(MAKE) $(repo)_rm -s ; \
-	)
-#	@rm -rf $(REPOS)
-
-.PHONY: repos repos_all repos_clean repos_fclean repos_clone repos_rm
+.PHONY: test
 
 ################################################################
 
 
+
+include repos.mk
 
 
 
@@ -303,14 +256,18 @@ repos_rm:
 
 OPENGL_REPO := $(REPOS_DIR)/OpenGL
 
-REPOS += $(OPENGL_REPO)
-LIBRARYS += $(foreach library, $(shell $(MAKE) -C $(OPENGL_REPO) -s librarys), $(OPENGL_REPO)/$(library))
-INCLUDES += $(foreach include, $(shell $(MAKE) -C $(OPENGL_REPO) -s includes), $(OPENGL_REPO)/$(include))
-ARGUMENTS += $(foreach argument, $(shell $(MAKE) -C $(OPENGL_REPO) -s arguments), $(argument))
+REPOS_STATIC += $(OPENGL_REPO)
 
-$(OPENGL_REPO)_clone : ;
+OPENGL_LIBRARYS = $(call repoLibrarys,$(OPENGL_REPO))
+OPENGL_INCLUDES = $(call repoIncludes,$(OPENGL_REPO))
+OPENGL_ARGUMENTS = $(call repoArguments,$(OPENGL_REPO))
 
-$(OPENGL_REPO)_rm : ;
+LIBRARYS += $(OPENGL_LIBRARYS)
+INCLUDES += $(OPENGL_INCLUDES)
+ARGUMENTS += $(OPENGL_ARGUMENTS)
+
+$(OPENGL_LIBRARYS) : $(OPENGL_REPO)
+	$(MAKE) -C $(OPENGL_REPO) $@ -s
 
 ################################################################
 
@@ -325,18 +282,21 @@ $(OPENGL_REPO)_rm : ;
 FM_HTTPS := https://github.com/StaubMaster/CPP-FileManager.git
 FM_REPO := $(REPOS_DIR)/FileManager
 
-REPOS += $(FM_REPO)
-LIBRARYS += $(foreach library, $(shell $(MAKE) -C $(FM_REPO) -s librarys), $(FM_REPO)/$(library))
-INCLUDES += $(foreach include, $(shell $(MAKE) -C $(FM_REPO) -s includes), $(FM_REPO)/$(include))
-ARGUMENTS += $(foreach argument, $(shell $(MAKE) -C $(FM_REPO) -s arguments), $(argument))
- 
-$(FM_REPO)_clone :
-	@if ! [ -d $(FM_REPO) ] ; then \
-		git clone $(FM_HTTPS) $(FM_REPO) -q ; \
-	fi
+REPOS_DYNAMIC += $(FM_REPO)
 
-$(FM_REPO)_rm :
-	@rm -rf $(FM_REPO)
+FM_LIBRARYS = $(call repoLibrarys,$(FM_REPO))
+FM_INCLUDES = $(call repoIncludes,$(FM_REPO))
+FM_ARGUMENTS = $(call repoArguments,$(FM_REPO))
+
+LIBRARYS += $(FM_LIBRARYS)
+INCLUDES += $(FM_INCLUDES)
+ARGUMENTS += $(FM_ARGUMENTS)
+
+$(FM_REPO) :
+	git clone $(FM_HTTPS) $(FM_REPO) -q
+
+$(FM_LIBRARYS) : $(FM_REPO)
+	$(MAKE) -C $(FM_REPO) $@ -s
 
 ################################################################
 
