@@ -258,9 +258,13 @@ OPENGL_REPO := $(REPOS_DIR)/OpenGL
 
 REPOS_STATIC += $(OPENGL_REPO)
 
-OPENGL_LIBRARYS = $(call repoLibrarys,$(OPENGL_REPO))
-OPENGL_INCLUDES = $(call repoIncludes,$(OPENGL_REPO))
-OPENGL_ARGUMENTS = $(call repoArguments,$(OPENGL_REPO))
+#OPENGL_LIBRARYS = $(call repoLibrarys,$(OPENGL_REPO))
+#OPENGL_INCLUDES = $(call repoIncludes,$(OPENGL_REPO))
+#OPENGL_ARGUMENTS = $(call repoArguments,$(OPENGL_REPO))
+
+OPENGL_LIBRARYS = $(OPENGL_REPO)/openGL.a
+OPENGL_INCLUDES = $(OPENGL_REPO)/../
+OPENGL_ARGUMENTS = -lglfw3 -lgdi32
 
 LIBRARYS += $(OPENGL_LIBRARYS)
 INCLUDES += $(OPENGL_INCLUDES)
@@ -284,9 +288,13 @@ FM_REPO := $(REPOS_DIR)/FileManager
 
 REPOS_DYNAMIC += $(FM_REPO)
 
-FM_LIBRARYS = $(call repoLibrarys,$(FM_REPO))
-FM_INCLUDES = $(call repoIncludes,$(FM_REPO))
-FM_ARGUMENTS = $(call repoArguments,$(FM_REPO))
+#FM_LIBRARYS = $(call repoLibrarys,$(FM_REPO))
+#FM_INCLUDES = $(call repoIncludes,$(FM_REPO))
+#FM_ARGUMENTS = $(call repoArguments,$(FM_REPO))
+
+FM_LIBRARYS = $(FM_REPO)/FileManager.a
+FM_INCLUDES = $(FM_REPO)/include
+FM_ARGUMENTS = 
 
 LIBRARYS += $(FM_LIBRARYS)
 INCLUDES += $(FM_INCLUDES)
