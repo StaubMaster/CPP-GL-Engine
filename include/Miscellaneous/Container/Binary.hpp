@@ -29,9 +29,9 @@ class Binary : public Dynamic<T>
 		{ }
 
 	protected:
-		unsigned int NewLimit(unsigned int count) override
+		unsigned int NewLimit(unsigned int wanted_count) override
 		{
-			return BinarySize(count);
+			return BinarySize(wanted_count);
 		}
 };
 

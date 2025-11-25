@@ -264,7 +264,14 @@ REPOS_STATIC += $(OPENGL_REPO)
 
 OPENGL_LIBRARYS = $(OPENGL_REPO)/openGL.a
 OPENGL_INCLUDES = $(OPENGL_REPO)/../
+
+ifeq ($(CheckOS), Windows)
 OPENGL_ARGUMENTS = -lglfw3 -lgdi32
+endif
+
+ifeq ($(CheckOS), Darwin)
+OPENGL_ARGUMENTS = -lglfw
+endif
 
 LIBRARYS += $(OPENGL_LIBRARYS)
 INCLUDES += $(OPENGL_INCLUDES)

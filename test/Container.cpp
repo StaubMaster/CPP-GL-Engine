@@ -2,13 +2,91 @@
 #include <iostream>
 
 #include "Miscellaneous/Container/Binary.hpp"
+#include "Miscellaneous/Container/Fixed.hpp"
+#include "Miscellaneous/Container/Fit.hpp"
+
 #include "Miscellaneous/EntryContainer/Dynamic.hpp"
+
+void ContainerData(Container::Dynamic<int> & container)
+{
+	std::cout << "Limit: " << container.Limit() << " ";
+	std::cout << "Count: " << container.Count() << "\n";
+	for (unsigned int i = 0; i < container.Limit(); i++)
+	{
+		if (i != 0) { std::cout << " "; }
+		if (i < container.Count())
+		{ std::cout << container[i]; }
+		else
+		{ std::cout << "|"; }
+	}
+	std::cout << "\n";
+}
+void ContainerInsert(Container::Dynamic<int> & container, int item)
+{
+	std::cout << "\n";
+	unsigned int idx = container.Insert(item);
+	std::cout << "insert " << item << " return " << idx << "\n";
+	ContainerData(container);
+}
+void ContainerRemove(Container::Dynamic<int> & container, unsigned int idx)
+{
+	std::cout << "\n";
+	int item = container.Remove(idx);
+	std::cout << "remove " << idx << " return " << item << "\n";
+	ContainerData(container);
+}
 
 void Test_Container_Binary()
 {
-	Container::Binary container;
+	std::cout << "################################\n";
+	std::cout << "Container Binary\n";
+	std::cout << "################################\n";
+	Container::Binary<int> container;
+	ContainerData(container);
 
-	
+	ContainerInsert(container, 2);
+	ContainerInsert(container, 3);
+	ContainerInsert(container, 5);
+	ContainerInsert(container, 7);
+	ContainerInsert(container, 11);
+
+	ContainerRemove(container, 1);
+	ContainerRemove(container, 2);
+}
+void Test_Container_Fixed()
+{
+	std::cout << "################################\n";
+	std::cout << "Container Fixed\n";
+	std::cout << "################################\n";
+
+	Container::Fixed<int> container(4);
+	ContainerData(container);
+
+	ContainerInsert(container, 2);
+	ContainerInsert(container, 3);
+	ContainerInsert(container, 5);
+	ContainerInsert(container, 7);
+	ContainerInsert(container, 11);
+
+	ContainerRemove(container, 1);
+	ContainerRemove(container, 2);
+}
+void Test_Container_Fit()
+{
+	std::cout << "################################\n";
+	std::cout << "Container Fit\n";
+	std::cout << "################################\n";
+	Container::Fit<int> container;
+	ContainerData(container);
+
+	ContainerInsert(container, 2);
+	ContainerInsert(container, 3);
+	ContainerInsert(container, 5);
+	ContainerInsert(container, 7);
+	ContainerInsert(container, 11);
+
+	ContainerRemove(container, 1);
+	ContainerRemove(container, 2);
 }
 
 void Test_EntryContainer_Dynamic()
@@ -34,6 +112,9 @@ void Test_EntryContainer_Dynamic()
 int main()
 {
 	Test_Container_Binary();
+	Test_Container_Fixed();
+	Test_Container_Fit();
+
 	//Test_EntryContainer_Dynamic();
 	std::cout << "\nmain() return\n";
 	return 0;
