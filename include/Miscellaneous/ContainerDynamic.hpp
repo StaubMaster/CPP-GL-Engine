@@ -8,7 +8,6 @@
 /* I created this because vector dosent have a few things that I would like to have
 	Remove a epecific Index can be done but is ugly
 	Trimming is C++11, which I use but still
-
 */
 
 template <typename ItemType>
@@ -131,7 +130,7 @@ class ContainerDynamic
 			ItemType item = Memory[udx];
 			for (unsigned int i = udx + 1; i < _Count; i++)
 			{
-				Memory[udx - 1] = Memory[udx];
+				Memory[i - 1] = Memory[i];
 			}
 			_Count--;
 			return item;
