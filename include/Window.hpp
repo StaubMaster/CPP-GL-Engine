@@ -39,7 +39,7 @@ class Window
 		Color DefaultColor;
 
 	public:
-		Window(float w, float h);
+		Window(float w, float h);	//	why does this take float ?
 		~Window();
 
 	private:

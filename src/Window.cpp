@@ -17,6 +17,20 @@
 #endif
 
 
+/*	Problem
+some Systems (Mac) have weird Sizing stuff
+so the Window with size (w, h) does not create a FrameBuffer with (w, h)
+on Mac the FrameBuffer is (w * 2, h * 2)
+
+how should things be outputted ?
+the Resize functions currently uses FrameBuffer Size
+but the mouse uses WindowSize ? (Screen Coordinate Size)
+
+have a Resize for the FrameBuffer
+	only needed internally for the ViewPort ?
+and a Resize for the Window
+	calls ResizeFunc
+*/
 
 Window::Window(float w, float h) :
 	win(NULL), Keys(7)
@@ -61,6 +75,18 @@ Window::Window(float w, float h) :
 	//Debug::Log << "Window Making done" << Debug::Done;
 
 	glfwMakeContextCurrent(win);
+
+	{
+		std::cout << "Window " << w << " " << h << "\n";
+		int wi, hi;
+		glfwGetWindowSize(win, &wi, &hi);
+		std::cout << "Window " << wi << " " << hi << "\n";
+		glfwGetFramebufferSize(win, &wi, &hi);
+		std::cout << "WindowSize " << wi << " " << hi << "\n";
+		int l, t, r, b;
+		glfwGetWindowFrameSize(win, &l, &t, &r, &b);
+		std::cout << "FrameBuffer " << l << " " << t << " " << r << " " << b << "\n";
+	}
 
 	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -107,6 +133,11 @@ void Window::Callback_Resize(GLFWwindow * window, int w, int h)
 	glViewport(0, 0, w, h);
 	win -> ViewPortSizeRatio = SizeRatio2D(w, h);
 	win -> Center = Point2D(w * 0.5f, h * 0.5f);
+
+	//	FrameBufferSize != WindowSize
+	//	hardcoded for now. think of solution later
+	glfwGetWindowSize(window, &w, &h);
+
 	if (win -> ResizeFunc != NULL) { win -> ResizeFunc(w, h); }
 }
 void Window::Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
@@ -248,16 +279,17 @@ void Window::Run()
 		glDepthRange(0, 1);
 		glClearDepth(1.0f);
 
-		int w, h;
-		glfwGetFramebufferSize(win, &w, &h);
-
 		if (InitFunc != NULL)
 		{
 			Debug::Log << "++++ Window Init" << Debug::Done;
 			InitFunc();
 			Debug::Log << "---- Window Init" << Debug::Done;
 		}
-		if (ResizeFunc != NULL) { ResizeFunc(w, h); }
+		{
+			int w, h;
+			glfwGetWindowSize(win, &w, &h);
+			if (ResizeFunc != NULL) { ResizeFunc(w, h); }
+		}
 
 		int frameSkipped = 0;
 		int frameCount = 0;
