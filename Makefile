@@ -271,7 +271,7 @@ INCLUDES += $(OPENGL_INCLUDES)
 ARGUMENTS += $(OPENGL_ARGUMENTS)
 
 $(OPENGL_LIBRARYS) : $(OPENGL_REPO)
-	$(MAKE) -C $(OPENGL_REPO) $@ -s
+	$(MAKE) -C $(OPENGL_REPO) $(@:$(OPENGL_REPO)/%=%) -s
 
 ################################################################
 
@@ -304,7 +304,7 @@ $(FM_REPO) :
 	git clone $(FM_HTTPS) $(FM_REPO) -q
 
 $(FM_LIBRARYS) : $(FM_REPO)
-	$(MAKE) -C $(FM_REPO) $@ -s
+	$(MAKE) -C $(FM_REPO) $(@:$(FM_REPO)/%=%) -s
 
 ################################################################
 

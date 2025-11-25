@@ -61,9 +61,6 @@ endif
 
 ################################################################
 
-$(NAME) : $(FILES_OBJ)
-	ar -rcs $(NAME) $(FILES_OBJ)
-
 all:
 	$(MAKE) $(FILES_OBJ)
 	$(MAKE) $(NAME)
@@ -80,6 +77,9 @@ re:
 	$(MAKE) all
 
 .PHONY: all clean fclean re
+
+$(NAME) : $(FILES_OBJ)
+	ar -rcs $(NAME) $(FILES_OBJ)
 
 ################################################################
 
