@@ -4,6 +4,8 @@
 # include <exception>
 # include <iostream>
 
+# include "Entry.hpp"
+
 namespace Container
 {
 
@@ -103,7 +105,7 @@ class Base
 			}
 		}
 
-		void ResizeLimit_GapNew(unsigned int new_limit, unsigned int count, unsigned int gap_offset, unsigned int gap_length)
+		void ResizeLimit_GapNew(unsigned int new_limit, unsigned int count, Entry gap_new)
 		{
 			T * data = _Data;
 
@@ -112,13 +114,13 @@ class Base
 				data = new T[new_limit];
 
 				unsigned int copy_end = count;
-				if (gap_offset < copy_end) { copy_end = gap_offset; }
+				if (gap_new.Offset < copy_end) { copy_end = gap_new.Offset; }
 				Copy(copy_end, _Data, 0, data, 0);
 			}
 
-			if (gap_offset < count)
+			if (gap_new.Offset < count)
 			{
-				Copy(count - gap_offset, _Data, gap_offset, data, gap_offset + gap_length);
+				Copy(count - gap_new.Offset, _Data, gap_new.Min(), data, gap_new.Max());
 			}
 
 			if (data != _Data)
@@ -128,8 +130,7 @@ class Base
 				_Limit = new_limit;
 			}
 		}
-
-		void ResizeLimit_GapOld(unsigned int new_limit, unsigned int count, unsigned int gap_offset, unsigned int gap_length)
+		void ResizeLimit_GapOld(unsigned int new_limit, unsigned int count, Entry gap_old)
 		{
 			T * data = _Data;
 
@@ -138,13 +139,13 @@ class Base
 				data = new T[new_limit];
 
 				unsigned int copy_end = count;
-				if (gap_offset < copy_end) { copy_end = gap_offset; }
+				if (gap_old.Offset < copy_end) { copy_end = gap_old.Offset; }
 				Copy(copy_end, _Data, 0, data, 0);
 			}
 
-			if (gap_offset < count)
+			if (gap_old.Offset < count)
 			{
-				Copy(count - gap_offset, _Data, gap_offset + gap_length, data, gap_offset);
+				Copy(count - gap_old.Offset, _Data, gap_old.Max(), data, gap_old.Min());
 			}
 
 			if (data != _Data)
