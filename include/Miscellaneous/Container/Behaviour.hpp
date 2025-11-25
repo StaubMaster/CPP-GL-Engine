@@ -5,6 +5,7 @@
 
 namespace Container
 {
+//	put both into one struct ?
 
 enum class IncreaseBehaviour
 {

@@ -3,6 +3,26 @@
 
 # define INVALID_INDEX 0xFFFFFFFF
 
+/*	nonPointer Entry
+
+it needs to use Pointers because they need to be syncronized
+for both Container and User
+
+make a Wrappar that has a Pointer to the Entry internally
+but can be used as a non Pointer ?
+
+what needs to be stored in the internal one ?
+	Index
+	Offset
+	Length
+Container dosent need to be internal
+since it is basically constant ?
+it is set to NULL when the Entry is invalid but this can be done in other ways
+but maybe just keep it since that would be easier
+
+
+*/
+
 namespace EntryContainer
 {
 

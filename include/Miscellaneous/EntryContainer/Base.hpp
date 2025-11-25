@@ -3,7 +3,7 @@
 
 # include "Entry.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Miscellaneous/Container/Dynamic.hpp"
 
 /*
 what should it do ?
@@ -38,22 +38,25 @@ template<typename T>
 class Base
 {
 	protected:
+		Container::Dynamic<Entry<T>*> Entrys;
+
+	protected:
 		unsigned int Limit;
 		T * Data;
 
-	protected:
-		Container::Binary<Entry<T>*> Entrys;
 	public:
 		bool Changed;
 
 	public:
-		Base()
+		Base() :
+			Entrys(Container::IncreaseBehaviour::Binary, Container::DecreaseBehaviour::Binary)
 		{
 			Limit = 0;
 			Data = new T[Limit];
 			Changed = false;
 		}
-		Base(unsigned int size)
+		Base(unsigned int size) :
+			Entrys(Container::IncreaseBehaviour::Binary, Container::DecreaseBehaviour::Binary)
 		{
 			Limit = size;
 			Data = new T[Limit];

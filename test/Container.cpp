@@ -2,11 +2,8 @@
 #include <iostream>
 
 #include "Miscellaneous/Container/Dynamic.hpp"
-//#include "Miscellaneous/Container/Binary.hpp"
-//#include "Miscellaneous/Container/Fixed.hpp"
-//#include "Miscellaneous/Container/Fit.hpp"
 
-//#include "Miscellaneous/EntryContainer/Dynamic.hpp"
+#include "Miscellaneous/EntryContainer/Dynamic.hpp"
 
 
 
@@ -100,7 +97,6 @@ void Test_Container_Binary()
 
 
 
-/*
 void Test_EntryContainer_Dynamic()
 {
 	EntryContainer::Dynamic<int> container;
@@ -120,17 +116,16 @@ void Test_EntryContainer_Dynamic()
 	ent1 -> Dispose();
 	container.ShowData();
 }
-*/
 
 
 
 int main()
 {
-	Test_Container_Fixed();
-	Test_Container_Fit();
-	Test_Container_Binary();
+	//Test_Container_Fixed();
+	//Test_Container_Fit();
+	//Test_Container_Binary();
 
-	//Test_EntryContainer_Dynamic();
+	Test_EntryContainer_Dynamic();
 
 	std::cout << "\nmain() return\n";
 	return 0;

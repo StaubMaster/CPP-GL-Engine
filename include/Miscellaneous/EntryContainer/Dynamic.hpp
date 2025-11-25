@@ -3,6 +3,31 @@
 
 # include "Base.hpp"
 
+/*	Behaviour
+borrow from regular Containers
+more:
+	bool Compact_immediately
+	void Compact_Entrys()
+		removes any gaps between Data
+		when would this have to be done immediately ?
+		allways only do it on command ?
+	bool IsCompact() const
+		to maybe save time ?
+		or just remember via Variable
+		change it when Gaps apprear ?
+
+	bool AttemptReorganizing;
+	bool ReorganizeToFit(size)
+		attempts to move around data without reallocating
+		to make space for size
+		false if it cant
+*/
+
+/*	Base vs Dynamic
+everything is handled dynamically
+so it could all be put in the Base ?
+*/
+
 namespace EntryContainer
 {
 
