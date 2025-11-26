@@ -91,6 +91,7 @@ class Base
 			for (unsigned int i = 0; i < Entrys.Count(); i++)
 			{
 				std::cout << "[" << i << "]";
+				std::cout << " ";
 				Entrys[i] -> ShowEntry();
 			}
 		}
@@ -104,6 +105,27 @@ class Base
 		{
 			limit = Limit;
 			return Data;
+		}
+
+	protected:
+		unsigned int FindEntryIndex(EntryData<T> * entry) const
+		{
+			for (unsigned int i = 0; i < Entrys.Count(); i++)
+			{
+				if (Entrys[i] == entry) { return i; }
+			}
+			return 0xFFFFFFFF;
+		}
+		EntryData<T> * FindEntryByData(unsigned int data_index) const
+		{
+			for (unsigned int i = 0; i < Entrys.Count(); i++)
+			{
+				if (data_index >= Entrys[i] -> Min() && data_index < Entrys[i] -> Max())
+				{
+					return Entrys[i];
+				}
+			}
+			return NULL;
 		}
 
 	public:

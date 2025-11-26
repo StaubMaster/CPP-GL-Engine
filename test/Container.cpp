@@ -162,15 +162,35 @@ void Test_EntryContainer_Dynamic()
 	container.ShowData();
 	std::cout << "\n";
 
-	std::cout << "Allocate\n";
-	ent1.Allocate(container, 9);
+	std::cout << "Change\n";
+	for (unsigned int i = 0; i < ent0.Length(); i++) { ent0[i] = 10; }
+	for (unsigned int i = 0; i < ent2.Length(); i++) { ent2[i] = 20; }
+	for (unsigned int i = 0; i < ent4.Length(); i++) { ent4[i] = 30; }
 	container.ShowData();
+	container.ShowEntrys();
+	std::cout << "\n";
+	
+	std::cout << "Is Compact " << container.IsCompact() << "\n";
 	std::cout << "\n";
 
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent1.Length(); i++) { ent1[i] = 9; }
+	std::cout << "Compact\n";
+	container.MakeCompact();
 	container.ShowData();
+	container.ShowEntrys();
 	std::cout << "\n";
+
+	std::cout << "Is Compact " << container.IsCompact() << "\n";
+	std::cout << "\n";
+
+	//std::cout << "Allocate\n";
+	//ent1.Allocate(container, 9);
+	//container.ShowData();
+	//std::cout << "\n";
+
+	//std::cout << "Change\n";
+	//for (unsigned int i = 0; i < ent1.Length(); i++) { ent1[i] = 9; }
+	//container.ShowData();
+	//std::cout << "\n";
 }
 
 

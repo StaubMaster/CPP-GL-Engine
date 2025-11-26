@@ -37,6 +37,14 @@ struct Entry
 	public:
 		unsigned int Min() const { return Offset; }
 		unsigned int Max() const { return Offset + Length; }
+
+	/*	Memory Reordering ?
+		Copy Input Data with Gaps onto Output Data with Gaps
+
+		Invert Entrys ?
+			the Entrys become Gaps
+			the Gaps become Entrys
+	*/
 };
 
 };

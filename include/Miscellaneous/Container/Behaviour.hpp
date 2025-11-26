@@ -20,14 +20,14 @@ enum class DecreaseBehaviour
 	Binary,	// use closest (n ^ 2) - 1 Limit
 };
 
-unsigned int BinarySize(unsigned int size)
+unsigned int BinarySize(unsigned int wanted_size)
 {
 	for (unsigned char shift = 31; shift < 32; shift--)
 	{
-		unsigned int new_size = 0xFFFFFFFF >> shift;
-		if (new_size >= size)
+		unsigned int size = 0xFFFFFFFF >> shift;
+		if (size >= wanted_size)
 		{
-			return new_size;
+			return size;
 		}
 	}
 	return 0;

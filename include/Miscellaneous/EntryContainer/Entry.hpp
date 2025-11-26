@@ -1,28 +1,7 @@
 #ifndef  ENTRY_CONTAINER_ENTRY_HPP
 # define ENTRY_CONTAINER_ENTRY_HPP
 
-# define INVALID_INDEX 0xFFFFFFFF
-
 # include "Miscellaneous/Container/Entry.hpp"
-
-/*	nonPointer Entry
-
-it needs to use Pointers because they need to be syncronized
-for both Container and User
-
-make a Wrappar that has a Pointer to the Entry internally
-but can be used as a non Pointer ?
-
-what needs to be stored in the internal one ?
-	Index
-	Offset
-	Length
-Container dosent need to be internal
-since it is basically constant ?
-it is set to NULL when the Entry is invalid but this can be done in other ways
-but maybe just keep it since that would be easier
-
-*/
 
 namespace EntryContainer
 {
@@ -34,23 +13,19 @@ class EntryData : public Container::Entry
 {
 	public:
 		Base<T> * Container;
-		unsigned int Index;
 
 	public:
 		EntryData() : Container::Entry()
 		{
-			Container = NULL,
-			Index = INVALID_INDEX;
+			Container = NULL;
 		}
 		EntryData(const EntryData & other) : Container::Entry(other)
 		{
 			Container = other.Container;
-			Index = other.Index;
 		}
-		EntryData(Base<T> * container, unsigned int idx, unsigned int off, unsigned int len) : Container::Entry(off, len)
+		EntryData(Base<T> * container, unsigned int off, unsigned int len) : Container::Entry(off, len)
 		{
 			Container = container;
-			Index = idx;
 		}
 		virtual ~EntryData()
 		{
@@ -90,26 +65,12 @@ class EntryData : public Container::Entry
 	public:
 		void ShowEntry() const
 		{
-			std::cout << "Entry";
-			std::cout << "(" << this << ")";
-			std::cout << " [" << Index << "] ";
-			std::cout << Container;
+			std::cout << "{" << Offset << " " << Length << "}";
+			std::cout << " ";
+			std::cout << "[" << Min() << " " << Max() << "]";
 			std::cout << "\n";
 		}
 };
-
-/*	Problem with Copying
-if the Entry E0 gets returned from the Alloc function
-it gets put into outside variable E1
-then E0 gets deleted, since it is temporary
-now E1 has undefined Data
-
-get rid of Copy ?
-much like Dispose, give the Alloc function to Entry ?
-give it an Container, Size constructor as well
-
-
-*/
 
 template<typename T>
 class Entry
