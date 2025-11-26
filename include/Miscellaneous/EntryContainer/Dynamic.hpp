@@ -71,14 +71,14 @@ class Dynamic : public Base<T>
 		}
 
 	public:
-		void Free(Entry<T> * entry) override
+		void Free(EntryData<T> * entry) override
 		{
-			if (entry -> ChangeIndex() >= this -> Entrys.Count())
+			if (entry -> Index >= this -> Entrys.Count())
 			{
 				std::cout << "EntryContainer::Dynamic Entry Index out of Range." << "\n";
 				throw "EntryContainer::Dynamic Entry Index out of Range.";
 			}
-			if (entry != this -> Entrys[entry -> ChangeIndex()])
+			if (entry != this -> Entrys[entry -> Index])
 			{
 				std::cout << "EntryContainer::Dynamic Entry Index invalid." << "\n";
 				throw "EntryContainer::Dynamic Entry Index invalid.";
@@ -88,7 +88,8 @@ class Dynamic : public Base<T>
 			unsigned int off0 = entry -> Offset;
 			unsigned int off1 = entry -> Length + off0;
 
-			this -> Entrys.Remove(entry -> ChangeIndex());
+			this -> Entrys.Remove(entry -> Index);
+			entry -> Container = NULL;
 
 			{
 				unsigned int offset = 0;
@@ -96,7 +97,7 @@ class Dynamic : public Base<T>
 				{
 					this -> Entrys[i] -> Offset = offset;
 					offset += this -> Entrys[i] -> Length;
-					this -> Entrys[i] -> ChangeIndex(i);
+					this -> Entrys[i] -> Index = i;
 				}
 			}
 
@@ -110,11 +111,11 @@ class Dynamic : public Base<T>
 				this -> Limit = off0;
 			}
 		}
-		Entry<T> * Alloc(unsigned int count) override
+		EntryData<T> * Alloc(unsigned int count) override
 		{
 			Grow(count);
 
-			Entry<T> * entry = new Entry<T>(this, this -> Entrys.Count(), Count, count);
+			EntryData<T> * entry = new EntryData<T>(this, this -> Entrys.Count(), Count, count);
 			this -> Entrys.Insert(entry);
 			this -> Changed = true;
 

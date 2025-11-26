@@ -3,6 +3,8 @@
 
 # define INVALID_INDEX 0xFFFFFFFF
 
+# include "Miscellaneous/Container/Entry.hpp"
+
 /*	nonPointer Entry
 
 it needs to use Pointers because they need to be syncronized
@@ -20,7 +22,6 @@ since it is basically constant ?
 it is set to NULL when the Entry is invalid but this can be done in other ways
 but maybe just keep it since that would be easier
 
-
 */
 
 namespace EntryContainer
@@ -29,46 +30,34 @@ namespace EntryContainer
 template<typename T> class Base;
 
 template<typename T>
-class Entry
+class EntryData : public Container::Entry
 {
-	private:
+	public:
 		Base<T> * Container;
 		unsigned int Index;
 
 	public:
-		unsigned int Offset;
-		unsigned int Length;
-
-	public:
-		Entry()
+		EntryData() : Container::Entry()
 		{
 			Container = NULL,
 			Index = INVALID_INDEX;
-			Offset = 0;
-			Length = 0;
 		}
-		Entry(const Entry & other)
+		EntryData(const EntryData & other) : Container::Entry(other)
 		{
 			Container = other.Container;
 			Index = other.Index;
-			Offset = other.Offset;
-			Length = other.Length;
 		}
-		Entry(Base<T> * container, unsigned int idx, unsigned int off, unsigned int len)
+		EntryData(Base<T> * container, unsigned int idx, unsigned int off, unsigned int len) : Container::Entry(off, len)
 		{
 			Container = container;
 			Index = idx;
-			Offset = off;
-			Length = len;
 		}
-		virtual ~Entry()
+		virtual ~EntryData()
 		{
-			Container = NULL;
-			Index = 0;
-			Offset = 0;
-			Length = 0;
-			//	should only be deleted by Container
-			//	so dont need to handle removing it from container ?
+			if (Container != NULL)
+			{
+				Container -> Free(this);
+			}
 		}
 
 	public:
@@ -107,40 +96,112 @@ class Entry
 			std::cout << Container;
 			std::cout << "\n";
 		}
+};
+
+/*	Problem with Copying
+if the Entry E0 gets returned from the Alloc function
+it gets put into outside variable E1
+then E0 gets deleted, since it is temporary
+now E1 has undefined Data
+
+get rid of Copy ?
+much like Dispose, give the Alloc function to Entry ?
+give it an Container, Size constructor as well
+
+
+*/
+
+template<typename T>
+class Entry
+{
+	private:
+		EntryData<T> * Data;
 
 	public:
-		void ChangeContainer(Base<T> * container)
+		Entry()
 		{
-			//std::cout << "change Index from " << Container << " to " << container << "\n";
-			Container = container;
+			std::cout << "  ++++ Entry()\n";
+			Data = NULL;
 		}
-		Base<T> * ChangeContainer()
+		Entry(Base<T> & container, unsigned int count)
 		{
-			return Container;
+			std::cout << "  ++++ Entry(container, count)\n";
+			Data = container.Alloc(count);
 		}
-		void ChangeIndex(unsigned int index)
+		~Entry()
 		{
-			/*
-			if (index == INVALID_INDEX)
-			{ std::cout << "change Index from " << Index << " to " << "Invalid" << "\n"; }
-			else
-			{ std::cout << "change Index from " << Index << " to " << index << "\n"; }
-			*/
-			Index = index;
+			std::cout << "  ---- ~Entry()\n";
+			delete Data;
 		}
-		unsigned int ChangeIndex()
+
+		Entry(const Entry<T> & other) = delete;
+		Entry<T> & operator =(const Entry<T> & other) = delete;
+
+	public:
+		unsigned int Length() const { return Data -> Length; }
+
+	public:
+		const T & operator[](unsigned int idx) const
 		{
-			return Index;
+			if (Data -> Container == NULL)
+			{
+				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
+				throw "EntryContainer::Entry Entry Invalid.";
+			}
+			if (idx >= Data -> Length)
+			{
+				std::cout << "EntryContainer::Entry Index out of Range." << "\n";
+				throw "EntryContainer::Entry Index out of Range.";
+			}
+			Data -> Container -> Changed = true;
+			return (Data -> Container -> DataPointer(Data -> Offset))[idx];
+		}
+		const T & operator*() const
+		{
+			if (Data -> Container == NULL)
+			{
+				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
+				throw "EntryContainer::Entry Entry Invalid.";
+			}
+			return *(Data -> Container -> DataPointer(Data -> Offset));
+		}
+		T & operator[](unsigned int idx)
+		{
+			if (Data -> Container == NULL)
+			{
+				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
+				throw "EntryContainer::Entry Entry Invalid.";
+			}
+			if (idx >= Data -> Length)
+			{
+				std::cout << "EntryContainer::Entry Index out of Range." << "\n";
+				throw "EntryContainer::Entry Index out of Range.";
+			}
+			return (Data -> Container -> DataPointer(Data -> Offset))[idx];
+		}
+		T & operator*()
+		{
+			if (Data -> Container == NULL)
+			{
+				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
+				throw "EntryContainer::Entry Entry Invalid.";
+			}
+			Data -> Container -> Changed = true;
+			return *(Data -> Container -> DataPointer(Data -> Offset));
 		}
 
 	public:
+		void Allocate(Base<T> & container, unsigned int count)
+		{
+			Dispose();
+			Data = container.Alloc(count);
+		}
 		void Dispose()
 		{
-			if (Container != NULL)
+			if (Data != NULL)
 			{
-				Container -> Free(this);
-				ChangeContainer(NULL);
-				ChangeIndex(INVALID_INDEX);
+				delete Data;
+				Data = NULL;
 			}
 		}
 };

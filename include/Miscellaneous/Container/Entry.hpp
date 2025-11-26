@@ -23,7 +23,7 @@ struct Entry
 			Offset(other.Offset),
 			Length(other.Length)
 		{ }
-		~Entry()
+		virtual ~Entry()
 		{ }
 
 	public:

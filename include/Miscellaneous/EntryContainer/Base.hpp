@@ -38,7 +38,7 @@ template<typename T>
 class Base
 {
 	protected:
-		Container::Dynamic<Entry<T>*> Entrys;
+		Container::Dynamic<EntryData<T>*> Entrys;
 
 	protected:
 		unsigned int Limit;
@@ -67,6 +67,7 @@ class Base
 			delete[] Data;
 			for (unsigned int i = 0; i < Entrys.Count(); i++)
 			{
+				Entrys[i] -> Container = NULL;
 				delete Entrys[i];
 			}
 		}
@@ -106,8 +107,8 @@ class Base
 		}
 
 	public:
-		virtual void Free(Entry<T> * entry) = 0;
-		virtual Entry<T> * Alloc(unsigned int count) = 0;
+		virtual void Free(EntryData<T> * entry) = 0;
+		virtual EntryData<T> * Alloc(unsigned int count) = 0;
 };
 
 };
