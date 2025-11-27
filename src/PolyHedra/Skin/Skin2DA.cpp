@@ -22,7 +22,7 @@ Skin2DA::~Skin2DA()
 
 Texture::Base * Skin2DA::ToTexture() const
 {
-	return new Texture::T2DArray(W, H, Images.Count(), (const Image**)Images.ToPointer());
+	return new Texture::T2DArray(W, H, Images.Count(), (const Image**)Images.Data());
 }
 
 

@@ -1,7 +1,7 @@
 #ifndef  POLYHEDRA_HPP
 # define POLYHEDRA_HPP
 
-# include "Miscellaneous/ContainerDynamic.hpp"
+# include "Miscellaneous/Container/Dynamic.hpp"
 
 # include <string>
 # include <exception>
@@ -52,8 +52,8 @@ class PolyHedra
 		struct Face;
 
 	private:
-		ContainerDynamic<Corner>	Corners;
-		ContainerDynamic<Face>		Faces;
+		Container::Dynamic<Corner>	Corners;
+		Container::Dynamic<Face>	Faces;
 	public:
 		FileContext *	File;
 		SkinBase *		Skin;

@@ -4,7 +4,7 @@
 
 # include "DataStruct/Color.hpp"
 
-# include "Miscellaneous/ContainerDynamic.hpp"
+# include "Miscellaneous/Container/Dynamic.hpp"
 
 # include <exception>
 
@@ -35,7 +35,7 @@ class MTL
 		};
 
 	public:
-		ContainerDynamic<Material> Materials;
+		Container::Dynamic<Material> Materials;
 		Material DefaultMaterial;
 
 	private:

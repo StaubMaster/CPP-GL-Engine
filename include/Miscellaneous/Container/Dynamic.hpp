@@ -90,11 +90,10 @@ class Dynamic : public Base<T>
 			return this -> _Limit;
 		}
 
-	private: // not fully tested
+	public:
 		unsigned int	Insert(T * items, unsigned int items_count)
 		{
 			unsigned int idx = _Count;
-
 			unsigned int newCount = _Count + items_count;
 			unsigned int newLimit = IncLimit(newCount);
 			this -> ResizeLimit_GapNew(newLimit, _Count, Entry(_Count, 0));
@@ -106,7 +105,6 @@ class Dynamic : public Base<T>
 			_Count = newCount;
 			return idx;
 		}
-	public:
 		unsigned int	Insert(T item)
 		{
 			return Insert(&item, 1);

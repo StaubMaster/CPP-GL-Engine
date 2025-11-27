@@ -3,7 +3,7 @@
 # define POLYHEDRA_3D_Instances
 
 # include "PolyHedra/PolyHedra.hpp"
-# include "Miscellaneous/EntryContainer/EntryContainerDynamic.hpp"
+# include "Miscellaneous/EntryContainer/Dynamic.hpp"
 
 # include "PolyHedra_3D_BufferArray.hpp"
 
@@ -21,14 +21,15 @@ class PolyHedra_3D_Instances
 		PolyHedra_3D_BufferArray Buffer;
 		//YMT::PolyHedra * Main;
 		Texture::Base * Texture;
-		EntryContainerDynamic<Simple3D_InstData> Instances;
+		EntryContainer::Dynamic<Simple3D_InstData> Instances;
 
 	public:
 		PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra);
 		~PolyHedra_3D_Instances();
 
 	public:
-		EntryContainerDynamic<Simple3D_InstData>::Entry * Alloc(int size);
+		//EntryContainer::Dynamic<Simple3D_InstData>::Entry * Alloc(int size);
+		//EntryContainer::Entry<Simple3D_InstData> Allocate(unsigned int size);
 		/*
 			make a Wrapper for these Entrys ?
 			I'm already planing on making an Array of these

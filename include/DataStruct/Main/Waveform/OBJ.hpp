@@ -6,7 +6,7 @@
 
 # include "DataDeclare.hpp"
 
-# include "Miscellaneous/ContainerDynamic.hpp"
+# include "Miscellaneous/Container/Dynamic.hpp"
 
 # include <exception>
 
@@ -45,10 +45,10 @@ class OBJ
 	private:
 		std::string Path;
 
-		ContainerDynamic<Point4D> Positions;
-		ContainerDynamic<Point3D> Textures;
-		ContainerDynamic<Point3D> Normals;
-		ContainerDynamic<Face> Faces;
+		Container::Dynamic<Point4D> Positions;
+		Container::Dynamic<Point3D> Textures;
+		Container::Dynamic<Point3D> Normals;
+		Container::Dynamic<Face> Faces;
 
 		MTL Materials;
 

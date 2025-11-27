@@ -25,7 +25,7 @@ class Dynamic : public Base<T>
 		unsigned int Count() const { return _Count; }
 
 	public:
-		void ShowData() const override
+		/*void ShowData() const override
 		{
 			std::cout << "Container Data: " << _Count << " " << this -> _Limit << "\n";
 			for (unsigned int i = 0; i < this -> _Limit; i++)
@@ -36,7 +36,7 @@ class Dynamic : public Base<T>
 				std::cout << this -> _Data[i];
 			}
 			if (this -> _Limit != 0) { std::cout << "\n"; }
-		}
+		}*/
 
 	private:
 		/*	this is the old system or changing Size

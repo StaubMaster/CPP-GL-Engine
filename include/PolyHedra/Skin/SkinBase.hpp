@@ -1,7 +1,7 @@
 #ifndef  SKIN_BASE_HPP
 # define SKIN_BASE_HPP
 
-# include "Miscellaneous/ContainerDynamic.hpp"
+# include "Miscellaneous/Container/Dynamic.hpp"
 
 # include "Parsing/ParsingCommand.hpp"
 
@@ -22,7 +22,7 @@ class LineCommand;
 class SkinBase
 {
 	public:
-		ContainerDynamic<Image *> Images;
+		Container::Dynamic<Image *> Images;
 		const FileContext * File;
 
 	public:

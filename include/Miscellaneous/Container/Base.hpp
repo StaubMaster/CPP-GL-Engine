@@ -128,7 +128,7 @@ class Base
 		const T * Data() const { return _Data; }
 
 	public:
-		virtual void ShowData() const
+		/*virtual void ShowData() const
 		{
 			std::cout << "Container Data: " << _Limit << "\n";
 			for (unsigned int i = 0; i < _Limit; i++)
@@ -137,7 +137,7 @@ class Base
 				std::cout << _Data[i];
 			}
 			if (_Limit != 0) { std::cout << "\n"; }
-		}
+		}*/
 
 	public:
 		virtual T & operator[](unsigned int idx)
@@ -168,7 +168,7 @@ class Base
 		{
 			Base<T> other(limit);
 			count = CopyFromOther(other, count);
-			other.Release(*this);
+			other.ReleaseTo(*this);
 		}
 
 		static void Copy(unsigned int count, T * data_old, unsigned off_old, T * data_new, unsigned int off_new)
@@ -186,6 +186,45 @@ class Base
 			}
 		}
 
+	private:
+		/*	optimized for copying with gaps in both input and output
+			gaps are the opposite of Entrys
+			invert for copying Entrys ?
+			gaps should be in order ?
+		*/
+		static void CopyOrderedGaps(unsigned int count,
+			Base<T> & inn_container, Base<Entry> inn_gaps,
+			Base<T> & out_container, Base<Entry> out_gaps)
+		{
+			unsigned int inn_off = 0;
+			unsigned int out_off = 0;
+			unsigned int inn_gap_idx = 0;
+			unsigned int out_gap_idx = 0;
+			for (unsigned int idx = 0; idx < count; idx++)
+			{
+				if (inn_gap_idx < inn_gaps.Limit() && inn_off >= inn_gaps[inn_gap_idx].Offset)
+				{
+					inn_gap_idx++;
+					if (inn_gap_idx < inn_gaps.Limit())
+					{
+						inn_off = inn_gaps[inn_gap_idx].Max();
+					}
+				}
+				if (out_gap_idx < out_gaps.Limit() && out_off >= out_gaps[out_gap_idx].Offset)
+				{
+					out_gap_idx++;
+					if (out_gap_idx < out_gaps.Limit())
+					{
+						out_off = out_gaps[out_gap_idx].Max();
+					}
+				}
+				out_container[out_off] = inn_container[inn_off];
+				inn_off++;
+				out_off++;
+			}
+		}
+
+	protected:
 		void ResizeLimit_GapNew(unsigned int limit, unsigned int count, Entry gap)
 		{
 			Base<T> other;

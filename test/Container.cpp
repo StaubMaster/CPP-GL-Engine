@@ -143,78 +143,78 @@ void Test_Container_Binary()
 void Test_EntryContainer_Dynamic()
 {
 	EntryContainer::Dynamic<int> container;
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 
 	std::cout << "Allocate\n";
 	EntryContainer::Entry<int> ent0(container, 4);
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 	
 	std::cout << "Allocate\n";
 	EntryContainer::Entry<int> ent1(container, 3);
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 	
 	std::cout << "Allocate\n";
 	EntryContainer::Entry<int> ent2(container, 2);
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 	
 	std::cout << "Allocate\n";
 	EntryContainer::Entry<int> ent3(container, 5);
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 	
 	std::cout << "Allocate\n";
 	EntryContainer::Entry<int> ent4(container, 5);
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 
 	std::cout << "Change\n";
 	for (unsigned int i = 0; i < ent0.Length(); i++) { ent0[i] = 1; }
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 
 	std::cout << "Change\n";
 	for (unsigned int i = 0; i < ent1.Length(); i++) { ent1[i] = 2; }
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 
 	std::cout << "Change\n";
 	for (unsigned int i = 0; i < ent2.Length(); i++) { ent2[i] = 3; }
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 
 	std::cout << "Change\n";
 	for (unsigned int i = 0; i < ent3.Length(); i++) { ent3[i] = 4; }
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 
 	std::cout << "Change\n";
 	for (unsigned int i = 0; i < ent4.Length(); i++) { ent4[i] = 5; }
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 	
 	std::cout << "Dispose\n";
 	ent1.Dispose();
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 	
 	std::cout << "Dispose\n";
 	ent3.Dispose();
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 
@@ -222,7 +222,7 @@ void Test_EntryContainer_Dynamic()
 	for (unsigned int i = 0; i < ent0.Length(); i++) { ent0[i] = 10; }
 	for (unsigned int i = 0; i < ent2.Length(); i++) { ent2[i] = 20; }
 	for (unsigned int i = 0; i < ent4.Length(); i++) { ent4[i] = 30; }
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 	
@@ -232,7 +232,7 @@ void Test_EntryContainer_Dynamic()
 	std::cout << "Compact Here\n";
 	//container.MakeCompact();
 	container.CompactHere();
-	container.ShowData();
+	//container.ShowData();
 	container.ShowEntrys();
 	std::cout << "\n";
 
@@ -241,12 +241,12 @@ void Test_EntryContainer_Dynamic()
 
 	//std::cout << "Allocate\n";
 	//ent1.Allocate(container, 9);
-	//container.ShowData();
+	////container.ShowData();
 	//std::cout << "\n";
 
 	//std::cout << "Change\n";
 	//for (unsigned int i = 0; i < ent1.Length(); i++) { ent1[i] = 9; }
-	//container.ShowData();
+	////container.ShowData();
 	//std::cout << "\n";
 }
 
@@ -257,9 +257,9 @@ int main()
 	//Test_Container_Base();
 	//Test_Container_Fixed();
 	//Test_Container_Fit();
-	//Test_Container_Binary();
+	Test_Container_Binary();
 
-	Test_EntryContainer_Dynamic();
+	//Test_EntryContainer_Dynamic();
 
 	std::cout << "\nmain() return\n";
 	return 0;
