@@ -17,7 +17,7 @@ basically just a Wrapper for a Pointer ?
 namespace Container
 {
 
-class Exception_OutOfRange : public std::exception { const char * what() const noexcept { return "Index was out of Range."; } };
+class ExceptionInvalidIndex : public std::exception { const char * what() const noexcept { return "Index invalid."; } };
 
 template<typename T>
 class Base
@@ -128,22 +128,26 @@ class Base
 		const T * Data() const { return _Data; }
 
 	public:
+		virtual void ShowData() const
+		{
+			std::cout << "Container Data: " << _Limit << "\n";
+			for (unsigned int i = 0; i < _Limit; i++)
+			{
+				if (i != 0) { std::cout << " "; }
+				std::cout << _Data[i];
+			}
+			if (_Limit != 0) { std::cout << "\n"; }
+		}
+
+	public:
 		virtual T & operator[](unsigned int idx)
 		{
-			if (idx >= _Limit)
-			{
-				//std::cout << "Out of Range\n";
-				throw Exception_OutOfRange();
-			}
+			if (idx >= _Limit) { throw ExceptionInvalidIndex(); }
 			return _Data[idx];
 		}
 		virtual const T & operator[](unsigned int idx) const
 		{
-			if (idx >= _Limit)
-			{
-				//std::cout << "Out of Range\n";
-				throw Exception_OutOfRange();
-			}
+			if (idx >= _Limit) { throw ExceptionInvalidIndex(); }
 			return _Data[idx];
 		}
 

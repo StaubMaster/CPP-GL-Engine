@@ -55,20 +55,12 @@ class Dynamic : public Base<T>
 	public:
 		T & operator[](unsigned int idx) override
 		{
-			if (idx >= _Count)
-			{
-				//std::cout << "Out of Range\n";
-				throw Exception_OutOfRange();
-			}
+			if (idx >= _Count) { throw ExceptionInvalidIndex(); }
 			return this -> _Data[idx];
 		}
 		const T & operator[](unsigned int idx) const override
 		{
-			if (idx >= _Count)
-			{
-				//std::cout << "Out of Range\n";
-				throw Exception_OutOfRange();
-			}
+			if (idx >= _Count) { throw ExceptionInvalidIndex(); }
 			return this -> _Data[idx];
 		}
 
@@ -122,7 +114,7 @@ class Dynamic : public Base<T>
 	private: // not fully tested
 		T				Remove(Entry entry)
 		{
-			if (entry.Max() > _Count) { throw Exception_OutOfRange(); }
+			if (entry.Max() > _Count) { throw ExceptionInvalidIndex(); }
 
 			T item = this -> _Data[entry.Offset];
 

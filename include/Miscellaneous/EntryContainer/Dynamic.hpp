@@ -2,46 +2,7 @@
 # define ENTRY_CONTAINER_DYNAMIC_HPP
 
 # include "Base.hpp"
-
-/*	Behaviour
-borrow from regular Containers
-more:
-	bool Compact_immediately
-	void Compact_Entrys()
-		removes any gaps between Data
-		when would this have to be done immediately ?
-		allways only do it on command ?
-	bool IsCompact() const
-		to maybe save time ?
-		or just remember via Variable
-		change it when Gaps apprear ?
-
-	bool AttemptReorganizing;
-	bool ReorganizeToFit(size)
-		attempts to move around data without reallocating
-		to make space for size
-		false if it cant
-*/
-
-/*	Base vs Dynamic
-everything is handled dynamically
-so it could all be put in the Base ?
-*/
-
-/*	what do I need here ?
-
-Compact Buffers
-for a draw call, the Data needs to be Compact
-so for MainBuffers and InstBuffers, all the data needs to be together
-
-nonCompact
-Surface Chunks. the version in C# now puts a lot of Surface into 1 Buffer
-and then draws different sections of that Buffer
-these also are Fixed size
-not fully sure how much this saves on performance
-also it could maybe used in other places ?
-
-*/
+# include "Miscellaneous/Container/Dynamic.hpp"
 
 namespace EntryContainer
 {
@@ -64,27 +25,17 @@ class Dynamic : public Base<T>
 		unsigned int Count() const { return _Count; }
 
 	public:
-		void ShowData() const
+		void ShowData() const override
 		{
-			std::cout << "Container Data: " << _Count << " " << this -> Limit << "\n";
-			for (unsigned int i = 0; i < this -> Limit; i++)
+			std::cout << "Container Data: " << _Count << " " << this -> _Limit << "\n";
+			for (unsigned int i = 0; i < this -> _Limit; i++)
 			{
 				//if ((i % 8) == 0) { if (i != 0) { std::cout << "\n"; } }
 				//else { std::cout << " "; }
 				if (i != 0) { std::cout << " "; }
-				std::cout << this -> Data[i];
+				std::cout << this -> _Data[i];
 			}
-			if (this -> Limit != 0) { std::cout << "\n"; }
-		}
-		void ShowEntrys() const
-		{
-			std::cout << "Entrys " << this -> Entrys.Count() << "\n";
-			for (unsigned int i = 0; i < this -> Entrys.Count(); i++)
-			{
-				std::cout << "[" << i << "]";
-				std::cout << " ";
-				this -> Entrys[i] -> ShowEntry();
-			}
+			if (this -> _Limit != 0) { std::cout << "\n"; }
 		}
 
 	private:
@@ -101,16 +52,16 @@ class Dynamic : public Base<T>
 
 			for (unsigned int i = 0; i < l; i++)
 			{
-				data[i] = this -> Data[i];
+				data[i] = this -> _Data[i];
 			}
 
-			this -> Limit = limit;
-			delete[] (this -> Data);
-			this -> Data = data;
+			this -> _Limit = limit;
+			delete[] (this -> _Data);
+			this -> _Data = data;
 		}
 		void Grow(unsigned int count)
 		{
-			if (_Count + count > (this -> Limit))
+			if (_Count + count > (this -> _Limit))
 			{
 				CopyNewLimit(_Count + count);
 			}
@@ -130,7 +81,7 @@ class Dynamic : public Base<T>
 			if (_Count != data_idx) { return false; }
 			return true;
 		}
-		void MakeCompact()
+		void CompactLimit()
 		{
 			unsigned int limit = 0;
 			for (unsigned int i = 0; i < this -> Entrys.Count(); i++)
@@ -150,17 +101,21 @@ class Dynamic : public Base<T>
 				data_idx += this -> Entrys[i] -> Length;
 			}
 
-			delete[] this -> Data;
-			this -> Data = data;
-			this -> Limit = limit;
+			delete[] this -> _Data;
+			this -> _Data = data;
+			this -> _Limit = limit;
 		}
-		/*	Compacting
-			how to Compact ?
-				only move Data, dont realloc Data
-				move Data, realloc Data to Count
-			MakeCompactHere
-			MakeCompactLimit
-		*/
+		void CompactHere()
+		{
+			unsigned int data_idx = 0;
+			EntryData<T> * entry = this -> FindNextEntry(data_idx);
+			while (entry != NULL)
+			{
+				entry -> Move(data_idx);
+				data_idx = entry -> Max();
+				entry = this -> FindNextEntry(data_idx);
+			}
+		}
 
 	public:
 		EntryData<T> * Alloc(unsigned int count) override

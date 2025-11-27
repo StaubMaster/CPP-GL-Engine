@@ -35,31 +35,49 @@ class EntryData : public Container::Entry
 			}
 		}
 
-	public:
-		T & operator[](unsigned int idx)
+	private:
+		void CheckContainer() const
 		{
 			if (Container == NULL)
 			{
-				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
-				throw "EntryContainer::Entry Entry Invalid.";
+				const char * msg = "EntryContainer::EntryData Entry Container Invalid.";
+				std::cout << msg << "\n";
+				throw msg;
 			}
+		}
+		void CheckIndex(unsigned int idx) const
+		{
 			if (idx >= Length)
 			{
-				std::cout << "EntryContainer::Entry Index out of Range." << "\n";
-				throw "EntryContainer::Entry Index out of Range.";
+				const char * msg = "EntryContainer::EntryData Index invalid.";
+				std::cout << msg << "\n";
+				throw msg;
 			}
+		}
+	public:
+		const T & operator[](unsigned int idx) const
+		{
+			CheckContainer();
+			CheckIndex(idx);
+			return (*Container)[Offset + idx];
+		}
+		const T & operator*() const
+		{
+			CheckContainer();
+			return (*Container)[Offset];
+		}
+		T & operator[](unsigned int idx)
+		{
+			CheckContainer();
+			CheckIndex(idx);
 			Container -> Changed = true;
-			return (Container -> DataPointer(Offset))[idx];
+			return (*Container)[Offset + idx];
 		}
 		T & operator*()
 		{
-			if (Container == NULL)
-			{
-				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
-				throw "EntryContainer::Entry Entry Invalid.";
-			}
+			CheckContainer();
 			Container -> Changed = true;
-			return *(Container -> DataPointer(Offset));
+			return (*Container)[Offset];
 		}
 
 	public:
@@ -68,7 +86,22 @@ class EntryData : public Container::Entry
 			std::cout << "{" << Offset << " " << Length << "}";
 			std::cout << " ";
 			std::cout << "[" << Min() << " " << Max() << "]";
+			for (unsigned int i = 0; i < Length; i++)
+			{
+				std::cout << " ";
+				std::cout << (*this)[i];
+			}
 			std::cout << "\n";
+		}
+
+	public:
+		void Move(unsigned int offset)
+		{
+			for (unsigned int i = 0; i < this -> Length; i++)
+			{
+				(*Container)[offset + i] = (*Container)[this -> Offset + i];
+			}
+			this -> Offset = offset;
 		}
 };
 
@@ -101,54 +134,67 @@ class Entry
 	public:
 		unsigned int Length() const { return Data -> Length; }
 
+	private:
+		//	these are a lot so extra function
+		//	once everything works again, turn these into excpetions
+		void CheckData() const
+		{
+			if (Data == NULL)
+			{
+				const char * msg = "EntryContainer::Entry Entry Invalid.";
+				std::cout << msg << "\n";
+				throw msg;
+			}
+		}
+		void CheckDataContainer() const
+		{
+			if (Data -> Container == NULL)
+			{
+				const char * msg = "EntryContainer::Entry Entry Invalid.";
+				std::cout << msg << "\n";
+				throw msg;
+			}
+		}
+		void CheckIndex(unsigned int idx) const
+		{
+			if (idx >= Data -> Length)
+			{
+				const char * msg = "EntryContainer::Entry Index invalid.";
+				std::cout << msg << "\n";
+				throw msg;
+			}
+		}
 	public:
 		const T & operator[](unsigned int idx) const
 		{
-			if (Data -> Container == NULL)
-			{
-				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
-				throw "EntryContainer::Entry Entry Invalid.";
-			}
-			if (idx >= Data -> Length)
-			{
-				std::cout << "EntryContainer::Entry Index out of Range." << "\n";
-				throw "EntryContainer::Entry Index out of Range.";
-			}
-			Data -> Container -> Changed = true;
-			return (Data -> Container -> DataPointer(Data -> Offset))[idx];
+			CheckData();
+			CheckDataContainer();
+			CheckIndex(idx);
+			//Data -> Container -> Changed = true;
+			//return (Data -> Container -> DataPointer(Data -> Offset))[idx];
+			return (*Data)[idx];
 		}
 		const T & operator*() const
 		{
-			if (Data -> Container == NULL)
-			{
-				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
-				throw "EntryContainer::Entry Entry Invalid.";
-			}
-			return *(Data -> Container -> DataPointer(Data -> Offset));
+			CheckData();
+			CheckDataContainer();
+			//return *(Data -> Container -> DataPointer(Data -> Offset));
+			return *(*Data);
 		}
 		T & operator[](unsigned int idx)
 		{
-			if (Data -> Container == NULL)
-			{
-				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
-				throw "EntryContainer::Entry Entry Invalid.";
-			}
-			if (idx >= Data -> Length)
-			{
-				std::cout << "EntryContainer::Entry Index out of Range." << "\n";
-				throw "EntryContainer::Entry Index out of Range.";
-			}
-			return (Data -> Container -> DataPointer(Data -> Offset))[idx];
+			CheckData();
+			CheckDataContainer();
+			CheckIndex(idx);
+			//return (*Data)[idx];
+			return (*Data)[idx];
 		}
 		T & operator*()
 		{
-			if (Data -> Container == NULL)
-			{
-				std::cout << "EntryContainer::Entry Entry Invalid." << "\n";
-				throw "EntryContainer::Entry Entry Invalid.";
-			}
-			Data -> Container -> Changed = true;
-			return *(Data -> Container -> DataPointer(Data -> Offset));
+			CheckData();
+			CheckDataContainer();
+			//return *(*Data);
+			return *(*Data);
 		}
 
 	public:
