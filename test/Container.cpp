@@ -7,6 +7,17 @@
 
 
 
+void ContainerData(Container::Base<int> & container)
+{
+	std::cout << "Limit: " << container.Limit() << "\n";
+	for (unsigned int i = 0; i < container.Limit(); i++)
+	{
+		if (i != 0) { std::cout << " "; }
+		std::cout << container[i];
+	}
+	if (container.Limit() != 0) { std::cout << "\n"; }
+}
+
 void ContainerData(Container::Dynamic<int> & container)
 {
 	std::cout << "Limit: " << container.Limit() << " ";
@@ -36,6 +47,38 @@ void ContainerRemove(Container::Dynamic<int> & container, unsigned int idx)
 	ContainerData(container);
 }
 
+void Test_Container_Base()
+{
+	std::cout << "Construct" << "\n";
+	Container::Base<int> cont0(5);
+	std::cout << "cont0: "; ContainerData(cont0);
+	std::cout << "\n";
+	
+	std::cout << "Change" << "\n";
+	for (unsigned int i = 0; i < cont0.Limit(); i++) { cont0[i] = i; }
+	std::cout << "cont0: "; ContainerData(cont0);
+	std::cout << "\n";
+
+	std::cout << "Release" << " " << "Constructor" << "\n";
+	Container::Base<int> cont1(cont0.Release());
+	std::cout << "cont0: "; ContainerData(cont0);
+	std::cout << "cont1: "; ContainerData(cont1);
+	std::cout << "\n";
+
+	std::cout << "Release" << " " << "operator=" << "\n";
+	Container::Base<int> cont2;
+	cont2 = cont1.Release();
+	std::cout << "cont1: "; ContainerData(cont1);
+	std::cout << "cont2: "; ContainerData(cont2);
+	std::cout << "\n";
+
+	std::cout << "Release" << " " << "other" << "\n";
+	Container::Base<int> cont3;
+	cont2.ReleaseTo(cont3);
+	std::cout << "cont2: "; ContainerData(cont2);
+	std::cout << "cont3: "; ContainerData(cont3);
+	std::cout << "\n";
+}
 void Test_Container_Fixed()
 {
 	std::cout << "################################\n";
@@ -197,11 +240,12 @@ void Test_EntryContainer_Dynamic()
 
 int main()
 {
+	//Test_Container_Base();
 	//Test_Container_Fixed();
 	//Test_Container_Fit();
-	//Test_Container_Binary();
+	Test_Container_Binary();
 
-	Test_EntryContainer_Dynamic();
+	//Test_EntryContainer_Dynamic();
 
 	std::cout << "\nmain() return\n";
 	return 0;

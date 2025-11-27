@@ -49,23 +49,54 @@ namespace EntryContainer
 template<typename T>
 class Dynamic : public Base<T>
 {
-	public:
-		unsigned int Count;
+	protected:
+		unsigned int _Count;
 
 	public:
 		Dynamic() : Base<T>(0)
 		{
-			Count = 0;
+			_Count = 0;
 		}
 		~Dynamic()
 		{ }
 
+	public:
+		unsigned int Count() const { return _Count; }
+
+	public:
+		void ShowData() const
+		{
+			std::cout << "Container Data: " << _Count << " " << this -> Limit << "\n";
+			for (unsigned int i = 0; i < this -> Limit; i++)
+			{
+				//if ((i % 8) == 0) { if (i != 0) { std::cout << "\n"; } }
+				//else { std::cout << " "; }
+				if (i != 0) { std::cout << " "; }
+				std::cout << this -> Data[i];
+			}
+			if (this -> Limit != 0) { std::cout << "\n"; }
+		}
+		void ShowEntrys() const
+		{
+			std::cout << "Entrys " << this -> Entrys.Count() << "\n";
+			for (unsigned int i = 0; i < this -> Entrys.Count(); i++)
+			{
+				std::cout << "[" << i << "]";
+				std::cout << " ";
+				this -> Entrys[i] -> ShowEntry();
+			}
+		}
+
 	private:
+		/*	this is the old system or changing Size
+			change this to use new Container Behaviour
+			first fix Container::Base and Container::Dynamic being the same
+		*/
 		void CopyNewLimit(unsigned int limit)
 		{
 			T * data = new T[limit];
 
-			unsigned int l = Count;
+			unsigned int l = _Count;
 			if (limit < l) { l = limit; }
 
 			for (unsigned int i = 0; i < l; i++)
@@ -79,9 +110,9 @@ class Dynamic : public Base<T>
 		}
 		void Grow(unsigned int count)
 		{
-			if (Count + count > (this -> Limit))
+			if (_Count + count > (this -> Limit))
 			{
-				CopyNewLimit(Count + count);
+				CopyNewLimit(_Count + count);
 			}
 		}
 
@@ -96,7 +127,7 @@ class Dynamic : public Base<T>
 				if (entry -> Offset != data_idx) { return false; }
 				data_idx += entry -> Length;
 			}
-			if (Count != data_idx) { return false; }
+			if (_Count != data_idx) { return false; }
 			return true;
 		}
 		void MakeCompact()
@@ -123,17 +154,24 @@ class Dynamic : public Base<T>
 			this -> Data = data;
 			this -> Limit = limit;
 		}
+		/*	Compacting
+			how to Compact ?
+				only move Data, dont realloc Data
+				move Data, realloc Data to Count
+			MakeCompactHere
+			MakeCompactLimit
+		*/
 
 	public:
 		EntryData<T> * Alloc(unsigned int count) override
 		{
 			Grow(count);
 
-			EntryData<T> * entry = new EntryData<T>(this, Count, count);
+			EntryData<T> * entry = new EntryData<T>(this, _Count, count);
 			this -> Entrys.Insert(entry);
 			this -> Changed = true;
 
-			Count += count;
+			_Count += count;
 			return entry;
 		}
 		void Free(EntryData<T> * entry) override
@@ -149,7 +187,7 @@ class Dynamic : public Base<T>
 
 			this -> Entrys.Remove(entry_idx);
 			entry -> Container = NULL;
-			Count -= entry -> Length;
+			_Count -= entry -> Length;
 		}
 };
 

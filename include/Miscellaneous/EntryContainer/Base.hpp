@@ -73,30 +73,6 @@ class Base
 		}
 
 	public:
-		void ShowData() const
-		{
-			std::cout << "Container Data: " << Limit << "\n";
-			for (unsigned int i = 0; i < Limit; i++)
-			{
-				//if ((i % 8) == 0) { if (i != 0) { std::cout << "\n"; } }
-				//else { std::cout << " "; }
-				if (i != 0) { std::cout << " "; }
-				std::cout << Data[i];
-			}
-			if (Limit != 0) { std::cout << "\n"; }
-		}
-		void ShowEntrys() const
-		{
-			std::cout << "Entrys " << Entrys.Count() << "\n";
-			for (unsigned int i = 0; i < Entrys.Count(); i++)
-			{
-				std::cout << "[" << i << "]";
-				std::cout << " ";
-				Entrys[i] -> ShowEntry();
-			}
-		}
-
-	public:
 		T * DataPointer(unsigned int offset)
 		{
 			return &(Data[offset]);

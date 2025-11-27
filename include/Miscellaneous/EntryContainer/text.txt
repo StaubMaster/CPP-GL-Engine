@@ -1,8 +1,0 @@
-
-ugly / disorganized
-
-put Entry into its own File ?
-instead of being a nested class
-
-
-
