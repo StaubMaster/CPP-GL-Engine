@@ -5,6 +5,8 @@
 
 #include "Miscellaneous/EntryContainer/Dynamic.hpp"
 
+#include "../src/Miscellaneous/Container/Behaviour.cpp"
+
 
 
 void ContainerData(Container::Base<int> & container)
@@ -250,6 +252,69 @@ void Test_EntryContainer_Dynamic()
 	//std::cout << "\n";
 }
 
+void Test_EntryContainer_EntryCopy()
+{
+	EntryContainer::Dynamic<int> container;
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+
+	std::cout << "Allocate\n";
+	EntryContainer::Entry<int> ent0(container, 4);
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+
+	//std::cout << "Copy\n";
+	//EntryContainer::Entry<int> ent1(ent0);
+	//ContainerData(container);
+	//container.ShowEntrys();
+	//std::cout << "\n";
+
+	std::cout << "Copy\n";
+	EntryContainer::Entry<int> ent2;
+	ent2 = ent0;
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+
+	std::cout << "Change\n";
+	for (unsigned int i = 0; i < ent0.Length(); i++) { ent0[i] = i; }
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+
+	std::cout << "Compact\n";
+	container.CompactHere();
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+
+	std::cout << "Dispose\n";
+	ent0.Dispose();
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+
+	//std::cout << "Dispose\n";
+	//ent1.Dispose();
+	//ContainerData(container);
+	//container.ShowEntrys();
+	//std::cout << "\n";
+
+	std::cout << "Dispose\n";
+	ent2.Dispose();
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+
+	std::cout << "Compact\n";
+	container.CompactHere();
+	ContainerData(container);
+	container.ShowEntrys();
+	std::cout << "\n";
+}
+
 
 
 int main()
@@ -257,9 +322,10 @@ int main()
 	//Test_Container_Base();
 	//Test_Container_Fixed();
 	//Test_Container_Fit();
-	Test_Container_Binary();
+	//Test_Container_Binary();
 
 	//Test_EntryContainer_Dynamic();
+	Test_EntryContainer_EntryCopy();
 
 	std::cout << "\nmain() return\n";
 	return 0;

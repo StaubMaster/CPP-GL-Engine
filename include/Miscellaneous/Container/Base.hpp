@@ -168,7 +168,7 @@ class Base
 		void ResizeLimit(unsigned int & count, unsigned int limit)
 		{
 			Base<T> other(limit);
-			count = CopyFromOther(other, count);
+			count = other.CopyFromOther(*this, count);
 			other.ReleaseTo(*this);
 		}
 

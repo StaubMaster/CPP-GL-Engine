@@ -81,7 +81,8 @@ class Dynamic : public Base<T>
 			if (_Count != data_idx) { return false; }
 			return true;
 		}
-		void CompactLimit()
+		//	dosent handle duplicate entrys
+		/*void CompactLimit()
 		{
 			unsigned int limit = 0;
 			for (unsigned int i = 0; i < this -> Entrys.Count(); i++)
@@ -104,16 +105,25 @@ class Dynamic : public Base<T>
 			delete[] this -> _Data;
 			this -> _Data = data;
 			this -> _Limit = limit;
-		}
+		}*/
 		void CompactHere()
 		{
 			unsigned int data_idx = 0;
-			EntryData<T> * entry = this -> FindNextEntry(data_idx);
-			while (entry != NULL)
+			unsigned int entry_idx = this -> FindNextEntry(data_idx);
+			while (entry_idx != 0xFFFFFFFF)
 			{
+				EntryData<T> * entry = this -> Entrys[entry_idx];
+				unsigned int dupe_idx = this -> FindNextEntryDuplicate(entry, entry_idx + 1);
 				entry -> Move(data_idx);
-				data_idx = entry -> Max();
-				entry = this -> FindNextEntry(data_idx);
+				if (dupe_idx == 0xFFFFFFFF)
+				{
+					data_idx = entry -> Max();
+					entry_idx = this -> FindNextEntry(data_idx);
+				}
+				else
+				{
+					entry_idx = dupe_idx;
+				}
 			}
 		}
 
@@ -121,28 +131,44 @@ class Dynamic : public Base<T>
 		EntryData<T> * Alloc(unsigned int count) override
 		{
 			Grow(count);
-
 			EntryData<T> * entry = new EntryData<T>(this, _Count, count);
+			std::cout << entry << " Allocate ...\n";
+			std::cout << entry << " Insert ...\n";
 			this -> Entrys.Insert(entry);
+			std::cout << entry << " Insert done\n";
 			this -> Changed = true;
-
 			_Count += count;
 			return entry;
 		}
 		void Free(EntryData<T> * entry) override
 		{
 			this -> Changed = true;
-
+			std::cout << entry << " Free\n";
 			unsigned int entry_idx = this -> FindEntryIndex(entry);
 			if (entry_idx == 0xFFFFFFFF)
 			{
 				std::cout << "EntryContainer::Dynamic Entry not found." << "\n";
-				throw "EntryContainer::Dynamic Entry not found.";
+				//throw "EntryContainer::Dynamic Entry not found.";
+				return;
 			}
-
+			std::cout << entry << " Remove ...\n";
 			this -> Entrys.Remove(entry_idx);
+			std::cout << entry << " Remove done\n";
 			entry -> Container = NULL;
-			_Count -= entry -> Length;
+			if (this -> FindNextEntryDuplicate(entry, 0) == 0xFFFFFFFF)
+			{
+				_Count -= entry -> Length;
+			}
+		}
+		EntryData<T> * Copy(EntryData<T> * entry) override
+		{
+			std::cout << entry << " Copy\n";
+			if (entry == NULL) { return NULL; }
+			EntryData<T> * other = new EntryData<T>(*entry);
+			std::cout << entry << " Insert ...\n";
+			this -> Entrys.Insert(other);
+			std::cout << entry << " Insert done\n";
+			return other;
 		}
 };
 

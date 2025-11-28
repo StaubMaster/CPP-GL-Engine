@@ -46,6 +46,14 @@ PolyHedra_MainData * YMT::PolyHedra::ToMainData(int & count)
 	count = Faces.Count() * 3;
 	PolyHedra_MainData * data = new PolyHedra_MainData[count];
 
+	std::cout << "C " << Corners.Count() << "\n";
+	std::cout << "F " << Faces.Count() << "\n";
+	for (unsigned int i = 0; i < Corners.Count(); i++)
+	{
+		std::cout << Corners[i].Position << "\n";
+	}
+	std::cout << "\n";
+
 	for (unsigned int f = 0; f < Faces.Count(); f++)
 	{
 		int c = f * 3;
@@ -77,7 +85,7 @@ PolyHedra_MainData * YMT::PolyHedra::ToMainData(int & count)
 		}
 		else
 		{
-			//std::cout << "Invalid Face\n";
+			std::cout << "Invalid Face\n";
 		}
 	}
 
@@ -101,10 +109,10 @@ PolyHedra_MainData * YMT::PolyHedra::ToMainData(int & count)
 		}
 	}
 
-	/*for (int i = 0; i < count; i++)
+	for (int i = 0; i < count; i++)
 	{
 		std::cout << "Main: " << data[i].Position << " : " << data[i].Normal << " : " << data[i].Texture << "\n";
-	}*/
+	}
 
 	return data;
 }

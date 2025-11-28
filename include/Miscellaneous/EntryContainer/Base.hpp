@@ -74,7 +74,7 @@ class Base : public Container::Base<T>
 			}
 			return NULL;
 		}
-		EntryData<T> * FindNextEntry(unsigned int data_index) const
+		unsigned int FindNextEntry(unsigned int data_index) const
 		{
 			unsigned int entry_idx = 0xFFFFFFFF;
 			unsigned int entry_dist = 0xFFFFFFFF;
@@ -90,16 +90,26 @@ class Base : public Container::Base<T>
 					}
 				}
 			}
-			if (entry_idx != 0xFFFFFFFF)
+			return entry_idx;
+		}
+
+		unsigned int FindNextEntryDuplicate(EntryData<T> * entry, unsigned int entry_idx) const
+		{
+			for (unsigned int i = entry_idx; i < Entrys.Count(); i++)
 			{
-				return Entrys[entry_idx];
+				if (Entrys[i] -> Offset == entry -> Offset &&
+					Entrys[i] -> Length == entry -> Length)
+				{
+					return i;
+				}
 			}
-			return NULL;
+			return 0xFFFFFFFF;
 		}
 
 	public:
-		virtual void Free(EntryData<T> * entry) = 0;
 		virtual EntryData<T> * Alloc(unsigned int count) = 0;
+		virtual void Free(EntryData<T> * entry) = 0;
+		virtual EntryData<T> * Copy(EntryData<T> * entry) = 0;
 };
 
 };
