@@ -198,6 +198,10 @@ class Entry
 		}
 
 	public:
+		bool Is() const
+		{
+			return (Data != NULL);
+		}
 		void Allocate(Base<T> & container, unsigned int count)
 		{
 			Dispose();

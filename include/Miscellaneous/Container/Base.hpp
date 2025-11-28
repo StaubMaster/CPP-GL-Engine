@@ -31,14 +31,15 @@ class Base
 	public:
 		Base()
 		{
-			std::cout << "  ++++  " << "Base()" << "\n";
+			//std::cout << "  ++++  " << "Base()" << "\n";
 			_Limit = 0;
-			_Data = new T[_Limit];
+			_Data = NULL;
+			//std::cout << this << ' ' << _Limit << ' ' << _Data << " Data\n";
 			IsConstant = false;
 		}
 		Base(unsigned int limit)
 		{
-			std::cout << "  ++++  " << "Base(limit)" << "\n";
+			//std::cout << "  ++++  " << "Base(limit)" << "\n";
 			_Limit = limit;
 			_Data = new T[_Limit];
 			IsConstant = false;
@@ -46,14 +47,14 @@ class Base
 
 		Base(unsigned int limit, const T * data)
 		{
-			std::cout << "  ++++  " << "Base(limit, data)" << "\n";
+			//std::cout << "  ++++  " << "Base(limit, data)" << "\n";
 			_Limit = limit;
 			_Data = (T *)data;
 			IsConstant = true;
 		}
 		~Base()
 		{
-			std::cout << "  ----  " << "~Base()" << "\n";
+			//std::cout << "  ----  " << "~Base()" << "\n";
 			if (IsConstant)
 			{
 				delete[] _Data;
@@ -62,7 +63,7 @@ class Base
 
 		Base(const Base<T> & other)
 		{
-			std::cout << "  ====  " << "Base(other)" << "\n";
+			//std::cout << "  ====  " << "Base(other)" << "\n";
 			_Limit = other._Limit;
 			_Data = new T[_Limit];
 			for (unsigned int i = 0; i < _Limit; i++)
@@ -73,7 +74,7 @@ class Base
 		}
 		Base & operator=(const Base<T> & other)
 		{
-			std::cout << "  ====  " << "Base operator=(other)" << "\n";
+			//std::cout << "  ====  " << "Base operator=(other)" << "\n";
 			_Limit = other._Limit;
 			_Data = new T[_Limit];
 			for (unsigned int i = 0; i < _Limit; i++)
@@ -89,7 +90,7 @@ class Base
 		{
 			if (!IsConstant)
 			{
-				delete _Data;
+				delete[] _Data;
 			}
 			_Data = NULL;
 			_Limit = 0;
@@ -228,7 +229,7 @@ class Base
 		void ResizeLimit_GapNew(unsigned int limit, unsigned int count, Entry gap)
 		{
 			Base<T> other;
-
+			
 			if (limit == _Limit)
 			{
 				other._Data = _Data;
@@ -239,7 +240,7 @@ class Base
 				other.Allocate(limit);
 				Copy(gap.Offset, *this, 0, other, 0);
 			}
-
+			
 			if (gap.Offset < count)
 			{
 				Copy(count - gap.Offset, *this, gap.Min(), other, gap.Max());

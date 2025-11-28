@@ -29,6 +29,8 @@ FILES_SRC_NAMES := \
 	DataStruct/Matrix3x3.cpp \
 	DataShow.cpp \
 \
+	Miscellaneous/Container/Behaviour.cpp \
+\
 	Graphics/Shader/Code.cpp \
 	Graphics/Shader/Base.cpp \
 \
