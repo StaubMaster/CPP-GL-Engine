@@ -11,25 +11,10 @@ YMT::PolyHedra::Template::Template(YMT::PolyHedra & referance) :
 
 
 
-#include "DataShow.hpp"
 void YMT::PolyHedra::Template::Done()
 {
-	std::cout << "C " << Referance.Corners.Count() << ' ' << Referance.Corners.Limit() << '\n';
-	std::cout << "F " << Referance.Faces.Count() << ' ' << Referance.Faces.Limit() << '\n';
-	for (unsigned int i = 0; i < Referance.Corners.Count(); i++)
-	{
-		std::cout << Referance.Corners[i].Position << "\n";
-	}
-	std::cout << "\n";
-
 	Referance.Corners.Trim();
 	Referance.Faces.Trim();
-
-	for (unsigned int i = 0; i < Referance.Corners.Count(); i++)
-	{
-		std::cout << Referance.Corners[i].Position << "\n";
-	}
-	std::cout << "\n";
 
 	Calc_Face_Normals();
 	Calc_Corn_Normals();
@@ -79,12 +64,9 @@ void YMT::PolyHedra::Template::Calc_Corn_Normals()
 
 
 
-#include "DataShow.hpp"
 void YMT::PolyHedra::Template::Insert_Corn(Corner corn)
 {
-	std::cout << "Insert_Corn " << corn.Position << "\n";
-	unsigned int i = Referance.Corners.Insert(corn);
-	std::cout << "Data " << Referance.Corners[i].Position << "\n";
+	Referance.Corners.Insert(corn);
 }
 void YMT::PolyHedra::Template::Insert_Face3(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2)
 {

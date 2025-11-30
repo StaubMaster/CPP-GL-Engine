@@ -53,6 +53,31 @@ namespace Debug
 		would this be better on a seperate thread ?
 		so the handling dosent slow down the main thread ?
 	*/
+	extern LogChange Tabs;
+	extern LogChange TabInc;
+	extern LogChange TabDec;
+	extern std::ostream & Console;
+
+	/*	TabObject
+
+		right now you have to manually do
+		{
+			Debug::Console << Debug::TabInc;
+			...
+			Debug::Console << Debug::TabDec;
+		}
+		with an Object you coult
+		{
+			Debug::TabSection tabs;	//	++++ Constructor increases Tabs
+			...
+		}	//	---- Destructor decreases Tabs
+		would also prevent unclosed Tabs from errors
+		make them have Names / Types them automatically
+		Types:
+			++++
+			----
+			====
+	*/
 
 	void NewFileInDir(const DirectoryContext & dir);
 };

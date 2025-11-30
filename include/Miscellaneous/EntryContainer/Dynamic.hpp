@@ -1,6 +1,8 @@
 #ifndef  ENTRY_CONTAINER_DYNAMIC_HPP
 # define ENTRY_CONTAINER_DYNAMIC_HPP
 
+# include "DebugDefines.hpp"
+
 # include "Base.hpp"
 # include "Miscellaneous/Container/Dynamic.hpp"
 
@@ -14,12 +16,62 @@ class Dynamic : public Base<T>
 		unsigned int _Count;
 
 	public:
+		virtual void DebugInfo() override
+		{
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << ">>>> EntryContainer::Dynamic.Info()\n";
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << this << '\n';
+
+			Debug::Console << "Data" << ' ' << (this -> _Data) << '\n';
+			Debug::Console << "Limit" << ' ' << (this -> _Limit) << '\n';
+			Debug::Console << "Count" << ' ' << (this -> _Count) << '\n';
+
+			Debug::Console << "IsConstant" << ' ';
+			if (this -> IsConstant) { Debug::Console << "true"; } else { Debug::Console << "false"; }
+			Debug::Console << '\n';
+
+			Debug::Console << "IsLocked" << ' ';
+			if (this -> _IsLocked) { Debug::Console << "true"; } else { Debug::Console << "false"; }
+			Debug::Console << '\n';
+
+			Debug::Console << "Changed" << ' ';
+			if (this -> Changed) { Debug::Console << "true"; } else { Debug::Console << "false"; }
+			Debug::Console << '\n';
+
+			Debug::Console << "Entrys" << ' ' << (this -> Entrys.Count()) << ' ' << (this -> Entrys.Limit()) << '\n';
+
+			Debug::Console << Debug::TabDec;
+			Debug::Console << Debug::Tabs << "<<<< EntryContainer::Dynamic.Info()\n";
+#endif
+		}
+
+	public:
 		Dynamic() : Base<T>(0)
 		{
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ++++  " << "Dynamic()" << "\n";
+#endif
 			_Count = 0;
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		~Dynamic()
-		{ }
+		{
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ----  " << "~Dynamic()" << "\n";
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
+		}
 
 	public:
 		unsigned int Count() const { return _Count; }
@@ -45,10 +97,21 @@ class Dynamic : public Base<T>
 		*/
 		void CopyNewLimit(unsigned int limit)
 		{
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  <-->  " << "CopyNewLimit()" << " ..." << "\n";
+#endif
 			T * data = new T[limit];
 
 			unsigned int l = _Count;
 			if (limit < l) { l = limit; }
+
+			Debug::Console << Debug::Tabs << "_Count " << (this -> _Count) << '\n';
+			Debug::Console << Debug::Tabs << "_Limit " << (this -> _Limit) << '\n';
+			Debug::Console << Debug::Tabs << "_Data " << (this -> _Data) << '\n';
+			Debug::Console << Debug::Tabs << "limit " << limit << '\n';
+			Debug::Console << Debug::Tabs << "l " << l << '\n';
+			Debug::Console << Debug::Tabs << "data " << data << '\n';
 
 			for (unsigned int i = 0; i < l; i++)
 			{
@@ -58,6 +121,10 @@ class Dynamic : public Base<T>
 			this -> _Limit = limit;
 			delete[] (this -> _Data);
 			this -> _Data = data;
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  <-->  " << "CopyNewLimit()" << " done" << "\n";
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		void Grow(unsigned int count)
 		{
@@ -130,44 +197,70 @@ class Dynamic : public Base<T>
 	public:
 		EntryData<T> * Alloc(unsigned int count) override
 		{
+			if (this -> _IsLocked) { return NULL; }
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ++++  " << "Alloc()" << '\n';
+#endif
 			Grow(count);
 			EntryData<T> * entry = new EntryData<T>(this, _Count, count);
-			std::cout << entry << " Allocate ...\n";
-			std::cout << entry << " Insert ...\n";
 			this -> Entrys.Insert(entry);
-			std::cout << entry << " Insert done\n";
 			this -> Changed = true;
 			_Count += count;
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
 			return entry;
 		}
 		void Free(EntryData<T> * entry) override
 		{
+			if (this -> _IsLocked) { return; }
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ----  " << "Free()" << '\n';
+#endif
 			this -> Changed = true;
-			std::cout << entry << " Free\n";
 			unsigned int entry_idx = this -> FindEntryIndex(entry);
 			if (entry_idx == 0xFFFFFFFF)
 			{
-				std::cout << "EntryContainer::Dynamic Entry not found." << "\n";
-				//throw "EntryContainer::Dynamic Entry not found.";
-				return;
+				//std::cout << "EntryContainer::Dynamic Entry not found." << "\n";
+				throw "EntryContainer::Dynamic Entry not found.";
 			}
-			std::cout << entry << " Remove ...\n";
 			this -> Entrys.Remove(entry_idx);
-			std::cout << entry << " Remove done\n";
 			entry -> Container = NULL;
 			if (this -> FindNextEntryDuplicate(entry, 0) == 0xFFFFFFFF)
 			{
 				_Count -= entry -> Length;
 			}
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		EntryData<T> * Copy(EntryData<T> * entry) override
 		{
-			std::cout << entry << " Copy\n";
-			if (entry == NULL) { return NULL; }
+			if (this -> _IsLocked) { return NULL; }
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ====  " << "Copy()" << '\n';
+#endif
+			if (entry == NULL)
+			{
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
+				return NULL;
+			}
 			EntryData<T> * other = new EntryData<T>(*entry);
-			std::cout << entry << " Insert ...\n";
 			this -> Entrys.Insert(other);
-			std::cout << entry << " Insert done\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
 			return other;
 		}
 };

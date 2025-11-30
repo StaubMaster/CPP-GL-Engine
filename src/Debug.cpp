@@ -36,6 +36,36 @@ std::string Debug::TimeStamp()
 
 
 
+Debug::LogChange Debug::Done = '\x04';	//	End of Transmission
+std::ostringstream Debug::Log;
+std::ofstream Debug::LogFile;
+
+Debug::LogChange Debug::Tabs = '\t';		//	does this interfere with regular '\t' ? it shouldn't since the Types are different
+Debug::LogChange Debug::TabInc = '\x0e';	//	Shift In	-->
+Debug::LogChange Debug::TabDec = '\x0f';	//	Shift Out	<--
+unsigned int TabsCount = 0;
+std::string TabsString(TabsCount, ' ');
+std::ostream & Debug::Console = std::cout;
+
+
+
+void Debug::NewFileInDir(const DirectoryContext & dir)
+{
+	if (Debug::LogFile.is_open())
+	{
+		Debug::LogFile.close();
+	}
+	Debug::Log = std::ostringstream();
+
+	std::string timestamp = TimeStamp();
+	FileContext file(dir.File(timestamp + ".log"));
+
+	Debug::LogFile.open(file.Path.ToString(), std::ofstream::out | std::ofstream::trunc); //std::ofstream::app ?
+	Debug::LogFile << "New Log File " << TimeStamp() << "\n";
+}
+
+
+
 std::ostream & operator <<(std::ostream & log, Debug::LogChange & type)
 {
 	if (type == Debug::Done)
@@ -67,28 +97,8 @@ std::ostream & operator <<(std::ostream & log, Debug::LogChange & type)
 		Debug::LogFile.flush();
 		return Debug::Log;
 	}
+	if (type == Debug::TabInc) { TabsCount += 2; TabsString = std::string(TabsCount, ' '); }
+	if (type == Debug::TabDec) { TabsCount -= 2; TabsString = std::string(TabsCount, ' '); }
+	if (type == Debug::Tabs) { log << TabsString; }
 	return log;
-}
-
-
-
-Debug::LogChange Debug::Done = '\x04';
-std::ostringstream Debug::Log;
-std::ofstream Debug::LogFile;
-
-
-
-void Debug::NewFileInDir(const DirectoryContext & dir)
-{
-	if (Debug::LogFile.is_open())
-	{
-		Debug::LogFile.close();
-	}
-	Debug::Log = std::ostringstream();
-
-	std::string timestamp = TimeStamp();
-	FileContext file(dir.File(timestamp + ".log"));
-
-	Debug::LogFile.open(file.Path.ToString(), std::ofstream::out | std::ofstream::trunc); //std::ofstream::app ?
-	Debug::LogFile << "New Log File " << TimeStamp() << "\n";
 }

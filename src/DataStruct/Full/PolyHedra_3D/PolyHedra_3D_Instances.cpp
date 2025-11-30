@@ -9,11 +9,6 @@ PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 {
 	int count;
 	PolyHedra_MainData * data = polyhedra -> ToMainData(count);
-	std::cout << "Main Count " << count << "\n";
-	for (int i = 0; i < count; i++)
-	{
-		std::cout << data[i].Position << ' ' << data[i].Texture << ' ' << data[i].Normal << '\n';
-	}
 	Buffer.BindMain(data, count);
 	delete [] data;
 
@@ -28,7 +23,10 @@ PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 }
 PolyHedra_3D_Instances::~PolyHedra_3D_Instances()
 {
+	std::cout << "PolyHedra_3D_Instances" << "  ----  " << "~PolyHedra_3D_Instances()" << '\n';
+	std::cout << __FILE__ << ':' << __LINE__ << '\n';
 	delete Texture;
+	std::cout << __FILE__ << ':' << __LINE__ << '\n';
 }
 
 

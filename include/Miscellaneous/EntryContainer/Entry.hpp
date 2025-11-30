@@ -1,113 +1,12 @@
 #ifndef  ENTRY_CONTAINER_ENTRY_HPP
 # define ENTRY_CONTAINER_ENTRY_HPP
 
-# include "Miscellaneous/Container/Entry.hpp"
+# include "DebugDefines.hpp"
+
+# include "EntryData.hpp"
 
 namespace EntryContainer
 {
-
-template<typename T> class Base;
-
-template<typename T>
-class EntryData : public Container::Entry
-{
-	public:
-		Base<T> * Container;
-
-	public:
-		EntryData() : Container::Entry()
-		{
-			std::cout << "  ++++  " << "EntryData()\n";
-			Container = NULL;
-		}
-		EntryData(const EntryData & other) : Container::Entry(other)
-		{
-			std::cout << "  ====  " << "EntryData(other)\n";
-			Container = other.Container;
-		}
-		EntryData(Base<T> * container, unsigned int off, unsigned int len) : Container::Entry(off, len)
-		{
-			std::cout << "  ++++  " << "EntryData(container, off, len)\n";
-			Container = container;
-		}
-		virtual ~EntryData()
-		{
-			std::cout << "  ----  " << "~EntryData()\n";
-			if (Container != NULL)
-			{
-				Container -> Free(this);
-			}
-		}
-
-	private:
-		void CheckContainer() const
-		{
-			if (Container == NULL)
-			{
-				const char * msg = "EntryContainer::EntryData Entry Container Invalid.";
-				std::cout << msg << "\n";
-				throw msg;
-			}
-		}
-		void CheckIndex(unsigned int idx) const
-		{
-			if (idx >= Length)
-			{
-				const char * msg = "EntryContainer::EntryData Index invalid.";
-				std::cout << msg << "\n";
-				throw msg;
-			}
-		}
-	public:
-		const T & operator[](unsigned int idx) const
-		{
-			CheckContainer();
-			CheckIndex(idx);
-			return (*Container)[Offset + idx];
-		}
-		const T & operator*() const
-		{
-			CheckContainer();
-			return (*Container)[Offset];
-		}
-		T & operator[](unsigned int idx)
-		{
-			CheckContainer();
-			CheckIndex(idx);
-			Container -> Changed = true;
-			return (*Container)[Offset + idx];
-		}
-		T & operator*()
-		{
-			CheckContainer();
-			Container -> Changed = true;
-			return (*Container)[Offset];
-		}
-
-	public:
-		void ShowEntry() const
-		{
-			std::cout << "{" << Offset << " " << Length << "}";
-			std::cout << " ";
-			std::cout << "[" << Min() << " " << Max() << "]";
-			/*for (unsigned int i = 0; i < Length; i++)
-			{
-				std::cout << " ";
-				std::cout << (*this)[i];
-			}*/
-			std::cout << "\n";
-		}
-
-	public:
-		void Move(unsigned int offset)
-		{
-			for (unsigned int i = 0; i < this -> Length; i++)
-			{
-				(*Container)[offset + i] = (*Container)[this -> Offset + i];
-			}
-			this -> Offset = offset;
-		}
-};
 
 template<typename T>
 class Entry
@@ -116,22 +15,60 @@ class Entry
 		EntryData<T> * Data;
 
 	public:
+		virtual void DebugInfo()
+		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << ">>>> EntryContainer::Entry.Info()\n";
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << this << '\n';
+
+			Debug::Console << Debug::Tabs << "Data" << ' ' << (Data) << '\n';
+			if (Data != NULL)
+			{
+				Data -> DebugInfo();
+			}
+
+			Debug::Console << Debug::TabDec;
+			Debug::Console << Debug::Tabs << "<<<< EntryContainer::Entry.Info()\n";
+#endif
+		}
+
+	public:
 		Entry()
 		{
-			std::cout << "  ++++  " << "Entry()\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ++++  " << "Entry()\n";
+#endif
 			Data = NULL;
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		Entry(Base<T> & container, unsigned int count)
 		{
-			std::cout << "  ++++  " << "Entry(container, count)\n";
-			std::cout << "container " << &container << "\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ++++  " << "Entry(container, count)\n";
+#endif
 			Data = container.Alloc(count);
-			std::cout << "  ++++  " << "Entry(container, count) done\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		~Entry()
 		{
-			std::cout << "  ----  " << "~Entry()\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ----  " << "~Entry()\n";
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
+#endif
 			delete Data;
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 
 		/*	Copying
@@ -165,7 +102,7 @@ class Entry
 				check if it overlaps any other
 				repeat until space is found
 				else reallocate new space
- 
+
 			the whole reason why I split this into EntryData and Entry is because of copying
 			if this works. merge them back together
 
@@ -174,7 +111,10 @@ class Entry
 		*/
 		Entry(const Entry<T> & other)
 		{
-			std::cout << "  ====  " << "Entry(other)\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "Entry(other) ...\n";
+#endif
 			if (other.Data != NULL)
 			{
 				Data = other.Data -> Container -> Copy(other.Data);
@@ -183,15 +123,35 @@ class Entry
 			{
 				Data = NULL;
 			}
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "Entry(other) done\n";
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		Entry<T> & operator =(const Entry<T> & other)
 		{
-			std::cout << "  ====  " << "operator =Entry\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "operator =(other) ...\n";
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs<< "EntryContainer::Entry" << " Data " << Data << "\n";
+#endif
 			Dispose();
 			if (other.Data != NULL)
 			{
 				Data = other.Data -> Container -> Copy(other.Data);
 			}
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
+#endif
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "operator =(other) done\n";
+			Debug::Console << Debug::TabDec;
+#endif
 			return *this;
 		}
 
@@ -206,25 +166,33 @@ class Entry
 			if (Data == NULL)
 			{
 				const char * msg = "EntryContainer::Entry Entry Invalid.";
-				std::cout << msg << "\n";
+				//std::cout << msg << "\n";
 				throw msg;
 			}
 		}
-		void CheckDataContainer() const
+		/*void CheckDataContainer() const
 		{
 			if (Data -> Container == NULL)
 			{
 				const char * msg = "EntryContainer::Entry Entry Invalid.";
-				std::cout << msg << "\n";
+				//std::cout << msg << "\n";
 				throw msg;
 			}
-		}
+		}*/
 		void CheckIndex(unsigned int idx) const
 		{
 			if (idx >= Data -> Length)
 			{
+#ifdef ENTRY_CONTAINER_DEBUG
+				Debug::Console << Debug::TabInc;
+				Debug::Console << Debug::Tabs << __FILE__ << ':' << __LINE__ << '\n';
+				Debug::Console << Debug::Tabs << idx << " >= " << (Data -> Length) << "\n";
+#endif
 				const char * msg = "EntryContainer::Entry Index invalid.";
-				std::cout << msg << "\n";
+				//std::cout << msg << "\n";
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
 				throw msg;
 			}
 		}
@@ -232,33 +200,37 @@ class Entry
 		const T & operator[](unsigned int idx) const
 		{
 			CheckData();
-			CheckDataContainer();
+			//CheckDataContainer();
 			CheckIndex(idx);
 			//Data -> Container -> Changed = true;
 			//return (Data -> Container -> DataPointer(Data -> Offset))[idx];
-			return (*Data)[idx];
+			//return (*Data)[idx];
+			return (Data -> Data())[idx];
 		}
 		const T & operator*() const
 		{
 			CheckData();
-			CheckDataContainer();
+			//CheckDataContainer();
 			//return *(Data -> Container -> DataPointer(Data -> Offset));
-			return *(*Data);
+			//return *(*Data);
+			return *(Data -> Data());
 		}
 		T & operator[](unsigned int idx)
 		{
 			CheckData();
-			CheckDataContainer();
+			//CheckDataContainer();
 			CheckIndex(idx);
 			//return (*Data)[idx];
-			return (*Data)[idx];
+			//return (*Data)[idx];
+			return (Data -> Data())[idx];
 		}
 		T & operator*()
 		{
 			CheckData();
-			CheckDataContainer();
+			//CheckDataContainer();
 			//return *(*Data);
-			return *(*Data);
+			//return *(*Data);
+			return *(Data -> Data());
 		}
 
 	public:
@@ -268,16 +240,32 @@ class Entry
 		}
 		void Allocate(Base<T> & container, unsigned int count)
 		{
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ++++  " << "Allocate()\n";
+#endif
 			Dispose();
 			Data = container.Alloc(count);
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		void Dispose()
 		{
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ----  " << "Dispose()\n";
+			Debug::Console << Debug::Tabs<< "EntryContainer::Entry" << " Data " << Data << "\n";
+#endif
 			if (Data != NULL)
 			{
 				delete Data;
 				Data = NULL;
 			}
+#ifdef ENTRY_CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 };
 

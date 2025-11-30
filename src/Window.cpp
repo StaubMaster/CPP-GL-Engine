@@ -76,7 +76,7 @@ Window::Window(float w, float h) :
 
 	glfwMakeContextCurrent(win);
 
-	{
+	/*{
 		std::cout << "Window " << w << " " << h << "\n";
 		int wi, hi;
 		glfwGetWindowSize(win, &wi, &hi);
@@ -86,7 +86,7 @@ Window::Window(float w, float h) :
 		int l, t, r, b;
 		glfwGetWindowFrameSize(win, &l, &t, &r, &b);
 		std::cout << "FrameBuffer " << l << " " << t << " " << r << " " << b << "\n";
-	}
+	}*/
 
 	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{

@@ -1,8 +1,9 @@
 #ifndef  CONTAINER_BASE_HPP
 # define CONTAINER_BASE_HPP
 
+# include "DebugDefines.hpp"
+
 # include <exception>
-# include <iostream>
 
 # include "Entry.hpp"
 
@@ -26,44 +27,97 @@ class Base
 		unsigned int _Limit;
 		T * _Data;
 	private:
+	protected:
 		bool IsConstant;
+
+	public:
+		virtual void DebugInfo()
+		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << ">>>> Container::Base.Info()\n";
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << this << '\n';
+
+			Debug::Console << Debug::Tabs << "Data" << ' ' << (this -> _Data) << '\n';
+			Debug::Console << Debug::Tabs << "Limit" << ' ' << (this -> _Limit) << '\n';
+
+			Debug::Console << Debug::Tabs << "IsConstant" << ' ';
+			if (IsConstant) { Debug::Console << "true"; } else { Debug::Console << "false"; }
+			Debug::Console << '\n';
+
+			Debug::Console << Debug::TabDec;
+			Debug::Console << Debug::Tabs << "<<<< Container::Base.Info()\n";
+#endif
+		}
 
 	public:
 		Base()
 		{
-			//std::cout << "  ++++  " << "Base()" << "\n";
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Base()" << "\n";
+#endif
 			_Limit = 0;
 			_Data = NULL;
 			//std::cout << this << ' ' << _Limit << ' ' << _Data << " Data\n";
 			IsConstant = false;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		Base(unsigned int limit)
 		{
-			//std::cout << "  ++++  " << "Base(limit)" << "\n";
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Base(limit)" << "\n";
+#endif
 			_Limit = limit;
 			_Data = new T[_Limit];
 			IsConstant = false;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 
 		Base(unsigned int limit, const T * data)
 		{
-			//std::cout << "  ++++  " << "Base(limit, data)" << "\n";
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Base(limit, data)" << "\n";
+#endif
 			_Limit = limit;
 			_Data = (T *)data;
 			IsConstant = true;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		~Base()
 		{
-			//std::cout << "  ----  " << "~Base()" << "\n";
-			if (IsConstant)
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ----  " << "~Base()" << "\n";
+#endif
+			if (!IsConstant)
 			{
 				delete[] _Data;
 			}
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 
 		Base(const Base<T> & other)
 		{
-			//std::cout << "  ====  " << "Base(other)" << "\n";
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Base(other)" << "\n";
+			other.DebugInfo();
+#endif
 			_Limit = other._Limit;
 			_Data = new T[_Limit];
 			for (unsigned int i = 0; i < _Limit; i++)
@@ -71,10 +125,19 @@ class Base
 				_Data[i] = other._Data[i];
 			}
 			IsConstant = false;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		Base & operator=(const Base<T> & other)
 		{
-			//std::cout << "  ====  " << "Base operator=(other)" << "\n";
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Base operator=(other)" << "\n";
+			DebugInfo();
+			other.DebugInfo();
+#endif
 			_Limit = other._Limit;
 			_Data = new T[_Limit];
 			for (unsigned int i = 0; i < _Limit; i++)
@@ -82,47 +145,103 @@ class Base
 				_Data[i] = other._Data[i];
 			}
 			IsConstant = false;
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "Container::Base" << " DL " << _Data << ' ' << _Limit << ' ' << IsConstant << "\n";
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 			return *this;
 		}
 
 	public:
 		void Dispose()
 		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ----  " << "Dispose()" << "\n";
+			DebugInfo();
+#endif
 			if (!IsConstant)
 			{
 				delete[] _Data;
 			}
-			_Data = NULL;
 			_Limit = 0;
+			_Data = NULL;
+			IsConstant = false;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		void Allocate(unsigned int limit)
 		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Allocate(limit)" << "\n";
+#endif
 			Dispose();
 			_Limit = limit;
 			_Data = new T[_Limit];
 			IsConstant = false;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
-		void Bind(unsigned int limit, const T * data)
+		/*void BindConstantData(unsigned int limit, const T * data)
 		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+#endif
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Allocate(limit)" << "\n";
+#endif
 			Dispose();
 			_Limit = limit;
 			_Data = (T *)data;
 			IsConstant = true;
-		}
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::Tabs << "Container::Base" << " DL " << _Data << ' ' << _Limit << ' ' << IsConstant << "\n";
+#endif
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
+		}*/
 		void ReleaseTo(Base<T> & other)
 		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Release(other)" << "\n";
+			DebugInfo();
+			other.DebugInfo();
+#endif
 			other.Dispose();
 			other._Limit = _Limit;
 			other._Data = _Data;
-			_Data = NULL;
 			_Limit = 0;
+			_Data = NULL;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			other.DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
-		Base<T> Release()
+		/*Base<T> Release()
 		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Release()" << "\n";
+			DebugInfo();
+#endif
 			Base<T> other;
 			ReleaseTo(other);
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			other.DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 			return other;
-		}
+		}*/
 
 	public:
 		unsigned int Limit() const { return _Limit; }
@@ -167,9 +286,20 @@ class Base
 	protected:
 		void ResizeLimit(unsigned int & count, unsigned int limit)
 		{
-			Base<T> other(limit);
-			count = other.CopyFromOther(*this, count);
-			other.ReleaseTo(*this);
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "        " << "ResizeLimit()" << "\n";
+			DebugInfo();
+#endif
+			{
+				Base<T> other(limit);
+				count = other.CopyFromOther(*this, count);
+				other.ReleaseTo(*this);
+			}
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 
 		static void Copy(unsigned int count, T * data_old, unsigned off_old, T * data_new, unsigned int off_new)
@@ -228,12 +358,18 @@ class Base
 	protected:
 		void ResizeLimit_GapNew(unsigned int limit, unsigned int count, Entry gap)
 		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "ResizeLimit_GapNew()" << " ..." << "\n";
+			DebugInfo();
+#endif
 			Base<T> other;
 			
 			if (limit == _Limit)
 			{
 				other._Data = _Data;
 				other._Limit = _Limit;
+				other.IsConstant = true;
 			}
 			else
 			{
@@ -245,17 +381,29 @@ class Base
 			{
 				Copy(count - gap.Offset, *this, gap.Min(), other, gap.Max());
 			}
+			other.DebugInfo();
 
 			if (other._Data != _Data) { other.ReleaseTo(*this); }
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "ResizeLimit_GapNew()" << " done" << "\n";
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 		void ResizeLimit_GapOld(unsigned int limit, unsigned int count, Entry gap)
 		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "ResizeLimit_GapOld()" << " ..." << "\n";
+			DebugInfo();
+#endif
 			Base<T> other;
 
 			if (limit == _Limit)
 			{
 				other._Data = _Data;
 				other._Limit = _Limit;
+				other.IsConstant = true;
 			}
 			else
 			{
@@ -267,8 +415,14 @@ class Base
 			{
 				Copy(count - gap.Offset, *this, gap.Max(), other, gap.Min());
 			}
+			other.DebugInfo();
 
 			if (other._Data != _Data) { other.ReleaseTo(*this); }
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "ResizeLimit_GapOld()" << " done" << "\n";
+			Debug::Console << Debug::TabDec;
+#endif
 		}
 };
 
