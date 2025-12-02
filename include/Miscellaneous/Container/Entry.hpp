@@ -13,9 +13,13 @@ struct Entry
 		unsigned int Length;
 
 	public:
+		unsigned int Min() const { return Offset; }
+		unsigned int Max() const { return (Offset + Length) - 1; }
+		unsigned int Limit() const { return Offset + Length; }
+
+	public:
 		virtual void DebugInfo()
 		{
-#ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << ">>>> Container::Entry.Info()\n";
 			Debug::Console << Debug::TabInc;
 			Debug::Console << Debug::Tabs << this << '\n';
@@ -25,7 +29,6 @@ struct Entry
 
 			Debug::Console << Debug::TabDec;
 			Debug::Console << Debug::Tabs << "<<<< Container::Entry.Info()\n";
-#endif
 		}
 
 	public:
@@ -49,16 +52,6 @@ struct Entry
 			Debug::Console << Debug::TabDec;
 #endif
 		}
-		Entry(const Entry & other) :
-			Offset(other.Offset),
-			Length(other.Length)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Entry" << "  ====  " << "Entry(other)" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-		}
 		virtual ~Entry()
 		{
 #ifdef CONTAINER_DEBUG
@@ -69,6 +62,16 @@ struct Entry
 		}
 
 	public:
+		Entry(const Entry & other) :
+			Offset(other.Offset),
+			Length(other.Length)
+		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Entry" << "  ====  " << "Entry(other)" << '\n';
+			Debug::Console << Debug::TabDec;
+#endif
+		}
 		Entry & operator =(const Entry & other)
 		{
 #ifdef CONTAINER_DEBUG
@@ -80,10 +83,6 @@ struct Entry
 			Length = other.Length;
 			return *this;
 		}
-
-	public:
-		unsigned int Min() const { return Offset; }
-		unsigned int Max() const { return Offset + Length; }
 
 	/*	Memory Reordering ?
 		Copy Input Data with Gaps onto Output Data with Gaps

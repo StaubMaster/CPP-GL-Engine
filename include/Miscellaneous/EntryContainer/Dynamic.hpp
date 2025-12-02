@@ -5,6 +5,7 @@
 
 # include "Base.hpp"
 # include "Miscellaneous/Container/Dynamic.hpp"
+# include "Miscellaneous/Container/Behaviour.hpp"
 
 namespace EntryContainer
 {
@@ -14,6 +15,13 @@ class Dynamic : public Base<T>
 {
 	protected:
 		unsigned int _Count;
+
+
+		
+	public:
+		unsigned int Count() const { return _Count; }
+
+
 
 	public:
 		virtual void DebugInfo() override
@@ -74,9 +82,6 @@ class Dynamic : public Base<T>
 		}
 
 	public:
-		unsigned int Count() const { return _Count; }
-
-	public:
 		/*void ShowData() const override
 		{
 			std::cout << "Container Data: " << _Count << " " << this -> _Limit << "\n";
@@ -90,57 +95,13 @@ class Dynamic : public Base<T>
 			if (this -> _Limit != 0) { std::cout << "\n"; }
 		}*/
 
-	private:
-		/*	this is the old system or changing Size
-			change this to use new Container Behaviour
-			first fix Container::Base and Container::Dynamic being the same
-		*/
-		void CopyNewLimit(unsigned int limit)
-		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  <-->  " << "CopyNewLimit()" << " ..." << "\n";
-#endif
-			T * data = new T[limit];
-
-			unsigned int l = _Count;
-			if (limit < l) { l = limit; }
-
-			Debug::Console << Debug::Tabs << "_Count " << (this -> _Count) << '\n';
-			Debug::Console << Debug::Tabs << "_Limit " << (this -> _Limit) << '\n';
-			Debug::Console << Debug::Tabs << "_Data " << (this -> _Data) << '\n';
-			Debug::Console << Debug::Tabs << "limit " << limit << '\n';
-			Debug::Console << Debug::Tabs << "l " << l << '\n';
-			Debug::Console << Debug::Tabs << "data " << data << '\n';
-
-			for (unsigned int i = 0; i < l; i++)
-			{
-				data[i] = this -> _Data[i];
-			}
-
-			this -> _Limit = limit;
-			delete[] (this -> _Data);
-			this -> _Data = data;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  <-->  " << "CopyNewLimit()" << " done" << "\n";
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		void Grow(unsigned int count)
-		{
-			if (_Count + count > (this -> _Limit))
-			{
-				CopyNewLimit(_Count + count);
-			}
-		}
-
 	public:
 		bool IsCompact() const
 		{
 			unsigned int data_idx = 0;
 			for (unsigned int i = 0; i < this -> Entrys.Count(); i++)
 			{
-				EntryData<T> * entry = this -> FindEntryByData(data_idx);
+				EntryData<T> * entry = this -> FindEntryContaining(data_idx).Ptr;
 				if (entry == NULL) { return false; }
 				if (entry -> Offset != data_idx) { return false; }
 				data_idx += entry -> Length;
@@ -176,16 +137,16 @@ class Dynamic : public Base<T>
 		void CompactHere()
 		{
 			unsigned int data_idx = 0;
-			unsigned int entry_idx = this -> FindNextEntry(data_idx);
+			unsigned int entry_idx = this -> FindNextEntry(data_idx).Idx;
 			while (entry_idx != 0xFFFFFFFF)
 			{
 				EntryData<T> * entry = this -> Entrys[entry_idx];
-				unsigned int dupe_idx = this -> FindNextEntryDuplicate(entry, entry_idx + 1);
+				unsigned int dupe_idx = this -> FindNextEntryDuplicate(entry, entry_idx + 1).Idx;
 				entry -> Move(data_idx);
 				if (dupe_idx == 0xFFFFFFFF)
 				{
-					data_idx = entry -> Max();
-					entry_idx = this -> FindNextEntry(data_idx);
+					data_idx = entry -> Limit();
+					entry_idx = this -> FindNextEntry(data_idx).Idx;
 				}
 				else
 				{
@@ -194,8 +155,10 @@ class Dynamic : public Base<T>
 			}
 		}
 
+
+
 	public:
-		EntryData<T> * Alloc(unsigned int count) override
+		EntryData<T> * Alloc(unsigned int size) override
 		{
 			if (this -> _IsLocked) { return NULL; }
 #ifdef ENTRY_CONTAINER_DEBUG
@@ -204,11 +167,15 @@ class Dynamic : public Base<T>
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ++++  " << "Alloc()" << '\n';
 #endif
-			Grow(count);
-			EntryData<T> * entry = new EntryData<T>(this, _Count, count);
+			unsigned int newCount = _Count + size;
+			unsigned int newLimit = Container::BinarySize(newCount);
+
+			this -> ResizeLimit(newLimit);
+
+			EntryData<T> * entry = new EntryData<T>(this, _Count, size);
 			this -> Entrys.Insert(entry);
 			this -> Changed = true;
-			_Count += count;
+			_Count = newCount;
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabDec;
 #endif
@@ -224,7 +191,7 @@ class Dynamic : public Base<T>
 			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ----  " << "Free()" << '\n';
 #endif
 			this -> Changed = true;
-			unsigned int entry_idx = this -> FindEntryIndex(entry);
+			unsigned int entry_idx = this -> FindEntry(entry).Idx;
 			if (entry_idx == 0xFFFFFFFF)
 			{
 				//std::cout << "EntryContainer::Dynamic Entry not found." << "\n";
@@ -232,7 +199,7 @@ class Dynamic : public Base<T>
 			}
 			this -> Entrys.Remove(entry_idx);
 			entry -> Container = NULL;
-			if (this -> FindNextEntryDuplicate(entry, 0) == 0xFFFFFFFF)
+			if (this -> FindNextEntryDuplicate(entry, 0).Idx == 0xFFFFFFFF)
 			{
 				_Count -= entry -> Length;
 			}

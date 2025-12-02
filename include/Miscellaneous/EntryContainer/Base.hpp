@@ -21,6 +21,15 @@ class Base : public Container::Base<T>
 	public:
 		bool Changed;
 	
+
+
+	public:
+		bool IsLocked() const { return _IsLocked; }
+		void Lock() { _IsLocked = true; }
+		void UnLock() { _IsLocked = false; }
+
+
+
 	public:
 		virtual void DebugInfo() override
 		{
@@ -105,11 +114,6 @@ class Base : public Container::Base<T>
 		}
 
 	public:
-		bool IsLocked() const { return _IsLocked; }
-		void Lock() { _IsLocked = true; }
-		void UnLock() { _IsLocked = false; }
-
-	public:
 		/*void ShowEntrys() const
 		{
 			std::cout << "Entrys " << Entrys.Count() << "\n";
@@ -121,27 +125,43 @@ class Base : public Container::Base<T>
 			}
 		}*/
 
+	public:
+		struct FindResult
+		{
+			unsigned int Idx;
+			EntryData<T> * Ptr;
+
+			FindResult() :
+				Idx(0xFFFFFFFF),
+				Ptr(NULL)
+			{ }
+			FindResult(unsigned int idx, EntryData<T> * ptr) :
+				Idx(idx),
+				Ptr(ptr)
+			{ }
+		};
 	protected:
-		unsigned int FindEntryIndex(EntryData<T> * entry) const
+		FindResult FindEntry(EntryData<T> * entry) const
 		{
 			for (unsigned int i = 0; i < Entrys.Count(); i++)
 			{
-				if (Entrys[i] == entry) { return i; }
+				if (Entrys[i] == entry) { return FindResult(i, Entrys[i]); }
 			}
-			return 0xFFFFFFFF;
+			return FindResult();
 		}
-		EntryData<T> * FindEntryByData(unsigned int data_index) const
+		FindResult FindEntryContaining(unsigned int data_index) const
 		{
 			for (unsigned int i = 0; i < Entrys.Count(); i++)
 			{
-				if (data_index >= Entrys[i] -> Min() && data_index < Entrys[i] -> Max())
+				if (data_index >= Entrys[i] -> Min() && data_index <= Entrys[i] -> Max())
 				{
-					return Entrys[i];
+					return FindResult(i, Entrys[i]);
 				}
 			}
-			return NULL;
+			return FindResult();
 		}
-		unsigned int FindNextEntry(unsigned int data_index) const
+
+		FindResult FindNextEntry(unsigned int data_index) const
 		{
 			unsigned int entry_idx = 0xFFFFFFFF;
 			unsigned int entry_dist = 0xFFFFFFFF;
@@ -157,24 +177,29 @@ class Base : public Container::Base<T>
 					}
 				}
 			}
-			return entry_idx;
+			if (entry_idx != 0xFFFFFFFF)
+			{
+				return FindResult(entry_idx, Entrys[entry_idx]);
+			}
+			return FindResult();
 		}
-
-		unsigned int FindNextEntryDuplicate(EntryData<T> * entry, unsigned int entry_idx) const
+		FindResult FindNextEntryDuplicate(EntryData<T> * entry, unsigned int entry_idx) const
 		{
 			for (unsigned int i = entry_idx; i < Entrys.Count(); i++)
 			{
 				if (Entrys[i] -> Offset == entry -> Offset &&
 					Entrys[i] -> Length == entry -> Length)
 				{
-					return i;
+					return FindResult(i, Entrys[i]);
 				}
 			}
-			return 0xFFFFFFFF;
+			return FindResult();
 		}
 
+
+
 	public:
-		virtual EntryData<T> * Alloc(unsigned int count) = 0;
+		virtual EntryData<T> * Alloc(unsigned int size) = 0;
 		virtual void Free(EntryData<T> * entry) = 0;
 		virtual EntryData<T> * Copy(EntryData<T> * entry) = 0;
 };
