@@ -4,7 +4,6 @@
 
 
 
-#include "DataShow.hpp"
 PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 {
 	int count;
@@ -23,10 +22,7 @@ PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 }
 PolyHedra_3D_Instances::~PolyHedra_3D_Instances()
 {
-	std::cout << "PolyHedra_3D_Instances" << "  ----  " << "~PolyHedra_3D_Instances()" << '\n';
-	std::cout << __FILE__ << ':' << __LINE__ << '\n';
 	delete Texture;
-	std::cout << __FILE__ << ':' << __LINE__ << '\n';
 }
 
 
