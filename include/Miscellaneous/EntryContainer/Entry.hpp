@@ -205,7 +205,8 @@ class Entry
 			//Data -> Container -> Changed = true;
 			//return (Data -> Container -> DataPointer(Data -> Offset))[idx];
 			//return (*Data)[idx];
-			return (Data -> Data())[idx];
+			//return (Data -> Data())[idx];
+			return (*Data)[idx];
 		}
 		const T & operator*() const
 		{
@@ -213,7 +214,8 @@ class Entry
 			//CheckDataContainer();
 			//return *(Data -> Container -> DataPointer(Data -> Offset));
 			//return *(*Data);
-			return *(Data -> Data());
+			//return *(Data -> Data());
+			return *(*Data);
 		}
 		T & operator[](unsigned int idx)
 		{
@@ -222,7 +224,8 @@ class Entry
 			CheckIndex(idx);
 			//return (*Data)[idx];
 			//return (*Data)[idx];
-			return (Data -> Data())[idx];
+			//return (Data -> Data())[idx];
+			return (*Data)[idx];
 		}
 		T & operator*()
 		{
@@ -230,7 +233,8 @@ class Entry
 			//CheckDataContainer();
 			//return *(*Data);
 			//return *(*Data);
-			return *(Data -> Data());
+			//return *(Data -> Data());
+			return *(*Data);
 		}
 
 	public:

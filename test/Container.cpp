@@ -372,6 +372,29 @@ void Test_EntryContainer_EntryCopy()
 	//container.ShowEntrys();
 	std::cout << "\n";
 }
+void Test_EntryContainer_Changed()
+{
+	EntryContainer::Dynamic<int> container;
+
+	std::cout << "changed " << container.Changed << "\n";
+	std::cout << "Entry()\n";
+	EntryContainer::Entry<int> entry(container, 1);
+	std::cout << "changed " << container.Changed << "\n";
+	std::cout << '\n';
+
+	container.Changed = false;
+	std::cout << "changed " << container.Changed << "\n";
+	std::cout << "Entry operator*\n";
+	*entry = 123;
+	std::cout << "changed " << container.Changed << "\n";
+	std::cout << '\n';
+
+	container.Changed = false;
+	std::cout << "changed " << container.Changed << "\n";
+	std::cout << "Entry operator[]\n";
+	entry[0] = 123;
+	std::cout << "changed " << container.Changed << "\n";
+}
 
 
 
@@ -386,8 +409,9 @@ int main()
 	//Test_Container_Fit();
 	//Test_Container_Binary();
 
-	Test_EntryContainer_Dynamic();
+	//Test_EntryContainer_Dynamic();
 	//Test_EntryContainer_EntryCopy();
+	Test_EntryContainer_Changed();
 
 	std::cout << "\nmain() return\n";
 	return 0;
