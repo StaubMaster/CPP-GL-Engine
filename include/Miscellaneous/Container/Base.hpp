@@ -175,7 +175,7 @@ class Base
 
 
 	public:
-		void Dispose()
+		virtual void Dispose()
 		{
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;

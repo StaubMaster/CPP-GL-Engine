@@ -159,11 +159,26 @@ class Dynamic : public Base<T>
 
 
 	public:
+		void Dispose() override
+		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ----  " << "Dispose()" << " ..." << '\n';
+			DebugInfo();
+#endif
+			Base<T>::Dispose();
+			_Count = 0;
+#ifdef CONTAINER_DEBUG
+			DebugInfo();
+			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ----  " << "Dispose()" << " done" << '\n';
+			Debug::Console << Debug::TabDec;
+#endif
+		}
 		void ResizeLimit(unsigned int limit) override
 		{
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "        " << "ResizeLimit()" << " ..." << '\n';
+			Debug::Console << Debug::Tabs << "Container::Dynamic" << "        " << "ResizeLimit()" << " ..." << '\n';
 			DebugInfo();
 #endif
 			if (limit != this -> _Limit)
@@ -174,7 +189,7 @@ class Dynamic : public Base<T>
 			}
 #ifdef CONTAINER_DEBUG
 			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Base" << "        " << "ResizeLimit()" << " done" << '\n';
+			Debug::Console << Debug::Tabs << "Container::Dynamic" << "        " << "ResizeLimit()" << " done" << '\n';
 			Debug::Console << Debug::TabDec;
 #endif
 		}

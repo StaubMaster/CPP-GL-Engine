@@ -108,7 +108,10 @@ Window::Window(float w, float h) :
 	InitFunc = NULL;
 	FrameFunc = NULL;
 	FreeFunc = NULL;
+
 	ResizeFunc = NULL;
+	TextFunc = NULL;
+	KeyFunc = NULL;
 
 	ViewPortSizeRatio = SizeRatio2D(w, h);
 	Center = Point2D(w * 0.5f, h * 0.5f);
@@ -130,6 +133,7 @@ void Window::Callback_Error(int error, const char * description)
 void Window::Callback_Resize(GLFWwindow * window, int w, int h)
 {
 	Window * win = (Window *)glfwGetWindowUserPointer(window);
+
 	glViewport(0, 0, w, h);
 	win -> ViewPortSizeRatio = SizeRatio2D(w, h);
 	win -> Center = Point2D(w * 0.5f, h * 0.5f);
@@ -151,15 +155,13 @@ void Window::Callback_Key(GLFWwindow * window, int key, int scancode, int action
 		if (action == GLFW_RELEASE)	{ data.State.SetReleased(); }
 	}
 
-	(void)scancode;
-	(void)mods;
+	if (win -> KeyFunc) { win -> KeyFunc(key, scancode, action, mods); }
 }
 void Window::Callback_Text(GLFWwindow * window, unsigned int codepoint)
 {
 	Window * win = (Window *)glfwGetWindowUserPointer(window);
-	(void)win;
-	//std::cout << "Text: " << codepoint << "\n";
-	(void)codepoint;
+
+	if (win -> TextFunc != NULL) { win -> TextFunc(codepoint); }
 }
 void Window::Callback_Click(GLFWwindow * window, int button, int action, int mods)
 {

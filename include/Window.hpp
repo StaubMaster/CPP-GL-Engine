@@ -30,7 +30,10 @@ class Window
 		void (*InitFunc)();
 		void (*FrameFunc)(double);
 		void (*FreeFunc)();
+
 		void (*ResizeFunc)(int, int);
+		void (*TextFunc)(unsigned int);
+		void (*KeyFunc)(int, int, int, int);
 
 	private:
 		SizeRatio2D ViewPortSizeRatio;
