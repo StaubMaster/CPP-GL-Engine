@@ -31,12 +31,13 @@ class Window
 		void (*FrameFunc)(double);
 		void (*FreeFunc)();
 
-		void (*ResizeFunc)(int, int);
+		void (*ResizeFunc)(const SizeRatio2D &);
 		void (*TextFunc)(unsigned int);
 		void (*KeyFunc)(int, int, int, int);
 
-	private:
+	public:
 		SizeRatio2D ViewPortSizeRatio;
+	private:
 		Point2D Center;
 	public:
 		Color DefaultColor;
@@ -47,11 +48,18 @@ class Window
 
 	private:
 		static void Callback_Error(int error, const char * decription);
+	private:
 		static void Callback_Resize(GLFWwindow * window, int w, int h);
 		static void Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
 		static void Callback_Text(GLFWwindow * window, unsigned int codepoint);
 		static void Callback_Click(GLFWwindow * window, int button, int action, int mods);
 		static void Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset);
+	private:
+		void Callback_Resize(int w, int h);
+		void Callback_Key(int key, int scancode, int action, int mods);
+		void Callback_Text(unsigned int codepoint);
+		void Callback_Click(int button, int action, int mods);
+		void Callback_Scroll(double xOffset, double yOffset);
 
 	public:
 		bool IsCursorLocked() const;

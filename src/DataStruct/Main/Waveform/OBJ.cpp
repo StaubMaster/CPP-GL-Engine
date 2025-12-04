@@ -74,7 +74,7 @@ Point3D OBJ::Texture_MainData(unsigned int idx, Point4D pos, SizeRatio2D scale, 
 		if (sides == 0b011) { tex = Point2D(pos.X, -pos.Y); }
 		if (sides == 0b101) { tex = Point2D(pos.X, -pos.Z); }
 		if (sides == 0b110) { tex = Point2D(pos.Z, -pos.Y); }
-		return Point3D(tex.X * scale.RatioW, tex.Y * scale.RatioH, 0);
+		return Point3D(tex.X * scale.Ratio.X, tex.Y * scale.Ratio.Y, 0);
 	}
 }
 Point3D OBJ::Normal_MainData(unsigned int idx, Point3D normal)

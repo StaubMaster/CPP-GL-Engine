@@ -4,29 +4,21 @@
 
 
 
-Point2D::Point2D()
-{
-	X = 0;
-	Y = 0;
-}
-Point2D::Point2D(float x, float y)
-{
-	X = x;
-	Y = y;
-}
+Point2D::Point2D() :
+	X(0), Y(0)
+{ }
+Point2D::Point2D(float x, float y) :
+	X(x), Y(y)
+{ }
 Point2D::~Point2D()
-{
-
-}
+{ }
 
 
 
-Point2D::Point2D(const Point2D & other)
-{
-	X = other.X;
-	Y = other.Y;
-}
-const Point2D & Point2D::operator =(const Point2D & other)
+Point2D::Point2D(const Point2D & other) :
+	X(other.X), Y(other.Y)
+{ }
+Point2D & Point2D::operator =(const Point2D & other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -76,35 +68,6 @@ Point2D Point2D::operator !() const
 
 
 
-Point2D Point2D::operator +(const Point2D & other) const
-{
-	return Point2D(
-		X + other.X,
-		Y + other.Y
-	);
-}
-Point2D Point2D::operator -(const Point2D & other) const
-{
-	return Point2D(
-		X - other.X,
-		Y - other.Y
-	);
-}
-Point2D Point2D::operator *(const Point2D & other) const
-{
-	return Point2D(
-		X * other.X,
-		Y * other.Y
-	);
-}
-Point2D Point2D::operator /(const Point2D & other) const
-{
-	return Point2D(
-		X / other.X,
-		Y / other.Y
-	);
-}
-
 
 
 Point2D Point2D::operator +(const float & flt) const
@@ -138,6 +101,95 @@ Point2D Point2D::operator /(const float & flt) const
 
 
 
+Point2D & Point2D::operator +=(const float & flt)
+{
+	X += flt;
+	Y += flt;
+	return *this;
+}
+Point2D & Point2D::operator -=(const float & flt)
+{
+	X -= flt;
+	Y -= flt;
+	return *this;
+}
+Point2D & Point2D::operator *=(const float & flt)
+{
+	X *= flt;
+	Y *= flt;
+	return *this;
+}
+Point2D & Point2D::operator /=(const float & flt)
+{
+	X /= flt;
+	Y /= flt;
+	return *this;
+}
+
+
+
+
+
+Point2D Point2D::operator +(const Point2D & other) const
+{
+	return Point2D(
+		X + other.X,
+		Y + other.Y
+	);
+}
+Point2D Point2D::operator -(const Point2D & other) const
+{
+	return Point2D(
+		X - other.X,
+		Y - other.Y
+	);
+}
+Point2D Point2D::operator *(const Point2D & other) const
+{
+	return Point2D(
+		X * other.X,
+		Y * other.Y
+	);
+}
+Point2D Point2D::operator /(const Point2D & other) const
+{
+	return Point2D(
+		X / other.X,
+		Y / other.Y
+	);
+}
+
+
+
+Point2D & Point2D::operator +=(const Point2D & other)
+{
+	X += other.X;
+	Y += other.Y;
+	return *this;
+}
+Point2D & Point2D::operator -=(const Point2D & other)
+{
+	X -= other.X;
+	Y -= other.Y;
+	return *this;
+}
+Point2D & Point2D::operator *=(const Point2D & other)
+{
+	X *= other.X;
+	Y *= other.Y;
+	return *this;
+}
+Point2D & Point2D::operator /=(const Point2D & other)
+{
+	X /= other.X;
+	Y /= other.Y;
+	return *this;
+}
+
+
+
+
+
 float Point2D::dot(const Point2D & p0, const Point2D & p1)
 {
 	return (
@@ -149,10 +201,3 @@ float Point2D::operator %(const Point2D & other) const
 {
 	return dot(*this, other);
 }
-
-
-
-/*std::ostream & operator <<(std::ostream & o, const Point2D & idx)
-{
-
-}*/

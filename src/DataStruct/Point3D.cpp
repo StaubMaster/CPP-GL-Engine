@@ -4,32 +4,21 @@
 
 
 
-Point3D::Point3D()
-{
-	X = 0;
-	Y = 0;
-	Z = 0;
-}
-Point3D::Point3D(float x, float y, float z)
-{
-	X = x;
-	Y = y;
-	Z = z;
-}
+Point3D::Point3D() :
+	X(0), Y(0), Z(0)
+{ }
+Point3D::Point3D(float x, float y, float z) :
+	X(x), Y(y), Z(z)
+{ }
 Point3D::~Point3D()
-{
-
-}
+{ }
 
 
 
-Point3D::Point3D(const Point3D & other)
-{
-	X = other.X;
-	Y = other.Y;
-	Z = other.Z;
-}
-const Point3D & Point3D::operator =(const Point3D & other)
+Point3D::Point3D(const Point3D & other) :
+	X(other.X), Y(other.Y), Z(other.Z)
+{ }
+Point3D & Point3D::operator =(const Point3D & other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -83,39 +72,6 @@ Point3D Point3D::operator !() const
 
 
 
-Point3D Point3D::operator +(const Point3D & other) const
-{
-	return Point3D(
-		X + other.X,
-		Y + other.Y,
-		Z + other.Z
-	);
-}
-Point3D Point3D::operator -(const Point3D & other) const
-{
-	return Point3D(
-		X - other.X,
-		Y - other.Y,
-		Z - other.Z
-	);
-}
-Point3D Point3D::operator *(const Point3D & other) const
-{
-	return Point3D(
-		X * other.X,
-		Y * other.Y,
-		Z * other.Z
-	);
-}
-Point3D Point3D::operator /(const Point3D & other) const
-{
-	return Point3D(
-		X / other.X,
-		Y / other.Y,
-		Z / other.Z
-	);
-}
-
 
 
 Point3D Point3D::operator +(const float & flt) const
@@ -153,6 +109,107 @@ Point3D Point3D::operator /(const float & flt) const
 
 
 
+Point3D & Point3D::operator +=(const float & flt)
+{
+	X += flt;
+	Y += flt;
+	Z += flt;
+	return *this;
+}
+Point3D & Point3D::operator -=(const float & flt)
+{
+	X -= flt;
+	Y -= flt;
+	Z -= flt;
+	return *this;
+}
+Point3D & Point3D::operator *=(const float & flt)
+{
+	X *= flt;
+	Y *= flt;
+	Z *= flt;
+	return *this;
+}
+Point3D & Point3D::operator /=(const float & flt)
+{
+	X /= flt;
+	Y /= flt;
+	Z /= flt;
+	return *this;
+}
+
+
+
+
+
+Point3D Point3D::operator +(const Point3D & other) const
+{
+	return Point3D(
+		X + other.X,
+		Y + other.Y,
+		Z + other.Z
+	);
+}
+Point3D Point3D::operator -(const Point3D & other) const
+{
+	return Point3D(
+		X - other.X,
+		Y - other.Y,
+		Z - other.Z
+	);
+}
+Point3D Point3D::operator *(const Point3D & other) const
+{
+	return Point3D(
+		X * other.X,
+		Y * other.Y,
+		Z * other.Z
+	);
+}
+Point3D Point3D::operator /(const Point3D & other) const
+{
+	return Point3D(
+		X / other.X,
+		Y / other.Y,
+		Z / other.Z
+	);
+}
+
+
+
+Point3D & Point3D::operator +=(const Point3D & other)
+{
+	X += other.X;
+	Y += other.Y;
+	Z += other.Z;
+	return *this;
+}
+Point3D & Point3D::operator -=(const Point3D & other)
+{
+	X -= other.X;
+	Y -= other.Y;
+	Z -= other.Z;
+	return *this;
+}
+Point3D & Point3D::operator *=(const Point3D & other)
+{
+	X *= other.X;
+	Y *= other.Y;
+	Z *= other.Z;
+	return *this;
+}
+Point3D & Point3D::operator /=(const Point3D & other)
+{
+	X /= other.X;
+	Y /= other.Y;
+	Z /= other.Z;
+	return *this;
+}
+
+
+
+
+
 float Point3D::dot(const Point3D & p0, const Point3D & p1)
 {
 	return (
@@ -180,13 +237,3 @@ Point3D Point3D::operator ^(const Point3D & other) const
 {
 	return cross(*this, other);
 }
-
-
-
-
-
-/*std::ostream & operator <<(std::ostream & o, const Point3D & p)
-{
-	o << "( " << p.X << " | " << p.Y << " | " << p.Z << " )";
-	return o;
-}*/

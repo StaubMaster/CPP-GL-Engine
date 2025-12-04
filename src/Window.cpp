@@ -126,53 +126,78 @@ Window::~Window()
 
 
 
+
+
 void Window::Callback_Error(int error, const char * description)
 {
 	std::cerr << "GLFW Error: " << error << ": " << description << "\n";
 }
+
+
+
 void Window::Callback_Resize(GLFWwindow * window, int w, int h)
 {
 	Window * win = (Window *)glfwGetWindowUserPointer(window);
-
-	glViewport(0, 0, w, h);
-	win -> ViewPortSizeRatio = SizeRatio2D(w, h);
-	win -> Center = Point2D(w * 0.5f, h * 0.5f);
-
-	//	FrameBufferSize != WindowSize
-	//	hardcoded for now. think of solution later
-	glfwGetWindowSize(window, &w, &h);
-
-	if (win -> ResizeFunc != NULL) { win -> ResizeFunc(w, h); }
+	win -> Callback_Resize(w, h);
 }
 void Window::Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
 	Window * win = (Window *)glfwGetWindowUserPointer(window);
-
-	if (win -> Keys.Has(key))
-	{
-		KeyData & data = win -> Keys[key];
-		if (action == GLFW_PRESS)	{ data.State.SetPressed(); }
-		if (action == GLFW_RELEASE)	{ data.State.SetReleased(); }
-	}
-
-	if (win -> KeyFunc) { win -> KeyFunc(key, scancode, action, mods); }
+	win -> Callback_Key(key, scancode, action, mods);
 }
 void Window::Callback_Text(GLFWwindow * window, unsigned int codepoint)
 {
 	Window * win = (Window *)glfwGetWindowUserPointer(window);
-
-	if (win -> TextFunc != NULL) { win -> TextFunc(codepoint); }
+	win -> Callback_Text(codepoint);
 }
 void Window::Callback_Click(GLFWwindow * window, int button, int action, int mods)
 {
 	Window * win = (Window *)glfwGetWindowUserPointer(window);
+	win -> Callback_Click(button, action, mods);
+}
+void Window::Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset)
+{
+	Window * win = (Window *)glfwGetWindowUserPointer(window);
+	win -> Callback_Scroll(xOffset, yOffset);
+}
 
+
+
+void Window::Callback_Resize(int w, int h)
+{
+	glViewport(0, 0, w, h);
+	ViewPortSizeRatio = SizeRatio2D(w, h);
+	Center = Point2D(w * 0.5f, h * 0.5f);
+
+	//	FrameBufferSize != WindowSize
+	//	hardcoded for now. think of solution later
+	glfwGetWindowSize(win, &w, &h);
+
+	if (ResizeFunc != NULL) { ResizeFunc(ViewPortSizeRatio); }
+}
+void Window::Callback_Key(int key, int scancode, int action, int mods)
+{
+	if (Keys.Has(key))
+	{
+		KeyData & data = Keys[key];
+		if (action == GLFW_PRESS)	{ data.State.SetPressed(); }
+		if (action == GLFW_RELEASE)	{ data.State.SetReleased(); }
+	}
+
+	if (KeyFunc) { KeyFunc(key, scancode, action, mods); }
+}
+void Window::Callback_Text(unsigned int codepoint)
+{
+	if (TextFunc != NULL) { TextFunc(codepoint); }
+}
+void Window::Callback_Click(int button, int action, int mods)
+{
 	//if (action == GLFW_RELEASE)	{ std::cout << "Click " << button << " Release\n"; }
 	//if (action == GLFW_PRESS)		{ std::cout << "Click " << button << " Press\n"; }
 
-	if (win -> MouseButtons.Has(button))
+	if (MouseButtons.Has(button))
 	{
-		KeyData & data = win -> MouseButtons[button];
+		KeyData & data = MouseButtons[button];
 		if (action == GLFW_RELEASE)	{ data.State.SetReleased(); }
 		if (action == GLFW_PRESS)	{ data.State.SetPressed(); }
 	}
@@ -180,10 +205,8 @@ void Window::Callback_Click(GLFWwindow * window, int button, int action, int mod
 	(void)action;
 	(void)mods;
 }
-void Window::Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset)
+void Window::Callback_Scroll(double xOffset, double yOffset)
 {
-	Window * win = (Window *)glfwGetWindowUserPointer(window);
-	(void)win;
 	//std::cout << "Scroll: " << xOffset << " " << yOffset << "\n";
 	(void)xOffset;
 	(void)yOffset;
@@ -250,8 +273,8 @@ Point2D Window::CursorCentered() const
 	p.X = (x - Center.X);
 	p.Y = (Center.Y - y);
 
-	p.X = p.X / (ViewPortSizeRatio.W * ViewPortSizeRatio.RatioW);
-	p.Y = p.Y / (ViewPortSizeRatio.H * ViewPortSizeRatio.RatioH);
+	p.X = p.X / (ViewPortSizeRatio.Size.X * ViewPortSizeRatio.Ratio.X);
+	p.Y = p.Y / (ViewPortSizeRatio.Size.Y * ViewPortSizeRatio.Ratio.Y);
 
 	p.X = p.X * 2;
 	p.Y = p.Y * 2;
@@ -290,7 +313,8 @@ void Window::Run()
 		{
 			int w, h;
 			glfwGetWindowSize(win, &w, &h);
-			if (ResizeFunc != NULL) { ResizeFunc(w, h); }
+			ViewPortSizeRatio = SizeRatio2D(w, h);
+			if (ResizeFunc != NULL) { ResizeFunc(ViewPortSizeRatio); }
 		}
 
 		int frameSkipped = 0;

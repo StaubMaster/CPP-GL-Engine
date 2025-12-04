@@ -3,13 +3,10 @@
 
 
 SizeRatio2D::SizeRatio2D()
+{ }
+SizeRatio2D::SizeRatio2D(float w, float h) :
+	Size(w, h)
 {
-
-}
-SizeRatio2D::SizeRatio2D(float w, float h)
-{
-	W = w;
-	H = h;
 	Calc();
 }
 
@@ -17,19 +14,19 @@ SizeRatio2D::SizeRatio2D(float w, float h)
 
 void SizeRatio2D::Calc()
 {
-	if (W == H)
+	if (Size.X == Size.Y)
 	{
-		RatioW = 1.0f;
-		RatioH = 1.0f;
+		Ratio.X = 1.0f;
+		Ratio.Y = 1.0f;
 	}
-	else if (W > H)
+	else if (Size.X > Size.Y)
 	{
-		RatioW = H / W;
-		RatioH = 1.0f;
+		Ratio.X = Size.Y / Size.X;
+		Ratio.Y = 1.0f;
 	}
-	else if (W < H)
+	else if (Size.X < Size.Y)
 	{
-		RatioW = 1.0f;
-		RatioH = W / H;
+		Ratio.X = 1.0f;
+		Ratio.Y = Size.X / Size.Y;
 	}
 }

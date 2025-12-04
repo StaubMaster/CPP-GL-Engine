@@ -1,14 +1,13 @@
-
 #ifndef  SIZE_RATIO_2D_HPP
 # define SIZE_RATIO_2D_HPP
+
+# include "Point2D.hpp"
 
 struct SizeRatio2D
 {
 	public:
-		float W;
-		float H;
-		float RatioW;
-		float RatioH;
+		Point2D	Size;
+		Point2D	Ratio;
 
 	public:
 		SizeRatio2D();

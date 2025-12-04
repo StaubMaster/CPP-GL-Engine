@@ -16,8 +16,6 @@ PolyHedra_3D_Shader::PolyHedra_3D_Shader(const DirectoryContext & dir)
 	ViewPortSizeRatio("ViewPortSizeRatio", *this),
 	View("View", *this),
 	Depth("Depth", *this)
-	{ }
+{ }
 PolyHedra_3D_Shader::~PolyHedra_3D_Shader()
-{
-
-}
+{ }
