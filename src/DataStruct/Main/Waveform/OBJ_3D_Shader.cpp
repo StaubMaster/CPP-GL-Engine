@@ -16,7 +16,8 @@ OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryContext & dir)
 	ViewPortSizeRatio("ViewPortSizeRatio", *this),
 	View("View", *this),
 	Depth("Depth", *this),
-	ColorToTex("ColorToTex", *this)
+	ColorToTex("ColorToTex", *this),
+	ShowLightFactor("ShowLightFactor", *this)
 {
 	//std::cout << "################################################################\n";
 	//std::cout << dir.File("OBJ_S3D.vert").LoadText();

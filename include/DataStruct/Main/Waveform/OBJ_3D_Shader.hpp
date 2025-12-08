@@ -14,6 +14,7 @@ class OBJ_3D_Shader : public Shader::Base
 		Uniform::Trans3D		View;
 		Uniform::Depth			Depth;
 		Uniform::LInter			ColorToTex;
+		Uniform::LInter			ShowLightFactor;
 
 	public:
 		OBJ_3D_Shader(const DirectoryContext & dir);
