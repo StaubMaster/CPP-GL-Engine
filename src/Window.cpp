@@ -184,17 +184,14 @@ void Window::Callback_Key(int key, int scancode, int action, int mods)
 		if (action == GLFW_RELEASE)	{ data.State.SetReleased(); }
 	}
 
-	if (KeyFunc) { KeyFunc(key, scancode, action, mods); }
+	if (KeyFunc != NULL) { KeyFunc(UserParameter::Key(key, scancode, action, mods)); }
 }
 void Window::Callback_Text(unsigned int codepoint)
 {
-	if (TextFunc != NULL) { TextFunc(codepoint); }
+	if (TextFunc != NULL) { TextFunc(UserParameter::Text(codepoint)); }
 }
 void Window::Callback_Click(int button, int action, int mods)
 {
-	//if (action == GLFW_RELEASE)	{ std::cout << "Click " << button << " Release\n"; }
-	//if (action == GLFW_PRESS)		{ std::cout << "Click " << button << " Press\n"; }
-
 	if (MouseButtons.Has(button))
 	{
 		KeyData & data = MouseButtons[button];
@@ -202,14 +199,13 @@ void Window::Callback_Click(int button, int action, int mods)
 		if (action == GLFW_PRESS)	{ data.State.SetPressed(); }
 	}
 
-	(void)action;
-	(void)mods;
+	Point2D pos = CursorPixel();
+	pos.Y = ViewPortSizeRatio.Size.Y - pos.Y;
+	if (ClickFunc != NULL) { ClickFunc(UserParameter::Click(button, action, mods, pos)); }
 }
 void Window::Callback_Scroll(double xOffset, double yOffset)
 {
-	//std::cout << "Scroll: " << xOffset << " " << yOffset << "\n";
-	(void)xOffset;
-	(void)yOffset;
+	if (ScrollFunc != NULL) { ScrollFunc(UserParameter::Scroll(xOffset, yOffset)); }
 }
 
 

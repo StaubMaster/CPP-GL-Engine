@@ -155,7 +155,19 @@ class Dynamic : public Base<T>
 			}
 		}
 
+/*	LEAK
+when the last Duplicate of an Entry is freed, _Count is decreased
+when Data is not Compacted, there are Entrys above _Count
+when Alloc is now called, it puts a new Entry at _Count
+this can overlap with still existing Entrys
 
+Solution:
+change Alloc to check where to put Entry
+have different versions that check if there is space
+else Compact and try again
+then Resize and try again
+
+*/
 
 	public:
 		EntryData<T> * Alloc(unsigned int size) override
@@ -163,8 +175,6 @@ class Dynamic : public Base<T>
 			if (this -> _IsLocked) { return NULL; }
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ++++  " << "Alloc()" << '\n';
 #endif
 			unsigned int newCount = _Count + size;
@@ -186,8 +196,6 @@ class Dynamic : public Base<T>
 			if (this -> _IsLocked) { return; }
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ----  " << "Free()" << '\n';
 #endif
 			this -> Changed = true;

@@ -19,7 +19,6 @@ class EntryData : public Container::Entry
 	public:
 		virtual void DebugInfo() override
 		{
-#ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << ">>>> EntryContainer::EntryData.Info()\n";
 			Debug::Console << Debug::TabInc;
 			Debug::Console << Debug::Tabs << this << '\n';
@@ -30,7 +29,6 @@ class EntryData : public Container::Entry
 
 			Debug::Console << Debug::TabDec;
 			Debug::Console << Debug::Tabs << "<<<< EntryContainer::EntryData.Info()\n";
-#endif
 		}
 
 	public:

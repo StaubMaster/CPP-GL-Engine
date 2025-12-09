@@ -5,7 +5,16 @@
 # include "DataStruct/Point2D.hpp"
 # include "DataStruct/SizeRatio2D.hpp"
 
+# include "UserParameter/Click.hpp"
+# include "UserParameter/Scroll.hpp"
+# include "UserParameter/Key.hpp"
+# include "UserParameter/Text.hpp"
+
 # include "Keys.hpp"
+
+/*	UserParameters
+make "Wrapper" for action
+*/
 
 struct GLFWwindow;
 
@@ -32,8 +41,11 @@ class Window
 		void (*FreeFunc)();
 
 		void (*ResizeFunc)(const SizeRatio2D &);
-		void (*TextFunc)(unsigned int);
-		void (*KeyFunc)(int, int, int, int);
+
+		void (*ClickFunc)	(UserParameter::Click);
+		void (*ScrollFunc)	(UserParameter::Scroll);
+		void (*KeyFunc)		(UserParameter::Key);
+		void (*TextFunc)	(UserParameter::Text);
 
 	public:
 		SizeRatio2D ViewPortSizeRatio;

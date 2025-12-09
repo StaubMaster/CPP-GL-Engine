@@ -107,6 +107,9 @@ YMT::PolyHedra * YMT::PolyHedra::Generate::ConeC(int segments, float width, floa
 	}
 
 	temp.Done();
+	skin -> Done();
+	ph -> Skin = skin;
+
 	return ph;
 }
 

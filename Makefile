@@ -116,6 +116,10 @@ FILES_SRC_NAMES := \
 \
 	TimeMeasure.cpp \
 	Keys.cpp \
+	UserParameter/Click.cpp \
+	UserParameter/Scroll.cpp \
+	UserParameter/Key.cpp \
+	UserParameter/Text.cpp \
 	Window.cpp \
 	Debug.cpp
 

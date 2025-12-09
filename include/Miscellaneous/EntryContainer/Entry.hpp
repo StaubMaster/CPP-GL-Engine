@@ -5,6 +5,8 @@
 
 # include "EntryData.hpp"
 
+# include <iostream>
+
 namespace EntryContainer
 {
 
@@ -12,12 +14,12 @@ template<typename T>
 class Entry
 {
 	private:
+	public:
 		EntryData<T> * Data;
 
 	public:
 		virtual void DebugInfo()
 		{
-#ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << ">>>> EntryContainer::Entry.Info()\n";
 			Debug::Console << Debug::TabInc;
 			Debug::Console << Debug::Tabs << this << '\n';
@@ -30,7 +32,6 @@ class Entry
 
 			Debug::Console << Debug::TabDec;
 			Debug::Console << Debug::Tabs << "<<<< EntryContainer::Entry.Info()\n";
-#endif
 		}
 
 	public:
