@@ -116,6 +116,9 @@ FILES_SRC_NAMES := \
 \
 	TimeMeasure.cpp \
 	Keys.cpp \
+	UserParameter/Haptic/Code.cpp \
+	UserParameter/Haptic/Action.cpp \
+	UserParameter/Haptic/Modifier.cpp \
 	UserParameter/Click.cpp \
 	UserParameter/Scroll.cpp \
 	UserParameter/Key.cpp \

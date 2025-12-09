@@ -3,7 +3,7 @@
 
 
 UserParameter::Key::Key(int keycode, int scancode, int action, int mods) :
-	KeyCode(keycode),
+	Code(keycode),
 	Scancode(scancode),
 	Action(action),
 	Mods(mods)
