@@ -204,11 +204,20 @@ void Window::Callback_Click(int button, int action, int mods)
 
 	Point2D pos = CursorPixel();
 	pos.Y = ViewPortSizeRatio.Size.Y - pos.Y;
-	if (ClickFunc != NULL) { ClickFunc(UserParameter::Click(button, action, mods, pos)); }
+
+	UserParameter::Mouse::Click params;
+	params.Code = button;
+	params.Action = action;
+	params.Mods = mods;
+	params.Position = pos;
+	if (ClickFunc != NULL) { ClickFunc(params); }
 }
 void Window::Callback_Scroll(double xOffset, double yOffset)
 {
-	if (ScrollFunc != NULL) { ScrollFunc(UserParameter::Scroll(xOffset, yOffset)); }
+	UserParameter::Mouse::Scroll params;
+	params.X = xOffset;
+	params.Y = yOffset;
+	if (ScrollFunc != NULL) { ScrollFunc(params); }
 }
 
 

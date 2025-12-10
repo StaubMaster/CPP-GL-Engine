@@ -8,9 +8,9 @@
 # include "UserParameter/KeyBoard/KeyRange1.hpp"
 # include "UserParameter/KeyBoard/KeyRange2.hpp"
 # include "UserParameter/Mouse/ButtonRange.hpp"
+# include "UserParameter/Mouse/Click.hpp"
+# include "UserParameter/Mouse/Scroll.hpp"
 
-# include "UserParameter/Click.hpp"
-# include "UserParameter/Scroll.hpp"
 # include "UserParameter/Key.hpp"
 # include "UserParameter/Text.hpp"
 
@@ -42,8 +42,8 @@ class Window
 
 		void (*ResizeFunc)(const SizeRatio2D &);
 
-		void (*ClickFunc)	(UserParameter::Click);
-		void (*ScrollFunc)	(UserParameter::Scroll);
+		void (*ClickFunc)	(UserParameter::Mouse::Click);
+		void (*ScrollFunc)	(UserParameter::Mouse::Scroll);
 		void (*KeyFunc)		(UserParameter::Key);
 		void (*TextFunc)	(UserParameter::Text);
 
