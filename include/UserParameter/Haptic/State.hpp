@@ -1,21 +1,25 @@
-#ifndef  USER_PARAMETER_KEYBOARD_KEY_STATE_HPP
-# define USER_PARAMETER_KEYBOARD_KEY_STATE_HPP
+#ifndef  USER_PARAMETER_HAPTIC_STATE_HPP
+# define USER_PARAMETER_HAPTIC_STATE_HPP
 
 namespace UserParameter
 {
 
-namespace KeyBoard
+namespace Haptic
 {
 
-namespace Key
-{
-	
 struct State
 {
+	public:
+	unsigned short Token;
 	private:
-	unsigned int Data;
+	unsigned char Flags;
 
 	public:
+	State();
+
+	public:
+	void	Down();
+	void	Up();
 	void	Press();
 	void	Release();
 
@@ -25,8 +29,6 @@ struct State
 	bool	IsRelease() const;
 
 	void	Tick();
-};
-
 };
 
 };

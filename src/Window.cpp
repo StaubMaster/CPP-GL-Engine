@@ -182,9 +182,9 @@ void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
 	if (Keys.Has(key))
 	{
-		UserParameter::KeyBoard::Key::Data & data = Keys[key];
-		if (action == GLFW_PRESS)	{ data.Press(); }
-		if (action == GLFW_RELEASE)	{ data.Release(); }
+		UserParameter::Haptic::State & state = Keys[key];
+		if (action == GLFW_PRESS)	{ state.Press(); }
+		if (action == GLFW_RELEASE)	{ state.Release(); }
 	}
 
 	if (KeyFunc != NULL) { KeyFunc(UserParameter::Key(key, scancode, action, mods)); }
@@ -197,9 +197,9 @@ void Window::Callback_Click(int button, int action, int mods)
 {
 	if (MouseButtons.Has(button))
 	{
-		UserParameter::Mouse::Button::Data & data = MouseButtons[button];
-		if (action == GLFW_PRESS)	{ data.Press(); }
-		if (action == GLFW_RELEASE)	{ data.Release(); }
+		UserParameter::Haptic::State & state = MouseButtons[button];
+		if (action == GLFW_PRESS)	{ state.Press(); }
+		if (action == GLFW_RELEASE)	{ state.Release(); }
 	}
 
 	Point2D pos = CursorPixel();

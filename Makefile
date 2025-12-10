@@ -119,14 +119,11 @@ FILES_SRC_NAMES := \
 	UserParameter/Haptic/Code.cpp \
 	UserParameter/Haptic/Action.cpp \
 	UserParameter/Haptic/Modifier.cpp \
+	UserParameter/Haptic/State.cpp \
 \
-	UserParameter/KeyBoard/Key/State.cpp \
-	UserParameter/KeyBoard/Key/Data.cpp \
 	UserParameter/KeyBoard/KeyRange1.cpp \
 	UserParameter/KeyBoard/KeyRange2.cpp \
 \
-	UserParameter/Mouse/Button/State.cpp \
-	UserParameter/Mouse/Button/Data.cpp \
 	UserParameter/Mouse/ButtonRange.cpp \
 \
 	UserParameter/Click.cpp \

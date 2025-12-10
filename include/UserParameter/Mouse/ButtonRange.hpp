@@ -1,7 +1,9 @@
 #ifndef  USER_PARAMETER_MOUSE_BUTTONRANGE_HPP
 # define USER_PARAMETER_MOUSE_BUTTONRANGE_HPP
 
-# include "UserParameter/Mouse/Button/Data.hpp"
+# include "UserParameter/Haptic/State.hpp"
+
+
 
 namespace UserParameter
 {
@@ -15,7 +17,7 @@ struct ButtonRange
 	unsigned short	TokenMax;
 
 	unsigned short	KeysCount;
-	Button::Data *		Keys;
+	Haptic::State *		Keys;
 
 	ButtonRange();
 	ButtonRange(unsigned short tokenMin, unsigned int tokenMax);
@@ -25,8 +27,8 @@ struct ButtonRange
 	ButtonRange & operator =(const ButtonRange & other);
 
 	bool					Has(unsigned short token) const;
-	Button::Data	&		operator [](unsigned short token);
-	const Button::Data &	operator [](unsigned short token) const;
+	Haptic::State	&		operator [](unsigned short token);
+	const Haptic::State &	operator [](unsigned short token) const;
 
 	void	Tick();
 };

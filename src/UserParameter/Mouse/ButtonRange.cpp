@@ -7,14 +7,14 @@ UserParameter::Mouse::ButtonRange::ButtonRange()
 	TokenMin = 0;
 	TokenMax = 0;
 	KeysCount = 0;
-	Keys = new Button::Data[KeysCount];
+	Keys = new Haptic::State[KeysCount];
 }
 UserParameter::Mouse::ButtonRange::ButtonRange(unsigned short tokenMin, unsigned int tokenMax)
 {
 	TokenMin = tokenMin;
 	TokenMax = tokenMax;
 	KeysCount = (TokenMax - TokenMin) + 1;
-	Keys = new Button::Data[KeysCount];
+	Keys = new Haptic::State[KeysCount];
 	for (unsigned int i = 0; i < KeysCount; i++)
 	{
 		Keys[i].Token = i + TokenMin;
@@ -32,7 +32,7 @@ UserParameter::Mouse::ButtonRange::ButtonRange(const ButtonRange & other)
 	TokenMin = other.TokenMin;
 	TokenMax = other.TokenMax;
 	KeysCount= other.KeysCount;
-	Keys = new Button::Data[KeysCount];
+	Keys = new Haptic::State[KeysCount];
 	for (unsigned int i = 0; i < KeysCount; i++)
 	{
 		Keys[i] = other.Keys[i];
@@ -44,7 +44,7 @@ UserParameter::Mouse::ButtonRange & UserParameter::Mouse::ButtonRange::operator 
 	TokenMin = other.TokenMin;
 	TokenMax = other.TokenMax;
 	KeysCount= other.KeysCount;
-	Keys = new Button::Data[KeysCount];
+	Keys = new Haptic::State[KeysCount];
 	for (unsigned int i = 0; i < KeysCount; i++)
 	{
 		Keys[i] = other.Keys[i];
@@ -58,11 +58,11 @@ bool UserParameter::Mouse::ButtonRange::Has(unsigned short token) const
 {
 	return (token >= TokenMin && token <= TokenMax);
 }
-UserParameter::Mouse::Button::Data	& UserParameter::Mouse::ButtonRange::operator [](unsigned short token)
+UserParameter::Haptic::State	& UserParameter::Mouse::ButtonRange::operator [](unsigned short token)
 {
 	return Keys[token - TokenMin];
 }
-const UserParameter::Mouse::Button::Data & UserParameter::Mouse::ButtonRange::operator [](unsigned short token) const
+const UserParameter::Haptic::State & UserParameter::Mouse::ButtonRange::operator [](unsigned short token) const
 {
 	return Keys[token - TokenMin];
 }

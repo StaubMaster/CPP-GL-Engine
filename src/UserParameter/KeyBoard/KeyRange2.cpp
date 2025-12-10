@@ -25,7 +25,7 @@ bool UserParameter::KeyBoard::KeyRange2::Has(unsigned short token) const
 	}
 	return false;
 }
-UserParameter::KeyBoard::Key::Data & UserParameter::KeyBoard::KeyRange2::operator [](unsigned short token)
+UserParameter::Haptic::State & UserParameter::KeyBoard::KeyRange2::operator [](unsigned short token)
 {
 	for (unsigned int i = 0; i < KeyArraysCount; i++)
 	{
@@ -36,7 +36,7 @@ UserParameter::KeyBoard::Key::Data & UserParameter::KeyBoard::KeyRange2::operato
 	}
 	throw "Key Token not in Array";
 }
-const UserParameter::KeyBoard::Key::Data & UserParameter::KeyBoard::KeyRange2::operator [](unsigned short token) const
+const UserParameter::Haptic::State & UserParameter::KeyBoard::KeyRange2::operator [](unsigned short token) const
 {
 	for (unsigned int i = 0; i < KeyArraysCount; i++)
 	{

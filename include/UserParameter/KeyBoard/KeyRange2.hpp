@@ -17,9 +17,9 @@ struct KeyRange2
 	KeyRange2(unsigned int count);
 	~KeyRange2();
 
-	bool				Has(unsigned short token) const;
-	Key::Data &			operator [](unsigned short token);
-	const Key::Data &	operator [](unsigned short token) const;
+	bool					Has(unsigned short token) const;
+	Haptic::State &			operator [](unsigned short token);
+	const Haptic::State &	operator [](unsigned short token) const;
 
 	void	Tick();
 };
