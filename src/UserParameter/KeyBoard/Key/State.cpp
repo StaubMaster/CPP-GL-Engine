@@ -1,4 +1,4 @@
-#include "UserParameter/KeyBoard/Key/Data.hpp"
+#include "UserParameter/KeyBoard/Key/State.hpp"
 
 #define KEYSTATE_BITS	0b111
 #define KEYSTATE_UD_BIT	0b001

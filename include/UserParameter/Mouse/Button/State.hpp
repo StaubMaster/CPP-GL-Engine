@@ -16,10 +16,10 @@ struct State
 	unsigned char Data;
 
 	public:
-	void	MakeDown();
-	void	MakeUp();
-	void	MakePress();
-	void	MakeRelease();
+	void	Down();
+	void	Up();
+	void	Press();
+	void	Release();
 
 	bool	IsDown() const;
 	bool	IsUp() const;

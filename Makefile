@@ -125,6 +125,10 @@ FILES_SRC_NAMES := \
 	UserParameter/KeyBoard/KeyRange1.cpp \
 	UserParameter/KeyBoard/KeyRange2.cpp \
 \
+	UserParameter/Mouse/Button/State.cpp \
+	UserParameter/Mouse/Button/Data.cpp \
+	UserParameter/Mouse/ButtonRange.cpp \
+\
 	UserParameter/Click.cpp \
 	UserParameter/Scroll.cpp \
 	UserParameter/Key.cpp \

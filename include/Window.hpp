@@ -1,4 +1,4 @@
-#ifndef WINDOW_HPP
+#ifndef  WINDOW_HPP
 # define WINDOW_HPP
 
 # include "DataStruct/Color.hpp"
@@ -7,17 +7,14 @@
 
 # include "UserParameter/KeyBoard/KeyRange1.hpp"
 # include "UserParameter/KeyBoard/KeyRange2.hpp"
+# include "UserParameter/Mouse/ButtonRange.hpp"
 
 # include "UserParameter/Click.hpp"
 # include "UserParameter/Scroll.hpp"
 # include "UserParameter/Key.hpp"
 # include "UserParameter/Text.hpp"
 
-//# include "Keys.hpp"
 
-/*	UserParameters
-make "Wrapper" for action
-*/
 
 struct GLFWwindow;
 
@@ -30,7 +27,7 @@ class Window
 	public:
 		GLFWwindow * win;
 		UserParameter::KeyBoard::KeyRange2 Keys;
-		UserParameter::KeyBoard::KeyRange1 MouseButtons;
+		UserParameter::Mouse::ButtonRange MouseButtons;
 
 	public:
 		bool ShowFrameData;

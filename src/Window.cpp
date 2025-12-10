@@ -45,7 +45,7 @@ Window::Window(float w, float h) :
 	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
 	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
-	MouseButtons = UserParameter::KeyBoard::KeyRange1(0, 5);	//	Mouse Buttons
+	MouseButtons = UserParameter::Mouse::ButtonRange(0, 5);	//	Mouse Buttons
 	//Debug::Log << "Window Keys done" << Debug::Done;
 
 	glfwSetErrorCallback(Callback_Error);
@@ -197,7 +197,7 @@ void Window::Callback_Click(int button, int action, int mods)
 {
 	if (MouseButtons.Has(button))
 	{
-		UserParameter::KeyBoard::Key::Data & data = MouseButtons[button];
+		UserParameter::Mouse::Button::Data & data = MouseButtons[button];
 		if (action == GLFW_PRESS)	{ data.Press(); }
 		if (action == GLFW_RELEASE)	{ data.Release(); }
 	}
