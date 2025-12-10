@@ -110,8 +110,11 @@ Window::Window(float w, float h) :
 	FreeFunc = NULL;
 
 	ResizeFunc = NULL;
-	TextFunc = NULL;
+
+	ClickFunc = NULL;
+	ScrollFunc = NULL;
 	KeyFunc = NULL;
+	TextFunc = NULL;
 
 	ViewPortSizeRatio = SizeRatio2D(w, h);
 	Center = Point2D(w * 0.5f, h * 0.5f);
