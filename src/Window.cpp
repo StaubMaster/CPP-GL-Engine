@@ -16,7 +16,6 @@
 # define ENGINE_DIR
 #endif
 
-
 /*	Problem
 some Systems (Mac) have weird Sizing stuff
 so the Window with size (w, h) does not create a FrameBuffer with (w, h)
@@ -38,15 +37,15 @@ Window::Window(float w, float h) :
 	//std::cout << "++++ Window(w, h) ...\n";
 	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
 
-	Keys.KeyArrays[0] = KeyDataArray(32, 32);	//	Space
-	Keys.KeyArrays[1] = KeyDataArray(48, 57);	//	Numbers
-	Keys.KeyArrays[2] = KeyDataArray(65, 90);	//	Letters
-	Keys.KeyArrays[3] = KeyDataArray(256, 269);	//	Control0
-	Keys.KeyArrays[4] = KeyDataArray(290, 314);	//	Function
-	Keys.KeyArrays[5] = KeyDataArray(320, 336);	//	KeyPad
-	Keys.KeyArrays[6] = KeyDataArray(340, 348);	//	Control1
+	Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);	//	Space
+	Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);	//	Numbers
+	Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);	//	Letters
+	Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
+	Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
+	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
+	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
-	MouseButtons = KeyDataArray(0, 5);	//	Mouse Buttons
+	MouseButtons = UserParameter::KeyBoard::KeyRange1(0, 5);	//	Mouse Buttons
 	//Debug::Log << "Window Keys done" << Debug::Done;
 
 	glfwSetErrorCallback(Callback_Error);
@@ -169,12 +168,13 @@ void Window::Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset
 void Window::Callback_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
-	ViewPortSizeRatio = SizeRatio2D(w, h);
-	Center = Point2D(w * 0.5f, h * 0.5f);
 
 	//	FrameBufferSize != WindowSize
 	//	hardcoded for now. think of solution later
 	glfwGetWindowSize(win, &w, &h);
+
+	ViewPortSizeRatio = SizeRatio2D(w, h);
+	Center = Point2D(w * 0.5f, h * 0.5f);
 
 	if (ResizeFunc != NULL) { ResizeFunc(ViewPortSizeRatio); }
 }
@@ -182,9 +182,9 @@ void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
 	if (Keys.Has(key))
 	{
-		KeyData & data = Keys[key];
-		if (action == GLFW_PRESS)	{ data.State.SetPressed(); }
-		if (action == GLFW_RELEASE)	{ data.State.SetReleased(); }
+		UserParameter::KeyBoard::Key::Data & data = Keys[key];
+		if (action == GLFW_PRESS)	{ data.Press(); }
+		if (action == GLFW_RELEASE)	{ data.Release(); }
 	}
 
 	if (KeyFunc != NULL) { KeyFunc(UserParameter::Key(key, scancode, action, mods)); }
@@ -197,9 +197,9 @@ void Window::Callback_Click(int button, int action, int mods)
 {
 	if (MouseButtons.Has(button))
 	{
-		KeyData & data = MouseButtons[button];
-		if (action == GLFW_RELEASE)	{ data.State.SetReleased(); }
-		if (action == GLFW_PRESS)	{ data.State.SetPressed(); }
+		UserParameter::KeyBoard::Key::Data & data = MouseButtons[button];
+		if (action == GLFW_PRESS)	{ data.Press(); }
+		if (action == GLFW_RELEASE)	{ data.Release(); }
 	}
 
 	Point2D pos = CursorPixel();
@@ -237,13 +237,13 @@ Point3D Window::MoveFromKeys(float speed) const
 {
 	Point3D move;
 
-	if (Keys[GLFW_KEY_A].State.GetDown())				{ move.X -= speed; }
-	if (Keys[GLFW_KEY_D].State.GetDown())				{ move.X += speed; }
-	if (Keys[GLFW_KEY_S].State.GetDown())				{ move.Z -= speed; }
-	if (Keys[GLFW_KEY_W].State.GetDown())				{ move.Z += speed; }
-	if (Keys[GLFW_KEY_SPACE].State.GetDown())			{ move.Y += speed; }
-	if (Keys[GLFW_KEY_LEFT_SHIFT].State.GetDown())		{ move.Y -= speed; }
-	if (Keys[GLFW_KEY_LEFT_CONTROL].State.GetDown())	{ move = move * 10; }
+	if (Keys[GLFW_KEY_A].IsDown())				{ move.X -= speed; }
+	if (Keys[GLFW_KEY_D].IsDown())				{ move.X += speed; }
+	if (Keys[GLFW_KEY_S].IsDown())				{ move.Z -= speed; }
+	if (Keys[GLFW_KEY_W].IsDown())				{ move.Z += speed; }
+	if (Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += speed; }
+	if (Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= speed; }
+	if (Keys[GLFW_KEY_LEFT_CONTROL].IsDown())	{ move = move * 10; }
 
 	return move;
 }
@@ -332,7 +332,7 @@ void Window::Run()
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
 
-				if (Keys[GLFW_KEY_TAB].State.GetPressed())
+				if (Keys[GLFW_KEY_TAB].IsPress())
 				{
 					ToggleCursorLock();
 				}
@@ -350,8 +350,8 @@ void Window::Run()
 					glfwSetCursorPos(win, 0, 0);
 				}
 
-				Keys.Frame();
-				MouseButtons.Frame();
+				Keys.Tick();
+				MouseButtons.Tick();
 
 				timePoll.T0();
 				glfwPollEvents();

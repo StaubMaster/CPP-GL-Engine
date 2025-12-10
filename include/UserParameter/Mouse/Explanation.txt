@@ -1,0 +1,37 @@
+
+Position:
+	store all different represantations of Cursor Pos
+	ScreenSpace
+	WindowSpace
+	Absolute
+		on the Screen
+		on the Window ?
+	Relative
+		in the Window ?
+		in a Control
+
+Clicks:
+	store current Click State
+	as well as times of when each Click began / Ended
+	if 2 Click happen close to eachother
+		then its a double Click
+	only call Click funciton when it is known to not be double
+	have 3 Functions:
+		ClickFunc()
+		SingleClickFunc()
+		DoubleClickFunc()
+
+Dragging:
+	when a Click happens
+	while that button is held down
+	remember where the Press happened
+	and store current Cursor Pos
+	seperate Functions for then Drag is happening vs done
+		DraggingFunc()
+		DragDoneFunc()
+
+Scroll:
+	scroll has X and Y, store those
+	also current Cursor Pos
+
+

@@ -115,14 +115,21 @@ FILES_SRC_NAMES := \
 	PolyHedra/Skin/Skin2D_Data.cpp \
 \
 	TimeMeasure.cpp \
-	Keys.cpp \
+\
 	UserParameter/Haptic/Code.cpp \
 	UserParameter/Haptic/Action.cpp \
 	UserParameter/Haptic/Modifier.cpp \
+\
+	UserParameter/KeyBoard/Key/State.cpp \
+	UserParameter/KeyBoard/Key/Data.cpp \
+	UserParameter/KeyBoard/KeyRange1.cpp \
+	UserParameter/KeyBoard/KeyRange2.cpp \
+\
 	UserParameter/Click.cpp \
 	UserParameter/Scroll.cpp \
 	UserParameter/Key.cpp \
 	UserParameter/Text.cpp \
+\
 	Window.cpp \
 	Debug.cpp
 

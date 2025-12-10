@@ -5,12 +5,15 @@
 # include "DataStruct/Point2D.hpp"
 # include "DataStruct/SizeRatio2D.hpp"
 
+# include "UserParameter/KeyBoard/KeyRange1.hpp"
+# include "UserParameter/KeyBoard/KeyRange2.hpp"
+
 # include "UserParameter/Click.hpp"
 # include "UserParameter/Scroll.hpp"
 # include "UserParameter/Key.hpp"
 # include "UserParameter/Text.hpp"
 
-# include "Keys.hpp"
+//# include "Keys.hpp"
 
 /*	UserParameters
 make "Wrapper" for action
@@ -26,8 +29,8 @@ class Window
 	private:
 	public:
 		GLFWwindow * win;
-		KeyDataArrayArray Keys;
-		KeyDataArray MouseButtons;
+		UserParameter::KeyBoard::KeyRange2 Keys;
+		UserParameter::KeyBoard::KeyRange1 MouseButtons;
 
 	public:
 		bool ShowFrameData;
