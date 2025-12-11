@@ -3,6 +3,9 @@
 
 
 
+UserParameter::Haptic::Code::Code() :
+	Flags(0)
+{ }
 UserParameter::Haptic::Code::Code(int flags) :
 	Flags(flags)
 { }

@@ -187,11 +187,11 @@ void Window::Callback_Key(int key, int scancode, int action, int mods)
 		if (action == GLFW_RELEASE)	{ state.Release(); }
 	}
 
-	if (KeyFunc != NULL) { KeyFunc(UserParameter::Key(key, scancode, action, mods)); }
+	if (KeyFunc != NULL) { KeyFunc(UserParameter::KeyBoard::Key(key, scancode, action, mods)); }
 }
 void Window::Callback_Text(unsigned int codepoint)
 {
-	if (TextFunc != NULL) { TextFunc(UserParameter::Text(codepoint)); }
+	if (TextFunc != NULL) { TextFunc(UserParameter::KeyBoard::Text(codepoint)); }
 }
 void Window::Callback_Click(int button, int action, int mods)
 {
@@ -209,7 +209,7 @@ void Window::Callback_Click(int button, int action, int mods)
 	params.Code = button;
 	params.Action = action;
 	params.Mods = mods;
-	params.Position = pos;
+	params.Position.Absolute = pos;
 	if (ClickFunc != NULL) { ClickFunc(params); }
 }
 void Window::Callback_Scroll(double xOffset, double yOffset)

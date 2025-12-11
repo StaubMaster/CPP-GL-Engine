@@ -15,6 +15,7 @@ struct Code
 	int Flags;
 
 	public:
+	Code();
 	Code(int flags);
 
 	public:

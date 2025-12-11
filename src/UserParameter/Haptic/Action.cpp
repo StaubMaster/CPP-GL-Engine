@@ -3,6 +3,9 @@
 
 
 
+UserParameter::Haptic::Action::Action() :
+	Flags(0)
+{ }
 UserParameter::Haptic::Action::Action(int flags) :
 	Flags(flags)
 { }

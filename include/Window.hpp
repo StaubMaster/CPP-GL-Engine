@@ -7,12 +7,12 @@
 
 # include "UserParameter/KeyBoard/KeyRange1.hpp"
 # include "UserParameter/KeyBoard/KeyRange2.hpp"
+# include "UserParameter/KeyBoard/Key.hpp"
+# include "UserParameter/KeyBoard/Text.hpp"
+
 # include "UserParameter/Mouse/ButtonRange.hpp"
 # include "UserParameter/Mouse/Click.hpp"
 # include "UserParameter/Mouse/Scroll.hpp"
-
-# include "UserParameter/Key.hpp"
-# include "UserParameter/Text.hpp"
 
 
 
@@ -44,8 +44,8 @@ class Window
 
 		void (*ClickFunc)	(UserParameter::Mouse::Click);
 		void (*ScrollFunc)	(UserParameter::Mouse::Scroll);
-		void (*KeyFunc)		(UserParameter::Key);
-		void (*TextFunc)	(UserParameter::Text);
+		void (*KeyFunc)		(UserParameter::KeyBoard::Key);
+		void (*TextFunc)	(UserParameter::KeyBoard::Text);
 
 	public:
 		SizeRatio2D ViewPortSizeRatio;

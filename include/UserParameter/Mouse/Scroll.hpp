@@ -18,6 +18,9 @@ struct Scroll
 	float				Y;
 	Haptic::Modifier	Mods;
 	Mouse::Position		Position;
+
+	//public:
+	//Scroll();
 };
 
 };

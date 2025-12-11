@@ -15,6 +15,7 @@ struct Modifier
 	int Flags;
 
 	public:
+	Modifier();
 	Modifier(int flags);
 
 	public:

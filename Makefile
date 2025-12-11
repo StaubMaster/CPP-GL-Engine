@@ -123,14 +123,13 @@ FILES_SRC_NAMES := \
 \
 	UserParameter/KeyBoard/KeyRange1.cpp \
 	UserParameter/KeyBoard/KeyRange2.cpp \
+	UserParameter/KeyBoard/Key.cpp \
+	UserParameter/KeyBoard/Text.cpp \
 \
 	UserParameter/Mouse/ButtonRange.cpp \
 	UserParameter/Mouse/Position.cpp \
 	UserParameter/Mouse/Click.cpp \
 	UserParameter/Mouse/Scroll.cpp \
-\
-	UserParameter/Key.cpp \
-	UserParameter/Text.cpp \
 \
 	Window.cpp \
 	Debug.cpp

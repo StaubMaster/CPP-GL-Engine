@@ -15,6 +15,7 @@ struct Action
 	int Flags;
 
 	public:
+	Action();
 	Action(int flags);
 
 	public:

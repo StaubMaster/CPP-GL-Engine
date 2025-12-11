@@ -19,6 +19,9 @@ struct Click
 	Haptic::Action		Action;
 	Haptic::Modifier	Mods;
 	Mouse::Position		Position;
+
+	//public:
+	//Click();
 };
 
 };

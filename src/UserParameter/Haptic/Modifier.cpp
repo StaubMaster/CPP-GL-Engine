@@ -3,6 +3,9 @@
 
 
 
+UserParameter::Haptic::Modifier::Modifier() :
+	Flags(0)
+{ }
 UserParameter::Haptic::Modifier::Modifier(int flags) :
 	Flags(flags)
 { }

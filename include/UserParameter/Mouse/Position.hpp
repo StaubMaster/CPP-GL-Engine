@@ -12,6 +12,9 @@ namespace Mouse
 struct Position
 {
 	Point2D	Absolute;
+
+	//public:
+	//Position();
 };
 
 };
