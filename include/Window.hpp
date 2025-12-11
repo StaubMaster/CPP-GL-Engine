@@ -13,6 +13,7 @@
 # include "UserParameter/Mouse/ButtonRange.hpp"
 # include "UserParameter/Mouse/Click.hpp"
 # include "UserParameter/Mouse/Scroll.hpp"
+# include "UserParameter/Mouse/EventManager.hpp"
 
 
 
@@ -25,65 +26,65 @@ class Window
 {
 	private:
 	public:
-		GLFWwindow * win;
-		UserParameter::KeyBoard::KeyRange2 Keys;
-		UserParameter::Mouse::ButtonRange MouseButtons;
+	GLFWwindow * win;
+	UserParameter::KeyBoard::KeyRange2 Keys;
+	UserParameter::Mouse::EventManager MouseManager;
 
 	public:
-		bool ShowFrameData;
+	bool ShowFrameData;
 	private:
-		double FrameTimeLast;
-		double FrameTimeDelta;
+	double FrameTimeLast;
+	double FrameTimeDelta;
 
 	public:
-		void (*InitFunc)();
-		void (*FrameFunc)(double);
-		void (*FreeFunc)();
+	void (*InitFunc)();
+	void (*FrameFunc)(double);
+	void (*FreeFunc)();
 
-		void (*ResizeFunc)(const SizeRatio2D &);
+	void (*ResizeFunc)(const SizeRatio2D &);
 
-		void (*ClickFunc)	(UserParameter::Mouse::Click);
-		void (*ScrollFunc)	(UserParameter::Mouse::Scroll);
-		void (*KeyFunc)		(UserParameter::KeyBoard::Key);
-		void (*TextFunc)	(UserParameter::KeyBoard::Text);
+	void (*KeyFunc)		(UserParameter::KeyBoard::Key);
+	void (*TextFunc)	(UserParameter::KeyBoard::Text);
 
 	public:
-		SizeRatio2D ViewPortSizeRatio;
+	SizeRatio2D ViewPortSizeRatio;
 	private:
-		Point2D Center;
+	Point2D Center;
 	public:
-		Color DefaultColor;
+	Color DefaultColor;
 
 	public:
-		Window(float w, float h);	//	why does this take float ?
-		~Window();
+	Window(float w, float h);	//	why does this take float ?
+	~Window();
 
 	private:
-		static void Callback_Error(int error, const char * decription);
+	static void Callback_Error(int error, const char * decription);
+
 	private:
-		static void Callback_Resize(GLFWwindow * window, int w, int h);
-		static void Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
-		static void Callback_Text(GLFWwindow * window, unsigned int codepoint);
-		static void Callback_Click(GLFWwindow * window, int button, int action, int mods);
-		static void Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset);
+	static void Callback_Resize(GLFWwindow * window, int w, int h);
+	static void Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
+	static void Callback_Text(GLFWwindow * window, unsigned int codepoint);
+	static void Callback_Click(GLFWwindow * window, int button, int action, int mods);
+	static void Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset);
+
 	private:
-		void Callback_Resize(int w, int h);
-		void Callback_Key(int key, int scancode, int action, int mods);
-		void Callback_Text(unsigned int codepoint);
-		void Callback_Click(int button, int action, int mods);
-		void Callback_Scroll(double xOffset, double yOffset);
+	void Callback_Resize(int w, int h);
+	void Callback_Key(int key, int scancode, int action, int mods);
+	void Callback_Text(unsigned int codepoint);
+	void Callback_Click(int button, int action, int mods);
+	void Callback_Scroll(double xOffset, double yOffset);
 
 	public:
-		bool IsCursorLocked() const;
-		void ToggleCursorLock();
-		Point3D MoveFromKeys(float speed) const;
-		Angle3D SpinFromCursor(float speed) const;
-		Point2D CursorCentered() const;
-		Point2D CursorPixel() const;
+	void ChangeCallbackClick(void (*func)(UserParameter::Mouse::Click));
+	void ChangeCallbackScroll(void (*func)(UserParameter::Mouse::Scroll));
 
 	public:
-		void Run();
-		void Term();
+	Point3D MoveFromKeys(float speed) const;
+	Angle3D SpinFromCursor(float speed) const;
+
+	public:
+	void Run();
+	void Term();
 };
 
 #endif

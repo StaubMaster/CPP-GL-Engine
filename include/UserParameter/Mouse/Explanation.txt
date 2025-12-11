@@ -29,6 +29,23 @@ Dragging:
 	seperate Functions for then Drag is happening vs done
 		DraggingFunc()
 		DragDoneFunc()
+	should the Drag just be 2 Clicks
+	where the Click0 is Pressed and Click1 is Released
+	what all do I need to rememb about the Drag
+	Modifier:
+		when it Began ?
+		when it Ended ?
+		when it Ended / in Progress is probably be best
+		thats how everythere does it
+	how does everywhere else does it ?
+	Origin to Position
+	begins at Press, ends at Release
+	while Down, Modifier Updates
+	Button:
+		should only Left Button Drag ?
+		no, every button should be able to drag
+		should they be able to drag at the same time ?
+		have a System that remembers stuff pre Button
 
 Scroll:
 	scroll has X and Y, store those

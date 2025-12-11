@@ -32,7 +32,9 @@ and a Resize for the Window
 */
 
 Window::Window(float w, float h) :
-	win(NULL), Keys(7)
+	win(NULL),
+	Keys(7),
+	MouseManager(this)
 {
 	//std::cout << "++++ Window(w, h) ...\n";
 	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
@@ -45,7 +47,7 @@ Window::Window(float w, float h) :
 	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
 	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
-	MouseButtons = UserParameter::Mouse::ButtonRange(0, 5);	//	Mouse Buttons
+	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
 	//Debug::Log << "Window Keys done" << Debug::Done;
 
 	glfwSetErrorCallback(Callback_Error);
@@ -110,8 +112,6 @@ Window::Window(float w, float h) :
 
 	ResizeFunc = NULL;
 
-	ClickFunc = NULL;
-	ScrollFunc = NULL;
 	KeyFunc = NULL;
 	TextFunc = NULL;
 
@@ -139,27 +139,27 @@ void Window::Callback_Error(int error, const char * description)
 
 void Window::Callback_Resize(GLFWwindow * window, int w, int h)
 {
-	Window * win = (Window *)glfwGetWindowUserPointer(window);
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_Resize(w, h);
 }
 void Window::Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
-	Window * win = (Window *)glfwGetWindowUserPointer(window);
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_Key(key, scancode, action, mods);
 }
 void Window::Callback_Text(GLFWwindow * window, unsigned int codepoint)
 {
-	Window * win = (Window *)glfwGetWindowUserPointer(window);
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_Text(codepoint);
 }
 void Window::Callback_Click(GLFWwindow * window, int button, int action, int mods)
 {
-	Window * win = (Window *)glfwGetWindowUserPointer(window);
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_Click(button, action, mods);
 }
 void Window::Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset)
 {
-	Window * win = (Window *)glfwGetWindowUserPointer(window);
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_Scroll(xOffset, yOffset);
 }
 
@@ -195,36 +195,30 @@ void Window::Callback_Text(unsigned int codepoint)
 }
 void Window::Callback_Click(int button, int action, int mods)
 {
-	if (MouseButtons.Has(button))
-	{
-		UserParameter::Haptic::State & state = MouseButtons[button];
-		if (action == GLFW_PRESS)	{ state.Press(); }
-		if (action == GLFW_RELEASE)	{ state.Release(); }
-	}
-
-	Point2D pos = CursorPixel();
-	pos.Y = ViewPortSizeRatio.Size.Y - pos.Y;
-
-	UserParameter::Mouse::Click params;
-	params.Code = button;
-	params.Action = action;
-	params.Mods = mods;
-	params.Position.Absolute = pos;
-	if (ClickFunc != NULL) { ClickFunc(params); }
+	MouseManager.Update(button, action, mods);
+	MouseManager.RelayCallbackClick(button, action, mods);
 }
 void Window::Callback_Scroll(double xOffset, double yOffset)
 {
-	UserParameter::Mouse::Scroll params;
-	params.X = xOffset;
-	params.Y = yOffset;
-	if (ScrollFunc != NULL) { ScrollFunc(params); }
+	MouseManager.RelayCallbackScroll(xOffset, yOffset);
+}
+
+
+
+void Window::ChangeCallbackClick(void (*func)(UserParameter::Mouse::Click))
+{
+	MouseManager.ChangeCallbackClick(func);
+}
+void Window::ChangeCallbackScroll(void (*func)(UserParameter::Mouse::Scroll))
+{
+	MouseManager.ChangeCallbackScroll(func);
 }
 
 
 
 
 
-bool Window::IsCursorLocked() const
+/*bool Window::IsCursorLocked() const
 {
 	return (glfwGetInputMode(win, GLFW_CURSOR) == GLFW_CURSOR_DISABLED);
 }
@@ -241,7 +235,7 @@ void Window::ToggleCursorLock()
 		glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		glfwSetCursorPos(win, 0, 0);
 	}
-}
+}*/
 Point3D Window::MoveFromKeys(float speed) const
 {
 	Point3D move;
@@ -269,7 +263,7 @@ Angle3D Window::SpinFromCursor(float speed) const
 
 	return spin;
 }
-Point2D Window::CursorCentered() const
+/*Point2D Window::CursorCentered() const
 {
 	if (IsCursorLocked()) { return Point2D(0, 0); }
 
@@ -294,7 +288,7 @@ Point2D Window::CursorPixel() const
 	double x, y;
 	glfwGetCursorPos(win, &x, &y);
 	return Point2D(x, y);
-}
+}*/
 
 
 
@@ -343,7 +337,8 @@ void Window::Run()
 
 				if (Keys[GLFW_KEY_TAB].IsPress())
 				{
-					ToggleCursorLock();
+					//ToggleCursorLock();
+					MouseManager.CursorModeToggle();
 				}
 
 				timeFunc.T0();
@@ -360,7 +355,7 @@ void Window::Run()
 				}
 
 				Keys.Tick();
-				MouseButtons.Tick();
+				MouseManager.Tick();
 
 				timePoll.T0();
 				glfwPollEvents();

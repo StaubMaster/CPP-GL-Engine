@@ -130,6 +130,7 @@ FILES_SRC_NAMES := \
 	UserParameter/Mouse/Position.cpp \
 	UserParameter/Mouse/Click.cpp \
 	UserParameter/Mouse/Scroll.cpp \
+	UserParameter/Mouse/EventManager.cpp \
 \
 	Window.cpp \
 	Debug.cpp

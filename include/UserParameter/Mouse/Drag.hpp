@@ -2,7 +2,6 @@
 # define USER_PARAMETER_MOUSE_DRAG_HPP
 
 # include "UserParameter/Haptic/Code.hpp"
-# include "UserParameter/Haptic/Action.hpp"
 # include "UserParameter/Haptic/Modifier.hpp"
 # include "UserParameter/Mouse/Position.hpp"
 
