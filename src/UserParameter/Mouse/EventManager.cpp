@@ -13,20 +13,14 @@ UserParameter::Mouse::EventManager::EventManager(Window * win) :
 
 
 
-void UserParameter::Mouse::EventManager::Update(int button, int action, int mods)
-{
-	if (Buttons.Has(button))
-	{
-		UserParameter::Haptic::State & state = Buttons[button];
-		if (action == GLFW_PRESS)	{ state.Press(); }
-		if (action == GLFW_RELEASE)	{ state.Release(); }
-	}
-	(void)mods;
-}
-
 void UserParameter::Mouse::EventManager::Tick()
 {
 	Buttons.Tick();
+}
+void UserParameter::Mouse::EventManager::UpdateClick(int button, int action, int mods)
+{
+	Buttons.Update(CursorPixelPosition(), Haptic::Code(button), Haptic::Action(action));
+	(void)mods;
 }
 
 
@@ -60,13 +54,16 @@ void UserParameter::Mouse::EventManager::CursorModeToggle()
 
 
 
-Point2D UserParameter::Mouse::EventManager::CursorPixelPosition() const
+UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelPosition() const
 {
 	double x, y;
 	glfwGetCursorPos(win -> win, &x, &y);
-	return Point2D(x, y);
+	UserParameter::Mouse::Position pos;
+	pos.Absolute.X = x;
+	pos.Absolute.Y = y;
+	return pos;
 }
-/*Point2D UserParameter::Mouse::EventManager::CursorPixelCentered() const
+/*UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelCentered() const
 {
 	if (CursorModeIsLocked()) { return Point2D(0, 0); }
 
@@ -94,6 +91,10 @@ void UserParameter::Mouse::EventManager::ChangeCallbackScroll(void (*func)(UserP
 {
 	CallbackScroll = func;
 }
+void UserParameter::Mouse::EventManager::ChangeCallbackMove(void (*func)(UserParameter::Mouse::ButtonData))
+{
+	CallbackMove = func;
+}
 
 void UserParameter::Mouse::EventManager::RelayCallbackClick(UserParameter::Mouse::Click params)
 {
@@ -103,6 +104,10 @@ void UserParameter::Mouse::EventManager::RelayCallbackScroll(UserParameter::Mous
 {
 	if (CallbackScroll != NULL) { CallbackScroll(params); }
 }
+void UserParameter::Mouse::EventManager::RelayCallbackMove(UserParameter::Mouse::ButtonData params)
+{
+	if (CallbackMove != NULL) { CallbackMove(params); }
+}
 
 void UserParameter::Mouse::EventManager::RelayCallbackClick(int button, int action, int mods)
 {
@@ -110,7 +115,7 @@ void UserParameter::Mouse::EventManager::RelayCallbackClick(int button, int acti
 	params.Code = button;
 	params.Action = action;
 	params.Mods = mods;
-	params.Position.Absolute = CursorPixelPosition();
+	params.Position = CursorPixelPosition();
 	RelayCallbackClick(params);
 }
 void UserParameter::Mouse::EventManager::RelayCallbackScroll(float offset_x, float offset_y)
@@ -119,4 +124,13 @@ void UserParameter::Mouse::EventManager::RelayCallbackScroll(float offset_x, flo
 	params.X = offset_x;
 	params.Y = offset_y;
 	RelayCallbackScroll(params);
+}
+void UserParameter::Mouse::EventManager::RelayCallbackMove(double x_pos, double y_pos)
+{
+	(void)x_pos;
+	(void)y_pos;
+	/*	look for what buttons are down
+		Drag Callback for all those
+	*/
+	//RelayCallbackMove(params);
 }

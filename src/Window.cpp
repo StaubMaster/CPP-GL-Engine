@@ -183,8 +183,7 @@ void Window::Callback_Key(int key, int scancode, int action, int mods)
 	if (Keys.Has(key))
 	{
 		UserParameter::Haptic::State & state = Keys[key];
-		if (action == GLFW_PRESS)	{ state.Press(); }
-		if (action == GLFW_RELEASE)	{ state.Release(); }
+		state.Update(UserParameter::Haptic::Action(action));
 	}
 
 	if (KeyFunc != NULL) { KeyFunc(UserParameter::KeyBoard::Key(key, scancode, action, mods)); }
@@ -195,7 +194,7 @@ void Window::Callback_Text(unsigned int codepoint)
 }
 void Window::Callback_Click(int button, int action, int mods)
 {
-	MouseManager.Update(button, action, mods);
+	MouseManager.UpdateClick(button, action, mods);
 	MouseManager.RelayCallbackClick(button, action, mods);
 }
 void Window::Callback_Scroll(double xOffset, double yOffset)
@@ -254,11 +253,10 @@ Angle3D Window::SpinFromCursor(float speed) const
 {
 	Angle3D spin;
 
-	double x, y;
-	glfwGetCursorPos(win, &x, &y);
+	Point2D cursor = MouseManager.CursorPixelPosition().Absolute;
 
-	spin.X = (+x) * speed;
-	spin.Y = (-y) * speed;
+	spin.X = (+cursor.X) * speed;
+	spin.Y = (-cursor.Y) * speed;
 	spin.Z = 0;
 
 	return spin;

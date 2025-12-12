@@ -12,6 +12,7 @@ namespace Haptic
 struct Action
 {
 	private:
+	public:
 	int Flags;
 
 	public:

@@ -127,6 +127,7 @@ FILES_SRC_NAMES := \
 	UserParameter/KeyBoard/Text.cpp \
 \
 	UserParameter/Mouse/ButtonRange.cpp \
+	UserParameter/Mouse/ButtonData.cpp \
 	UserParameter/Mouse/Position.cpp \
 	UserParameter/Mouse/Click.cpp \
 	UserParameter/Mouse/Scroll.cpp \

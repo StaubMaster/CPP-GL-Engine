@@ -1,10 +1,6 @@
 #ifndef  USER_PARAMETER_HAPTIC_CODE_HPP
 # define USER_PARAMETER_HAPTIC_CODE_HPP
 
-//#include "OpenGL/openGL.h"
-
-//	Rename to Token
-
 namespace UserParameter
 {
 
@@ -13,7 +9,8 @@ namespace Haptic
 
 struct Code
 {
-	private:
+	//private:
+	public:
 	int Flags;
 
 	public:

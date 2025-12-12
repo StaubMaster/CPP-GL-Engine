@@ -1,6 +1,9 @@
 #ifndef  USER_PARAMETER_HAPTIC_STATE_HPP
 # define USER_PARAMETER_HAPTIC_STATE_HPP
 
+# include "UserParameter/Haptic/Code.hpp"
+# include "UserParameter/Haptic/Action.hpp"
+
 namespace UserParameter
 {
 
@@ -18,17 +21,13 @@ struct State
 	State();
 
 	public:
-	void	Down();
-	void	Up();
-	void	Press();
-	void	Release();
+	void	Tick();
+	void	Update(Action action);
 
-	bool	IsDown() const;
 	bool	IsUp() const;
+	bool	IsDown() const;
 	bool	IsPress() const;
 	bool	IsRelease() const;
-
-	void	Tick();
 };
 
 };

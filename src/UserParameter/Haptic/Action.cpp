@@ -12,6 +12,6 @@ UserParameter::Haptic::Action::Action(int flags) :
 
 
 
-bool UserParameter::Haptic::Action::IsPress() const		{ return (Flags & GLFW_PRESS) != 0; }
-bool UserParameter::Haptic::Action::IsRepeat() const	{ return (Flags & GLFW_REPEAT) != 0; }
-bool UserParameter::Haptic::Action::IsRelease() const	{ return (Flags & GLFW_RELEASE) != 0; }
+bool UserParameter::Haptic::Action::IsPress() const		{ return (Flags == GLFW_PRESS); }
+bool UserParameter::Haptic::Action::IsRepeat() const	{ return (Flags == GLFW_REPEAT); }
+bool UserParameter::Haptic::Action::IsRelease() const	{ return (Flags == GLFW_RELEASE); }

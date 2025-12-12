@@ -64,6 +64,9 @@ class Window
 	static void Callback_Resize(GLFWwindow * window, int w, int h);
 	static void Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
 	static void Callback_Text(GLFWwindow * window, unsigned int codepoint);
+
+	//	Put these into MouseEventManager
+	static void Callback_Cursor(GLFWwindow * window, double xPos, double yPos);
 	static void Callback_Click(GLFWwindow * window, int button, int action, int mods);
 	static void Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset);
 
@@ -71,6 +74,9 @@ class Window
 	void Callback_Resize(int w, int h);
 	void Callback_Key(int key, int scancode, int action, int mods);
 	void Callback_Text(unsigned int codepoint);
+
+	//	Put these into MouseEventManager
+	void Callback_Cursor(double xPos, double yPos);
 	void Callback_Click(int button, int action, int mods);
 	void Callback_Scroll(double xOffset, double yOffset);
 
