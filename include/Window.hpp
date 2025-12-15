@@ -11,8 +11,6 @@
 # include "UserParameter/KeyBoard/Text.hpp"
 
 # include "UserParameter/Mouse/ButtonRange.hpp"
-# include "UserParameter/Mouse/Click.hpp"
-# include "UserParameter/Mouse/Scroll.hpp"
 # include "UserParameter/Mouse/EventManager.hpp"
 
 

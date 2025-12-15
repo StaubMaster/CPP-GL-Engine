@@ -2,10 +2,7 @@
 # define USER_PARAMETER_MOUSE_EVENNTMANAGER_HPP
 
 # include "UserParameter/Mouse/ButtonRange.hpp"
-# include "UserParameter/Mouse/Position.hpp"
-# include "UserParameter/Mouse/Click.hpp"
-# include "UserParameter/Mouse/Scroll.hpp"
-# include "UserParameter/Mouse/Drag.hpp"
+# include "UserParameter/MouseDeclare.hpp"
 
 # include "DataStruct/Point2D.hpp"
 
@@ -14,7 +11,7 @@
 
 
 
-struct Window;
+class Window;
 
 namespace UserParameter
 {

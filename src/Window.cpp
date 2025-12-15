@@ -4,6 +4,7 @@
 #include "DataStruct/Point3D.hpp"
 #include "DataStruct/Angle3D.hpp"
 #include "DataStruct/Point2D.hpp"
+#include "UserParameter/MouseInclude.hpp"
 
 #include "Debug.hpp"
 #include <sstream>
