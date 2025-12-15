@@ -100,8 +100,11 @@ Window::Window(float w, float h) :
 	glfwSetFramebufferSizeCallback(win, Callback_Resize);
 	glfwSetKeyCallback(win, Callback_Key);
 	glfwSetCharCallback(win, Callback_Text);
-	glfwSetMouseButtonCallback(win, Callback_Click);
-	glfwSetScrollCallback(win, Callback_Scroll);
+
+	glfwSetMouseButtonCallback(win, Callback_CursorClick);
+	glfwSetScrollCallback(win, Callback_CursorScroll);
+	glfwSetCursorPosCallback(win, Callback_CursorMove);
+
 	//Debug::Log << "Window CallBacks done" << Debug::Done;
 
 	ShowFrameData = false;
@@ -152,15 +155,21 @@ void Window::Callback_Text(GLFWwindow * window, unsigned int codepoint)
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_Text(codepoint);
 }
-void Window::Callback_Click(GLFWwindow * window, int button, int action, int mods)
+
+void Window::Callback_CursorClick(GLFWwindow * window, int button, int action, int mods)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_Click(button, action, mods);
+	win -> Callback_CursorClick(button, action, mods);
 }
-void Window::Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset)
+void Window::Callback_CursorScroll(GLFWwindow * window, double xOffset, double yOffset)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_Scroll(xOffset, yOffset);
+	win -> Callback_CursorScroll(xOffset, yOffset);
+}
+void Window::Callback_CursorMove(GLFWwindow * window, double xPos, double yPos)
+{
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
+	win -> Callback_CursorMove(xPos, yPos);
 }
 
 
@@ -192,25 +201,37 @@ void Window::Callback_Text(unsigned int codepoint)
 {
 	if (TextFunc != NULL) { TextFunc(UserParameter::KeyBoard::Text(codepoint)); }
 }
-void Window::Callback_Click(int button, int action, int mods)
+
+void Window::Callback_CursorClick(int button, int action, int mods)
 {
 	MouseManager.UpdateClick(button, action, mods);
-	MouseManager.RelayCallbackClick(button, action, mods);
 }
-void Window::Callback_Scroll(double xOffset, double yOffset)
+void Window::Callback_CursorScroll(double xOffset, double yOffset)
 {
-	MouseManager.RelayCallbackScroll(xOffset, yOffset);
+	MouseManager.UpdateScroll(xOffset, yOffset);
+}
+void Window::Callback_CursorMove(double xPos, double yPos)
+{
+	MouseManager.UpdateMove(xPos, yPos);
 }
 
 
 
-void Window::ChangeCallbackClick(void (*func)(UserParameter::Mouse::Click))
+void Window::ChangeCallback_CursorClick(void (*func)(UserParameter::Mouse::Click))
 {
 	MouseManager.ChangeCallbackClick(func);
 }
-void Window::ChangeCallbackScroll(void (*func)(UserParameter::Mouse::Scroll))
+void Window::ChangeCallback_CursorScroll(void (*func)(UserParameter::Mouse::Scroll))
 {
 	MouseManager.ChangeCallbackScroll(func);
+}
+void Window::ChangeCallback_CursorMove(void (*func)(UserParameter::Mouse::Position))
+{
+	MouseManager.ChangeCallbackMove(func);
+}
+void Window::ChangeCallback_CursorDrag(void (*func)(UserParameter::Mouse::Drag))
+{
+	MouseManager.ChangeCallbackDrag(func);
 }
 
 

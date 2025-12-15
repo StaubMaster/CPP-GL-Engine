@@ -66,9 +66,9 @@ class Window
 	static void Callback_Text(GLFWwindow * window, unsigned int codepoint);
 
 	//	Put these into MouseEventManager
-	static void Callback_Cursor(GLFWwindow * window, double xPos, double yPos);
-	static void Callback_Click(GLFWwindow * window, int button, int action, int mods);
-	static void Callback_Scroll(GLFWwindow * window, double xOffset, double yOffset);
+	static void Callback_CursorClick(GLFWwindow * window, int button, int action, int mods);
+	static void Callback_CursorScroll(GLFWwindow * window, double xOffset, double yOffset);
+	static void Callback_CursorMove(GLFWwindow * window, double xPos, double yPos);
 
 	private:
 	void Callback_Resize(int w, int h);
@@ -76,13 +76,15 @@ class Window
 	void Callback_Text(unsigned int codepoint);
 
 	//	Put these into MouseEventManager
-	void Callback_Cursor(double xPos, double yPos);
-	void Callback_Click(int button, int action, int mods);
-	void Callback_Scroll(double xOffset, double yOffset);
+	void Callback_CursorClick(int button, int action, int mods);
+	void Callback_CursorScroll(double xOffset, double yOffset);
+	void Callback_CursorMove(double xPos, double yPos);
 
 	public:
-	void ChangeCallbackClick(void (*func)(UserParameter::Mouse::Click));
-	void ChangeCallbackScroll(void (*func)(UserParameter::Mouse::Scroll));
+	void ChangeCallback_CursorClick(void (*func)(UserParameter::Mouse::Click));
+	void ChangeCallback_CursorScroll(void (*func)(UserParameter::Mouse::Scroll));
+	void ChangeCallback_CursorMove(void (*func)(UserParameter::Mouse::Position));
+	void ChangeCallback_CursorDrag(void (*func)(UserParameter::Mouse::Drag));
 
 	public:
 	Point3D MoveFromKeys(float speed) const;

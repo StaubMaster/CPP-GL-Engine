@@ -13,18 +13,6 @@ UserParameter::Mouse::EventManager::EventManager(Window * win) :
 
 
 
-void UserParameter::Mouse::EventManager::Tick()
-{
-	Buttons.Tick();
-}
-void UserParameter::Mouse::EventManager::UpdateClick(int button, int action, int mods)
-{
-	Buttons.Update(CursorPixelPosition(), Haptic::Code(button), Haptic::Action(action));
-	(void)mods;
-}
-
-
-
 bool UserParameter::Mouse::EventManager::CursorModeIsLocked() const
 {
 	return (glfwGetInputMode(win -> win, GLFW_CURSOR) == GLFW_CURSOR_DISABLED);
@@ -83,6 +71,58 @@ UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelPo
 
 
 
+void UserParameter::Mouse::EventManager::Tick()
+{
+	Buttons.Tick();
+}
+void UserParameter::Mouse::EventManager::UpdateClick(int button, int action, int mods)
+{
+	Buttons.Update(CursorPixelPosition(), Haptic::Code(button), Haptic::Action(action));
+
+	UserParameter::Mouse::Click params;
+	params.Code = button;
+	params.Action = action;
+	params.Mods = mods;
+	params.Position = CursorPixelPosition();
+	RelayCallbackClick(params);
+}
+void UserParameter::Mouse::EventManager::UpdateScroll(float offset_x, float offset_y)
+{
+	UserParameter::Mouse::Scroll params;
+	params.X = offset_x;
+	params.Y = offset_y;
+	RelayCallbackScroll(params);
+}
+void UserParameter::Mouse::EventManager::UpdateMove(double x_pos, double y_pos)
+{
+	UserParameter::Mouse::Position pos;
+	pos.Absolute.X = x_pos;
+	pos.Absolute.Y = y_pos;
+
+	RelayCallbackMove(pos);
+	/*	Dragging
+			check if any Buttons id Down
+			change current Pos to pos
+			call Drag function
+	*/
+	for (unsigned int i = 0; i < Buttons.ButtonsCount; i++)
+	{
+		//	this uses the index as a token. only works because MouseButton Tokens are identical to Indexes
+		UserParameter::Mouse::ButtonData & data = Buttons[i];
+		if (data.State.IsDown())
+		{
+			UserParameter::Mouse::Drag params;
+			//params.Code = data.State;
+			//params.Mods	//	would need to store Mods for this
+			params.Origin = data.LastPressPosition;
+			params.Position = pos;
+			RelayCallbackDrag(params);
+		}
+	}
+}
+
+
+
 void UserParameter::Mouse::EventManager::ChangeCallbackClick(void (*func)(UserParameter::Mouse::Click))
 {
 	CallbackClick = func;
@@ -91,10 +131,16 @@ void UserParameter::Mouse::EventManager::ChangeCallbackScroll(void (*func)(UserP
 {
 	CallbackScroll = func;
 }
-void UserParameter::Mouse::EventManager::ChangeCallbackMove(void (*func)(UserParameter::Mouse::ButtonData))
+void UserParameter::Mouse::EventManager::ChangeCallbackMove(void (*func)(UserParameter::Mouse::Position))
 {
 	CallbackMove = func;
 }
+void UserParameter::Mouse::EventManager::ChangeCallbackDrag(void (*func)(UserParameter::Mouse::Drag))
+{
+	CallbackDrag = func;
+}
+
+
 
 void UserParameter::Mouse::EventManager::RelayCallbackClick(UserParameter::Mouse::Click params)
 {
@@ -104,33 +150,11 @@ void UserParameter::Mouse::EventManager::RelayCallbackScroll(UserParameter::Mous
 {
 	if (CallbackScroll != NULL) { CallbackScroll(params); }
 }
-void UserParameter::Mouse::EventManager::RelayCallbackMove(UserParameter::Mouse::ButtonData params)
+void UserParameter::Mouse::EventManager::RelayCallbackMove(UserParameter::Mouse::Position params)
 {
 	if (CallbackMove != NULL) { CallbackMove(params); }
 }
-
-void UserParameter::Mouse::EventManager::RelayCallbackClick(int button, int action, int mods)
+void UserParameter::Mouse::EventManager::RelayCallbackDrag(UserParameter::Mouse::Drag params)
 {
-	UserParameter::Mouse::Click params;
-	params.Code = button;
-	params.Action = action;
-	params.Mods = mods;
-	params.Position = CursorPixelPosition();
-	RelayCallbackClick(params);
-}
-void UserParameter::Mouse::EventManager::RelayCallbackScroll(float offset_x, float offset_y)
-{
-	UserParameter::Mouse::Scroll params;
-	params.X = offset_x;
-	params.Y = offset_y;
-	RelayCallbackScroll(params);
-}
-void UserParameter::Mouse::EventManager::RelayCallbackMove(double x_pos, double y_pos)
-{
-	(void)x_pos;
-	(void)y_pos;
-	/*	look for what buttons are down
-		Drag Callback for all those
-	*/
-	//RelayCallbackMove(params);
+	if (CallbackDrag != NULL) { CallbackDrag(params); }
 }

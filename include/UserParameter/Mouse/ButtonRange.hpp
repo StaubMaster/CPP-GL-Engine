@@ -14,13 +14,19 @@ namespace UserParameter
 namespace Mouse
 {
 
+/*	Inherit from Base
+make a struct for Index to differentiate form tokens ?
+make Containers for multidimensional stuff
+*/
 struct ButtonRange
 {
 	private:
 	unsigned short	TokenMin;
 	unsigned short	TokenMax;
 
+	public:
 	unsigned short	ButtonsCount;
+	private:
 	ButtonData *	Buttons;
 
 	public:
