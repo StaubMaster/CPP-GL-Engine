@@ -17,7 +17,7 @@ class Dynamic : public Base<T>
 		unsigned int _Count;
 
 
-		
+
 	public:
 		unsigned int Count() const { return _Count; }
 
@@ -59,8 +59,6 @@ class Dynamic : public Base<T>
 		{
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ++++  " << "Dynamic()" << "\n";
 #endif
 			_Count = 0;
@@ -72,11 +70,7 @@ class Dynamic : public Base<T>
 		{
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ----  " << "~Dynamic()" << "\n";
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabDec;
 #endif
 		}
@@ -138,9 +132,11 @@ class Dynamic : public Base<T>
 		{
 			unsigned int data_idx = 0;
 			unsigned int entry_idx = this -> FindNextEntry(data_idx).Idx;
+			_Count = 0;
 			while (entry_idx != 0xFFFFFFFF)
 			{
 				EntryData<T> * entry = this -> Entrys[entry_idx];
+				if (entry -> Limit() > _Count) { _Count = entry -> Limit(); }
 				unsigned int dupe_idx = this -> FindNextEntryDuplicate(entry, entry_idx + 1).Idx;
 				entry -> Move(data_idx);
 				if (dupe_idx == 0xFFFFFFFF)
@@ -154,20 +150,6 @@ class Dynamic : public Base<T>
 				}
 			}
 		}
-
-/*	LEAK
-when the last Duplicate of an Entry is freed, _Count is decreased
-when Data is not Compacted, there are Entrys above _Count
-when Alloc is now called, it puts a new Entry at _Count
-this can overlap with still existing Entrys
-
-Solution:
-change Alloc to check where to put Entry
-have different versions that check if there is space
-else Compact and try again
-then Resize and try again
-
-*/
 
 	public:
 		EntryData<T> * Alloc(unsigned int size) override
@@ -207,10 +189,10 @@ then Resize and try again
 			}
 			this -> Entrys.Remove(entry_idx);
 			entry -> Container = NULL;
-			if (this -> FindNextEntryDuplicate(entry, 0).Idx == 0xFFFFFFFF)
+			/*if (this -> FindNextEntryDuplicate(entry, 0).Idx == 0xFFFFFFFF)
 			{
 				_Count -= entry -> Length;
-			}
+			}*/
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabDec;
 #endif
@@ -220,8 +202,6 @@ then Resize and try again
 			if (this -> _IsLocked) { return NULL; }
 #ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "EntryContainer::Dynamic" << "  ====  " << "Copy()" << '\n';
 #endif
 			if (entry == NULL)
