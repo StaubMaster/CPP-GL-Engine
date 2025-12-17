@@ -5,6 +5,7 @@
 # include "MTL.hpp"
 
 # include "DataDeclare.hpp"
+# include "Display/SizeRatio2D.hpp"
 
 # include "Miscellaneous/Container/Dynamic.hpp"
 

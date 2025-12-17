@@ -11,10 +11,12 @@ std::ostream & operator <<(std::ostream & o, const Point4D & val);
 
 std::ostream & operator <<(std::ostream & o, const Angle3D & val);
 
+std::ostream & operator <<(std::ostream & o, const AxisBox1D & val);
+std::ostream & operator <<(std::ostream & o, const AxisBox2D & val);
+std::ostream & operator <<(std::ostream & o, const AxisBox3D & val);
+
 std::ostream & operator <<(std::ostream & o, const Undex3D & val);
 
 std::ostream & operator <<(std::ostream & o, const Color & val);
-
-std::ostream & operator <<(std::ostream & o, const AxisBox3D & val);
 
 #endif

@@ -6,21 +6,36 @@
 AxisBox3D::AxisBox3D() :
 	Min(+INFINITY, +INFINITY, +INFINITY),
 	Max(-INFINITY, -INFINITY, -INFINITY)
-{
+{ }
+AxisBox3D::AxisBox3D(Point3D min, Point3D max) :
+	Min(min),
+	Max(max)
+{ }
 
+
+
+AxisBox3D::AxisBox3D(const AxisBox3D & other) :
+	Min(other.Min),
+	Max(other.Max)
+{ }
+AxisBox3D & AxisBox3D::operator=(const AxisBox3D & other)
+{
+	Min = other.Min;
+	Max = other.Max;
+	return *this;
 }
 
 
 
-void AxisBox3D::Consider(Point3D p)
+void AxisBox3D::Consider(Point3D val)
 {
-	if (p.X < Min.X) { Min.X = p.X; }
-	if (p.Y < Min.Y) { Min.Y = p.Y; }
-	if (p.Z < Min.Z) { Min.Z = p.Z; }
+	if (val.X < Min.X) { Min.X = val.X; }
+	if (val.Y < Min.Y) { Min.Y = val.Y; }
+	if (val.Z < Min.Z) { Min.Z = val.Z; }
 
-	if (p.X > Max.X) { Max.X = p.X; }
-	if (p.Y > Max.Y) { Max.Y = p.Y; }
-	if (p.Z > Max.Z) { Max.Z = p.Z; }
+	if (val.X > Max.X) { Max.X = val.X; }
+	if (val.Y > Max.Y) { Max.Y = val.Y; }
+	if (val.Z > Max.Z) { Max.Z = val.Z; }
 }
 
 
@@ -31,4 +46,13 @@ Point3D AxisBox3D::Size() const
 Point3D AxisBox3D::Center() const
 {
 	return ((Max * 0.5f) + (Min * 0.5f));
+}
+
+
+
+bool AxisBox3D::Intersekt(Point3D val) const
+{
+	return (Min.X <= val.X && Max.X >= val.X)
+		&& (Min.Y <= val.Y && Max.Y >= val.Y)
+		&& (Min.Z <= val.Z && Max.Z >= val.Z);
 }

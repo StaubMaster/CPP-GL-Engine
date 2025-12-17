@@ -12,6 +12,8 @@ namespace Shader
 	class Base;
 };
 
+struct SizeRatio2D;
+
 namespace Uniform
 {
 class SizeRatio2D : public Uniform::GBase<::SizeRatio2D>

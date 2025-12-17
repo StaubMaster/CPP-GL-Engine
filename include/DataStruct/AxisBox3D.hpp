@@ -1,4 +1,3 @@
-
 #ifndef  AXISBOX_3D_HPP
 # define AXISBOX_3D_HPP
 
@@ -7,18 +6,25 @@
 struct AxisBox3D
 {
 	public:
-		Point3D	Min;
-		Point3D	Max;
+	Point3D	Min;
+	Point3D	Max;
 
 	public:
-		AxisBox3D();
+	AxisBox3D();
+	AxisBox3D(Point3D min, Point3D max);
+
+	AxisBox3D(const AxisBox3D & other);
+	AxisBox3D & operator=(const AxisBox3D & other);
 
 	public:
-		void Consider(Point3D p);
+	void Consider(Point3D val);
 
 	public:
-		Point3D Size() const;
-		Point3D Center() const;
+	Point3D Size() const;
+	Point3D Center() const;
+
+	public:
+	bool Intersekt(Point3D val) const;
 };
 
 #endif

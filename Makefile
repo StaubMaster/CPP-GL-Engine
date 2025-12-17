@@ -13,23 +13,25 @@ DIR_OBJ := obj/
 
 
 DATASTRUCT := \
+	DataStruct/Point2D.cpp \
 	DataStruct/Point3D.cpp \
+	DataStruct/Point4D.cpp \
 	DataStruct/Angle3D.cpp \
 	DataStruct/Trans3D.cpp \
-	DataStruct/Undex3D.cpp \
+	DataStruct/AxisBox1D.cpp \
+	DataStruct/AxisBox2D.cpp \
 	DataStruct/AxisBox3D.cpp \
-	DataStruct/Point2D.cpp \
+	DataStruct/Ray3D.cpp \
+	DataStruct/Undex3D.cpp \
+	DataStruct/Matrix3x3.cpp \
+	DataStruct/DepthFactors.cpp \
+	DataStruct/Depth.cpp \
 	DataStruct/Range.cpp \
 	DataStruct/LInter.cpp \
-	DataStruct/DepthFactors.cpp \
-	DataStruct/Point4D.cpp \
 	DataStruct/Color.cpp \
-	DataStruct/Depth.cpp \
 	DataStruct/LightBase.cpp \
 	DataStruct/LightSolar.cpp \
 	DataStruct/LightSpot.cpp \
-	DataStruct/Ray3D.cpp \
-	DataStruct/Matrix3x3.cpp \
 	DataShow.cpp
 DATASTRUCT_SRC := $(addprefix $(DIR_SRC)/,$(DATASTRUCT))
 DATASTRUCT_OBJ := $(addprefix $(DIR_OBJ)/,$(DATASTRUCT:.cpp=.o))
