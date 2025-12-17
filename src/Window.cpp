@@ -78,18 +78,6 @@ Window::Window(float w, float h) :
 
 	glfwMakeContextCurrent(win);
 
-	/*{
-		std::cout << "Window " << w << " " << h << "\n";
-		int wi, hi;
-		glfwGetWindowSize(win, &wi, &hi);
-		std::cout << "Window " << wi << " " << hi << "\n";
-		glfwGetFramebufferSize(win, &wi, &hi);
-		std::cout << "WindowSize " << wi << " " << hi << "\n";
-		int l, t, r, b;
-		glfwGetWindowFrameSize(win, &l, &t, &r, &b);
-		std::cout << "FrameBuffer " << l << " " << t << " " << r << " " << b << "\n";
-	}*/
-
 	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		throw "glad load GL-Loader Failed";
@@ -119,8 +107,11 @@ Window::Window(float w, float h) :
 	KeyFunc = NULL;
 	TextFunc = NULL;
 
-	ViewPortSizeRatio = SizeRatio2D(w, h);
-	Center = Point2D(w * 0.5f, h * 0.5f);
+	UpdateSize();
+
+	//ViewPortSizeRatio = SizeRatio2D(w, h);
+	//Center = Point2D(w * 0.5f, h * 0.5f);
+
 	DefaultColor = Color(0.5f, 0.5f, 0.5f);
 
 	Debug::Log << "++++ Window" << Debug::Done;
@@ -131,6 +122,23 @@ Window::~Window()
 }
 
 
+
+void Window::UpdateSize()
+{
+	int w, h;
+
+	Point2D winSize;
+	glfwGetWindowSize(win, &w, &h);
+	winSize = Point2D(w, h);
+
+	Point2D bufSize;
+	glfwGetFramebufferSize(win, &w, &h);
+	bufSize = Point2D(w, h);
+
+	Size.Change(winSize, bufSize);
+	WindowCenter = winSize * 0.5f;
+	BufferCenter = bufSize * 0.5f;
+}
 
 
 
@@ -178,15 +186,8 @@ void Window::Callback_CursorMove(GLFWwindow * window, double xPos, double yPos)
 void Window::Callback_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
-
-	//	FrameBufferSize != WindowSize
-	//	hardcoded for now. think of solution later
-	glfwGetWindowSize(win, &w, &h);
-
-	ViewPortSizeRatio = SizeRatio2D(w, h);
-	Center = Point2D(w * 0.5f, h * 0.5f);
-
-	if (ResizeFunc != NULL) { ResizeFunc(ViewPortSizeRatio); }
+	UpdateSize();
+	if (ResizeFunc != NULL) { ResizeFunc(Size); }
 }
 void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
@@ -239,24 +240,6 @@ void Window::ChangeCallback_CursorDrag(void (*func)(UserParameter::Mouse::Drag))
 
 
 
-/*bool Window::IsCursorLocked() const
-{
-	return (glfwGetInputMode(win, GLFW_CURSOR) == GLFW_CURSOR_DISABLED);
-}
-void Window::ToggleCursorLock()
-{
-	int mode = glfwGetInputMode(win, GLFW_CURSOR);
-	if (mode == GLFW_CURSOR_DISABLED)
-	{
-		glfwSetCursorPos(win, 0, 0);
-		glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	}
-	else
-	{
-		glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-		glfwSetCursorPos(win, 0, 0);
-	}
-}*/
 Point3D Window::MoveFromKeys(float speed) const
 {
 	Point3D move;
@@ -283,32 +266,6 @@ Angle3D Window::SpinFromCursor(float speed) const
 
 	return spin;
 }
-/*Point2D Window::CursorCentered() const
-{
-	if (IsCursorLocked()) { return Point2D(0, 0); }
-
-	double x, y;
-	glfwGetCursorPos(win, &x, &y);
-
-	Point2D p;
-
-	p.X = (x - Center.X);
-	p.Y = (Center.Y - y);
-
-	p.X = p.X / (ViewPortSizeRatio.Size.X * ViewPortSizeRatio.Ratio.X);
-	p.Y = p.Y / (ViewPortSizeRatio.Size.Y * ViewPortSizeRatio.Ratio.Y);
-
-	p.X = p.X * 2;
-	p.Y = p.Y * 2;
-
-	return p;
-}
-Point2D Window::CursorPixel() const
-{
-	double x, y;
-	glfwGetCursorPos(win, &x, &y);
-	return Point2D(x, y);
-}*/
 
 
 
@@ -332,12 +289,9 @@ void Window::Run()
 			InitFunc();
 			Debug::Log << "---- Window Init" << Debug::Done;
 		}
-		{
-			int w, h;
-			glfwGetWindowSize(win, &w, &h);
-			ViewPortSizeRatio = SizeRatio2D(w, h);
-			if (ResizeFunc != NULL) { ResizeFunc(ViewPortSizeRatio); }
-		}
+
+		UpdateSize();
+		if (ResizeFunc != NULL) { ResizeFunc(Size); }
 
 		int frameSkipped = 0;
 		int frameCount = 0;

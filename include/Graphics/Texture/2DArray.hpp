@@ -2,7 +2,7 @@
 # define TEXTURE_2D_ARRAY_HPP
 
 # include "Base.hpp"
-# include "DataStruct/SizeRatio2D.hpp"
+# include "Display/SizeRatio2D.hpp"
 
 class FileContext;
 class Image;

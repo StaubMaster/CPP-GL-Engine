@@ -7,8 +7,8 @@
 #include "Parsing/LineCommand.hpp"
 
 #include "DataStruct/Point2D.hpp"
-#include "DataStruct/SizeRatio2D.hpp"
 #include "DataStruct/AxisBox3D.hpp"
+#include "Display/SizeRatio2D.hpp"
 
 #include "DataShow.hpp"
 

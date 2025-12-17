@@ -7,15 +7,18 @@ FLAGS := -Wall -Wextra -Werror -D ENGINE_DIR='"$(shell pwd)"'
 
 
 
-FILES_SRC_NAMES := \
-\
+DIR_SRC := src/
+DIR_OBJ := obj/
+
+
+
+DATASTRUCT := \
 	DataStruct/Point3D.cpp \
 	DataStruct/Angle3D.cpp \
 	DataStruct/Trans3D.cpp \
 	DataStruct/Undex3D.cpp \
 	DataStruct/AxisBox3D.cpp \
 	DataStruct/Point2D.cpp \
-	DataStruct/SizeRatio2D.cpp \
 	DataStruct/Range.cpp \
 	DataStruct/LInter.cpp \
 	DataStruct/DepthFactors.cpp \
@@ -27,13 +30,32 @@ FILES_SRC_NAMES := \
 	DataStruct/LightSpot.cpp \
 	DataStruct/Ray3D.cpp \
 	DataStruct/Matrix3x3.cpp \
-	DataShow.cpp \
-\
-	Miscellaneous/Container/Behaviour.cpp \
-\
+	DataShow.cpp
+DATASTRUCT_SRC := $(addprefix $(DIR_SRC)/,$(DATASTRUCT))
+DATASTRUCT_OBJ := $(addprefix $(DIR_OBJ)/,$(DATASTRUCT:.cpp=.o))
+
+DISPLAY := \
+	Display/AbsNormal2D.cpp \
+	Display/RelNormal2D.cpp \
+	Display/PixelCoord2D.cpp \
+	Display/ScreenCoord2D.cpp \
+	Display/SizeRatio2D.cpp \
+	Display/WindowBufferSize2D.cpp
+DISPLAY_SRC := $(addprefix $(DIR_SRC)/,$(DISPLAY))
+DISPLAY_OBJ := $(addprefix $(DIR_OBJ)/,$(DISPLAY:.cpp=.o))
+
+CONTAINER := \
+	Miscellaneous/Container/Behaviour.cpp
+CONTAINER_SRC := $(addprefix $(DIR_SRC)/,$(CONTAINER))
+CONTAINER_OBJ := $(addprefix $(DIR_OBJ)/,$(CONTAINER:.cpp=.o))
+
+SHADER := \
 	Graphics/Shader/Code.cpp \
-	Graphics/Shader/Base.cpp \
-\
+	Graphics/Shader/Base.cpp
+SHADER_SRC := $(addprefix $(DIR_SRC)/,$(SHADER))
+SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
+
+UNIFORM := \
 	Graphics/Uniform/Base/Base.cpp \
 	Graphics/Uniform/Base/FloatN.cpp \
 	Graphics/Uniform/Base/Float1.cpp \
@@ -46,7 +68,6 @@ FILES_SRC_NAMES := \
 	Graphics/Uniform/Angle3D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
 	Graphics/Uniform/Point2D.cpp \
-	Graphics/Uniform/SizeRatio2D.cpp \
 	Graphics/Uniform/DepthFactors.cpp \
 	Graphics/Uniform/Range.cpp \
 	Graphics/Uniform/Depth.cpp \
@@ -55,19 +76,31 @@ FILES_SRC_NAMES := \
 	Graphics/Uniform/LightBase.cpp \
 	Graphics/Uniform/LightSolar.cpp \
 	Graphics/Uniform/LightSpot.cpp \
-\
+	Graphics/Uniform/SizeRatio2D.cpp \
+	Graphics/Uniform/WindowBufferSize2D.cpp
+UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))
+UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
+
+MULTIFORM := \
 	Graphics/Multiform/Base/Base.cpp \
 	Graphics/Multiform/Trans3D.cpp \
-	Graphics/Multiform/SizeRatio2D.cpp \
 	Graphics/Multiform/DepthFactors.cpp \
 	Graphics/Multiform/Range.cpp \
 	Graphics/Multiform/Depth.cpp \
 	Graphics/Multiform/LInter.cpp \
 	Graphics/Multiform/Color.cpp \
-\
+	Graphics/Multiform/SizeRatio2D.cpp \
+	Graphics/Multiform/WindowBufferSize2D.cpp
+MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
+MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
+
+BUFFER := \
 	Graphics/Buffer/BaseBufferArray.cpp \
-	Graphics/Buffer/BaseBuffer.cpp \
-\
+	Graphics/Buffer/BaseBuffer.cpp
+BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
+BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
+
+ATTRIBUTE := \
 	Graphics/Attribute/Base/AttributeLocation.cpp \
 	Graphics/Attribute/Base/AttributeBase.cpp \
 	Graphics/Attribute/Base/FloatN.cpp \
@@ -77,33 +110,39 @@ FILES_SRC_NAMES := \
 	Graphics/Attribute/Trans3D.cpp \
 	Graphics/Attribute/Point2D.cpp \
 	Graphics/Attribute/Point4D.cpp \
-	Graphics/Attribute/Color.cpp \
-\
+	Graphics/Attribute/Color.cpp
+ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
+ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
+
+TEXTURE := \
 	Graphics/Texture/Base.cpp \
 	Graphics/Texture/2DArray.cpp \
-	Graphics/Texture/Generate.cpp \
-\
+	Graphics/Texture/Generate.cpp
+TEXTURE_SRC := $(addprefix $(DIR_SRC)/,$(TEXTURE))
+TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))
+
+INSTANCE_DATA := \
 	DataStruct/Inst/Simple3D/Simple3D_InstData.cpp \
 	DataStruct/Inst/Simple3D/Simple3D_InstAttrib.cpp \
 	DataStruct/Inst/Simple3D/Simple3D_InstBuffer.cpp \
 \
 	DataStruct/Inst/Physics3D/Physics3D_InstData.cpp \
 	DataStruct/Inst/Physics3D/Physics3D_InstAttrib.cpp \
-	DataStruct/Inst/Physics3D/Physics3D_InstBuffer.cpp \
-\
+	DataStruct/Inst/Physics3D/Physics3D_InstBuffer.cpp
+INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
+INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
+
+POLYHEDRA_MAIN := \
 	DataStruct/Main/PolyHedra/PolyHedra_MainData.cpp \
 	DataStruct/Main/PolyHedra/PolyHedra_MainAttrib.cpp \
 	DataStruct/Main/PolyHedra/PolyHedra_MainBuffer.cpp \
 	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_BufferArray.cpp \
 	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Instances.cpp \
-	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Shader.cpp \
-\
-	DataStruct/Main/Waveform/OBJ.cpp \
-	DataStruct/Main/Waveform/OBJ_Main.cpp \
-	DataStruct/Main/Waveform/OBJ_3D_BufferArray.cpp \
-	DataStruct/Main/Waveform/OBJ_3D_Shader.cpp \
-	DataStruct/Main/Waveform/MTL.cpp \
-\
+	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Shader.cpp
+POLYHEDRA_MAIN_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA_MAIN))
+POLYHEDRA_MAIN_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA_MAIN:.cpp=.o))
+
+POLYHEDRA := \
 	PolyHedra/PolyHedra.cpp \
 	PolyHedra/Data.cpp \
 	PolyHedra/Template.cpp \
@@ -112,10 +151,20 @@ FILES_SRC_NAMES := \
 \
 	PolyHedra/Skin/SkinBase.cpp \
 	PolyHedra/Skin/Skin2DA.cpp \
-	PolyHedra/Skin/Skin2D_Data.cpp \
-\
-	TimeMeasure.cpp \
-\
+	PolyHedra/Skin/Skin2D_Data.cpp
+POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
+POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))
+
+WAVEFORM := \
+	DataStruct/Main/Waveform/OBJ.cpp \
+	DataStruct/Main/Waveform/OBJ_Main.cpp \
+	DataStruct/Main/Waveform/OBJ_3D_BufferArray.cpp \
+	DataStruct/Main/Waveform/OBJ_3D_Shader.cpp \
+	DataStruct/Main/Waveform/MTL.cpp
+WAVEFORM_SRC := $(addprefix $(DIR_SRC)/,$(WAVEFORM))
+WAVEFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(WAVEFORM:.cpp=.o))
+
+USERPARAMETER := \
 	UserParameter/Haptic/Code.cpp \
 	UserParameter/Haptic/Action.cpp \
 	UserParameter/Haptic/Modifier.cpp \
@@ -131,18 +180,42 @@ FILES_SRC_NAMES := \
 	UserParameter/Mouse/Position.cpp \
 	UserParameter/Mouse/Click.cpp \
 	UserParameter/Mouse/Scroll.cpp \
-	UserParameter/Mouse/EventManager.cpp \
-\
+	UserParameter/Mouse/EventManager.cpp
+USERPARAMETER_SRC := $(addprefix $(DIR_SRC)/,$(USERPARAMETER))
+USERPARAMETER_OBJ := $(addprefix $(DIR_OBJ)/,$(USERPARAMETER:.cpp=.o))
+
+OTHER := \
+	TimeMeasure.cpp \
 	Window.cpp \
 	Debug.cpp
-
-DIR_SRC := src/
-DIR_OBJ := obj/
-
-FILES_SRC := $(addprefix $(DIR_SRC)/,$(FILES_SRC_NAMES))
-FILES_OBJ := $(addprefix $(DIR_OBJ)/,$(FILES_SRC_NAMES:.cpp=.o))
+OTHER_SRC := $(addprefix $(DIR_SRC)/,$(OTHER))
+OTHER_OBJ := $(addprefix $(DIR_OBJ)/,$(OTHER:.cpp=.o))
 
 
+
+ALL_SRC := \
+	$(DATASTRUCT_SRC) $(DISPLAY_SRC)\
+	$(CONTAINER_SRC)\
+	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC)\
+	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC)\
+	$(INSTANCE_DATA_SRC)\
+	$(POLYHEDRA_MAIN_SRC)\
+	$(POLYHEDRA_SRC)\
+	$(WAVEFORM_SRC)\
+	$(USERPARAMETER_SRC)\
+	$(OTHER_SRC)
+
+ALL_OBJ := \
+	$(DATASTRUCT_OBJ) $(DISPLAY_OBJ)\
+	$(CONTAINER_OBJ)\
+	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ)\
+	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ)\
+	$(INSTANCE_DATA_OBJ)\
+	$(POLYHEDRA_MAIN_OBJ)\
+	$(POLYHEDRA_OBJ)\
+	$(WAVEFORM_OBJ)\
+	$(USERPARAMETER_OBJ)\
+	$(OTHER_OBJ)
 
 #	these makefiles suck
 #	currenty it allways makes stuff
@@ -188,7 +261,7 @@ all:
 
 clean:
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(FILES_OBJ)
+	@rm -f $(ALL_OBJ)
 
 fclean:
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
@@ -204,9 +277,101 @@ re:
 
 # I allways thought that NAME was supposed to be the default ?
 # pretty sure its just so the Makefile checks if it needs to be updated
-$(NAME) : $(FILES_OBJ)
+$(NAME) : $(ALL_OBJ)
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@ar -rcs $(NAME) $(FILES_OBJ)
+	@ar -rcs $(NAME) $(ALL_OBJ)
+
+################################################################
+
+remake_DataStruct:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(DATASTRUCT_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Display:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(DISPLAY_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Container:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(CONTAINER_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Shader:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(SHADER_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Uniform:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(UNIFORM_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Multiform:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(MULTIFORM_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Buffer:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(BUFFER_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Attribute:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(ATTRIBUTE_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Texture:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(TEXTURE_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Inst:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(INSTANCE_DATA_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Main:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(POLYHEDRA_MAIN_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_PolyHedra:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(POLYHEDRA_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Waveform:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(WAVEFORM_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_UserParameter:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(USERPARAMETER_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
+
+remake_Other:
+	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@rm -f $(OTHER_OBJ)
+	@rm -f $(NAME)
+	@$(MAKE) -s all
 
 ################################################################
 

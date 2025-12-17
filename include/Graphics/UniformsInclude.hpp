@@ -18,7 +18,6 @@
 # include "Uniform/Range.hpp"
 
 # include "Uniform/Point2D.hpp"
-# include "Uniform/SizeRatio2D.hpp"
 
 # include "Uniform/Point3D.hpp"
 # include "Uniform/Angle3D.hpp"
@@ -31,5 +30,8 @@
 # include "Uniform/LightBase.hpp"
 # include "Uniform/LightSolar.hpp"
 # include "Uniform/LightSpot.hpp"
+
+# include "Uniform/SizeRatio2D.hpp"
+# include "Uniform/WindowBufferSize2D.hpp"
 
 #endif

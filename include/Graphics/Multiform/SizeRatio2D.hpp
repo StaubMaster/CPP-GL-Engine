@@ -4,7 +4,7 @@
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/SizeRatio2D.hpp"
-# include "DataStruct/SizeRatio2D.hpp"
+# include "Display/SizeRatio2D.hpp"
 
 namespace Multiform
 {

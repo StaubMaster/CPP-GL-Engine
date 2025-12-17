@@ -14,9 +14,10 @@ namespace Multiform
 	class LInter;
 	class Range;
 
-	class SizeRatio2D;
-
 	class Trans3D;
+	
+	class SizeRatio2D;
+	class WindowBufferSize2D;
 };
 
 #endif

@@ -20,7 +20,6 @@ namespace Uniform
 	class Depth;
 
 	class Point2D;
-	class SizeRatio2D;
 
 	class Point3D;
 	class Angle3D;
@@ -29,6 +28,9 @@ namespace Uniform
 	class LightBase;
 	class LightSolar;
 	class LightSpot;
+
+	class SizeRatio2D;
+	class WindowBufferSize2D;
 };
 
 #endif

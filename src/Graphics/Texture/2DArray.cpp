@@ -1,4 +1,5 @@
 #include "Graphics/Texture/2DArray.hpp"
+#include "Display/SizeRatio2D.hpp"
 
 #include "Format/Image.hpp"
 #include "FileContext.hpp"
@@ -11,7 +12,7 @@
 Texture::T2DArray::T2DArray(const Image * img)
 	: Texture::Base(GL_TEXTURE_2D_ARRAY)
 {
-	SizeRatio = SizeRatio2D(img -> W, img -> H);
+	SizeRatio = SizeRatio2D(Point2D(img -> W, img -> H));
 	glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA8, img -> W, img -> H, 1, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, img -> Data32);
 
 	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -24,7 +25,7 @@ Texture::T2DArray::T2DArray(const Image * img)
 Texture::T2DArray::T2DArray(unsigned int w, unsigned int h, unsigned int count, const Image ** img)
 	: Texture::Base(GL_TEXTURE_2D_ARRAY)
 {
-	SizeRatio = SizeRatio2D(w, h);
+	SizeRatio = SizeRatio2D(Point2D(w, h));
 
 	glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA8, w, h, count, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, NULL);
 
@@ -46,7 +47,7 @@ Texture::T2DArray::T2DArray(const FileContext & file)
 	: Texture::Base(GL_TEXTURE_2D_ARRAY)
 {
 	Image * img = file.LoadImagePNG();
-	SizeRatio = SizeRatio2D(img -> W, img -> H);
+	SizeRatio = SizeRatio2D(Point2D(img -> W, img -> H));
 	glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA8, img -> W, img -> H, 1, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, img -> Data32);
 	delete img;
 
@@ -60,7 +61,7 @@ Texture::T2DArray::T2DArray(const FileContext & file)
 Texture::T2DArray::T2DArray(unsigned int w, unsigned int h, unsigned int count, const FileContext files [])
 	: Texture::Base(GL_TEXTURE_2D_ARRAY)
 {
-	SizeRatio = SizeRatio2D(w, h);
+	SizeRatio = SizeRatio2D(Point2D(w, h));
 
 	glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA8, w, h, count, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, NULL);
 

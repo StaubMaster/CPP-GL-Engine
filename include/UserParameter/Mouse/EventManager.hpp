@@ -56,6 +56,7 @@ struct EventManager
 	void ChangeCallbackMove(void (*func)(UserParameter::Mouse::Position));
 	void ChangeCallbackDrag(void (*func)(UserParameter::Mouse::Drag));
 
+	//	rename to Invoke ?
 	private:
 	void RelayCallbackClick(UserParameter::Mouse::Click params);
 	void RelayCallbackScroll(UserParameter::Mouse::Scroll params);

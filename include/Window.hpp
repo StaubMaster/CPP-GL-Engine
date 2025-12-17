@@ -3,7 +3,8 @@
 
 # include "DataStruct/Color.hpp"
 # include "DataStruct/Point2D.hpp"
-# include "DataStruct/SizeRatio2D.hpp"
+
+# include "Display/WindowBufferSize2D.hpp"
 
 # include "UserParameter/KeyBoard/KeyRange1.hpp"
 # include "UserParameter/KeyBoard/KeyRange2.hpp"
@@ -39,21 +40,27 @@ class Window
 	void (*FrameFunc)(double);
 	void (*FreeFunc)();
 
-	void (*ResizeFunc)(const SizeRatio2D &);
+	void (*ResizeFunc)(const WindowBufferSize2D &);
 
 	void (*KeyFunc)		(UserParameter::KeyBoard::Key);
 	void (*TextFunc)	(UserParameter::KeyBoard::Text);
 
 	public:
-	SizeRatio2D ViewPortSizeRatio;
+	WindowBufferSize2D Size;
+
 	private:
-	Point2D Center;
+	Point2D WindowCenter;
+	Point2D BufferCenter;
+
 	public:
 	Color DefaultColor;
 
 	public:
 	Window(float w, float h);	//	why does this take float ?
 	~Window();
+
+	private:
+	void UpdateSize();
 
 	private:
 	static void Callback_Error(int error, const char * decription);
