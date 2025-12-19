@@ -1,4 +1,4 @@
-#include "DataStruct/Main/Waveform/OBJ_Main.hpp"
+#include "Waveform/OBJ_Main.hpp"
 
 #include "OpenGL/openGL.h"
 

@@ -4,7 +4,7 @@
 
 #include "PolyHedra/Skin/Skin2DA.hpp"
 
-#include "DataStruct/Main/PolyHedra/PolyHedra_MainData.hpp"
+#include "PolyHedra/MainData/PolyHedra_MainData.hpp"
 
 #include "DataStruct/Angle3D.hpp"
 #include "DataStruct/AxisBox3D.hpp"

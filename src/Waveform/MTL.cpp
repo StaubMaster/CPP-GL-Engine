@@ -1,4 +1,4 @@
-#include "DataStruct/Main/Waveform/MTL.hpp"
+#include "Waveform/MTL.hpp"
 
 #include "DataShow.hpp"
 

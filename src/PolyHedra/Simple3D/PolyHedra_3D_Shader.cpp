@@ -1,4 +1,4 @@
-#include "DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Shader.hpp"
+#include "PolyHedra/Simple3D/PolyHedra_3D_Shader.hpp"
 #include "Graphics/Shader/Code.hpp"
 
 #include "DirectoryContext.hpp"

@@ -1,6 +1,6 @@
-#include "DataStruct/Main/PolyHedra/PolyHedra_MainBuffer.hpp"
-#include "DataStruct/Main/PolyHedra/PolyHedra_MainAttrib.hpp"
-#include "DataStruct/Main/PolyHedra/PolyHedra_MainData.hpp"
+#include "PolyHedra/MainData//PolyHedra_MainBuffer.hpp"
+#include "PolyHedra/MainData//PolyHedra_MainAttrib.hpp"
+#include "PolyHedra/MainData//PolyHedra_MainData.hpp"
 
 
 

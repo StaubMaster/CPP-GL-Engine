@@ -127,25 +127,15 @@ TEXTURE_SRC := $(addprefix $(DIR_SRC)/,$(TEXTURE))
 TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))
 
 INSTANCE_DATA := \
-	DataStruct/Inst/Simple3D/Simple3D_InstData.cpp \
-	DataStruct/Inst/Simple3D/Simple3D_InstAttrib.cpp \
-	DataStruct/Inst/Simple3D/Simple3D_InstBuffer.cpp \
+	InstanceData/Simple3D/Simple3D_InstData.cpp \
+	InstanceData/Simple3D/Simple3D_InstAttrib.cpp \
+	InstanceData/Simple3D/Simple3D_InstBuffer.cpp \
 \
-	DataStruct/Inst/Physics3D/Physics3D_InstData.cpp \
-	DataStruct/Inst/Physics3D/Physics3D_InstAttrib.cpp \
-	DataStruct/Inst/Physics3D/Physics3D_InstBuffer.cpp
+	InstanceData/Physics3D/Physics3D_InstData.cpp \
+	InstanceData/Physics3D/Physics3D_InstAttrib.cpp \
+	InstanceData/Physics3D/Physics3D_InstBuffer.cpp
 INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
 INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
-
-POLYHEDRA_MAIN := \
-	DataStruct/Main/PolyHedra/PolyHedra_MainData.cpp \
-	DataStruct/Main/PolyHedra/PolyHedra_MainAttrib.cpp \
-	DataStruct/Main/PolyHedra/PolyHedra_MainBuffer.cpp \
-	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_BufferArray.cpp \
-	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Instances.cpp \
-	DataStruct/Full/PolyHedra_3D/PolyHedra_3D_Shader.cpp
-POLYHEDRA_MAIN_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA_MAIN))
-POLYHEDRA_MAIN_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA_MAIN:.cpp=.o))
 
 POLYHEDRA := \
 	PolyHedra/PolyHedra.cpp \
@@ -156,16 +146,27 @@ POLYHEDRA := \
 \
 	PolyHedra/Skin/SkinBase.cpp \
 	PolyHedra/Skin/Skin2DA.cpp \
-	PolyHedra/Skin/Skin2D_Data.cpp
+	PolyHedra/Skin/Skin2D_Data.cpp \
+\
+	PolyHedra/MainData/PolyHedra_MainData.cpp \
+	PolyHedra/MainData/PolyHedra_MainAttrib.cpp \
+	PolyHedra/MainData/PolyHedra_MainBuffer.cpp \
+	PolyHedra/Simple3D/PolyHedra_3D_BufferArray.cpp \
+	PolyHedra/Simple3D/PolyHedra_3D_Instances.cpp \
+	PolyHedra/Simple3D/PolyHedra_3D_Shader.cpp
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
 POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))
 
+POLYHEDRA_MAIN := 
+POLYHEDRA_MAIN_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA_MAIN))
+POLYHEDRA_MAIN_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA_MAIN:.cpp=.o))
+
 WAVEFORM := \
-	DataStruct/Main/Waveform/OBJ.cpp \
-	DataStruct/Main/Waveform/OBJ_Main.cpp \
-	DataStruct/Main/Waveform/OBJ_3D_BufferArray.cpp \
-	DataStruct/Main/Waveform/OBJ_3D_Shader.cpp \
-	DataStruct/Main/Waveform/MTL.cpp
+	Waveform/OBJ.cpp \
+	Waveform/OBJ_Main.cpp \
+	Waveform/OBJ_3D_BufferArray.cpp \
+	Waveform/OBJ_3D_Shader.cpp \
+	Waveform/MTL.cpp
 WAVEFORM_SRC := $(addprefix $(DIR_SRC)/,$(WAVEFORM))
 WAVEFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(WAVEFORM:.cpp=.o))
 

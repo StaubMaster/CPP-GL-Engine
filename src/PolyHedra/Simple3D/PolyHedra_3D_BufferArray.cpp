@@ -1,4 +1,4 @@
-#include "DataStruct/Full/PolyHedra_3D/PolyHedra_3D_BufferArray.hpp"
+#include "PolyHedra/Simple3D/PolyHedra_3D_BufferArray.hpp"
 
 # include "OpenGL/openGL.h"
 //# include <iostream>

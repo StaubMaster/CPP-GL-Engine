@@ -1,7 +1,7 @@
-#include "DataStruct/Main/Waveform/OBJ.hpp"
-#include "DataStruct/Main/Waveform/OBJ_Main.hpp"
+#include "Waveform/OBJ.hpp"
+#include "Waveform/OBJ_Main.hpp"
 
-#include "DataStruct/Main/Waveform/MTL.hpp"
+#include "Waveform/MTL.hpp"
 
 #include "FileContext.hpp"
 #include "Parsing/LineCommand.hpp"
