@@ -19,7 +19,7 @@ class DepthFactors : public Uniform::GBase<::DepthFactors>
 		Uniform::Float1 Location;
 
 	public:
-		DepthFactors(std::string name, Shader::Base & shader);
+		DepthFactors(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::DepthFactors val) override;

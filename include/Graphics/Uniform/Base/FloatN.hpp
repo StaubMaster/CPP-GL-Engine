@@ -18,7 +18,7 @@ class FloatN : public Uniform::GBase<const float *>
 		int Count;
 
 	public:
-		FloatN(int count, std::string name, Shader::Base & shader);
+		FloatN(int count, Uniform::NameShader name_shader);
 
 	public:
 		virtual void PutData(const float * val) = 0;

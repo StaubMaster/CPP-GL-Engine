@@ -4,9 +4,9 @@
 
 
 
-Uniform::Trans3D::Trans3D(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Pos(name + ".Pos", shader),
-	Rot(name + ".Rot", shader)
+Uniform::Trans3D::Trans3D(Uniform::NameShader name_shader) : GBase(name_shader),
+	Pos(name_shader.Suffix(".Pos")),
+	Rot(name_shader.Suffix(".Rot"))
 { }
 
 void Uniform::Trans3D::PutData(::Trans3D t)

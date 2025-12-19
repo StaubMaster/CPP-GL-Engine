@@ -41,7 +41,7 @@ class GBase : public Base
 
 			for (int s = 0; s < count; s++)
 			{
-				for (int u = 0; u < (int)shaders[s] -> Uniforms.size(); u++)
+				for (unsigned int u = 0; u < shaders[s] -> Uniforms.Count(); u++)
 				{
 					Uniform::Base * uni = shaders[s] -> Uniforms[u];
 					if (uni -> Name == this -> Name)

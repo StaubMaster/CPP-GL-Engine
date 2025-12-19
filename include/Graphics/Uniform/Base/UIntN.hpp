@@ -18,7 +18,7 @@ class UIntN : public Uniform::GBase<const unsigned int *>
 		int Count;
 
 	public:
-		UIntN(int count, std::string name, Shader::Base & shader);
+		UIntN(int count, Uniform::NameShader name_shader);
 
 	public:
 		virtual void PutData(const unsigned int * val) = 0;

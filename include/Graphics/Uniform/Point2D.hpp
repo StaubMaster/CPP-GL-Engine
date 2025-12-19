@@ -19,7 +19,7 @@ class Point2D : public Uniform::GBase<::Point2D>
 		Uniform::Float2 Location;
 
 	public:
-		Point2D(std::string name, Shader::Base & shader);
+		Point2D(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::Point2D p) override;

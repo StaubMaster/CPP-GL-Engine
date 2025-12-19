@@ -16,7 +16,7 @@ std::ostream & operator <<(std::ostream & o, const AxisBox2D & val);
 std::ostream & operator <<(std::ostream & o, const AxisBox3D & val);
 
 std::ostream & operator <<(std::ostream & o, const Undex3D & val);
-std::ostream & operator <<(std::ostream & o, const UndexRange3D & val);
+std::ostream & operator <<(std::ostream & o, const UndexBox3D & val);
 
 std::ostream & operator <<(std::ostream & o, const Bool3D & val);
 

@@ -23,16 +23,16 @@ class GArray
 		UniformType **	Uniforms;
 
 	public:
-		GArray(unsigned int count, std::string name, Shader::Base & shader) :
+		GArray(unsigned int count, Uniform::NameShader name_shader) :
 			Limit(count)
 		{
 			Uniforms = new UniformType*[Limit];
 			for (unsigned int i = 0; i < Limit; i++)
 			{
 				std::stringstream ss;
-				ss << name << "[" << i << "]";
+				ss << name_shader.Name << "[" << i << "]";
 				//std::cout << "Uni:" << ss.str() << "\n";
-				Uniforms[i] = new UniformType(ss.str(), shader);
+				Uniforms[i] = new UniformType(ss.str(), name_shader.Shader);
 			}
 		}
 		~GArray()

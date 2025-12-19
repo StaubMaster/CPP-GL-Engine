@@ -13,9 +13,9 @@ PolyHedra_3D_Shader::PolyHedra_3D_Shader(const DirectoryContext & dir)
 		//Shader::Code::FromFile(dir.File("PH_ULight.frag")),
 		Shader::Code::FromFile(dir.File("PH_Full.frag")),
 	}, 2),
-	ViewPortSizeRatio("ViewPortSizeRatio", *this),
-	View("View", *this),
-	Depth("Depth", *this)
+	ViewPortSizeRatio(Uniform::NameShader("ViewPortSizeRatio", *this)),
+	View(Uniform::NameShader("View", *this)),
+	Depth(Uniform::NameShader("Depth", *this))
 { }
 PolyHedra_3D_Shader::~PolyHedra_3D_Shader()
 { }

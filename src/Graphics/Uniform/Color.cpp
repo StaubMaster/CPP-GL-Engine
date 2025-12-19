@@ -3,8 +3,8 @@
 
 
 
-Uniform::Color::Color(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Location(name, shader)
+Uniform::Color::Color(Uniform::NameShader name_shader) : GBase(name_shader),
+	Location(name_shader)
 { }
 
 void Uniform::Color::PutData(::Color val)

@@ -19,7 +19,7 @@ class Color : public Uniform::GBase<::Color>
 		Uniform::Float3 Location;
 
 	public:
-		Color(std::string name, Shader::Base & shader);
+		Color(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::Color val) override;

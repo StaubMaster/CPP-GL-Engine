@@ -35,7 +35,7 @@ void Shader::Code::Attach(int ProgramID) const
 }
 void Shader::Code::Detach(int ProgramID) const
 {
-	glAttachShader(ProgramID, ID);
+	glDetachShader(ProgramID, ID);
 }
 
 void Shader::Code::Compile(const std::string code)

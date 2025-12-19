@@ -3,11 +3,11 @@
 
 
 
-Uniform::LightSpot::LightSpot(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Base(name + ".Base", shader),
-	Pos(name + ".Position", shader),
-	Dir(name + ".Direction", shader),
-	Range(name + ".Range", shader)
+Uniform::LightSpot::LightSpot(Uniform::NameShader name_shader) : GBase(name_shader),
+	Base(name_shader.Suffix(".Base")),
+	Pos(name_shader.Suffix(".Position")),
+	Dir(name_shader.Suffix(".Direction")),
+	Range(name_shader.Suffix(".Range"))
 { }
 
 void Uniform::LightSpot::PutData(::LightSpot val)

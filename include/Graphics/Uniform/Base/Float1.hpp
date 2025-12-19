@@ -14,8 +14,8 @@ namespace Uniform
 class Float1 : public Uniform::FloatN
 {
 	public:
-		Float1(std::string name, Shader::Base & shader);
-		Float1(int count, std::string name, Shader::Base & shader);
+		Float1(Uniform::NameShader name_shader);
+		Float1(int count, Uniform::NameShader name_shader);
 
 	public:
 		void PutData(const float * val) override;

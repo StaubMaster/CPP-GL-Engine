@@ -23,7 +23,7 @@ class WindowBufferSize2D : public Uniform::GBase<::WindowBufferSize2D>
 		Uniform::Point2D Ratio;
 
 	public:
-		WindowBufferSize2D(std::string name, Shader::Base & shader);
+		WindowBufferSize2D(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::WindowBufferSize2D sr) override;

@@ -3,8 +3,8 @@
 
 
 
-Uniform::Point3D::Point3D(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Location(name, shader)
+Uniform::Point3D::Point3D(Uniform::NameShader name_shader) : GBase(name_shader),
+	Location(name_shader)
 { }
 
 

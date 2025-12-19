@@ -14,8 +14,8 @@ namespace Uniform
 class UInt1 : public Uniform::UIntN
 {
 	public:
-		UInt1(std::string name, Shader::Base & shader);
-		UInt1(int count, std::string name, Shader::Base & shader);
+		UInt1(Uniform::NameShader name_shader);
+		UInt1(int count, Uniform::NameShader name_shader);
 
 	public:
 		void PutData(const unsigned int * val) override;

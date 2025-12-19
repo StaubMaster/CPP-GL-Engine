@@ -4,8 +4,8 @@
 
 
 
-Uniform::Point2D::Point2D(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Location(name, shader)
+Uniform::Point2D::Point2D(Uniform::NameShader name_shader) : GBase(name_shader),
+	Location(name_shader)
 { }
 
 void Uniform::Point2D::PutData(::Point2D p)

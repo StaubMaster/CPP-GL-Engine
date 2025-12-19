@@ -19,7 +19,7 @@ class Point3D : public Uniform::GBase<::Point3D>
 		Uniform::Float3 Location;
 
 	public:
-		Point3D(std::string name, Shader::Base & shader);
+		Point3D(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::Point3D p) override;

@@ -4,12 +4,10 @@
 
 
 
-Uniform::SizeRatio2D::SizeRatio2D(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Size(name + ".Size", shader),
-	Ratio(name + ".Ratio", shader)
-{
-
-}
+Uniform::SizeRatio2D::SizeRatio2D(Uniform::NameShader name_shader) : GBase(name_shader),
+	Size(name_shader.Suffix(".Size")),
+	Ratio(name_shader.Suffix(".Ratio"))
+{ }
 
 void Uniform::SizeRatio2D::PutData(::SizeRatio2D sr)
 {

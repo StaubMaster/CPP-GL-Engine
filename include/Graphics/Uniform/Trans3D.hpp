@@ -22,7 +22,7 @@ class Trans3D : public Uniform::GBase<::Trans3D>
 		Uniform::Angle3D Rot;
 
 	public:
-		Trans3D(std::string name, Shader::Base & shader);
+		Trans3D(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::Trans3D t) override;

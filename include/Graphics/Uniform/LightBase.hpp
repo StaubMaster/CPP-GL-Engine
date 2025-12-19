@@ -24,7 +24,7 @@ class LightBase : public Uniform::GBase<::LightBase>
 		Uniform::Color Color;
 
 	public:
-		LightBase(std::string name, Shader::Base & shader);
+		LightBase(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::LightBase val) override;

@@ -3,8 +3,8 @@
 
 
 
-Uniform::FloatN::FloatN(int count, std::string name, Shader::Base & shader) : GBase(name, shader),
-	Location(shader.UniformFind(name)),
+Uniform::FloatN::FloatN(int count, Uniform::NameShader name_shader) : GBase(name_shader),
+	Location(Find()),
 	Count(count)
 { }
 

@@ -3,9 +3,9 @@
 
 
 
-Uniform::LightSolar::LightSolar(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Base(name + ".Base", shader),
-	Dir(name + ".Direction", shader)
+Uniform::LightSolar::LightSolar(Uniform::NameShader name_shader) : GBase(name_shader),
+	Base(name_shader.Suffix(".Base")),
+	Dir(name_shader.Suffix(".Direction"))
 { }
 
 void Uniform::LightSolar::PutData(::LightSolar val)

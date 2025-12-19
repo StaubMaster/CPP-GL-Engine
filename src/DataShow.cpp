@@ -55,7 +55,7 @@ std::ostream & operator <<(std::ostream & o, const Undex3D & val)
 	o << "[" << val.X << ":" << val.Y << ":" << val.Z << "]";
 	return o;
 }
-std::ostream & operator <<(std::ostream & o, const UndexRange3D & val)
+std::ostream & operator <<(std::ostream & o, const UndexBox3D & val)
 {
 	o << "{ " << val.Min << " : " << val.Max << " }";
 	return o;

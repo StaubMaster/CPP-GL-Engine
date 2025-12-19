@@ -13,11 +13,11 @@ OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryContext & dir)
 		Shader::Code::FromFile(dir.File("OBJ_S3D.vert")),
 		Shader::Code::FromFile(dir.File("OBJ.frag")),
 	}, 2),
-	ViewPortSizeRatio("ViewPortSizeRatio", *this),
-	View("View", *this),
-	Depth("Depth", *this),
-	ColorToTex("ColorToTex", *this),
-	ShowLightFactor("ShowLightFactor", *this)
+	ViewPortSizeRatio(Uniform::NameShader("ViewPortSizeRatio", *this)),
+	View(Uniform::NameShader("View", *this)),
+	Depth(Uniform::NameShader("Depth", *this)),
+	ColorToTex(Uniform::NameShader("ColorToTex", *this)),
+	ShowLightFactor(Uniform::NameShader("ShowLightFactor", *this))
 {
 	//std::cout << "################################################################\n";
 	//std::cout << dir.File("OBJ_S3D.vert").LoadText();
@@ -26,6 +26,4 @@ OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryContext & dir)
 	//std::cout << "################################################################\n";
 }
 OBJ_3D_Shader::~OBJ_3D_Shader()
-{
-
-}
+{ }

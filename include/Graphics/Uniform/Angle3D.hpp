@@ -18,7 +18,7 @@ class Angle3D : public Uniform::GBase<::Angle3D>
 		int Location;
 
 	public:
-		Angle3D(std::string name, Shader::Base & shader);
+		Angle3D(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::Angle3D p) override;

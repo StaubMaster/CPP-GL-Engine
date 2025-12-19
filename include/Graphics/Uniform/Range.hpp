@@ -21,7 +21,7 @@ class Range : public Uniform::GBase<::Range>
 		Uniform::Float1 Max;
 
 	public:
-		Range(std::string name, Shader::Base & shader);
+		Range(Uniform::NameShader name_shader);
 
 	public:
 		void PutData(::Range val) override;

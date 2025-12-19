@@ -3,8 +3,8 @@
 
 
 
-Uniform::DepthFactors::DepthFactors(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Location(7, name, shader)
+Uniform::DepthFactors::DepthFactors(Uniform::NameShader name_shader) : GBase(name_shader),
+	Location(7, name_shader)
 { }
 
 void Uniform::DepthFactors::PutData(::DepthFactors val)

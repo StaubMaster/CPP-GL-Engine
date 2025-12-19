@@ -18,7 +18,7 @@ struct AxisBox3D;
 struct Ray3D;
 
 struct Undex3D;
-struct UndexRange3D;
+struct UndexBox3D;
 struct UndexLoop3D;
 
 struct Bool3D;

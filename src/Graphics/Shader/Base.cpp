@@ -8,8 +8,6 @@
 #include "OpenGL/openGL.h"
 #include <iostream>
 
-int Shader::Base::CurrentID = -1;
-
 
 
 Shader::Base::Base(const Code * code, int count)
@@ -31,20 +29,21 @@ void Shader::Base::Use()
 	if (!Is())
 	{
 		glUseProgram(ID);
-		Shader::Base::CurrentID = ID;
 		UniformsUpdate();
 	}
 }
 bool Shader::Base::Is() const
 {
-	return (Shader::Base::CurrentID == ID);
+	int CurrentID = 0;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &CurrentID);
+	return (CurrentID == ID);
 }
 
 
 
 void Shader::Base::UniformsUpdate()
 {
-	for (int i = 0; i < (int)Uniforms.size(); i++)
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
 		if (Uniforms[i] -> Changed)
 		{
@@ -55,16 +54,13 @@ void Shader::Base::UniformsUpdate()
 int Shader::Base::UniformFind(const std::string & name) const
 {
 	int location = glGetUniformLocation(ID, name.c_str());
-	//std::cout << "Uniform '" << name <<"' " << location << " " << ID << ".\n";
 	if (location == -1)
 	{
 		Debug::Log << "Shader " << ID << " Uniform " << name << " not found." << Debug::Done;
-		//std::cout << "Uniform '" << name <<"' not found in Prog " << ID << ".\n";
 	}
 	else
 	{
 		Debug::Log << "Shader " << ID << " Uniform " << name << " found at " << location << "." << Debug::Done;
-		//std::cout << "Uniform '" << name << "' found at " << location << " in Prog " << ID << ".\n";
 	}
 	return location;
 }

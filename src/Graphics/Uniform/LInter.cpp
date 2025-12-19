@@ -3,9 +3,9 @@
 
 
 
-Uniform::LInter::LInter(std::string name, Shader::Base & shader) : GBase(name, shader),
-	T0(name + ".T0", shader),
-	T1(name + ".T1", shader)
+Uniform::LInter::LInter(Uniform::NameShader name_shader) : GBase(name_shader),
+	T0(name_shader.Suffix(".T0")),
+	T1(name_shader.Suffix(".T1"))
 { }
 
 void Uniform::LInter::PutData(::LInter val)

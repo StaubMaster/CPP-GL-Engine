@@ -3,9 +3,9 @@
 
 
 
-Uniform::LightBase::LightBase(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Intensity(name + ".Intensity", shader),
-	Color(name + ".Color", shader)
+Uniform::LightBase::LightBase(Uniform::NameShader name_shader) : GBase(name_shader),
+	Intensity(name_shader.Suffix(".Intensity")),
+	Color(name_shader.Suffix(".Color"))
 { }
 
 void Uniform::LightBase::PutData(::LightBase val)

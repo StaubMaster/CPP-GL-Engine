@@ -3,13 +3,11 @@
 
 
 
-Uniform::Depth::Depth(std::string name, Shader::Base & shader) : GBase(name, shader),
-	Factors(name + ".Factors", shader),
-	Range(name + ".Range", shader),
-	Color(name + ".Color", shader)
-{
-	
-}
+Uniform::Depth::Depth(Uniform::NameShader name_shader) : GBase(name_shader),
+	Factors(name_shader.Suffix(".Factors")),
+	Range(name_shader.Suffix(".Range")),
+	Color(name_shader.Suffix(".Color"))
+{ }
 
 void Uniform::Depth::PutData(::Depth val)
 {

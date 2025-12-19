@@ -17,7 +17,7 @@
 #include "DataStruct/Ray3D.hpp"
 
 #include "DataStruct/Undex3D.hpp"
-#include "DataStruct/UndexRange3D.hpp"
+#include "DataStruct/UndexBox3D.hpp"
 #include "DataStruct/UndexLoop3D.hpp"
 
 #include "DataStruct/Bool3D.hpp"

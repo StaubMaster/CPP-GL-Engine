@@ -5,10 +5,9 @@
 
 
 
-Uniform::Angle3D::Angle3D(std::string name, Shader::Base & shader) : GBase(name, shader)
-{
-	Location = shader.UniformFind(name);
-}
+Uniform::Angle3D::Angle3D(Uniform::NameShader name_shader) : GBase(name_shader),
+	Location(Find())
+{ }
 
 void Uniform::Angle3D::PutData(::Angle3D a)
 {
