@@ -9,6 +9,7 @@ struct Bool3D
 
 	public:
 	Bool3D();
+	Bool3D(bool val);
 	Bool3D(bool x, bool y, bool z);
 	~Bool3D();
 	

@@ -23,7 +23,7 @@ DATASTRUCT := \
 	DataStruct/AxisBox3D.cpp \
 	DataStruct/Ray3D.cpp \
 	DataStruct/Undex3D.cpp \
-	DataStruct/UndexRange3D.cpp \
+	DataStruct/UndexBox3D.cpp \
 	DataStruct/UndexLoop3D.cpp \
 	DataStruct/Bool3D.cpp \
 	DataStruct/Matrix3x3.cpp \
