@@ -13,6 +13,7 @@ Matrix3x3::Matrix3x3()
 		}
 	}
 }
+
 Matrix3x3::Matrix3x3(const Matrix3x3 & other)
 {
 	for (int x = 0; x < 3; x++)

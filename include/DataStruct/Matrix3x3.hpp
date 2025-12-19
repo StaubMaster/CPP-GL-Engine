@@ -10,10 +10,11 @@ class Matrix3x3
 
 	public:
 		Matrix3x3();
+		
 		Matrix3x3(const Matrix3x3 & other);
 		Matrix3x3 & operator =(const Matrix3x3 & other);
-		Matrix3x3(const float * data);
 
+		Matrix3x3(const float * data);
 		static Matrix3x3 Default();
 
 	public:

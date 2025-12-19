@@ -1,0 +1,20 @@
+
+Idea:
+
+PolyHedraBase
+PolyHedraGenericBase<CornerType, FaceCornerType, FaceType>
+PolyHedra (Standard PolyHedra)
+
+
+
+make these more coherent
+make OBJ inherit from these
+
+
+
+make Control inherit from these ?
+no, Control has its own Main and Inst data
+
+
+
+Voxles could also be done as PolyHedra ???

@@ -2,31 +2,27 @@
 
 
 
-Undex3D::Undex3D()
-{
-	X = 0;
-	Y = 0;
-	Z = 0;
-}
-Undex3D::Undex3D(unsigned int x, unsigned int y, unsigned int z)
-{
-	X = x;
-	Y = y;
-	Z = z;
-}
+Undex3D::Undex3D() :
+	X(0),
+	Y(0),
+	Z(0)
+{ }
+Undex3D::Undex3D(unsigned int x, unsigned int y, unsigned int z) :
+	X(x),
+	Y(y),
+	Z(z)
+{ }
 Undex3D::~Undex3D()
-{
-
-}
+{ }
 
 
-Undex3D::Undex3D(const Undex3D & other)
-{
-	X = other.X;
-	Y = other.Y;
-	Z = other.Z;
-}
-const Undex3D & Undex3D::operator =(const Undex3D & other)
+
+Undex3D::Undex3D(const Undex3D & other) :
+	X(other.X),
+	Y(other.Y),
+	Z(other.Z)
+{ }
+Undex3D & Undex3D::operator=(const Undex3D & other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -36,7 +32,7 @@ const Undex3D & Undex3D::operator =(const Undex3D & other)
 
 
 
-Undex3D Undex3D::operator +(const Undex3D & other) const
+Undex3D Undex3D::operator+(const Undex3D & other) const
 {
 	return Undex3D(
 		X + other.X,
@@ -44,7 +40,7 @@ Undex3D Undex3D::operator +(const Undex3D & other) const
 		Z + other.Z
 	);
 }
-Undex3D Undex3D::operator -(const Undex3D & other) const
+Undex3D Undex3D::operator-(const Undex3D & other) const
 {
 	return Undex3D(
 		X - other.X,
@@ -55,16 +51,65 @@ Undex3D Undex3D::operator -(const Undex3D & other) const
 
 
 
-/*unsigned int	Undex3D::ToIndex(unsigned int size_per_side) const
+Undex3D Undex3D::operator%(const Undex3D & other) const
 {
-	return (
-		X + 
-		Y * size_per_side +
-		Z * size_per_side * size_per_side
+	return Undex3D(
+		X % other.X,
+		Y % other.Y,
+		Z % other.Z
 	);
-}*/
+}
 
 
+
+Bool3D Undex3D::operator==(const Undex3D & other) const
+{
+	return Bool3D(
+		X == other.X,
+		Y == other.Y,
+		Z == other.Z
+	);
+}
+Bool3D Undex3D::operator<=(const Undex3D & other) const
+{
+	return Bool3D(
+		X <= other.X,
+		Y <= other.Y,
+		Z <= other.Z
+	);
+}
+Bool3D Undex3D::operator>=(const Undex3D & other) const
+{
+	return Bool3D(
+		X >= other.X,
+		Y >= other.Y,
+		Z >= other.Z
+	);
+}
+Bool3D Undex3D::operator!=(const Undex3D & other) const
+{
+	return Bool3D(
+		X != other.X,
+		Y != other.Y,
+		Z != other.Z
+	);
+}
+Bool3D Undex3D::operator<(const Undex3D & other) const
+{
+	return Bool3D(
+		X < other.X,
+		Y < other.Y,
+		Z < other.Z
+	);
+}
+Bool3D Undex3D::operator>(const Undex3D & other) const
+{
+	return Bool3D(
+		X > other.X,
+		Y > other.Y,
+		Z > other.Z
+	);
+}
 
 
 
