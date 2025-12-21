@@ -34,6 +34,7 @@ class Base
 
 	public:
 		unsigned int Limit() const { return _Limit; }
+		virtual unsigned int Count() const { return _Limit; }
 		const T * Data() const { return _Data; }
 
 	public:
@@ -47,8 +48,7 @@ class Base
 			if (idx >= _Limit) { throw ExceptionInvalidIndex(); }
 			return _Data[idx];
 		}
-
-
+		//	At(idx) unchecked
 
 	public:
 		virtual void DebugInfo()
@@ -135,7 +135,6 @@ class Base
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
 			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Base(other)" << '\n';
-			other.DebugInfo();
 #endif
 			_Limit = other._Limit;
 			_Data = new T[_Limit];
@@ -145,17 +144,15 @@ class Base
 			}
 			Deletable = true;
 #ifdef CONTAINER_DEBUG
-			DebugInfo();
 			Debug::Console << Debug::TabDec;
 #endif
 		}
-		Base & operator=(const Base<T> & other)
+		Base<T> & operator=(const Base<T> & other)
 		{
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
 			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Base operator=(other)" << '\n';
 			DebugInfo();
-			other.DebugInfo();
 #endif
 			Dispose();
 			_Limit = other._Limit;
@@ -265,7 +262,6 @@ class Base
 			Debug::Console << Debug::TabInc;
 			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Bind()" << " ..." << '\n';
 			DebugInfo();
-			other.DebugInfo();
 #endif
 			Dispose();
 			_Limit = limit;

@@ -20,7 +20,7 @@ class Dynamic : public Base<T>
 
 
 	public:
-		unsigned int Count() const { return _Count; }
+		unsigned int Count() const override { return _Count; }
 
 	public:
 		T & operator[](unsigned int idx) override
@@ -113,12 +113,19 @@ class Dynamic : public Base<T>
 			Debug::Console << Debug::TabDec;
 #endif
 		}
+		virtual ~Dynamic()
+		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ----  " << "~Dynamic()" << '\n';
+			Debug::Console << Debug::TabDec;
+#endif
+		}
+
 		Dynamic(const Base<T> & other) : Base<T>(other)
 		{
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-#endif
-#ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic(base)" << '\n';
 #endif
 			_Count = this -> _Limit;
@@ -128,12 +135,32 @@ class Dynamic : public Base<T>
 			Debug::Console << Debug::TabDec;
 #endif
 		}
+		Dynamic & operator=(const Base<T> & other)
+		{
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic operator=(base)" << '\n';
+#endif
+			Dispose();
+			this -> _Limit = other._Limit;
+			this -> _Count = other._Limit;
+			this -> _Data = new T[this -> _Limit];
+			for (unsigned int i = 0; i < _Count; i++)
+			{
+				this -> _Data[i] = other._Data[i];
+			}
+			this -> Deletable = true;
+			IncB = IncreaseBehaviour::Binary;
+			DecB = DecreaseBehaviour::Binary;
+#ifdef CONTAINER_DEBUG
+			Debug::Console << Debug::TabDec;
+#endif
+			return *this;
+		}
 		Dynamic(const Dynamic<T> & other) : Base<T>(other)
 		{
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
-#endif
-#ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic(other)" << '\n';
 #endif
 			_Count = other._Count;
@@ -143,17 +170,27 @@ class Dynamic : public Base<T>
 			Debug::Console << Debug::TabDec;
 #endif
 		}
-		virtual ~Dynamic()
+		Dynamic & operator=(const Dynamic<T> & other)
 		{
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabInc;
+			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic(other)" << '\n';
 #endif
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ----  " << "~Dynamic()" << '\n';
-#endif
+			Dispose();
+			this -> _Limit = other._Limit;
+			this -> _Count = other._Count;
+			this -> _Data = new T[this -> _Limit];
+			for (unsigned int i = 0; i < _Count; i++)
+			{
+				this -> _Data[i] = other._Data[i];
+			}
+			this -> Deletable = true;
+			IncB = IncreaseBehaviour::Binary;
+			DecB = DecreaseBehaviour::Binary;
 #ifdef CONTAINER_DEBUG
 			Debug::Console << Debug::TabDec;
 #endif
+			return *this;
 		}
 
 

@@ -22,16 +22,14 @@ Uniform::NameShader Uniform::NameShader::Suffix(std::string name) const
 
 Uniform::Base::Base(Uniform::NameShader & name_shader) :
 	Name(name_shader.Name),
-	Shader(name_shader.Shader)
+	Shader(name_shader.Shader),
+	Multiform(NULL),
+	MultiformChanged(false)
 {
-	Uniform = NULL;
-	Changed = false;
 	Shader.Uniforms.Insert(this);
 }
 Uniform::Base::~Base()
-{
-	
-}
+{ }
 
 
 
@@ -39,7 +37,10 @@ int Uniform::Base::Find() const { return Shader.UniformFind(Name); }
 
 
 
-void Uniform::Base::PutData()
+void Uniform::Base::PutMultiformData()
 {
-	Uniform -> Data_PutUniform(this);
+	if (MultiformChanged)
+	{
+		Multiform -> PutUniformData(this);
+	}
 }

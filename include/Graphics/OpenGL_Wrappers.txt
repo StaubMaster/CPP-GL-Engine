@@ -1,0 +1,6 @@
+Make it so Destructor dosent delete ID ?
+have a Dispose function for that ?
+this might cause lost IDs
+but that is a Problem with OpenGL in general
+
+do that for all OpenGL "Wrapper" stuff

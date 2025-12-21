@@ -9,17 +9,52 @@
 
 
 
+Shader::Code::Code()
+{
+	ID = 0;
+}
 Shader::Code::Code(GLenum type, const std::string code, const std::string path)
 {
 	Path = path;
 	ID = glCreateShader(type);
 	Debug::Log << "++++ Shader::Code " << ID << Debug::Done;
+	std::cout << "++++ Shader::Code " << ID << '\n';
 	Compile(code);
 }
 Shader::Code::~Code()
 {
 	Debug::Log << "---- Shader::Code " << ID << Debug::Done;
+	std::cout << "---- Shader::Code " << ID << '\n';
+}
+
+
+
+Shader::Code::Code(const Shader::Code & other) :
+	ID(other.ID),
+	Path(other.Path)
+{ }
+Shader::Code & Shader::Code::operator=(const Shader::Code & other)
+{
+	ID = other.ID;
+	Path = other.Path;
+	return *this;
+}
+
+
+
+void Shader::Code::Dispose()
+{
+	Debug::Log << "Shader::Code Dispose " << ID << Debug::Done;
+	std::cout << "Shader::Code Dispose " << ID << '\n';
 	glDeleteShader(ID);
+	ID = 0;
+}
+void Shader::Code::Dispose(Container::Base<Shader::Code> & code)
+{
+	for (unsigned int i = 0; i < code.Limit(); i++)
+	{
+		code[i].Dispose();
+	}
 }
 
 
@@ -88,7 +123,7 @@ bool str_ends_with(const std::string & str, const std::string & pattern)
 	return true;
 }
 
-Shader::Code Shader::Code::FromFile(const FileContext & file)
+Shader::Code * Shader::Code::FromFile(const FileContext & file)
 {
 	std::string ext = file.Extension();
 
@@ -99,7 +134,7 @@ Shader::Code Shader::Code::FromFile(const FileContext & file)
 	else if (ext == ".frag") { type = GL_FRAGMENT_SHADER; }
 	else { throw EInvalidFileExtention(file.Path.ToString()); }
 
-	return Shader::Code(type, file.LoadText(), file.Path.ToString());
+	return new Shader::Code(type, file.LoadText(), file.Path.ToString());
 }
 
 Shader::Code::EInvalidFileExtention::EInvalidFileExtention(const std::string & path)

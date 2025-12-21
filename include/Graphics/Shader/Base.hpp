@@ -1,7 +1,7 @@
-
 #ifndef  SHADER_BASE_HPP
 # define SHADER_BASE_HPP
 
+# include "Miscellaneous/Container/Base.hpp"
 # include "Miscellaneous/Container/Dynamic.hpp"
 # include <string>
 
@@ -22,19 +22,28 @@ class Base
 	Container::Dynamic<Uniform::Base *> Uniforms;
 
 	public:
-	Base(const Code * code, int count);
+	Base(Container::Base<Code *> code);
 	virtual ~Base();
+
+	Base(const Shader::Base & other);
+	Base & operator=(const Shader::Base & other);
+
+	public:
+	void Dispose();
+	static void Dispose(Container::Base<Shader::Base> & shaders);
 
 	public:
 	void Use();
 	bool Is() const;
+	static int Bound();
+	static void BindNone();
 
 	public:
 	void UniformsUpdate();
 	int UniformFind(const std::string & name) const;
 
 	private:
-	void Compile(const Code * code, int count);
+	void Compile(Container::Base<Code *> & code);
 
 	class ECompileLog : std::exception
 	{

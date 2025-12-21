@@ -3,6 +3,7 @@
 
 # include "Debug.hpp"
 
-//# define CONTAINER_DEBUG
+# define CONTAINER_DEBUG
+//#error "CONTAINER_DEBUG used here"
 
 #endif

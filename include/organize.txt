@@ -1,0 +1,24 @@
+
+
+
+/Data
+	rename /DataStruct
+/Miscellaneous
+	PolyHedra
+	Waveform
+	Light
+	Depth ?
+	InstanceData
+
+
+
+/DataStruct to /Data
+	simple data structs
+	/Value since they are all fixed and relatively small
+	and "abstract"
+
+/Graphics
+	OpenGL related Graphics stuff
+/Display to /Graphics/Coord
+
+

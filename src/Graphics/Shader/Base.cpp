@@ -10,16 +10,47 @@
 
 
 
-Shader::Base::Base(const Code * code, int count)
+Shader::Base::Base(Container::Base<Code *> code)
 {
 	ID = glCreateProgram();
 	Debug::Log << "++++ BaseShader " << ID << Debug::Done;
-	Compile(code, count);
+	std::cout << "++++ BaseShader " << ID << '\n';
+	Compile(code);
 }
 Shader::Base::~Base()
 {
+	std::cout << "---- BaseShader " << ID << '\n';
 	Debug::Log << "---- BaseShader " << ID << Debug::Done;
+}
+
+
+
+Shader::Base::Base(const Shader::Base & other) :
+	ID(other.ID),
+	Uniforms(other.Uniforms)
+{ }
+Shader::Base & Shader::Base::operator=(const Shader::Base & other)
+{
+	ID = other.ID;
+	Uniforms = other.Uniforms;
+	return *this;
+}
+
+
+
+void Shader::Base::Dispose()
+{
+	Debug::Log << "Shader::Base Dispose " << ID << Debug::Done;
+	std::cout << "Shader::Base Dispose " << ID << '\n';
 	glDeleteProgram(ID);
+	ID = 0;
+}
+void Shader::Base::Dispose(Container::Base<Shader::Base> & shaders)
+{
+	for (unsigned int i = 0; i < shaders.Limit(); i++)
+	{
+		shaders[i].Dispose();
+	}
 }
 
 
@@ -34,9 +65,17 @@ void Shader::Base::Use()
 }
 bool Shader::Base::Is() const
 {
-	int CurrentID = 0;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &CurrentID);
-	return (CurrentID == ID);
+	return (Bound() == ID);
+}
+int Shader::Base::Bound()
+{
+	int ID;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &ID);
+	return ID;
+}
+void Shader::Base::BindNone()
+{
+	glUseProgram(0);
 }
 
 
@@ -45,10 +84,7 @@ void Shader::Base::UniformsUpdate()
 {
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
-		if (Uniforms[i] -> Changed)
-		{
-			Uniforms[i] -> PutData();
-		}
+		Uniforms[i] -> PutMultiformData();
 	}
 }
 int Shader::Base::UniformFind(const std::string & name) const
@@ -67,16 +103,16 @@ int Shader::Base::UniformFind(const std::string & name) const
 
 
 
-void Shader::Base::Compile(const Code * code, int count)
+void Shader::Base::Compile(Container::Base<Code *> & code)
 {
 	Debug::Log << "Compiling BaseShader " << ID << " ..." << Debug::Done;
 	Debug::Log << "BaseShader " << ID << " using Code";
-	for (int i = 0; i < count; i++) { Debug::Log << " " << code[i].getID(); }
+	for (unsigned int i = 0; i < code.Limit(); i++) { Debug::Log << " " << code[i] -> getID(); }
 	Debug::Log << Debug::Done;
 
-	for (int i = 0; i < count; i++) { code[i].Attach(ID); }
+	for (unsigned int i = 0; i < code.Limit(); i++) { code[i] -> Attach(ID); }
 	glLinkProgram(ID);
-	for (int i = 0; i < count; i++) { code[i].Detach(ID); }
+	for (unsigned int i = 0; i < code.Limit(); i++) { code[i] -> Detach(ID); }
 
 	char log_arr[1024];
 	int log_len = 0;

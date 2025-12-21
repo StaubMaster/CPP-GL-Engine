@@ -2,6 +2,7 @@
 #ifndef  MULTIFORM_BASE_HPP
 # define MULTIFORM_BASE_HPP
 
+#include "Miscellaneous/Container/Base.hpp"
 #include <string>
 
 namespace Shader
@@ -16,18 +17,21 @@ namespace Uniform
 
 namespace Multiform
 {
+
+class Base;
+
 class Base
 {
 	public:
-		std::string Name;
+	std::string Name;
 
 	protected:
-		Base(std::string name);
-		~Base();
+	Base(std::string name);
+	~Base();
 
 	public:
-		virtual void FindUniforms(Shader::Base ** shaders, int len) = 0;
-		virtual void Data_PutUniform(Uniform::Base * uni_base) = 0;
+	virtual void FindUniforms(Container::Base<Shader::Base *> & shaders) = 0;
+	virtual void PutUniformData(Uniform::Base * uni_base) = 0;
 };
 };
 

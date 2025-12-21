@@ -28,10 +28,11 @@ struct NameShader
 class Base
 {
 	public:
-	std::string Name;
-	Shader::Base & Shader;
-	Multiform::Base * Uniform;
-	bool Changed;
+	std::string			Name;
+	Shader::Base &		Shader;
+
+	Multiform::Base *	Multiform;
+	bool				MultiformChanged;
 
 	/*
 		name and shader go down the Constructor chain until here
@@ -47,7 +48,7 @@ class Base
 	int Find() const;
 
 	public:
-	void PutData();
+	void PutMultiformData();
 };
 };
 
