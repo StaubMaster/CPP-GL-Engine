@@ -10,18 +10,16 @@
 
 
 
-Shader::Base::Base(Container::Base<Code *> code)
+Shader::Base::Base() :
+	ID(0)
+{ }
+Shader::Base::Base(Container::Base<Code> code) :
+	ID(0)
 {
-	ID = glCreateProgram();
-	Debug::Log << "++++ BaseShader " << ID << Debug::Done;
-	std::cout << "++++ BaseShader " << ID << '\n';
 	Compile(code);
 }
 Shader::Base::~Base()
-{
-	std::cout << "---- BaseShader " << ID << '\n';
-	Debug::Log << "---- BaseShader " << ID << Debug::Done;
-}
+{ }
 
 
 
@@ -45,12 +43,30 @@ void Shader::Base::Dispose()
 	glDeleteProgram(ID);
 	ID = 0;
 }
-void Shader::Base::Dispose(Container::Base<Shader::Base> & shaders)
+
+void Shader::Base::Compile(Container::Base<Code> & code)
 {
-	for (unsigned int i = 0; i < shaders.Limit(); i++)
+	Shader::Code::Compile(code);
+
+	ID = glCreateProgram();
+	Debug::Log << "Compiling BaseShader " << ID << " ..." << Debug::Done;
+	Debug::Log << "BaseShader " << ID << " using Code";
+	for (unsigned int i = 0; i < code.Count(); i++) { Debug::Log << " " << code[i].getID(); }
+	Debug::Log << Debug::Done;
+
+	for (unsigned int i = 0; i < code.Count(); i++) { code[i].Attach(ID); }
+	glLinkProgram(ID);
+	for (unsigned int i = 0; i < code.Count(); i++) { code[i].Detach(ID); }
+
+	char log_arr[1024];
+	int log_len = 0;
+	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
+	if (log_len != 0)
 	{
-		shaders[i].Dispose();
+		std::string log = std::string(log_arr, log_len);
+		throw ECompileLog(log);
 	}
+	Debug::Log << "Compiling BaseShader " << ID << " done" << Debug::Done;
 }
 
 
@@ -102,28 +118,6 @@ int Shader::Base::UniformFind(const std::string & name) const
 }
 
 
-
-void Shader::Base::Compile(Container::Base<Code *> & code)
-{
-	Debug::Log << "Compiling BaseShader " << ID << " ..." << Debug::Done;
-	Debug::Log << "BaseShader " << ID << " using Code";
-	for (unsigned int i = 0; i < code.Limit(); i++) { Debug::Log << " " << code[i] -> getID(); }
-	Debug::Log << Debug::Done;
-
-	for (unsigned int i = 0; i < code.Limit(); i++) { code[i] -> Attach(ID); }
-	glLinkProgram(ID);
-	for (unsigned int i = 0; i < code.Limit(); i++) { code[i] -> Detach(ID); }
-
-	char log_arr[1024];
-	int log_len = 0;
-	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
-	if (log_len != 0)
-	{
-		std::string log = std::string(log_arr, log_len);
-		throw ECompileLog(log);
-	}
-	Debug::Log << "Compiling BaseShader " << ID << " done" << Debug::Done;
-}
 
 Shader::Base::ECompileLog::ECompileLog(const std::string log)
 {

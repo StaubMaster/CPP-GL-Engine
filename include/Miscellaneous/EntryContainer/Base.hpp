@@ -1,8 +1,6 @@
 #ifndef  ENTRY_CONTAINER_BASE_HPP
 # define ENTRY_CONTAINER_BASE_HPP
 
-# include "DebugDefines.hpp"
-
 # include "Entry.hpp"
 # include "Miscellaneous/Container/Base.hpp"
 # include "Miscellaneous/Container/Dynamic.hpp"
@@ -31,86 +29,33 @@ class Base : public Container::Base<T>
 
 
 	public:
-		virtual void DebugInfo() override
-		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << ">>>> EntryContainer::Base.Info()\n";
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << this << '\n';
-
-			Debug::Console << "Data" << ' ' << (this -> _Data) << '\n';
-			Debug::Console << "Limit" << ' ' << (this -> _Limit) << '\n';
-
-			Debug::Console << "IsConstant" << ' ';
-			if (this -> IsConstant) { Debug::Console << "true"; } else { Debug::Console << "false"; }
-			Debug::Console << '\n';
-
-			Debug::Console << "IsLocked" << ' ';
-			if (this -> _IsLocked) { Debug::Console << "true"; } else { Debug::Console << "false"; }
-			Debug::Console << '\n';
-
-			Debug::Console << "Changed" << ' ';
-			if (this -> Changed) { Debug::Console << "true"; } else { Debug::Console << "false"; }
-			Debug::Console << '\n';
-		
-			Debug::Console << "Entrys" << ' ' << (this -> Entrys.Count()) << ' ' << (this -> Entrys.Limit()) << '\n';
-			Debug::Console << Debug::Tabs << "<<<< EntryContainer::Base.Info()\n";
-			Debug::Console << Debug::TabDec;
-#endif
-		}
+		virtual void DebugInfo() override { }
 
 	public:
 		Base() : Container::Base<T>(),
 			Entrys(Container::IncreaseBehaviour::Binary, Container::DecreaseBehaviour::Binary)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Base" << "  ++++  " << "Base()" << "\n";
-#endif
 			//_Limit = 0;
 			//_Data = new T[_Limit];
 			_IsLocked = false;
 			Changed = false;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		Base(unsigned int limit) : Container::Base<T>(limit),
 			Entrys(Container::IncreaseBehaviour::Binary, Container::DecreaseBehaviour::Binary)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Base" << "  ++++  " << "Base(limit)" << "\n";
-#endif
 			//_Limit = limit;
 			//_Data = new T[_Limit];
 			_IsLocked = false;
 			Changed = false;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		virtual ~Base()
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Base" << "  ----  " << "~Base()" << "\n";
-#endif
 			//delete[] _Data;
 			for (unsigned int i = 0; i < Entrys.Count(); i++)
 			{
 				Entrys[i] -> Container = NULL;
 				delete Entrys[i];
 			}
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 
 	public:

@@ -9,11 +9,15 @@
 
 
 OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryContext & dir)
-	: Shader::Base(Container::Base<Shader::Code *>()
-	/*(const Shader::Code []) {
-		Shader::Code::FromFile(dir.File("OBJ_S3D.vert")),
-		Shader::Code::FromFile(dir.File("OBJ.frag")),
-	}, 2*/),
+	: Shader::Base(
+		Container::Base<Shader::Code>(
+			(Shader::Code[])
+			{
+				Shader::Code(dir.File("OBJ_S3D.vert")),
+				Shader::Code(dir.File("OBJ.frag")),
+			}, 2
+		)
+	),
 	ViewPortSizeRatio(Uniform::NameShader("ViewPortSizeRatio", *this)),
 	View(Uniform::NameShader("View", *this)),
 	Depth(Uniform::NameShader("Depth", *this)),

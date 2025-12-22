@@ -1,8 +1,6 @@
 #ifndef  ENTRY_CONTAINER_ENTRY_HPP
 # define ENTRY_CONTAINER_ENTRY_HPP
 
-# include "DebugDefines.hpp"
-
 # include "EntryData.hpp"
 
 # include <iostream>
@@ -18,58 +16,20 @@ class Entry
 		EntryData<T> * Data;
 
 	public:
-		virtual void DebugInfo()
-		{
-			Debug::Console << Debug::Tabs << ">>>> EntryContainer::Entry.Info()\n";
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << this << '\n';
-
-			Debug::Console << Debug::Tabs << "Data" << ' ' << (Data) << '\n';
-			if (Data != NULL)
-			{
-				Data -> DebugInfo();
-			}
-
-			Debug::Console << Debug::TabDec;
-			Debug::Console << Debug::Tabs << "<<<< EntryContainer::Entry.Info()\n";
-		}
+		virtual void DebugInfo() { }
 
 	public:
 		Entry()
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ++++  " << "Entry()\n";
-#endif
 			Data = NULL;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		Entry(Base<T> & container, unsigned int count)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ++++  " << "Entry(container, count)\n";
-#endif
 			Data = container.Alloc(count);
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		~Entry()
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ----  " << "~Entry()\n";
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
-#endif
 			delete Data;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 
 		/*	Copying
@@ -112,10 +72,6 @@ class Entry
 		*/
 		Entry(const Entry<T> & other)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "Entry(other) ...\n";
-#endif
 			if (other.Data != NULL)
 			{
 				Data = other.Data -> Container -> Copy(other.Data);
@@ -124,35 +80,14 @@ class Entry
 			{
 				Data = NULL;
 			}
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "Entry(other) done\n";
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		Entry<T> & operator =(const Entry<T> & other)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "operator =(other) ...\n";
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs<< "EntryContainer::Entry" << " Data " << Data << "\n";
-#endif
 			Dispose();
 			if (other.Data != NULL)
 			{
 				Data = other.Data -> Container -> Copy(other.Data);
 			}
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
-#endif
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ====  " << "operator =(other) done\n";
-			Debug::Console << Debug::TabDec;
-#endif
 			return *this;
 		}
 
@@ -184,16 +119,8 @@ class Entry
 		{
 			if (idx >= Data -> Length)
 			{
-#ifdef ENTRY_CONTAINER_DEBUG
-				Debug::Console << Debug::TabInc;
-				Debug::Console << Debug::Tabs << __FILE__ << ':' << __LINE__ << '\n';
-				Debug::Console << Debug::Tabs << idx << " >= " << (Data -> Length) << "\n";
-#endif
 				const char * msg = "EntryContainer::Entry Index invalid.";
 				//std::cout << msg << "\n";
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 				throw msg;
 			}
 		}
@@ -245,32 +172,16 @@ class Entry
 		}
 		void Allocate(Base<T> & container, unsigned int count)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ++++  " << "Allocate()\n";
-#endif
 			Dispose();
 			Data = container.Alloc(count);
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << " Data " << Data << "\n";
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		void Dispose()
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::Entry" << "  ----  " << "Dispose()\n";
-			Debug::Console << Debug::Tabs<< "EntryContainer::Entry" << " Data " << Data << "\n";
-#endif
 			if (Data != NULL)
 			{
 				delete Data;
 				Data = NULL;
 			}
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 };
 

@@ -22,7 +22,8 @@ class Base
 	Container::Dynamic<Uniform::Base *> Uniforms;
 
 	public:
-	Base(Container::Base<Code *> code);
+	Base();
+	Base(Container::Base<Shader::Code> code);
 	virtual ~Base();
 
 	Base(const Shader::Base & other);
@@ -30,9 +31,15 @@ class Base
 
 	public:
 	void Dispose();
-	static void Dispose(Container::Base<Shader::Base> & shaders);
+
+	private:
+	void Compile(Container::Base<Code> & code);
 
 	public:
+	//bool IsValid();
+	//void Bind();
+	//bool IsBound();
+
 	void Use();
 	bool Is() const;
 	static int Bound();
@@ -41,9 +48,6 @@ class Base
 	public:
 	void UniformsUpdate();
 	int UniformFind(const std::string & name) const;
-
-	private:
-	void Compile(Container::Base<Code *> & code);
 
 	class ECompileLog : std::exception
 	{

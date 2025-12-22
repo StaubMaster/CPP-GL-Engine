@@ -1,8 +1,6 @@
 #ifndef  CONTAINER_DYNAMIC_HPP
 # define CONTAINER_DYNAMIC_HPP
 
-# include "DebugDefines.hpp"
-
 # include "Base.hpp"
 # include "Behaviour.hpp"
 
@@ -13,223 +11,123 @@ template<typename T>
 class Dynamic : public Base<T>
 {
 	protected:
-		unsigned int _Count;
-		IncreaseBehaviour IncB;
-		DecreaseBehaviour DecB;
+	unsigned int _Count;
+	IncreaseBehaviour IncB;
+	DecreaseBehaviour DecB;
 
 
 
 	public:
-		unsigned int Count() const override { return _Count; }
+	unsigned int Count() const override { return _Count; }
 
 	public:
-		T & operator[](unsigned int idx) override
-		{
-			if (idx >= _Count) { throw ExceptionInvalidIndex(); }
-			return this -> _Data[idx];
-		}
-		const T & operator[](unsigned int idx) const override
-		{
-			if (idx >= _Count) { throw ExceptionInvalidIndex(); }
-			return this -> _Data[idx];
-		}
-
-
-
-	public:
-		virtual void DebugInfo() override
-		{
-			Debug::Console << Debug::Tabs << ">>>> Container::Dynamic.Info()\n";
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << this << '\n';
-
-			Debug::Console << Debug::Tabs << "Data" << ' ' << (this -> _Data) << '\n';
-			Debug::Console << Debug::Tabs << "Limit" << ' ' << (this -> _Limit) << '\n';
-			Debug::Console << Debug::Tabs << "Count" << ' ' << (this -> _Count) << '\n';
-
-			Debug::Console << Debug::Tabs << "Deletable" << ' ';
-			if (this -> Deletable) { Debug::Console << "true"; } else { Debug::Console << "false"; }
-			Debug::Console << '\n';
-
-			Debug::Console << Debug::Tabs << "IncB" << ' ';
-			if (IncB == IncreaseBehaviour::None) { Debug::Console << "None"; }
-			if (IncB == IncreaseBehaviour::Fit) { Debug::Console << "Fit"; }
-			if (IncB == IncreaseBehaviour::Binary) { Debug::Console << "Binary"; }
-			Debug::Console << '\n';
-
-			Debug::Console << Debug::Tabs << "DecB" << ' ';
-			if (DecB == DecreaseBehaviour::None) { Debug::Console << "None"; }
-			if (DecB == DecreaseBehaviour::Fit) { Debug::Console << "Fit"; }
-			if (DecB == DecreaseBehaviour::Binary) { Debug::Console << "Binary"; }
-			Debug::Console << '\n';
-
-			Debug::Console << Debug::TabDec;
-			Debug::Console << Debug::Tabs << "<<<< Container::Dynamic.Info()\n";
-		}
-
-	public:
-		Dynamic() : Base<T>()
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-#endif
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ++++  " << "Dynamic()" << '\n';
-#endif
-			_Count = 0;
-			IncB = IncreaseBehaviour::Binary;
-			DecB = DecreaseBehaviour::Binary;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		Dynamic(IncreaseBehaviour incB, DecreaseBehaviour decB) : Base<T>()
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-#endif
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ++++  " << "Dynamic(inc, dec)" << '\n';
-#endif
-			_Count = 0;
-			IncB = incB;
-			DecB = decB;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		Dynamic(unsigned int limit, IncreaseBehaviour incB, DecreaseBehaviour decB) : Base<T>(limit)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-#endif
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ++++  " << "Dynamic(limit, inc, dec)" << '\n';
-#endif
-			_Count = 0;
-			IncB = incB;
-			DecB = decB;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		virtual ~Dynamic()
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ----  " << "~Dynamic()" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-
-		Dynamic(const Base<T> & other) : Base<T>(other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic(base)" << '\n';
-#endif
-			_Count = this -> _Limit;
-			IncB = IncreaseBehaviour::Binary;
-			DecB = DecreaseBehaviour::Binary;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		Dynamic & operator=(const Base<T> & other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic operator=(base)" << '\n';
-#endif
-			Dispose();
-			this -> _Limit = other._Limit;
-			this -> _Count = other._Limit;
-			this -> _Data = new T[this -> _Limit];
-			for (unsigned int i = 0; i < _Count; i++)
-			{
-				this -> _Data[i] = other._Data[i];
-			}
-			this -> Deletable = true;
-			IncB = IncreaseBehaviour::Binary;
-			DecB = DecreaseBehaviour::Binary;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-			return *this;
-		}
-		Dynamic(const Dynamic<T> & other) : Base<T>(other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic(other)" << '\n';
-#endif
-			_Count = other._Count;
-			IncB = other.IncB;
-			DecB = other.DecB;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		Dynamic & operator=(const Dynamic<T> & other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ====  " << "Dynamic(other)" << '\n';
-#endif
-			Dispose();
-			this -> _Limit = other._Limit;
-			this -> _Count = other._Count;
-			this -> _Data = new T[this -> _Limit];
-			for (unsigned int i = 0; i < _Count; i++)
-			{
-				this -> _Data[i] = other._Data[i];
-			}
-			this -> Deletable = true;
-			IncB = IncreaseBehaviour::Binary;
-			DecB = DecreaseBehaviour::Binary;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-			return *this;
-		}
+	T & operator[](unsigned int idx) override
+	{
+		if (idx >= _Count) { throw ExceptionInvalidIndex(); }
+		return this -> _Data[idx];
+	}
+	const T & operator[](unsigned int idx) const override
+	{
+		if (idx >= _Count) { throw ExceptionInvalidIndex(); }
+		return this -> _Data[idx];
+	}
 
 
 
 	public:
-		void Dispose() override
+	virtual void DebugInfo() override { }
+
+	public:
+	Dynamic() : Base<T>()
+	{
+		_Count = 0;
+		IncB = IncreaseBehaviour::Binary;
+		DecB = DecreaseBehaviour::Binary;
+	}
+	Dynamic(IncreaseBehaviour incB, DecreaseBehaviour decB) : Base<T>()
+	{
+		_Count = 0;
+		IncB = incB;
+		DecB = decB;
+	}
+	Dynamic(unsigned int limit, IncreaseBehaviour incB, DecreaseBehaviour decB) : Base<T>(limit)
+	{
+		_Count = 0;
+		IncB = incB;
+		DecB = decB;
+	}
+	virtual ~Dynamic()
+	{
+	}
+
+	Dynamic(const Base<T> & other) : Base<T>(other)
+	{
+		_Count = this -> _Limit;
+		IncB = IncreaseBehaviour::Binary;
+		DecB = DecreaseBehaviour::Binary;
+	}
+	Dynamic & operator=(const Base<T> & other)
+	{
+		Dispose();
+		this -> _Limit = other._Limit;
+		this -> _Count = other._Limit;
+		this -> _Data = new T[this -> _Limit];
+		for (unsigned int i = 0; i < _Count; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ----  " << "Dispose()" << " ..." << '\n';
-			DebugInfo();
-#endif
-			Base<T>::Dispose();
-			_Count = 0;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  ----  " << "Dispose()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
+			this -> _Data[i] = other._Data[i];
 		}
-		void ResizeLimit(unsigned int limit) override
+		this -> Deletable = true;
+		IncB = IncreaseBehaviour::Binary;
+		DecB = DecreaseBehaviour::Binary;
+		return *this;
+	}
+	Dynamic(const Dynamic<T> & other) : Base<T>(other)
+	{
+		_Count = other._Count;
+		IncB = other.IncB;
+		DecB = other.DecB;
+	}
+	Dynamic & operator=(const Dynamic<T> & other)
+	{
+		Dispose();
+		this -> _Limit = other._Limit;
+		this -> _Count = other._Count;
+		this -> _Data = new T[this -> _Limit];
+		for (unsigned int i = 0; i < _Count; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "        " << "ResizeLimit()" << " ..." << '\n';
-			DebugInfo();
-#endif
-			if (limit != this -> _Limit)
-			{
-				Base<T> other(limit);
-				Base<T>::CopyData(*this, other, _Count);
-				other.Swap(*this);
-			}
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "        " << "ResizeLimit()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
+			this -> _Data[i] = other._Data[i];
 		}
+		this -> Deletable = true;
+		IncB = IncreaseBehaviour::Binary;
+		DecB = DecreaseBehaviour::Binary;
+		return *this;
+	}
+
+
+
+	public:
+	void Dispose() override
+	{
+		Base<T>::Dispose();
+		_Count = 0;
+	}
+	void ResizeLimit(unsigned int limit) override
+	{
+		if (limit != this -> _Limit)
+		{
+			Base<T> other(limit);
+			Base<T>::CopyData(*this, other, _Count);
+			other.Swap(*this);
+		}
+	}
+	void Trim()
+	{
+		if (_Count < this -> _Limit)
+		{
+			this -> ResizeLimit(_Count);
+		}
+	}
+
 	/*	Gapped Copying
 			used for optimized Copying when Removing / Inserting
 			Inserting is currenty only done at the end
@@ -247,140 +145,79 @@ class Dynamic : public Base<T>
 
 		handle the Size change somewhere else ?
 	*/
-		void InsertGap(Entry gap)
+	void InsertGap(Entry gap)
+	{
+		//	done in reverse, else it would override
+		if (_Count != 0)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  <-->  " << "InsertGap()" << " ..." << '\n';
-#endif
-			//	done in reverse, else it would override
-			if (_Count != 0)
+			for (unsigned int i = _Count - 1; i >= gap.Offset; i--)
 			{
-				for (unsigned int i = _Count - 1; i >= gap.Offset; i--)
-				{
-					this -> _Data[i + gap.Length] = this -> _Data[i];
-				}
+				this -> _Data[i + gap.Length] = this -> _Data[i];
 			}
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  <-->  " << "InsertGap()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-			_Count = _Count + gap.Length;
 		}
-		void RemoveGap(Entry gap)
+		_Count = _Count + gap.Length;
+	}
+	void RemoveGap(Entry gap)
+	{
+		for (unsigned int i = gap.Offset; i < _Count; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  <-->  " << "RemoveGap()" << " ..." << '\n';
-#endif
-			for (unsigned int i = gap.Offset; i < _Count; i++)
-			{
-				this -> _Data[i] = this -> _Data[i + gap.Length];
-			}
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << "  <-->  " << "RemoveGap()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-			_Count = _Count - gap.Length;
+			this -> _Data[i] = this -> _Data[i + gap.Length];
 		}
+		_Count = _Count - gap.Length;
+	}
 
-	public:
-		//	changes Limit to Count. ignores Behaviour
-		void Trim()
-		{
-			if (_Count < this -> _Limit)
-			{
-				this -> ResizeLimit(_Count);
-			}
-		}
+
 
 	private:
-		unsigned int IncLimit(unsigned int wanted_count)
-		{
-			if (IncB == IncreaseBehaviour::None)	{ return this -> _Limit; }
-			if (IncB == IncreaseBehaviour::Fit)		{ return wanted_count; }
-			if (IncB == IncreaseBehaviour::Binary)	{ return BinarySize(wanted_count); }
-			return this -> _Limit;
-		}
-		unsigned int DecLimit(unsigned int wanted_count)
-		{
-			if (DecB == DecreaseBehaviour::None)	{ return this -> _Limit; }
-			if (DecB == DecreaseBehaviour::Fit)		{ return wanted_count; }
-			if (DecB == DecreaseBehaviour::Binary)	{ return BinarySize(wanted_count); }
-			return this -> _Limit;
-		}
+	unsigned int IncLimit(unsigned int wanted_count)
+	{
+		if (IncB == IncreaseBehaviour::None)	{ return this -> _Limit; }
+		if (IncB == IncreaseBehaviour::Fit)		{ return wanted_count; }
+		if (IncB == IncreaseBehaviour::Binary)	{ return BinarySize(wanted_count); }
+		return this -> _Limit;
+	}
+	unsigned int DecLimit(unsigned int wanted_count)
+	{
+		if (DecB == DecreaseBehaviour::None)	{ return this -> _Limit; }
+		if (DecB == DecreaseBehaviour::Fit)		{ return wanted_count; }
+		if (DecB == DecreaseBehaviour::Binary)	{ return BinarySize(wanted_count); }
+		return this -> _Limit;
+	}
 
 	public:
-		bool	Insert(T * items, unsigned int items_count)
+	bool	Insert(T * items, unsigned int items_count)
+	{
+		unsigned int idx = _Count;
+		unsigned int newCount = _Count + items_count;
+		unsigned int newLimit = IncLimit(newCount);
+		this -> ResizeLimit(newLimit);
+		this -> InsertGap(Entry(_Count, 0));
+		if (idx + items_count > this -> _Limit)
 		{
-
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << ' ' << "Insert(n)\n";
-#endif
-			unsigned int idx = _Count;
-			unsigned int newCount = _Count + items_count;
-			unsigned int newLimit = IncLimit(newCount);
-
-			this -> ResizeLimit(newLimit);
-			this -> InsertGap(Entry(_Count, 0));
-
-			if (idx + items_count > this -> _Limit)
-			{
-#ifdef CONTAINER_DEBUG
-				Debug::Console << Debug::Tabs << "no Space\n";
-				Debug::Console << Debug::Tabs << "need " << (idx + items_count) << ". have " << (this -> _Limit) << ".\n";
-				Debug::Console << Debug::TabDec;
-#endif
-				return false;
-			}
-			Base<T>::CopyData(items, 0, this -> _Data, _Count, items_count);
-
-			_Count = newCount;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-			return true;
+			return false;
 		}
-		bool	Insert(T item)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << ' ' << "Insert(1)\n";
-			Debug::Console << Debug::TabDec;
-#endif
-			return Insert(&item, 1);
-		}
-		bool	Remove(Entry entry)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << ' ' << "Remove(entry)\n";
-#endif
-			if (entry.Limit() > _Count) { throw ExceptionInvalidIndex(); }
-
-			unsigned int newCount = this -> _Count - entry.Length;
-			unsigned int newLimit = DecLimit(newCount);
-
-			this -> RemoveGap(entry);
-			this -> ResizeLimit(newLimit);
-
-			this -> _Count = newCount;
-
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-			return true;
-		}
-		bool	Remove(unsigned int idx)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Dynamic" << ' ' << "Remove(idx)\n";
-			Debug::Console << Debug::TabDec;
-#endif
-			return Remove(Entry(idx, 1));
-		}
+		Base<T>::CopyData(items, 0, this -> _Data, _Count, items_count);
+		_Count = newCount;
+		return true;
+	}
+	bool	Insert(T item)
+	{
+		return Insert(&item, 1);
+	}
+	bool	Remove(Entry entry)
+	{
+		if (entry.Limit() > _Count) { throw ExceptionInvalidIndex(); }
+		unsigned int newCount = this -> _Count - entry.Length;
+		unsigned int newLimit = DecLimit(newCount);
+		this -> RemoveGap(entry);
+		this -> ResizeLimit(newLimit);
+		this -> _Count = newCount;
+		return true;
+	}
+	bool	Remove(unsigned int idx)
+	{
+		return Remove(Entry(idx, 1));
+	}
 };
 
 };

@@ -1,8 +1,6 @@
 #ifndef  ENTRY_CONTAINER_ENTRY_DATA_HPP
 # define ENTRY_CONTAINER_ENTRY_DATA_HPP
 
-# include "DebugDefines.hpp"
-
 # include "Miscellaneous/Container/Entry.hpp"
 
 namespace EntryContainer
@@ -17,67 +15,27 @@ class EntryData : public Container::Entry
 		Base<T> * Container;
 
 	public:
-		virtual void DebugInfo() override
-		{
-			Debug::Console << Debug::Tabs << ">>>> EntryContainer::EntryData.Info()\n";
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << this << '\n';
-
-			Debug::Console << Debug::Tabs << "Offset" << ' ' << (this -> Offset) << '\n';
-			Debug::Console << Debug::Tabs << "Length" << ' ' << (this -> Length) << '\n';
-			Debug::Console << Debug::Tabs << "Container" << ' ' << (Container) << '\n';
-
-			Debug::Console << Debug::TabDec;
-			Debug::Console << Debug::Tabs << "<<<< EntryContainer::EntryData.Info()\n";
-		}
+		virtual void DebugInfo() override { }
 
 	public:
 		EntryData() : Container::Entry()
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::EntryData" << "  ++++  " << "EntryData()\n";
-#endif
 			Container = NULL;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		EntryData(const EntryData & other) : Container::Entry(other)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::EntryData" << "  ====  " << "EntryData(other)\n";
-#endif
 			Container = other.Container;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		EntryData(Base<T> * container, unsigned int off, unsigned int len) : Container::Entry(off, len)
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::EntryData" << "  ++++  " << "EntryData(container, off, len)\n";
-#endif
 			Container = container;
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 		virtual ~EntryData()
 		{
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "EntryContainer::EntryData" << "  ----  " << "~EntryData()\n";
-#endif
 			if (Container != NULL)
 			{
 				Container -> Free(this);
 			}
-#ifdef ENTRY_CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
 		}
 
 	private:
@@ -94,16 +52,8 @@ class EntryData : public Container::Entry
 		{
 			if (idx >= this -> Length)
 			{
-#ifdef ENTRY_CONTAINER_DEBUG
-				Debug::Console << Debug::TabInc;
-				Debug::Console << Debug::Tabs << __FILE__ << ':' << __LINE__ << '\n';
-				Debug::Console << Debug::Tabs << idx << " >= " << (this -> Length) << "\n";
-#endif
 				const char * msg = "EntryContainer::EntryData Index invalid.";
 				//std::cout << msg << "\n";
-#ifdef ENTRY_CONTAINER_DEBUG
-				Debug::Console << Debug::TabDec;
-#endif
 				throw msg;
 			}
 		}

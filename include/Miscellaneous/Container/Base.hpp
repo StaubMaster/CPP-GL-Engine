@@ -1,8 +1,6 @@
 #ifndef  CONTAINER_BASE_HPP
 # define CONTAINER_BASE_HPP
 
-# include "DebugDefines.hpp"
-
 # include <exception>
 
 # include "Entry.hpp"
@@ -24,409 +22,256 @@ template<typename T>
 class Base
 {
 	protected:
-		unsigned int _Limit;
-		T * _Data;
+	unsigned int _Limit;
+	T * _Data;
 	private:
 	protected:
-		bool Deletable;
+	bool Deletable;
 
 
 
 	public:
-		unsigned int Limit() const { return _Limit; }
-		virtual unsigned int Count() const { return _Limit; }
-		const T * Data() const { return _Data; }
+	unsigned int Limit() const { return _Limit; }
+	virtual unsigned int Count() const { return _Limit; }
+	const T * Data() const { return _Data; }
+
+	T & At(unsigned int idx) { return _Data[idx]; }
+	const T & At(unsigned int idx) const { return _Data[idx]; }
+
+	virtual T & operator[](unsigned int idx)
+	{
+		if (idx >= _Limit) { throw ExceptionInvalidIndex(); }
+		return _Data[idx];
+	}
+	virtual const T & operator[](unsigned int idx) const
+	{
+		if (idx >= _Limit) { throw ExceptionInvalidIndex(); }
+		return _Data[idx];
+	}
 
 	public:
-		virtual T & operator[](unsigned int idx)
-		{
-			if (idx >= _Limit) { throw ExceptionInvalidIndex(); }
-			return _Data[idx];
-		}
-		virtual const T & operator[](unsigned int idx) const
-		{
-			if (idx >= _Limit) { throw ExceptionInvalidIndex(); }
-			return _Data[idx];
-		}
-		//	At(idx) unchecked
+	virtual void DebugInfo() { }
 
 	public:
-		virtual void DebugInfo()
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << ">>>> Container::Base.Info()\n";
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << this << '\n';
+	Base()
+	{
+		_Limit = 0;
+		_Data = NULL;
+		Deletable = false;
+	}
+	Base(unsigned int limit)
+	{
+		_Limit = limit;
+		_Data = new T[_Limit];
+		Deletable = true;
+	}
 
-			Debug::Console << Debug::Tabs << "Data" << ' ' << (this -> _Data) << '\n';
-			Debug::Console << Debug::Tabs << "Limit" << ' ' << (this -> _Limit) << '\n';
+	Base(const T * data, unsigned int limit)
+	{
+		_Limit = limit;
+		_Data = (T *)data;
+		Deletable = false;
+	}
+	~Base()
+	{
+		if (Deletable)
+		{
+			delete[] _Data;
+		}
+	}
 
-			Debug::Console << Debug::Tabs << "Deletable" << ' ';
-			if (Deletable) { Debug::Console << "true"; } else { Debug::Console << "false"; }
-			Debug::Console << '\n';
-
-			Debug::Console << Debug::TabDec;
-			Debug::Console << Debug::Tabs << "<<<< Container::Base.Info()\n";
-#endif
-		}
-
-	public:
-		Base()
+	Base(const Base<T> & other)
+	{
+		_Limit = other._Limit;
+		_Data = new T[_Limit];
+		for (unsigned int i = 0; i < _Limit; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Base()" << '\n';
-#endif
-			_Limit = 0;
-			_Data = NULL;
-			Deletable = false;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::TabDec;
-#endif
+			_Data[i] = other._Data[i];
 		}
-		Base(unsigned int limit)
+		Deletable = true;
+	}
+	Base<T> & operator=(const Base<T> & other)
+	{
+		Dispose();
+		_Limit = other._Limit;
+		_Data = new T[_Limit];
+		for (unsigned int i = 0; i < _Limit; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Base(limit)" << '\n';
-#endif
-			_Limit = limit;
-			_Data = new T[_Limit];
-			Deletable = true;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::TabDec;
-#endif
+			_Data[i] = other._Data[i];
 		}
-
-		Base(const T * data, unsigned int limit)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Base(limit, data)" << '\n';
-#endif
-			_Limit = limit;
-			_Data = (T *)data;
-			Deletable = false;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		~Base()
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ----  " << "~Base()" << '\n';
-#endif
-			if (Deletable)
-			{
-				delete[] _Data;
-			}
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-
-		Base(const Base<T> & other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Base(other)" << '\n';
-#endif
-			_Limit = other._Limit;
-			_Data = new T[_Limit];
-			for (unsigned int i = 0; i < _Limit; i++)
-			{
-				_Data[i] = other._Data[i];
-			}
-			Deletable = true;
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		Base<T> & operator=(const Base<T> & other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ====  " << "Base operator=(other)" << '\n';
-			DebugInfo();
-#endif
-			Dispose();
-			_Limit = other._Limit;
-			_Data = new T[_Limit];
-			for (unsigned int i = 0; i < _Limit; i++)
-			{
-				_Data[i] = other._Data[i];
-			}
-			Deletable = true;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::TabDec;
-#endif
-			return *this;
-		}
+		Deletable = true;
+		return *this;
+	}
 
 
 
 	public:
-		virtual void Dispose()
+	virtual void Dispose()
+	{
+		if (Deletable)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ----  " << "Dispose()" << " ..." << '\n';
-			DebugInfo();
-#endif
-			if (Deletable)
-			{
-				delete[] _Data;
-			}
-			_Limit = 0;
-			_Data = NULL;
-			Deletable = false;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ----  " << "Dispose()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
+			delete[] _Data;
 		}
-		void Allocate(unsigned int limit)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Allocate(limit)" << " ..." << '\n';
-#endif
-			Dispose();
-			_Limit = limit;
-			_Data = new T[_Limit];
-			Deletable = true;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Allocate(limit)" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		void Swap(Base<T> & other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <==>  " << "Swap(other)" << " ..." << '\n';
-			DebugInfo();
-			other.DebugInfo();
-#endif
-			unsigned int limit;
-			limit = _Limit;
-			_Limit = other._Limit;
-			other._Limit = limit;
+		_Limit = 0;
+		_Data = NULL;
+		Deletable = false;
+	}
+	void Allocate(unsigned int limit)
+	{
+		Dispose();
+		_Limit = limit;
+		_Data = new T[_Limit];
+		Deletable = true;
+	}
+	void Swap(Base<T> & other)
+	{
+		unsigned int limit;
+		limit = _Limit;
+		_Limit = other._Limit;
+		other._Limit = limit;
 
-			T * data;
-			data = _Data;
-			_Data = other._Data;
-			other._Data = data;
+		T * data;
+		data = _Data;
+		_Data = other._Data;
+		other._Data = data;
 
-			bool deletable;
-			deletable = Deletable;
-			Deletable = other.Deletable;
-			other.Deletable = deletable;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			other.DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <==>  " << "Swap(other)" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-		}
+		bool deletable;
+		deletable = Deletable;
+		Deletable = other.Deletable;
+		other.Deletable = deletable;
+	}
 
-		void Bind(Base<T> & other)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Bind()" << " ..." << '\n';
-			DebugInfo();
-			other.DebugInfo();
-#endif
-			Dispose();
-			_Limit = other._Limit;
-			_Data = other._Data;
-			Deletable = false;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Bind()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-		}
-		void Bind(const T * data, unsigned int limit)
-		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Bind()" << " ..." << '\n';
-			DebugInfo();
-#endif
-			Dispose();
-			_Limit = limit;
-			_Data = data;
-			Deletable = false;
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Base" << "  ++++  " << "Bind()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-		}
+	void Bind(Base<T> & other)
+	{
+		Dispose();
+		_Limit = other._Limit;
+		_Data = other._Data;
+		Deletable = false;
+	}
+	void Bind(const T * data, unsigned int limit)
+	{
+		Dispose();
+		_Limit = limit;
+		_Data = data;
+		Deletable = false;
+	}
 
-		static unsigned int CopyData(Base<T> & src, Base<T> & dst, unsigned int count)
+	static unsigned int CopyData(Base<T> & src, Base<T> & dst, unsigned int count)
+	{
+		if (count > src._Limit) { count = src._Limit; }
+		if (count > dst._Limit) { count = dst._Limit; }
+		for (unsigned int i = 0; i < count; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "CopyData(src, dst, count)" << " ..." << '\n';
-#endif
-			if (count > src._Limit) { count = src._Limit; }
-			if (count > dst._Limit) { count = dst._Limit; }
-			for (unsigned int i = 0; i < count; i++)
-			{
-				dst._Data[i] = src._Data[i];
-			}
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "CopyData(src, dst, count)" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-			return count;
+			dst._Data[i] = src._Data[i];
 		}
-		static unsigned int CopyData(Base<T> & src, unsigned int src_off, Base<T> & dst, unsigned int dst_off, unsigned int count)
+		return count;
+	}
+	static unsigned int CopyData(Base<T> & src, unsigned int src_off, Base<T> & dst, unsigned int dst_off, unsigned int count)
+	{
+		if (count > (src._Limit - src_off)) { count = (src._Limit - src_off); }
+		if (count > (dst._Limit - dst_off)) { count = (dst._Limit - dst_off); }
+		for (unsigned int i = 0; i < count; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "CopyData(src, src_off, dst, dst_off, count)" << " ..." << '\n';
-#endif
-			if (count > (src._Limit - src_off)) { count = (src._Limit - src_off); }
-			if (count > (dst._Limit - dst_off)) { count = (dst._Limit - dst_off); }
-			for (unsigned int i = 0; i < count; i++)
-			{
-				dst._Data[dst_off + i] = src._Data[src_off + i];
-			}
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "CopyData(src, src_off, dst, dst_off, count)" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-			return count;
+			dst._Data[dst_off + i] = src._Data[src_off + i];
 		}
-		static unsigned int CopyData(T * src, unsigned int src_off, T * dst, unsigned int dst_off, unsigned int count)
+		return count;
+	}
+	static unsigned int CopyData(T * src, unsigned int src_off, T * dst, unsigned int dst_off, unsigned int count)
+	{
+		//if (count > (src._Limit - src_off)) { count = (src._Limit - src_off); }
+		//if (count > (dst._Limit - dst_off)) { count = (dst._Limit - dst_off); }
+		for (unsigned int i = 0; i < count; i++)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "CopyData(src, src_off, dst, dst_off, count)" << " ..." << '\n';
-#endif
-			//if (count > (src._Limit - src_off)) { count = (src._Limit - src_off); }
-			//if (count > (dst._Limit - dst_off)) { count = (dst._Limit - dst_off); }
-			for (unsigned int i = 0; i < count; i++)
-			{
-				dst[dst_off + i] = src[src_off + i];
-			}
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::Tabs << "Container::Base" << "  <-->  " << "CopyData(src, src_off, dst, dst_off, count)" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
-			return count;
+			dst[dst_off + i] = src[src_off + i];
 		}
+		return count;
+	}
 
-		virtual void ResizeLimit(unsigned int limit)
+	virtual void ResizeLimit(unsigned int limit)
+	{
+		if (limit != _Limit)
 		{
-#ifdef CONTAINER_DEBUG
-			Debug::Console << Debug::TabInc;
-			Debug::Console << Debug::Tabs << "Container::Base" << "        " << "ResizeLimit()" << " ..." << '\n';
-			DebugInfo();
-#endif
-			if (limit != _Limit)
-			{
-				Base<T> other(limit);
-				CopyData(*this, other, 0xFFFFFFFF);
-				other.Swap(*this);
-			}
-#ifdef CONTAINER_DEBUG
-			DebugInfo();
-			Debug::Console << Debug::Tabs << "Container::Base" << "        " << "ResizeLimit()" << " done" << '\n';
-			Debug::Console << Debug::TabDec;
-#endif
+			Base<T> other(limit);
+			CopyData(*this, other, 0xFFFFFFFF);
+			other.Swap(*this);
 		}
+	}
 
 
 
 	private:
-		/*	optimized for copying with gaps in both input and output
-			gaps are the opposite of Entrys
-			invert for copying Entrys ?
-			gaps should be in order ?
-		*/
-		/*	Problem
-				these require a new Container to copy into
-				what it I need to do it in the same container ?
-				have a seperate function for that
-		*/
-		static void CopyOrderedGaps(
-			Base<T> & inn_container, Base<Entry> inn_gaps,
-			Base<T> & out_container, Base<Entry> out_gaps,
-			unsigned int count)
+	/*	optimized for copying with gaps in both input and output
+		gaps are the opposite of Entrys
+		invert for copying Entrys ?
+		gaps should be in order ?
+	*/
+	/*	Problem
+			these require a new Container to copy into
+			what it I need to do it in the same container ?
+			have a seperate function for that
+	*/
+	static void CopyOrderedGaps(
+		Base<T> & inn_container, Base<Entry> inn_gaps,
+		Base<T> & out_container, Base<Entry> out_gaps,
+		unsigned int count)
+	{
+		unsigned int inn_off = 0;
+		unsigned int out_off = 0;
+		unsigned int inn_gap_idx = 0;
+		unsigned int out_gap_idx = 0;
+		for (unsigned int idx = 0; idx < count; idx++)
 		{
-			unsigned int inn_off = 0;
-			unsigned int out_off = 0;
-			unsigned int inn_gap_idx = 0;
-			unsigned int out_gap_idx = 0;
-			for (unsigned int idx = 0; idx < count; idx++)
+			if (inn_gap_idx < inn_gaps.Limit() && inn_off >= inn_gaps[inn_gap_idx].Offset)
 			{
-				if (inn_gap_idx < inn_gaps.Limit() && inn_off >= inn_gaps[inn_gap_idx].Offset)
+				inn_gap_idx++;
+				if (inn_gap_idx < inn_gaps.Limit())
 				{
-					inn_gap_idx++;
-					if (inn_gap_idx < inn_gaps.Limit())
-					{
-						inn_off = inn_gaps[inn_gap_idx].Limit();
-					}
+					inn_off = inn_gaps[inn_gap_idx].Limit();
 				}
-				if (out_gap_idx < out_gaps.Limit() && out_off >= out_gaps[out_gap_idx].Offset)
-				{
-					out_gap_idx++;
-					if (out_gap_idx < out_gaps.Limit())
-					{
-						out_off = out_gaps[out_gap_idx].Limit();
-					}
-				}
-				out_container[out_off] = inn_container[inn_off];
-				inn_off++;
-				out_off++;
 			}
+			if (out_gap_idx < out_gaps.Limit() && out_off >= out_gaps[out_gap_idx].Offset)
+			{
+				out_gap_idx++;
+				if (out_gap_idx < out_gaps.Limit())
+				{
+					out_off = out_gaps[out_gap_idx].Limit();
+				}
+			}
+			out_container[out_off] = inn_container[inn_off];
+			inn_off++;
+			out_off++;
 		}
+	}
 
-		/*
-			old_gaps : are removed
-			new_gaps : are inserted
+	/*
+		old_gaps : are removed
+		new_gaps : are inserted
+	*/
+	static void CopyOrderedGaps(
+		Base<T> & container,
+		Base<Entry> old_gaps, Base<Entry> new_gaps,
+		unsigned int count)
+	{
+		/*	Problem
+			old_gaps require moving forewards
+				else they override themselves
+			new_gaps require moving backwards
+				else they override themselves
 		*/
-		static void CopyOrderedGaps(
-			Base<T> & container,
-			Base<Entry> old_gaps, Base<Entry> new_gaps,
-			unsigned int count)
-		{
-			/*	Problem
-				old_gaps require moving forewards
-					else they override themselves
-				new_gaps require moving backwards
-					else they override themselves
-			*/
-
-			/*	
-				# Item
-				n (Number) Item
-				+ new Gap
-				- old Gap
-
-				before:	######----##	012345----67
-				after:	####++++####	0123++++4567
-				
-			*/
-
-			(void)container;
-			(void)old_gaps;
-			(void)new_gaps;
-			(void)count;
-		}
+		/*	
+			# Item
+			n (Number) Item
+			+ new Gap
+			- old Gap
+			before:	######----##	012345----67
+			after:	####++++####	0123++++4567
+			
+		*/
+		(void)container;
+		(void)old_gaps;
+		(void)new_gaps;
+		(void)count;
+	}
 };
 
 };

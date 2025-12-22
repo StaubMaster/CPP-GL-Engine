@@ -9,34 +9,30 @@
 
 
 
-Shader::Code::Code()
-{
-	ID = 0;
-}
-Shader::Code::Code(GLenum type, const std::string code, const std::string path)
-{
-	Path = path;
-	ID = glCreateShader(type);
-	Debug::Log << "++++ Shader::Code " << ID << Debug::Done;
-	std::cout << "++++ Shader::Code " << ID << '\n';
-	Compile(code);
-}
+Shader::Code::Code() :
+	ID(0),
+	Type(0)
+{ }
+Shader::Code::Code(const FileContext & file) :
+	ID(0),
+	Type(ShaderTypeFromExtension(file.Extension())),
+	File(file)
+{ }
 Shader::Code::~Code()
-{
-	Debug::Log << "---- Shader::Code " << ID << Debug::Done;
-	std::cout << "---- Shader::Code " << ID << '\n';
-}
+{ }
 
 
 
 Shader::Code::Code(const Shader::Code & other) :
 	ID(other.ID),
-	Path(other.Path)
+	Type(other.Type),
+	File(other.File)
 { }
 Shader::Code & Shader::Code::operator=(const Shader::Code & other)
 {
 	ID = other.ID;
-	Path = other.Path;
+	Type = other.Type;
+	File = other.File;
 	return *this;
 }
 
@@ -51,9 +47,38 @@ void Shader::Code::Dispose()
 }
 void Shader::Code::Dispose(Container::Base<Shader::Code> & code)
 {
-	for (unsigned int i = 0; i < code.Limit(); i++)
+	for (unsigned int i = 0; i < code.Count(); i++)
 	{
 		code[i].Dispose();
+	}
+}
+
+void Shader::Code::Compile()
+{
+	ID = glCreateShader(Type);
+	Debug::Log << "Compiling Shader::Code " << ID << " ..." << Debug::Done;
+	std::string code = File.LoadText();
+	const char * arr[1] = {
+		code.c_str(),
+	};
+	glShaderSource(ID, 1, arr, NULL);
+	glCompileShader(ID);
+
+	char log_arr[1024];
+	int log_len = 0;
+	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
+	if (log_len != 0)
+	{
+		std::string log = std::string(log_arr, log_len);
+		throw ECompileLog(log, File.Path.ToString());
+	}
+	Debug::Log << "Compiling Shader::Code " << ID << " done" << Debug::Done;
+}
+void Shader::Code::Compile(Container::Base<Shader::Code> & code)
+{
+	for (unsigned int i = 0; i < code.Count(); i++)
+	{
+		code[i].Compile();
 	}
 }
 
@@ -73,25 +98,9 @@ void Shader::Code::Detach(int ProgramID) const
 	glDetachShader(ProgramID, ID);
 }
 
-void Shader::Code::Compile(const std::string code)
-{
-	Debug::Log << "Compiling Shader::Code " << ID << " ..." << Debug::Done;
-	const char * arr[1] = {
-		code.c_str(),
-	};
-	glShaderSource(ID, 1, arr, NULL);
-	glCompileShader(ID);
 
-	char log_arr[1024];
-	int log_len = 0;
-	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
-	if (log_len != 0)
-	{
-		std::string log = std::string(log_arr, log_len);
-		throw ECompileLog(log, Path);
-	}
-	Debug::Log << "Compiling Shader::Code " << ID << " done" << Debug::Done;
-}
+
+
 
 Shader::Code::ECompileLog::ECompileLog(const std::string log, const std::string path)
 {
@@ -106,35 +115,16 @@ const char * Shader::Code::ECompileLog::what() const throw()
 
 
 
-bool str_ends_with(const std::string & str, const std::string & pattern)
-{
-	int len_s = str.length();
-	int len_p = pattern.length();
-	if (len_s < len_p) { return false; }
-	
-	int off_s = len_s - len_p;
-	for (int i = 0; i < len_p; i++)
-	{
-		if (str[off_s + i] != pattern[i])
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-Shader::Code * Shader::Code::FromFile(const FileContext & file)
+GLenum Shader::Code::ShaderTypeFromExtension(const FileContext & file)
 {
 	std::string ext = file.Extension();
-
 	GLenum type;
 	if      (ext == ".glsg") { throw EInvalidFileExtention(file.Path.ToString()); }
 	else if (ext == ".vert") { type = GL_VERTEX_SHADER; }
 	else if (ext == ".geom") { type = GL_GEOMETRY_SHADER; }
 	else if (ext == ".frag") { type = GL_FRAGMENT_SHADER; }
 	else { throw EInvalidFileExtention(file.Path.ToString()); }
-
-	return new Shader::Code(type, file.LoadText(), file.Path.ToString());
+	return type;
 }
 
 Shader::Code::EInvalidFileExtention::EInvalidFileExtention(const std::string & path)

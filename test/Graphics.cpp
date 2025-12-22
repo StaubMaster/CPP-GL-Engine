@@ -34,10 +34,15 @@ int main()
 
 		{
 			DirectoryContext shader_dir("../media/Shaders/");
-			Container::Base<Shader::Code *> code(2);
-			code[0] = Shader::Code::FromFile(shader_dir.File("PH_Full.frag"));
-			code[1] = Shader::Code::FromFile(shader_dir.File("PH_S3D.vert"));
-			Shader::Base shader(code);
+			Shader::Base shader(
+				Container::Base<Shader::Code>(
+				(Shader::Code[])
+					{
+						Shader::Code::FromFile(shader_dir.File("PH_Full.frag")),
+						Shader::Code::FromFile(shader_dir.File("PH_S3D.vert")),
+					}, 2
+				)
+			);
 			std::cout << "Shader" << ' ' << shader.Is() << '\n';
 			shader.Use();
 			std::cout << "Shader" << ' ' << shader.Is() << '\n';
@@ -91,6 +96,15 @@ int main()
 		delete win;
 		glfwTerminate();
 	}
+
+	{
+		Container::Base<int> container((int[]){ 1, 2, 3 }, 3);
+		for (unsigned int i = 0; i < container.Count(); i++)
+		{
+			std::cout << container[i] << '\n';
+		}
+	}
+
 	std::cout << "main return\n";
 	return 0;
 }

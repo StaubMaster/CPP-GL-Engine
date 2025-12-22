@@ -8,14 +8,14 @@
 
 PolyHedra_3D_Shader::PolyHedra_3D_Shader(const DirectoryContext & dir)
 	: Shader::Base(
-		Container::Base<Shader::Code *>(
-			/*(const Shader::Code [])
+		Container::Base<Shader::Code>(
+			(Shader::Code[])
 			{
-				Shader::Code::FromFile(dir.File("PH_S3D.vert")),
+				Shader::Code(dir.File("PH_S3D.vert")),
 				//Shader::Code::FromFile(dir.File("PH_solar.frag")),
 				//Shader::Code::FromFile(dir.File("PH_ULight.frag")),
-				Shader::Code::FromFile(dir.File("PH_Full.frag")),
-			}, 2*/
+				Shader::Code(dir.File("PH_Full.frag")),
+			}, 2
 		)
 	),
 	ViewPortSizeRatio(Uniform::NameShader("ViewPortSizeRatio", *this)),

@@ -4,13 +4,12 @@
 //# include <exception>
 //# include <string>
 //# include <fstream>
-//# include "FileManager/FileContext.hpp"
 //# include "OpenGL/openGL.h"
 # include "Miscellaneous/Container/Base.hpp"
+# include "FileContext.hpp"
 # include <string>
 
 typedef unsigned int GLenum;
-class FileContext;
 
 namespace Shader
 {
@@ -18,13 +17,12 @@ class Code
 {
 	private:
 	int ID;
-	std::string Path;
+	GLenum Type;
+	FileContext File;
 
 	public:
 	Code();
-	private:
-	Code(GLenum type, const std::string code, std::string path);
-	public:
+	Code(const FileContext & file);
 	~Code();
 
 	Code(const Shader::Code & other);
@@ -35,14 +33,17 @@ class Code
 	static void Dispose(Container::Base<Shader::Code> & code);
 
 	public:
+	void Compile();
+	static void Compile(Container::Base<Shader::Code> & code);
+
+	public:
 	int getID() const;
+
 	public:
 	void Attach(int ProgramID) const;
 	void Detach(int ProgramID) const;
 
 	private:
-	void Compile(const std::string code);
-
 	class ECompileLog : public std::exception
 	{
 		private:
@@ -57,10 +58,8 @@ class Code
 		const char * what() const throw();
 	};
 
-	public:
-	static Code * FromFile(const FileContext & file);
-
 	private:
+	static GLenum ShaderTypeFromExtension(const FileContext & file);
 	class EInvalidFileExtention : std::exception
 	{
 		private:
