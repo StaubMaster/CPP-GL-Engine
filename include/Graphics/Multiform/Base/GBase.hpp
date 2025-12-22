@@ -9,7 +9,8 @@
 # include "Miscellaneous/Container/Base.hpp"
 
 # include <typeinfo>
-# include <iostream>
+
+
 
 namespace Shader
 {
@@ -35,10 +36,10 @@ class GBase : public Base
 	public:
 		void FindUniforms(Container::Base<Shader::Base *> & shaders) override
 		{
-			Container::Base<UniformType *> uniforms(shaders.Limit());
+			Container::Base<UniformType *> uniforms(shaders.Count());
 			int c = 0;
 
-			for (unsigned int s = 0; s < shaders.Limit(); s++)
+			for (unsigned int s = 0; s < shaders.Count(); s++)
 			{
 				Shader::Base * shader = shaders[s];
 				for (unsigned int u = 0; u < shader -> Uniforms.Count(); u++)
@@ -70,11 +71,10 @@ class GBase : public Base
 		}
 		void ChangeData(DataType data)
 		{
-			std::cout << "Multiform" << ' ' << "ChangeData" << '\n';
 			Data = data;
-			for (unsigned int i = 0; i < Uniforms.Limit(); i++)
+			for (unsigned int i = 0; i < Uniforms.Count(); i++)
 			{
-				if (Uniforms[i] -> Shader.Is())
+				if (Uniforms[i] -> Shader.IsBound())
 				{ PutUniformData(Uniforms[i]); }
 				else
 				{ Uniforms[i] -> MultiformChanged = true; }

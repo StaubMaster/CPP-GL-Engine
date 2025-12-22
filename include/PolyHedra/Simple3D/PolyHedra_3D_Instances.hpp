@@ -1,6 +1,5 @@
-
-#ifndef POLYHEDRA_3D_Instances
-# define POLYHEDRA_3D_Instances
+#ifndef  POLYHEDRA_SIMPLE3D_BUFFER_MANAGER
+# define POLYHEDRA_SIMPLE3D_BUFFER_MANAGER
 
 # include "PolyHedra/PolyHedra.hpp"
 # include "Miscellaneous/EntryContainer/Dynamic.hpp"
@@ -10,6 +9,8 @@
 # include "OpenGL/openGL.h"
 # include <iostream>
 
+
+
 namespace Texture
 {
 	class Base;
@@ -18,27 +19,18 @@ namespace Texture
 class PolyHedra_3D_Instances
 {
 	public:
-		PolyHedra_3D_BufferArray Buffer;
-		//YMT::PolyHedra * Main;
-		Texture::Base * Texture;
-		EntryContainer::Dynamic<Simple3D_InstData> Instances;
+	YMT::PolyHedra * MainPolyHedra;
+	Texture::Base * MainTexture;
+	PolyHedra_3D_BufferArray Buffer;
+	EntryContainer::Dynamic<Simple3D_InstData> Instances;
 
 	public:
-		PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra);
-		~PolyHedra_3D_Instances();
+	PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra);
+	~PolyHedra_3D_Instances();
 
 	public:
-		//EntryContainer::Dynamic<Simple3D_InstData>::Entry * Alloc(int size);
-		//EntryContainer::Entry<Simple3D_InstData> Allocate(unsigned int size);
-		/*
-			make a Wrapper for these Entrys ?
-			I'm already planing on making an Array of these
-			and then have an Entry Wrapper for those
-		*/
-
-	public:
-		PolyHedra_3D_Instances & Update();
-		PolyHedra_3D_Instances & Draw();
+	PolyHedra_3D_Instances & Update();
+	PolyHedra_3D_Instances & Draw();
 };
 
 #endif

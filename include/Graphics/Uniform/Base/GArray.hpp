@@ -32,7 +32,7 @@ class GArray
 				std::stringstream ss;
 				ss << name_shader.Name << "[" << i << "]";
 				//std::cout << "Uni:" << ss.str() << "\n";
-				Uniforms[i] = new UniformType(ss.str(), name_shader.Shader);
+				Uniforms[i] = new UniformType(Uniform::NameShader(ss.str(), name_shader.Shader));
 			}
 		}
 		~GArray()

@@ -18,8 +18,11 @@ class Base
 {
 	private:
 	int ID;
+	Container::Base<Shader::Code> Code;	// these are the Shaders. the whole class is technically a Shader Program
 	public:
-	Container::Dynamic<Uniform::Base *> Uniforms;
+	Container::Dynamic<Uniform::Base*> Uniforms;
+
+
 
 	public:
 	Base();
@@ -29,21 +32,25 @@ class Base
 	Base(const Shader::Base & other);
 	Base & operator=(const Shader::Base & other);
 
-	public:
-	void Dispose();
 
-	private:
-	void Compile(Container::Base<Code> & code);
 
 	public:
-	//bool IsValid();
-	//void Bind();
-	//bool IsBound();
+	bool IsCompiled() const;
+	bool IsBound() const;
+	void Bind();
 
-	void Use();
-	bool Is() const;
 	static int Bound();
 	static void BindNone();
+
+
+
+	public:
+	void Dispose();
+	void Compile();
+
+	static Shader::Base Compiled(Container::Base<Shader::Code> & code);
+
+
 
 	public:
 	void UniformsUpdate();

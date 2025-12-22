@@ -38,18 +38,22 @@ int main()
 				Container::Base<Shader::Code>(
 				(Shader::Code[])
 					{
-						Shader::Code::FromFile(shader_dir.File("PH_Full.frag")),
-						Shader::Code::FromFile(shader_dir.File("PH_S3D.vert")),
+						Shader::Code(shader_dir.File("PH_Full.frag")),
+						Shader::Code(shader_dir.File("PH_S3D.vert")),
 					}, 2
 				)
 			);
-			std::cout << "Shader" << ' ' << shader.Is() << '\n';
-			shader.Use();
-			std::cout << "Shader" << ' ' << shader.Is() << '\n';
+			std::cout << "Shader Compiled" << ' ' << shader.IsCompiled() << '\n';
+			shader.Compile();
+			std::cout << "Shader Compiled" << ' ' << shader.IsCompiled() << '\n';
+
+			std::cout << "Shader Bound" << ' ' << shader.IsBound() << '\n';
+			shader.Bind();
+			std::cout << "Shader Bound" << ' ' << shader.IsBound() << '\n';
 			std::cout << '\n';
 
 			Uniform::Trans3D uni_ViewTrans(Uniform::NameShader("View", shader));
-			std::cout << "Uniforms " << shader.Uniforms.Count() << '\n';
+			std::cout << "Shader Uniforms " << shader.Uniforms.Count() << '\n';
 			for (unsigned int i = 0; i < shader.Uniforms.Count(); i++)
 			{ std::cout << (shader.Uniforms[i] -> Name) << '\n'; }
 			/*	this puts 4 Uniforms in Shader
@@ -89,7 +93,7 @@ int main()
 			std::cout << '\n';
 
 			std::cout << "####    " << "Shader" << ' ' << "Bind" << "    ####" << '\n';
-			shader.Use();
+			shader.Bind();
 			std::cout << '\n';
 		}
 

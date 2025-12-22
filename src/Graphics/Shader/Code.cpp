@@ -21,8 +21,6 @@ Shader::Code::Code(const FileContext & file) :
 Shader::Code::~Code()
 { }
 
-
-
 Shader::Code::Code(const Shader::Code & other) :
 	ID(other.ID),
 	Type(other.Type),
@@ -40,23 +38,19 @@ Shader::Code & Shader::Code::operator=(const Shader::Code & other)
 
 void Shader::Code::Dispose()
 {
-	Debug::Log << "Shader::Code Dispose " << ID << Debug::Done;
-	std::cout << "Shader::Code Dispose " << ID << '\n';
+	if (ID == 0) { return; }
+	Debug::Log << "Shader::Code Disposing " << ID << " ..." << Debug::Done;
 	glDeleteShader(ID);
 	ID = 0;
+	Debug::Log << "Shader::Code Disposing " << ID << " done" << Debug::Done;
 }
-void Shader::Code::Dispose(Container::Base<Shader::Code> & code)
-{
-	for (unsigned int i = 0; i < code.Count(); i++)
-	{
-		code[i].Dispose();
-	}
-}
-
 void Shader::Code::Compile()
 {
+	if (ID != 0) { return; }
+
+	Debug::Log << "Shader::Code Compiling " << ID << " ..." << Debug::Done;
 	ID = glCreateShader(Type);
-	Debug::Log << "Compiling Shader::Code " << ID << " ..." << Debug::Done;
+
 	std::string code = File.LoadText();
 	const char * arr[1] = {
 		code.c_str(),
@@ -72,7 +66,28 @@ void Shader::Code::Compile()
 		std::string log = std::string(log_arr, log_len);
 		throw ECompileLog(log, File.Path.ToString());
 	}
-	Debug::Log << "Compiling Shader::Code " << ID << " done" << Debug::Done;
+
+	Debug::Log << "Shader::Code Compiling " << ID << " done" << Debug::Done;
+}
+void Shader::Code::Attach(int ProgramID) const
+{
+	Debug::Log << "Shader::Code Attaching " << ID << " to " << ProgramID << " ..." << Debug::Done;
+	glAttachShader(ProgramID, ID);
+	Debug::Log << "Shader::Code Attaching " << ID << " to " << ProgramID << " done" << Debug::Done;
+}
+void Shader::Code::Detach(int ProgramID) const
+{
+	Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " ..." << Debug::Done;
+	glDetachShader(ProgramID, ID);
+	Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " done" << Debug::Done;
+}
+
+void Shader::Code::Dispose(Container::Base<Shader::Code> & code)
+{
+	for (unsigned int i = 0; i < code.Count(); i++)
+	{
+		code[i].Dispose();
+	}
 }
 void Shader::Code::Compile(Container::Base<Shader::Code> & code)
 {
@@ -81,24 +96,20 @@ void Shader::Code::Compile(Container::Base<Shader::Code> & code)
 		code[i].Compile();
 	}
 }
-
-
-
-int Shader::Code::getID() const
+void Shader::Code::Attach(Container::Base<Shader::Code> & code, int ProgramID)
 {
-	return ID;
+	for (unsigned int i = 0; i < code.Count(); i++)
+	{
+		code[i].Attach(ProgramID);
+	}
 }
-
-void Shader::Code::Attach(int ProgramID) const
+void Shader::Code::Detach(Container::Base<Shader::Code> & code, int ProgramID)
 {
-	glAttachShader(ProgramID, ID);
+	for (unsigned int i = 0; i < code.Count(); i++)
+	{
+		code[i].Detach(ProgramID);
+	}
 }
-void Shader::Code::Detach(int ProgramID) const
-{
-	glDetachShader(ProgramID, ID);
-}
-
-
 
 
 

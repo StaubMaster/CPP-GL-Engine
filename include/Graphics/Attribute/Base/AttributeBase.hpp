@@ -1,4 +1,3 @@
-
 #ifndef  ATTRIBUTE_BASE_HPP
 # define ATTRIBUTE_BASE_HPP
 

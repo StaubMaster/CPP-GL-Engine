@@ -1,0 +1,34 @@
+
+BufferArray with EntryContainer is a Main PolyHedra with multiple Instances
+
+a Manager holds multiple Main PolyHedra each with multiple Instances
+
+the only similarity is that MainData and InstData is the same
+but with multiple Objects
+and a Single Shader
+
+
+
+
+
+PolyHedra_Simple3D_Manager
+{
+	Shader
+	Container::Dynamic<PolyHedra_Simple3D_Buffer_Manager>
+}
+
+
+
+PolyHedra_Simple3D_Buffer_Manager
+{
+	PolyHedra
+	BufferArray
+	EntryContainer
+}
+this one handles a single PolyHedra with a single BufferArray
+stores Instances
+
+
+
+
+

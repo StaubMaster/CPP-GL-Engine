@@ -11,78 +11,44 @@
 
 
 Shader::Base::Base() :
-	ID(0)
+	ID(0),
+	Code(),
+	Uniforms()
 { }
-Shader::Base::Base(Container::Base<Code> code) :
-	ID(0)
-{
-	Compile(code);
-}
+Shader::Base::Base(Container::Base<Shader::Code> code) :
+	ID(0),
+	Code(code),
+	Uniforms()
+{ }
 Shader::Base::~Base()
 { }
 
-
-
 Shader::Base::Base(const Shader::Base & other) :
 	ID(other.ID),
+	Code(other.Code),
 	Uniforms(other.Uniforms)
 { }
 Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 {
 	ID = other.ID;
+	Code = other.Code;
 	Uniforms = other.Uniforms;
 	return *this;
 }
 
 
 
-void Shader::Base::Dispose()
+bool Shader::Base::IsCompiled() const { return (ID != 0); }
+bool Shader::Base::IsBound() const { return (Bound() == ID); }
+void Shader::Base::Bind()
 {
-	Debug::Log << "Shader::Base Dispose " << ID << Debug::Done;
-	std::cout << "Shader::Base Dispose " << ID << '\n';
-	glDeleteProgram(ID);
-	ID = 0;
-}
-
-void Shader::Base::Compile(Container::Base<Code> & code)
-{
-	Shader::Code::Compile(code);
-
-	ID = glCreateProgram();
-	Debug::Log << "Compiling BaseShader " << ID << " ..." << Debug::Done;
-	Debug::Log << "BaseShader " << ID << " using Code";
-	for (unsigned int i = 0; i < code.Count(); i++) { Debug::Log << " " << code[i].getID(); }
-	Debug::Log << Debug::Done;
-
-	for (unsigned int i = 0; i < code.Count(); i++) { code[i].Attach(ID); }
-	glLinkProgram(ID);
-	for (unsigned int i = 0; i < code.Count(); i++) { code[i].Detach(ID); }
-
-	char log_arr[1024];
-	int log_len = 0;
-	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
-	if (log_len != 0)
-	{
-		std::string log = std::string(log_arr, log_len);
-		throw ECompileLog(log);
-	}
-	Debug::Log << "Compiling BaseShader " << ID << " done" << Debug::Done;
-}
-
-
-
-void Shader::Base::Use()
-{
-	if (!Is())
+	if (!IsBound())
 	{
 		glUseProgram(ID);
 		UniformsUpdate();
 	}
 }
-bool Shader::Base::Is() const
-{
-	return (Bound() == ID);
-}
+
 int Shader::Base::Bound()
 {
 	int ID;
@@ -92,6 +58,53 @@ int Shader::Base::Bound()
 void Shader::Base::BindNone()
 {
 	glUseProgram(0);
+}
+
+
+
+void Shader::Base::Dispose()
+{
+	if (ID == 0) { return; }
+
+	Debug::Log << "Shader::Base Disposing " << ID << " ..." << Debug::Done;
+	glDeleteProgram(ID);
+	ID = 0;
+	Uniforms.Dispose();
+	/*
+		this should probably also tell the Uniforms that the Shader is gone
+	*/
+	Debug::Log << "Shader::Base Disposing " << ID << " done" << Debug::Done;
+}
+void Shader::Base::Compile()
+{
+	if (ID != 0) { return; }
+
+	Debug::Log << "Shader::Base Compiling " << ID << " ..." << Debug::Done;
+	ID = glCreateProgram();
+
+	Shader::Code::Compile(Code);
+	Shader::Code::Attach(Code, ID);
+	glLinkProgram(ID);
+	Shader::Code::Detach(Code, ID);
+	Shader::Code::Dispose(Code);
+
+	char log_arr[1024];
+	int log_len = 0;
+	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
+	if (log_len != 0)
+	{
+		std::string log = std::string(log_arr, log_len);
+		throw ECompileLog(log);
+	}
+
+	Debug::Log << "Shader::Base Compiling " << ID << " done" << Debug::Done;
+}
+
+Shader::Base Shader::Base::Compiled(Container::Base<Shader::Code> & code)
+{
+	Shader::Base shader(code);
+	shader.Compile();
+	return shader;
 }
 
 
@@ -106,14 +119,7 @@ void Shader::Base::UniformsUpdate()
 int Shader::Base::UniformFind(const std::string & name) const
 {
 	int location = glGetUniformLocation(ID, name.c_str());
-	if (location == -1)
-	{
-		Debug::Log << "Shader " << ID << " Uniform " << name << " not found." << Debug::Done;
-	}
-	else
-	{
-		Debug::Log << "Shader " << ID << " Uniform " << name << " found at " << location << "." << Debug::Done;
-	}
+	Debug::Log << "Shader " << ID << " Uniform " << name << " found at " << location << "." << Debug::Done;
 	return location;
 }
 

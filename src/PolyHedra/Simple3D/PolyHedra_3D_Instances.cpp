@@ -6,6 +6,8 @@
 
 PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 {
+	MainPolyHedra = polyhedra;
+
 	int count;
 	PolyHedra_MainData * data = polyhedra -> ToMainData(count);
 	Buffer.BindMain(data, count);
@@ -13,28 +15,20 @@ PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 
 	if (polyhedra -> Skin != NULL)
 	{
-		Texture = polyhedra -> Skin -> ToTexture();
+		MainTexture = polyhedra -> Skin -> ToTexture();
 	}
 	else
 	{
-		Texture = NULL;
+		MainTexture = NULL;
 	}
 }
 PolyHedra_3D_Instances::~PolyHedra_3D_Instances()
 {
-	delete Texture;
+	//delete MainPolyHedra;
+	delete MainTexture;
 }
 
 
-
-/*EntryContainerDynamic<Simple3D_InstData>::Entry * PolyHedra_3D_Instances::Alloc(int size)
-{
-	return Instances.Alloc(size);
-}*/
-/*EntryContainer::Entry<Simple3D_InstData> PolyHedra_3D_Instances::Allocate(unsigned int size)
-{
-	return EntryContainer::Entry<Simple3D_InstData>(Instances, size);
-}*/
 
 
 
@@ -49,9 +43,9 @@ PolyHedra_3D_Instances & PolyHedra_3D_Instances::Update()
 }
 PolyHedra_3D_Instances & PolyHedra_3D_Instances::Draw()
 {
-	if (Texture != NULL)
+	if (MainTexture != NULL)
 	{
-		Texture -> Bind();
+		MainTexture -> Bind();
 	}
 	Buffer.Draw();
 	return *this;

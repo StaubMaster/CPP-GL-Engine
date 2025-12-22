@@ -20,6 +20,8 @@ class Code
 	GLenum Type;
 	FileContext File;
 
+
+
 	public:
 	Code();
 	Code(const FileContext & file);
@@ -28,20 +30,21 @@ class Code
 	Code(const Shader::Code & other);
 	Code & operator=(const Shader::Code & other);
 
+
+
 	public:
 	void Dispose();
-	static void Dispose(Container::Base<Shader::Code> & code);
-
-	public:
 	void Compile();
-	static void Compile(Container::Base<Shader::Code> & code);
-
-	public:
-	int getID() const;
-
-	public:
 	void Attach(int ProgramID) const;
 	void Detach(int ProgramID) const;
+
+	public:
+	static void Dispose(Container::Base<Shader::Code> & code);
+	static void Compile(Container::Base<Shader::Code> & code);
+	static void Attach(Container::Base<Shader::Code> & code, int ProgramID);
+	static void Detach(Container::Base<Shader::Code> & code, int ProgramID);
+
+
 
 	private:
 	class ECompileLog : public std::exception

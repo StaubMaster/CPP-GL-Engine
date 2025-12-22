@@ -1,0 +1,27 @@
+
+
+
+dont require everything to be used as Pointers
+
+
+
+Buffer::Base
+{
+	void Create()
+	void Delete()
+	static Buffer::Base Create()
+}
+
+Buffer::Attribute
+{
+	Container::Base<Attribute::Base>
+}
+
+Buffer::ArrayBase
+{
+	void Create()
+	void Delete()
+	static Buffer::Base Create()
+}
+
+
