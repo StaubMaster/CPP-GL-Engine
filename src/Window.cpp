@@ -17,44 +17,12 @@
 # define ENGINE_DIR
 #endif
 
-/*	Problem
-some Systems (Mac) have weird Sizing stuff
-so the Window with size (w, h) does not create a FrameBuffer with (w, h)
-on Mac the FrameBuffer is (w * 2, h * 2)
 
-how should things be outputted ?
-the Resize functions currently uses FrameBuffer Size
-but the mouse uses WindowSize ? (Screen Coordinate Size)
 
-have a Resize for the FrameBuffer
-	only needed internally for the ViewPort ?
-and a Resize for the Window
-	calls ResizeFunc
-*/
-
-Window::Window(float w, float h) :
-	win(NULL),
-	Keys(7),
-	MouseManager(this)
+GLFWwindow * Window::NormalWindow()
 {
-	//std::cout << "++++ Window(w, h) ...\n";
-	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
-
-	Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);	//	Space
-	Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);	//	Numbers
-	Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);	//	Letters
-	Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
-	Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
-	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
-	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
-
-	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
-	//Debug::Log << "Window Keys done" << Debug::Done;
-
 	glfwSetErrorCallback(Callback_Error);
 
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
@@ -63,40 +31,50 @@ Window::Window(float w, float h) :
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-	//Debug::Log << "Window Settings done" << Debug::Done;
 
-	//Debug::Log << "here 0" << Debug::Done;
-	win = glfwCreateWindow(w, h, "Window", NULL, NULL);
-	//Debug::Log << "here 1" << Debug::Done;
-
+	GLFWwindow * win = glfwCreateWindow(640, 480, "Window", NULL, NULL);
 	if (win == NULL)
 	{
 		Debug::Log << "Window Making failed" << Debug::Done;
 		throw "Window Failed";
 	}
-	//Debug::Log << "Window Making done" << Debug::Done;
-
 	glfwMakeContextCurrent(win);
-
 	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		throw "glad load GL-Loader Failed";
 	}
-	//Debug::Log << "Window Loading done" << Debug::Done;
+	return win;
+}
 
-	glfwSetWindowUserPointer(win, this);
 
-	glfwSetFramebufferSizeCallback(win, Callback_Resize);
-	glfwSetKeyCallback(win, Callback_Key);
-	glfwSetCharCallback(win, Callback_Text);
 
-	glfwSetMouseButtonCallback(win, Callback_CursorClick);
-	glfwSetScrollCallback(win, Callback_CursorScroll);
-	glfwSetCursorPosCallback(win, Callback_CursorMove);
+Window::Window() :
+	glfw_window(NormalWindow()),
+	Keys(7),
+	MouseManager(*this),
+	Data(NULL)
+{
+	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
 
-	//Debug::Log << "Window CallBacks done" << Debug::Done;
+	Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
+	Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
+	Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
+	Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
+	Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
+	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
+	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
-	ShowFrameData = false;
+	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
+
+	glfwSetWindowUserPointer(glfw_window, this);
+
+	glfwSetFramebufferSizeCallback(glfw_window, Callback_Resize);
+	glfwSetKeyCallback(glfw_window, Callback_Key);
+	glfwSetCharCallback(glfw_window, Callback_Text);
+
+	glfwSetMouseButtonCallback(glfw_window, Callback_CursorClick);
+	glfwSetScrollCallback(glfw_window, Callback_CursorScroll);
+	glfwSetCursorPosCallback(glfw_window, Callback_CursorMove);
 
 	InitFunc = NULL;
 	FrameFunc = NULL;
@@ -109,17 +87,10 @@ Window::Window(float w, float h) :
 
 	UpdateSize();
 
-	//ViewPortSizeRatio = SizeRatio2D(w, h);
-	//Center = Point2D(w * 0.5f, h * 0.5f);
-
 	DefaultColor = Color(0.5f, 0.5f, 0.5f);
-
-	Debug::Log << "++++ Window" << Debug::Done;
 }
 Window::~Window()
-{
-	Debug::Log << "---- Window" << Debug::Done;
-}
+{ }
 
 
 
@@ -128,11 +99,11 @@ void Window::UpdateSize()
 	int w, h;
 
 	Point2D winSize;
-	glfwGetWindowSize(win, &w, &h);
+	glfwGetWindowSize(glfw_window, &w, &h);
 	winSize = Point2D(w, h);
 
 	Point2D bufSize;
-	glfwGetFramebufferSize(win, &w, &h);
+	glfwGetFramebufferSize(glfw_window, &w, &h);
 	bufSize = Point2D(w, h);
 
 	Size.Change(winSize, bufSize);
@@ -187,7 +158,7 @@ void Window::Callback_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
 	UpdateSize();
-	if (ResizeFunc != NULL) { ResizeFunc(Size); }
+	if (ResizeFunc != NULL) { ResizeFunc(Data, Size); }
 }
 void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
@@ -207,14 +178,21 @@ void Window::Callback_Text(unsigned int codepoint)
 void Window::Callback_CursorClick(int button, int action, int mods)
 {
 	MouseManager.UpdateClick(button, action, mods);
+	(void)button;
+	(void)action;
+	(void)mods;
 }
 void Window::Callback_CursorScroll(double xOffset, double yOffset)
 {
 	MouseManager.UpdateScroll(xOffset, yOffset);
+	(void)xOffset;
+	(void)yOffset;
 }
 void Window::Callback_CursorMove(double xPos, double yPos)
 {
 	MouseManager.UpdateMove(xPos, yPos);
+	(void)xPos;
+	(void)yPos;
 }
 
 
@@ -222,18 +200,22 @@ void Window::Callback_CursorMove(double xPos, double yPos)
 void Window::ChangeCallback_CursorClick(void (*func)(UserParameter::Mouse::Click))
 {
 	MouseManager.ChangeCallbackClick(func);
+	(void)func;
 }
 void Window::ChangeCallback_CursorScroll(void (*func)(UserParameter::Mouse::Scroll))
 {
 	MouseManager.ChangeCallbackScroll(func);
+	(void)func;
 }
 void Window::ChangeCallback_CursorMove(void (*func)(UserParameter::Mouse::Position))
 {
 	MouseManager.ChangeCallbackMove(func);
+	(void)func;
 }
 void Window::ChangeCallback_CursorDrag(void (*func)(UserParameter::Mouse::Drag))
 {
 	MouseManager.ChangeCallbackDrag(func);
+	(void)func;
 }
 
 
@@ -251,6 +233,7 @@ Point3D Window::MoveFromKeys(float speed) const
 	if (Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += speed; }
 	if (Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= speed; }
 	if (Keys[GLFW_KEY_LEFT_CONTROL].IsDown())	{ move = move * 10; }
+	(void)speed;
 
 	return move;
 }
@@ -268,111 +251,65 @@ Angle3D Window::SpinFromCursor(float speed) const
 }
 
 
+void Window::RunGL_Setup()
+{
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CW);
 
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_LESS);
+	glDepthRange(0, 1);
+	glClearDepth(1.0f);
+}
+void Window::Run_Init()
+{
+	if (InitFunc != NULL)
+	{
+		Debug::Log << "Window Init() ..." << Debug::Done;
+		InitFunc(Data);
+		Debug::Log << "Window Init() done" << Debug::Done;
+	}
+}
+void Window::Run_Free()
+{
+	if (FreeFunc != NULL)
+	{
+		Debug::Log << "Window Free() ..." << Debug::Done;
+		FreeFunc(Data);
+		Debug::Log << "Window Free() done" << Debug::Done;
+	}
+}
 void Window::Run()
 {
 	try
 	{
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		glFrontFace(GL_CW);
-
-		glEnable(GL_DEPTH_TEST);
-		glDepthMask(GL_TRUE);
-		glDepthFunc(GL_LESS);
-		glDepthRange(0, 1);
-		glClearDepth(1.0f);
-
-		if (InitFunc != NULL)
-		{
-			Debug::Log << "++++ Window Init" << Debug::Done;
-			InitFunc();
-			Debug::Log << "---- Window Init" << Debug::Done;
-		}
-
+		RunGL_Setup();
+		Run_Init();
 		UpdateSize();
-		if (ResizeFunc != NULL) { ResizeFunc(Size); }
-
-		int frameSkipped = 0;
-		int frameCount = 0;
-		TimeMeasure timeFunc;
-		TimeMeasure timeSwap;
-		TimeMeasure timePoll;
-
-		FrameTimeLast = glfwGetTime();
-		while (!glfwWindowShouldClose(win))
+		if (ResizeFunc != NULL) { ResizeFunc(Data, Size); }
+		double FrameTimeLast = glfwGetTime();
+		while (!glfwWindowShouldClose(glfw_window))
 		{
 			double FrameTimeCurr = glfwGetTime();
-			FrameTimeDelta = FrameTimeCurr - FrameTimeLast;
+			double FrameTimeDelta = FrameTimeCurr - FrameTimeLast;
 			if (FrameTimeDelta >= (1.0 / 64.0))
 			{
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
-
-				if (Keys[GLFW_KEY_TAB].IsPress())
-				{
-					//ToggleCursorLock();
-					MouseManager.CursorModeToggle();
-				}
-
-				timeFunc.T0();
-				FrameFunc(FrameTimeDelta);
-				timeFunc.T1();
-
-				timeSwap.T0();
-				glfwSwapBuffers(win);
-				timeSwap.T1();
-
-				if (glfwGetInputMode(win, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
-				{
-					glfwSetCursorPos(win, 0, 0);
-				}
-
+				FrameFunc(Data, FrameTimeDelta);
+				glfwSwapBuffers(glfw_window);
 				Keys.Tick();
 				MouseManager.Tick();
-
-				timePoll.T0();
 				glfwPollEvents();
-				timePoll.T1();
-
-				if (ShowFrameData)
-				{
-					if ((frameCount % 64) == 0)
-					{
-						std::cout << "Frame: " << frameCount << " (" << frameSkipped << ")" << "\n";
-						std::cout << "FrameTime: " << ((1.0 / 64.0) * 1000) << "ms\n";
-						std::cout << "Func: " << (timeFunc.Average() * 1000) << "ms\n";
-						std::cout << "Swap: " << (timeSwap.Average() * 1000) << "ms\n";
-						std::cout << "Poll: " << (timePoll.Average() * 1000) << "ms\n";
-					}
-					frameCount++;
-					frameSkipped = 0;
-				}
 				FrameTimeLast = FrameTimeCurr;
-			}
-			else
-			{
-				frameSkipped++;
 			}
 		}
 	}
-	catch (std::exception & ex)
-	{
-		std::cout << "Exception: " << ex.what() << "\n";
-	}
-	catch (const char * err)
-	{
-		std::cerr << "String Error: "<< err << "\n";
-	}
-	catch (...)
-	{
-		std::cerr << "Unknown Error\n";
-	}
-
-	if (FreeFunc != NULL)
-	{
-		Debug::Log << "++++ Window Free" << Debug::Done;
-		FreeFunc();
-		Debug::Log << "---- Window Free" << Debug::Done;
-	}
+	catch (std::exception & ex)	{ std::cerr << "Exception: " << ex.what() << '\n'; }
+	catch (std::string & str)	{ std::cerr << "string Exception: "<< str << '\n'; }
+	catch (const char * str)	{ std::cerr << "const char * Exception: "<< str << '\n'; }
+	catch (...)					{ std::cerr << "Unknown Exception\n"; }
+	Run_Free();
 }

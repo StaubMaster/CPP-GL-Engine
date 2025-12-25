@@ -5,32 +5,34 @@
 
 
 
-UserParameter::Mouse::EventManager::EventManager(Window * win) :
-	win(win),
+UserParameter::Mouse::EventManager::EventManager(Window & win) :
+	window(win),
 	Buttons(),
 	CallbackClick(NULL),
-	CallbackScroll(NULL)
+	CallbackScroll(NULL),
+	CallbackMove(NULL),
+	CallbackDrag(NULL)
 { }
 
 
 
 bool UserParameter::Mouse::EventManager::CursorModeIsLocked() const
 {
-	return (glfwGetInputMode(win -> win, GLFW_CURSOR) == GLFW_CURSOR_DISABLED);
+	return (glfwGetInputMode(window.glfw_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED);
 }
 void UserParameter::Mouse::EventManager::CursorModeFree()
 {
-	glfwSetCursorPos(win -> win, 0, 0);
-	glfwSetInputMode(win -> win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	glfwSetCursorPos(window.glfw_window, 0, 0);
+	glfwSetInputMode(window.glfw_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 void UserParameter::Mouse::EventManager::CursorModeLock()
 {
-	glfwSetInputMode(win -> win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetCursorPos(win -> win, 0, 0);
+	glfwSetInputMode(window.glfw_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPos(window.glfw_window, 0, 0);
 }
 void UserParameter::Mouse::EventManager::CursorModeToggle()
 {
-	int mode = glfwGetInputMode(win -> win, GLFW_CURSOR);
+	int mode = glfwGetInputMode(window.glfw_window, GLFW_CURSOR);
 	if (mode == GLFW_CURSOR_DISABLED)
 	{
 		CursorModeFree();
@@ -46,7 +48,7 @@ void UserParameter::Mouse::EventManager::CursorModeToggle()
 UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelPosition() const
 {
 	double x, y;
-	glfwGetCursorPos(win -> win, &x, &y);
+	glfwGetCursorPos(window.glfw_window, &x, &y);
 	UserParameter::Mouse::Position pos;
 	pos.Absolute.X = x;
 	pos.Absolute.Y = y;
@@ -75,6 +77,10 @@ UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelPo
 void UserParameter::Mouse::EventManager::Tick()
 {
 	Buttons.Tick();
+	if (CursorModeIsLocked())
+	{
+		glfwSetCursorPos(window.glfw_window, 0, 0);
+	}
 }
 void UserParameter::Mouse::EventManager::UpdateClick(int button, int action, int mods)
 {

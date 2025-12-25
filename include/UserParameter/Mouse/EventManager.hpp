@@ -22,7 +22,7 @@ namespace Mouse
 struct EventManager
 {
 	private:
-	Window * win;
+	Window & window;
 	public:
 	UserParameter::Mouse::ButtonRange Buttons;
 
@@ -33,7 +33,7 @@ struct EventManager
 	void (*CallbackDrag)	(UserParameter::Mouse::Drag);
 
 	public:
-	EventManager(Window * win);
+	EventManager(Window & win);
 
 	public:
 	bool	CursorModeIsLocked() const;

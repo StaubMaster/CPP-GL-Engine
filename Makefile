@@ -2,7 +2,8 @@
 
 
 NAME := Engine.a
-COMPILER := c++ -std=c++11
+#COMPILER := c++ -std=c++11
+COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror -D ENGINE_DIR='"$(shell pwd)"'
 
 

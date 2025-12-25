@@ -16,6 +16,14 @@
 
 
 
+/*
+	Crashes sometimes even with no Buffers Shaders or anything else
+	I assume something in Window (Keys Mouse) is causing it
+	or the glfw Stuff itself
+*/
+
+
+
 struct GLFWwindow;
 
 struct Point3D;
@@ -24,23 +32,21 @@ struct Angle3D;
 class Window
 {
 	private:
+	static GLFWwindow * NormalWindow();
+
+	private:
 	public:
-	GLFWwindow * win;
+	GLFWwindow * glfw_window;
 	UserParameter::KeyBoard::KeyRange2 Keys;
 	UserParameter::Mouse::EventManager MouseManager;
+	void * Data;
 
 	public:
-	bool ShowFrameData;
-	private:
-	double FrameTimeLast;
-	double FrameTimeDelta;
+	void (*InitFunc)(void *);
+	void (*FrameFunc)(void *, double);
+	void (*FreeFunc)(void *);
 
-	public:
-	void (*InitFunc)();
-	void (*FrameFunc)(double);
-	void (*FreeFunc)();
-
-	void (*ResizeFunc)(const WindowBufferSize2D &);
+	void (*ResizeFunc)(void *, const WindowBufferSize2D &);
 
 	void (*KeyFunc)		(UserParameter::KeyBoard::Key);
 	void (*TextFunc)	(UserParameter::KeyBoard::Text);
@@ -56,8 +62,12 @@ class Window
 	Color DefaultColor;
 
 	public:
-	Window(float w, float h);	//	why does this take float ?
+	Window();
 	~Window();
+
+	//public:
+	//void Create();
+	//void Delete();
 
 	private:
 	void UpdateSize();
@@ -94,6 +104,11 @@ class Window
 	public:
 	Point3D MoveFromKeys(float speed) const;
 	Angle3D SpinFromCursor(float speed) const;
+
+	private:
+	void RunGL_Setup();
+	void Run_Init();
+	void Run_Free();
 
 	public:
 	void Run();
