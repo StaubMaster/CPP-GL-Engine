@@ -1,5 +1,4 @@
 #include "PolyHedra/MainData//PolyHedra_MainBuffer.hpp"
-#include "PolyHedra/MainData//PolyHedra_MainAttrib.hpp"
 #include "PolyHedra/MainData//PolyHedra_MainData.hpp"
 
 
@@ -9,7 +8,15 @@ PolyHedra_MainBuffer::PolyHedra_MainBuffer(
 	unsigned int indexNormal,
 	unsigned int indexTexture
 ) :
-	BaseBuffer(1, (Attribute::Base * []) {
-		new PolyHedra_MainAttrib(0, sizeof(PolyHedra_MainData), indexPosition, indexNormal, indexTexture)
-	}) { }
-PolyHedra_MainBuffer::~PolyHedra_MainBuffer() {}
+	Buffer::Attribute(GL_ARRAY_BUFFER, GL_STATIC_DRAW, sizeof(PolyHedra_MainData)),
+	Position(0, sizeof(PolyHedra_MainData), indexPosition),
+	Normal(0, sizeof(PolyHedra_MainData), indexNormal),
+	Texture(0, sizeof(PolyHedra_MainData), indexTexture)
+{
+	Attributes.Allocate(3);
+	Attributes[0] = &Position;
+	Attributes[1] = &Normal;
+	Attributes[2] = &Texture;
+}
+PolyHedra_MainBuffer::~PolyHedra_MainBuffer()
+{ }

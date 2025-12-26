@@ -20,7 +20,8 @@
 
 
 
-# include "Graphics/Buffer/BaseBuffer.hpp"
+//# include "Graphics/Buffer/BaseBuffer.hpp"
+# include "Graphics/Buffer/Attribute.hpp"
 
 
 
@@ -72,20 +73,23 @@ class OBJ_MainAttrib : public Attribute::Base
 
 
 
-class OBJ_MainBuffer : public BaseBuffer
+class OBJ_MainBuffer : public Buffer::Attribute
 {
+	private:
+	OBJ_MainAttrib	Attribute;
+
 	public:
-		OBJ_MainBuffer(
-			unsigned int indexPosition,
-			unsigned int indexTexture,
-			unsigned int indexNormal,
-			unsigned int indexColor,
-			unsigned int indexAmbientColor,
-			unsigned int indexDiffuseColor,
-			unsigned int indexSpecularPower,
-			unsigned int indexSpecularColor
-		);
-		~OBJ_MainBuffer();
+	OBJ_MainBuffer(
+		unsigned int indexPosition,
+		unsigned int indexTexture,
+		unsigned int indexNormal,
+		unsigned int indexColor,
+		unsigned int indexAmbientColor,
+		unsigned int indexDiffuseColor,
+		unsigned int indexSpecularPower,
+		unsigned int indexSpecularColor
+	);
+	~OBJ_MainBuffer();
 };
 
 

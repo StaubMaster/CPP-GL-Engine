@@ -2,8 +2,8 @@
 
 
 NAME := Engine.a
-#COMPILER := c++ -std=c++11
-COMPILER := g++ -g -std=c++11
+COMPILER := c++ -std=c++11
+#COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror -D ENGINE_DIR='"$(shell pwd)"'
 
 
@@ -100,9 +100,9 @@ MULTIFORM := \
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
 MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
 
+#	Graphics/Buffer/BaseBufferArray.cpp
+#	Graphics/Buffer/BaseBuffer.cpp
 BUFFER := \
-	Graphics/Buffer/BaseBufferArray.cpp \
-	Graphics/Buffer/BaseBuffer.cpp \
 	Graphics/Buffer/Base.cpp \
 	Graphics/Buffer/Attribute.cpp \
 	Graphics/Buffer/ArrayBase.cpp
@@ -132,11 +132,9 @@ TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))
 
 INSTANCE_DATA := \
 	InstanceData/Simple3D/Simple3D_InstData.cpp \
-	InstanceData/Simple3D/Simple3D_InstAttrib.cpp \
 	InstanceData/Simple3D/Simple3D_InstBuffer.cpp \
 \
 	InstanceData/Physics3D/Physics3D_InstData.cpp \
-	InstanceData/Physics3D/Physics3D_InstAttrib.cpp \
 	InstanceData/Physics3D/Physics3D_InstBuffer.cpp
 INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
 INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
@@ -153,7 +151,6 @@ POLYHEDRA := \
 	PolyHedra/Skin/Skin2D_Data.cpp \
 \
 	PolyHedra/MainData/PolyHedra_MainData.cpp \
-	PolyHedra/MainData/PolyHedra_MainAttrib.cpp \
 	PolyHedra/MainData/PolyHedra_MainBuffer.cpp \
 	PolyHedra/Simple3D/PolyHedra_3D_BufferArray.cpp \
 	PolyHedra/Simple3D/PolyHedra_3D_Instances.cpp \

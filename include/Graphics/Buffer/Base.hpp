@@ -5,7 +5,7 @@ namespace Buffer
 {
 class Base
 {
-	private:
+	protected:
 	unsigned int ID;
 
 
@@ -22,12 +22,10 @@ class Base
 	public:
 	void Create();
 	void Delete();
-	void Bind(unsigned int target, unsigned int size, const void * data, unsigned int usage);
 
 	protected:
 	virtual void CreateRelay();
 	virtual void DeleteRelay();
-	virtual void BindRelay();
 };
 };
 

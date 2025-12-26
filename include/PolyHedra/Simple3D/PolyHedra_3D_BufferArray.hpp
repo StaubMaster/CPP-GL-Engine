@@ -2,7 +2,8 @@
 #ifndef  POLYHEDRA_3D_BUFFER_ARRAY_HPP
 # define POLYHEDRA_3D_BUFFER_ARRAY_HPP
 
-# include "Graphics/Buffer/Instance_Base_BufferArray.hpp"
+//# include "Graphics/Buffer/Instance_Base_BufferArray.hpp"
+# include "Graphics/Buffer/ArrayBase.hpp"
 
 # include "PolyHedra/MainData/PolyHedra_MainData.hpp"
 # include "PolyHedra/MainData/PolyHedra_MainBuffer.hpp"
@@ -12,16 +13,24 @@
 
 
 
-class PolyHedra_3D_BufferArray : public Instance_Base_BufferArray<
+/*class PolyHedra_3D_BufferArray : public Instance_Base_BufferArray<
 	PolyHedra_MainData,
 	PolyHedra_MainBuffer,
 	Simple3D_InstData,
 	Simple3D_InstBuffer
->
+>*/
+class PolyHedra_3D_BufferArray : Buffer::ArrayBase
 {
 	public:
-		PolyHedra_3D_BufferArray();
-		~PolyHedra_3D_BufferArray();
+	PolyHedra_MainBuffer	Main;
+	Simple3D_InstBuffer		Inst;
+	unsigned int			DrawMode;
+
+	public:
+	PolyHedra_3D_BufferArray();
+	~PolyHedra_3D_BufferArray();
+
+	void Draw();
 };
 
 #endif

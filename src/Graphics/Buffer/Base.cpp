@@ -45,15 +45,8 @@ void Buffer::Base::Delete()
 	ID = 0;
 	Debug::Log << "Buffer::Base Deleting " << ID << " done" << Debug::Done;
 }
-void Buffer::Base::Bind(unsigned int target, unsigned int size, const void * data, unsigned int usage)
-{
-	glBindBuffer(target, ID);
-	glBufferData(target, size, data, usage);
-	BindRelay();
-}
 
 
 
 void Buffer::Base::CreateRelay() { }
 void Buffer::Base::DeleteRelay() { }
-void Buffer::Base::BindRelay() { }

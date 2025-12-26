@@ -7,26 +7,34 @@
 
 # include "Miscellaneous/Container/Base.hpp"
 
+# include "Debug.hpp"
+# include "OpenGL/openGL.h"
+# include <sstream>
+
+
+
 namespace Buffer
 {
 class Attribute : public Base
 {
 	private:
 	public:
+	unsigned int Target;
+	unsigned int Usage;
+	unsigned int DataSize;
 	Container::Base<::Attribute::Base*> Attributes;
-	unsigned int Count;
+	unsigned int DrawCount;
 
 	public:
 	Attribute();
-	virtual ~Attribute();
-	
+	Attribute(unsigned int target, unsigned int usage, unsigned int data_size);
+	~Attribute();
+
 	Attribute(const Attribute & other);
 	Attribute & operator=(const Attribute & other);
 
 	public:
-	void CreateRelay() override;
-	void DeleteRelay() override;
-	void BindRelay() override;
+	void Bind(const void * data, unsigned int count);
 };
 };
 

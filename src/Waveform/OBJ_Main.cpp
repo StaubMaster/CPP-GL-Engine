@@ -51,8 +51,15 @@ OBJ_MainBuffer::OBJ_MainBuffer(
 	unsigned int indexSpecularPower,
 	unsigned int indexSpecularColor
 ) :
-	BaseBuffer(1, (Attribute::Base * []) {
-		new OBJ_MainAttrib(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor,
-		indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
-	}) { }
-OBJ_MainBuffer::~OBJ_MainBuffer() {}
+	//BaseBuffer(1, (Attribute::Base * []) {
+	//	new OBJ_MainAttrib(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor,
+	//	indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
+	//}) { }
+	Buffer::Attribute(GL_ARRAY_BUFFER, GL_STATIC_DRAW, sizeof(OBJ_MainData)),
+	Attribute(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor, indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
+{
+	Attributes.Allocate(1);
+	Attributes[0] = &Attribute;
+}
+OBJ_MainBuffer::~OBJ_MainBuffer()
+{ }
