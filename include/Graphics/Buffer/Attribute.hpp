@@ -6,6 +6,7 @@
 # include "Graphics/Attribute/Base/AttributeBase.hpp"
 
 # include "Miscellaneous/Container/Base.hpp"
+# include "Miscellaneous/Container/VoidPointerBase.hpp"
 
 # include "Debug.hpp"
 # include "OpenGL/openGL.h"
@@ -34,7 +35,7 @@ class Attribute : public Base
 	Attribute & operator=(const Attribute & other);
 
 	public:
-	void Bind(const void * data, unsigned int count);
+	void Bind(const Container::VoidPointerBase & data);
 };
 };
 

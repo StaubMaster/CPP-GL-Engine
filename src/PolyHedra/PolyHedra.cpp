@@ -39,10 +39,9 @@ YMT::PolyHedra::~PolyHedra()
 
 
 
-PolyHedra_MainData * YMT::PolyHedra::ToMainData(int & count)
+Container::VoidPointer<PolyHedra_MainData> YMT::PolyHedra::ToMainData()
 {
-	count = Faces.Count() * 3;
-	PolyHedra_MainData * data = new PolyHedra_MainData[count];
+	Container::VoidPointer<PolyHedra_MainData> data(Faces.Count() * 3);
 
 	/*
 	std::cout << "C " << Corners.Count() << "\n";
@@ -91,7 +90,7 @@ PolyHedra_MainData * YMT::PolyHedra::ToMainData(int & count)
 
 	if (Skin == NULL)
 	{
-		for (int i = 0; i < count; i++)
+		for (unsigned int i = 0; i < data.Count(); i++)
 		{
 			data[i].Texture = Point2D();
 		}

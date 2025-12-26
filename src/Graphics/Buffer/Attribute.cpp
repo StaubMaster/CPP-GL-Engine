@@ -54,11 +54,11 @@ Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 
 
 
-void Buffer::Attribute::Bind(const void * data, unsigned int count)
+void Buffer::Attribute::Bind(const Container::VoidPointerBase & data)
 {
 	glBindBuffer(Target, ID);
-	glBufferData(Target, DataSize * count, data, Usage);
-	DrawCount = count;
+	glBufferData(Target, data.VoidSize(), data.VoidData(), Usage);
+	DrawCount = data.VoidSize() / DataSize;
 
 	const unsigned char * offset = NULL;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)

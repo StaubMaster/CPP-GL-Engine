@@ -2,6 +2,7 @@
 # define POLYHEDRA_HPP
 
 # include "Miscellaneous/Container/Dynamic.hpp"
+# include "Miscellaneous/Container/VoidPointer.hpp"
 
 # include <string>
 # include <exception>
@@ -67,7 +68,8 @@ class PolyHedra
 		~PolyHedra();
 
 	public:
-		PolyHedra_MainData * ToMainData(int & count);
+	Container::VoidPointer<PolyHedra_MainData> ToMainData();
+
 	public:
 		std::string ToInfo() const;
 		AxisBox3D	CalcBound() const;

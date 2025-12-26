@@ -8,11 +8,9 @@ PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 {
 	MainPolyHedra = polyhedra;
 
-	int count;
-	PolyHedra_MainData * data = polyhedra -> ToMainData(count);
-	Buffer.Main.Bind(data, count);
-	//Buffer.BindMain(data, count);
-	delete [] data;
+	Container::VoidPointer<PolyHedra_MainData> data = polyhedra -> ToMainData();
+	Buffer.Main.Bind(data);
+	data.Delete();
 
 	if (polyhedra -> Skin != NULL)
 	{
@@ -37,7 +35,9 @@ PolyHedra_3D_Instances & PolyHedra_3D_Instances::Update()
 {
 	if (Instances.Changed)
 	{
-		Buffer.Inst.Bind(Instances.Data(), Instances.Count());
+		Container::VoidPointer<Simple3D_InstData> data(Instances.Count(), Instances.Data());
+		Buffer.Inst.Bind(data);
+		//Buffer.Inst.Bind(Instances.Data(), Instances.Count());
 		//Buffer.Inst.Bind(GL_ARRAY_BUFFER, sizeof(Simple3D_InstData) * Instances.Count(), Instances.Data(), GL_STREAM_DRAW);
 		//Buffer.Inst.Count = Instances.Count();
 		//Buffer.BindInst(Instances.Data(), Instances.Count());
