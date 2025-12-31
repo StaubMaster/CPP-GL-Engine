@@ -5,8 +5,8 @@
 
 # include "Graphics/Attribute/Base/AttributeBase.hpp"
 
-# include "Miscellaneous/Container/Base.hpp"
-# include "Miscellaneous/Container/VoidPointerBase.hpp"
+# include "Miscellaneous/Container/Fixed.hpp"
+# include "Miscellaneous/Container/Void.hpp"
 
 # include "Debug.hpp"
 # include "OpenGL/openGL.h"
@@ -23,7 +23,7 @@ class Attribute : public Base
 	unsigned int Target;
 	unsigned int Usage;
 	unsigned int DataSize;
-	Container::Base<::Attribute::Base*> Attributes;
+	Container::Fixed<::Attribute::Base*> Attributes;
 	unsigned int DrawCount;
 
 	public:
@@ -35,7 +35,7 @@ class Attribute : public Base
 	Attribute & operator=(const Attribute & other);
 
 	public:
-	void Bind(const Container::VoidPointerBase & data);
+	void Bind(const Container::Void & data);
 };
 };
 

@@ -7,7 +7,7 @@
 # include "DataDeclare.hpp"
 # include "Display/SizeRatio2D.hpp"
 
-# include "Miscellaneous/Container/Dynamic.hpp"
+# include "Miscellaneous/Container/Binary.hpp"
 
 # include <exception>
 
@@ -46,10 +46,10 @@ class OBJ
 	private:
 		std::string Path;
 
-		Container::Dynamic<Point4D> Positions;
-		Container::Dynamic<Point3D> Textures;
-		Container::Dynamic<Point3D> Normals;
-		Container::Dynamic<Face> Faces;
+		Container::Binary<Point4D> Positions;
+		Container::Binary<Point3D> Textures;
+		Container::Binary<Point3D> Normals;
+		Container::Binary<Face> Faces;
 
 		MTL Materials;
 

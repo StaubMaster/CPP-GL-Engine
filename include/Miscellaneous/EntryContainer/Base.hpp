@@ -3,7 +3,7 @@
 
 # include "Entry.hpp"
 # include "Miscellaneous/Container/Base.hpp"
-# include "Miscellaneous/Container/Dynamic.hpp"
+# include "Miscellaneous/Container/Binary.hpp"
 
 namespace EntryContainer
 {
@@ -12,7 +12,7 @@ template<typename T>
 class Base : public Container::Base<T>
 {
 	protected:
-		Container::Dynamic<EntryData<T>*> Entrys;
+		Container::Binary<EntryData<T>*> Entrys;
 	protected:
 		bool _IsLocked;
 
@@ -32,22 +32,22 @@ class Base : public Container::Base<T>
 		virtual void DebugInfo() override { }
 
 	public:
-		Base() : Container::Base<T>(),
-			Entrys(Container::IncreaseBehaviour::Binary, Container::DecreaseBehaviour::Binary)
+		Base(Container::Behaviour::EIncrease incB, Container::Behaviour::EDecrease decB, Container::Behaviour::EMemory memB ) : Container::Base<T>(incB, decB, memB),
+			Entrys()
 		{
 			//_Limit = 0;
 			//_Data = new T[_Limit];
 			_IsLocked = false;
 			Changed = false;
 		}
-		Base(unsigned int limit) : Container::Base<T>(limit),
-			Entrys(Container::IncreaseBehaviour::Binary, Container::DecreaseBehaviour::Binary)
+		/*Base(unsigned int limit) : Container::Base<T>(limit),
+			Entrys(Container::Behaviour::EIncrease::Binary,Container::Behaviour::EDecrease::Binary)
 		{
 			//_Limit = limit;
 			//_Data = new T[_Limit];
 			_IsLocked = false;
 			Changed = false;
-		}
+		}*/
 		virtual ~Base()
 		{
 			//delete[] _Data;

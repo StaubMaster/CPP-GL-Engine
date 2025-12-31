@@ -3,7 +3,7 @@
 
 # include "SkinBase.hpp"
 
-# include "Miscellaneous/Container/Dynamic.hpp"
+# include "Miscellaneous/Container/Binary.hpp"
 //# include "Texture/TextureBase.hpp"
 
 namespace YMT
@@ -17,8 +17,8 @@ template<typename CornerType, typename FaceCornerType, typename FaceType>
 class SkinGenericBase : public SkinBase
 {
 	public:
-		Container::Dynamic<CornerType>	Corners;
-		Container::Dynamic<FaceType>	Faces;
+		Container::Binary<CornerType>	Corners;
+		Container::Binary<FaceType>		Faces;
 
 	public:
 		SkinGenericBase() :

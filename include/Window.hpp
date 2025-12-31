@@ -42,8 +42,11 @@ class Window
 	void * Data;
 
 	public:
-	void (*InitFunc)(void *);
+	unsigned long long FrameNumberTerminate;
+
+	public:
 	void (*FrameFunc)(void *, double);
+	void (*InitFunc)(void *);
 	void (*FreeFunc)(void *);
 
 	void (*ResizeFunc)(void *, const WindowBufferSize2D &);

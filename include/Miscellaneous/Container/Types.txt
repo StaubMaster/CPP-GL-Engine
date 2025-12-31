@@ -1,0 +1,11 @@
+
+
+UnCounting (_Limit is constant) (_Count == _Limit)
+	Array()		internal Data. Copy. needs Limit to allocate
+	Pointer()	external Data. Bind. needs Limit and Pointer
+
+Counting (_Limit changes)
+	Dynamic()		internal Data. Copy. Binary Size
+	Tight()			internal Data. Copy. Limit == _Count
+	Fixed()			internal Data. Copy. fixed Size. needs Limit to allocate
+	Fixed()			external Data. Bind. fixed Size. needs Limit and Data pointer

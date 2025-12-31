@@ -18,4 +18,3 @@ Attribute::Location::Location(
 	Stride(stride),
 	Index(index)
 { }
-

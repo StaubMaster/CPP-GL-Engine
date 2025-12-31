@@ -70,7 +70,8 @@ MTL::Material & MTL::Index(unsigned int idx)
 
 void MTL::Insert(MTL & mtl)
 {
-	Materials.Insert((Material*)mtl.Materials.Data(), mtl.Materials.Count());
+	//Materials.Insert((Material*)mtl.Materials.Data(), mtl.Materials.Count());
+	Materials.Insert(mtl.Materials);
 }
 void MTL::Select(std::string name)
 {

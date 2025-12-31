@@ -6,17 +6,17 @@
 
 #include <iostream>
 
+#include "Miscellaneous/Container/Pointer.hpp"
+
 
 
 OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryContext & dir)
 	: Shader::Base(
-		Container::Base<Shader::Code>(
-			(Shader::Code[])
-			{
-				Shader::Code(dir.File("OBJ_S3D.vert")),
-				Shader::Code(dir.File("OBJ.frag")),
-			}, 2
-		)
+		Container::Pointer<Shader::Code>(2, (Shader::Code[])
+		{
+			Shader::Code(dir.File("OBJ_S3D.vert")),
+			Shader::Code(dir.File("OBJ.frag")),
+		})
 	),
 	ViewPortSizeRatio(Uniform::NameShader("ViewPortSizeRatio", *this)),
 	View(Uniform::NameShader("View", *this)),

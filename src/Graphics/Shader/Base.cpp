@@ -17,9 +17,12 @@ Shader::Base::Base() :
 { }
 Shader::Base::Base(Container::Base<Shader::Code> code) :
 	ID(0),
-	Code(code),
+	Code(Container::Fixed<Shader::Code>::Copy(code)),
 	Uniforms()
-{ }
+{
+	std::cout << "code " << code.Limit() << ' ' << code.Count() << '\n';
+	std::cout << "Code " << code.Limit() << ' ' << Code.Count() << '\n';
+}
 Shader::Base::~Base()
 { }
 

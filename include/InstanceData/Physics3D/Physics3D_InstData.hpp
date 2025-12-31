@@ -10,8 +10,8 @@ struct Physics3D_InstData
 	Trans3D Vel;
 
 	public:
-		Physics3D_InstData();
-		Physics3D_InstData(const Trans3D & trans);
+	Physics3D_InstData();
+	Physics3D_InstData(const Trans3D & trans);
 };
 
 #endif

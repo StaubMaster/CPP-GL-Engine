@@ -2,7 +2,7 @@
 
 
 
-unsigned int Container::BinarySize(unsigned int wanted_size)
+unsigned int Container::Behaviour::BinarySize(unsigned int wanted_size)
 {
 	for (unsigned char shift = 31; shift < 32; shift--)
 	{

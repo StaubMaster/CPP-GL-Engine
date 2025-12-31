@@ -14,8 +14,8 @@ Physics3D_InstBuffer::Physics3D_InstBuffer(
 	Vel(1, sizeof(Physics3D_InstData), indexVelPos, indexVelRot)
 {
 	Attributes.Allocate(2);
-	Attributes[0] = &Trans;
-	Attributes[1] = &Vel;
+	Attributes.Insert(&Trans);
+	Attributes.Insert(&Vel);
 }
 Physics3D_InstBuffer::~Physics3D_InstBuffer()
 { }

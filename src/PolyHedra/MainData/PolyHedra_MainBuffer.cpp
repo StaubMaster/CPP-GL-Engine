@@ -14,9 +14,9 @@ PolyHedra_MainBuffer::PolyHedra_MainBuffer(
 	Texture(0, sizeof(PolyHedra_MainData), indexTexture)
 {
 	Attributes.Allocate(3);
-	Attributes[0] = &Position;
-	Attributes[1] = &Normal;
-	Attributes[2] = &Texture;
+	Attributes.Insert(&Position);
+	Attributes.Insert(&Normal);
+	Attributes.Insert(&Texture);
 }
 PolyHedra_MainBuffer::~PolyHedra_MainBuffer()
 { }

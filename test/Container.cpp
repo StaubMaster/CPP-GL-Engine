@@ -1,26 +1,16 @@
 
 #include <iostream>
 
-#include "Miscellaneous/Container/Dynamic.hpp"
+#include "Miscellaneous/Container/Fixed.hpp"
+#include "Miscellaneous/Container/Tight.hpp"
+#include "Miscellaneous/Container/Binary.hpp"
+//#include "Miscellaneous/Container/Behaviour.cpp"
 
-#include "Miscellaneous/EntryContainer/Dynamic.hpp"
-
-#include "../src/Miscellaneous/Container/Behaviour.cpp"
+#include "Miscellaneous/EntryContainer/Binary.hpp"
 
 
 
 void ContainerData(Container::Base<int> & container)
-{
-	std::cout << "Limit: " << container.Limit() << "\n";
-	for (unsigned int i = 0; i < container.Limit(); i++)
-	{
-		if (i != 0) { std::cout << " "; }
-		std::cout << container[i];
-	}
-	if (container.Limit() != 0) { std::cout << "\n"; }
-}
-
-void ContainerData(Container::Dynamic<int> & container)
 {
 	std::cout << "Limit: " << container.Limit() << " ";
 	std::cout << "Count: " << container.Count() << "\n";
@@ -34,14 +24,14 @@ void ContainerData(Container::Dynamic<int> & container)
 	}
 	std::cout << "\n";
 }
-void ContainerInsert(Container::Dynamic<int> & container, int item)
+void ContainerInsert(Container::Base<int> & container, int item)
 {
 	std::cout << "\n";
 	bool ret = container.Insert(item);
 	std::cout << "insert " << item << " return " << ret << "\n";
 	ContainerData(container);
 }
-void ContainerRemove(Container::Dynamic<int> & container, unsigned int idx)
+void ContainerRemove(Container::Base<int> & container, unsigned int idx)
 {
 	std::cout << "\n";
 	bool ret = container.Remove(idx);
@@ -49,14 +39,15 @@ void ContainerRemove(Container::Dynamic<int> & container, unsigned int idx)
 	ContainerData(container);
 }
 
-void ContainerData(EntryContainer::Dynamic<int> & container)
+void ContainerData(EntryContainer::Binary<int> & container)
 {
 	std::cout << "Limit: " << container.Limit() << "\n";
 	std::cout << "Count: " << container.Count() << "\n";
 	for (unsigned int i = 0; i < container.Limit(); i++)
 	{
 		if (i != 0) { std::cout << " "; }
-		std::cout << container[i];
+		//std::cout << container[i];	// check Count
+		std::cout << container.At(i);
 	}
 	if (container.Limit() != 0) { std::cout << "\n"; }
 }
@@ -69,7 +60,7 @@ void Test_Contnainer_Function_Resize()
 	std::cout << "Container Function Resize\n";
 	std::cout << "################################\n";
 
-	Container::Dynamic<int> cont;
+	Container::Binary<int> cont;
 	cont.Insert(0);
 	cont.Insert(1);
 	cont.Insert(2);
@@ -85,7 +76,7 @@ void Test_Contnainer_Function_InsertGap()
 	std::cout << "Container Function InsertGap\n";
 	std::cout << "################################\n";
 
-	Container::Dynamic<int> cont;
+	Container::Binary<int> cont;
 	cont.Insert(0);
 	cont.Insert(1);
 	cont.Insert(2);
@@ -104,7 +95,7 @@ void Test_Contnainer_Function_RemoveGap()
 	std::cout << "Container Function RemoveGap\n";
 	std::cout << "################################\n";
 
-	Container::Dynamic<int> cont;
+	Container::Binary<int> cont;
 	cont.Insert(0);
 	cont.Insert(1);
 	cont.Insert(2);
@@ -124,7 +115,10 @@ void Test_Contnainer_Function_RemoveGap()
 void Test_Container_Base()
 {
 	std::cout << "Construct" << "\n";
-	Container::Base<int> cont0(5);
+	//Container::Base<int> cont0(5);
+	Container::Base<int> cont0;
+	cont0.Allocate(5);
+
 	std::cout << "cont0: "; ContainerData(cont0);
 	std::cout << "\n";
 	
@@ -146,7 +140,8 @@ void Test_Container_Fixed()
 	std::cout << "Container Fixed\n";
 	std::cout << "################################\n";
 
-	Container::Dynamic<int> container(4, Container::IncreaseBehaviour::None, Container::DecreaseBehaviour::None);
+	Container::Fixed<int> container(4);
+
 	ContainerData(container);
 
 	ContainerInsert(container, 2);
@@ -163,9 +158,9 @@ void Test_Container_Fixed()
 void Test_Container_Fit()
 {
 	std::cout << "################################\n";
-	std::cout << "Container Fit\n";
+	std::cout << "Container Tight\n";
 	std::cout << "################################\n";
-	Container::Dynamic<int> container(Container::IncreaseBehaviour::Fit, Container::DecreaseBehaviour::Fit);
+	Container::Tight<int> container;
 	ContainerData(container);
 
 	ContainerInsert(container, 2);
@@ -184,7 +179,7 @@ void Test_Container_Binary()
 	std::cout << "################################\n";
 	std::cout << "Container Binary\n";
 	std::cout << "################################\n";
-	Container::Dynamic<int> container(Container::IncreaseBehaviour::Binary, Container::DecreaseBehaviour::Binary);
+	Container::Binary<int> container;
 	ContainerData(container);
 
 	ContainerInsert(container, 2);
@@ -203,7 +198,7 @@ void Test_Container_Binary()
 
 void Test_EntryContainer_Dynamic()
 {
-	EntryContainer::Dynamic<int> container;
+	EntryContainer::Binary<int> container;
 	ContainerData(container);
 	//container.ShowEntrys();
 
@@ -312,7 +307,7 @@ void Test_EntryContainer_Dynamic()
 }
 void Test_EntryContainer_EntryCopy()
 {
-	EntryContainer::Dynamic<int> container;
+	EntryContainer::Binary<int> container;
 	ContainerData(container);
 	//container.ShowEntrys();
 	std::cout << "\n";
@@ -374,7 +369,7 @@ void Test_EntryContainer_EntryCopy()
 }
 void Test_EntryContainer_Changed()
 {
-	EntryContainer::Dynamic<int> container;
+	EntryContainer::Binary<int> container;
 
 	std::cout << "changed " << container.Changed << "\n";
 	std::cout << "Entry()\n";
@@ -409,9 +404,9 @@ int main()
 	//Test_Container_Fit();
 	//Test_Container_Binary();
 
-	//Test_EntryContainer_Dynamic();
+	Test_EntryContainer_Dynamic();
 	//Test_EntryContainer_EntryCopy();
-	Test_EntryContainer_Changed();
+	//Test_EntryContainer_Changed();
 
 	std::cout << "\nmain() return\n";
 	return 0;

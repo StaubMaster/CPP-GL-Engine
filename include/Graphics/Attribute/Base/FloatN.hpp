@@ -17,12 +17,12 @@ class FloatN : public Attribute::Base
 			unsigned int n,
 			unsigned int divisor,
 			unsigned int stride,
-			unsigned int indexPos
+			unsigned int index
 		);
 		FloatN(
 			unsigned int divisor,
 			unsigned int stride,
-			unsigned int indexPos
+			unsigned int index
 		);
 
 	public:

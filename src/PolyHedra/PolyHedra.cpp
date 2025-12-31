@@ -16,6 +16,9 @@
 
 #include <sstream>
 
+//#include "DataShow.hpp"
+//#include <iostream>
+
 
 
 YMT::PolyHedra::PolyHedra() :
@@ -39,9 +42,9 @@ YMT::PolyHedra::~PolyHedra()
 
 
 
-Container::VoidPointer<PolyHedra_MainData> YMT::PolyHedra::ToMainData()
+Container::Pointer<PolyHedra_MainData> YMT::PolyHedra::ToMainData()
 {
-	Container::VoidPointer<PolyHedra_MainData> data(Faces.Count() * 3);
+	Container::Pointer<PolyHedra_MainData> data(Faces.Count() * 3);
 
 	/*
 	std::cout << "C " << Corners.Count() << "\n";
@@ -108,10 +111,9 @@ Container::VoidPointer<PolyHedra_MainData> YMT::PolyHedra::ToMainData()
 		}
 	}
 
-	/*for (int i = 0; i < count; i++)
-	{
-		std::cout << "Main: " << data[i].Position << " : " << data[i].Normal << " : " << data[i].Texture << "\n";
-	}*/
+	//std::cout << "Main: " << data.Limit() << ' ' << data.Count() << '\n';
+	//for (unsigned int i = 0; i < data.Count(); i++)
+	//{ std::cout << data[i].Position << " : " << data[i].Normal << " : " << data[i].Texture << '\n'; }
 
 	return data;
 }

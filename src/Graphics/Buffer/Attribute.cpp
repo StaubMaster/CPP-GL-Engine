@@ -42,7 +42,7 @@ Buffer::Attribute::Attribute(const Attribute & other) :
 Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 {
 	Debug::Log << "==== Buffer::Attribute " << " operator=" << Debug::Done;
-	*((Base*)this) = other;
+	Base::operator=(other);
 	Target = other.Target;
 	Usage = other.Usage;
 	DataSize = other.DataSize;
@@ -54,11 +54,11 @@ Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 
 
 
-void Buffer::Attribute::Bind(const Container::VoidPointerBase & data)
+void Buffer::Attribute::Bind(const Container::Void & data)
 {
 	glBindBuffer(Target, ID);
-	glBufferData(Target, data.VoidSize(), data.VoidData(), Usage);
-	DrawCount = data.VoidSize() / DataSize;
+	glBufferData(Target, data.VoidCount(), data.VoidData(), Usage);
+	DrawCount = data.Count();
 
 	const unsigned char * offset = NULL;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)

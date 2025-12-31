@@ -32,6 +32,14 @@ std::ostream & operator <<(std::ostream & o, const Angle3D & val)
 
 
 
+std::ostream & operator <<(std::ostream & o, const Trans3D & val)
+{
+	o << "{ " << val.Pos << " | " << val.Rot << " }";
+	return o;
+}
+
+
+
 std::ostream & operator <<(std::ostream & o, const AxisBox1D & val)
 {
 	o << "{ " << val.Min << " : " << val.Max << " }";

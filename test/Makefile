@@ -1,21 +1,23 @@
 
 NAME := test.exe
-COMPILER := c++ -std=c++11
+#COMPILER := c++ -std=c++11
+COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror
 #FLAGS += -fsanitize=address	#	ld ... cannot find -lasan: No such file or directory
 
 DIR_SRC := ../src
 
 FILES := \
-	Graphics.cpp
+	CopyConstruct.cpp
+#	Container.cpp
+#	Graphics.cpp
 #	Undex.cpp
 #	$(DIR_SRC)/Debug.cpp \
-#	Container.cpp
 #	../src/Miscellaneous/Container/Behaviour.cpp
 
 DIR_MISC := ../include/Miscellaneous
 
-HEADERS_CONTAINER := \
+#HEADERS_CONTAINER := \
 	$(DIR_MISC)/Container/Base.hpp \
 	$(DIR_MISC)/Container/Dynamic.hpp \
 	$(DIR_MISC)/Container/Entry.hpp \
@@ -35,7 +37,8 @@ all:
 fclean:
 	rm -f $(NAME)
 
-$(NAME) : $(FILES) $(HEADERS_CONTAINER) $(LIBRARYS)
+#$(NAME) : $(FILES) $(HEADERS_CONTAINER) $(LIBRARYS)
+$(NAME) : $(FILES) $(LIBRARYS)
 	@$(call fancyEcho,$(FANCY_NAME),Compiling,$@)
 	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES) $(LIBRARYS) $(ARGUMENTS)
 

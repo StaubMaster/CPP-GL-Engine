@@ -7,17 +7,17 @@ Attribute::FloatN::FloatN(
 	unsigned int n,
 	unsigned int divisor,
 	unsigned int stride,
-	unsigned int indexPos
+	unsigned int index
 ) :
-	Location(GL_FLOAT, sizeof(float) * n, n, divisor, stride, indexPos)
+	Location(GL_FLOAT, sizeof(float) * n, n, divisor, stride, index)
 { }
 
 Attribute::FloatN::FloatN(
 	unsigned int divisor,
 	unsigned int stride,
-	unsigned int indexPos
+	unsigned int index
 ) :
-	Location(GL_FLOAT, sizeof(float), 1, divisor, stride, indexPos)
+	Location(GL_FLOAT, sizeof(float), 1, divisor, stride, index)
 { }
 
 

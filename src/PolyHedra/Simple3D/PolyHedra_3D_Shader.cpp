@@ -4,19 +4,19 @@
 #include "DirectoryContext.hpp"
 #include "FileContext.hpp"
 
+#include "Miscellaneous/Container/Pointer.hpp"
+
 
 
 PolyHedra_3D_Shader::PolyHedra_3D_Shader(const DirectoryContext & dir)
 	: Shader::Base(
-		Container::Base<Shader::Code>(
-			(Shader::Code[])
-			{
-				Shader::Code(dir.File("PH_S3D.vert")),
-				//Shader::Code::FromFile(dir.File("PH_solar.frag")),
-				//Shader::Code::FromFile(dir.File("PH_ULight.frag")),
-				Shader::Code(dir.File("PH_Full.frag")),
-			}, 2
-		)
+		Container::Pointer<Shader::Code>(2, (Shader::Code[])
+		{
+			Shader::Code(dir.File("PH_S3D.vert")),
+			//Shader::Code::FromFile(dir.File("PH_solar.frag")),
+			//Shader::Code::FromFile(dir.File("PH_ULight.frag")),
+			Shader::Code(dir.File("PH_Full.frag")),
+		})
 	),
 	ViewPortSizeRatio(Uniform::NameShader("ViewPortSizeRatio", *this)),
 	View(Uniform::NameShader("View", *this)),

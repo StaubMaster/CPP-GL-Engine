@@ -9,8 +9,8 @@ struct Simple3D_InstData
 	Trans3D Trans;
 
 	public:
-		Simple3D_InstData();
-		Simple3D_InstData(const Trans3D & trans);
+	Simple3D_InstData();
+	Simple3D_InstData(const Trans3D & trans);
 };
 
 #endif

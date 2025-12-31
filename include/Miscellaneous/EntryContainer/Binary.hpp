@@ -1,23 +1,23 @@
-#ifndef  ENTRY_CONTAINER_DYNAMIC_HPP
-# define ENTRY_CONTAINER_DYNAMIC_HPP
+#ifndef  ENTRY_CONTAINER_BINARY_HPP
+# define ENTRY_CONTAINER_BINARY_HPP
 
 # include "Base.hpp"
-# include "Miscellaneous/Container/Dynamic.hpp"
+# include "Miscellaneous/Container/Binary.hpp"
 # include "Miscellaneous/Container/Behaviour.hpp"
 
 namespace EntryContainer
 {
 
 template<typename T>
-class Dynamic : public Base<T>
+class Binary : public Base<T>
 {
-	protected:
-		unsigned int _Count;
+	//protected:
+	//	unsigned int _Count;
 
 
 
-	public:
-		unsigned int Count() const { return _Count; }
+	//public:
+	//	unsigned int Count() const { return _Count; }
 
 
 
@@ -25,14 +25,10 @@ class Dynamic : public Base<T>
 		virtual void DebugInfo() override { }
 
 	public:
-		Dynamic() : Base<T>(0)
-		{
-			_Count = 0;
-		}
-		~Dynamic()
-		{
-
-		}
+		Binary() : Base<T>(Container::Behaviour::EIncrease::Binary, Container::Behaviour::EDecrease::Binary, Container::Behaviour::EMemory::Copy)
+		{ }
+		~Binary()
+		{ }
 
 	public:
 		/*void ShowData() const override
@@ -59,7 +55,7 @@ class Dynamic : public Base<T>
 				if (entry -> Offset != data_idx) { return false; }
 				data_idx += entry -> Length;
 			}
-			if (_Count != data_idx) { return false; }
+			if (this -> _Count != data_idx) { return false; }
 			return true;
 		}
 		//	dosent handle duplicate entrys
@@ -91,11 +87,11 @@ class Dynamic : public Base<T>
 		{
 			unsigned int data_idx = 0;
 			unsigned int entry_idx = this -> FindNextEntry(data_idx).Idx;
-			_Count = 0;
+			this -> _Count = 0;
 			while (entry_idx != 0xFFFFFFFF)
 			{
 				EntryData<T> * entry = this -> Entrys[entry_idx];
-				if (entry -> Limit() > _Count) { _Count = entry -> Limit(); }
+				if (entry -> Limit() > this -> _Count) { this -> _Count = entry -> Limit(); }
 				unsigned int dupe_idx = this -> FindNextEntryDuplicate(entry, entry_idx + 1).Idx;
 				entry -> Move(data_idx);
 				if (dupe_idx == 0xFFFFFFFF)
@@ -114,15 +110,15 @@ class Dynamic : public Base<T>
 		EntryData<T> * Alloc(unsigned int size) override
 		{
 			if (this -> _IsLocked) { return NULL; }
-			unsigned int newCount = _Count + size;
-			unsigned int newLimit = Container::BinarySize(newCount);
+			unsigned int newCount = this -> _Count + size;
+			unsigned int newLimit = Container::Behaviour::BinarySize(newCount);
 
 			this -> ResizeLimit(newLimit);
 
-			EntryData<T> * entry = new EntryData<T>(this, _Count, size);
+			EntryData<T> * entry = new EntryData<T>(this, this -> _Count, size);
 			this -> Entrys.Insert(entry);
 			this -> Changed = true;
-			_Count = newCount;
+			this -> _Count = newCount;
 			return entry;
 		}
 		void Free(EntryData<T> * entry) override

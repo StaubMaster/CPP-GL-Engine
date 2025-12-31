@@ -1,8 +1,8 @@
 #ifndef  POLYHEDRA_HPP
 # define POLYHEDRA_HPP
 
-# include "Miscellaneous/Container/Dynamic.hpp"
-# include "Miscellaneous/Container/VoidPointer.hpp"
+# include "Miscellaneous/Container/Binary.hpp"
+# include "Miscellaneous/Container/Pointer.hpp"
 
 # include <string>
 # include <exception>
@@ -53,8 +53,8 @@ class PolyHedra
 		struct Face;
 
 	private:
-		Container::Dynamic<Corner>	Corners;
-		Container::Dynamic<Face>	Faces;
+		Container::Binary<Corner>	Corners;
+		Container::Binary<Face>	Faces;
 	public:
 		FileContext *	File;
 		SkinBase *		Skin;
@@ -68,7 +68,7 @@ class PolyHedra
 		~PolyHedra();
 
 	public:
-	Container::VoidPointer<PolyHedra_MainData> ToMainData();
+	Container::Pointer<PolyHedra_MainData> ToMainData();
 
 	public:
 		std::string ToInfo() const;

@@ -1,8 +1,8 @@
 #ifndef  SHADER_BASE_HPP
 # define SHADER_BASE_HPP
 
-# include "Miscellaneous/Container/Base.hpp"
-# include "Miscellaneous/Container/Dynamic.hpp"
+# include "Miscellaneous/Container/Fixed.hpp"
+# include "Miscellaneous/Container/Binary.hpp"
 # include <string>
 
 namespace Uniform
@@ -18,9 +18,9 @@ class Base
 {
 	private:
 	int ID;
-	Container::Base<Shader::Code> Code;	// these are the Shaders. the whole class is technically a Shader Program
+	Container::Fixed<Shader::Code> Code;	// these are the Shaders. the whole class is technically a Shader Program
 	public:
-	Container::Dynamic<Uniform::Base*> Uniforms;
+	Container::Binary<Uniform::Base*> Uniforms;
 
 
 

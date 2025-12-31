@@ -2,8 +2,8 @@
 
 
 NAME := Engine.a
-COMPILER := c++ -std=c++11
-#COMPILER := g++ -g -std=c++11
+#COMPILER := c++ -std=c++11
+COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror -D ENGINE_DIR='"$(shell pwd)"'
 
 
@@ -51,7 +51,8 @@ DISPLAY_SRC := $(addprefix $(DIR_SRC)/,$(DISPLAY))
 DISPLAY_OBJ := $(addprefix $(DIR_OBJ)/,$(DISPLAY:.cpp=.o))
 
 CONTAINER := \
-	Miscellaneous/Container/Behaviour.cpp
+	Miscellaneous/Container/Behaviour.cpp \
+	Miscellaneous/Container/BehaviourShow.cpp
 CONTAINER_SRC := $(addprefix $(DIR_SRC)/,$(CONTAINER))
 CONTAINER_OBJ := $(addprefix $(DIR_OBJ)/,$(CONTAINER:.cpp=.o))
 

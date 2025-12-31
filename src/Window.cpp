@@ -76,8 +76,10 @@ Window::Window() :
 	glfwSetScrollCallback(glfw_window, Callback_CursorScroll);
 	glfwSetCursorPosCallback(glfw_window, Callback_CursorMove);
 
-	InitFunc = NULL;
+	FrameNumberTerminate = 0xFFFFFFFFFFFFFFFF;
+
 	FrameFunc = NULL;
+	InitFunc = NULL;
 	FreeFunc = NULL;
 
 	ResizeFunc = NULL;
@@ -290,6 +292,7 @@ void Window::Run()
 		UpdateSize();
 		if (ResizeFunc != NULL) { ResizeFunc(Data, Size); }
 		double FrameTimeLast = glfwGetTime();
+		unsigned long long FrameNumber = 0;
 		while (!glfwWindowShouldClose(glfw_window))
 		{
 			double FrameTimeCurr = glfwGetTime();
@@ -304,7 +307,10 @@ void Window::Run()
 				MouseManager.Tick();
 				glfwPollEvents();
 				FrameTimeLast = FrameTimeCurr;
+				FrameNumber++;
 			}
+			if (FrameNumber == FrameNumberTerminate)
+			{ glfwSetWindowShouldClose(glfw_window, 1); }
 		}
 	}
 	catch (std::exception & ex)	{ std::cerr << "Exception: " << ex.what() << '\n'; }

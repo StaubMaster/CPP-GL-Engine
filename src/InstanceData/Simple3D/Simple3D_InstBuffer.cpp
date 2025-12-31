@@ -11,7 +11,7 @@ Simple3D_InstBuffer::Simple3D_InstBuffer(
 	Trans(1, sizeof(Simple3D_InstData), indexTransPos, indexTransRot)
 {
 	Attributes.Allocate(1);
-	Attributes[0] = &Trans;
+	Attributes.Insert(&Trans);
 }
 Simple3D_InstBuffer::~Simple3D_InstBuffer()
 { }

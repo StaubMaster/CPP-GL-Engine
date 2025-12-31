@@ -2,7 +2,7 @@
 # define POLYHEDRA_SIMPLE3D_BUFFER_MANAGER
 
 # include "PolyHedra/PolyHedra.hpp"
-# include "Miscellaneous/EntryContainer/Dynamic.hpp"
+# include "Miscellaneous/EntryContainer/Binary.hpp"
 
 # include "PolyHedra_3D_BufferArray.hpp"
 
@@ -22,7 +22,7 @@ class PolyHedra_3D_Instances
 	YMT::PolyHedra * MainPolyHedra;
 	Texture::Base * MainTexture;
 	PolyHedra_3D_BufferArray Buffer;
-	EntryContainer::Dynamic<Simple3D_InstData> Instances;
+	EntryContainer::Binary<Simple3D_InstData> Instances;
 
 	public:
 	PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra);
