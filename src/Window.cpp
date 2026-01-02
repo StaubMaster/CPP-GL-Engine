@@ -291,6 +291,8 @@ void Window::Run()
 		Run_Init();
 		UpdateSize();
 		if (ResizeFunc != NULL) { ResizeFunc(Data, Size); }
+		Debug::Log << "Window Loop ..." << Debug::Done;
+		std::cout << "Window Loop ..." << '\n';
 		double FrameTimeLast = glfwGetTime();
 		unsigned long long FrameNumber = 0;
 		while (!glfwWindowShouldClose(glfw_window))
@@ -312,6 +314,8 @@ void Window::Run()
 			if (FrameNumber == FrameNumberTerminate)
 			{ glfwSetWindowShouldClose(glfw_window, 1); }
 		}
+		Debug::Log << "Window Loop done" << Debug::Done;
+		std::cout << "Window Loop done" << '\n';
 	}
 	catch (std::exception & ex)	{ std::cerr << "Exception: " << ex.what() << '\n'; }
 	catch (std::string & str)	{ std::cerr << "string Exception: "<< str << '\n'; }

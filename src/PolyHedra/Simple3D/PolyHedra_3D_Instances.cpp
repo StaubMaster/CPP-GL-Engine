@@ -50,7 +50,7 @@ void PolyHedra_3D_Instances::Delete()
 
 
 
-void PolyHedra_3D_Instances::SetPolyHedra(YMT::PolyHedra * polyhedra)
+void PolyHedra_3D_Instances::SetPolyHedra(PolyHedra * polyhedra)
 {
 	MainPolyHedra = polyhedra;
 

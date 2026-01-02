@@ -19,7 +19,7 @@ namespace Texture
 class PolyHedra_3D_Instances
 {
 	public:
-	YMT::PolyHedra * MainPolyHedra;
+	PolyHedra * MainPolyHedra;
 	Texture::Base * MainTexture;
 
 	PolyHedra_3D_BufferArray Buffer;
@@ -37,7 +37,7 @@ class PolyHedra_3D_Instances
 	void Delete();
 
 	public:
-	void SetPolyHedra(YMT::PolyHedra * polyhedra);
+	void SetPolyHedra(PolyHedra * polyhedra);
 
 	public:
 	void Draw();

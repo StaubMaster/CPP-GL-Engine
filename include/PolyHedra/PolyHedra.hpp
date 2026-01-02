@@ -43,8 +43,6 @@ probably FileContext
 maybe other Context stuff
 */
 
-namespace YMT
-{
 class PolyHedra
 {
 	public:
@@ -85,7 +83,6 @@ class PolyHedra
 		struct ParsingData;
 	public:
 		static PolyHedra * Load(const FileContext & file);
-};
 };
 
 #endif

@@ -12,7 +12,75 @@
 
 
 
-YMT::PolyHedra * YMT::PolyHedra::Generate::Cube(float scale)
+PolyHedra * PolyHedra::Generate::DuoHedra(Image * img, float scale)
+{
+	PolyHedra * ph = new PolyHedra();
+	PolyHedra::Template temp(*ph);
+
+	temp.Insert_Corn(Point3D(-scale, -scale, 0));
+	temp.Insert_Corn(Point3D(-scale, +scale, 0));
+	temp.Insert_Corn(Point3D(+scale, -scale, 0));
+	temp.Insert_Corn(Point3D(+scale, +scale, 0));
+
+	temp.Insert_Face4(FaceCorner(0), FaceCorner(1), FaceCorner(2), FaceCorner(3));
+
+	temp.Done();
+
+
+	Skin2DA * skin = new Skin2DA();
+	skin -> W = img -> W;
+	skin -> H = img -> H;
+	skin -> Images.Insert(img);
+
+	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.0f, 1.0f)), Skin2DFaceCorner(Point2D(0.0f, 0.0f)), Skin2DFaceCorner(Point2D(1.0f, 1.0f)), Skin2DFaceCorner(Point2D(1.0f, 0.0f)));
+
+	skin -> Done();
+
+
+	ph -> Skin = skin;
+	return ph;
+}
+
+
+
+PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
+{
+	PolyHedra * ph = new PolyHedra();
+	PolyHedra::Template temp(*ph);
+
+	temp.Insert_Corn(Point3D(-scale, -scale, -scale));
+	temp.Insert_Corn(Point3D(+scale, +scale, -scale));
+	temp.Insert_Corn(Point3D(+scale, -scale, +scale));
+	temp.Insert_Corn(Point3D(-scale, +scale, +scale));
+
+	temp.Insert_Face3(FaceCorner(0b00), FaceCorner(0b01), FaceCorner(0b10));
+	temp.Insert_Face3(FaceCorner(0b00), FaceCorner(0b10), FaceCorner(0b11));
+	temp.Insert_Face3(FaceCorner(0b00), FaceCorner(0b11), FaceCorner(0b01));
+	temp.Insert_Face3(FaceCorner(0b11), FaceCorner(0b10), FaceCorner(0b01));
+
+	temp.Done();
+
+
+	Skin2DA * skin = new Skin2DA();
+	skin -> W = 8;
+	skin -> H = 4;
+	skin -> Images.Insert(Texture::Generate::Orientation3D());
+
+	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.00f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(0.25f, 0.00f)));
+	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.25f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(0.50f, 0.00f)));
+	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.50f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(0.75f, 0.00f)));
+	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.75f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(1.00f, 0.00f)));
+
+	skin -> Done();
+
+
+	ph -> Skin = skin;
+	return ph;
+}
+
+
+
+PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 {
 	PolyHedra * ph = new PolyHedra();
 	PolyHedra::Template temp(*ph);
@@ -59,7 +127,7 @@ YMT::PolyHedra * YMT::PolyHedra::Generate::Cube(float scale)
 
 
 
-YMT::PolyHedra * YMT::PolyHedra::Generate::ConeC(int segments, float width, float height)
+PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 {
 	PolyHedra * ph = new PolyHedra();
 	PolyHedra::Template temp(*ph);
@@ -113,34 +181,4 @@ YMT::PolyHedra * YMT::PolyHedra::Generate::ConeC(int segments, float width, floa
 	return ph;
 }
 
-
-
-YMT::PolyHedra * YMT::PolyHedra::Generate::FullTexture(Image * img, float scale)
-{
-	PolyHedra * ph = new PolyHedra();
-	PolyHedra::Template temp(*ph);
-
-	temp.Insert_Corn(Point3D(-scale, -scale, 0));
-	temp.Insert_Corn(Point3D(-scale, +scale, 0));
-	temp.Insert_Corn(Point3D(+scale, -scale, 0));
-	temp.Insert_Corn(Point3D(+scale, +scale, 0));
-
-	temp.Insert_Face4(FaceCorner(0), FaceCorner(1), FaceCorner(2), FaceCorner(3));
-
-	temp.Done();
-
-
-	Skin2DA * skin = new Skin2DA();
-	skin -> W = img -> W;
-	skin -> H = img -> H;
-	skin -> Images.Insert(img);
-
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.0f, 1.0f)), Skin2DFaceCorner(Point2D(0.0f, 0.0f)), Skin2DFaceCorner(Point2D(1.0f, 1.0f)), Skin2DFaceCorner(Point2D(1.0f, 0.0f)));
-
-	skin -> Done();
-
-
-	ph -> Skin = skin;
-	return ph;
-}
 

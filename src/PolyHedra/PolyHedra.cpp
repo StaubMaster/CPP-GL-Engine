@@ -21,14 +21,14 @@
 
 
 
-YMT::PolyHedra::PolyHedra() :
+PolyHedra::PolyHedra() :
 	Corners(), Faces(),
 	File(NULL),
 	Skin(NULL)
 {
 	UseCornerNormals = false;
 }
-YMT::PolyHedra::~PolyHedra()
+PolyHedra::~PolyHedra()
 {
 	delete File;
 	delete Skin;
@@ -42,7 +42,7 @@ YMT::PolyHedra::~PolyHedra()
 
 
 
-Container::Pointer<PolyHedra_MainData> YMT::PolyHedra::ToMainData()
+Container::Pointer<PolyHedra_MainData> PolyHedra::ToMainData()
 {
 	Container::Pointer<PolyHedra_MainData> data(Faces.Count() * 3);
 
@@ -118,7 +118,7 @@ Container::Pointer<PolyHedra_MainData> YMT::PolyHedra::ToMainData()
 	return data;
 }
 
-std::string YMT::PolyHedra::ToInfo() const
+std::string PolyHedra::ToInfo() const
 {
 	std::ostringstream ss;
 
@@ -129,7 +129,7 @@ std::string YMT::PolyHedra::ToInfo() const
 	return ss.str();
 }
 
-AxisBox3D	YMT::PolyHedra::CalcBound() const
+AxisBox3D	PolyHedra::CalcBound() const
 {
 	AxisBox3D box;
 	for (unsigned int i = 0; i < Corners.Count(); i++)

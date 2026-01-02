@@ -5,13 +5,13 @@
 
 
 
-YMT::PolyHedra::Template::Template(YMT::PolyHedra & referance) :
+PolyHedra::Template::Template(PolyHedra & referance) :
 	Referance(referance)
 { }
 
 
 
-void YMT::PolyHedra::Template::Done()
+void PolyHedra::Template::Done()
 {
 	Referance.Corners.Trim();
 	Referance.Faces.Trim();
@@ -22,7 +22,7 @@ void YMT::PolyHedra::Template::Done()
 
 
 
-void YMT::PolyHedra::Template::Calc_Face_Normals()
+void PolyHedra::Template::Calc_Face_Normals()
 {
 	for (unsigned int i = 0; i < Referance.Faces.Count(); i++)
 	{
@@ -42,7 +42,7 @@ void YMT::PolyHedra::Template::Calc_Face_Normals()
 		}
 	}
 }
-void YMT::PolyHedra::Template::Calc_Corn_Normals()
+void PolyHedra::Template::Calc_Corn_Normals()
 {
 	for (unsigned int i = 0; i < Referance.Corners.Count(); i++)
 	{
@@ -64,15 +64,15 @@ void YMT::PolyHedra::Template::Calc_Corn_Normals()
 
 
 
-void YMT::PolyHedra::Template::Insert_Corn(Corner corn)
+void PolyHedra::Template::Insert_Corn(Corner corn)
 {
 	Referance.Corners.Insert(corn);
 }
-void YMT::PolyHedra::Template::Insert_Face3(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2)
+void PolyHedra::Template::Insert_Face3(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2)
 {
 	Referance.Faces.Insert(Face(corn0, corn1, corn2));
 }
-void YMT::PolyHedra::Template::Insert_Face4(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2, FaceCorner corn3)
+void PolyHedra::Template::Insert_Face4(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2, FaceCorner corn3)
 {
 	Insert_Face3(corn0, corn1, corn2);
 	Insert_Face3(corn2, corn1, corn3);
