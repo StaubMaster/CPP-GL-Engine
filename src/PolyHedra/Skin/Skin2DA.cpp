@@ -1,7 +1,7 @@
 #include "PolyHedra/Skin/Skin2DA.hpp"
 #include "PolyHedra/PolyHedra.hpp"
 
-#include "Graphics/Texture/2DArray.hpp"
+#include "Graphics/Texture/Array2D.hpp"
 
 #include "Parsing/LineCommand.hpp"
 #include "FileContext.hpp"
@@ -22,7 +22,10 @@ Skin2DA::~Skin2DA()
 
 Texture::Base * Skin2DA::ToTexture() const
 {
-	return new Texture::T2DArray(W, H, Images.Count(), (const Image**)Images.Data());
+	Texture::Array2D * tex = new Texture::Array2D();
+	//tex -> Create();
+	tex -> Assign(W, H, Images);
+	return tex;
 }
 
 

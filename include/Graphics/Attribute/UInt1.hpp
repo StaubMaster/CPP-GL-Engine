@@ -10,17 +10,22 @@ namespace Attribute
 class UInt1 : public Attribute::Base
 {
 	private:
-		Attribute::Location Location;
+	Attribute::Location Location;
 
 	public:
-		UInt1(
-			unsigned int divisor,
-			unsigned int stride,
-			unsigned int index
-		);
+	UInt1();
+	UInt1(
+		unsigned int divisor,
+		unsigned int stride,
+		unsigned int index
+	);
+	~UInt1();
+
+	UInt1(const UInt1 & other);
+	UInt1 & operator=(const UInt1 & other);
 
 	public:
-		void Bind(const unsigned char * & offset) const override;
+	void Bind(const unsigned char * & offset) const override;
 };
 };
 

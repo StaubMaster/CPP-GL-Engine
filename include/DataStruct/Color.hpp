@@ -1,6 +1,9 @@
-
 #ifndef  COLOR_HPP
 # define COLOR_HPP
+
+/*	Rename to Color3
+	make a Color4 with R G B A
+*/
 
 struct Color
 {

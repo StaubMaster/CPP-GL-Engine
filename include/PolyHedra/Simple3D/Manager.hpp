@@ -43,7 +43,7 @@ class Manager
 	//	BufferArray
 	private:
 	PolyHedra_3D_Shader	_Shader;
-	Container::Dynamic<SinglePolyHedra>	_Singles;
+	Container::Dynamic<SinglePolyHedra>	MultiplePolyHedra;
 
 	public:
 	Manager();

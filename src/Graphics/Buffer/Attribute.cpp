@@ -54,7 +54,7 @@ Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 
 
 
-void Buffer::Attribute::Bind(const Container::Void & data)
+void Buffer::Attribute::Change(const Container::Void & data)
 {
 	glBindBuffer(Target, ID);
 	glBufferData(Target, data.VoidCount(), data.VoidData(), Usage);

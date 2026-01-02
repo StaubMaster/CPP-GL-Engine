@@ -4,12 +4,59 @@
 
 
 
-PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
+PolyHedra_3D_Instances::PolyHedra_3D_Instances() :
+	MainPolyHedra(NULL),
+	MainTexture(NULL),
+	Buffer(),
+	Instances(NULL)
+{ }
+PolyHedra_3D_Instances::~PolyHedra_3D_Instances()
+{ }
+
+PolyHedra_3D_Instances::PolyHedra_3D_Instances(const PolyHedra_3D_Instances & other) :
+	MainPolyHedra(other.MainPolyHedra),
+	MainTexture(other.MainTexture),
+	Buffer(other.Buffer),
+	Instances(other.Instances)
+{ }
+PolyHedra_3D_Instances & PolyHedra_3D_Instances::operator=(const PolyHedra_3D_Instances & other)
+{
+	MainPolyHedra = other.MainPolyHedra;
+	MainTexture = other.MainTexture;
+	Buffer = other.Buffer;
+	Instances = other.Instances;
+	return *this;
+}
+
+
+
+void PolyHedra_3D_Instances::Create()
+{
+	Buffer.Create();
+
+	Instances = new EntryContainer::Binary<Simple3D_InstData>();
+}
+void PolyHedra_3D_Instances::Delete()
+{
+	Buffer.Delete();
+
+	delete MainPolyHedra;
+	delete MainTexture;
+	MainPolyHedra = NULL;
+	MainTexture = NULL;
+
+	delete Instances;
+}
+
+
+
+void PolyHedra_3D_Instances::SetPolyHedra(YMT::PolyHedra * polyhedra)
 {
 	MainPolyHedra = polyhedra;
 
 	Container::Pointer<PolyHedra_MainData> data = polyhedra -> ToMainData();
-	Buffer.Main.Bind(data);
+	Buffer.Bind();
+	Buffer.Main.Change(data);
 	data.Dispose();
 
 	if (polyhedra -> Skin != NULL)
@@ -21,31 +68,20 @@ PolyHedra_3D_Instances::PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra)
 		MainTexture = NULL;
 	}
 }
-PolyHedra_3D_Instances::~PolyHedra_3D_Instances()
+
+
+
+void PolyHedra_3D_Instances::Draw()
 {
-	delete MainTexture;
-}
-
-
-
-
-
-PolyHedra_3D_Instances & PolyHedra_3D_Instances::Update()
-{
-	if (Instances.Changed)
+	if (Instances -> Changed)
 	{
-		Container::Pointer<Simple3D_InstData> data(Instances.Count(), Instances.Data());
-		Buffer.Inst.Bind(data);
-		Instances.Changed = false;
+		Buffer.Bind();
+		Buffer.Inst.Change(*Instances);
+		Instances -> Changed = false;
 	}
-	return *this;
-}
-PolyHedra_3D_Instances & PolyHedra_3D_Instances::Draw()
-{
 	if (MainTexture != NULL)
 	{
 		MainTexture -> Bind();
 	}
 	Buffer.Draw();
-	return *this;
 }

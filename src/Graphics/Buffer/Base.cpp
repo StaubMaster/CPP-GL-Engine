@@ -14,6 +14,7 @@ Buffer::Base::~Base()
 {
 	Debug::Log << "---- Buffer::Base " << ID << Debug::Done;
 }
+
 Buffer::Base::Base(const Base & other) :
 	ID(other.ID)
 {

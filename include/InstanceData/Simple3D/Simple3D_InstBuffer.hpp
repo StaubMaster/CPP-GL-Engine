@@ -16,6 +16,9 @@ class Simple3D_InstBuffer : public Buffer::Attribute
 		unsigned int indexTransRot
 	);
 	~Simple3D_InstBuffer();
+
+	Simple3D_InstBuffer(const Simple3D_InstBuffer & other);
+	Simple3D_InstBuffer & operator=(const Simple3D_InstBuffer & other);
 };
 
 #endif

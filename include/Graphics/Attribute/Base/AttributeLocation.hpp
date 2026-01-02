@@ -13,24 +13,29 @@ class Location
 	*/
 	private:
 	public:
-		//	from Child
-		const unsigned int Type;
-		const unsigned int Size;
-		const unsigned int Count;
+	//	from Child
+	const unsigned int Type;
+	const unsigned int Size;
+	const unsigned int Count;
 
-		//	from Buffer
-		const unsigned int Divisor;
-		const unsigned int Stride;
-		const unsigned int Index;
+	//	from Buffer
+	const unsigned int Divisor;
+	const unsigned int Stride;
+	const unsigned int Index;
 
 	public:
-		Location(
-			unsigned int type,
-			unsigned int size,
-			unsigned int count,
-			unsigned int divisor,
-			unsigned int stride,
-			unsigned int index);
+	Location();
+	Location(
+		unsigned int type,
+		unsigned int size,
+		unsigned int count,
+		unsigned int divisor,
+		unsigned int stride,
+		unsigned int index);
+	~Location();
+
+	Location(const Location & other);
+	Location & operator=(const Location & other) = delete;
 };
 };
 

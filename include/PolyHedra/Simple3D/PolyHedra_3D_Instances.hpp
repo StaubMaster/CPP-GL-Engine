@@ -21,16 +21,26 @@ class PolyHedra_3D_Instances
 	public:
 	YMT::PolyHedra * MainPolyHedra;
 	Texture::Base * MainTexture;
+
 	PolyHedra_3D_BufferArray Buffer;
-	EntryContainer::Binary<Simple3D_InstData> Instances;
+	EntryContainer::Binary<Simple3D_InstData> * Instances;
 
 	public:
-	PolyHedra_3D_Instances(YMT::PolyHedra * polyhedra);
+	PolyHedra_3D_Instances();
 	~PolyHedra_3D_Instances();
 
+	PolyHedra_3D_Instances(const PolyHedra_3D_Instances & other);
+	PolyHedra_3D_Instances & operator=(const PolyHedra_3D_Instances & other);
+
 	public:
-	PolyHedra_3D_Instances & Update();
-	PolyHedra_3D_Instances & Draw();
+	void Create();
+	void Delete();
+
+	public:
+	void SetPolyHedra(YMT::PolyHedra * polyhedra);
+
+	public:
+	void Draw();
 };
 
 #endif

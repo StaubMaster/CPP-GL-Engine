@@ -11,17 +11,22 @@ namespace Attribute
 class Point4D : public Attribute::Base
 {
 	private:
-		Attribute::FloatN Pos;
+	Attribute::FloatN Location;
 
 	public:
-		Point4D(
-			unsigned int divisor,
-			unsigned int stride,
-			unsigned int indexPos
-		);
+	Point4D();
+	Point4D(
+		unsigned int divisor,
+		unsigned int stride,
+		unsigned int indexPos
+	);
+	~Point4D();
+
+	Point4D(const Point4D & other);
+	Point4D & operator=(const Point4D & other);
 
 	public:
-		void Bind(const unsigned char * & offset) const override;
+	void Bind(const unsigned char * & offset) const override;
 };
 };
 

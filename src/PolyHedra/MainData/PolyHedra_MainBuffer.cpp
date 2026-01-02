@@ -20,3 +20,18 @@ PolyHedra_MainBuffer::PolyHedra_MainBuffer(
 }
 PolyHedra_MainBuffer::~PolyHedra_MainBuffer()
 { }
+
+PolyHedra_MainBuffer::PolyHedra_MainBuffer(const PolyHedra_MainBuffer & other) :
+	Buffer::Attribute(other),
+	Position(other.Position),
+	Normal(other.Normal),
+	Texture(other.Texture)
+{ }
+PolyHedra_MainBuffer & PolyHedra_MainBuffer::operator=(const PolyHedra_MainBuffer & other)
+{
+	Buffer::Attribute::operator=(other);
+	Position = other.Position;
+	Normal = other.Normal;
+	Texture = other.Texture;
+	return *this;
+}

@@ -20,6 +20,9 @@ class PolyHedra_MainBuffer : public Buffer::Attribute
 		unsigned int indexTexture
 	);
 	~PolyHedra_MainBuffer();
+
+	PolyHedra_MainBuffer(const PolyHedra_MainBuffer & other);
+	PolyHedra_MainBuffer & operator=(const PolyHedra_MainBuffer & other);
 };
 
 #endif

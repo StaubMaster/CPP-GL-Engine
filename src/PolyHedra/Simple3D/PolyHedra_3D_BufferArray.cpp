@@ -18,6 +18,33 @@ PolyHedra_3D_BufferArray::PolyHedra_3D_BufferArray() :
 PolyHedra_3D_BufferArray::~PolyHedra_3D_BufferArray()
 { }
 
+PolyHedra_3D_BufferArray::PolyHedra_3D_BufferArray(const PolyHedra_3D_BufferArray & other) :
+	Buffer::ArrayBase(),
+	Main(other.Main),
+	Inst(other.Inst),
+	DrawMode(other.DrawMode)
+{ }
+PolyHedra_3D_BufferArray & PolyHedra_3D_BufferArray::operator=(const PolyHedra_3D_BufferArray & other)
+{
+	Main = other.Main;
+	Inst = other.Inst;
+	DrawMode = other.DrawMode;
+	return *this;
+}
+
+
+
+void PolyHedra_3D_BufferArray::CreateBuffers()
+{
+	Main.Create();
+	Inst.Create();
+}
+void PolyHedra_3D_BufferArray::DeleteBuffers()
+{
+	Main.Delete();
+	Inst.Delete();
+}
+
 
 
 void PolyHedra_3D_BufferArray::Draw()

@@ -126,7 +126,7 @@ ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
 
 TEXTURE := \
 	Graphics/Texture/Base.cpp \
-	Graphics/Texture/2DArray.cpp \
+	Graphics/Texture/Array2D.cpp \
 	Graphics/Texture/Generate.cpp
 TEXTURE_SRC := $(addprefix $(DIR_SRC)/,$(TEXTURE))
 TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))

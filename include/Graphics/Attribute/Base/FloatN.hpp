@@ -10,23 +10,28 @@ namespace Attribute
 class FloatN : public Attribute::Base
 {
 	private:
-		Attribute::Location Location;
+	Attribute::Location Location;
 
 	public:
-		FloatN(
-			unsigned int n,
-			unsigned int divisor,
-			unsigned int stride,
-			unsigned int index
-		);
-		FloatN(
-			unsigned int divisor,
-			unsigned int stride,
-			unsigned int index
-		);
+	FloatN();
+	FloatN(
+		unsigned int n,
+		unsigned int divisor,
+		unsigned int stride,
+		unsigned int index
+	);
+	FloatN(
+		unsigned int divisor,
+		unsigned int stride,
+		unsigned int index
+	);
+	~FloatN();
+
+	FloatN(const FloatN & other);
+	FloatN & operator=(const FloatN & other);
 
 	public:
-		void Bind(const unsigned char * & offset) const override;
+	void Bind(const unsigned char * & offset) const override;
 };
 };
 

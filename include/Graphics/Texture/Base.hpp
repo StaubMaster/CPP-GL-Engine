@@ -7,16 +7,24 @@ namespace Texture
 {
 class Base
 {
+	protected:
+	unsigned int ID;
+	unsigned int Type;
+
+	public:
+	Base(unsigned int type);
+	virtual ~Base();
+
+	Base(const Base & other);
+	Base & operator=(const Base & other);
+
+	public:
 	private:
-		unsigned int GL_Texture;
-		unsigned int Type;
+	void Create();
+	void Delete();
 
 	public:
-		Base(unsigned int type);
-		virtual ~Base();
-
-	public:
-		virtual void Bind();
+	virtual void Bind();
 };
 };
 

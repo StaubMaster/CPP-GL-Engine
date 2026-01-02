@@ -19,7 +19,7 @@
 	Simple3D_InstData,
 	Simple3D_InstBuffer
 >*/
-class PolyHedra_3D_BufferArray : Buffer::ArrayBase
+class PolyHedra_3D_BufferArray : public Buffer::ArrayBase
 {
 	public:
 	PolyHedra_MainBuffer	Main;
@@ -29,7 +29,15 @@ class PolyHedra_3D_BufferArray : Buffer::ArrayBase
 	public:
 	PolyHedra_3D_BufferArray();
 	~PolyHedra_3D_BufferArray();
+	
+	PolyHedra_3D_BufferArray(const PolyHedra_3D_BufferArray & other);
+	PolyHedra_3D_BufferArray & operator=(const PolyHedra_3D_BufferArray & other);
 
+	protected:
+	void CreateBuffers() override;
+	void DeleteBuffers() override;
+
+	public:
 	void Draw();
 };
 

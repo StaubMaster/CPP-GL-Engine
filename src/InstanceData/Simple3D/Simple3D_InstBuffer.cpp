@@ -15,3 +15,14 @@ Simple3D_InstBuffer::Simple3D_InstBuffer(
 }
 Simple3D_InstBuffer::~Simple3D_InstBuffer()
 { }
+
+Simple3D_InstBuffer::Simple3D_InstBuffer(const Simple3D_InstBuffer & other) :
+	Buffer::Attribute(other),
+	Trans(other.Trans)
+{ }
+Simple3D_InstBuffer & Simple3D_InstBuffer::operator=(const Simple3D_InstBuffer & other)
+{
+	Buffer::Attribute::operator=(other);
+	Trans = other.Trans;
+	return *this;
+}

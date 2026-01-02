@@ -11,17 +11,22 @@ namespace Attribute
 class Color : public Attribute::Base
 {
 	private:
-		Attribute::FloatN Col;
+	Attribute::FloatN Location;
 
 	public:
-		Color(
-			unsigned int divisor,
-			unsigned int stride,
-			unsigned int indexCol
-		);
+	Color();
+	Color(
+		unsigned int divisor,
+		unsigned int stride,
+		unsigned int indexCol
+	);
+	~Color();
+
+	Color(const Color & other);
+	Color & operator=(const Color & other);
 
 	public:
-		void Bind(const unsigned char * & offset) const override;
+	void Bind(const unsigned char * & offset) const override;
 };
 };
 
