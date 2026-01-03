@@ -20,8 +20,7 @@ Shader::Base::Base(Container::Base<Shader::Code> code) :
 	Code(Container::Fixed<Shader::Code>::Copy(code)),
 	Uniforms()
 {
-	std::cout << "code " << code.Limit() << ' ' << code.Count() << '\n';
-	std::cout << "Code " << code.Limit() << ' ' << Code.Count() << '\n';
+	Create();
 }
 Shader::Base::~Base()
 { }
@@ -41,14 +40,16 @@ Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 
 
 
-bool Shader::Base::IsCompiled() const { return (ID != 0); }
 bool Shader::Base::IsBound() const { return (Bound() == ID); }
 void Shader::Base::Bind()
 {
 	if (!IsBound())
 	{
 		glUseProgram(ID);
-		UniformsUpdate();
+		for (unsigned int i = 0; i < Uniforms.Count(); i++)
+		{
+			Uniforms[i] -> PutMultiformData();
+		}
 	}
 }
 
@@ -65,24 +66,26 @@ void Shader::Base::BindNone()
 
 
 
-void Shader::Base::Dispose()
+bool Shader::Base::Exists() const { return (ID != 0); }
+void Shader::Base::Delete()
 {
 	if (ID == 0) { return; }
 
-	Debug::Log << "Shader::Base Disposing " << ID << " ..." << Debug::Done;
+	Debug::Log << "Shader::Base Deleting " << ID << " ..." << Debug::Done;
 	glDeleteProgram(ID);
 	ID = 0;
-	Uniforms.Dispose();
-	/*
-		this should probably also tell the Uniforms that the Shader is gone
-	*/
-	Debug::Log << "Shader::Base Disposing " << ID << " done" << Debug::Done;
+	Debug::Log << "Shader::Base Deleting " << ID << " done" << Debug::Done;
+
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		Uniforms[i] -> ReLocate();
+	}
 }
-void Shader::Base::Compile()
+void Shader::Base::Create()
 {
 	if (ID != 0) { return; }
 
-	Debug::Log << "Shader::Base Compiling " << ID << " ..." << Debug::Done;
+	Debug::Log << "Shader::Base Creating " << ID << " ..." << Debug::Done;
 	ID = glCreateProgram();
 
 	Shader::Code::Compile(Code);
@@ -100,29 +103,42 @@ void Shader::Base::Compile()
 		throw ECompileLog(log);
 	}
 
-	Debug::Log << "Shader::Base Compiling " << ID << " done" << Debug::Done;
-}
+	Debug::Log << "Shader::Base Creating " << ID << " done" << Debug::Done;
 
-Shader::Base Shader::Base::Compiled(Container::Base<Shader::Code> & code)
-{
-	Shader::Base shader(code);
-	shader.Compile();
-	return shader;
-}
-
-
-
-void Shader::Base::UniformsUpdate()
-{
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
-		Uniforms[i] -> PutMultiformData();
+		Uniforms[i] -> ReLocate();
 	}
 }
-int Shader::Base::UniformFind(const std::string & name) const
+void Shader::Base::Change(Container::Base<Shader::Code> code)
 {
-	int location = glGetUniformLocation(ID, name.c_str());
-	Debug::Log << "Shader " << ID << " Uniform " << name << " found at " << location << "." << Debug::Done;
+	if (Exists())
+	{
+		Delete();
+		Code = Container::Fixed<Shader::Code>::Copy(code);
+		Create();
+	}
+	else
+	{
+		Code = Container::Fixed<Shader::Code>::Copy(code);
+	}
+}
+
+
+
+int Shader::Base::LocateUniform(const char * name)
+{
+	int location;
+	if (Exists())
+	{
+		location = glGetUniformLocation(ID, name);
+	}
+	else
+	{
+		location = -1;
+	}
+	//Debug::Log << "Shader " << ID << " Uniform " << name << " found at " << location << "." << Debug::Done;
+	Debug::Log << "Shader Uniform Location: " << '(' << ID << ')' << ' ' << '(' << name << ':' << location << ')' << Debug::Done;
 	return location;
 }
 

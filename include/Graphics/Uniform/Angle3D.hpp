@@ -15,13 +15,14 @@ namespace Uniform
 class Angle3D : public Uniform::GBase<::Angle3D>
 {
 	private:
-		int Location;
+	int Location;
 
 	public:
-		Angle3D(Uniform::NameShader name_shader);
+	Angle3D(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::Angle3D p) override;
+	virtual void ReLocate() override;
+	void PutData(::Angle3D p) override;
 };
 };
 

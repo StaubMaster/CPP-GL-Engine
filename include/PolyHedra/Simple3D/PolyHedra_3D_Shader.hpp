@@ -10,13 +10,14 @@ class DirectoryContext;
 class PolyHedra_3D_Shader : public Shader::Base
 {
 	public:
-		Uniform::SizeRatio2D	ViewPortSizeRatio;
-		Uniform::Trans3D		View;
-		Uniform::Depth			Depth;
+	Uniform::WindowBufferSize2D	WindowSize;
+	Uniform::Trans3D			View;
+	Uniform::Depth				Depth;
 
 	public:
-		PolyHedra_3D_Shader(const DirectoryContext & dir);
-		~PolyHedra_3D_Shader();
+	PolyHedra_3D_Shader();
+	PolyHedra_3D_Shader(const DirectoryContext & dir);
+	~PolyHedra_3D_Shader();
 };
 
 #endif

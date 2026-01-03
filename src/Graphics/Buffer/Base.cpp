@@ -7,22 +7,15 @@
 
 Buffer::Base::Base() :
 	ID(0)
-{
-	Debug::Log << "++++ Buffer::Base " << ID << Debug::Done;
-}
+{ }
 Buffer::Base::~Base()
-{
-	Debug::Log << "---- Buffer::Base " << ID << Debug::Done;
-}
+{ }
 
 Buffer::Base::Base(const Base & other) :
 	ID(other.ID)
-{
-	Debug::Log << "==== Buffer::Base " << ID << Debug::Done;
-}
+{ }
 Buffer::Base & Buffer::Base::operator=(const Base & other)
 {
-	Debug::Log << "==== Buffer::Base " << ID << " operator=" << Debug::Done;
 	ID = other.ID;
 	return *this;
 }

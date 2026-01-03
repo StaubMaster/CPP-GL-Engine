@@ -33,7 +33,11 @@ Uniform::Base::~Base()
 
 
 
-int Uniform::Base::Find() const { return Shader.UniformFind(Name); }
+int Uniform::Base::Locate() const
+{
+	return Shader.LocateUniform(Name.c_str());
+}
+void Uniform::Base::ReLocate() { }
 
 
 

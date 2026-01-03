@@ -7,21 +7,14 @@
 
 Buffer::ArrayBase::ArrayBase() :
 	ID(0)
-{
-	Debug::Log << "++++ Buffer::ArrayBase " << ID << Debug::Done;
-}
+{ }
 Buffer::ArrayBase::~ArrayBase()
-{
-	Debug::Log << "---- Buffer::ArrayBase " << ID << Debug::Done;
-}
+{ }
 Buffer::ArrayBase::ArrayBase(const ArrayBase & other) :
 	ID(other.ID)
-{
-	Debug::Log << "==== Buffer::ArrayBase " << ID << Debug::Done;
-}
+{ }
 Buffer::ArrayBase & Buffer::ArrayBase::operator=(const ArrayBase & other)
 {
-	Debug::Log << "==== Buffer::ArrayBase " << ID << " operator=" << Debug::Done;
 	ID = other.ID;
 	return *this;
 }

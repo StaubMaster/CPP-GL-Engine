@@ -8,6 +8,12 @@
 
 
 
+PolyHedra_3D_Shader::PolyHedra_3D_Shader()
+	: Shader::Base(),
+	WindowSize(Uniform::NameShader("WindowSize", *this)),
+	View(Uniform::NameShader("View", *this)),
+	Depth(Uniform::NameShader("Depth", *this))
+{ }
 PolyHedra_3D_Shader::PolyHedra_3D_Shader(const DirectoryContext & dir)
 	: Shader::Base(
 		Container::Pointer<Shader::Code>(2, (Shader::Code[])
@@ -18,11 +24,9 @@ PolyHedra_3D_Shader::PolyHedra_3D_Shader(const DirectoryContext & dir)
 			Shader::Code(dir.File("PH_Full.frag")),
 		})
 	),
-	ViewPortSizeRatio(Uniform::NameShader("ViewPortSizeRatio", *this)),
+	WindowSize(Uniform::NameShader("WindowSize", *this)),
 	View(Uniform::NameShader("View", *this)),
 	Depth(Uniform::NameShader("Depth", *this))
-{
-	(void)dir;
-}
+{ }
 PolyHedra_3D_Shader::~PolyHedra_3D_Shader()
 { }

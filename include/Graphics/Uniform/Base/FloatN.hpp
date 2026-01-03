@@ -14,15 +14,16 @@ namespace Uniform
 class FloatN : public Uniform::GBase<const float *>
 {
 	protected:
-		int Location;
-		int Count;
+	int Location;
+	int Count;
 
 	public:
-		FloatN(int count, Uniform::NameShader name_shader);
+	FloatN(int count, Uniform::NameShader name_shader);
 
 	public:
-		virtual void PutData(const float * val) = 0;
-		void PutVoid(const void * val);
+	virtual void ReLocate() override;
+	virtual void PutData(const float * val) = 0;
+	void PutVoid(const void * val);
 };
 };
 

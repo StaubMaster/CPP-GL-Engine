@@ -54,7 +54,15 @@ class Base : public Container::Base<T>
 			for (unsigned int i = 0; i < Entrys.Count(); i++)
 			{
 				Entrys[i] -> Container = NULL;
-				delete Entrys[i];
+				delete Entrys[i];	// remove this ?
+				/*
+					EntryData is pointen to in 2 places
+					here and in Entry
+					if this is deleted then the Entrys still exist
+					Container is set to NULL
+					so Entry knows that the EntryContainer no longer exists
+					and so can safely delete it itself
+				*/
 			}
 		}
 

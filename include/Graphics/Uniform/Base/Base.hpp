@@ -30,22 +30,16 @@ class Base
 	public:
 	std::string			Name;
 	Shader::Base &		Shader;
-
 	Multiform::Base *	Multiform;
 	bool				MultiformChanged;
-
-	/*
-		name and shader go down the Constructor chain until here
-		put them both into one container called UniformData or something
-		so only one thing needs to be passed down instead of 2 ?
-	*/
 
 	protected:
 	Base(Uniform::NameShader & name_shader);
 	virtual ~Base();
 
 	public:
-	int Find() const;
+	int Locate() const;
+	virtual void ReLocate();
 
 	public:
 	void PutMultiformData();

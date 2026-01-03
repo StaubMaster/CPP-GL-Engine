@@ -13,23 +13,34 @@
 
 std::string Debug::TimeStamp()
 {
-	//	[YYYY:MM:DD hh.mm.ss]
-	//	[YYYY-MM-DD hh-mm-ss]
-	//	[YYYY-DDD hh-mm-ss]
-
 	std::time_t now_t = std::time(NULL);
 	std::tm * now = std::localtime(&now_t);
 
 	std::stringstream ss;
 	ss << std::setfill('0');
-	ss << "[ ";
-	ss << std::setw(4) << ((now -> tm_year) + 1900) << "-";
-	ss << std::setw(2) << ((now -> tm_mon) + 1) << "-";
-	ss << std::setw(2) << ((now -> tm_mday)) << " ";
-	ss << std::setw(2) << ((now -> tm_hour)) << "-";
-	ss << std::setw(2) << ((now -> tm_min)) << "-";
+	ss << std::setw(4) << ((now -> tm_year) + 1900) << '-';
+	ss << std::setw(2) << ((now -> tm_mon) + 1) << '-';
+	ss << std::setw(2) << ((now -> tm_mday)) << ' ';
+	ss << std::setw(2) << ((now -> tm_hour)) << ':';
+	ss << std::setw(2) << ((now -> tm_min)) << ':';
+	ss << std::setw(2) << ((now -> tm_sec)) << ' ';
+
+	return ss.str();
+}
+std::string Debug::TimeStampFileName()
+{
+	std::time_t now_t = std::time(NULL);
+	std::tm * now = std::localtime(&now_t);
+
+	std::stringstream ss;
+	ss << std::setfill('0');
+
+	ss << std::setw(4) << ((now -> tm_year) + 1900) << '_';
+	ss << std::setw(2) << ((now -> tm_mon) + 1) << '_';
+	ss << std::setw(2) << ((now -> tm_mday)) << '_';
+	ss << std::setw(2) << ((now -> tm_hour)) << '_';
+	ss << std::setw(2) << ((now -> tm_min)) << '_';
 	ss << std::setw(2) << ((now -> tm_sec));
-	ss << " ]";
 
 	return ss.str();
 }
@@ -57,8 +68,7 @@ void Debug::NewFileInDir(const DirectoryContext & dir)
 	}
 	Debug::Log = std::ostringstream();
 
-	std::string timestamp = TimeStamp();
-	FileContext file(dir.File(timestamp + ".log"));
+	FileContext file(dir.File(TimeStampFileName() + ".log"));
 
 	Debug::LogFile.open(file.Path.ToString(), std::ofstream::out | std::ofstream::trunc); //std::ofstream::app ?
 	Debug::LogFile << "New Log File " << TimeStamp() << "\n";

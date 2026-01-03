@@ -12,9 +12,7 @@ Buffer::Attribute::Attribute() :
 	DataSize(0),
 	Attributes(),
 	DrawCount(0)
-{
-	Debug::Log << "++++ Buffer::Attribute " << Debug::Done;
-}
+{ }
 Buffer::Attribute::Attribute(unsigned int target, unsigned int usage, unsigned int data_size) :
 	Buffer::Base(),
 	Target(target),
@@ -22,13 +20,9 @@ Buffer::Attribute::Attribute(unsigned int target, unsigned int usage, unsigned i
 	DataSize(data_size),
 	Attributes(),
 	DrawCount(0)
-{
-	Debug::Log << "++++ Buffer::Attribute " << Debug::Done;
-}
+{ }
 Buffer::Attribute::~Attribute()
-{
-	Debug::Log << "---- Buffer::Attribute " << Debug::Done;
-}
+{ }
 Buffer::Attribute::Attribute(const Attribute & other) :
 	Buffer::Base(other),
 	Target(other.Target),
@@ -36,19 +30,15 @@ Buffer::Attribute::Attribute(const Attribute & other) :
 	DataSize(other.DataSize),
 	Attributes(other.Attributes),
 	DrawCount(other.DrawCount)
-{
-	Debug::Log << "==== Buffer::Attribute " << Debug::Done;
-}
+{ }
 Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 {
-	Debug::Log << "==== Buffer::Attribute " << " operator=" << Debug::Done;
 	Base::operator=(other);
 	Target = other.Target;
 	Usage = other.Usage;
 	DataSize = other.DataSize;
 	Attributes = other.Attributes;
 	DrawCount = other.DrawCount;
-	Debug::Log << "==== Buffer::Attribute " << " operator=done" << Debug::Done;
 	return *this;
 }
 

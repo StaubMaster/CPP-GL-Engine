@@ -35,7 +35,6 @@ class Base
 
 
 	public:
-	bool IsCompiled() const;
 	bool IsBound() const;
 	void Bind();
 
@@ -45,16 +44,17 @@ class Base
 
 
 	public:
-	void Dispose();
-	void Compile();
-
-	static Shader::Base Compiled(Container::Base<Shader::Code> & code);
+	bool Exists() const;
+	void Delete();
+	void Create();
+	void Change(Container::Base<Shader::Code> code);
 
 
 
 	public:
-	void UniformsUpdate();
-	int UniformFind(const std::string & name) const;
+	int LocateUniform(const char * name);
+
+
 
 	class ECompileLog : std::exception
 	{

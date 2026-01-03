@@ -5,7 +5,8 @@ namespace Buffer
 {
 class Base
 {
-	protected:
+	//protected:
+	public:
 	unsigned int ID;
 
 

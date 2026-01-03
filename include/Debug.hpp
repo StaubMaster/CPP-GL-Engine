@@ -28,6 +28,7 @@ namespace Debug
 */
 
 	std::string TimeStamp();
+	std::string TimeStampFileName();
 
 	typedef char LogChange;
 

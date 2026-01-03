@@ -32,3 +32,25 @@ stores Instances
 
 
 
+
+
+	How would I like this to work / User friendly
+
+PolyHedra_Simple3D::Manager	manager;
+
+Init()
+{
+	PolyHedra * cube = Cube();
+	Entry entry = manager.Place(cube);
+	entry.Trans = ...
+}
+Free()
+{ }
+
+Frame()
+{
+	manager.DefaultShader ... Update Uniforms
+	manager.Draw();
+}
+
+
