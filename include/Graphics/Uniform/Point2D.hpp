@@ -1,4 +1,3 @@
-
 #ifndef  UNI_POINT_2D_HPP
 # define UNI_POINT_2D_HPP
 
@@ -13,16 +12,13 @@ namespace Shader
 
 namespace Uniform
 {
-class Point2D : public Uniform::GBase<::Point2D>
+class Point2D : public Uniform::Float2
 {
-	private:
-		Uniform::Float2 Location;
+	public:
+	Point2D(Uniform::NameShader name_shader);
 
 	public:
-		Point2D(Uniform::NameShader name_shader);
-
-	public:
-		void PutData(::Point2D p) override;
+	void Put(const ::Point2D & p);
 };
 };
 

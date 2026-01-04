@@ -1,0 +1,25 @@
+
+#ifndef  UNI_FLOAT_3X3_HPP
+# define UNI_FLOAT_3X3_HPP
+
+# include "Graphics/Uniform/Base/FloatN.hpp"
+
+namespace Shader
+{
+	class Base;
+};
+
+namespace Uniform
+{
+class Float3x3 : public Uniform::FloatN
+{
+	public:
+	Float3x3(Uniform::NameShader name_shader);
+	Float3x3(Uniform::NameShader name_shader, int count);
+
+	public:
+	void PutData(const float * val) override;
+};
+};
+
+#endif

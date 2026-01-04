@@ -7,7 +7,7 @@
 # include <string>
 # include <exception>
 
-struct PolyHedra_MainData;
+namespace PolyHedra_Main { struct Data; };
 
 class SkinBase;
 
@@ -66,7 +66,7 @@ class PolyHedra
 		~PolyHedra();
 
 	public:
-	Container::Pointer<PolyHedra_MainData> ToMainData();
+	Container::Pointer<PolyHedra_Main::Data> ToMainData();
 
 	public:
 		std::string ToInfo() const;

@@ -2,9 +2,12 @@
 # define POLYHEDRA_SIMPLE3D_BUFFER_MANAGER
 
 # include "PolyHedra/PolyHedra.hpp"
-# include "Miscellaneous/EntryContainer/Binary.hpp"
 
-# include "PolyHedra_3D_BufferArray.hpp"
+# include "PolyHedra/Main/Data.hpp"
+# include "InstanceData/Simple3D/Data.hpp"
+
+# include "BufferArray.hpp"
+# include "Miscellaneous/EntryContainer/Binary.hpp"
 
 # include "OpenGL/openGL.h"
 # include <iostream>
@@ -22,8 +25,8 @@ class PolyHedra_3D_Instances
 	PolyHedra * MainPolyHedra;
 	Texture::Base * MainTexture;
 
-	PolyHedra_3D_BufferArray Buffer;
-	EntryContainer::Binary<Simple3D_InstData> * Instances;
+	PolyHedra_Simple3D::BufferArray Buffer;
+	EntryContainer::Binary<Simple3D::Data> * Instances;
 
 	public:
 	PolyHedra_3D_Instances();

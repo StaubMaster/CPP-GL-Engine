@@ -1,4 +1,3 @@
-
 #ifndef  UNI_LIGHT_SPOT_HPP
 # define UNI_LIGHT_SPOT_HPP
 
@@ -21,18 +20,17 @@ namespace Uniform
 class LightSpot : public Uniform::GBase<::LightSpot>
 {
 	private:
-		Uniform::LightBase	Base;
-		Uniform::Point3D	Pos;
-		Uniform::Point3D	Dir;
-		Uniform::Range		Range;
+	Uniform::LightBase	Base;
+	Uniform::Point3D	Pos;
+	Uniform::Point3D	Dir;
+	Uniform::Range		Range;
 
 	public:
-		LightSpot(Uniform::NameShader name_shader);
+	LightSpot(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::LightSpot val) override;
+	void Put(const ::LightSpot & obj) override;
 };
 };
 
 #endif
-

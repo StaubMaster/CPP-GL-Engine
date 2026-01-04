@@ -1,4 +1,3 @@
-
 #ifndef  UNI_RANGE_HPP
 # define UNI_RANGE_HPP
 
@@ -16,15 +15,15 @@ namespace Uniform
 class Range : public Uniform::GBase<::Range>
 {
 	private:
-		Uniform::Float1 Min;
-		Uniform::Float1 Len;
-		Uniform::Float1 Max;
+	Uniform::Float1 Min;
+	Uniform::Float1 Len;
+	Uniform::Float1 Max;
 
 	public:
-		Range(Uniform::NameShader name_shader);
+	Range(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::Range val) override;
+	void Put(const ::Range & obj) override;
 };
 };
 

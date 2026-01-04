@@ -1,4 +1,3 @@
-
 #ifndef  UNI_DEPTH_HPP
 # define UNI_DEPTH_HPP
 
@@ -19,15 +18,15 @@ namespace Uniform
 class Depth : public Uniform::GBase<::Depth>
 {
 	private:
-		Uniform::DepthFactors Factors;
-		Uniform::Range Range;
-		Uniform::Color Color;
+	Uniform::DepthFactors Factors;
+	Uniform::Range Range;
+	Uniform::Color Color;
 
 	public:
-		Depth(Uniform::NameShader name_shader);
+	Depth(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::Depth val) override;
+	void Put(const ::Depth & obj) override;
 };
 };
 

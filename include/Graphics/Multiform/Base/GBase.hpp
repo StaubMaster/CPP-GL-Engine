@@ -66,7 +66,7 @@ class GBase : public Base
 		void PutUniformData(Uniform::Base * uni_base) override
 		{
 			UniformType * uni = (UniformType*)uni_base;
-			uni -> PutData(Data);
+			uni -> Put(Data);
 			uni -> MultiformChanged = false;
 		}
 		void ChangeData(DataType data)

@@ -4,11 +4,14 @@
 # include "Miscellaneous/Container/Fixed.hpp"
 # include "Miscellaneous/Container/Binary.hpp"
 # include <string>
+//# include <iosfwd>
 
-namespace Uniform
-{
-	class Base;
-};
+
+
+typedef unsigned int ShaderID;
+//std::ostream & operator<<(std::ostream & o, const ShaderID & val);
+
+namespace Uniform { class Base; };
 
 namespace Shader
 {
@@ -17,10 +20,13 @@ class Code;
 class Base
 {
 	private:
-	int ID;
+	ShaderID ID;
 	Container::Fixed<Shader::Code> Code;	// these are the Shaders. the whole class is technically a Shader Program
 	public:
 	Container::Binary<Uniform::Base*> Uniforms;
+
+	public:
+	void LogInfo(bool self = true) const;
 
 
 
@@ -38,7 +44,7 @@ class Base
 	bool IsBound() const;
 	void Bind();
 
-	static int Bound();
+	static ShaderID Bound();
 	static void BindNone();
 
 

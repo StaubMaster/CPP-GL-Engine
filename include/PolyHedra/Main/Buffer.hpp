@@ -6,7 +6,9 @@
 # include "Graphics/Attribute/Point3D.hpp"
 # include "Graphics/Attribute/Point2D.hpp"
 
-class PolyHedra_MainBuffer : public Buffer::Attribute
+namespace PolyHedra_Main
+{
+class Buffer : public ::Buffer::Attribute
 {
 	private:
 	::Attribute::Point3D	Position;
@@ -14,15 +16,16 @@ class PolyHedra_MainBuffer : public Buffer::Attribute
 	::Attribute::Point2D	Texture;
 
 	public:
-	PolyHedra_MainBuffer(
+	Buffer(
 		unsigned int indexPosition,
 		unsigned int indexNormal,
 		unsigned int indexTexture
 	);
-	~PolyHedra_MainBuffer();
+	~Buffer();
 
-	PolyHedra_MainBuffer(const PolyHedra_MainBuffer & other);
-	PolyHedra_MainBuffer & operator=(const PolyHedra_MainBuffer & other);
+	Buffer(const Buffer & other);
+	Buffer & operator=(const Buffer & other);
+};
 };
 
 #endif

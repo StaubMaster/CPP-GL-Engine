@@ -36,7 +36,7 @@ void PolyHedra_Simple3D::ManagerSingle::Change(PolyHedra * polyhedra)
 	_PolyHedra = polyhedra;
 	{
 		_Buffer.Bind();
-		Container::Pointer<PolyHedra_MainData> data = _PolyHedra -> ToMainData();
+		Container::Pointer<PolyHedra_Main::Data> data = _PolyHedra -> ToMainData();
 		_Buffer.Main.Change(data);
 		data.Dispose();
 	}

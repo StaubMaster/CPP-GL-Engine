@@ -9,14 +9,19 @@
 # include "FileContext.hpp"
 # include <string>
 
+
+
 typedef unsigned int GLenum;
+typedef unsigned int ShaderID;
+
+class FileContext;
 
 namespace Shader
 {
 class Code
 {
 	private:
-	int ID;
+	ShaderID ID;
 	GLenum Type;
 	FileContext File;
 
@@ -35,14 +40,14 @@ class Code
 	public:
 	void Dispose();
 	void Compile();
-	void Attach(int ProgramID) const;
-	void Detach(int ProgramID) const;
+	void Attach(ShaderID ProgramID) const;
+	void Detach(ShaderID ProgramID) const;
 
 	public:
 	static void Dispose(Container::Base<Shader::Code> & code);
 	static void Compile(Container::Base<Shader::Code> & code);
-	static void Attach(Container::Base<Shader::Code> & code, int ProgramID);
-	static void Detach(Container::Base<Shader::Code> & code, int ProgramID);
+	static void Attach(Container::Base<Shader::Code> & code, ShaderID ProgramID);
+	static void Detach(Container::Base<Shader::Code> & code, ShaderID ProgramID);
 
 
 

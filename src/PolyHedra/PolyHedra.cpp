@@ -4,7 +4,7 @@
 
 #include "PolyHedra/Skin/Skin2DA.hpp"
 
-#include "PolyHedra/MainData/PolyHedra_MainData.hpp"
+#include "PolyHedra/Main/Data.hpp"
 
 #include "DataStruct/Angle3D.hpp"
 #include "DataStruct/AxisBox3D.hpp"
@@ -42,9 +42,9 @@ PolyHedra::~PolyHedra()
 
 
 
-Container::Pointer<PolyHedra_MainData> PolyHedra::ToMainData()
+Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 {
-	Container::Pointer<PolyHedra_MainData> data(Faces.Count() * 3);
+	Container::Pointer<PolyHedra_Main::Data> data(Faces.Count() * 3);
 
 	/*
 	std::cout << "C " << Corners.Count() << "\n";

@@ -10,7 +10,7 @@ OBJ_3D_BufferArray::OBJ_3D_BufferArray() :
 	//	new OBJ_MainBuffer(0, 1, 2, 3, 4, 5, 6, 7),
 	//	new Simple3D_InstBuffer(8, 9),
 	//	GL_TRIANGLES)
-	Buffer::ArrayBase(),
+	BufferArray::Base(),
 	Main(0, 1, 2, 3, 4, 5, 6, 7),
 	Inst(8, 9),
 	DrawMode(GL_TRIANGLES)

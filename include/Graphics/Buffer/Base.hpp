@@ -1,13 +1,21 @@
 #ifndef  BUFFER_BASE_HPP
 # define BUFFER_BASE_HPP
 
+typedef unsigned int BufferID;
+
 namespace Buffer
 {
 class Base
 {
+	private:
+	static BufferID None;
+
 	//protected:
 	public:
-	unsigned int ID;
+	BufferID ID;
+
+	public:
+	void LogInfo(bool self = true) const;
 
 
 
@@ -23,10 +31,6 @@ class Base
 	public:
 	void Create();
 	void Delete();
-
-	protected:
-	virtual void CreateRelay();
-	virtual void DeleteRelay();
 };
 };
 

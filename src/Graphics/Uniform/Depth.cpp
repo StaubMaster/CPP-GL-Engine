@@ -9,9 +9,11 @@ Uniform::Depth::Depth(Uniform::NameShader name_shader) : GBase(name_shader),
 	Color(name_shader.Suffix(".Color"))
 { }
 
-void Uniform::Depth::PutData(::Depth val)
+
+
+void Uniform::Depth::Put(const ::Depth & obj)
 {
-	Factors.PutData(val.Factors);
-	Range.PutData(val.Range);
-	Color.PutData(val.Color);
+	Factors.Put(obj.Factors);
+	Range.Put(obj.Range);
+	Color.Put(obj.Color);
 }

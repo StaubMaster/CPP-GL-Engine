@@ -34,7 +34,7 @@ void PolyHedra_3D_Instances::Create()
 {
 	Buffer.Create();
 
-	Instances = new EntryContainer::Binary<Simple3D_InstData>();
+	Instances = new EntryContainer::Binary<Simple3D::Data>();
 }
 void PolyHedra_3D_Instances::Delete()
 {
@@ -54,7 +54,7 @@ void PolyHedra_3D_Instances::SetPolyHedra(PolyHedra * polyhedra)
 {
 	MainPolyHedra = polyhedra;
 
-	Container::Pointer<PolyHedra_MainData> data = polyhedra -> ToMainData();
+	Container::Pointer<PolyHedra_Main::Data> data = polyhedra -> ToMainData();
 	Buffer.Bind();
 	Buffer.Main.Change(data);
 	data.Dispose();

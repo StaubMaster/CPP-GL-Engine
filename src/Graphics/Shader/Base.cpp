@@ -2,11 +2,47 @@
 #include "Graphics/Shader/Code.hpp"
 #include "Graphics/Uniform/Base/Base.hpp"
 
+#include "OpenGL/openGL.h"
 #include "Debug.hpp"
 #include <sstream>
 
-#include "OpenGL/openGL.h"
-#include <iostream>
+//#include <iostream>
+
+
+
+/*std::ostream & operator<<(std::ostream & o, const ShaderID & val)
+{
+	int v = val;
+	if (val == 0) { o << "none"; }
+	else { o << v; }
+	return o;
+}*/
+
+
+
+void Shader::Base::LogInfo(bool self) const
+{
+	if (self)
+	{
+		Debug::Log << Debug::Tabs << "Shader Info\n";
+		Debug::Log << Debug::TabInc;
+	}
+	//Debug::Log << Debug::Tabs << "Type " << typeid(*this).name() << '\n';
+	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
+	Debug::Log << Debug::Tabs << "Code[" << Code.Count() << "]\n";
+	Debug::Log << Debug::Tabs << "Uniforms[" << Uniforms.Count() << "]\n";
+	//Debug::Log << Debug::Tabs << "[\n";
+	Debug::Log << Debug::TabInc;
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{ Uniforms[i] -> LogInfo(false); }
+	Debug::Log << Debug::TabDec;
+	//Debug::Log << Debug::Tabs << "]\n";
+	if (self)
+	{
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
+}
 
 
 
@@ -27,14 +63,14 @@ Shader::Base::~Base()
 
 Shader::Base::Base(const Shader::Base & other) :
 	ID(other.ID),
-	Code(other.Code),
-	Uniforms(other.Uniforms)
+	Code(other.Code)
+	//Uniforms(other.Uniforms)
 { }
 Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 {
 	ID = other.ID;
 	Code = other.Code;
-	Uniforms = other.Uniforms;
+	//Uniforms = other.Uniforms;
 	return *this;
 }
 
@@ -53,7 +89,7 @@ void Shader::Base::Bind()
 	}
 }
 
-int Shader::Base::Bound()
+ShaderID Shader::Base::Bound()
 {
 	int ID;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &ID);
@@ -71,10 +107,13 @@ void Shader::Base::Delete()
 {
 	if (ID == 0) { return; }
 
-	Debug::Log << "Shader::Base Deleting " << ID << " ..." << Debug::Done;
+	//Debug::Log << "Delete Shader: " << ID << Debug::Done;
+	//LogInfo();
+
+	//Debug::Log << "Shader::Base Deleting " << ID << " ..." << Debug::Done;
 	glDeleteProgram(ID);
 	ID = 0;
-	Debug::Log << "Shader::Base Deleting " << ID << " done" << Debug::Done;
+	//Debug::Log << "Shader::Base Deleting " << ID << " done" << Debug::Done;
 
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
@@ -85,7 +124,7 @@ void Shader::Base::Create()
 {
 	if (ID != 0) { return; }
 
-	Debug::Log << "Shader::Base Creating " << ID << " ..." << Debug::Done;
+	//Debug::Log << "Shader::Base Creating " << ID << " ..." << Debug::Done;
 	ID = glCreateProgram();
 
 	Shader::Code::Compile(Code);
@@ -103,12 +142,15 @@ void Shader::Base::Create()
 		throw ECompileLog(log);
 	}
 
-	Debug::Log << "Shader::Base Creating " << ID << " done" << Debug::Done;
+	//Debug::Log << "Shader::Base Creating " << ID << " done" << Debug::Done;
 
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
 		Uniforms[i] -> ReLocate();
 	}
+
+	//Debug::Log << "Create Shader: " << ID << Debug::Done;
+	//LogInfo();
 }
 void Shader::Base::Change(Container::Base<Shader::Code> code)
 {
@@ -128,18 +170,14 @@ void Shader::Base::Change(Container::Base<Shader::Code> code)
 
 int Shader::Base::LocateUniform(const char * name)
 {
-	int location;
 	if (Exists())
 	{
-		location = glGetUniformLocation(ID, name);
+		return glGetUniformLocation(ID, name);
 	}
 	else
 	{
-		location = -1;
+		return -1;
 	}
-	//Debug::Log << "Shader " << ID << " Uniform " << name << " found at " << location << "." << Debug::Done;
-	Debug::Log << "Shader Uniform Location: " << '(' << ID << ')' << ' ' << '(' << name << ':' << location << ')' << Debug::Done;
-	return location;
 }
 
 

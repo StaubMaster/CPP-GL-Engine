@@ -1,4 +1,3 @@
-
 #ifndef  UNI_DISPLAY_SIZE_HPP
 # define UNI_DISPLAY_SIZE_HPP
 
@@ -18,17 +17,16 @@ namespace Uniform
 class WindowBufferSize2D : public Uniform::GBase<::WindowBufferSize2D>
 {
 	private:
-		Uniform::Point2D WindowSize;
-		Uniform::Point2D BufferSize;
-		Uniform::Point2D Ratio;
+	Uniform::Point2D WindowSize;
+	Uniform::Point2D BufferSize;
+	Uniform::Point2D Ratio;
 
 	public:
-		WindowBufferSize2D(Uniform::NameShader name_shader);
+	WindowBufferSize2D(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::WindowBufferSize2D sr) override;
+	void Put(const ::WindowBufferSize2D & obj) override;
 };
 };
 
 #endif
-

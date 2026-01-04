@@ -1,6 +1,5 @@
 #include "Graphics/Uniform/Range.hpp"
 #include "DataStruct/Range.hpp"
-#include "OpenGL/openGL.h"
 
 
 
@@ -10,9 +9,11 @@ Uniform::Range::Range(Uniform::NameShader name_shader) : GBase(name_shader),
 	Max(name_shader.Suffix(".Max"))
 { }
 
-void Uniform::Range::PutData(::Range val)
+
+
+void Uniform::Range::Put(const ::Range & obj)
 {
-	Min.PutVoid(&val.Min);
-	Len.PutVoid(&val.Len);
-	Max.PutVoid(&val.Max);
+	Min.PutVoid(&obj.Min);
+	Len.PutVoid(&obj.Len);
+	Max.PutVoid(&obj.Max);
 }

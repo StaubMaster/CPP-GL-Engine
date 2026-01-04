@@ -1,6 +1,5 @@
 #include "Graphics/Uniform/Trans3D.hpp"
 #include "DataStruct/Trans3D.hpp"
-#include "OpenGL/openGL.h"
 
 
 
@@ -9,8 +8,10 @@ Uniform::Trans3D::Trans3D(Uniform::NameShader name_shader) : GBase(name_shader),
 	Rot(name_shader.Suffix(".Rot"))
 { }
 
-void Uniform::Trans3D::PutData(::Trans3D t)
+
+
+void Uniform::Trans3D::Put(const ::Trans3D & obj)
 {
-	Pos.PutData(t.Pos);
-	Rot.PutData(t.Rot);
+	Pos.Put(obj.Pos);
+	Rot.Put(obj.Rot);
 }

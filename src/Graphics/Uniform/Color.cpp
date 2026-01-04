@@ -3,11 +3,10 @@
 
 
 
-Uniform::Color::Color(Uniform::NameShader name_shader) : GBase(name_shader),
-	Location(name_shader)
+Uniform::Color::Color(Uniform::NameShader name_shader) : Float3(name_shader)
 { }
 
-void Uniform::Color::PutData(::Color val)
+void Uniform::Color::Put(const ::Color & val)
 {
-	Location.PutVoid(&val);
+	PutVoid(&val);
 }

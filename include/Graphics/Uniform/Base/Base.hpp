@@ -33,6 +33,9 @@ class Base
 	Multiform::Base *	Multiform;
 	bool				MultiformChanged;
 
+	public:
+	virtual void LogInfo(bool self = true) const;
+
 	protected:
 	Base(Uniform::NameShader & name_shader);
 	virtual ~Base();

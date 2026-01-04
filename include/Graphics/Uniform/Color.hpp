@@ -1,4 +1,3 @@
-
 #ifndef  UNI_COLOR_HPP
 # define UNI_COLOR_HPP
 
@@ -13,16 +12,13 @@ namespace Shader
 
 namespace Uniform
 {
-class Color : public Uniform::GBase<::Color>
+class Color : public Uniform::Float3
 {
-	private:
-		Uniform::Float3 Location;
+	public:
+	Color(Uniform::NameShader name_shader);
 
 	public:
-		Color(Uniform::NameShader name_shader);
-
-	public:
-		void PutData(::Color val) override;
+	void Put(const ::Color & val);
 };
 };
 

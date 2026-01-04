@@ -1,12 +1,31 @@
 #include "Graphics/Buffer/Base.hpp"
-#include "Debug.hpp"
 #include "OpenGL/openGL.h"
+#include "Debug.hpp"
 #include <sstream>
 
 
 
+BufferID Buffer::Base::None = 0;
+
+void Buffer::Base::LogInfo(bool self) const
+{
+	if (self)
+	{
+		Debug::Log << Debug::Tabs << "Buffer Info\n";
+		Debug::Log << Debug::TabInc;
+	}
+	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
+	if (self)
+	{
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
+}
+
+
+
 Buffer::Base::Base() :
-	ID(0)
+	ID(None)
 { }
 Buffer::Base::~Base()
 { }
@@ -24,23 +43,18 @@ Buffer::Base & Buffer::Base::operator=(const Base & other)
 
 void Buffer::Base::Create()
 {
-	if (ID != 0) { return; }
-	Debug::Log << "Buffer::Base Creating " << ID << " ..." << Debug::Done;
+	if (ID != None) { return; }
+
+	//Debug::Log << "Buffer::Base Creating " << ID << " ..." << Debug::Done;
 	glGenBuffers(1, &ID);
-	CreateRelay();
-	Debug::Log << "Buffer::Base Creating " << ID << " done" << Debug::Done;
+	//Debug::Log << "Buffer::Base Creating " << ID << " done" << Debug::Done;
 }
 void Buffer::Base::Delete()
 {
-	if (ID == 0) { return; }
-	Debug::Log << "Buffer::Base Deleting " << ID << " ..." << Debug::Done;
-	DeleteRelay();
+	if (ID == None) { return; }
+
+	//Debug::Log << "Buffer::Base Deleting " << ID << " ..." << Debug::Done;
 	glDeleteBuffers(1, &ID);
-	ID = 0;
-	Debug::Log << "Buffer::Base Deleting " << ID << " done" << Debug::Done;
+	ID = None;
+	//Debug::Log << "Buffer::Base Deleting " << ID << " done" << Debug::Done;
 }
-
-
-
-void Buffer::Base::CreateRelay() { }
-void Buffer::Base::DeleteRelay() { }

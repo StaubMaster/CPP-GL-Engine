@@ -1,29 +1,59 @@
 #include "Graphics/Buffer/ArrayBase.hpp"
-#include "Debug.hpp"
+#include "Graphics/Buffer/Base.hpp"
 #include "OpenGL/openGL.h"
+#include "Debug.hpp"
 #include <sstream>
 
 
 
-Buffer::ArrayBase::ArrayBase() :
-	ID(0)
+BufferArrayID BufferArray::Base::None = 0;
+
+void BufferArray::Base::LogInfo(bool self) const
+{
+	if (self)
+	{
+		Debug::Log << Debug::Tabs << "Buffer Array Info\n";
+		Debug::Log << Debug::TabInc;
+	}
+	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
+	Debug::Log << Debug::Tabs << "Buffers[" << Buffers.Count() << "]\n";
+	Debug::Log << Debug::TabInc;
+	for (unsigned int i = 0; i < Buffers.Count(); i++)
+	{
+		Buffers[i] -> LogInfo(false);
+	}
+	Debug::Log << Debug::TabDec;
+	if (self)
+	{
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
+}
+
+
+
+BufferArray::Base::Base() :
+	ID(None),
+	Buffers()
 { }
-Buffer::ArrayBase::~ArrayBase()
+BufferArray::Base::~Base()
 { }
-Buffer::ArrayBase::ArrayBase(const ArrayBase & other) :
+BufferArray::Base::Base(const Base & other) :
 	ID(other.ID)
+	//Buffers(other.Buffers)
 { }
-Buffer::ArrayBase & Buffer::ArrayBase::operator=(const ArrayBase & other)
+BufferArray::Base & BufferArray::Base::operator=(const Base & other)
 {
 	ID = other.ID;
+	//Buffers = other.Buffers;
 	return *this;
 }
 
 
 
-bool Buffer::ArrayBase::Exists() const { return (ID != 0); }
-bool Buffer::ArrayBase::IsBound() const { return (Bound() == ID); }
-void Buffer::ArrayBase::Bind()
+bool BufferArray::Base::Exists() const { return (ID != None); }
+bool BufferArray::Base::IsBound() const { return (Bound() == ID); }
+void BufferArray::Base::Bind()
 {
 	if (!IsBound())
 	{
@@ -31,39 +61,53 @@ void Buffer::ArrayBase::Bind()
 	}
 }
 
-unsigned int Buffer::ArrayBase::Bound()
+BufferArrayID BufferArray::Base::Bound()
 {
 	int ID;
 	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &ID);
 	return ID;
 }
-void Buffer::ArrayBase::BindNone()
+void BufferArray::Base::BindNone()
 {
-	glBindVertexArray(0);
+	glBindVertexArray(None);
 }
 
 
 
-void Buffer::ArrayBase::Create()
+void BufferArray::Base::Create()
 {
-	if (ID != 0) { return; }
-	Debug::Log << "Buffer::ArrayBase Creating " << ID << " ..." << Debug::Done;
+	if (ID != None) { return; }
+
+	//Debug::Log << "Buffer::ArrayBase Creating " << ID << " ..." << Debug::Done;
 	glGenVertexArrays(1, &ID);
-	CreateBuffers();
-	Debug::Log << "Buffer::ArrayBase Creating " << ID << " done" << Debug::Done;
+	//Debug::Log << "Buffer::ArrayBase Creating " << ID << " done" << Debug::Done;
+
+	for (unsigned int i = 0; i < Buffers.Count(); i++)
+	{
+		Buffers[i] -> Create();
+	}
+
+	//Debug::Log << "Create BufferArray: " << ID << Debug::Done;
+	//LogInfo();
 }
-void Buffer::ArrayBase::Delete()
+void BufferArray::Base::Delete()
 {
-	if (ID == 0) { return; }
-	Debug::Log << "Buffer::ArrayBase Deleting " << ID << " ..." << Debug::Done;
+	if (ID == None) { return; }
+
+	//Debug::Log << "Delete BufferArray: " << ID << Debug::Done;
+	//LogInfo();
+
+	//Debug::Log << "Buffer::ArrayBase Deleting " << ID << " ..." << Debug::Done;
 	glDeleteVertexArrays(1, &ID);
-	DeleteBuffers();
-	Debug::Log << "Buffer::ArrayBase Deleting " << ID << " done" << Debug::Done;
+	ID = None;
+	//Debug::Log << "Buffer::ArrayBase Deleting " << ID << " done" << Debug::Done;
+
+	for (unsigned int i = 0; i < Buffers.Count(); i++)
+	{
+		Buffers[i] -> Delete();
+	}
 }
 
-void Buffer::ArrayBase::CreateBuffers() { }
-void Buffer::ArrayBase::DeleteBuffers() { }
 
 
-
-void Buffer::ArrayBase::Draw() { }
+void BufferArray::Base::Draw() { }

@@ -1,4 +1,3 @@
-
 #ifndef  UNI_LIGHT_BASE_HPP
 # define UNI_LIGHT_BASE_HPP
 
@@ -20,14 +19,14 @@ namespace Uniform
 class LightBase : public Uniform::GBase<::LightBase>
 {
 	private:
-		Uniform::Float1 Intensity;
-		Uniform::Color Color;
+	Uniform::Float1 Intensity;
+	Uniform::Color Color;
 
 	public:
-		LightBase(Uniform::NameShader name_shader);
+	LightBase(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::LightBase val) override;
+	void Put(const ::LightBase & obj) override;
 };
 };
 

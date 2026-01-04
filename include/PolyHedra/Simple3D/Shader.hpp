@@ -1,13 +1,14 @@
-
-#ifndef  POLYHEDRA_3D_SHADER_HPP
-# define POLYHEDRA_3D_SHADER_HPP
+#ifndef  POLYHEDRA_SIMPLE3D_SHADER_HPP
+# define POLYHEDRA_SIMPLE3D_SHADER_HPP
 
 # include "Graphics/Shader/Base.hpp"
 # include "Graphics/UniformsInclude.hpp"
 
 class DirectoryContext;
 
-class PolyHedra_3D_Shader : public Shader::Base
+namespace PolyHedra_Simple3D
+{
+class Shader : public ::Shader::Base
 {
 	public:
 	Uniform::WindowBufferSize2D	WindowSize;
@@ -15,9 +16,10 @@ class PolyHedra_3D_Shader : public Shader::Base
 	Uniform::Depth				Depth;
 
 	public:
-	PolyHedra_3D_Shader();
-	PolyHedra_3D_Shader(const DirectoryContext & dir);
-	~PolyHedra_3D_Shader();
+	Shader();
+	Shader(const DirectoryContext & dir);
+	~Shader();
+};
 };
 
 #endif

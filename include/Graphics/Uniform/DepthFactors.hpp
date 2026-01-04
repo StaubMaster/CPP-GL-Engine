@@ -1,8 +1,6 @@
+#ifndef  UNI_DEPTH_FACTORS_HPP
+# define UNI_DEPTH_FACTORS_HPP
 
-#ifndef  UNI_DEPTH_FACTORS_3D_HPP
-# define UNI_DEPTH_FACTORS_3D_HPP
-
-# include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float1.hpp"
 # include "DataDeclare.hpp"
 
@@ -13,16 +11,13 @@ namespace Shader
 
 namespace Uniform
 {
-class DepthFactors : public Uniform::GBase<::DepthFactors>
+class DepthFactors : public Uniform::Float1
 {
-	private:
-		Uniform::Float1 Location;
+	public:
+	DepthFactors(Uniform::NameShader name_shader);
 
 	public:
-		DepthFactors(Uniform::NameShader name_shader);
-
-	public:
-		void PutData(::DepthFactors val) override;
+	void Put(const ::DepthFactors & obj);
 };
 };
 

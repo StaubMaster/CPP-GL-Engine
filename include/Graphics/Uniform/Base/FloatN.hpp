@@ -1,24 +1,23 @@
-
 #ifndef  UNI_FLOAT_N_HPP
 # define UNI_FLOAT_N_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/Base/Base.hpp"
 
-namespace Shader
-{
-	class Base;
-};
+namespace Shader { class Base; };
 
 namespace Uniform
 {
-class FloatN : public Uniform::GBase<const float *>
+class FloatN : public Uniform::Base
 {
 	protected:
 	int Location;
 	int Count;
 
 	public:
-	FloatN(int count, Uniform::NameShader name_shader);
+	void LogInfo(bool self = true) const override;
+
+	public:
+	FloatN(Uniform::NameShader name_shader, int count);
 
 	public:
 	virtual void ReLocate() override;

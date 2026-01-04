@@ -1,7 +1,5 @@
 #include "Graphics/Uniform/WindowBufferSize2D.hpp"
 #include "Display/WindowBufferSize2D.hpp"
-#include "DataStruct/Point2D.hpp"
-#include "OpenGL/openGL.h"
 
 
 
@@ -11,9 +9,11 @@ Uniform::WindowBufferSize2D::WindowBufferSize2D(Uniform::NameShader name_shader)
 	Ratio(name_shader.Suffix(".Ratio"))
 { }
 
-void Uniform::WindowBufferSize2D::PutData(::WindowBufferSize2D sr)
+
+
+void Uniform::WindowBufferSize2D::Put(const ::WindowBufferSize2D & obj)
 {
-	WindowSize.PutData(sr.WindowSize);
-	BufferSize.PutData(sr.BufferSize);
-	Ratio.PutData(sr.Ratio);
+	WindowSize.Put(obj.WindowSize);
+	BufferSize.Put(obj.BufferSize);
+	Ratio.Put(obj.Ratio);
 }

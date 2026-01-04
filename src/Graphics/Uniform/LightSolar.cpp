@@ -8,8 +8,10 @@ Uniform::LightSolar::LightSolar(Uniform::NameShader name_shader) : GBase(name_sh
 	Dir(name_shader.Suffix(".Direction"))
 { }
 
-void Uniform::LightSolar::PutData(::LightSolar val)
+
+
+void Uniform::LightSolar::Put(const ::LightSolar & obj)
 {
-	Base.PutData(val.Base);
-	Dir.PutData(val.Dir);
+	Base.Put(obj.Base);
+	Dir.Put(obj.Dir);
 }

@@ -2,6 +2,9 @@
 #include "Graphics/Multiform/Base/Base.hpp"
 #include "Graphics/Shader/Base.hpp"
 
+#include "Debug.hpp"
+#include <sstream>
+
 
 
 Uniform::NameShader::NameShader(std::string name, Shader::Base & shader) :
@@ -17,6 +20,21 @@ Uniform::NameShader Uniform::NameShader::Suffix(std::string name) const
 }
 
 
+
+void Uniform::Base::LogInfo(bool self) const
+{
+	if (self)
+	{
+		Debug::Log << Debug::Tabs << "Uniform Info\n";
+		Debug::Log << Debug::TabInc;
+	}
+	Debug::Log << Debug::Tabs << '"' << (Name) << '"' << '\n';
+	if (self)
+	{
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
+}
 
 
 

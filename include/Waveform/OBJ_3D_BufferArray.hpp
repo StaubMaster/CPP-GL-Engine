@@ -6,8 +6,8 @@
 
 # include "OBJ_Main.hpp"
 
-# include "InstanceData/Simple3D/Simple3D_InstData.hpp"
-# include "InstanceData/Simple3D/Simple3D_InstBuffer.hpp"
+# include "InstanceData/Simple3D/Data.hpp"
+# include "InstanceData/Simple3D/Buffer.hpp"
 
 
 
@@ -17,11 +17,11 @@
 	Simple3D_InstData,
 	Simple3D_InstBuffer
 >*/
-class OBJ_3D_BufferArray : Buffer::ArrayBase
+class OBJ_3D_BufferArray : BufferArray::Base
 {
 	public:
 	OBJ_MainBuffer			Main;
-	Simple3D_InstBuffer		Inst;
+	Simple3D::Buffer		Inst;
 	unsigned int			DrawMode;
 
 	public:

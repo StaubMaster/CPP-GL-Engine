@@ -1,14 +1,15 @@
-#ifndef  POLYHEDRA_SIMPLE3D_MANAGER_SINGLE_HPP
-# define POLYHEDRA_SIMPLE3D_MANAGER_SINGLE_HPP
+#ifndef POLYHEDRA_SIMPLE3D_MANAGER_SINGLE_HPP
+#define POLYHEDRA_SIMPLE3D_MANAGER_SINGLE_HPP
 
-# include "PolyHedra/PolyHedra.hpp"
-//# include "PolyHedra_3D_Shader.hpp"
-# include "PolyHedra_3D_BufferArray.hpp"
+#include "PolyHedra/PolyHedra.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
-# include "Miscellaneous/EntryContainer/Binary.hpp"
+#include "BufferArray.hpp"
 
+#include "PolyHedra/Main/Data.hpp"
+#include "InstanceData/Simple3D/Data.hpp"
 
+#include "Miscellaneous/Container/Binary.hpp"
+#include "Miscellaneous/EntryContainer/Binary.hpp"
 
 namespace Texture
 {
@@ -17,25 +18,25 @@ namespace Texture
 
 namespace PolyHedra_Simple3D
 {
-struct ManagerSingle
-{
-	PolyHedra *				_PolyHedra;
-	Texture::Base *			_Texture;
+	struct ManagerSingle
+	{
+		PolyHedra *_PolyHedra;
+		Texture::Base *_Texture;
 
-	PolyHedra_3D_BufferArray	_Buffer;
-	EntryContainer::Binary<Simple3D_InstData>	_Instances;
+		PolyHedra_Simple3D::BufferArray _Buffer;
+		EntryContainer::Binary<Simple3D::Data> _Instances;
 
-	ManagerSingle();
-	~ManagerSingle();
+		ManagerSingle();
+		~ManagerSingle();
 
-	//SinglePolyHedra(const SinglePolyHedra & other);
-	//SinglePolyHedra & operator=(const SinglePolyHedra & other);
+		// SinglePolyHedra(const SinglePolyHedra & other);
+		// SinglePolyHedra & operator=(const SinglePolyHedra & other);
 
-	void Dispose();
-	void Change(PolyHedra * polyhedra);
+		void Dispose();
+		void Change(PolyHedra *polyhedra);
 
-	void Draw();
-};
+		void Draw();
+	};
 };
 
 #endif

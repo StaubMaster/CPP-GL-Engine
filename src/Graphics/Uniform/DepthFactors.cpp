@@ -3,11 +3,12 @@
 
 
 
-Uniform::DepthFactors::DepthFactors(Uniform::NameShader name_shader) : GBase(name_shader),
-	Location(7, name_shader)
+Uniform::DepthFactors::DepthFactors(Uniform::NameShader name_shader) : Float1(name_shader, 7)
 { }
 
-void Uniform::DepthFactors::PutData(::DepthFactors val)
+
+
+void Uniform::DepthFactors::Put(const ::DepthFactors & obj)
 {
-	Location.PutVoid(&val);
+	PutVoid(&obj);
 }

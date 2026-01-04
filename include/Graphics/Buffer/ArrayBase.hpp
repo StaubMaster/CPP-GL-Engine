@@ -1,21 +1,35 @@
 #ifndef  BUFFER_ARRAYBASE_HPP
 # define BUFFER_ARRAYBASE_HPP
 
-namespace Buffer
+# include "Miscellaneous/Container/Binary.hpp"
+
+typedef unsigned int BufferArrayID;
+
+namespace Buffer { class Base; };
+
+namespace BufferArray
 {
-class ArrayBase
+class Base
 {
 	private:
-	unsigned int ID;
+	static BufferArrayID None;
+
+	private:
+	BufferArrayID ID;
+	protected:
+	Container::Binary<Buffer::Base*> Buffers;
+
+	public:
+	void LogInfo(bool self = true) const;
 
 
 
 	public:
-	ArrayBase();
-	virtual ~ArrayBase();
+	Base();
+	virtual ~Base();
 
-	ArrayBase(const ArrayBase & other);
-	ArrayBase & operator=(const ArrayBase & other);
+	Base(const Base & other);
+	Base & operator=(const Base & other);
 
 
 
@@ -24,7 +38,7 @@ class ArrayBase
 	bool IsBound() const;
 	void Bind();
 
-	static unsigned int Bound();
+	static BufferArrayID Bound();
 	static void BindNone();
 
 
@@ -32,9 +46,6 @@ class ArrayBase
 	public:
 	void Create();
 	void Delete();
-	protected:
-	virtual void CreateBuffers();
-	virtual void DeleteBuffers();
 
 
 

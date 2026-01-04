@@ -2,9 +2,9 @@
 # define POLYHEDRA_SIMPLE3D_MANAGER_MULTI_HPP
 
 # include "PolyHedra/PolyHedra.hpp"
-# include "PolyHedra_3D_Shader.hpp"
-//# include "PolyHedra_3D_BufferArray.hpp"
-#include "InstanceData/Simple3D/Simple3D_InstData.hpp"
+
+# include "Shader.hpp"
+# include "InstanceData/Simple3D/Data.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
 # include "Miscellaneous/EntryContainer/Binary.hpp"
@@ -23,7 +23,7 @@ struct ManagerSingle;
 class ManagerMulti
 {
 	public:
-	PolyHedra_3D_Shader					DefaultShader;
+	PolyHedra_Simple3D::Shader			DefaultShader;
 	Container::Binary<ManagerSingle*>	MultiplePolyHedra;
 
 	public:
@@ -38,7 +38,7 @@ class ManagerMulti
 	void Remove(PolyHedra * polyhedra);
 	//void Remove(unsigned int polyhedra);
 
-	EntryContainer::Entry<Simple3D_InstData> Place(PolyHedra * polyhedra, unsigned int size);
+	EntryContainer::Entry<Simple3D::Data> Place(PolyHedra * polyhedra, unsigned int size);
 	//EntryContainer::Entry<Simple3D_InstData> Place(unsigned int polyhedra, unsigned int size);
 	void Clear();
 

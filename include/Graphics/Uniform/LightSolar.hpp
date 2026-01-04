@@ -1,4 +1,3 @@
-
 #ifndef  UNI_LIGHT_SOLAR_HPP
 # define UNI_LIGHT_SOLAR_HPP
 
@@ -20,16 +19,15 @@ namespace Uniform
 class LightSolar : public Uniform::GBase<::LightSolar>
 {
 	private:
-		Uniform::LightBase	Base;
-		Uniform::Point3D	Dir;
+	Uniform::LightBase	Base;
+	Uniform::Point3D	Dir;
 
 	public:
-		LightSolar(Uniform::NameShader name_shader);
+	LightSolar(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::LightSolar val) override;
+	void Put(const ::LightSolar & obj) override;
 };
 };
 
 #endif
-

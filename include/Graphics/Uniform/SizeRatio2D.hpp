@@ -1,4 +1,3 @@
-
 #ifndef  UNI_SIZE_RATIO_2D_HPP
 # define UNI_SIZE_RATIO_2D_HPP
 
@@ -19,16 +18,15 @@ namespace Uniform
 class SizeRatio2D : public Uniform::GBase<::SizeRatio2D>
 {
 	private:
-		Uniform::Point2D Size;
-		Uniform::Point2D Ratio;
+	Uniform::Point2D Size;
+	Uniform::Point2D Ratio;
 
 	public:
-		SizeRatio2D(Uniform::NameShader name_shader);
+	SizeRatio2D(Uniform::NameShader name_shader);
 
 	public:
-		void PutData(::SizeRatio2D sr) override;
+	void Put(const ::SizeRatio2D & obj) override;
 };
 };
 
 #endif
-

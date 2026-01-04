@@ -10,10 +10,12 @@ Uniform::LightSpot::LightSpot(Uniform::NameShader name_shader) : GBase(name_shad
 	Range(name_shader.Suffix(".Range"))
 { }
 
-void Uniform::LightSpot::PutData(::LightSpot val)
+
+
+void Uniform::LightSpot::Put(const ::LightSpot & obj)
 {
-	Base.PutData(val.Base);
-	Pos.PutData(val.Pos);
-	Dir.PutData(val.Dir);
-	Range.PutData(val.Range);
+	Base.Put(obj.Base);
+	Pos.Put(obj.Pos);
+	Dir.Put(obj.Dir);
+	Range.Put(obj.Range);
 }

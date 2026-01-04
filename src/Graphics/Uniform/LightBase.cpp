@@ -8,8 +8,10 @@ Uniform::LightBase::LightBase(Uniform::NameShader name_shader) : GBase(name_shad
 	Color(name_shader.Suffix(".Color"))
 { }
 
-void Uniform::LightBase::PutData(::LightBase val)
+
+
+void Uniform::LightBase::Put(const ::LightBase & obj)
 {
-	Intensity.PutData(&val.Intensity);
-	Color.PutData(val.Color);
+	Intensity.PutData(&obj.Intensity);
+	Color.Put(obj.Color);
 }

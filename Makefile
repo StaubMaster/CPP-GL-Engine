@@ -68,18 +68,21 @@ UNIFORM := \
 	Graphics/Uniform/Base/Float1.cpp \
 	Graphics/Uniform/Base/Float2.cpp \
 	Graphics/Uniform/Base/Float3.cpp \
+	Graphics/Uniform/Base/Float3x3.cpp \
 	Graphics/Uniform/Base/UIntN.cpp \
 	Graphics/Uniform/Base/UInt1.cpp \
 \
+	Graphics/Uniform/Point2D.cpp \
 	Graphics/Uniform/Point3D.cpp \
+	Graphics/Uniform/Color.cpp \
+	Graphics/Uniform/Matrix3x3.cpp \
+	Graphics/Uniform/DepthFactors.cpp \
+\
 	Graphics/Uniform/Angle3D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
-	Graphics/Uniform/Point2D.cpp \
-	Graphics/Uniform/DepthFactors.cpp \
 	Graphics/Uniform/Range.cpp \
 	Graphics/Uniform/Depth.cpp \
 	Graphics/Uniform/LInter.cpp \
-	Graphics/Uniform/Color.cpp \
 	Graphics/Uniform/LightBase.cpp \
 	Graphics/Uniform/LightSolar.cpp \
 	Graphics/Uniform/LightSpot.cpp \
@@ -132,11 +135,11 @@ TEXTURE_SRC := $(addprefix $(DIR_SRC)/,$(TEXTURE))
 TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))
 
 INSTANCE_DATA := \
-	InstanceData/Simple3D/Simple3D_InstData.cpp \
-	InstanceData/Simple3D/Simple3D_InstBuffer.cpp \
+	InstanceData/Simple3D/Data.cpp \
+	InstanceData/Simple3D/Buffer.cpp \
 \
-	InstanceData/Physics3D/Physics3D_InstData.cpp \
-	InstanceData/Physics3D/Physics3D_InstBuffer.cpp
+	InstanceData/Physics3D/Data.cpp \
+	InstanceData/Physics3D/Buffer.cpp
 INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
 INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
 
@@ -151,13 +154,13 @@ POLYHEDRA := \
 	PolyHedra/Skin/Skin2DA.cpp \
 	PolyHedra/Skin/Skin2D_Data.cpp \
 \
-	PolyHedra/MainData/PolyHedra_MainData.cpp \
-	PolyHedra/MainData/PolyHedra_MainBuffer.cpp \
-	PolyHedra/Simple3D/PolyHedra_3D_BufferArray.cpp \
+	PolyHedra/Main/Data.cpp \
+	PolyHedra/Main/Buffer.cpp \
+	PolyHedra/Simple3D/Shader.cpp \
+	PolyHedra/Simple3D/BufferArray.cpp \
 	PolyHedra/Simple3D/PolyHedra_3D_Instances.cpp \
 	PolyHedra/Simple3D/ManagerSingle.cpp \
-	PolyHedra/Simple3D/ManagerMulti.cpp \
-	PolyHedra/Simple3D/PolyHedra_3D_Shader.cpp
+	PolyHedra/Simple3D/ManagerMulti.cpp
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
 POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))
 
