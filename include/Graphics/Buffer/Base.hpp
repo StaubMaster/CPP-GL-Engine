@@ -9,9 +9,9 @@ class Base
 {
 	private:
 	static BufferID None;
+	//	have referance to ArrayBuffer, Binding needs ArrayBuffer to be Bound
 
-	//protected:
-	public:
+	protected:
 	BufferID ID;
 
 	public:

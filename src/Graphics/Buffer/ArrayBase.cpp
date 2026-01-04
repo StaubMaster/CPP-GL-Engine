@@ -55,7 +55,7 @@ bool BufferArray::Base::Exists() const { return (ID != None); }
 bool BufferArray::Base::IsBound() const { return (Bound() == ID); }
 void BufferArray::Base::Bind()
 {
-	if (!IsBound())
+	if (Exists() && !IsBound())
 	{
 		glBindVertexArray(ID);
 	}

@@ -2,6 +2,7 @@
 # define POLYHEDRA_SIMPLE3D_BUFFER_ARRAY_HPP
 
 # include "Graphics/Buffer/ArrayBase.hpp"
+# include "Graphics/Texture/Array2D.hpp"
 # include "PolyHedra/Main/Buffer.hpp"
 # include "InstanceData/Simple3D/Buffer.hpp"
 
@@ -14,6 +15,7 @@ class BufferArray : public ::BufferArray::Base
 	public:
 	PolyHedra_Main::Buffer	Main;
 	Simple3D::Buffer		Inst;
+	Texture::Array2D		Texture;
 	unsigned int			DrawMode;
 
 	public:

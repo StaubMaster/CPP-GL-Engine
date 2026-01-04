@@ -9,6 +9,7 @@ PolyHedra_Simple3D::BufferArray::BufferArray() :
 	::BufferArray::Base(),
 	Main(0, 1, 2),
 	Inst(3, 4),
+	Texture(),
 	DrawMode(GL_TRIANGLES)
 {
 	Buffers.Insert(&Main);
@@ -21,6 +22,7 @@ PolyHedra_Simple3D::BufferArray::BufferArray(const BufferArray & other) :
 	::BufferArray::Base(),
 	Main(other.Main),
 	Inst(other.Inst),
+	Texture(other.Texture),
 	DrawMode(other.DrawMode)
 {
 	Buffers.Insert(&Main);
@@ -30,6 +32,7 @@ PolyHedra_Simple3D::BufferArray & PolyHedra_Simple3D::BufferArray::operator=(con
 {
 	Main = other.Main;
 	Inst = other.Inst;
+	Texture = other.Texture;
 	DrawMode = other.DrawMode;
 	return *this;
 }
@@ -38,6 +41,7 @@ PolyHedra_Simple3D::BufferArray & PolyHedra_Simple3D::BufferArray::operator=(con
 
 void PolyHedra_Simple3D::BufferArray::Draw()
 {
+	Texture.Bind();
 	Bind();
 	glDrawArraysInstanced(DrawMode, 0, Main.DrawCount, Inst.DrawCount);
 }

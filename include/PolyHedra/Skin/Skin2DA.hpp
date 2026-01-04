@@ -3,6 +3,7 @@
 
 # include "PolyHedra/Skin/SkinGenericBase.hpp"
 # include "PolyHedra/Skin/Skin2D_Data.hpp"
+# include "Graphics/Texture/Array2D.hpp"
 
 //# include "Miscellaneous/Container/Dynamic.hpp"
 
@@ -12,22 +13,24 @@
 class Skin2DA : public SkinGenericBase<Skin2DCorner, Skin2DFaceCorner, Skin2DFace>
 {
 	public:
-		unsigned int W;
-		unsigned int H;
+	unsigned int W;
+	unsigned int H;
 
 	public:
-		Skin2DA();
-		~Skin2DA();
-	
+	Skin2DA();
+	~Skin2DA();
+
+	private:
+	Texture::Base * ToTexture() const override;
 	public:
-		Texture::Base * ToTexture() const override;
+	void ToTexture(Texture::Array2D & tex) const;
 
 	public:
-		void Parse(const ParsingCommand & cmd) override;
-		void Parse_W(const ParsingCommand & cmd);
-		void Parse_H(const ParsingCommand & cmd);
-		void Parse_File(const ParsingCommand & cmd);
-		void Parse_t(const ParsingCommand & cmd);
+	void Parse(const ParsingCommand & cmd) override;
+	void Parse_W(const ParsingCommand & cmd);
+	void Parse_H(const ParsingCommand & cmd);
+	void Parse_File(const ParsingCommand & cmd);
+	void Parse_t(const ParsingCommand & cmd);
 };
 
 #endif

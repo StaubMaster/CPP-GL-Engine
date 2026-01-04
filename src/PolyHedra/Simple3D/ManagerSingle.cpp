@@ -1,13 +1,15 @@
 #include "PolyHedra/Simple3D/ManagerSingle.hpp"
 #include "PolyHedra/PolyHedra.hpp"
+
 #include "PolyHedra/Skin/SkinBase.hpp"
+#include "PolyHedra/Skin/Skin2DA.hpp"
 #include "Graphics/Texture/Base.hpp"
+#include "Graphics/Texture/Array2D.hpp"
 
 
 
 PolyHedra_Simple3D::ManagerSingle::ManagerSingle() :
 	_PolyHedra(NULL),
-	_Texture(NULL),
 	_Buffer(),
 	_Instances()
 { }
@@ -19,17 +21,15 @@ PolyHedra_Simple3D::ManagerSingle::~ManagerSingle()
 void PolyHedra_Simple3D::ManagerSingle::Dispose()
 {
 	_Buffer.Delete();
+	_Buffer.Texture.Delete();
 	_Instances.Dispose();
 
 	delete _PolyHedra;
-	delete _Texture;
 	_PolyHedra = NULL;
-	_Texture = NULL;
 }
 void PolyHedra_Simple3D::ManagerSingle::Change(PolyHedra * polyhedra)
 {
 	delete _PolyHedra;
-	delete _Texture;
 	_Instances.Dispose();
 	_Buffer.Create();
 
@@ -41,8 +41,16 @@ void PolyHedra_Simple3D::ManagerSingle::Change(PolyHedra * polyhedra)
 		data.Dispose();
 	}
 	if (_PolyHedra -> Skin != NULL)
-	{ _Texture = _PolyHedra -> Skin -> ToTexture(); }
-	else { _Texture = NULL; }
+	{
+		//_Texture = _PolyHedra -> Skin -> ToTexture();
+		Skin2DA * skin = (Skin2DA*)(_PolyHedra -> Skin);
+		skin -> ToTexture(_Buffer.Texture);
+	}
+	else
+	{
+		//_Texture = NULL;
+		_Buffer.Texture.Delete();
+	}
 }
 
 void PolyHedra_Simple3D::ManagerSingle::Draw()
@@ -53,11 +61,9 @@ void PolyHedra_Simple3D::ManagerSingle::Draw()
 		_Buffer.Inst.Change(_Instances);
 		_Instances.Changed = false;
 	}
-	if (_Texture != NULL)
+	/*if (_Texture != NULL)
 	{
 		_Texture -> Bind();
-	}
+	}*/
 	_Buffer.Draw();
 }
-
-

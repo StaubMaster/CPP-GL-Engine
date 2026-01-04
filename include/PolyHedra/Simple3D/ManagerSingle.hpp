@@ -21,7 +21,6 @@ namespace PolyHedra_Simple3D
 	struct ManagerSingle
 	{
 		PolyHedra *_PolyHedra;
-		Texture::Base *_Texture;
 
 		PolyHedra_Simple3D::BufferArray _Buffer;
 		EntryContainer::Binary<Simple3D::Data> _Instances;

@@ -23,9 +23,14 @@ Skin2DA::~Skin2DA()
 Texture::Base * Skin2DA::ToTexture() const
 {
 	Texture::Array2D * tex = new Texture::Array2D();
-	//tex -> Create();
+	tex -> Create();
 	tex -> Assign(W, H, Images);
 	return tex;
+}
+void Skin2DA::ToTexture(Texture::Array2D & tex) const
+{
+	tex.Create();
+	tex.Assign(W, H, Images);
 }
 
 

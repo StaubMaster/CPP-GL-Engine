@@ -36,11 +36,6 @@ class Array2D : public Base
 
 
 
-	private:
-	void InitStuff();
-	void Init3D(unsigned int w, unsigned int h, unsigned int l, const void * data);
-	void Sub3D(unsigned int w, unsigned int h, unsigned int l, const Image & img);
-
 	public:
 	void Assign(const Image * img);
 	void Assign(const FileContext & file);

@@ -79,7 +79,7 @@ Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 bool Shader::Base::IsBound() const { return (Bound() == ID); }
 void Shader::Base::Bind()
 {
-	if (!IsBound())
+	if (Exists() && !IsBound())
 	{
 		glUseProgram(ID);
 		for (unsigned int i = 0; i < Uniforms.Count(); i++)
