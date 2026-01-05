@@ -10,9 +10,12 @@ namespace Uniform
 	class Float1;
 	class Float2;
 	class Float3;
+	class Float3x3;
 
 	class UIntN;
 	class UInt1;
+
+	class Matrix3x3;
 
 	class DepthFactors;
 	class Range;
