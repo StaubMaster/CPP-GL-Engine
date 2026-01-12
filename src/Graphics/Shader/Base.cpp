@@ -27,16 +27,20 @@ void Shader::Base::LogInfo(bool self) const
 		Debug::Log << Debug::Tabs << "Shader Info\n";
 		Debug::Log << Debug::TabInc;
 	}
-	//Debug::Log << Debug::Tabs << "Type " << typeid(*this).name() << '\n';
 	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
+
 	Debug::Log << Debug::Tabs << "Code[" << Code.Count() << "]\n";
+	Debug::Log << Debug::TabInc;
+	for (unsigned int i = 0; i < Code.Count(); i++)
+	{ Code[i].LogInfo(false); }
+	Debug::Log << Debug::TabDec;
+
 	Debug::Log << Debug::Tabs << "Uniforms[" << Uniforms.Count() << "]\n";
-	//Debug::Log << Debug::Tabs << "[\n";
 	Debug::Log << Debug::TabInc;
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{ Uniforms[i] -> LogInfo(false); }
 	Debug::Log << Debug::TabDec;
-	//Debug::Log << Debug::Tabs << "]\n";
+
 	if (self)
 	{
 		Debug::Log << Debug::TabDec;

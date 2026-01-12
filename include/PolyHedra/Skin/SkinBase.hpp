@@ -3,7 +3,9 @@
 
 # include "Miscellaneous/Container/Binary.hpp"
 
-# include "Parsing/ParsingCommand.hpp"
+# include "FileParsing/ParsingCommand.hpp"
+
+# include "Image.hpp"
 
 namespace YMT
 {
@@ -15,15 +17,14 @@ namespace Texture
 	class Base;
 };
 
-class Image;
-class FileContext;
+class FileInfo;
 class LineCommand;
 
 class SkinBase
 {
 	public:
-		Container::Binary<Image *> Images;
-		const FileContext * File;
+		Container::Binary<Image> Images;
+		const FileInfo * File;
 
 	public:
 		SkinBase();
@@ -38,7 +39,7 @@ class SkinBase
 		struct ParsingEnvironmentData : public ParsingCommand::EnvironmentData
 		{
 			SkinBase * Skin;
-			ParsingEnvironmentData(const FileContext & file);
+			ParsingEnvironmentData(const FileInfo & file);
 			void Parse(const ParsingCommand & cmd) override;
 
 			void Parse_Type(const ParsingCommand & cmd);
@@ -47,7 +48,7 @@ class SkinBase
 	public:
 		virtual void Parse(const ParsingCommand & cmd) = 0;
 	public:
-		static SkinBase * Load(const FileContext & file);
+		static SkinBase * Load(const FileInfo & file);
 };
 
 #endif

@@ -1,8 +1,8 @@
 #include "Waveform/OBJ_3D_Shader.hpp"
 #include "Graphics/Shader/Code.hpp"
 
-#include "DirectoryContext.hpp"
-#include "FileContext.hpp"
+#include "DirectoryInfo.hpp"
+#include "FileInfo.hpp"
 
 #include <iostream>
 
@@ -10,7 +10,7 @@
 
 
 
-OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryContext & dir)
+OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryInfo & dir)
 	: Shader::Base(
 		Container::Pointer<Shader::Code>(2, (Shader::Code[])
 		{

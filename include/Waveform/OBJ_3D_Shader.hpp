@@ -5,7 +5,7 @@
 # include "Graphics/Shader/Base.hpp"
 # include "Graphics/UniformsInclude.hpp"
 
-class DirectoryContext;
+class DirectoryInfo;
 
 class OBJ_3D_Shader : public Shader::Base
 {
@@ -17,7 +17,7 @@ class OBJ_3D_Shader : public Shader::Base
 		Uniform::LInter			ShowLightFactor;
 
 	public:
-		OBJ_3D_Shader(const DirectoryContext & dir);
+		OBJ_3D_Shader(const DirectoryInfo & dir);
 		~OBJ_3D_Shader();
 };
 

@@ -1,6 +1,6 @@
 #include "Debug.hpp"
-#include "FileContext.hpp"
-#include "DirectoryContext.hpp"
+#include "FileInfo.hpp"
+#include "DirectoryInfo.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -60,7 +60,7 @@ std::ostream & Debug::Console = std::cout;
 
 
 
-void Debug::NewFileInDir(const DirectoryContext & dir)
+void Debug::NewFileInDir(const DirectoryInfo & dir)
 {
 	if (Debug::LogFile.is_open())
 	{
@@ -68,7 +68,7 @@ void Debug::NewFileInDir(const DirectoryContext & dir)
 	}
 	Debug::Log = std::ostringstream();
 
-	FileContext file(dir.File(TimeStampFileName() + ".log"));
+	FileInfo file(dir.File((TimeStampFileName() + ".log").c_str()));
 
 	Debug::LogFile.open(file.Path.ToString(), std::ofstream::out | std::ofstream::trunc); //std::ofstream::app ?
 	Debug::LogFile << "New Log File " << TimeStamp() << "\n";

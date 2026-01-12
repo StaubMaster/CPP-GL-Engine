@@ -1,11 +1,30 @@
 #include "Graphics/Shader/Code.hpp"
-#include "FileContext.hpp"
+#include "FileInfo.hpp"
 
+#include "OpenGL/openGL.h"
 #include "Debug.hpp"
 #include <sstream>
 
-#include "OpenGL/openGL.h"
-#include <iostream>
+
+
+void Shader::Code::LogInfo(bool self) const
+{
+	if (self)
+	{
+		Debug::Log << Debug::Tabs << "Shader Info\n";
+		Debug::Log << Debug::TabInc;
+	}
+	//Debug::Log << Debug::Tabs << "Type " << typeid(*this).name() << '\n';
+	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
+	Debug::Log << Debug::Tabs << "Type " << Type << '\n';
+	Debug::Log << Debug::Tabs << "File " << File.Path.ToString() << '\n';
+	//Debug::Log << Debug::Tabs << "]\n";
+	if (self)
+	{
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
+}
 
 
 
@@ -13,9 +32,9 @@ Shader::Code::Code() :
 	ID(0),
 	Type(0)
 { }
-Shader::Code::Code(const FileContext & file) :
+Shader::Code::Code(const FileInfo & file) :
 	ID(0),
-	Type(ShaderTypeFromExtension(file.Extension())),
+	Type(ShaderTypeFromExtension(file)),
 	File(file)
 { }
 Shader::Code::~Code()
@@ -126,10 +145,10 @@ const char * Shader::Code::ECompileLog::what() const throw()
 
 
 
-GLenum Shader::Code::ShaderTypeFromExtension(const FileContext & file)
+ShaderType Shader::Code::ShaderTypeFromExtension(const FileInfo & file)
 {
 	std::string ext = file.Extension();
-	GLenum type;
+	ShaderType type;
 	if      (ext == ".glsg") { throw EInvalidFileExtention(file.Path.ToString()); }
 	else if (ext == ".vert") { type = GL_VERTEX_SHADER; }
 	else if (ext == ".geom") { type = GL_GEOMETRY_SHADER; }

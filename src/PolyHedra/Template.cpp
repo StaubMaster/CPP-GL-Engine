@@ -79,3 +79,63 @@ void PolyHedra::Template::Insert_Face4(FaceCorner corn0, FaceCorner corn1, FaceC
 }
 
 
+
+
+
+void PolyHedra::Template::Belt(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure)
+{
+	for (unsigned int i = 1; i < len; i++)
+	{
+		if (!direction)
+		{
+			Insert_Face3(idx0[i - 1], idx0[i - 0], idx1[i - 1]);
+			Insert_Face3(idx1[i - 1], idx0[i - 0], idx1[i - 0]);
+		}
+		else
+		{
+			Insert_Face3(idx1[i - 1], idx0[i - 0], idx0[i - 1]);
+			Insert_Face3(idx1[i - 0], idx0[i - 0], idx1[i - 1]);
+		}
+	}
+
+	if (closure)
+	{
+		if (!direction)
+		{
+			Insert_Face3(idx0[len - 1], idx0[0], idx1[len - 1]);
+			Insert_Face3(idx1[len - 1], idx0[0], idx1[0]);
+		}
+		else
+		{
+			Insert_Face3(idx0[0], idx0[len -1], idx1[len - 1]);
+			Insert_Face3(idx0[0], idx1[len -1], idx1[0]);
+		}
+	}
+}
+//void PolyHedra::Template::Band(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure)
+void PolyHedra::Template::Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure)
+{
+	for (unsigned int i = 1; i < len; i++)
+	{
+		if (!direction)
+		{
+			Insert_Face3(middle, blade[i - 1], blade[i - 0]);
+		}
+		else
+		{
+			Insert_Face3(middle, blade[i - 0], blade[i - 1]);
+		}
+	}
+
+	if (closure)
+	{
+		if (!direction)
+		{
+			Insert_Face3(middle, blade[len - 1], blade[0]);
+		}
+		else
+		{
+			Insert_Face3(middle, blade[0], blade[len - 1]);
+		}
+	}
+}

@@ -15,7 +15,7 @@ I think there are GL functions for getting this informations
 make the struct have Wrapper funcitons to get/set or is/make that stuff
 */
 
-class FileContext;
+class FileInfo;
 class Image;
 
 namespace Texture
@@ -37,10 +37,10 @@ class Array2D : public Base
 
 
 	public:
-	void Assign(const Image * img);
-	void Assign(const FileContext & file);
-	void Assign(unsigned int w, unsigned int h, const Container::Member<Image*> & imgs);
-	void Assign(unsigned int w, unsigned int h, const Container::Member<FileContext> & files);
+	void Assign(const Image & img);
+	void Assign(const FileInfo & file);
+	void Assign(unsigned int w, unsigned int h, const Container::Member<Image> & imgs);
+	void Assign(unsigned int w, unsigned int h, const Container::Member<FileInfo> & files);
 };
 };
 

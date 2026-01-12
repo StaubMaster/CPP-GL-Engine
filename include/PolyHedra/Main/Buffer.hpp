@@ -4,7 +4,6 @@
 # include "Graphics/Buffer/Attribute.hpp"
 
 # include "Graphics/Attribute/Point3D.hpp"
-# include "Graphics/Attribute/Point2D.hpp"
 
 namespace PolyHedra_Main
 {
@@ -13,7 +12,7 @@ class Buffer : public ::Buffer::Attribute
 	private:
 	::Attribute::Point3D	Position;
 	::Attribute::Point3D	Normal;
-	::Attribute::Point2D	Texture;
+	::Attribute::Point3D	Texture;
 
 	public:
 	Buffer(

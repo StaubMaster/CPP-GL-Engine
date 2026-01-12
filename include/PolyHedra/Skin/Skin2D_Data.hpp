@@ -1,6 +1,7 @@
-#ifndef  TEXTURE_2D_FACE_HPP
-# define TEXTURE_2D_FACE_HPP
+#ifndef  SKIN_2D_DATA_HPP
+# define SKIN_2D_DATA_HPP
 
+# include "DataStruct/Point3D.hpp"
 # include "DataStruct/Point2D.hpp"
 
 struct Skin2DCorner
@@ -10,10 +11,12 @@ struct Skin2DCorner
 
 struct Skin2DFaceCorner
 {
-	Point2D	Tex;
+	Point3D	Tex;
 
 	Skin2DFaceCorner();
 	Skin2DFaceCorner(Point2D tex);
+	Skin2DFaceCorner(Point3D tex);
+	Skin2DFaceCorner(float tex_x, float tex_y, float tex_z);
 };
 
 struct Skin2DFace

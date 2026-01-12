@@ -7,9 +7,12 @@
 #include "PolyHedra/Skin/Skin2DA.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
-#include "FileContext.hpp"
-#include "FilePath.hpp"
-#include "Parsing/LineCommand.hpp"
+//#include "FileInfo.hpp"
+//#include "FilePath.hpp"
+//#include "FileParsing/LineCommand.hpp"
+#include "FileParsing/Text/TextCommand.hpp"
+#include "FileParsing/Text/TextCommandStream.hpp"
+#include "FileParsing/Text/Exceptions.hpp"
 
 #include "DataStruct/Point3D.hpp"
 #include "DataStruct/Angle3D.hpp"
@@ -40,8 +43,8 @@
 
 
 
-PolyHedra::ParsingData::ParsingData(const FileContext & file)
-: ParsingCommand::EnvironmentData(file),
+PolyHedra::ParsingData::ParsingData(const FileInfo & file) :
+	File(file),
 	PH(NULL),
 	Data(NULL),
 	CornerOffset(0),
@@ -51,7 +54,7 @@ PolyHedra::ParsingData::~ParsingData()
 {
 	delete Data;
 }
-void PolyHedra::ParsingData::Parse(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 {
 	std::string name = cmd.Name();
 	if (name == "")				{ /*std::cout << "empty\n";*/ }
@@ -89,22 +92,22 @@ void PolyHedra::ParsingData::Parse(const ParsingCommand & cmd)
 
 	else						{ Debug::Log << "unknown: " << cmd << Debug::Done; }
 }
-void PolyHedra::ParsingData::Parse_Type(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse_Type(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(1))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(1)); }
-	if (cmd.ToString(0) != "PolyHedra") { throw ParsingCommand::ExceptionInvalidArg(cmd, 0); }
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+	if (cmd.ToString(0) != "PolyHedra") { throw InvalidCommandArgument(cmd, 0); }
 }
-void PolyHedra::ParsingData::Parse_Format(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse_Format(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(1))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(1)); }
-	if (cmd.ToString(0) != "PH_2025_10_27") { throw ParsingCommand::ExceptionInvalidArg(cmd, 0); }
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+	if (cmd.ToString(0) != "PH_2025_10_27") { throw InvalidCommandArgument(cmd, 0); }
 }
-void PolyHedra::ParsingData::Parse_Skin(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse_Skin(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(1))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(1)); }
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
 	//Debug::Log << cmd << Debug::Done;
 
-	FileContext file(File.Directory() + "/" + cmd.ToString(0));
+	FileInfo file((File.DirectoryString() + "/" + cmd.ToString(0)).c_str());
 	if (PH -> Skin != NULL)
 	{
 		std::cout << cmd.Name() << ": " << "Skin already given" << "\n";
@@ -116,9 +119,9 @@ void PolyHedra::ParsingData::Parse_Skin(const ParsingCommand & cmd)
 	PH -> Skin = SkinBase::Load(file);
 }
 
-void PolyHedra::ParsingData::Parse_Corner(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckRange(3, 3))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckRange(3, 3)); }
+	if (!(cmd.Count() == 3)) { throw InvalidCommandArgumentCount(cmd, "n == 3"); }
 	//Debug::Log << cmd << Debug::Done;
 
 	Point3D c;
@@ -128,9 +131,9 @@ void PolyHedra::ParsingData::Parse_Corner(const ParsingCommand & cmd)
 	//std::cout << "c: " << c << "\n";
 	Data -> Insert_Corn(Corner(c));
 }
-void PolyHedra::ParsingData::Parse_Face(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse_Face(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckRange(3, 4))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckRange(3, 4)); }
+	if (!(cmd.Count() >= 3 && cmd.Count() <= 4)) { throw InvalidCommandArgumentCount(cmd, "n >= 3 && n <= 4"); }
 	//Debug::Log << cmd << Debug::Done;
 	//std::cout << "COff: " << CornerOffset << "\n";
 
@@ -155,9 +158,9 @@ void PolyHedra::ParsingData::Parse_Face(const ParsingCommand & cmd)
 	}
 }
 
-void PolyHedra::ParsingData::Parse_Offset(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse_Offset(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(2))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(2)); }
+	if (!(cmd.Count() == 2)) { throw InvalidCommandArgumentCount(cmd, "n == 2"); }
 	//Debug::Log << cmd << Debug::Done;
 
 	{
@@ -176,10 +179,10 @@ void PolyHedra::ParsingData::Parse_Offset(const ParsingCommand & cmd)
 		{ FaceOffset = cmd.ToUInt32(1); }
 	}
 }
-void PolyHedra::ParsingData::Parse_Belt(const ParsingCommand & cmd, bool direction, bool closure)
+void PolyHedra::ParsingData::Parse_Belt(const TextCommand & cmd, bool direction, bool closure)
 {
 	unsigned int len = cmd.Count() / 2;
-	if (!cmd.CheckCount(CountCheckModulo(2, 0)) || len < 2) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckModulo(2, 0)); }
+	if (!((cmd.Count() % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "(n % 2) == 2"); }
 	//Debug::Log << cmd << Debug::Done;
 
 	unsigned int idx0[len];
@@ -232,16 +235,16 @@ void PolyHedra::ParsingData::Parse_Belt(const ParsingCommand & cmd, bool directi
 		}
 	}
 }
-void PolyHedra::ParsingData::Parse_Band(const ParsingCommand & cmd, bool direction, bool closure)
+void PolyHedra::ParsingData::Parse_Band(const TextCommand & cmd, bool direction, bool closure)
 {
 	(void)cmd;
 	(void)direction;
 	(void)closure;
 }
-void PolyHedra::ParsingData::Parse_Fan(const ParsingCommand & cmd, bool direction, bool closure)
+void PolyHedra::ParsingData::Parse_Fan(const TextCommand & cmd, bool direction, bool closure)
 {
 	unsigned int len = cmd.Count() - 1;
-	if (!cmd.CheckCount(CountCheckRange(2, 255))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckRange(2, 255)); }
+	if (!(cmd.Count() >= 2 && cmd.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd, "n >= 2 && n <= 255"); }
 	//Debug::Log << cmd << Debug::Done;
 
 	unsigned int middle;
@@ -287,9 +290,9 @@ void PolyHedra::ParsingData::Parse_Fan(const ParsingCommand & cmd, bool directio
 		}
 	}
 }
-void PolyHedra::ParsingData::Parse_CircleOLD(const ParsingCommand & cmd)
+void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(10))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(10)); }
+	if (!(cmd.Count() == 10)) { throw InvalidCommandArgumentCount(cmd, "n == 10"); }
 	//Debug::Log << cmd << Debug::Done;
 
 	int step_num = cmd.ToInt32(0);
@@ -325,9 +328,9 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const ParsingCommand & cmd)
 		//std::cout << p << "\n";
 	}
 }
-void PolyHedra::ParsingData::Parse_Circle(const ParsingCommand & cmd, bool direction)
+void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool direction)
 {
-	if (!cmd.CheckCount(CountCheckEqual(11))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(11)); }
+	if (!(cmd.Count() == 11)) { throw InvalidCommandArgumentCount(cmd, "n == 11"); }
 	//Debug::Log << cmd << Debug::Done;
 
 	float step = (TAU / cmd.ToInt32(0));
@@ -366,14 +369,20 @@ void PolyHedra::ParsingData::Parse_Circle(const ParsingCommand & cmd, bool direc
 	}
 }
 
-PolyHedra * PolyHedra::Load(const FileContext & file)
+PolyHedra * PolyHedra::Load(const FileInfo & file)
 {
 	Debug::Log << "Loading PolyHedra File " << file.Name() << " ..." << Debug::Done;
 	ParsingData data(file);
 	data.PH = new PolyHedra();
 	data.Data = new PolyHedra::Template(*data.PH);
 
-	ParsingCommand::SplitFileIntoCommands(data);
+	TextCommandStream stream(file.LoadText());
+	TextCommand cmd;
+	while (stream.Continue(cmd))
+	{
+		data.Parse(cmd);
+	}
+	//ParsingCommand::SplitFileIntoCommands(data);
 
 	if (data.Data != NULL)
 	{

@@ -7,4 +7,4 @@ but an absolute path also cant be used
 
 a macro define can be set from the Makefile
 in the Engine Makefile, get the Makefile directory and set the macro based on that
-then use that to set a DirectoryContext at the beginning of the main
+then use that to set a DirectoryInfo at the beginning of the main

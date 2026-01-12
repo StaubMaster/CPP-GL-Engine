@@ -6,15 +6,15 @@
 //# include <fstream>
 //# include "OpenGL/openGL.h"
 # include "Miscellaneous/Container/Base.hpp"
-# include "FileContext.hpp"
+# include "FileInfo.hpp"
 # include <string>
 
 
 
-typedef unsigned int GLenum;
 typedef unsigned int ShaderID;
+typedef unsigned int ShaderType;
 
-class FileContext;
+class FileInfo;
 
 namespace Shader
 {
@@ -22,14 +22,17 @@ class Code
 {
 	private:
 	ShaderID ID;
-	GLenum Type;
-	FileContext File;
+	ShaderType Type;
+	FileInfo File;
+
+	public:
+	void LogInfo(bool self = true) const;
 
 
 
 	public:
 	Code();
-	Code(const FileContext & file);
+	Code(const FileInfo & file);
 	~Code();
 
 	Code(const Shader::Code & other);
@@ -67,7 +70,7 @@ class Code
 	};
 
 	private:
-	static GLenum ShaderTypeFromExtension(const FileContext & file);
+	static ShaderType ShaderTypeFromExtension(const FileInfo & file);
 	class EInvalidFileExtention : std::exception
 	{
 		private:

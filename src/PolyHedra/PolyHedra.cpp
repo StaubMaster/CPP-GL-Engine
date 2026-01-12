@@ -10,9 +10,12 @@
 #include "DataStruct/AxisBox3D.hpp"
 
 #include "Graphics/Texture/Generate.hpp"
-#include "Format/Image.hpp"
+#include "Image.hpp"
 
-#include "FileContext.hpp"
+#include "FileParsing/Text/TextCommand.hpp"
+#include "FileParsing/Text/TextCommandStream.hpp"
+
+//#include "FileInfo.hpp"
 
 #include <sstream>
 
@@ -23,14 +26,13 @@
 
 PolyHedra::PolyHedra() :
 	Corners(), Faces(),
-	File(NULL),
+	File(),
 	Skin(NULL)
 {
 	UseCornerNormals = false;
 }
 PolyHedra::~PolyHedra()
 {
-	delete File;
 	delete Skin;
 }
 
@@ -38,10 +40,33 @@ PolyHedra::~PolyHedra()
 
 
 
+std::string PolyHedra::ToInfo() const
+{
+	std::ostringstream ss;
+
+	ss << "PolyHedra Info";
+	ss << "\n" << "Corner Count: " << Corners.Count();
+	ss << "\n" << "Face Count: " << Faces.Count();
+
+	return ss.str();
+}
+
+AxisBox3D	PolyHedra::CalcBound() const
+{
+	AxisBox3D box;
+	for (unsigned int i = 0; i < Corners.Count(); i++)
+	{
+		box.Consider(Corners[i].Position);
+	}
+	return box;
+}
 
 
 
 
+
+#include <iostream>
+#include "DataShow.hpp"
 Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 {
 	Container::Pointer<PolyHedra_Main::Data> data(Faces.Count() * 3);
@@ -95,7 +120,7 @@ Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 	{
 		for (unsigned int i = 0; i < data.Count(); i++)
 		{
-			data[i].Texture = Point2D();
+			data[i].Texture = Point3D();
 		}
 	}
 	else
@@ -116,25 +141,4 @@ Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 	//{ std::cout << data[i].Position << " : " << data[i].Normal << " : " << data[i].Texture << '\n'; }
 
 	return data;
-}
-
-std::string PolyHedra::ToInfo() const
-{
-	std::ostringstream ss;
-
-	ss << "PolyHedra Info";
-	ss << "\n" << "Corner Count: " << Corners.Count();
-	ss << "\n" << "Face Count: " << Faces.Count();
-
-	return ss.str();
-}
-
-AxisBox3D	PolyHedra::CalcBound() const
-{
-	AxisBox3D box;
-	for (unsigned int i = 0; i < Corners.Count(); i++)
-	{
-		box.Consider(Corners[i].Position);
-	}
-	return box;
 }

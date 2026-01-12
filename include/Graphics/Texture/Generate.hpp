@@ -9,12 +9,12 @@ namespace Texture
 {
 namespace Generate
 {
-	Image * NoSkin();
+	Image NoSkin();
 
-	Image * Orientation2D();
-	Image * Orientation3D();
+	Image Orientation2D();
+	Image Orientation3D();
 
-	Image * GradiantX(Color col0, Color col1, unsigned int sections);
+	Image GradiantX(Color col0, Color col1, unsigned int sections);
 };
 };
 

@@ -1,8 +1,8 @@
 #include "PolyHedra/Skin/SkinBase.hpp"
 #include "PolyHedra/Skin/Skin2DA.hpp"
 #include "Graphics/Texture/Base.hpp"
-#include "Format/Image.hpp"
-#include "Parsing/LineCommand.hpp"
+#include "Image.hpp"
+#include "FileParsing/LineCommand.hpp"
 
 
 
@@ -14,7 +14,7 @@ SkinBase::~SkinBase()
 {
 	for (unsigned int i = 0; i < Images.Count(); i++)
 	{
-		delete Images[i];
+		Images[i].Dispose();
 	}
 }
 
@@ -22,7 +22,7 @@ SkinBase::~SkinBase()
 
 
 
-SkinBase::ParsingEnvironmentData::ParsingEnvironmentData(const FileContext & file) :
+SkinBase::ParsingEnvironmentData::ParsingEnvironmentData(const FileInfo & file) :
 	ParsingCommand::EnvironmentData(file), Skin(NULL)
 { }
 void SkinBase::ParsingEnvironmentData::Parse(const ParsingCommand & cmd)
@@ -51,7 +51,7 @@ void SkinBase::ParsingEnvironmentData::Parse_Format(const ParsingCommand & cmd)
 	if (cmd.ToString(0) != "S_2025_10_27") { throw ParsingCommand::ExceptionInvalidArg(cmd, 0); }
 }
 
-SkinBase * SkinBase::Load(const FileContext & file)
+SkinBase * SkinBase::Load(const FileInfo & file)
 {
 	ParsingEnvironmentData data(file);
 	ParsingCommand::SplitFileIntoCommands(data);

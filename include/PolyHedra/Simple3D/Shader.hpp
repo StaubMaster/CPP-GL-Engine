@@ -4,7 +4,7 @@
 # include "Graphics/Shader/Base.hpp"
 # include "Graphics/UniformsInclude.hpp"
 
-class DirectoryContext;
+class DirectoryInfo;
 
 namespace PolyHedra_Simple3D
 {
@@ -18,7 +18,7 @@ class Shader : public ::Shader::Base
 
 	public:
 	Shader();
-	Shader(const DirectoryContext & dir);
+	Shader(const DirectoryInfo & dir);
 	~Shader();
 };
 };

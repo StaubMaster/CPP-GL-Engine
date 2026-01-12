@@ -16,7 +16,7 @@
 struct OBJ_MainData;
 
 class LineCommand;
-class FileContext;
+class FileInfo;
 
 //class MTL;
 
@@ -81,7 +81,7 @@ class OBJ
 		void Parse(const LineCommand & cmd);
 
 	public:
-		static OBJ * Load(const FileContext & file);
+		static OBJ * Load(const FileInfo & file);
 
 	public:
 		AxisBox3D ToAxisBox();

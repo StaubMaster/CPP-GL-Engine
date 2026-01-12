@@ -169,10 +169,12 @@ void Texture::Base::DefaultParams()
 
 void Texture::Base::Full3D(Undex3D size, const void * data)
 {
+	//std::cout << "Full3D " << size << '\n';
 	glTexImage3D(Type, 0, GL_RGBA8, size.X, size.Y, size.Z, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
 }
 void Texture::Base::Part3D(Undex3D size, Undex3D offset, const void * data)
 {
+	//std::cout << "Part3D " << size << " | " << offset << '\n';
 	glTexSubImage3D(Type, 0, offset.X, offset.Y, offset.Z, size.X, size.Y, size.Z, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
 }
 

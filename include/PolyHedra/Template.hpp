@@ -17,6 +17,10 @@ struct PolyHedra::Template
 	void Insert_Corn(Corner corn);
 	void Insert_Face3(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2);
 	void Insert_Face4(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2, FaceCorner corn3);
+
+	void Belt(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);
+	void Band(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);
+	void Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure);
 };
 
 #endif

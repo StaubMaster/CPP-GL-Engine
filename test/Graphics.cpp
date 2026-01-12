@@ -2,8 +2,8 @@
 #include "DataShow.hpp"
 #include <iostream>
 
-#include "FileContext.hpp"
-#include "DirectoryContext.hpp"
+#include "FileInfo.hpp"
+#include "DirectoryInfo.hpp"
 
 #include "Miscellaneous/Container/Base.hpp"
 #include "Miscellaneous/Container/Dynamic.hpp"
@@ -20,7 +20,7 @@
 int main()
 {
 	//	Directory and Files should be able to create subdirectorys if it needs them
-	Debug::NewFileInDir(DirectoryContext("/logs"));
+	Debug::NewFileInDir(DirectoryInfo("/logs"));
 	{
 		//	put a wrapper for this in OpenGL Namespace ?
 		//	throw exception on error
@@ -33,7 +33,7 @@ int main()
 		Window * win = new Window(480, 360);
 
 		{
-			DirectoryContext shader_dir("../media/Shaders/");
+			DirectoryInfo shader_dir("../media/Shaders/");
 			Shader::Base shader(
 				Container::Base<Shader::Code>(
 				(Shader::Code[])

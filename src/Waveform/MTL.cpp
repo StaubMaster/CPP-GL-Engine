@@ -2,8 +2,8 @@
 
 #include "DataShow.hpp"
 
-#include "FileContext.hpp"
-#include "Parsing/LineCommand.hpp"
+#include "FileInfo.hpp"
+#include "FileParsing/LineCommand.hpp"
 
 #include <string>
 
@@ -163,7 +163,7 @@ void MTL::Parse(const LineCommand & cmd)
 
 
 
-MTL * MTL::Load(const FileContext & file)
+MTL * MTL::Load(const FileInfo & file)
 {
 	if (file.Exists())
 	{

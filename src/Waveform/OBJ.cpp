@@ -3,8 +3,8 @@
 
 #include "Waveform/MTL.hpp"
 
-#include "FileContext.hpp"
-#include "Parsing/LineCommand.hpp"
+#include "FileInfo.hpp"
+#include "FileParsing/LineCommand.hpp"
 
 #include "DataStruct/Point2D.hpp"
 #include "DataStruct/AxisBox3D.hpp"
@@ -287,7 +287,7 @@ void OBJ::Parse_f(const LineCommand & cmd)
 void OBJ::Parse_mtllib(const LineCommand & cmd)
 {
 	if (cmd.Args.size() < 1) { std::cout << "Bad Num of Args\n"; }
-	MTL * mtl = MTL::Load(FileContext(Path + "/" + cmd.Args[0]));
+	MTL * mtl = MTL::Load(FileInfo((Path + "/" + cmd.Args[0]).c_str()));
 	Materials.Insert(*mtl);
 	delete mtl;
 }
@@ -315,7 +315,7 @@ void OBJ::Parse(const LineCommand & cmd)
 
 
 
-OBJ * OBJ::Load(const FileContext & file)
+OBJ * OBJ::Load(const FileInfo & file)
 {
 	if (file.Exists())
 	{
@@ -325,7 +325,7 @@ OBJ * OBJ::Load(const FileContext & file)
 		}
 
 		OBJ * obj = new OBJ();
-		obj -> Path = file.Directory();
+		obj -> Path = file.DirectoryString();
 		LineCommand::Split(file, *obj, &OBJ::Parse);
 		std::cout << "Materials:\n";
 		for (unsigned int i = 0; i < obj -> Materials.Materials.Count(); i++)

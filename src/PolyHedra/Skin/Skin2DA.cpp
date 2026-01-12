@@ -3,8 +3,8 @@
 
 #include "Graphics/Texture/Array2D.hpp"
 
-#include "Parsing/LineCommand.hpp"
-#include "FileContext.hpp"
+#include "FileParsing/LineCommand.hpp"
+#include "FileInfo.hpp"
 
 #include "DataStruct/Point2D.hpp"
 #include "DataShow.hpp"
@@ -60,12 +60,12 @@ void Skin2DA::Parse_H(const ParsingCommand & cmd)
 void Skin2DA::Parse_File(const ParsingCommand & cmd)
 {
 	if (!cmd.CheckCount(CountCheckEqual(1))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(1)); }
-	FileContext file(File -> Directory() + "/" + cmd.ToString(0));
+	FileInfo file((File -> DirectoryString() + "/" + cmd.ToString(0)).c_str());
 	std::string ext = file.Extension();
 	std::cout << ext << "\n";
 	if (ext == ".png" || ext == ".PNG")
 	{
-		Images.Insert(file.LoadImagePNG());
+		Images.Insert(file.LoadImage());
 	}
 	else
 	{

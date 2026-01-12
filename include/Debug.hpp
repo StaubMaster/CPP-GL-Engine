@@ -5,8 +5,8 @@
 # include <iosfwd>
 # include <fstream>
 
-class FileContext;
-class DirectoryContext;
+class FileInfo;
+class DirectoryInfo;
 
 namespace Debug
 {
@@ -80,7 +80,7 @@ namespace Debug
 			====
 	*/
 
-	void NewFileInDir(const DirectoryContext & dir);
+	void NewFileInDir(const DirectoryInfo & dir);
 };
 
 std::ostream & operator <<(std::ostream & log, Debug::LogChange & type);

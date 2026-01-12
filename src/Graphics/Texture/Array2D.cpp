@@ -2,8 +2,8 @@
 #include "Display/SizeRatio2D.hpp"
 #include "DataStruct/Undex3D.hpp"
 
-#include "Format/Image.hpp"
-#include "FileContext.hpp"
+#include "Image.hpp"
+#include "FileInfo.hpp"
 
 #include "OpenGL/openGL.h"
 #include <iostream>
@@ -27,44 +27,60 @@ Texture::Array2D & Texture::Array2D::operator=(const Array2D & other)
 
 
 
-void Texture::Array2D::Assign(const Image * img)
+void Texture::Array2D::Assign(const Image & img)
 {
-	SizeRatio = Point2D(img -> W, img -> H);
-	Full3D(Undex3D(img -> W, img -> H, 1), img -> Data32);
+	SizeRatio = Point2D(img.W(), img.H());
+	Full3D(Undex3D(img.W(), img.H(), 1), img.Data());
 	DefaultParams();
 }
-void Texture::Array2D::Assign(const FileContext & file)
+void Texture::Array2D::Assign(const FileInfo & file)
 {
-	Image * img = file.LoadImagePNG();
+	Image img = file.LoadImage();
 	Assign(img);
-	delete img;
+	img.Dispose();
 }
-void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<Image*> & imgs)
+void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<Image> & imgs)
 {
 	SizeRatio = Point2D(w, h);
 	Full3D(Undex3D(w, h, imgs.Count()), NULL);
-	Image * missing = Image::Missing();
+	Image missing = Image::Missing(Undex2D(4, 4));
+	missing.Scale(Undex2D(w, h));
 	for (unsigned int i = 0; i < imgs.Count(); i++)
 	{
-		const Image * img = imgs[i];
-		if (img == NULL) { img = missing; }
-		Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), img -> Data32);
+		if (imgs[i].Empty())
+		{
+			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), missing.Data());
+		}
+		else
+		{
+			Image img = imgs[i].Scaled(Undex2D(w, h));
+			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), img.Data());
+			img.Dispose();
+		}
 	}
-	delete missing;
+	missing.Dispose();
 	DefaultParams();
 }
-void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<FileContext> & files)
+void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<FileInfo> & files)
 {
 	SizeRatio = Point2D(w, h);
 	Full3D(Undex3D(w, h, files.Count()), NULL);
-	Image * missing = Image::Missing();
+	Image missing = Image::Missing(Undex2D(4, 4));
+	missing.Scale(Undex2D(w, h));
 	for (unsigned int i = 0; i < files.Count(); i++)
 	{
-		const Image * img = files[i].LoadImagePNG();
-		if (img == NULL) { img = missing; }
-		Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), img -> Data32);
-		if (img != missing) { delete img; }
+		Image img = files[i].LoadImage();
+		if (img.Empty())
+		{
+			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), missing.Data());
+		}
+		else
+		{
+			img.Scale(Undex2D(w, h));
+			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), img.Data());
+			img.Dispose();
+		}
 	}
-	delete missing;
+	missing.Dispose();
 	DefaultParams();
 }

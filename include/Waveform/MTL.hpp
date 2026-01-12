@@ -12,7 +12,7 @@
 
 
 class LineCommand;
-class FileContext;
+class FileInfo;
 
 class MTL
 {
@@ -67,7 +67,7 @@ class MTL
 		void Parse(const LineCommand & cmd);
 
 	public:
-		static MTL * Load(const FileContext & file);
+		static MTL * Load(const FileInfo & file);
 };
 
 #endif

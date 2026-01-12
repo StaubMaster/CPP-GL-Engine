@@ -6,10 +6,10 @@ add more stuff to Debug
 Debug could be its own thing ?
 so another Repository ?
 
-but it includes FileContext ?
+but it includes FileInfo ?
 remove that
 
-check for FILE_CONTEXT_HPP to check if FileContext is known
+check for FILE_CONTEXT_HPP to check if FileInfo is known
 then depending on that, declare all the functions that use that
 
 how do I handle the -I Includes ?

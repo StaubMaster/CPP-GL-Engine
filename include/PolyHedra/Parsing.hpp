@@ -1,43 +1,42 @@
 #ifndef  POLYHEDRA_PARSING_HPP
 # define POLYHEDRA_PARSING_HPP
 
+# include "FileInfo.hpp"
 # include "PolyHedra/PolyHedra.hpp"
-# include "Parsing/ParsingCommand.hpp"
+//# include "FileParsing/ParsingCommand.hpp"
+//# include "FileParsing/Text/TextCommand.hpp"
 
 # include <string>
 # include <exception>
 
-class FileContext;
+class TextCommand;
 
-struct PolyHedra::ParsingData : public ParsingCommand::EnvironmentData
+struct PolyHedra::ParsingData
 {
-	//	Line
-	//	have ParsingCommand here instead of as Parameter
-	//	have the full Line String here
-
-	PolyHedra *				PH;
-	PolyHedra::Template *	Data;
+	FileInfo				File;
+	PolyHedra *				PH;		//rename to Data
+	PolyHedra::Template *	Data;	//rename to Temp
 	unsigned int	CornerOffset;
 	unsigned int	FaceOffset;
 
-	ParsingData(const FileContext & file);
+	ParsingData(const FileInfo & file);
 	~ParsingData();
 
-	void Parse(const ParsingCommand & cmd) override;
+	void Parse(const TextCommand & cmd);
 
-	void Parse_Type(const ParsingCommand & cmd);
-	void Parse_Format(const ParsingCommand & cmd);
-	void Parse_Skin(const ParsingCommand & cmd);
+	void Parse_Type(const TextCommand & cmd);
+	void Parse_Format(const TextCommand & cmd);
+	void Parse_Skin(const TextCommand & cmd);
 
-	void Parse_Corner(const ParsingCommand & cmd);
-	void Parse_Face(const ParsingCommand & cmd);
+	void Parse_Corner(const TextCommand & cmd);
+	void Parse_Face(const TextCommand & cmd);
 
-	void Parse_Offset(const ParsingCommand & cmd);
-	void Parse_Belt(const ParsingCommand & cmd, bool direction, bool closure);
-	void Parse_Band(const ParsingCommand & cmd, bool direction, bool closure);
-	void Parse_Fan(const ParsingCommand & cmd, bool direction, bool closure);
-	void Parse_CircleOLD(const ParsingCommand & cmd);
-	void Parse_Circle(const ParsingCommand & cmd, bool direction);
+	void Parse_Offset(const TextCommand & cmd);
+	void Parse_Belt(const TextCommand & cmd, bool direction, bool closure);
+	void Parse_Band(const TextCommand & cmd, bool direction, bool closure);
+	void Parse_Fan(const TextCommand & cmd, bool direction, bool closure);
+	void Parse_CircleOLD(const TextCommand & cmd);
+	void Parse_Circle(const TextCommand & cmd, bool direction);
 };
 
 #endif

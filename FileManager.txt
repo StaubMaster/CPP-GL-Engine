@@ -81,11 +81,30 @@ that returns Type and Foramt
 
 
 
-FileContext
+FileInfo
 Directory()
 	currently return a string
-	should return a DirectoryContext
+	should return a DirectoryInfo
 DirectoryString()
 	should return the string
 
 
+
+FileInfo and DirectoryInfo
+	should be able to create subDirectorys needed for the current
+
+
+
+DirectoryInfo Collection
+	have a collection of Directorys
+	then getting a File, look through all the Directorys
+	usually User specified stuff should be checked first
+	have 2 Lists, User and Auto
+	have a way to specify Priority ?
+
+
+
+Path:
+	right now it stores a vector of string
+	maybe just store 1 char *
+	and an array of the sections between the '/'

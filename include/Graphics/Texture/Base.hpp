@@ -4,7 +4,7 @@
 typedef unsigned int TextureID;
 typedef unsigned int TextureType;
 
-class FileContext;
+class FileInfo;
 
 struct Undex3D;
 
@@ -58,9 +58,9 @@ class Base
 
 	public:
 	//static Base Tex2DArray(const Image * img);
-	//static Base Tex2DArray(const FileContext & file);
+	//static Base Tex2DArray(const FileInfo & file);
 	//static Base Tex2DArray(unsigned int w, unsigned int h, const Container::Member<Image*> & imgs);
-	//static Base Tex2DArray(unsigned int w, unsigned int h, const Container::Member<FileContext> & files);
+	//static Base Tex2DArray(unsigned int w, unsigned int h, const Container::Member<FileInfo> & files);
 };
 };
 

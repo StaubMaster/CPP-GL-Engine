@@ -4,6 +4,8 @@
 # include "Miscellaneous/Container/Binary.hpp"
 # include "Miscellaneous/Container/Pointer.hpp"
 
+# include "FileInfo.hpp"
+
 # include <string>
 # include <exception>
 
@@ -15,7 +17,6 @@ struct Point2D;
 struct AxisBox3D;
 
 class Image;
-class FileContext;
 
 /*
 Functions for changing the PolyHedra
@@ -38,7 +39,7 @@ YES I CAN forward declare nested classes
 thats literally what the first thing in the class is
 
 but the question still is what to catually store in the Template
-probably FileContext
+probably FileInfo
 
 maybe other Context stuff
 */
@@ -54,8 +55,8 @@ class PolyHedra
 		Container::Binary<Corner>	Corners;
 		Container::Binary<Face>	Faces;
 	public:
-		FileContext *	File;
-		SkinBase *		Skin;
+		FileInfo	File;
+		SkinBase *	Skin;
 
 	private:
 		bool UseCornerNormals;
@@ -82,7 +83,7 @@ class PolyHedra
 	private:
 		struct ParsingData;
 	public:
-		static PolyHedra * Load(const FileContext & file);
+		static PolyHedra * Load(const FileInfo & file);
 };
 
 #endif
