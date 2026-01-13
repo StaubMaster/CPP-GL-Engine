@@ -183,24 +183,6 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 
 
 
-static Image Gradient2D(unsigned int w, unsigned int h)
-{
-	Image img(w, h);
-
-	ColorU4 col;
-	for (unsigned int y = 0; y < h; y++)
-	{
-		col.R = 0xFF * ((float)y) / h;
-		for (unsigned int x = 0; x < w; x++)
-		{
-			col.B = 0xFF * ((float)x) / w;
-			img.Pixel(x, y) = col;
-		}
-	}
-
-	return img;
-}
-
 #include "FileInfo.hpp"
 #include "DirectoryInfo.hpp"
 #include <vector>
@@ -216,17 +198,18 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 
 	skin -> Images.Insert(img);
 	//skin -> Images.Insert(Image::Missing(16, 16));
-	skin -> Images.Insert(Gradient2D(16, 16));
-
-	float FrameThicknessSide = 0.5f;
-	float FrameThicknessDepth = 0.1f;
-	//float FrameDepthBack = 0.05f;
+	skin -> Images.Insert(Texture::Generate::Gradiant2D());
+	//skin -> Images.Insert(Texture::Generate::Wood16x16());
 
 	/*	Frame Textures should be fixed Scale
 		have square Pixels
 		possibly be Centered ?
 		just use Vertex Position for Texture ?
 	*/
+
+	float FrameSize0 = 0.20f;
+	float FrameSize1 = 0.10f;
+	float FrameSize2 = 0.05f;
 
 	Point3D tex01[4];
 	tex01[0] = Point3D(0.0f, 1.0f, 0.0f);
@@ -235,31 +218,36 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	tex01[3] = Point3D(1.0f, 0.0f, 0.0f);
 
 	Point2D scale(img.W() * img_scale * 0.01f, img.H() * img_scale * 0.01f);
-	temp.Insert_Corn(Point3D(-scale.X, -scale.Y, 0));
-	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, 0));
-	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, 0));
-	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, 0));
+	temp.Insert_Corn(Point3D(-scale.X, -scale.Y, -FrameSize2));
+	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, -FrameSize2));
+	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, -FrameSize2));
+	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, -FrameSize2));
 	temp.Insert_Face4(FaceCorner(0), FaceCorner(3), FaceCorner(1), FaceCorner(2));
 	skin -> Insert_Face4(tex01[0], tex01[1], tex01[2], tex01[3]);
 
-											//	R	B
-	tex01[0] = Point3D(0.0f, 1.0f, 1.0f);	//	1	0
-	tex01[1] = Point3D(0.0f, 0.0f, 1.0f);	//	0	0
-	tex01[2] = Point3D(1.0f, 1.0f, 1.0f);	//	1	1
-	tex01[3] = Point3D(1.0f, 0.0f, 1.0f);	//	0	1
+	tex01[0] = Point3D(0.0f, 1.0f, 1.0f);
+	tex01[1] = Point3D(0.0f, 0.0f, 1.0f);
+	tex01[2] = Point3D(1.0f, 1.0f, 1.0f);
+	tex01[3] = Point3D(1.0f, 0.0f, 1.0f);
 
 	Point3D texPixelRatio = Point3D(16, 16, 1);
 
-	Skin2DFaceCorner tex[4];
-	Point3D texPixelSize;
-
 	unsigned int off0 = 0;
-	unsigned int off1 = 4;
+	unsigned int off1 = 0;
+	Skin2DFaceCorner tex[4];
+	Skin2DFaceCorner texMid[4];
+	Skin2DFaceCorner texCrn[4];
+	Point3D texPixelSize;
+	Point3D texPixelSizeMid;
+	Point3D texPixelSizeCrn;
+
+	off0 += 0;
+	off1 += 4;
 	texPixelSize = Point3D(5, 128 * img_scale, 1);
-	temp.Insert_Corn(Point3D(-scale.X, -scale.Y, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, -FrameThicknessDepth));
+	temp.Insert_Corn(Point3D(-scale.X, -scale.Y, -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, -FrameSize1));
+	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, -FrameSize1));
 	temp.Insert_Face4(FaceCorner(off0 + 0), FaceCorner(off0 + 1), FaceCorner(off1 + 0), FaceCorner(off1 + 1));
 	temp.Insert_Face4(FaceCorner(off0 + 1), FaceCorner(off0 + 2), FaceCorner(off1 + 1), FaceCorner(off1 + 2));
 	temp.Insert_Face4(FaceCorner(off0 + 2), FaceCorner(off0 + 3), FaceCorner(off1 + 2), FaceCorner(off1 + 3));
@@ -275,12 +263,8 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 
 	off0 += 4;
 	off1 += 4;
-	Skin2DFaceCorner texMid[4];
-	Skin2DFaceCorner texCrn[4];
-	Point3D texPixelSizeMid;
-	Point3D texPixelSizeCrn;
-	texPixelSizeMid = Point3D(10, 128 * img_scale, 1);
-	texPixelSizeCrn = Point3D(10, 10, 1);
+	texPixelSizeMid = Point3D(16, 128, 1);
+	texPixelSizeCrn = Point3D(16, 16, 1);
 	texMid[0] = Skin2DFaceCorner((tex01[0] * texPixelSizeMid) / texPixelRatio);
 	texMid[1] = Skin2DFaceCorner((tex01[1] * texPixelSizeMid) / texPixelRatio);
 	texMid[2] = Skin2DFaceCorner((tex01[2] * texPixelSizeMid) / texPixelRatio);
@@ -289,18 +273,18 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	texCrn[1] = Skin2DFaceCorner((tex01[1] * texPixelSizeCrn) / texPixelRatio);
 	texCrn[2] = Skin2DFaceCorner((tex01[2] * texPixelSizeCrn) / texPixelRatio);
 	texCrn[3] = Skin2DFaceCorner((tex01[3] * texPixelSizeCrn) / texPixelRatio);
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, -scale.Y - FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X, -scale.Y - FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, -scale.Y - FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, -scale.Y - FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, -scale.Y, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, +scale.Y, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, +scale.Y + FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, +scale.Y + FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X, +scale.Y + FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, +scale.Y + FrameThicknessSide, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, +scale.Y, -FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, -scale.Y, -FrameThicknessDepth));
+	temp.Insert_Corn(Point3D(-scale.X - FrameSize0, -scale.Y - FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(-scale.X,              -scale.Y - FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X,              -scale.Y - FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X + FrameSize0, -scale.Y - FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X + FrameSize0, -scale.Y,              -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X + FrameSize0, +scale.Y,              -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X + FrameSize0, +scale.Y + FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(+scale.X,              +scale.Y + FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(-scale.X,              +scale.Y + FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(-scale.X - FrameSize0, +scale.Y + FrameSize0, -FrameSize1));
+	temp.Insert_Corn(Point3D(-scale.X - FrameSize0, +scale.Y,              -FrameSize1));
+	temp.Insert_Corn(Point3D(-scale.X - FrameSize0, -scale.Y,              -FrameSize1));
 	temp.Insert_Face3(FaceCorner(off0 + 0), FaceCorner(off1 + 1), FaceCorner(off1 + 0));
 	temp.Insert_Face4(FaceCorner(off0 + 0), FaceCorner(off0 + 1), FaceCorner(off1 + 1), FaceCorner(off1 + 2));
 	temp.Insert_Face3(FaceCorner(off1 + 2), FaceCorner(off0 + 1), FaceCorner(off1 + 3));
@@ -326,75 +310,75 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
 	skin -> Insert_Face3(texCrn[2], texCrn[0], texCrn[3]);
 
-	off0 += 4;
-	off1 += 12;
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, -scale.Y - FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X, -scale.Y - FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, -scale.Y - FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, -scale.Y - FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, -scale.Y, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, +scale.Y, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X + FrameThicknessSide, +scale.Y + FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, +scale.Y + FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X, +scale.Y + FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, +scale.Y + FrameThicknessSide, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, +scale.Y, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X - FrameThicknessSide, -scale.Y, +FrameThicknessDepth));
-	temp.Insert_Face4(FaceCorner(off0 + 0x0), FaceCorner(off0 + 0x1), FaceCorner(off1 + 0x0), FaceCorner(off1 + 0x1));
-	temp.Insert_Face4(FaceCorner(off0 + 0x1), FaceCorner(off0 + 0x2), FaceCorner(off1 + 0x1), FaceCorner(off1 + 0x2));
-	temp.Insert_Face4(FaceCorner(off0 + 0x2), FaceCorner(off0 + 0x3), FaceCorner(off1 + 0x2), FaceCorner(off1 + 0x3));
-	temp.Insert_Face4(FaceCorner(off0 + 0x3), FaceCorner(off0 + 0x4), FaceCorner(off1 + 0x3), FaceCorner(off1 + 0x4));
-	temp.Insert_Face4(FaceCorner(off0 + 0x4), FaceCorner(off0 + 0x5), FaceCorner(off1 + 0x4), FaceCorner(off1 + 0x5));
-	temp.Insert_Face4(FaceCorner(off0 + 0x5), FaceCorner(off0 + 0x6), FaceCorner(off1 + 0x5), FaceCorner(off1 + 0x6));
-	temp.Insert_Face4(FaceCorner(off0 + 0x6), FaceCorner(off0 + 0x7), FaceCorner(off1 + 0x6), FaceCorner(off1 + 0x7));
-	temp.Insert_Face4(FaceCorner(off0 + 0x7), FaceCorner(off0 + 0x8), FaceCorner(off1 + 0x7), FaceCorner(off1 + 0x8));
-	temp.Insert_Face4(FaceCorner(off0 + 0x8), FaceCorner(off0 + 0x9), FaceCorner(off1 + 0x8), FaceCorner(off1 + 0x9));
-	temp.Insert_Face4(FaceCorner(off0 + 0x9), FaceCorner(off0 + 0xA), FaceCorner(off1 + 0x9), FaceCorner(off1 + 0xA));
-	temp.Insert_Face4(FaceCorner(off0 + 0xA), FaceCorner(off0 + 0xB), FaceCorner(off1 + 0xA), FaceCorner(off1 + 0xB));
-	temp.Insert_Face4(FaceCorner(off0 + 0xB), FaceCorner(off0 + 0x0), FaceCorner(off1 + 0xB), FaceCorner(off1 + 0x0));
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
-	skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
-	skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
-	skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
-	skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
-	skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//off0 += 4;
+	//off1 += 12;
+	//temp.Insert_Corn(Point3D(-scale.X - FrameSize0, -scale.Y - FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(-scale.X, -scale.Y - FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X, -scale.Y - FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X + FrameSize0, -scale.Y - FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X + FrameSize0, -scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X + FrameSize0, +scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X + FrameSize0, +scale.Y + FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X, +scale.Y + FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(-scale.X, +scale.Y + FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(-scale.X - FrameSize0, +scale.Y + FrameSize0, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(-scale.X - FrameSize0, +scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(-scale.X - FrameSize0, -scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x0), FaceCorner(off0 + 0x1), FaceCorner(off1 + 0x0), FaceCorner(off1 + 0x1));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x1), FaceCorner(off0 + 0x2), FaceCorner(off1 + 0x1), FaceCorner(off1 + 0x2));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x2), FaceCorner(off0 + 0x3), FaceCorner(off1 + 0x2), FaceCorner(off1 + 0x3));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x3), FaceCorner(off0 + 0x4), FaceCorner(off1 + 0x3), FaceCorner(off1 + 0x4));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x4), FaceCorner(off0 + 0x5), FaceCorner(off1 + 0x4), FaceCorner(off1 + 0x5));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x5), FaceCorner(off0 + 0x6), FaceCorner(off1 + 0x5), FaceCorner(off1 + 0x6));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x6), FaceCorner(off0 + 0x7), FaceCorner(off1 + 0x6), FaceCorner(off1 + 0x7));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x7), FaceCorner(off0 + 0x8), FaceCorner(off1 + 0x7), FaceCorner(off1 + 0x8));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x8), FaceCorner(off0 + 0x9), FaceCorner(off1 + 0x8), FaceCorner(off1 + 0x9));
+	//temp.Insert_Face4(FaceCorner(off0 + 0x9), FaceCorner(off0 + 0xA), FaceCorner(off1 + 0x9), FaceCorner(off1 + 0xA));
+	//temp.Insert_Face4(FaceCorner(off0 + 0xA), FaceCorner(off0 + 0xB), FaceCorner(off1 + 0xA), FaceCorner(off1 + 0xB));
+	//temp.Insert_Face4(FaceCorner(off0 + 0xB), FaceCorner(off0 + 0x0), FaceCorner(off1 + 0xB), FaceCorner(off1 + 0x0));
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
+	//skin -> Insert_Face4(texMid[0], texMid[1], texMid[2], texMid[3]);
+	//skin -> Insert_Face4(texCrn[0], texCrn[1], texCrn[2], texCrn[3]);
 
-	off0 += 12;
-	off1 += 12;
-	temp.Insert_Corn(Point3D(-scale.X, -scale.Y, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, +FrameThicknessDepth));
-	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, +FrameThicknessDepth));
-	temp.Insert_Face3(FaceCorner(off1 + 0), FaceCorner(off0 + 0), FaceCorner(off0 + 1));
-	temp.Insert_Face4(FaceCorner(off1 + 1), FaceCorner(off1 + 0), FaceCorner(off0 + 2), FaceCorner(off0 + 1));
-	temp.Insert_Face3(FaceCorner(off0 + 3), FaceCorner(off1 + 1), FaceCorner(off0 + 2));
-	temp.Insert_Face3(FaceCorner(off1 + 1), FaceCorner(off0 + 3), FaceCorner(off0 + 4));
-	temp.Insert_Face4(FaceCorner(off1 + 2), FaceCorner(off1 + 1), FaceCorner(off0 + 5), FaceCorner(off0 + 4));
-	temp.Insert_Face3(FaceCorner(off0 + 6), FaceCorner(off1 + 2), FaceCorner(off0 + 5));
-	temp.Insert_Face3(FaceCorner(off1 + 2), FaceCorner(off0 + 6), FaceCorner(off0 + 7));
-	temp.Insert_Face4(FaceCorner(off1 + 3), FaceCorner(off1 + 2), FaceCorner(off0 + 8), FaceCorner(off0 + 7));
-	temp.Insert_Face3(FaceCorner(off0 + 9), FaceCorner(off1 + 3), FaceCorner(off0 + 8));
-	temp.Insert_Face3(FaceCorner(off1 + 3), FaceCorner(off0 + 9), FaceCorner(off0 + 10));
-	temp.Insert_Face4(FaceCorner(off1 + 0), FaceCorner(off1 + 3), FaceCorner(off0 + 11), FaceCorner(off0 + 10));
-	temp.Insert_Face3(FaceCorner(off0 + 0), FaceCorner(off1 + 0), FaceCorner(off0 + 11));
-	skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
-	skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
-	skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
-	skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
-	skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
-	skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
-	skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
-	skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
-	skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
-	skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
-	skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
-	skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
+	//off0 += 12;
+	//off1 += 12;
+	//temp.Insert_Corn(Point3D(-scale.X, -scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X, -scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(+scale.X, +scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Corn(Point3D(-scale.X, +scale.Y, +FrameThicknessDepth));
+	//temp.Insert_Face3(FaceCorner(off1 + 0), FaceCorner(off0 + 0), FaceCorner(off0 + 1));
+	//temp.Insert_Face4(FaceCorner(off1 + 1), FaceCorner(off1 + 0), FaceCorner(off0 + 2), FaceCorner(off0 + 1));
+	//temp.Insert_Face3(FaceCorner(off0 + 3), FaceCorner(off1 + 1), FaceCorner(off0 + 2));
+	//temp.Insert_Face3(FaceCorner(off1 + 1), FaceCorner(off0 + 3), FaceCorner(off0 + 4));
+	//temp.Insert_Face4(FaceCorner(off1 + 2), FaceCorner(off1 + 1), FaceCorner(off0 + 5), FaceCorner(off0 + 4));
+	//temp.Insert_Face3(FaceCorner(off0 + 6), FaceCorner(off1 + 2), FaceCorner(off0 + 5));
+	//temp.Insert_Face3(FaceCorner(off1 + 2), FaceCorner(off0 + 6), FaceCorner(off0 + 7));
+	//temp.Insert_Face4(FaceCorner(off1 + 3), FaceCorner(off1 + 2), FaceCorner(off0 + 8), FaceCorner(off0 + 7));
+	//temp.Insert_Face3(FaceCorner(off0 + 9), FaceCorner(off1 + 3), FaceCorner(off0 + 8));
+	//temp.Insert_Face3(FaceCorner(off1 + 3), FaceCorner(off0 + 9), FaceCorner(off0 + 10));
+	//temp.Insert_Face4(FaceCorner(off1 + 0), FaceCorner(off1 + 3), FaceCorner(off0 + 11), FaceCorner(off0 + 10));
+	//temp.Insert_Face3(FaceCorner(off0 + 0), FaceCorner(off1 + 0), FaceCorner(off0 + 11));
+	//skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
+	//skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
+	//skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
+	//skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
+	//skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
+	//skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
+	//skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
+	//skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
+	//skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
+	//skin -> Insert_Face3(texCrn[3], texCrn[0], texCrn[1]);
+	//skin -> Insert_Face4(texMid[3], texMid[2], texMid[1], texMid[0]);
+	//skin -> Insert_Face3(texCrn[1], texCrn[2], texCrn[0]);
 
 	temp.Done();
 	skin -> Done();

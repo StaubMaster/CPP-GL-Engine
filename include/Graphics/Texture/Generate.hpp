@@ -15,6 +15,9 @@ namespace Generate
 	Image Orientation3D();
 
 	Image GradiantX(Color col0, Color col1, unsigned int sections);
+	Image Gradiant2D();
+
+	Image Wood16x16();
 };
 };
 
