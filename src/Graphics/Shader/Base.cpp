@@ -6,7 +6,7 @@
 #include "Debug.hpp"
 #include <sstream>
 
-//#include <iostream>
+#include <iostream>
 
 
 
@@ -158,16 +158,24 @@ void Shader::Base::Create()
 }
 void Shader::Base::Change(Container::Base<Shader::Code> code)
 {
-	if (Exists())
+	std::cout << "Shader Change\n";
+	/*if (Exists())
 	{
+		std::cout << "Exists\n";
 		Delete();
-		Code = Container::Fixed<Shader::Code>::Copy(code);
+		//Code = Container::Fixed<Shader::Code>::Copy(code);
+		//Code.CopyHere(code);
 		Create();
 	}
 	else
 	{
-		Code = Container::Fixed<Shader::Code>::Copy(code);
-	}
+		std::cout << "dosent Exists\n";
+		//Code = Container::Fixed<Shader::Code>::Copy(code);
+		std::cout << "Code.CopyHere()\n";
+		//Code.CopyHere(code);
+		std::cout << "Code.CopyHere() done\n";
+	}*/
+	(void)code;
 }
 
 

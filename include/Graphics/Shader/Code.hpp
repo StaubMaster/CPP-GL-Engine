@@ -21,6 +21,7 @@ namespace Shader
 class Code
 {
 	private:
+	public:
 	ShaderID ID;
 	ShaderType Type;
 	FileInfo File;
