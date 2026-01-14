@@ -158,23 +158,18 @@ void Shader::Base::Create()
 }
 void Shader::Base::Change(Container::Base<Shader::Code> code)
 {
-	std::cout << "Shader Change\n";
-	/*if (Exists())
+	if (Exists())
 	{
-		std::cout << "Exists\n";
 		Delete();
 		//Code = Container::Fixed<Shader::Code>::Copy(code);
-		//Code.CopyHere(code);
+		Code.CopyHere(code);
 		Create();
 	}
 	else
 	{
-		std::cout << "dosent Exists\n";
 		//Code = Container::Fixed<Shader::Code>::Copy(code);
-		std::cout << "Code.CopyHere()\n";
-		//Code.CopyHere(code);
-		std::cout << "Code.CopyHere() done\n";
-	}*/
+		Code.CopyHere(code);
+	}
 	(void)code;
 }
 
