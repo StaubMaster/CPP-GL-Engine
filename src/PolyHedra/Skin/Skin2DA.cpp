@@ -8,6 +8,7 @@
 
 #include "DataStruct/Point2D.hpp"
 #include "DataShow.hpp"
+#include <iostream>
 
 
 
@@ -23,14 +24,15 @@ Skin2DA::~Skin2DA()
 Texture::Base * Skin2DA::ToTexture() const
 {
 	Texture::Array2D * tex = new Texture::Array2D();
-	tex -> Create();
-	tex -> Assign(W, H, Images);
+	ToTexture(*tex);
 	return tex;
 }
 void Skin2DA::ToTexture(Texture::Array2D & tex) const
 {
+	std::cout << "Skin2DA::ToTexture() ...\n";
 	tex.Create();
 	tex.Assign(W, H, Images);
+	std::cout << "Skin2DA::ToTexture() done\n";
 }
 
 

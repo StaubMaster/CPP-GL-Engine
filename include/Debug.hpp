@@ -1,6 +1,5 @@
-
-#ifndef  DEBUG_LOG_HPP
-# define DEBUG_LOG_HPP
+#ifndef  DEBUG_HPP
+# define DEBUG_HPP
 
 # include <iosfwd>
 # include <fstream>
@@ -83,6 +82,6 @@ namespace Debug
 	void NewFileInDir(const DirectoryInfo & dir);
 };
 
-std::ostream & operator <<(std::ostream & log, Debug::LogChange & type);
+std::ostream & operator<<(std::ostream & log, Debug::LogChange & type);
 
 #endif

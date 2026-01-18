@@ -54,8 +54,8 @@ std::ofstream Debug::LogFile;
 Debug::LogChange Debug::Tabs = '\t';		//	does this interfere with regular '\t' ? it shouldn't since the Types are different
 Debug::LogChange Debug::TabInc = '\x0e';	//	Shift In	-->
 Debug::LogChange Debug::TabDec = '\x0f';	//	Shift Out	<--
-unsigned int TabsCount = 0;
-std::string TabsString(TabsCount, ' ');
+static unsigned int TabsCount = 0;
+static std::string TabsString(TabsCount, ' ');
 std::ostream & Debug::Console = std::cout;
 
 
@@ -76,7 +76,7 @@ void Debug::NewFileInDir(const DirectoryInfo & dir)
 
 
 
-std::ostream & operator <<(std::ostream & log, Debug::LogChange & type)
+std::ostream & operator<<(std::ostream & log, Debug::LogChange & type)
 {
 	if (type == Debug::Done)
 	{

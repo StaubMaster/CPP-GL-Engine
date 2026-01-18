@@ -34,6 +34,7 @@ class ManagerMulti
 	unsigned int FindIndex(PolyHedra * polyhedra) const;
 
 	public:
+	void Dispose();
 	void Insert(PolyHedra * polyhedra);
 	void Remove(PolyHedra * polyhedra);
 	//void Remove(unsigned int polyhedra);

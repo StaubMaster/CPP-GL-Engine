@@ -41,6 +41,7 @@ void Texture::Array2D::Assign(const FileInfo & file)
 }
 void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<Image> & imgs)
 {
+	std::cout << "Texture::Array2D::Assign(w, h, imgs) ...\n";
 	SizeRatio = Point2D(w, h);
 	Full3D(Undex3D(w, h, imgs.Count()), NULL);
 	Image missing = Image::Missing(Undex2D(4, 4));
@@ -60,6 +61,7 @@ void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::M
 	}
 	missing.Dispose();
 	DefaultParams();
+	std::cout << "Texture::Array2D::Assign(w, h, imgs) done\n";
 }
 void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<FileInfo> & files)
 {

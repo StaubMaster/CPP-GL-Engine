@@ -44,46 +44,79 @@ probably FileInfo
 maybe other Context stuff
 */
 
+/*	non Pointer
+make this like Image ?
+this one uses Containers to store Data
+so Assignment just Copys the Pointers, then it would get Deleted
+with Image it only Delets the Data when Dispose is called
+but what if a "Copy" of the PolyHedra that Points to the same Data
+changes the Container, like Inserting something that requires reallocation ?
+
+Idea: smart(er) Pointers
+smart Pointers already exist as part of c++(11 I think)
+but they are just a wrapper to auto set Pointers to NULL
+make a CountingPointer
+that count how many times it has been Assigned
+when Assignment hits 0, delete it
+this is basically just a simple version of a garbadge collector ?
+but that dosent seem right here ?
+
+right now the PolyHedra is not supposed to be changed directly
+only with the Template
+
+the Template currently has a Referance to a PolyHedra
+change it so It is completely seperate ?
+
+do the Template has a Binary Container
+and the PolyHedra has a Array Container
+*/
+
 class PolyHedra
 {
 	public:
-		struct Corner;
-		struct FaceCorner;
-		struct Face;
+	struct Corner;
+	struct FaceCorner;
+	struct Face;
 
 	private:
-		Container::Binary<Corner>	Corners;
-		Container::Binary<Face>	Faces;
+	Container::Binary<Corner>	Corners;
+	Container::Binary<Face>		Faces;
 	public:
-		FileInfo	File;
-		SkinBase *	Skin;
+	FileInfo	File;
+	SkinBase *	Skin;
 
 	private:
-		bool UseCornerNormals;
+	bool UseCornerNormals;
 
 	private:
-		PolyHedra();
+	PolyHedra();
 	public:
-		~PolyHedra();
+	~PolyHedra();
+
+	//PolyHedra(const PolyHedra & other);
+	//PolyHedra & operator=(const PolyHedra & other);
+
+	public:
+	void Dispose();
 
 	public:
 	Container::Pointer<PolyHedra_Main::Data> ToMainData();
 
 	public:
-		std::string ToInfo() const;
-		AxisBox3D	CalcBound() const;
+	std::string ToInfo() const;
+	AxisBox3D	CalcBound() const;
 
 	public:
-		struct Template;
-		Template * ToTemplate();
+	struct Template;
+	Template * ToTemplate();
 
 	public:
-		struct Generate;
+	struct Generate;
 
 	private:
-		struct ParsingData;
+	struct ParsingData;
 	public:
-		static PolyHedra * Load(const FileInfo & file);
+	static PolyHedra * Load(const FileInfo & file);
 };
 
 #endif
