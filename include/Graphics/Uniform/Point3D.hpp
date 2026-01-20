@@ -5,11 +5,6 @@
 # include "Graphics/Uniform/Base/Float3.hpp"
 # include "DataDeclare.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
 namespace Uniform
 {
 class Point3D : public Uniform::Float3

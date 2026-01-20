@@ -1,7 +1,7 @@
 #ifndef  PHYSICS3D_DATA_HPP
 # define PHYSICS3D_DATA_HPP
 
-# include "DataStruct/Trans3D.hpp"
+# include "ValueType/Trans3D.hpp"
 
 namespace Physics3D
 {

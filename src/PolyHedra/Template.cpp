@@ -1,7 +1,7 @@
 #include "PolyHedra/Template.hpp"
 #include "PolyHedra/Data.hpp"
 
-#include "DataStruct/Point3D.hpp"
+#include "ValueType/Point3D.hpp"
 
 
 

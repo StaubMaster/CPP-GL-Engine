@@ -6,7 +6,7 @@
 #include "FileParsing/LineCommand.hpp"
 #include "FileInfo.hpp"
 
-#include "DataStruct/Point2D.hpp"
+#include "ValueType/Point2D.hpp"
 #include "DataShow.hpp"
 #include <iostream>
 

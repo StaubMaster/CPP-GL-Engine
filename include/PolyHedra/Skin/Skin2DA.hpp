@@ -7,8 +7,8 @@
 
 //# include "Miscellaneous/Container/Dynamic.hpp"
 
-# include "DataStruct/Point2D.hpp"
-# include "DataStruct/Point3D.hpp"
+# include "ValueType/Point2D.hpp"
+# include "ValueType/Point3D.hpp"
 
 class Skin2DA : public SkinGenericBase<Skin2DCorner, Skin2DFaceCorner, Skin2DFace>
 {

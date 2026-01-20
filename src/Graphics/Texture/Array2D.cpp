@@ -1,6 +1,6 @@
 #include "Graphics/Texture/Array2D.hpp"
 #include "Display/SizeRatio2D.hpp"
-#include "DataStruct/Undex3D.hpp"
+#include "ValueType/Undex3D.hpp"
 
 #include "Image.hpp"
 #include "FileInfo.hpp"

@@ -1,9 +1,9 @@
 #include "DataShow.hpp"
 
-#include "DataStruct/Bool3D.hpp"
-#include "DataStruct/Undex3D.hpp"
-#include "DataStruct/UndexBox3D.hpp"
-#include "DataStruct/UndexLoop3D.hpp"
+#include "ValueType/Bool3D.hpp"
+#include "ValueType/Undex3D.hpp"
+#include "ValueType/UndexBox3D.hpp"
+#include "ValueType/UndexLoop3D.hpp"
 
 #include <iostream>
 

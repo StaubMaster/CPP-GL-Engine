@@ -1,7 +1,7 @@
 #ifndef  DISPLAY_WINDOWBUFFERSIZE2D_HPP
 # define DISPLAY_WINDOWBUFFERSIZE2D_HPP
 
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/Point2D.hpp"
 
 struct AbsNormal2D;
 struct RelNormal2D;

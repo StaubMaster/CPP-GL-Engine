@@ -68,7 +68,7 @@ EntryContainer::Entry<Simple3D::Data> PolyHedra_Simple3D::ManagerMulti::Place(Po
 	if (idx == 0xFFFFFFFF)
 	{
 		Insert(polyhedra);
-		FindIndex(polyhedra);
+		idx = FindIndex(polyhedra);
 	}
 
 	ManagerSingle * man = MultiplePolyHedra[idx];

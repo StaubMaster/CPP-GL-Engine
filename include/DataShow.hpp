@@ -22,6 +22,6 @@ std::ostream & operator <<(std::ostream & o, const UndexBox3D & val);
 
 std::ostream & operator <<(std::ostream & o, const Bool3D & val);
 
-std::ostream & operator <<(std::ostream & o, const Color & val);
+std::ostream & operator <<(std::ostream & o, const ColorF4 & val);
 
 #endif

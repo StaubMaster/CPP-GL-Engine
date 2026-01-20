@@ -1,8 +1,8 @@
 #ifndef  SKIN_2D_DATA_HPP
 # define SKIN_2D_DATA_HPP
 
-# include "DataStruct/Point3D.hpp"
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/Point3D.hpp"
+# include "ValueType/Point2D.hpp"
 
 struct Skin2DCorner
 {

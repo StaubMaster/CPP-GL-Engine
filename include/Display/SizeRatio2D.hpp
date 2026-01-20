@@ -1,7 +1,7 @@
 #ifndef  DISPLAY_SIZERATIO2D_HPP
 # define DISPLAY_SIZERATIO2D_HPP
 
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/Point2D.hpp"
 
 struct SizeRatio2D
 {

@@ -5,11 +5,6 @@
 # include "Graphics/Uniform/Matrix3x3.hpp"
 # include "DataDeclare.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
 namespace Uniform
 {
 class Angle3D : public Uniform::GBase<::Angle3D>

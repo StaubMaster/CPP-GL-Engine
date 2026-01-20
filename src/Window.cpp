@@ -1,9 +1,9 @@
 #include "Window.hpp"
 #include "TimeMeasure.hpp"
 
-#include "DataStruct/Point3D.hpp"
-#include "DataStruct/Angle3D.hpp"
-#include "DataStruct/Point2D.hpp"
+#include "ValueType/Point3D.hpp"
+#include "ValueType/Angle3D.hpp"
+#include "ValueType/Point2D.hpp"
 #include "UserParameter/MouseInclude.hpp"
 
 #include "Debug.hpp"
@@ -88,7 +88,7 @@ Window::Window() :
 
 	UpdateSize();
 
-	DefaultColor = Color(0.5f, 0.5f, 0.5f);
+	DefaultColor = ColorF4(0.5f, 0.5f, 0.5f);
 }
 Window::~Window()
 { }

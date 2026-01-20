@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/Point3D.hpp"
-#include "DataStruct/Point3D.hpp"
+#include "ValueType/Point3D.hpp"
 
 
 

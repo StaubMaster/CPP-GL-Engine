@@ -1,7 +1,7 @@
 #ifndef  POLYHEDRA_MAIN_DATA_HPP
 # define POLYHEDRA_MAIN_DATA_HPP
 
-# include "DataStruct/Point3D.hpp"
+# include "ValueType/Point3D.hpp"
 
 namespace PolyHedra_Main
 {

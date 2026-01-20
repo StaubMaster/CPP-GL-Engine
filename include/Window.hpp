@@ -1,8 +1,8 @@
 #ifndef  WINDOW_HPP
 # define WINDOW_HPP
 
-# include "DataStruct/Color.hpp"
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/ColorF4.hpp"
+# include "ValueType/Point2D.hpp"
 
 # include "Display/WindowBufferSize2D.hpp"
 
@@ -61,7 +61,7 @@ class Window
 	Point2D BufferCenter;
 
 	public:
-	Color DefaultColor;
+	ColorF4 DefaultColor;
 
 	public:
 	Window();

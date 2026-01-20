@@ -6,7 +6,7 @@
 #include "PolyHedra/Skin/Skin2DA.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
-#include "DataStruct/Angle3D.hpp"
+#include "ValueType/Angle3D.hpp"
 
 #include "Image.hpp"
 

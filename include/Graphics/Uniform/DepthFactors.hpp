@@ -4,11 +4,6 @@
 # include "Graphics/Uniform/Base/Float1.hpp"
 # include "DataDeclare.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
 namespace Uniform
 {
 class DepthFactors : public Uniform::Float1

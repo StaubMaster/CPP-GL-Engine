@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/LightSolar.hpp"
-#include "DataStruct/LightSolar.hpp"
+#include "ValueType/LightSolar.hpp"
 
 
 

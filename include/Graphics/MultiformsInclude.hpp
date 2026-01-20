@@ -4,7 +4,7 @@
 
 # include "Multiform/Base/Base.hpp"
 
-# include "Multiform/Color.hpp"
+# include "Multiform/ColorF4.hpp"
 
 # include "Multiform/Depth.hpp"
 # include "Multiform/DepthFactors.hpp"

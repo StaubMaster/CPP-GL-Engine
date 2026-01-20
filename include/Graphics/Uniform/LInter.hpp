@@ -5,11 +5,6 @@
 # include "Graphics/Uniform/Base/Float1.hpp"
 # include "DataDeclare.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
 namespace Uniform
 {
 class LInter : public Uniform::GBase<::LInter>

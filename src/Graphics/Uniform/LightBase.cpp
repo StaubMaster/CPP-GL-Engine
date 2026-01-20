@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/LightBase.hpp"
-#include "DataStruct/LightBase.hpp"
+#include "ValueType/LightBase.hpp"
 
 
 

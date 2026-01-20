@@ -26,7 +26,7 @@
 # include "Uniform/Angle3D.hpp"
 # include "Uniform/Trans3D.hpp"
 
-# include "Uniform/Color.hpp"
+# include "Uniform/ColorF4.hpp"
 # include "Uniform/LInter.hpp"
 # include "Uniform/Depth.hpp"
 

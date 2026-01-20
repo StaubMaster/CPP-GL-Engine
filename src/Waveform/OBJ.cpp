@@ -6,8 +6,8 @@
 #include "FileInfo.hpp"
 #include "FileParsing/LineCommand.hpp"
 
-#include "DataStruct/Point2D.hpp"
-#include "DataStruct/AxisBox3D.hpp"
+#include "ValueType/Point2D.hpp"
+#include "ValueType/AxisBox3D.hpp"
 #include "Display/SizeRatio2D.hpp"
 
 #include "DataShow.hpp"
@@ -108,15 +108,15 @@ OBJ_MainData * OBJ::ToMainData(int & count, SizeRatio2D texScale)
 	Point3D TexLen = TexMax - TexMin;
 	char sides = SizeMax(TexLen) | SizeMid(TexLen);
 
-	Color colors [] = {
-		Color(0.0f, 0.0f, 0.0f),
-		Color(1.0f, 0.0f, 0.0f),
-		Color(0.0f, 1.0f, 0.0f),
-		Color(0.0f, 0.0f, 1.0f),
-		Color(0.0f, 1.0f, 1.0f),
-		Color(1.0f, 0.0f, 1.0f),
-		Color(1.0f, 1.0f, 0.0f),
-		Color(1.0f, 1.0f, 1.0f),
+	ColorF4 colors [] = {
+		ColorF4(0.0f, 0.0f, 0.0f),
+		ColorF4(1.0f, 0.0f, 0.0f),
+		ColorF4(0.0f, 1.0f, 0.0f),
+		ColorF4(0.0f, 0.0f, 1.0f),
+		ColorF4(0.0f, 1.0f, 1.0f),
+		ColorF4(1.0f, 0.0f, 1.0f),
+		ColorF4(1.0f, 1.0f, 0.0f),
+		ColorF4(1.0f, 1.0f, 1.0f),
 	};
 	int color_count = 8;
 
@@ -145,7 +145,7 @@ OBJ_MainData * OBJ::ToMainData(int & count, SizeRatio2D texScale)
 		c1.Normal = Normal_MainData(face.Corner2.Normal, normal);
 		c2.Normal = Normal_MainData(face.Corner3.Normal, normal);
 
-		Color col = colors[(f % color_count)];
+		ColorF4 col = colors[(f % color_count)];
 		c0.Color = col;
 		c1.Color = col;
 		c2.Color = col;

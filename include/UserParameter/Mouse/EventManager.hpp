@@ -4,7 +4,7 @@
 # include "UserParameter/Mouse/ButtonRange.hpp"
 # include "UserParameter/MouseDeclare.hpp"
 
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/Point2D.hpp"
 
 /*	instead of putting all the managing logic in the Window, put it here
 */

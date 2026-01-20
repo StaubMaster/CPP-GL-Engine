@@ -4,7 +4,7 @@
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/DepthFactors.hpp"
-# include "DataStruct/DepthFactors.hpp"
+# include "ValueType/DepthFactors.hpp"
 
 namespace Multiform
 {

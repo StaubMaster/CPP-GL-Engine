@@ -1,7 +1,7 @@
 #ifndef  DISPLAY_ABSNORMAL2D_HPP
 # define DISPLAY_ABSNORMAL2D_HPP
 
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/Point2D.hpp"
 
 struct RelNormal2D;
 

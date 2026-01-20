@@ -4,7 +4,7 @@
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/Trans3D.hpp"
-# include "DataStruct/Trans3D.hpp"
+# include "ValueType/Trans3D.hpp"
 
 namespace Multiform
 {

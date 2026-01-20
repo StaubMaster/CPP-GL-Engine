@@ -3,8 +3,8 @@
 
 # include "PolyHedra.hpp"
 
-# include "DataStruct/Point2D.hpp"
-# include "DataStruct/Point3D.hpp"
+# include "ValueType/Point2D.hpp"
+# include "ValueType/Point3D.hpp"
 
 struct PolyHedra::Corner
 {

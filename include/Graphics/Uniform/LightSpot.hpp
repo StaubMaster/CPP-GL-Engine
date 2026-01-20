@@ -8,13 +8,6 @@
 # include "Graphics/Uniform/Point3D.hpp"
 # include "Graphics/Uniform/Range.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
-struct LightSpot;
-
 namespace Uniform
 {
 class LightSpot : public Uniform::GBase<::LightSpot>

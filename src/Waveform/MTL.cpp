@@ -31,9 +31,9 @@ std::string MTL::Material::ToString()
 
 MTL::MTL()
 {
-	DefaultMaterial.Ka = Color(0.25, 0.0, 0.0);
-	DefaultMaterial.Kd = Color(0.0, 0.0, 0.25);
-	DefaultMaterial.Ks = Color(0.0, 0.25, 0.0);
+	DefaultMaterial.Ka = ColorF4(0.25, 0.0, 0.0);
+	DefaultMaterial.Kd = ColorF4(0.0, 0.0, 0.25);
+	DefaultMaterial.Ks = ColorF4(0.0, 0.25, 0.0);
 	DefaultMaterial.Ns = 32;
 
 	DefaultMaterial.Ni = 1.0;

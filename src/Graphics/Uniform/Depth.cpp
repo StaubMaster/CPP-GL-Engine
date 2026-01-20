@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/Depth.hpp"
-#include "DataStruct/Depth.hpp"
+#include "ValueType/Depth.hpp"
 
 
 

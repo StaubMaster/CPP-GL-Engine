@@ -5,14 +5,7 @@
 # include "DataDeclare.hpp"
 
 # include "Graphics/Uniform/Base/Float1.hpp"
-# include "Graphics/Uniform/Color.hpp"
-
-namespace Shader
-{
-	class Base;
-};
-
-struct LightBase;
+# include "Graphics/Uniform/ColorF4.hpp"
 
 namespace Uniform
 {
@@ -20,7 +13,7 @@ class LightBase : public Uniform::GBase<::LightBase>
 {
 	private:
 	Uniform::Float1 Intensity;
-	Uniform::Color Color;
+	Uniform::ColorF4 Color;
 
 	public:
 	LightBase(Uniform::NameShader name_shader);

@@ -7,11 +7,6 @@
 # include "Graphics/Uniform/Point3D.hpp"
 # include "Graphics/Uniform/Angle3D.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
 namespace Uniform
 {
 class Trans3D : public Uniform::GBase<::Trans3D>

@@ -4,7 +4,7 @@
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/Range.hpp"
-# include "DataStruct/Range.hpp"
+# include "ValueType/Range.hpp"
 
 namespace Multiform
 {

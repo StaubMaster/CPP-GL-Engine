@@ -2,37 +2,38 @@
 #ifndef  DATA_INCLUDE_HPP
 # define DATA_INCLUDE_HPP
 
-#include "DataStruct/Point2D.hpp"
-#include "DataStruct/Point3D.hpp"
-#include "DataStruct/Point4D.hpp"
+#include "ValueType/Point2D.hpp"
+#include "ValueType/Point3D.hpp"
+#include "ValueType/Point4D.hpp"
 
-#include "DataStruct/Angle3D.hpp"
+#include "ValueType/Angle3D.hpp"
 
-#include "DataStruct/Trans3D.hpp"
+#include "ValueType/Trans3D.hpp"
 
-#include "DataStruct/AxisBox1D.hpp"
-#include "DataStruct/AxisBox2D.hpp"
-#include "DataStruct/AxisBox3D.hpp"
+#include "ValueType/AxisBox1D.hpp"
+#include "ValueType/AxisBox2D.hpp"
+#include "ValueType/AxisBox3D.hpp"
 
-#include "DataStruct/Ray3D.hpp"
+#include "ValueType/Ray3D.hpp"
 
-#include "DataStruct/Undex3D.hpp"
-#include "DataStruct/UndexBox3D.hpp"
-#include "DataStruct/UndexLoop3D.hpp"
+#include "ValueType/Undex3D.hpp"
+#include "ValueType/UndexBox3D.hpp"
+#include "ValueType/UndexLoop3D.hpp"
 
-#include "DataStruct/Bool3D.hpp"
+#include "ValueType/Bool3D.hpp"
 
-#include "DataStruct/Matrix3x3.hpp"
+#include "ValueType/Matrix3x3.hpp"
 
-#include "DataStruct/DepthFactors.hpp"
-#include "DataStruct/Depth.hpp"
+#include "ValueType/DepthFactors.hpp"
+#include "ValueType/Depth.hpp"
 
-#include "DataStruct/Range.hpp"
-#include "DataStruct/LInter.hpp"
-#include "DataStruct/Color.hpp"
+#include "ValueType/Range.hpp"
+#include "ValueType/LInter.hpp"
 
-#include "DataStruct/LightBase.hpp"
-#include "DataStruct/LightSolar.hpp"
-#include "DataStruct/LightSpot.hpp"
+#include "ValueType/ColorF4.hpp"
+
+#include "ValueType/LightBase.hpp"
+#include "ValueType/LightSolar.hpp"
+#include "ValueType/LightSpot.hpp"
 
 #endif

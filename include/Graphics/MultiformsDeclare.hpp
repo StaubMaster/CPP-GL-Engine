@@ -6,7 +6,7 @@ namespace Multiform
 {
 	class Base;
 
-	class Color;
+	class ColorF4;
 
 	class Depth;
 	class DepthFactors;

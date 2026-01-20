@@ -2,7 +2,7 @@
 #ifndef  MTL_HPP
 # define MTL_HPP
 
-# include "DataStruct/Color.hpp"
+# include "ValueType/ColorF4.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
 
@@ -21,9 +21,9 @@ class MTL
 		{
 			public:
 				std::string Name;
-				Color	Ka;	//	ambient
-				Color	Kd;	//	diffuse
-				Color	Ks;	//	specular
+				ColorF4	Ka;	//	ambient
+				ColorF4	Kd;	//	diffuse
+				ColorF4	Ks;	//	specular
 				float	Ns;	//	specular
 				float	Ni;	//	"optical density"
 				float	d;	//	"dissolve"

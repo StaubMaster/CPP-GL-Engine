@@ -4,9 +4,9 @@
 
 
 
-# include "DataStruct/Point3D.hpp"
-# include "DataStruct/Point4D.hpp"
-# include "DataStruct/Color.hpp"
+# include "ValueType/Point3D.hpp"
+# include "ValueType/Point4D.hpp"
+# include "ValueType/ColorF4.hpp"
 
 
 
@@ -15,7 +15,7 @@
 
 # include "Graphics/Attribute/Point4D.hpp"
 # include "Graphics/Attribute/Point3D.hpp"
-# include "Graphics/Attribute/Color.hpp"
+# include "Graphics/Attribute/ColorF4.hpp"
 # include "Graphics/Attribute/Base/FloatN.hpp"
 
 
@@ -30,12 +30,12 @@ struct OBJ_MainData
 	Point4D	Position;
 	Point3D	Texture;
 	Point3D	Normal;
-	::Color	Color;
+	ColorF4	Color;
 
-	::Color	AmbientColor;
-	::Color	DiffuseColor;
+	ColorF4	AmbientColor;
+	ColorF4	DiffuseColor;
 	float	SpecularPower;
-	::Color	SpecularColor;
+	ColorF4	SpecularColor;
 };
 
 
@@ -46,12 +46,12 @@ class OBJ_MainAttrib : public Attribute::Base
 		Attribute::Point4D	Position;
 		Attribute::Point3D	Texture;
 		Attribute::Point3D	Normal;
-		Attribute::Color	Color;
+		Attribute::ColorF4	Color;
 
-		Attribute::Color	AmbientColor;
-		Attribute::Color	DiffuseColor;
+		Attribute::ColorF4	AmbientColor;
+		Attribute::ColorF4	DiffuseColor;
 		Attribute::FloatN	SpecularPower;
-		Attribute::Color	SpecularColor;
+		Attribute::ColorF4	SpecularColor;
 
 	public:
 		OBJ_MainAttrib(

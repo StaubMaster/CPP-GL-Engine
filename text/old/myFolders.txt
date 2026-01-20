@@ -37,13 +37,13 @@ but right now it is for the Basic Graphics stuff
 
 	Temporary:
 
-/DataStruct/Main
+/ValueType/Main
 	Main Data for Buffers
 
-/DataStruct/Inst
+/ValueType/Inst
 	Instance Data for Buffers
 
-/DataStruct/Full
+/ValueType/Full
 	Main and Instance Data for Buffers
 
 

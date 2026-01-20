@@ -7,13 +7,6 @@
 # include "Graphics/Uniform/LightBase.hpp"
 # include "Graphics/Uniform/Point3D.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
-struct LightSolar;
-
 namespace Uniform
 {
 class LightSolar : public Uniform::GBase<::LightSolar>

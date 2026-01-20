@@ -1,7 +1,7 @@
 #ifndef  SIMPLE3D_DATA_HPP
 # define SIMPLE3D_DATA_HPP
 
-# include "DataStruct/Trans3D.hpp"
+# include "ValueType/Trans3D.hpp"
 
 namespace Simple3D
 {

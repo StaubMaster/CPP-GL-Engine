@@ -1,5 +1,5 @@
 #include "Graphics/Texture/Base.hpp"
-#include "DataStruct/Undex3D.hpp"
+#include "ValueType/Undex3D.hpp"
 #include "OpenGL/openGL.h"
 #include "Debug.hpp"
 #include <sstream>

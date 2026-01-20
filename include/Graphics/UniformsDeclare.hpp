@@ -19,7 +19,7 @@ namespace Uniform
 
 	class DepthFactors;
 	class Range;
-	class Color;
+	class ColorF4;
 	class Depth;
 
 	class Point2D;

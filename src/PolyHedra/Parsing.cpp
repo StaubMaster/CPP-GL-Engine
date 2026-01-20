@@ -14,9 +14,9 @@
 #include "FileParsing/Text/TextCommandStream.hpp"
 #include "FileParsing/Text/Exceptions.hpp"
 
-#include "DataStruct/Point3D.hpp"
-#include "DataStruct/Angle3D.hpp"
-#include "DataStruct/AxisBox3D.hpp"
+#include "ValueType/Point3D.hpp"
+#include "ValueType/Angle3D.hpp"
+#include "ValueType/AxisBox3D.hpp"
 #include "DataShow.hpp"
 
 #include "Debug.hpp"

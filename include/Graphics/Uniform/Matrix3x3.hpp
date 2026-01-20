@@ -4,11 +4,6 @@
 # include "Graphics/Uniform/Base/Float3x3.hpp"
 # include "DataDeclare.hpp"
 
-namespace Shader
-{
-	class Base;
-};
-
 namespace Uniform
 {
 class Matrix3x3 : public Uniform::Float3x3

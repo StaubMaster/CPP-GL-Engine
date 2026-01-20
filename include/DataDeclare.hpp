@@ -30,7 +30,8 @@ struct Depth;
 
 struct Range;
 struct LInter;
-struct Color;
+
+struct ColorF4;
 
 struct LightBase;
 struct LightSolar;

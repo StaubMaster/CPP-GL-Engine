@@ -4,7 +4,7 @@
 # include "UserParameter/Haptic/Modifier.hpp"
 # include "UserParameter/Mouse/Position.hpp"
 
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/Point2D.hpp"
 
 namespace UserParameter
 {

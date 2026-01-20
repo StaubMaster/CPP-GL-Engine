@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/Angle3D.hpp"
-#include "DataStruct/Angle3D.hpp"
+#include "ValueType/Angle3D.hpp"
 
 
 

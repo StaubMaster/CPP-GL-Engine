@@ -4,7 +4,7 @@
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/LInter.hpp"
-# include "DataStruct/LInter.hpp"
+# include "ValueType/LInter.hpp"
 
 namespace Multiform
 {

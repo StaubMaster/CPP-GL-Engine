@@ -10,9 +10,9 @@ it wasnt that hard
 
 
 basically the Names still suck
-DataStruct/Main
-DataStruct/Inst
-DataStruct/Full
+ValueType/Main
+ValueType/Inst
+ValueType/Full
 
 I dont really like them being in DataStruct
 but I also dont want them directly in the Base Folder

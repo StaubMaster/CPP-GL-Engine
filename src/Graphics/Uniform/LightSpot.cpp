@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/LightSpot.hpp"
-#include "DataStruct/LightSpot.hpp"
+#include "ValueType/LightSpot.hpp"
 
 
 

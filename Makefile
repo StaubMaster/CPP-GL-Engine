@@ -13,32 +13,32 @@ DIR_OBJ := obj/
 
 
 
-DATASTRUCT := \
-	DataStruct/Point2D.cpp \
-	DataStruct/Point3D.cpp \
-	DataStruct/Point4D.cpp \
-	DataStruct/Angle3D.cpp \
-	DataStruct/Trans3D.cpp \
-	DataStruct/AxisBox1D.cpp \
-	DataStruct/AxisBox2D.cpp \
-	DataStruct/AxisBox3D.cpp \
-	DataStruct/Ray3D.cpp \
-	DataStruct/Undex3D.cpp \
-	DataStruct/UndexBox3D.cpp \
-	DataStruct/UndexLoop3D.cpp \
-	DataStruct/Bool3D.cpp \
-	DataStruct/Matrix3x3.cpp \
-	DataStruct/DepthFactors.cpp \
-	DataStruct/Depth.cpp \
-	DataStruct/Range.cpp \
-	DataStruct/LInter.cpp \
-	DataStruct/Color.cpp \
-	DataStruct/LightBase.cpp \
-	DataStruct/LightSolar.cpp \
-	DataStruct/LightSpot.cpp \
+ValueType/ := \
+	ValueType/Point2D.cpp \
+	ValueType/Point3D.cpp \
+	ValueType/Point4D.cpp \
+	ValueType/Angle3D.cpp \
+	ValueType/Trans3D.cpp \
+	ValueType/AxisBox1D.cpp \
+	ValueType/AxisBox2D.cpp \
+	ValueType/AxisBox3D.cpp \
+	ValueType/Ray3D.cpp \
+	ValueType/Undex3D.cpp \
+	ValueType/UndexBox3D.cpp \
+	ValueType/UndexLoop3D.cpp \
+	ValueType/Bool3D.cpp \
+	ValueType/Matrix3x3.cpp \
+	ValueType/DepthFactors.cpp \
+	ValueType/Depth.cpp \
+	ValueType/Range.cpp \
+	ValueType/LInter.cpp \
+	ValueType/ColorF4.cpp \
+	ValueType/LightBase.cpp \
+	ValueType/LightSolar.cpp \
+	ValueType/LightSpot.cpp \
 	DataShow.cpp
-DATASTRUCT_SRC := $(addprefix $(DIR_SRC)/,$(DATASTRUCT))
-DATASTRUCT_OBJ := $(addprefix $(DIR_OBJ)/,$(DATASTRUCT:.cpp=.o))
+ValueType/_SRC := $(addprefix $(DIR_SRC)/,$(ValueType/))
+ValueType/_OBJ := $(addprefix $(DIR_OBJ)/,$(ValueType/:.cpp=.o))
 
 DISPLAY := \
 	Display/AbsNormal2D.cpp \
@@ -68,13 +68,14 @@ UNIFORM := \
 	Graphics/Uniform/Base/Float1.cpp \
 	Graphics/Uniform/Base/Float2.cpp \
 	Graphics/Uniform/Base/Float3.cpp \
+	Graphics/Uniform/Base/Float4.cpp \
 	Graphics/Uniform/Base/Float3x3.cpp \
 	Graphics/Uniform/Base/UIntN.cpp \
 	Graphics/Uniform/Base/UInt1.cpp \
 \
 	Graphics/Uniform/Point2D.cpp \
 	Graphics/Uniform/Point3D.cpp \
-	Graphics/Uniform/Color.cpp \
+	Graphics/Uniform/ColorF4.cpp \
 	Graphics/Uniform/Matrix3x3.cpp \
 	Graphics/Uniform/DepthFactors.cpp \
 \
@@ -98,7 +99,7 @@ MULTIFORM := \
 	Graphics/Multiform/Range.cpp \
 	Graphics/Multiform/Depth.cpp \
 	Graphics/Multiform/LInter.cpp \
-	Graphics/Multiform/Color.cpp \
+	Graphics/Multiform/ColorF4.cpp \
 	Graphics/Multiform/SizeRatio2D.cpp \
 	Graphics/Multiform/WindowBufferSize2D.cpp
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
@@ -123,7 +124,7 @@ ATTRIBUTE := \
 	Graphics/Attribute/Trans3D.cpp \
 	Graphics/Attribute/Point2D.cpp \
 	Graphics/Attribute/Point4D.cpp \
-	Graphics/Attribute/Color.cpp
+	Graphics/Attribute/ColorF4.cpp
 ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
 
@@ -206,7 +207,7 @@ OTHER_OBJ := $(addprefix $(DIR_OBJ)/,$(OTHER:.cpp=.o))
 
 
 ALL_SRC := \
-	$(DATASTRUCT_SRC) $(DISPLAY_SRC)\
+	$(ValueType/_SRC) $(DISPLAY_SRC)\
 	$(CONTAINER_SRC)\
 	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC)\
 	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC)\
@@ -218,7 +219,7 @@ ALL_SRC := \
 	$(OTHER_SRC)
 
 ALL_OBJ := \
-	$(DATASTRUCT_OBJ) $(DISPLAY_OBJ)\
+	$(ValueType/_OBJ) $(DISPLAY_OBJ)\
 	$(CONTAINER_OBJ)\
 	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ)\
 	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ)\
@@ -295,9 +296,9 @@ $(NAME) : $(ALL_OBJ)
 
 ################################################################
 
-remake_DataStruct:
+remake_ValueType/:
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(DATASTRUCT_OBJ)
+	@rm -f $(ValueType/_OBJ)
 	@rm -f $(NAME)
 	@$(MAKE) -s all
 

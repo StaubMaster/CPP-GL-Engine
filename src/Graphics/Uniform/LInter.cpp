@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/LInter.hpp"
-#include "DataStruct/LInter.hpp"
+#include "ValueType/LInter.hpp"
 
 
 

@@ -5,7 +5,7 @@
 # include "UserParameter/Haptic/State.hpp"
 # include "UserParameter/Haptic/Action.hpp"
 
-# include "DataStruct/Point2D.hpp"
+# include "ValueType/Point2D.hpp"
 
 /*	what stuff needs to be remembered per MouseButton
 last Click time (for multiClick) ?
