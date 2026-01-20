@@ -39,17 +39,16 @@ class Window
 	GLFWwindow * glfw_window;
 	UserParameter::KeyBoard::KeyRange2 Keys;
 	UserParameter::Mouse::EventManager MouseManager;
-	void * Data;
 
 	public:
 	unsigned long long FrameNumberTerminate;
 
 	public:
-	void (*FrameFunc)(void *, double);
-	void (*InitFunc)(void *);
-	void (*FreeFunc)(void *);
+	void (*FrameFunc)	(double);
+	void (*InitFunc)	();
+	void (*FreeFunc)	();
 
-	void (*ResizeFunc)(void *, const WindowBufferSize2D &);
+	void (*ResizeFunc)	(const WindowBufferSize2D &);
 
 	void (*KeyFunc)		(UserParameter::KeyBoard::Key);
 	void (*TextFunc)	(UserParameter::KeyBoard::Text);

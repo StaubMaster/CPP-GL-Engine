@@ -51,8 +51,7 @@ GLFWwindow * Window::NormalWindow()
 Window::Window() :
 	glfw_window(NormalWindow()),
 	Keys(7),
-	MouseManager(*this),
-	Data(NULL)
+	MouseManager(*this)
 {
 	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
 
@@ -160,7 +159,7 @@ void Window::Callback_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
 	UpdateSize();
-	if (ResizeFunc != NULL) { ResizeFunc(Data, Size); }
+	if (ResizeFunc != NULL) { ResizeFunc(Size); }
 }
 void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
@@ -270,7 +269,7 @@ void Window::Run_Init()
 	if (InitFunc != NULL)
 	{
 		Debug::Log << "Window Init() ..." << Debug::Done;
-		InitFunc(Data);
+		InitFunc();
 		Debug::Log << "Window Init() done" << Debug::Done;
 	}
 }
@@ -279,7 +278,7 @@ void Window::Run_Free()
 	if (FreeFunc != NULL)
 	{
 		Debug::Log << "Window Free() ..." << Debug::Done;
-		FreeFunc(Data);
+		FreeFunc();
 		Debug::Log << "Window Free() done" << Debug::Done;
 	}
 }
@@ -290,7 +289,7 @@ void Window::Run()
 		RunGL_Setup();
 		Run_Init();
 		UpdateSize();
-		if (ResizeFunc != NULL) { ResizeFunc(Data, Size); }
+		if (ResizeFunc != NULL) { ResizeFunc(Size); }
 		Debug::Log << "Window Loop ..." << Debug::Done;
 		std::cout << "Window Loop ..." << '\n';
 		double FrameTimeLast = glfwGetTime();
@@ -303,7 +302,7 @@ void Window::Run()
 			{
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
-				FrameFunc(Data, FrameTimeDelta);
+				FrameFunc(FrameTimeDelta);
 				glfwSwapBuffers(glfw_window);
 				Keys.Tick();
 				MouseManager.Tick();

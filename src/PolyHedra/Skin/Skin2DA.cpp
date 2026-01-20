@@ -29,10 +29,8 @@ Texture::Base * Skin2DA::ToTexture() const
 }
 void Skin2DA::ToTexture(Texture::Array2D & tex) const
 {
-	std::cout << "Skin2DA::ToTexture() ...\n";
 	tex.Create();
 	tex.Assign(W, H, Images);
-	std::cout << "Skin2DA::ToTexture() done\n";
 }
 
 

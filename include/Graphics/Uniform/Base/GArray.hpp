@@ -18,47 +18,46 @@ template <typename UniformType, typename DataType>
 class GArray
 {
 	public:
-		const unsigned int	Limit;
+	const unsigned int	Limit;
 	private:
-		UniformType **	Uniforms;
+	UniformType **	Uniforms;
 
 	public:
-		GArray(unsigned int count, Uniform::NameShader name_shader) :
-			Limit(count)
+	GArray(unsigned int count, Uniform::NameShader name_shader) :
+		Limit(count)
+	{
+		Uniforms = new UniformType*[Limit];
+		for (unsigned int i = 0; i < Limit; i++)
 		{
-			Uniforms = new UniformType*[Limit];
-			for (unsigned int i = 0; i < Limit; i++)
-			{
-				std::stringstream ss;
-				ss << name_shader.Name << "[" << i << "]";
-				//std::cout << "Uni:" << ss.str() << "\n";
-				Uniforms[i] = new UniformType(Uniform::NameShader(ss.str(), name_shader.Shader));
-			}
+			std::stringstream ss;
+			ss << name_shader.Name << "[" << i << "]";
+			Uniforms[i] = new UniformType(Uniform::NameShader(ss.str(), name_shader.Shader));
 		}
-		~GArray()
+	}
+	~GArray()
+	{
+		for (unsigned int i = 0; i < Limit; i++)
 		{
-			for (unsigned int i = 0; i < Limit; i++)
-			{
-				delete Uniforms[i];
-			}
-			delete[] Uniforms;
+			delete Uniforms[i];
 		}
+		delete[] Uniforms;
+	}
 
 	public:
-		UniformType & operator[](unsigned int index)
-		{
-			return *(Uniforms[index]);
-		}
+	UniformType & operator[](unsigned int index)
+	{
+		return *(Uniforms[index]);
+	}
 
 	public:
-		void PutData(DataType * data, unsigned int count)
+	void PutData(DataType * data, unsigned int count)
+	{
+		if (Limit < count) { count = Limit; }
+		for (unsigned int i = 0; i < count; i++)
 		{
-			if (Limit < count) { count = Limit; }
-			for (unsigned int i = 0; i < count; i++)
-			{
-				Uniforms[i] -> PutData(data[i]);
-			}
+			Uniforms[i] -> PutData(data[i]);
 		}
+	}
 };
 };
 

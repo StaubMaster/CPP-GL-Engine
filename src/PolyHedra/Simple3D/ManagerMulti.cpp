@@ -4,7 +4,9 @@
 
 
 PolyHedra_Simple3D::ManagerMulti::ManagerMulti() :
-	DefaultShader()
+	DefaultShader(),
+	DefaultShaderToUse(NULL),
+	MultiplePolyHedra()
 { }
 PolyHedra_Simple3D::ManagerMulti::~ManagerMulti()
 {
@@ -62,9 +64,12 @@ void PolyHedra_Simple3D::ManagerMulti::Remove(PolyHedra * polyhedra)
 
 EntryContainer::Entry<Simple3D::Data> PolyHedra_Simple3D::ManagerMulti::Place(PolyHedra * polyhedra, unsigned int size)
 {
-	Insert(polyhedra);
 	unsigned int idx = FindIndex(polyhedra);
-	//if (idx == 0xFFFFFFFF) { return; }
+	if (idx == 0xFFFFFFFF)
+	{
+		Insert(polyhedra);
+		FindIndex(polyhedra);
+	}
 
 	ManagerSingle * man = MultiplePolyHedra[idx];
 	return EntryContainer::Entry<Simple3D::Data>(man -> _Instances, size);
@@ -86,7 +91,11 @@ void PolyHedra_Simple3D::ManagerMulti::Clear()
 
 void PolyHedra_Simple3D::ManagerMulti::Draw()
 {
-	DefaultShader.Bind();
+	if (DefaultShaderToUse != NULL)
+	{ DefaultShaderToUse -> Bind(); }
+	else
+	{ DefaultShader.Bind(); }
+
 	for (unsigned int i = 0; i < MultiplePolyHedra.Count(); i++)
 	{
 		MultiplePolyHedra[i] -> Draw();

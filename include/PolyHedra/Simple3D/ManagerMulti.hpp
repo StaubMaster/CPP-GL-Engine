@@ -24,6 +24,7 @@ class ManagerMulti
 {
 	public:
 	PolyHedra_Simple3D::Shader			DefaultShader;
+	Shader::Base *						DefaultShaderToUse;
 	Container::Binary<ManagerSingle*>	MultiplePolyHedra;
 
 	public:

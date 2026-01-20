@@ -158,7 +158,6 @@ POLYHEDRA := \
 	PolyHedra/Main/Buffer.cpp \
 	PolyHedra/Simple3D/Shader.cpp \
 	PolyHedra/Simple3D/BufferArray.cpp \
-	PolyHedra/Simple3D/PolyHedra_3D_Instances.cpp \
 	PolyHedra/Simple3D/ManagerSingle.cpp \
 	PolyHedra/Simple3D/ManagerMulti.cpp
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))

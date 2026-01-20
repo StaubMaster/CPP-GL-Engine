@@ -56,6 +56,8 @@ PolyHedra::ParsingData::~ParsingData()
 }
 void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 {
+	try
+	{
 	std::string name = cmd.Name();
 	if (name == "")				{ /*std::cout << "empty\n";*/ }
 	else if (name == "Type")	{ Parse_Type(cmd); }
@@ -91,6 +93,12 @@ void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 	else if (name == "fan<1")	{ Parse_Fan(cmd, true, true); }
 
 	else						{ Debug::Log << "unknown: " << cmd << Debug::Done; }
+	}
+	catch (std::exception & ex)
+	{
+		Debug::Log << "Exception while Parsing PolyHedra: " << ex.what() << '\n';
+		Debug::Log << "Exception on TextCommand: " << cmd << Debug::Done;
+	}
 }
 void PolyHedra::ParsingData::Parse_Type(const TextCommand & cmd)
 {
