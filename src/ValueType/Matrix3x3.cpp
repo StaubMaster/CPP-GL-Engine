@@ -36,15 +36,19 @@ Matrix3x3 & Matrix3x3::operator =(const Matrix3x3 & other)
 	return *this;
 }
 
-Matrix3x3::Matrix3x3(const float * data)
+Matrix3x3::Matrix3x3(	float data00, float data01, float data02,
+						float data10, float data11, float data12,
+						float data20, float data21, float data22)
 {
-	for (int y = 0; y < 3; y++)
-	{
-		for (int x = 0; x < 3; x++)
-		{
-			Data[x][y] = data[y + x * 3];
-		}
-	}
+	Data[0][0] = data00;
+	Data[0][1] = data01;
+	Data[0][2] = data02;
+	Data[1][0] = data10;
+	Data[1][1] = data11;
+	Data[1][2] = data12;
+	Data[2][0] = data20;
+	Data[2][1] = data21;
+	Data[2][2] = data22;
 }
 
 

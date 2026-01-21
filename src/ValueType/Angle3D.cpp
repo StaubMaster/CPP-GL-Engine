@@ -61,27 +61,27 @@ void Angle3D::CalcFore()
 {
 	float sinX = sin(X);
 	float cosX = cos(X);
-	Matrix3x3 matX((float[]) {
+	Matrix3x3 matX(
 		 +cosX , 0 , -sinX ,
 		   0   , 1 ,   0   ,
-		 +sinX , 0 , +cosX ,
-	});
+		 +sinX , 0 , +cosX
+	);
 
 	float sinY = sin(Y);
 	float cosY = cos(Y);
-	Matrix3x3 matY((float[]) {
+	Matrix3x3 matY(
 		 1 ,   0   ,   0   ,
 		 0 , +cosY , -sinY ,
-		 0 , +sinY , +cosY ,
-	});
+		 0 , +sinY , +cosY
+	);
 
 	float sinZ = sin(Z);
 	float cosZ = cos(Z);
-	Matrix3x3 matZ((float[]) {
+	Matrix3x3 matZ(
 		 +cosZ , +sinZ , 0 ,
 		 -sinZ , +cosZ , 0 ,
-		   0   ,   0   , 1 ,
-	});
+		   0   ,   0   , 1
+	);
 
 	Mat = Matrix3x3::Default();
 	Mat = Mat * matZ;
@@ -92,27 +92,27 @@ void Angle3D::CalcBack()
 {
 	float sinZ = sin(Z);
 	float cosZ = cos(Z);
-	Matrix3x3 matZ((float[]) {
+	Matrix3x3 matZ(
 		 +cosZ , -sinZ , 0 ,
 		 +sinZ , +cosZ , 0 ,
-		   0   ,   0   , 1 ,
-	});
+		   0   ,   0   , 1
+	);
 
 	float sinY = sin(Y);
 	float cosY = cos(Y);
-	Matrix3x3 matY((float[]) {
+	Matrix3x3 matY(
 		 1 ,   0   ,   0   ,
 		 0 , +cosY , +sinY ,
-		 0 , -sinY , +cosY ,
-	});
+		 0 , -sinY , +cosY
+	);
 
 	float sinX = sin(X);
 	float cosX = cos(X);
-	Matrix3x3 matX((float[]) {
+	Matrix3x3 matX(
 		 +cosX , 0 , +sinX ,
 		   0   , 1 ,   0   ,
-		 -sinX , 0 , +cosX ,
-	});
+		 -sinX , 0 , +cosX
+	);
 
 	Mat = Matrix3x3::Default();
 	Mat = Mat * matX;

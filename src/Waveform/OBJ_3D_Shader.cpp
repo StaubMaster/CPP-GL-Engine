@@ -10,7 +10,7 @@
 
 
 
-OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryInfo & dir)
+/*OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryInfo & dir)
 	: Shader::Base(
 		Container::Pointer<Shader::Code>(2, (Shader::Code[])
 		{
@@ -30,6 +30,6 @@ OBJ_3D_Shader::OBJ_3D_Shader(const DirectoryInfo & dir)
 	//std::cout << dir.File("OBJ.frag").LoadText();
 	//std::cout << "################################################################\n";
 	(void)dir;
-}
+}*/
 OBJ_3D_Shader::~OBJ_3D_Shader()
 { }

@@ -14,7 +14,9 @@ class Matrix3x3
 		Matrix3x3(const Matrix3x3 & other);
 		Matrix3x3 & operator =(const Matrix3x3 & other);
 
-		Matrix3x3(const float * data);
+		Matrix3x3(	float data00, float data01, float data02,
+					float data10, float data11, float data12,
+					float data20, float data21, float data22);
 		static Matrix3x3 Default();
 
 	public:

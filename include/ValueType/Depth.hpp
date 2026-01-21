@@ -9,7 +9,7 @@ struct Depth
 {
 	public:
 	DepthFactors	Factors;
-	Range			Range;
+	::Range			Range;
 	ColorF4			Color;
 };
 

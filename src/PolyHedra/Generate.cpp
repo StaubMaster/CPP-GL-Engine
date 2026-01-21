@@ -183,14 +183,14 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 
 
 
-#include "FileInfo.hpp"
-#include "DirectoryInfo.hpp"
-#include <vector>
-#include "ValueType/uint.hpp"
-#include <iostream>
-#include "DataShow.hpp"
+//#include "FileInfo.hpp"
+//#include "DirectoryInfo.hpp"
+//#include <iostream>
+//#include "DataShow.hpp"
+#include "Debug.hpp"
 PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 {
+	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") ..." << Debug::Done;
 	PolyHedra * ph = new PolyHedra();
 	PolyHedra::Template temp(*ph);
 
@@ -215,7 +215,6 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	tex01[3] = Point3D(1.0f, 0.0f, 0.0f);
 
 	Point2D scale(img.W() * img_scale * 0.01f * 0.5f, img.H() * img_scale * 0.01f * 0.5f);
-	std::cout << "scale: " << scale << '\n';
 
 	temp.Insert_Corn(Point3D(-scale.X, -scale.Y, -FrameSizeInn.Z));
 	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, -FrameSizeInn.Z));
@@ -440,5 +439,6 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	temp.Done();
 	skin -> Done();
 	ph -> Skin = skin;
+	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") done" << Debug::Done;
 	return ph;
 }

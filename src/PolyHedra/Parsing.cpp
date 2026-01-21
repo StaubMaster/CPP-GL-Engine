@@ -54,6 +54,7 @@ PolyHedra::ParsingData::~ParsingData()
 {
 	delete Data;
 }
+
 void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 {
 	try

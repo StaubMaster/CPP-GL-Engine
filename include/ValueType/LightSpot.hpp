@@ -11,7 +11,7 @@ struct LightSpot
 	LightBase	Base;
 	Point3D		Pos;
 	Point3D		Dir;
-	Range		Range;
+	::Range		Range;
 
 	public:
 	LightSpot();

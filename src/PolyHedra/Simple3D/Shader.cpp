@@ -15,7 +15,7 @@ PolyHedra_Simple3D::Shader::Shader()
 	Depth(Uniform::NameShader("Depth", *this)),
 	FOV(Uniform::NameShader("FOV", *this))
 { }
-PolyHedra_Simple3D::Shader::Shader(const DirectoryInfo & dir)
+/*PolyHedra_Simple3D::Shader::Shader(const DirectoryInfo & dir)
 	: ::Shader::Base(
 		Container::Pointer<::Shader::Code>(2, (::Shader::Code[])
 		{
@@ -27,6 +27,6 @@ PolyHedra_Simple3D::Shader::Shader(const DirectoryInfo & dir)
 	View(Uniform::NameShader("View", *this)),
 	Depth(Uniform::NameShader("Depth", *this)),
 	FOV(Uniform::NameShader("FOV", *this))
-{ }
+{ }*/
 PolyHedra_Simple3D::Shader::~Shader()
 { }
