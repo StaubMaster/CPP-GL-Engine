@@ -269,7 +269,6 @@ ALL_OBJ := \
 # having repos as a dependency allways does this stuff
 all:
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@$(MAKE) repos_clone -s
 	@$(MAKE) $(NAME) -s
 
 clean:
@@ -293,6 +292,14 @@ re:
 $(NAME) : $(ALL_OBJ)
 	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
 	@ar -rcs $(NAME) $(ALL_OBJ)
+
+################################################################
+
+
+
+
+
+
 
 ################################################################
 
@@ -434,16 +441,11 @@ arguments:
 
 .PHONY: librarys includes arguments
 
-test:
-	@echo '$(shell $(MAKE) includes -s)'
-
-.PHONY: test
-
 ################################################################
 
 
 
-include repos.mk
+REPOS_DIR := ../
 
 
 
@@ -453,8 +455,6 @@ include repos.mk
 
 OPENGL_REPO := $(REPOS_DIR)/OpenGL
 
-REPOS_STATIC += $(OPENGL_REPO)
-
 #OPENGL_LIBRARYS = $(call repoLibrarys,$(OPENGL_REPO))
 #OPENGL_INCLUDES = $(call repoIncludes,$(OPENGL_REPO))
 #OPENGL_ARGUMENTS = $(call repoArguments,$(OPENGL_REPO))
@@ -462,20 +462,21 @@ REPOS_STATIC += $(OPENGL_REPO)
 OPENGL_LIBRARYS = $(OPENGL_REPO)/openGL.a
 OPENGL_INCLUDES = $(OPENGL_REPO)/../
 
-ifeq ($(CheckOS), Windows)
-OPENGL_ARGUMENTS = -lglfw3 -lgdi32
-endif
-
-ifeq ($(CheckOS), Darwin)
-OPENGL_ARGUMENTS = -lglfw
-endif
+#ifeq ($(CheckOS), Windows)
+#OPENGL_ARGUMENTS = -lglfw3 -lgdi32
+#endif
+#
+#ifeq ($(CheckOS), Darwin)
+#OPENGL_ARGUMENTS = -lglfw
+#endif
+#
+#ifeq ($(CheckOS), Linux)
+#OPENGL_ARGUMENTS = -lglfw
+#endif
 
 LIBRARYS += $(OPENGL_LIBRARYS)
 INCLUDES += $(OPENGL_INCLUDES)
 ARGUMENTS += $(OPENGL_ARGUMENTS)
-
-$(OPENGL_LIBRARYS) : $(OPENGL_REPO)
-	$(MAKE) -C $(OPENGL_REPO) $(@:$(OPENGL_REPO)/%=%) -s
 
 ################################################################
 
@@ -487,10 +488,7 @@ $(OPENGL_LIBRARYS) : $(OPENGL_REPO)
 #                         File Manager                         #
 ################################################################
 
-FM_HTTPS := https://github.com/StaubMaster/CPP-FileManager.git
 FM_REPO := $(REPOS_DIR)/FileManager
-
-REPOS_DYNAMIC += $(FM_REPO)
 
 #FM_LIBRARYS = $(call repoLibrarys,$(FM_REPO))
 #FM_INCLUDES = $(call repoIncludes,$(FM_REPO))
@@ -503,12 +501,6 @@ FM_ARGUMENTS =
 LIBRARYS += $(FM_LIBRARYS)
 INCLUDES += $(FM_INCLUDES)
 ARGUMENTS += $(FM_ARGUMENTS)
-
-$(FM_REPO) :
-	git clone $(FM_HTTPS) $(FM_REPO) -q
-
-$(FM_LIBRARYS) : $(FM_REPO)
-	$(MAKE) -C $(FM_REPO) $(@:$(FM_REPO)/%=%) -s
 
 ################################################################
 
