@@ -20,13 +20,18 @@ class Code;
 class Base
 {
 	private:
+	static ShaderID None;
+	static int GetProgramiv(ShaderID ID, unsigned int name);
+
+	private:
 	ShaderID ID;
 	Container::Fixed<Shader::Code> Code;	// these are the Shaders. the whole class is technically a Shader Program
 	public:
 	Container::Binary<Uniform::Base*> Uniforms;
 
 	public:
-	void LogInfo(bool self = true) const;
+	void LogInfo(bool self = true, bool log = false) const;
+	//void LogInfo(bool dent, bool code, bool uniforms, bool log) const;
 
 
 

@@ -10,17 +10,17 @@
 
 
 
-/*std::ostream & operator<<(std::ostream & o, const ShaderID & val)
+ShaderID Shader::Base::None = 0;
+int Shader::Base::GetProgramiv(ShaderID ID, unsigned int name)
 {
-	int v = val;
-	if (val == 0) { o << "none"; }
-	else { o << v; }
-	return o;
-}*/
+	int params;
+	glGetProgramiv(ID, name, &params);
+	return params;
+}
 
 
 
-void Shader::Base::LogInfo(bool self) const
+void Shader::Base::LogInfo(bool self, bool log) const
 {
 	if (self)
 	{
@@ -39,6 +39,29 @@ void Shader::Base::LogInfo(bool self) const
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{ Uniforms[i] -> LogInfo(false); }
 	Debug::Log << Debug::TabDec;
+
+	{
+		if (ID != None)
+		{
+			int len = GetProgramiv(ID, GL_INFO_LOG_LENGTH);
+			Debug::Log << Debug::Tabs << "InfoLog: " << len << '\n';
+			if (log && len != 0)
+			{
+				char str[len];
+				glGetProgramInfoLog(ID, len, &len, str);
+				Debug::Log << "####\n";
+				Debug::Log << str;
+				Debug::Log << "####\n";
+			}
+			unsigned int status = GetProgramiv(ID, GL_LINK_STATUS);
+			Debug::Log << Debug::Tabs << "Status: " << status << '\n';
+		}
+		else
+		{
+			Debug::Log << Debug::Tabs << "InfoLog:\n";
+			Debug::Log << Debug::Tabs << "Status:\n";
+		}
+	}
 
 	if (self)
 	{
@@ -105,7 +128,13 @@ void Shader::Base::BindNone()
 
 
 
-bool Shader::Base::Exists() const { return (ID != 0); }
+bool Shader::Base::Exists() const
+{
+	if (ID == None) { return false; }
+	if (GetProgramiv(ID, GL_INFO_LOG_LENGTH) != 0) { return false; }
+	if (GetProgramiv(ID, GL_LINK_STATUS) == 0) { return false; }
+	return true;
+}
 void Shader::Base::Delete()
 {
 	if (ID == 0) { return; }
@@ -131,19 +160,36 @@ void Shader::Base::Create()
 	ID = glCreateProgram();
 
 	Shader::Code::Compile(Code);
-	Shader::Code::Attach(Code, ID);
-	glLinkProgram(ID);
-	Shader::Code::Detach(Code, ID);
+	if (Shader::Code::Valid(Code))
+	{
+		Shader::Code::Attach(Code, ID);
+		glLinkProgram(ID);
+		Shader::Code::Detach(Code, ID);
+	}
+	else
+	{
+		Debug::Log << Debug::Tabs << "Shader::Code[" << Code.Count() << "]\n";
+		Debug::Log << Debug::TabInc;
+		for (unsigned int i = 0; i < Code.Count(); i++)
+		{
+			Debug::Log << Debug::Tabs << "[" << i << "]\n";
+			Debug::Log << Debug::TabInc;
+			Code[i].LogInfo(false, true);
+			Debug::Log << Debug::TabDec;
+		}
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
 	Shader::Code::Dispose(Code);
 
-	char log_arr[1024];
+	/*char log_arr[1024];
 	int log_len = 0;
-	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
+	glGetProgramInfoLog(ID, 1024, &log_len, log_arr);
 	if (log_len != 0)
 	{
 		std::string log = std::string(log_arr, log_len);
 		throw ECompileLog(log);
-	}
+	}*/
 
 	//Debug::Log << "Shader::Base Creating " << ID << " done" << Debug::Done;
 
@@ -153,7 +199,7 @@ void Shader::Base::Create()
 	}
 
 	//Debug::Log << "Create Shader: " << ID << Debug::Done;
-	//LogInfo();
+	//LogInfo(true, true);
 }
 void Shader::Base::Change(Container::Base<Shader::Code> code)
 {

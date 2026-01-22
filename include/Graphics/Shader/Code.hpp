@@ -21,13 +21,17 @@ namespace Shader
 class Code
 {
 	private:
+	static ShaderID None;
+	static int GetShaderiv(ShaderID ID, unsigned int name);
+
+	private:
 	public:
 	ShaderID ID;
 	ShaderType Type;
 	FileInfo File;
 
 	public:
-	void LogInfo(bool self = true) const;
+	void LogInfo(bool self = true, bool log = false) const;
 
 
 
@@ -42,48 +46,21 @@ class Code
 
 
 	public:
+	bool Valid() const;
 	void Dispose();
 	void Compile();
 	void Attach(ShaderID ProgramID) const;
 	void Detach(ShaderID ProgramID) const;
 
 	public:
+	static bool Valid(Container::Base<Shader::Code> & code);
 	static void Dispose(Container::Base<Shader::Code> & code);
 	static void Compile(Container::Base<Shader::Code> & code);
 	static void Attach(Container::Base<Shader::Code> & code, ShaderID ProgramID);
 	static void Detach(Container::Base<Shader::Code> & code, ShaderID ProgramID);
 
-
-
-	private:
-	class ECompileLog : public std::exception
-	{
-		private:
-		std::string Log;
-		std::string Path;
-		std::string Text;
-
-		public:
-		ECompileLog(const std::string log, const std::string path);
-
-		public:
-		const char * what() const throw();
-	};
-
 	private:
 	static ShaderType ShaderTypeFromExtension(const FileInfo & file);
-	class EInvalidFileExtention : std::exception
-	{
-		private:
-		std::string Path;
-		std::string Text;
-
-		public:
-		EInvalidFileExtention(const std::string & path);
-
-		public:
-		const char * what() const throw();
-	};
 };
 };
 

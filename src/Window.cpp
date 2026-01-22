@@ -317,7 +317,7 @@ void Window::Run()
 		std::cout << "Window Loop done" << '\n';
 	}
 	catch (std::exception & ex)	{ std::cerr << "Exception: " << ex.what() << '\n'; }
-	catch (std::string & str)	{ std::cerr << "string Exception: "<< str << '\n'; }
+	catch (std::string & str)	{ std::cerr << "std::string Exception: "<< str << '\n'; }
 	catch (const char * str)	{ std::cerr << "const char * Exception: "<< str << '\n'; }
 	catch (...)					{ std::cerr << "Unknown Exception\n"; }
 	Run_Free();

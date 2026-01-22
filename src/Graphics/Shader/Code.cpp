@@ -1,5 +1,6 @@
 #include "Graphics/Shader/Code.hpp"
 #include "FileInfo.hpp"
+#include "FileExceptions.hpp"
 
 #include "OpenGL/openGL.h"
 #include "Debug.hpp"
@@ -7,7 +8,17 @@
 
 
 
-void Shader::Code::LogInfo(bool self) const
+ShaderID Shader::Code::None = 0;
+int Shader::Code::GetShaderiv(ShaderID ID, unsigned int name)
+{
+	int params;
+	glGetShaderiv(ID, name, &params);
+	return params;
+}
+
+
+
+void Shader::Code::LogInfo(bool self, bool log) const
 {
 	if (self)
 	{
@@ -15,10 +26,31 @@ void Shader::Code::LogInfo(bool self) const
 		Debug::Log << Debug::TabInc;
 	}
 	//Debug::Log << Debug::Tabs << "Type " << typeid(*this).name() << '\n';
-	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Type " << Type << '\n';
-	Debug::Log << Debug::Tabs << "File " << File.Path.ToString() << '\n';
-	//Debug::Log << Debug::Tabs << "]\n";
+	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
+	Debug::Log << Debug::Tabs << "Type: " << Type << '\n';
+	Debug::Log << Debug::Tabs << "File: " << File.Path.ToString() << '\n';
+	{
+		if (ID != None)
+		{
+			int len = GetShaderiv(ID, GL_INFO_LOG_LENGTH);
+			Debug::Log << Debug::Tabs << "InfoLog: " << len << '\n';
+			if (log && len != 0)
+			{
+				char str[len];
+				glGetShaderInfoLog(ID, len, &len, str);
+				Debug::Log << "####\n";
+				Debug::Log << str;
+				Debug::Log << "####\n";
+			}
+			unsigned int status = GetShaderiv(ID, GL_COMPILE_STATUS);
+			Debug::Log << Debug::Tabs << "Status: " << status << '\n';
+		}
+		else
+		{
+			Debug::Log << Debug::Tabs << "InfoLog:\n";
+			Debug::Log << Debug::Tabs << "Status:\n";
+		}
+	}
 	if (self)
 	{
 		Debug::Log << Debug::TabDec;
@@ -30,7 +62,8 @@ void Shader::Code::LogInfo(bool self) const
 
 Shader::Code::Code() :
 	ID(0),
-	Type(0)
+	Type(0),
+	File()
 { }
 Shader::Code::Code(const FileInfo & file) :
 	ID(0),
@@ -55,36 +88,44 @@ Shader::Code & Shader::Code::operator=(const Shader::Code & other)
 
 
 
+bool Shader::Code::Valid() const
+{
+	if (ID == None) { return false; }
+	if (GetShaderiv(ID, GL_INFO_LOG_LENGTH) != 0) { return false; }
+	if (GetShaderiv(ID, GL_COMPILE_STATUS) == 0) { return false; }
+	return true;
+}
 void Shader::Code::Dispose()
 {
-	if (ID == 0) { return; }
+	if (ID == None) { return; }
 	//Debug::Log << "Shader::Code Disposing " << ID << " ..." << Debug::Done;
 	glDeleteShader(ID);
-	ID = 0;
+	ID = None;
 	//Debug::Log << "Shader::Code Disposing " << ID << " done" << Debug::Done;
 }
 void Shader::Code::Compile()
 {
-	if (ID != 0) { return; }
+	if (ID != None) { return; }
 
 	//Debug::Log << "Shader::Code Compiling " << ID << " ..." << Debug::Done;
 	ID = glCreateShader(Type);
 
-	std::string code = File.LoadText();
-	const char * arr[1] = {
-		code.c_str(),
-	};
-	glShaderSource(ID, 1, arr, NULL);
+	{
+		std::string code = File.LoadText();
+		const char * strs[1];
+		strs[0] = code.c_str();
+		glShaderSource(ID, 1, strs, NULL);
+	}
 	glCompileShader(ID);
 
-	char log_arr[1024];
+	/*char log_arr[1024];
 	int log_len = 0;
 	glGetShaderInfoLog(ID, 1024, &log_len, log_arr);
 	if (log_len != 0)
 	{
 		std::string log = std::string(log_arr, log_len);
 		throw ECompileLog(log, File.Path.ToString());
-	}
+	}*/
 
 	//Debug::Log << "Shader::Code Compiling " << ID << " done" << Debug::Done;
 }
@@ -101,6 +142,14 @@ void Shader::Code::Detach(ShaderID ProgramID) const
 	//Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " done" << Debug::Done;
 }
 
+bool Shader::Code::Valid(Container::Base<Shader::Code> & code)
+{
+	for (unsigned int i = 0; i < code.Count(); i++)
+	{
+		if (!code[i].Valid()) { return false; }
+	}
+	return true;
+}
 void Shader::Code::Dispose(Container::Base<Shader::Code> & code)
 {
 	for (unsigned int i = 0; i < code.Count(); i++)
@@ -132,37 +181,14 @@ void Shader::Code::Detach(Container::Base<Shader::Code> & code, ShaderID Program
 
 
 
-Shader::Code::ECompileLog::ECompileLog(const std::string log, const std::string path)
-{
-	Log = log;
-	Path = path;
-	Text = "Log returned from compiling File '" + Path + "'.\n\n" + Log;
-}
-const char * Shader::Code::ECompileLog::what() const throw()
-{
-	return Text.c_str();
-}
-
-
-
 ShaderType Shader::Code::ShaderTypeFromExtension(const FileInfo & file)
 {
 	std::string ext = file.Extension();
 	ShaderType type;
-	if      (ext == ".glsg") { throw EInvalidFileExtention(file.Path.ToString()); }
+	if      (ext == ".glsg") { throw (file.Path.ToString()); }
 	else if (ext == ".vert") { type = GL_VERTEX_SHADER; }
 	else if (ext == ".geom") { type = GL_GEOMETRY_SHADER; }
 	else if (ext == ".frag") { type = GL_FRAGMENT_SHADER; }
-	else { throw EInvalidFileExtention(file.Path.ToString()); }
+	else { throw InvalidExtension(file.Path.ToString()); }
 	return type;
-}
-
-Shader::Code::EInvalidFileExtention::EInvalidFileExtention(const std::string & path)
-{
-	Path = path;
-	Text = "File '" + Path + "' has an invalid Extention.";
-}
-const char * Shader::Code::EInvalidFileExtention::what() const throw()
-{
-	return Text.c_str();
 }
