@@ -7,8 +7,10 @@
 # include "Graphics/Uniform/Base/Base.hpp"
 
 # include "Miscellaneous/Container/Base.hpp"
+# include "Miscellaneous/Container/Fixed.hpp"
 
 # include <typeinfo>
+# include <iostream>
 
 
 
@@ -23,7 +25,7 @@ template <typename UniformType, typename DataType>
 class GBase : public Base
 {
 	public:
-	Container::Base<UniformType *> Uniforms;
+	Container::Fixed<UniformType *> Uniforms;
 	DataType Data;
 
 	public:
@@ -36,8 +38,7 @@ class GBase : public Base
 	public:
 		void FindUniforms(Container::Base<Shader::Base *> & shaders) override
 		{
-			Container::Base<UniformType *> uniforms(shaders.Count());
-			int c = 0;
+			Uniforms.Allocate(shaders.Count());
 
 			for (unsigned int s = 0; s < shaders.Count(); s++)
 			{
@@ -50,17 +51,14 @@ class GBase : public Base
 						if (typeid(*uni) == typeid(UniformType))
 						{
 							uni -> Multiform = this;
-							uniforms[c] = (UniformType*)(uni);
-							c++;
+							Uniforms.Insert((UniformType*)(uni));
 						}
 						else { /* Uniform has correct name but wrong Type */ }
 					}
 				}
 			}
 
-			Uniforms.Allocate(c);
-			for (int i = 0; i < c; i++)
-			{ Uniforms[i] = uniforms[i]; }
+			Uniforms.Trim();
 		}
 
 		void PutUniformData(Uniform::Base * uni_base) override

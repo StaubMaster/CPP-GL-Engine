@@ -12,6 +12,7 @@ PolyHedra_Simple3D::BufferArray::BufferArray() :
 	Texture(),
 	DrawMode(GL_TRIANGLES)
 {
+	Buffers.Allocate(2);
 	Buffers.Insert(&Main);
 	Buffers.Insert(&Inst);
 }
@@ -25,6 +26,7 @@ PolyHedra_Simple3D::BufferArray::BufferArray(const BufferArray & other) :
 	Texture(other.Texture),
 	DrawMode(other.DrawMode)
 {
+	Buffers.Allocate(2);
 	Buffers.Insert(&Main);
 	Buffers.Insert(&Inst);
 }

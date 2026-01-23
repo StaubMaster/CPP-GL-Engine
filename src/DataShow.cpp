@@ -88,6 +88,6 @@ std::ostream & operator <<(std::ostream & o, const Bool3D & val)
 
 std::ostream & operator <<(std::ostream & o, const ColorF4 & val)
 {
-	o << "(" << " R:" << val.R << " G:" << val.G << " B:" << val.B << " )";
+	o << "(" << " R:" << val.R << " G:" << val.G << " B:" << val.B << " A:" << val.A << " )";
 	return o;
 }

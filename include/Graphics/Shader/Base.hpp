@@ -55,6 +55,7 @@ class Base
 
 
 	public:
+	bool Validate() const;
 	bool Exists() const;
 	void Delete();
 	void Create();

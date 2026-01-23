@@ -126,6 +126,11 @@ void Shader::Base::BindNone()
 
 
 
+bool Shader::Base::Validate() const
+{
+	glValidateProgram(ID);
+	return (GetProgramiv(ID, GL_VALIDATE_STATUS));
+}
 bool Shader::Base::Exists() const
 {
 	if (ID == None) { return false; }

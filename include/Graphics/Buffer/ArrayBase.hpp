@@ -1,7 +1,7 @@
 #ifndef  BUFFER_ARRAYBASE_HPP
 # define BUFFER_ARRAYBASE_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Miscellaneous/Container/Fixed.hpp"
 
 typedef unsigned int BufferArrayID;
 
@@ -17,7 +17,7 @@ class Base
 	private:
 	BufferArrayID ID;
 	protected:
-	Container::Binary<Buffer::Base*> Buffers;
+	Container::Fixed<Buffer::Base*> Buffers;
 
 	public:
 	void LogInfo(bool self = true) const;
