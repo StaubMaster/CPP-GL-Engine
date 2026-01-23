@@ -6,8 +6,6 @@
 #include "Debug.hpp"
 #include <sstream>
 
-#include <iostream>
-
 
 
 ShaderID Shader::Base::None = 0;

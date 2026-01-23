@@ -35,13 +35,8 @@ unsigned int PolyHedra_Simple3D::ManagerMulti::FindIndex(PolyHedra * polyhedra) 
 
 void PolyHedra_Simple3D::ManagerMulti::Dispose()
 {
-	//DefaultShader.Delete();
-	//for (unsigned int i = 0; i < MultiplePolyHedra.Count(); i++)
-	//{
-	//	MultiplePolyHedra[i] -> Dispose();
-	//	delete MultiplePolyHedra[i];
-	//}
-	//MultiplePolyHedra.Dispose();
+	DefaultShader.Delete();
+	Clear();
 }
 void PolyHedra_Simple3D::ManagerMulti::Insert(PolyHedra * polyhedra)
 {
