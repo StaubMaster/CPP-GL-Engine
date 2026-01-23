@@ -1,10 +1,13 @@
 
-
-
 NAME := Engine.a
-#COMPILER := c++ -std=c++11
+
 COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror -D ENGINE_DIR='"$(shell pwd)"'
+ARCHIVER := ar -rcs
+REMOVER := rm -f
+
+FANCY_NAME := Engine
+include fancy.mk
 
 
 
@@ -230,35 +233,7 @@ ALL_OBJ := \
 	$(USERPARAMETER_OBJ)\
 	$(OTHER_OBJ)
 
-#	these makefiles suck
-#	currenty it allways makes stuff
-#	instead of checking if it needs to be updatd
-#	and then only making that stuff
-#	
-#	should I check for the .a of repos ?
-#	repos already have rules for _clone and _rm
-#	have one for making librarys ?
-#	for that I first need to check if the repo even exists
-#	else it needs to be cloned
-#
-#	so when comliling
-#	check for repo(s)
-#		if isnt found : clone
-#	check for librarys
-#		if isnt found : compile
-#
-#	how to compile librarys ?
-#	they are only required by the findal Executable
-#	but the actual file target is different by then because paths gets changed
-#	so just have the all target compile the current library
-#	and also all the sub librarys
-#	still leave checking for librarys before compiling
-#
-#	the library target is gotten from the repos
-#	this causes an error when the repos dont exist
-#	so have a check that checks if the directory exists
-#	else leave empty ?
-#
+
 
 
 
@@ -266,36 +241,41 @@ ALL_OBJ := \
 #                  Standard Makefile Commands                  #
 ################################################################
 
-# having repos as a dependency allways does this stuff
 all:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) $(NAME) -s
 
 clean:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(ALL_OBJ)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(ALL_OBJ)
 
 fclean:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) -s clean
-	@rm -f $(NAME)
+	@$(REMOVER) $(NAME)
 
 re:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
+	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) -s fclean
 	@$(MAKE) -s all
 
 .PHONY: all clean fclean re
 
-# I allways thought that NAME was supposed to be the default ?
-# pretty sure its just so the Makefile checks if it needs to be updated
 $(NAME) : $(ALL_OBJ)
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@ar -rcs $(NAME) $(ALL_OBJ)
+	@$(call fancyNameArchivingEcho,$@)
+	@$(ARCHIVER) $(NAME) $(ALL_OBJ)
 
 ################################################################
 
 
+
+
+
+
+$(DIR_OBJ)/%.o : $(DIR_SRC)/%.cpp
+	@$(call fancyNameCompilingEcho,$@)
+	@mkdir -p $(dir $@)
+	@$(COMPILER) $(FLAGS) $(ARGS_INCLUDES) -c $< -o $@
 
 
 
@@ -304,112 +284,98 @@ $(NAME) : $(ALL_OBJ)
 ################################################################
 
 remake_ValueType/:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(ValueType/_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(ValueType/_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Display:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(DISPLAY_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(DISPLAY_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Container:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(CONTAINER_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(CONTAINER_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Shader:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(SHADER_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(SHADER_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Uniform:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(UNIFORM_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(UNIFORM_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Multiform:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(MULTIFORM_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(MULTIFORM_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Buffer:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(BUFFER_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(BUFFER_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Attribute:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(ATTRIBUTE_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(ATTRIBUTE_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Texture:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(TEXTURE_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(TEXTURE_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Inst:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(INSTANCE_DATA_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(INSTANCE_DATA_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Main:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(POLYHEDRA_MAIN_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(POLYHEDRA_MAIN_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_PolyHedra:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(POLYHEDRA_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(POLYHEDRA_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Waveform:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(WAVEFORM_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(WAVEFORM_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_UserParameter:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(USERPARAMETER_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(USERPARAMETER_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 remake_Other:
-	@$(call fancyEcho,$(FANCY_NAME),Target,$@)
-	@rm -f $(OTHER_OBJ)
-	@rm -f $(NAME)
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(OTHER_OBJ)
+	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
 ################################################################
 
 
-
-
-
-include fancy.mk
-FANCY_NAME := Engine
-
-
-
-
-
-$(DIR_OBJ)/%.o : $(DIR_SRC)/%.cpp
-	@$(call fancyEcho,$(FANCY_NAME),Compiling,$@)
-	@mkdir -p $(dir $@)
-	@$(COMPILER) $(FLAGS) $(ARGS_INCLUDES) -c $< -o $@
 
 
 
