@@ -426,7 +426,7 @@ OPENGL_REPO := $(REPOS_DIR)/OpenGL
 #OPENGL_ARGUMENTS = $(call repoArguments,$(OPENGL_REPO))
 
 OPENGL_LIBRARYS = $(OPENGL_REPO)/openGL.a
-OPENGL_INCLUDES = $(OPENGL_REPO)/../
+OPENGL_INCLUDES = $(OPENGL_REPO)/include
 
 #ifeq ($(CheckOS), Windows)
 #OPENGL_ARGUMENTS = -lglfw3 -lgdi32

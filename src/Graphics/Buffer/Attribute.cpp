@@ -1,7 +1,9 @@
 #include "Graphics/Buffer/Attribute.hpp"
-#include "Debug.hpp"
 #include "OpenGL/openGL.h"
-#include <sstream>
+
+//#include "OpenGL/Errors.hpp"
+//#include "Debug.hpp"
+//#include <sstream>
 
 
 

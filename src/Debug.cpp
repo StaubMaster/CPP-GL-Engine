@@ -100,7 +100,6 @@ std::ostream & operator<<(std::ostream & log, Debug::LogChange & type)
 			{ Debug::LogFile << timestamp; }
 			else
 			{ Debug::LogFile << padding; }
-			Debug::LogFile << " ";
 			Debug::LogFile << lines[i];
 			Debug::LogFile << "\n";
 		}

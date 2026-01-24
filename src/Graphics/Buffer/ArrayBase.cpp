@@ -1,6 +1,8 @@
 #include "Graphics/Buffer/ArrayBase.hpp"
 #include "Graphics/Buffer/Base.hpp"
 #include "OpenGL/openGL.h"
+
+//#include "OpenGL/Errors.hpp"
 #include "Debug.hpp"
 #include <sstream>
 
