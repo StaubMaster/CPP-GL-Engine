@@ -1,5 +1,5 @@
 #include "UserParameter/Haptic/Modifier.hpp"
-#include "OpenGL/openGL.h"
+#include <GLFW/glfw3.h>
 
 
 

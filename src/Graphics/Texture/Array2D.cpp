@@ -5,7 +5,7 @@
 #include "Image.hpp"
 #include "FileInfo.hpp"
 
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 
 

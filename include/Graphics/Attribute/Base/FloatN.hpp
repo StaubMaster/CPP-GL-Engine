@@ -5,6 +5,8 @@
 # include "Graphics/Attribute/Base/AttributeLocation.hpp"
 # include "Graphics/Attribute/Base/AttributeBase.hpp"
 
+# include "OpenGLTypes.hpp"
+
 namespace Attribute
 {
 class FloatN : public Attribute::Base
@@ -16,12 +18,12 @@ class FloatN : public Attribute::Base
 	FloatN();
 	FloatN(
 		unsigned int n,
-		unsigned int divisor,
+		GL::AttributeDivisor divisor,
 		unsigned int stride,
 		unsigned int index
 	);
 	FloatN(
-		unsigned int divisor,
+		GL::AttributeDivisor divisor,
 		unsigned int stride,
 		unsigned int index
 	);

@@ -1,5 +1,5 @@
 #include "Graphics/Buffer/Attribute.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 //#include "OpenGL/Errors.hpp"
 //#include "Debug.hpp"
@@ -9,13 +9,13 @@
 
 Buffer::Attribute::Attribute() :
 	Buffer::Base(),
-	Target(0),
-	Usage(0),
+	Target((GL::BufferTarget)0),
+	Usage((GL::BufferDataUsage)0),
 	DataSize(0),
 	Attributes(),
 	DrawCount(0)
 { }
-Buffer::Attribute::Attribute(unsigned int target, unsigned int usage, unsigned int data_size) :
+Buffer::Attribute::Attribute(GL::BufferTarget target, GL::BufferDataUsage usage, unsigned int data_size) :
 	Buffer::Base(),
 	Target(target),
 	Usage(usage),
@@ -48,8 +48,8 @@ Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 
 void Buffer::Attribute::Change(const Container::Void & data)
 {
-	glBindBuffer(Target, ID);
-	glBufferData(Target, data.VoidCount(), data.VoidData(), Usage);
+	GL::BindBuffer(Target, ID);
+	GL::BufferData(Target, data.VoidCount(), data.VoidData(), Usage);
 	DrawCount = data.Count();
 
 	const unsigned char * offset = NULL;

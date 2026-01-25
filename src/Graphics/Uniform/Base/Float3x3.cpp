@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/Base/Float3x3.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 
 
@@ -12,5 +12,5 @@ Uniform::Float3x3::Float3x3(Uniform::NameShader name_shader, int count) : FloatN
 
 void Uniform::Float3x3::PutData(const float * val)
 {
-	glUniformMatrix3fv(Location, Count, true, val);
+	GL::UniformMatrix3fv(Location, Count, true, val);
 }

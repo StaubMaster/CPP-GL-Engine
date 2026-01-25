@@ -1,6 +1,6 @@
 #include "Waveform/OBJ_3D_BufferArray.hpp"
 
-# include "OpenGL/openGL.h"
+# include "OpenGL.hpp"
 # include <iostream>
 
 
@@ -13,7 +13,7 @@ OBJ_3D_BufferArray::OBJ_3D_BufferArray() :
 	BufferArray::Base(),
 	Main(0, 1, 2, 3, 4, 5, 6, 7),
 	Inst(8, 9),
-	DrawMode(GL_TRIANGLES)
+	DrawMode(GL::DrawMode::Triangles)
 { }
 OBJ_3D_BufferArray::~OBJ_3D_BufferArray()
 { }
@@ -23,5 +23,5 @@ OBJ_3D_BufferArray::~OBJ_3D_BufferArray()
 void OBJ_3D_BufferArray::Draw()
 {
 	Bind();
-	glDrawArraysInstanced(DrawMode, 0, Main.DrawCount, Inst.DrawCount);
+	GL::DrawArraysInstanced(DrawMode, 0, Main.DrawCount, Inst.DrawCount);
 }

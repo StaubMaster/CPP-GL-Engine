@@ -22,7 +22,7 @@ class OBJ_3D_BufferArray : BufferArray::Base
 	public:
 	OBJ_MainBuffer			Main;
 	Simple3D::Buffer		Inst;
-	unsigned int			DrawMode;
+	GL::DrawMode			DrawMode;
 
 	public:
 	OBJ_3D_BufferArray();

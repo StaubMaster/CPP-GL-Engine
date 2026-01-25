@@ -1,5 +1,5 @@
 #include "Graphics/Attribute/Base/FloatN.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 
 
@@ -7,21 +7,21 @@ Attribute::FloatN::FloatN()
 { }
 Attribute::FloatN::FloatN(
 	unsigned int n,
-	unsigned int divisor,
+	GL::AttributeDivisor divisor,
 	unsigned int stride,
-	unsigned int index
+	GL::AttributeID index
 ) :	Attribute::Base(),
-	Location(GL_FLOAT, sizeof(float) * n, n, divisor, stride, index)
+	Location(GL::AttributeType::Float, sizeof(float) * n, n, divisor, stride, index)
 { }
 Attribute::FloatN::~FloatN()
 { }
 
 Attribute::FloatN::FloatN(
-	unsigned int divisor,
+	GL::AttributeDivisor divisor,
 	unsigned int stride,
-	unsigned int index
+	GL::AttributeID index
 ) :
-	Location(GL_FLOAT, sizeof(float), 1, divisor, stride, index)
+	Location(GL::AttributeType::Float, sizeof(float), 1, divisor, stride, index)
 { }
 
 Attribute::FloatN::FloatN(const FloatN & other) :
@@ -39,8 +39,8 @@ Attribute::FloatN & Attribute::FloatN::operator=(const FloatN & other)
 
 void Attribute::FloatN::Bind(const unsigned char * & offset) const
 {
-	glEnableVertexAttribArray(Location.Index);
-	glVertexAttribPointer(Location.Index, Location.Count, Location.Type, GL_FALSE, Location.Stride, offset);
-	glVertexAttribDivisor(Location.Index, Location.Divisor);
+	GL::EnableVertexAttribArray(Location.Index);
+	GL::VertexAttribPointer(Location.Index, Location.Count, Location.Type, GL_FALSE, Location.Stride, offset);
+	GL::VertexAttribDivisor(Location.Index, Location.Divisor);
 	offset += Location.Size;
 }

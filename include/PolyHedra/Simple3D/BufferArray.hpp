@@ -16,7 +16,7 @@ class BufferArray : public ::BufferArray::Base
 	PolyHedra_Main::Buffer	Main;
 	Simple3D::Buffer		Inst;
 	Texture::Array2D		Texture;
-	unsigned int			DrawMode;
+	GL::DrawMode			DrawMode;
 
 	public:
 	BufferArray();

@@ -9,10 +9,9 @@
 # include "FileInfo.hpp"
 # include <string>
 
+#include "OpenGLTypes.hpp"
 
 
-typedef unsigned int ShaderID;
-typedef unsigned int ShaderType;
 
 class FileInfo;
 
@@ -21,13 +20,12 @@ namespace Shader
 class Code
 {
 	private:
-	static ShaderID None;
-	static int GetShaderiv(ShaderID ID, unsigned int name);
+	static GL::ShaderID None;
 
 	private:
 	public:
-	ShaderID ID;
-	ShaderType Type;
+	GL::ShaderID ID;
+	GL::ShaderType Type;
 	FileInfo File;
 
 	public:
@@ -49,18 +47,18 @@ class Code
 	bool Valid() const;
 	void Dispose();
 	void Compile();
-	void Attach(ShaderID ProgramID) const;
-	void Detach(ShaderID ProgramID) const;
+	void Attach(GL::ShaderID ProgramID) const;
+	void Detach(GL::ShaderID ProgramID) const;
 
 	public:
 	static bool Valid(Container::Base<Shader::Code> & code);
 	static void Dispose(Container::Base<Shader::Code> & code);
 	static void Compile(Container::Base<Shader::Code> & code);
-	static void Attach(Container::Base<Shader::Code> & code, ShaderID ProgramID);
-	static void Detach(Container::Base<Shader::Code> & code, ShaderID ProgramID);
+	static void Attach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID);
+	static void Detach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID);
 
 	private:
-	static ShaderType ShaderTypeFromExtension(const FileInfo & file);
+	static GL::ShaderType ShaderTypeFromExtension(const FileInfo & file);
 };
 };
 

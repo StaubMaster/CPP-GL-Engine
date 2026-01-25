@@ -1,5 +1,4 @@
 #include "UserParameter/Haptic/State.hpp"
-#include "OpenGL/openGL.h"
 
 #define HAPTIC_STATE_BITS	0b111
 #define HAPTIC_STATE_UD_BIT	0b001

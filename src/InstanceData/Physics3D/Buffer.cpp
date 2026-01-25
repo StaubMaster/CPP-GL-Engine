@@ -9,7 +9,7 @@ Physics3D::Buffer::Buffer(
 	unsigned int indexVelPos,
 	unsigned int indexVelRot
 ) :
-	::Buffer::Attribute(GL_ARRAY_BUFFER, GL_STREAM_DRAW, sizeof(Physics3D::Data)),
+	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StreamDraw, sizeof(Physics3D::Data)),
 	Trans(1, sizeof(Physics3D::Data), indexTransPos, indexTransRot),
 	Vel(1, sizeof(Physics3D::Data), indexVelPos, indexVelRot)
 {

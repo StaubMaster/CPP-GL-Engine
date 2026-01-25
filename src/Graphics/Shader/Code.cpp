@@ -2,19 +2,13 @@
 #include "FileInfo.hpp"
 #include "FileExceptions.hpp"
 
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 #include "Debug.hpp"
 #include <sstream>
 
 
 
-ShaderID Shader::Code::None = 0;
-int Shader::Code::GetShaderiv(ShaderID ID, unsigned int name)
-{
-	int params;
-	glGetShaderiv(ID, name, &params);
-	return params;
-}
+GL::ShaderID Shader::Code::None = 0;
 
 
 
@@ -27,12 +21,12 @@ void Shader::Code::LogInfo(bool self, bool log) const
 	}
 	//Debug::Log << Debug::Tabs << "Type " << typeid(*this).name() << '\n';
 	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Type: " << Type << '\n';
+	Debug::Log << Debug::Tabs << "Type: " << ((unsigned int)Type) << '\n';
 	Debug::Log << Debug::Tabs << "File: " << File.Path.ToString() << '\n';
 	{
 		if (ID != None)
 		{
-			int len = GetShaderiv(ID, GL_INFO_LOG_LENGTH);
+			int len = GL::GetShaderiv(ID, GL::ShaderParameterName::InfoLogLength);
 			Debug::Log << Debug::Tabs << "InfoLog: " << len << '\n';
 			if (log && len != 0)
 			{
@@ -42,7 +36,7 @@ void Shader::Code::LogInfo(bool self, bool log) const
 				Debug::Log << str;
 				Debug::Log << "####\n";
 			}
-			unsigned int status = GetShaderiv(ID, GL_COMPILE_STATUS);
+			unsigned int status = GL::GetShaderiv(ID, GL::ShaderParameterName::CompileStatus);
 			Debug::Log << Debug::Tabs << "Status: " << status << '\n';
 		}
 		else
@@ -62,7 +56,7 @@ void Shader::Code::LogInfo(bool self, bool log) const
 
 Shader::Code::Code() :
 	ID(0),
-	Type(0),
+	Type((GL::ShaderType)0),
 	File()
 { }
 Shader::Code::Code(const FileInfo & file) :
@@ -91,15 +85,15 @@ Shader::Code & Shader::Code::operator=(const Shader::Code & other)
 bool Shader::Code::Valid() const
 {
 	if (ID == None) { return false; }
-	if (GetShaderiv(ID, GL_INFO_LOG_LENGTH) != 0) { return false; }
-	if (GetShaderiv(ID, GL_COMPILE_STATUS) == 0) { return false; }
+	if (GL::GetShaderiv(ID, GL::ShaderParameterName::InfoLogLength) != 0) { return false; }
+	if (GL::GetShaderiv(ID, GL::ShaderParameterName::CompileStatus) == 0) { return false; }
 	return true;
 }
 void Shader::Code::Dispose()
 {
 	if (ID == None) { return; }
 	//Debug::Log << "Shader::Code Disposing " << ID << " ..." << Debug::Done;
-	glDeleteShader(ID);
+	GL::DeleteShader(ID);
 	ID = None;
 	//Debug::Log << "Shader::Code Disposing " << ID << " done" << Debug::Done;
 }
@@ -108,7 +102,7 @@ void Shader::Code::Compile()
 	if (ID != None) { return; }
 
 	//Debug::Log << "Shader::Code Compiling " << ID << " ..." << Debug::Done;
-	ID = glCreateShader(Type);
+	ID = GL::CreateShader(Type);
 
 	{
 		std::string code = File.LoadText();
@@ -129,13 +123,13 @@ void Shader::Code::Compile()
 
 	//Debug::Log << "Shader::Code Compiling " << ID << " done" << Debug::Done;
 }
-void Shader::Code::Attach(ShaderID ProgramID) const
+void Shader::Code::Attach(GL::ShaderID ProgramID) const
 {
 	//Debug::Log << "Shader::Code Attaching " << ID << " to " << ProgramID << " ..." << Debug::Done;
 	glAttachShader(ProgramID, ID);
 	//Debug::Log << "Shader::Code Attaching " << ID << " to " << ProgramID << " done" << Debug::Done;
 }
-void Shader::Code::Detach(ShaderID ProgramID) const
+void Shader::Code::Detach(GL::ShaderID ProgramID) const
 {
 	//Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " ..." << Debug::Done;
 	glDetachShader(ProgramID, ID);
@@ -164,14 +158,14 @@ void Shader::Code::Compile(Container::Base<Shader::Code> & code)
 		code[i].Compile();
 	}
 }
-void Shader::Code::Attach(Container::Base<Shader::Code> & code, ShaderID ProgramID)
+void Shader::Code::Attach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID)
 {
 	for (unsigned int i = 0; i < code.Count(); i++)
 	{
 		code[i].Attach(ProgramID);
 	}
 }
-void Shader::Code::Detach(Container::Base<Shader::Code> & code, ShaderID ProgramID)
+void Shader::Code::Detach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID)
 {
 	for (unsigned int i = 0; i < code.Count(); i++)
 	{
@@ -181,14 +175,14 @@ void Shader::Code::Detach(Container::Base<Shader::Code> & code, ShaderID Program
 
 
 
-ShaderType Shader::Code::ShaderTypeFromExtension(const FileInfo & file)
+GL::ShaderType Shader::Code::ShaderTypeFromExtension(const FileInfo & file)
 {
 	std::string ext = file.Extension();
-	ShaderType type;
+	GL::ShaderType type;
 	if      (ext == ".glsg") { throw (file.Path.ToString()); }
-	else if (ext == ".vert") { type = GL_VERTEX_SHADER; }
-	else if (ext == ".geom") { type = GL_GEOMETRY_SHADER; }
-	else if (ext == ".frag") { type = GL_FRAGMENT_SHADER; }
+	else if (ext == ".vert") { type = GL::ShaderType::VertexShader; }
+	else if (ext == ".geom") { type = GL::ShaderType::GeometryShader; }
+	else if (ext == ".frag") { type = GL::ShaderType::FragmentShader; }
 	else { throw InvalidExtension(file.Path.ToString()); }
 	return type;
 }

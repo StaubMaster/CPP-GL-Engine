@@ -1,6 +1,6 @@
 #include "Graphics/Texture/Base.hpp"
 #include "ValueType/Undex3D.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 #include <sstream>
 
 #include "Debug.hpp"

@@ -3,20 +3,20 @@
 
 
 Attribute::Location::Location() :
-	Type(0),
+	Type((GL::AttributeType)0),
 	Size(0),
 	Count(0),
-	Divisor(0),
+	Divisor((GL::AttributeDivisor)0),
 	Stride(0),
-	Index(0)
+	Index((GL::AttributeID)0)
 { }
 Attribute::Location::Location(
-	unsigned int type,
+	GL::AttributeType type,
 	unsigned int size,
 	unsigned int count,
-	unsigned int divisor,
+	GL::AttributeDivisor divisor,
 	unsigned int stride,
-	unsigned int index
+	GL::AttributeID index
 ) :
 	Type(type),
 	Size(size),

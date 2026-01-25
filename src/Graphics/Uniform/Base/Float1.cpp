@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/Base/Float1.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 
 
@@ -12,5 +12,5 @@ Uniform::Float1::Float1(Uniform::NameShader name_shader, int count) : FloatN(nam
 
 void Uniform::Float1::PutData(const float * val)
 {
-	glUniform1fv(Location, Count, val);
+	GL::Uniform1fv(Location, Count, val);
 }

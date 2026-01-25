@@ -6,10 +6,11 @@
 # include <string>
 //# include <iosfwd>
 
+# include "OpenGLTypes.hpp"
 
 
-typedef unsigned int ShaderID;
-//std::ostream & operator<<(std::ostream & o, const ShaderID & val);
+
+//std::ostream & operator<<(std::ostream & o, const GL::ShaderID & val);
 
 namespace Uniform { class Base; };
 
@@ -20,11 +21,10 @@ class Code;
 class Base
 {
 	private:
-	static ShaderID None;
-	static int GetProgramiv(ShaderID ID, unsigned int name);
+	static GL::ShaderID None;
 
 	private:
-	ShaderID ID;
+	GL::ShaderID ID;
 	Container::Fixed<Shader::Code> Code;	// these are the Shaders. the whole class is technically a Shader Program
 	public:
 	Container::Binary<Uniform::Base*> Uniforms;
@@ -49,7 +49,7 @@ class Base
 	bool IsBound() const;
 	void Bind();
 
-	static ShaderID Bound();
+	static GL::ShaderID Bound();
 	static void BindNone();
 
 

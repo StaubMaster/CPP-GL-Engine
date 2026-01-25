@@ -1,5 +1,5 @@
 #include "TimeMeasure.hpp"
-#include "OpenGL/openGL.h"
+#include <GLFW/glfw3.h>
 
 
 

@@ -1,7 +1,7 @@
 #include "PolyHedra/Simple3D/BufferArray.hpp"
 
 # include "Graphics/Shader/Base.hpp"
-# include "OpenGL/openGL.h"
+# include "OpenGL.hpp"
 
 
 
@@ -10,7 +10,7 @@ PolyHedra_Simple3D::BufferArray::BufferArray() :
 	Main(0, 1, 2),
 	Inst(3, 4),
 	Texture(),
-	DrawMode(GL_TRIANGLES)
+	DrawMode(GL::DrawMode::Triangles)
 {
 	Buffers.Allocate(2);
 	Buffers.Insert(&Main);
@@ -45,5 +45,5 @@ void PolyHedra_Simple3D::BufferArray::Draw()
 {
 	Texture.Bind();
 	Bind();
-	glDrawArraysInstanced(DrawMode, 0, Main.DrawCount, Inst.DrawCount);
+	GL::DrawArraysInstanced(DrawMode, 0, Main.DrawCount, Inst.DrawCount);
 }

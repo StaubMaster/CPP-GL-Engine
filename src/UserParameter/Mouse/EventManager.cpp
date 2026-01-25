@@ -1,7 +1,7 @@
 #include "UserParameter/Mouse/EventManager.hpp"
 #include "UserParameter/MouseInclude.hpp"
 #include "Window.hpp"
-#include "OpenGL/openGL.h"
+#include <GLFW/glfw3.h>
 
 
 

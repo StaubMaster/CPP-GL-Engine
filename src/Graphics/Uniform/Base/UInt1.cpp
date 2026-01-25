@@ -1,5 +1,5 @@
 #include "Graphics/Uniform/Base/UInt1.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 
 
@@ -12,5 +12,5 @@ Uniform::UInt1::UInt1(Uniform::NameShader name_shader, int count) : UIntN(name_s
 
 void Uniform::UInt1::PutData(const unsigned int * val)
 {
-	glUniform1uiv(Location, Count, val);
+	GL::Uniform1uiv(Location, Count, val);
 }

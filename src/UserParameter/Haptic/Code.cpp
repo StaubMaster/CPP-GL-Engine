@@ -1,5 +1,4 @@
 #include "UserParameter/Haptic/Code.hpp"
-#include "OpenGL/openGL.h"
 
 
 
@@ -12,7 +11,7 @@ UserParameter::Haptic::Code::Code(int flags) :
 
 
 
-bool UserParameter::Haptic::Code::operator ==(int code) const
+bool UserParameter::Haptic::Code::operator==(int code) const
 {
 	return Flags == code;
 }

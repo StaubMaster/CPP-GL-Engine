@@ -1,6 +1,6 @@
 #include "Graphics/Buffer/ArrayBase.hpp"
 #include "Graphics/Buffer/Base.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 //#include "OpenGL/Errors.hpp"
 #include "Debug.hpp"
@@ -8,7 +8,7 @@
 
 
 
-BufferArrayID BufferArray::Base::None = 0;
+GL::VertexArrayID BufferArray::Base::None = 0;
 
 void BufferArray::Base::LogInfo(bool self) const
 {
@@ -59,11 +59,11 @@ void BufferArray::Base::Bind()
 {
 	if (Exists() && !IsBound())
 	{
-		glBindVertexArray(ID);
+		GL::BindVertexArray(ID);
 	}
 }
 
-BufferArrayID BufferArray::Base::Bound()
+GL::VertexArrayID BufferArray::Base::Bound()
 {
 	int ID;
 	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &ID);
@@ -71,7 +71,7 @@ BufferArrayID BufferArray::Base::Bound()
 }
 void BufferArray::Base::BindNone()
 {
-	glBindVertexArray(None);
+	GL::BindVertexArray(None);
 }
 
 
@@ -80,29 +80,29 @@ void BufferArray::Base::Create()
 {
 	if (ID != None) { return; }
 
-	//Debug::Log << "Buffer::ArrayBase Creating " << ID << " ..." << Debug::Done;
-	glGenVertexArrays(1, &ID);
-	//Debug::Log << "Buffer::ArrayBase Creating " << ID << " done" << Debug::Done;
+	Debug::Log << "Buffer::ArrayBase Creating " << ID << " ..." << Debug::Done;
+	ID = GL::CreateVertexArray();
+	Debug::Log << "Buffer::ArrayBase Creating " << ID << " done" << Debug::Done;
 
 	for (unsigned int i = 0; i < Buffers.Count(); i++)
 	{
 		Buffers[i] -> Create();
 	}
 
-	//Debug::Log << "Create BufferArray: " << ID << Debug::Done;
-	//LogInfo();
+	Debug::Log << "Create BufferArray: " << ID << Debug::Done;
+	LogInfo();
 }
 void BufferArray::Base::Delete()
 {
 	if (ID == None) { return; }
 
-	//Debug::Log << "Delete BufferArray: " << ID << Debug::Done;
-	//LogInfo();
+	Debug::Log << "Delete BufferArray: " << ID << Debug::Done;
+	LogInfo();
 
-	//Debug::Log << "Buffer::ArrayBase Deleting " << ID << " ..." << Debug::Done;
-	glDeleteVertexArrays(1, &ID);
+	Debug::Log << "Buffer::ArrayBase Deleting " << ID << " ..." << Debug::Done;
+	GL::DeleteVertexArray(ID);
 	ID = None;
-	//Debug::Log << "Buffer::ArrayBase Deleting " << ID << " done" << Debug::Done;
+	Debug::Log << "Buffer::ArrayBase Deleting " << ID << " done" << Debug::Done;
 
 	for (unsigned int i = 0; i < Buffers.Count(); i++)
 	{

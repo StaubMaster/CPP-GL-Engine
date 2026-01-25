@@ -3,6 +3,8 @@
 
 # include "Graphics/Uniform/Base/Base.hpp"
 
+# include "OpenGLTypes.hpp"
+
 namespace Shader { class Base; };
 
 namespace Uniform
@@ -10,7 +12,7 @@ namespace Uniform
 class FloatN : public Uniform::Base
 {
 	protected:
-	int Location;
+	GL::UniformLocation Location;
 	int Count;
 
 	public:

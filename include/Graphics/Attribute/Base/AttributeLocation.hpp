@@ -1,6 +1,8 @@
 #ifndef  ATTRIBUTE_LOCATION_HPP
 # define ATTRIBUTE_LOCATION_HPP
 
+# include "OpenGLTypes.hpp"
+
 namespace Attribute
 {
 class Location
@@ -14,24 +16,24 @@ class Location
 	private:
 	public:
 	//	from Child
-	const unsigned int Type;
+	const GL::AttributeType Type;
 	const unsigned int Size;
 	const unsigned int Count;
 
 	//	from Buffer
-	const unsigned int Divisor;
+	const GL::AttributeDivisor Divisor;
 	const unsigned int Stride;
-	const unsigned int Index;
+	const GL::AttributeID Index;
 
 	public:
 	Location();
 	Location(
-		unsigned int type,
+		GL::AttributeType type,
 		unsigned int size,
 		unsigned int count,
-		unsigned int divisor,
+		GL::AttributeDivisor divisor,
 		unsigned int stride,
-		unsigned int index);
+		GL::AttributeID index);
 	~Location();
 
 	Location(const Location & other);

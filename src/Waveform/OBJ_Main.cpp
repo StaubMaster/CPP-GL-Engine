@@ -1,11 +1,11 @@
 #include "Waveform/OBJ_Main.hpp"
 
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 
 
 
 OBJ_MainAttrib::OBJ_MainAttrib(
-	unsigned int divisor,
+	GL::AttributeDivisor divisor,
 	unsigned int stride,
 	unsigned int indexPosition,
 	unsigned int indexTexture,
@@ -55,7 +55,7 @@ OBJ_MainBuffer::OBJ_MainBuffer(
 	//	new OBJ_MainAttrib(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor,
 	//	indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
 	//}) { }
-	Buffer::Attribute(GL_ARRAY_BUFFER, GL_STATIC_DRAW, sizeof(OBJ_MainData)),
+	Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, sizeof(OBJ_MainData)),
 	Attribute(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor, indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
 {
 	Attributes.Allocate(1);

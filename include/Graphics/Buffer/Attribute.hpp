@@ -9,7 +9,7 @@
 # include "Miscellaneous/Container/Void.hpp"
 
 # include "Debug.hpp"
-# include "OpenGL/openGL.h"
+# include "OpenGLEnums.hpp"
 # include <sstream>
 
 
@@ -20,15 +20,15 @@ class Attribute : public Base
 {
 	private:
 	public:
-	unsigned int Target;
-	unsigned int Usage;
+	GL::BufferTarget	Target;
+	GL::BufferDataUsage	Usage;
 	unsigned int DataSize;
 	Container::Fixed<::Attribute::Base*> Attributes;
 	unsigned int DrawCount;
 
 	public:
 	Attribute();
-	Attribute(unsigned int target, unsigned int usage, unsigned int data_size);
+	Attribute(GL::BufferTarget target, GL::BufferDataUsage usage, unsigned int data_size);
 	~Attribute();
 
 	Attribute(const Attribute & other);

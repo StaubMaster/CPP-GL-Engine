@@ -1,5 +1,5 @@
 #include "Graphics/Buffer/Base.hpp"
-#include "OpenGL/openGL.h"
+#include "OpenGL.hpp"
 #include "Debug.hpp"
 #include <sstream>
 
@@ -46,7 +46,7 @@ void Buffer::Base::Create()
 	if (ID != None) { return; }
 
 	//Debug::Log << "Buffer::Base Creating " << ID << " ..." << Debug::Done;
-	glGenBuffers(1, &ID);
+	ID = GL::CreateBuffer();
 	//Debug::Log << "Buffer::Base Creating " << ID << " done" << Debug::Done;
 }
 void Buffer::Base::Delete()
@@ -54,7 +54,7 @@ void Buffer::Base::Delete()
 	if (ID == None) { return; }
 
 	//Debug::Log << "Buffer::Base Deleting " << ID << " ..." << Debug::Done;
-	glDeleteBuffers(1, &ID);
+	GL::DeleteBuffer(ID);
 	ID = None;
 	//Debug::Log << "Buffer::Base Deleting " << ID << " done" << Debug::Done;
 }

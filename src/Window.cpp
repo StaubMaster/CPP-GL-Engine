@@ -9,7 +9,9 @@
 #include "Debug.hpp"
 #include <sstream>
 
-#include "OpenGL/openGL.h"
+#include "../glad/glad.h"
+#include <GLFW/glfw3.h>
+
 #include <iostream>
 
 #ifndef ENGINE_DIR

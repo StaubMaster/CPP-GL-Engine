@@ -3,7 +3,7 @@
 
 # include "Miscellaneous/Container/Fixed.hpp"
 
-typedef unsigned int BufferArrayID;
+# include "OpenGLTypes.hpp"
 
 namespace Buffer { class Base; };
 
@@ -12,10 +12,10 @@ namespace BufferArray
 class Base
 {
 	private:
-	static BufferArrayID None;
+	static GL::VertexArrayID None;
 
 	private:
-	BufferArrayID ID;
+	GL::VertexArrayID ID;
 	protected:
 	Container::Fixed<Buffer::Base*> Buffers;
 
@@ -38,7 +38,7 @@ class Base
 	bool IsBound() const;
 	void Bind();
 
-	static BufferArrayID Bound();
+	static GL::VertexArrayID Bound();
 	static void BindNone();
 
 
