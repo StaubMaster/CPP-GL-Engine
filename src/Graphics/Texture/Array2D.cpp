@@ -10,7 +10,7 @@
 
 
 Texture::Array2D::Array2D()
-	: Texture::Base(GL_TEXTURE_2D_ARRAY)
+	: Texture::Base(GL::TextureTarget::Texture2DArray)
 { }
 Texture::Array2D::~Array2D()
 { }

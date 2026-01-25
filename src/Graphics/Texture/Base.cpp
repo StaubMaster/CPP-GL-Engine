@@ -22,7 +22,7 @@
 	Debug::Log << Debug::Done;
 */
 
-TextureType Texture::Base::None = 0;
+GL::TextureID Texture::Base::None = 0;
 
 void Texture::Base::LogInfo(bool self) const
 {
@@ -32,7 +32,7 @@ void Texture::Base::LogInfo(bool self) const
 		Debug::Log << Debug::TabInc;
 	}
 	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Type " << Type << '\n';
+	Debug::Log << Debug::Tabs << "Target " << ((unsigned int)Target) << '\n';
 	if (self)
 	{
 		Debug::Log << Debug::TabDec;
@@ -42,51 +42,51 @@ void Texture::Base::LogInfo(bool self) const
 
 
 
-Texture::Base::Base(unsigned int type) :
-	Type(type),
+Texture::Base::Base(GL::TextureTarget target) :
+	Target(target),
 	ID(None)
 { }
 Texture::Base::~Base()
 { }
 
 Texture::Base::Base(const Base & other) :
-	Type(other.Type),
+	Target(other.Target),
 	ID(other.ID)
 { }
 Texture::Base & Texture::Base::operator=(const Base & other)
 {
-	Type = other.Type;
 	ID = other.ID;
+	Target = other.Target;
 	return *this;
 }
 
 
 
 bool Texture::Base::Exists() const { return (ID != None); }
-bool Texture::Base::IsBound() const { return (Bound(Type) == ID); }
+bool Texture::Base::IsBound() const { return (Bound(Target) == ID); }
 void Texture::Base::Bind()
 {
 	if (Exists() && !IsBound())
 	{
-		glBindTexture(Type, ID);
+		GL::BindTexture(Target, ID);
 	}
 }
 
-TextureID Texture::Base::Bound(TextureType type)
+GL::TextureID Texture::Base::Bound(GL::TextureTarget target)
 {
-	unsigned int t;
-	switch (type)
+	GL::ParameterName name;
+	switch (target)
 	{
-		case GL_TEXTURE_2D_ARRAY:	t = GL_TEXTURE_BINDING_2D_ARRAY;	break;
+		case GL::TextureTarget::Texture2DArray: name = GL::ParameterName::TextureBinding2DArray; break;
 		default: return None;
 	};
 	int ID;
-	glGetIntegerv(t, &ID);
+	GL::GetIntegerv(name, ID);
 	return ID;
 }
-void Texture::Base::BindNone(TextureType type)
+void Texture::Base::BindNone(GL::TextureTarget target)
 {
-	glBindTexture(type, None);
+	GL::BindTexture(target, None);
 }
 
 
@@ -96,8 +96,7 @@ void Texture::Base::Create()
 	if (ID != None) { return; }
 
 	Debug::Log << "Texture::Base Creating " << ID << " ..." << Debug::Done;
-	glGenTextures(1, &ID);
-	glBindTexture(Type, ID);
+	ID = GL::CreateTexture();
 	Debug::Log << "Texture::Base Creating " << ID << " done" << Debug::Done;
 }
 void Texture::Base::Delete()
@@ -105,7 +104,7 @@ void Texture::Base::Delete()
 	if (ID == None) { return; }
 
 	Debug::Log << "Texture::Base Deleting " << ID << " ..." << Debug::Done;
-	glDeleteTextures(1, &ID);
+	GL::DeleteTexture(ID);
 	ID = 0;
 	Debug::Log << "Texture::Base Deleting " << ID << " done" << Debug::Done;
 }
@@ -159,11 +158,11 @@ GL_TEXTURE_WRAP_R	Z
 */
 void Texture::Base::DefaultParams()
 {
-	glTexParameteri(Type, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(Type, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(Type, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(Type, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glGenerateMipmap(Type);
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureWrapS, GL_REPEAT);
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureWrapT, GL_REPEAT);
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureMinFilter, GL_NEAREST);
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureMagFilter, GL_NEAREST);
+	glGenerateMipmap((unsigned int)Target);
 }
 
 
@@ -172,12 +171,12 @@ void Texture::Base::Full3D(Undex3D size, const void * data)
 {
 	//Debug::Log << "Texture: Full3D: " << size << Debug::Done;
 	//std::cout << "Texture: Full3D: " << size << '\n';
-	glTexImage3D(Type, 0, GL_RGBA8, size.X, size.Y, size.Z, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
+	GL::TexImage3D(Target, 0, GL::TextureInternalFormat::Rgba8, size.X, size.Y, size.Z, 0, GL::TextureFormat::Rgba, GL::TextureType::UnsignedInt8888Rev, data);
 }
 void Texture::Base::Part3D(Undex3D size, Undex3D offset, const void * data)
 {
 	//Debug::Log << "Texture: Part3D: " << size << " | " << offset << Debug::Done;
 	//std::cout << "Texture: Part3D: " << size << " | " << offset << '\n';
-	glTexSubImage3D(Type, 0, offset.X, offset.Y, offset.Z, size.X, size.Y, size.Z, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
+	GL::TexSubImage3D(Target, 0, offset.X, offset.Y, offset.Z, size.X, size.Y, size.Z, GL::TextureFormat::Rgba, GL::TextureType::UnsignedInt8888Rev, data);
 }
 

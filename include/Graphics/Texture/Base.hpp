@@ -1,8 +1,7 @@
 #ifndef  TEXTURE_BASE_HPP
 # define TEXTURE_BASE_HPP
 
-typedef unsigned int TextureID;
-typedef unsigned int TextureType;
+# include "OpenGLTypes.hpp"
 
 class FileInfo;
 
@@ -13,11 +12,11 @@ namespace Texture
 class Base
 {
 	private:
-	static TextureID None;
+	static GL::TextureID None;
 
 	protected:
-	TextureType Type;
-	TextureID ID;
+	GL::TextureTarget Target;
+	GL::TextureID ID;
 
 	public:
 	virtual void LogInfo(bool self = true) const;
@@ -25,7 +24,7 @@ class Base
 
 
 	public:
-	Base(unsigned int type);
+	Base(GL::TextureTarget target);
 	virtual ~Base();
 
 	Base(const Base & other);
@@ -38,8 +37,8 @@ class Base
 	bool IsBound() const;
 	void Bind();
 
-	static TextureID Bound(TextureType type);
-	static void BindNone(TextureType type);
+	static GL::TextureID Bound(GL::TextureTarget target);
+	static void BindNone(GL::TextureTarget target);
 
 
 
