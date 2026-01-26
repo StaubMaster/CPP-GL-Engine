@@ -7,21 +7,6 @@
 #include "DataShow.hpp"
 #include <iostream>
 
-/*	Debug::Log << "GL_TEXTURE_...\n";
-	Debug::Log << "GL_TEXTURE_1D" << ' ' << GL_TEXTURE_1D << '\n';
-	Debug::Log << "GL_TEXTURE_2D" << ' ' << GL_TEXTURE_2D << '\n';
-	Debug::Log << "GL_TEXTURE_3D" << ' ' << GL_TEXTURE_3D << '\n';
-	Debug::Log << "GL_TEXTURE_1D_ARRAY" << ' ' << GL_TEXTURE_1D_ARRAY << '\n';
-	Debug::Log << "GL_TEXTURE_2D_ARRAY" << ' ' << GL_TEXTURE_2D_ARRAY << '\n';
-	Debug::Log << "GL_TEXTURE_RECTANGLE" << ' ' << GL_TEXTURE_RECTANGLE << '\n';
-	Debug::Log << "GL_TEXTURE_CUBE_MAP" << ' ' << GL_TEXTURE_CUBE_MAP << '\n';
-	Debug::Log << "GL_TEXTURE_CUBE_MAP_ARRAY" << ' ' << GL_TEXTURE_CUBE_MAP_ARRAY << '\n';
-	Debug::Log << "GL_TEXTURE_BUFFER" << ' ' << GL_TEXTURE_BUFFER << '\n';
-	Debug::Log << "GL_TEXTURE_2D_MULTISAMPLE" << ' ' << GL_TEXTURE_2D_MULTISAMPLE << '\n';
-	Debug::Log << "GL_TEXTURE_2D_MULTISAMPLE_ARRAY" << ' ' << GL_TEXTURE_2D_MULTISAMPLE_ARRAY << '\n';
-	Debug::Log << Debug::Done;
-*/
-
 GL::TextureID Texture::Base::None = 0;
 
 void Texture::Base::LogInfo(bool self) const

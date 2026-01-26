@@ -9,8 +9,9 @@
 #include "Debug.hpp"
 #include <sstream>
 
-#include "../glad/glad.h"
-#include <GLFW/glfw3.h>
+//#include "../glad/glad.h"
+//#include <GLFW/glfw3.h>
+#include "OpenGL.hpp"
 
 #include <iostream>
 
@@ -256,15 +257,23 @@ Angle3D Window::SpinFromCursor(float speed) const
 
 void Window::RunGL_Setup()
 {
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glFrontFace(GL_CW);
+	GL::Enable(GL::Capability::CullFace);
+	GL::CullFace(GL::Side::Back);
+	GL::FrontFace(GL::FrontSide::Cw);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
+	//glFrontFace(GL_CW);
 
-	glEnable(GL_DEPTH_TEST);
-	glDepthMask(GL_TRUE);
-	glDepthFunc(GL_LESS);
-	glDepthRange(0, 1);
-	glClearDepth(1.0f);
+	GL::Enable(GL::Capability::DepthTest);
+	GL::DepthMask(true);
+	GL::DepthFunc(GL::Comparison::Less);
+	GL::DepthRange(0, 1);
+	GL::ClearDepth(1.0f);
+	//glEnable(GL_DEPTH_TEST);
+	//glDepthMask(GL_TRUE);
+	//glDepthFunc(GL_LESS);
+	//glDepthRange(0, 1);
+	//glClearDepth(1.0f);
 }
 void Window::Run_Init()
 {
@@ -302,8 +311,8 @@ void Window::Run()
 			double FrameTimeDelta = FrameTimeCurr - FrameTimeLast;
 			if (FrameTimeDelta >= (1.0 / 64.0))
 			{
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				FrameFunc(FrameTimeDelta);
 				glfwSwapBuffers(glfw_window);
 				Keys.Tick();
