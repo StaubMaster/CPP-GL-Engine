@@ -33,12 +33,11 @@ class Window
 {
 	private:
 	static GLFWwindow * NormalWindow();
+	void MakeCallbacks();
+	void MakeUserParemeters();
 
-	private:
 	public:
 	GLFWwindow * glfw_window;
-	UserParameter::KeyBoard::KeyRange2 Keys;
-	UserParameter::Mouse::EventManager MouseManager;
 
 	public:
 	unsigned long long FrameNumberTerminate;
@@ -54,22 +53,29 @@ class Window
 	void (*TextFunc)	(UserParameter::KeyBoard::Text);
 
 	public:
-	WindowBufferSize2D Size;
+	UserParameter::KeyBoard::KeyRange2 Keys;
+	UserParameter::Mouse::EventManager MouseManager;
+	ColorF4 DefaultColor;
 
+	public:
+	WindowBufferSize2D Size;
 	private:
 	Point2D WindowCenter;
 	Point2D BufferCenter;
 
 	public:
-	ColorF4 DefaultColor;
-
-	public:
 	Window();
+	Window(const Window & other);
+	Window & operator=(const Window & other);
 	~Window();
 
-	//public:
-	//void Create();
-	//void Delete();
+	public:
+	void Create();
+	void Delete();
+
+	public:
+	//void ChangeSize(Point2D size);
+	//void ChangeDefaultColor(ColorF4 color);
 
 	private:
 	void UpdateSize();

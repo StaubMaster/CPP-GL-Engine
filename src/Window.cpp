@@ -48,26 +48,8 @@ GLFWwindow * Window::NormalWindow()
 	}
 	return win;
 }
-
-
-
-Window::Window() :
-	glfw_window(NormalWindow()),
-	Keys(7),
-	MouseManager(*this)
+void Window::MakeCallbacks()
 {
-	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
-
-	Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
-	Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
-	Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
-	Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
-	Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
-	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
-	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
-
-	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
-
 	glfwSetWindowUserPointer(glfw_window, this);
 
 	glfwSetFramebufferSizeCallback(glfw_window, Callback_Resize);
@@ -77,24 +59,83 @@ Window::Window() :
 	glfwSetMouseButtonCallback(glfw_window, Callback_CursorClick);
 	glfwSetScrollCallback(glfw_window, Callback_CursorScroll);
 	glfwSetCursorPosCallback(glfw_window, Callback_CursorMove);
+}
+void Window::MakeUserParemeters()
+{
+	Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
+	Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
+	Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
+	Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
+	Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
+	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
+	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
-	FrameNumberTerminate = 0xFFFFFFFFFFFFFFFF;
+	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
+}
 
-	FrameFunc = NULL;
-	InitFunc = NULL;
-	FreeFunc = NULL;
 
-	ResizeFunc = NULL;
 
-	KeyFunc = NULL;
-	TextFunc = NULL;
 
+
+Window::Window() :
+	glfw_window(NULL),
+	FrameNumberTerminate(0xFFFFFFFFFFFFFFFF),
+	FrameFunc(NULL),
+	InitFunc(NULL),
+	FreeFunc(NULL),
+	ResizeFunc(NULL),
+	KeyFunc(NULL),
+	TextFunc(NULL),
+	Keys(7),
+	MouseManager(*this),
+	DefaultColor(0.5f, 0.5f, 0.5f)
+{
+	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
+	MakeUserParemeters();
 	UpdateSize();
-
-	DefaultColor = ColorF4(0.5f, 0.5f, 0.5f);
 }
 Window::~Window()
 { }
+
+Window::Window(const Window & other) :
+	glfw_window(other.glfw_window),
+	FrameNumberTerminate(0xFFFFFFFFFFFFFFFF),
+	FrameFunc(other.FrameFunc),
+	InitFunc(other.InitFunc),
+	FreeFunc(other.FreeFunc),
+	ResizeFunc(other.ResizeFunc),
+	KeyFunc(other.KeyFunc),
+	TextFunc(other.TextFunc),
+	Keys(7),
+	MouseManager(*this),
+	DefaultColor(other.DefaultColor)
+{
+	MakeUserParemeters();
+}
+Window & Window::operator=(const Window & other)
+{
+	glfw_window = other.glfw_window;
+	FrameNumberTerminate = 0xFFFFFFFFFFFFFFFF;
+	FrameFunc = other.FrameFunc;
+	InitFunc = other.InitFunc;
+	FreeFunc = other.FreeFunc;
+	ResizeFunc = other.ResizeFunc;
+	KeyFunc = other.KeyFunc;
+	TextFunc = other.TextFunc;
+	DefaultColor = other.DefaultColor;
+	return *this;
+}
+
+void Window::Create()
+{
+	glfw_window = NormalWindow();
+	MakeCallbacks();
+}
+void Window::Delete()
+{
+	glfwDestroyWindow(glfw_window);
+	glfw_window = NULL;
+}
 
 
 
@@ -260,20 +301,12 @@ void Window::RunGL_Setup()
 	GL::Enable(GL::Capability::CullFace);
 	GL::CullFace(GL::Side::Back);
 	GL::FrontFace(GL::FrontSide::Cw);
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
-	//glFrontFace(GL_CW);
 
 	GL::Enable(GL::Capability::DepthTest);
 	GL::DepthMask(true);
 	GL::DepthFunc(GL::Comparison::Less);
 	GL::DepthRange(0, 1);
 	GL::ClearDepth(1.0f);
-	//glEnable(GL_DEPTH_TEST);
-	//glDepthMask(GL_TRUE);
-	//glDepthFunc(GL_LESS);
-	//glDepthRange(0, 1);
-	//glClearDepth(1.0f);
 }
 void Window::Run_Init()
 {
@@ -311,13 +344,13 @@ void Window::Run()
 			double FrameTimeDelta = FrameTimeCurr - FrameTimeLast;
 			if (FrameTimeDelta >= (1.0 / 64.0))
 			{
-				glClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-				FrameFunc(FrameTimeDelta);
-				glfwSwapBuffers(glfw_window);
 				Keys.Tick();
 				MouseManager.Tick();
 				glfwPollEvents();
+				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
+				GL::Clear(GL::ClearMask::ColorBufferBit | GL::ClearMask::DepthBufferBit);
+				FrameFunc(FrameTimeDelta);
+				glfwSwapBuffers(glfw_window);
 				FrameTimeLast = FrameTimeCurr;
 				FrameNumber++;
 			}
