@@ -35,14 +35,14 @@ class ManagerMulti
 	unsigned int FindIndex(PolyHedra * polyhedra) const;
 
 	public:
-	void Dispose();
-	void Insert(PolyHedra * polyhedra);
-	void Remove(PolyHedra * polyhedra);
+	void	Dispose();
+	void			Clear();
+	unsigned int	Insert(PolyHedra * polyhedra);
+	void			Remove(PolyHedra * polyhedra);
 	//void Remove(unsigned int polyhedra);
 
+	EntryContainer::Entry<Simple3D::Data> Place(unsigned int polyhedra, unsigned int size);
 	EntryContainer::Entry<Simple3D::Data> Place(PolyHedra * polyhedra, unsigned int size);
-	//EntryContainer::Entry<Simple3D_InstData> Place(unsigned int polyhedra, unsigned int size);
-	void Clear();
 
 	public:
 	void Draw();

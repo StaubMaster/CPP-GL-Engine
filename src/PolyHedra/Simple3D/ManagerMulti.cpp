@@ -38,14 +38,16 @@ void PolyHedra_Simple3D::ManagerMulti::Dispose()
 	DefaultShader.Delete();
 	Clear();
 }
-void PolyHedra_Simple3D::ManagerMulti::Insert(PolyHedra * polyhedra)
+unsigned int PolyHedra_Simple3D::ManagerMulti::Insert(PolyHedra * polyhedra)
 {
 	unsigned int idx = FindIndex(polyhedra);
-	if (idx != 0xFFFFFFFF) { return; }
+	if (idx != 0xFFFFFFFF) { return idx; }
 
+	idx = MultiplePolyHedra.Count();
 	ManagerSingle * man = new ManagerSingle();
 	MultiplePolyHedra.Insert(man);
 	man -> Change(polyhedra);
+	return idx;
 }
 void PolyHedra_Simple3D::ManagerMulti::Remove(PolyHedra * polyhedra)
 {
@@ -57,17 +59,19 @@ void PolyHedra_Simple3D::ManagerMulti::Remove(PolyHedra * polyhedra)
 	delete man;
 }
 
+EntryContainer::Entry<Simple3D::Data> PolyHedra_Simple3D::ManagerMulti::Place(unsigned int polyhedra, unsigned int size)
+{
+	ManagerSingle * man = MultiplePolyHedra[polyhedra];
+	return EntryContainer::Entry<Simple3D::Data>(man -> _Instances, size);
+}
 EntryContainer::Entry<Simple3D::Data> PolyHedra_Simple3D::ManagerMulti::Place(PolyHedra * polyhedra, unsigned int size)
 {
 	unsigned int idx = FindIndex(polyhedra);
 	if (idx == 0xFFFFFFFF)
 	{
-		Insert(polyhedra);
-		idx = FindIndex(polyhedra);
+		idx = Insert(polyhedra);
 	}
-
-	ManagerSingle * man = MultiplePolyHedra[idx];
-	return EntryContainer::Entry<Simple3D::Data>(man -> _Instances, size);
+	return Place(idx, size);
 }
 
 
