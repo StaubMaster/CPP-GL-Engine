@@ -4,9 +4,9 @@
 struct Point3D
 {
 	public:
-		float	X;
-		float	Y;
-		float	Z;
+	float	X;
+	float	Y;
+	float	Z;
 
 	//	Synonyms
 	//public:
@@ -16,47 +16,47 @@ struct Point3D
 	//	Referances take Space
 
 	public:
-		Point3D();
-		Point3D(float x, float y, float z);
-		~Point3D();
+	Point3D();
+	Point3D(float x, float y, float z);
+	~Point3D();
 
-		Point3D(const Point3D & other);
-		Point3D & operator =(const Point3D & other);
+	Point3D(const Point3D & other);
+	Point3D & operator =(const Point3D & other);
 
 	public:
-		float length2() const;
-		float length() const;
-		Point3D normalize() const;
+	float length2() const;
+	float length() const;
+	Point3D normalize() const;
 
-		Point3D operator +() const;
-		Point3D operator -() const;
-		Point3D operator !() const;
+	Point3D operator +() const;
+	Point3D operator -() const;
+	Point3D operator !() const;
 
-		Point3D operator +(const float & flt) const;
-		Point3D operator -(const float & flt) const;
-		Point3D operator *(const float & flt) const;
-		Point3D operator /(const float & flt) const;
+	Point3D operator +(const float & flt) const;
+	Point3D operator -(const float & flt) const;
+	Point3D operator *(const float & flt) const;
+	Point3D operator /(const float & flt) const;
 
-		Point3D & operator +=(const float & flt);
-		Point3D & operator -=(const float & flt);
-		Point3D & operator *=(const float & flt);
-		Point3D & operator /=(const float & flt);
+	Point3D & operator +=(const float & flt);
+	Point3D & operator -=(const float & flt);
+	Point3D & operator *=(const float & flt);
+	Point3D & operator /=(const float & flt);
 
-		Point3D operator +(const Point3D & other) const;
-		Point3D operator -(const Point3D & other) const;
-		Point3D operator *(const Point3D & other) const;
-		Point3D operator /(const Point3D & other) const;
+	Point3D operator +(const Point3D & other) const;
+	Point3D operator -(const Point3D & other) const;
+	Point3D operator *(const Point3D & other) const;
+	Point3D operator /(const Point3D & other) const;
 
-		Point3D & operator +=(const Point3D & other);
-		Point3D & operator -=(const Point3D & other);
-		Point3D & operator *=(const Point3D & other);
-		Point3D & operator /=(const Point3D & other);
+	Point3D & operator +=(const Point3D & other);
+	Point3D & operator -=(const Point3D & other);
+	Point3D & operator *=(const Point3D & other);
+	Point3D & operator /=(const Point3D & other);
 
-		float static dot(const Point3D & p0, const Point3D & p1);
-		float operator %(const Point3D & other) const;
+	float static dot(const Point3D & p0, const Point3D & p1);
+	float operator %(const Point3D & other) const;
 
-		Point3D static cross(const Point3D & p0, const Point3D & p1);
-		Point3D operator ^(const Point3D & other) const;
+	Point3D static cross(const Point3D & p0, const Point3D & p1);
+	Point3D operator ^(const Point3D & other) const;
 };
 
 #endif

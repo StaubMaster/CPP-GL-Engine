@@ -39,6 +39,7 @@ ValueType/ := \
 	ValueType/LightBase.cpp \
 	ValueType/LightSolar.cpp \
 	ValueType/LightSpot.cpp \
+	ValueType/View.cpp \
 	DataShow.cpp
 ValueType/_SRC := $(addprefix $(DIR_SRC)/,$(ValueType/))
 ValueType/_OBJ := $(addprefix $(DIR_OBJ)/,$(ValueType/:.cpp=.o))

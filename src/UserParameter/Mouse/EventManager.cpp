@@ -8,10 +8,10 @@
 UserParameter::Mouse::EventManager::EventManager(Window & win) :
 	window(win),
 	Buttons(),
-	CallbackClick(NULL),
-	CallbackScroll(NULL),
-	CallbackMove(NULL),
-	CallbackDrag(NULL)
+	CallbackClick(),
+	CallbackScroll(),
+	CallbackMove(),
+	CallbackDrag()
 { }
 
 
@@ -91,14 +91,14 @@ void UserParameter::Mouse::EventManager::UpdateClick(int button, int action, int
 	params.Action = action;
 	params.Mods = mods;
 	params.Position = CursorPixelPosition();
-	RelayCallbackClick(params);
+	CallbackClick(params);
 }
 void UserParameter::Mouse::EventManager::UpdateScroll(float offset_x, float offset_y)
 {
 	UserParameter::Mouse::Scroll params;
 	params.X = offset_x;
 	params.Y = offset_y;
-	RelayCallbackScroll(params);
+	CallbackScroll(params);
 }
 void UserParameter::Mouse::EventManager::UpdateMove(double x_pos, double y_pos)
 {
@@ -106,7 +106,7 @@ void UserParameter::Mouse::EventManager::UpdateMove(double x_pos, double y_pos)
 	pos.Absolute.X = x_pos;
 	pos.Absolute.Y = y_pos;
 
-	RelayCallbackMove(pos);
+	CallbackMove(pos);
 	/*	Dragging
 			check if any Buttons id Down
 			change current Pos to pos
@@ -123,45 +123,26 @@ void UserParameter::Mouse::EventManager::UpdateMove(double x_pos, double y_pos)
 			//params.Mods	//	would need to store Mods for this
 			params.Origin = data.LastPressPosition;
 			params.Position = pos;
-			RelayCallbackDrag(params);
+			CallbackDrag(params);
 		}
 	}
 }
 
 
 
-void UserParameter::Mouse::EventManager::ChangeCallbackClick(void (*func)(UserParameter::Mouse::Click))
+void UserParameter::Mouse::EventManager::ChangeClick(BaseFunction<void, UserParameter::Mouse::Click> * func)
 {
 	CallbackClick = func;
 }
-void UserParameter::Mouse::EventManager::ChangeCallbackScroll(void (*func)(UserParameter::Mouse::Scroll))
+void UserParameter::Mouse::EventManager::ChangeScroll(BaseFunction<void, UserParameter::Mouse::Scroll> * func)
 {
 	CallbackScroll = func;
 }
-void UserParameter::Mouse::EventManager::ChangeCallbackMove(void (*func)(UserParameter::Mouse::Position))
+void UserParameter::Mouse::EventManager::ChangeMove(BaseFunction<void, UserParameter::Mouse::Position> * func)
 {
 	CallbackMove = func;
 }
-void UserParameter::Mouse::EventManager::ChangeCallbackDrag(void (*func)(UserParameter::Mouse::Drag))
+void UserParameter::Mouse::EventManager::ChangeDrag(BaseFunction<void, UserParameter::Mouse::Drag> * func)
 {
 	CallbackDrag = func;
-}
-
-
-
-void UserParameter::Mouse::EventManager::RelayCallbackClick(UserParameter::Mouse::Click params)
-{
-	if (CallbackClick != NULL) { CallbackClick(params); }
-}
-void UserParameter::Mouse::EventManager::RelayCallbackScroll(UserParameter::Mouse::Scroll params)
-{
-	if (CallbackScroll != NULL) { CallbackScroll(params); }
-}
-void UserParameter::Mouse::EventManager::RelayCallbackMove(UserParameter::Mouse::Position params)
-{
-	if (CallbackMove != NULL) { CallbackMove(params); }
-}
-void UserParameter::Mouse::EventManager::RelayCallbackDrag(UserParameter::Mouse::Drag params)
-{
-	if (CallbackDrag != NULL) { CallbackDrag(params); }
 }

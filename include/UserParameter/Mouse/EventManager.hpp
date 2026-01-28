@@ -6,6 +6,8 @@
 
 # include "ValueType/Point2D.hpp"
 
+# include "Function/Pointer.hpp"
+
 /*	instead of putting all the managing logic in the Window, put it here
 */
 
@@ -27,10 +29,10 @@ struct EventManager
 	UserParameter::Mouse::ButtonRange Buttons;
 
 	private:
-	void (*CallbackClick)	(UserParameter::Mouse::Click);
-	void (*CallbackScroll)	(UserParameter::Mouse::Scroll);
-	void (*CallbackMove)	(UserParameter::Mouse::Position);
-	void (*CallbackDrag)	(UserParameter::Mouse::Drag);
+	FunctionPointer<UserParameter::Mouse::Click>	CallbackClick;
+	FunctionPointer<UserParameter::Mouse::Scroll>	CallbackScroll;
+	FunctionPointer<UserParameter::Mouse::Position>	CallbackMove;
+	FunctionPointer<UserParameter::Mouse::Drag>		CallbackDrag;
 
 	public:
 	EventManager(Window & win);
@@ -51,17 +53,10 @@ struct EventManager
 	void UpdateMove(double x_pos, double y_pos);
 
 	public:
-	void ChangeCallbackClick(void (*func)(UserParameter::Mouse::Click));
-	void ChangeCallbackScroll(void (*func)(UserParameter::Mouse::Scroll));
-	void ChangeCallbackMove(void (*func)(UserParameter::Mouse::Position));
-	void ChangeCallbackDrag(void (*func)(UserParameter::Mouse::Drag));
-
-	//	rename to Invoke ?
-	private:
-	void RelayCallbackClick(UserParameter::Mouse::Click params);
-	void RelayCallbackScroll(UserParameter::Mouse::Scroll params);
-	void RelayCallbackMove(UserParameter::Mouse::Position params);
-	void RelayCallbackDrag(UserParameter::Mouse::Drag params);
+	void ChangeClick(BaseFunction<void, UserParameter::Mouse::Click> * func);
+	void ChangeScroll(BaseFunction<void, UserParameter::Mouse::Scroll> * func);
+	void ChangeMove(BaseFunction<void, UserParameter::Mouse::Position> * func);
+	void ChangeDrag(BaseFunction<void, UserParameter::Mouse::Drag> * func);
 };
 
 };

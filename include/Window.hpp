@@ -4,6 +4,8 @@
 # include "ValueType/ColorF4.hpp"
 # include "ValueType/Point2D.hpp"
 
+# include "Function/Pointer.hpp"
+
 # include "Display/WindowBufferSize2D.hpp"
 
 # include "UserParameter/KeyBoard/KeyRange1.hpp"
@@ -16,18 +18,11 @@
 
 
 
-/*
-	Crashes sometimes even with no Buffers Shaders or anything else
-	I assume something in Window (Keys Mouse) is causing it
-	or the glfw Stuff itself
-*/
-
-
-
 struct GLFWwindow;
 
 struct Point3D;
 struct Angle3D;
+struct Trans3D;
 
 class Window
 {
@@ -43,14 +38,12 @@ class Window
 	unsigned long long FrameNumberTerminate;
 
 	public:
-	void (*FrameFunc)	(double);
-	void (*InitFunc)	();
-	void (*FreeFunc)	();
-
-	void (*ResizeFunc)	(const WindowBufferSize2D &);
-
-	void (*KeyFunc)		(UserParameter::KeyBoard::Key);
-	void (*TextFunc)	(UserParameter::KeyBoard::Text);
+	FunctionPointer<double>	FrameCallBack;
+	FunctionPointer<>		InitCallBack;
+	FunctionPointer<>		FreeCallBack;
+	FunctionPointer<const WindowBufferSize2D &>		ResizeCallBack;
+	FunctionPointer<UserParameter::KeyBoard::Key>	KeyCallBack;
+	FunctionPointer<UserParameter::KeyBoard::Text>	TextCallBack;
 
 	public:
 	UserParameter::KeyBoard::KeyRange2 Keys;
@@ -70,8 +63,14 @@ class Window
 	~Window();
 
 	public:
+//	bool Exists() const;
 	void Create();
 	void Delete();
+
+/*
+	make sure that all functions that require the window to exist
+	check that it actually exists
+*/
 
 	public:
 	//void ChangeSize(Point2D size);
@@ -104,14 +103,15 @@ class Window
 	void Callback_CursorMove(double xPos, double yPos);
 
 	public:
-	void ChangeCallback_CursorClick(void (*func)(UserParameter::Mouse::Click));
-	void ChangeCallback_CursorScroll(void (*func)(UserParameter::Mouse::Scroll));
-	void ChangeCallback_CursorMove(void (*func)(UserParameter::Mouse::Position));
-	void ChangeCallback_CursorDrag(void (*func)(UserParameter::Mouse::Drag));
+	void ChangeCallback_CursorClick(BaseFunction<void, UserParameter::Mouse::Click> * func);
+	void ChangeCallback_CursorScroll(BaseFunction<void, UserParameter::Mouse::Scroll> * func);
+	void ChangeCallback_CursorMove(BaseFunction<void, UserParameter::Mouse::Position> * func);
+	void ChangeCallback_CursorDrag(BaseFunction<void, UserParameter::Mouse::Drag> * func);
 
 	public:
-	Point3D MoveFromKeys(float speed) const;
-	Angle3D SpinFromCursor(float speed) const;
+	Point3D MoveFromKeys() const;
+	Angle3D SpinFromCursor() const;
+	Trans3D MoveSpinFromKeysCursor() const;
 
 	private:
 	void RunGL_Setup();

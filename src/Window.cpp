@@ -4,6 +4,7 @@
 #include "ValueType/Point3D.hpp"
 #include "ValueType/Angle3D.hpp"
 #include "ValueType/Point2D.hpp"
+#include "ValueType/Trans3D.hpp"
 #include "UserParameter/MouseInclude.hpp"
 
 #include "Debug.hpp"
@@ -24,6 +25,7 @@
 
 GLFWwindow * Window::NormalWindow()
 {
+	Debug::Log << Debug::Tabs << "Window::NormalWindow()" << "  ....  " << Debug::Done;
 	glfwSetErrorCallback(Callback_Error);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -46,6 +48,7 @@ GLFWwindow * Window::NormalWindow()
 	{
 		throw "glad load GL-Loader Failed";
 	}
+	Debug::Log << Debug::Tabs << "Window::NormalWindow()" << "  done  " << Debug::Done;
 	return win;
 }
 void Window::MakeCallbacks()
@@ -62,6 +65,8 @@ void Window::MakeCallbacks()
 }
 void Window::MakeUserParemeters()
 {
+	Debug::Log << Debug::Tabs << "MakeUserParemeters" << "  ....  " << Debug::Done;
+
 	Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
 	Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
 	Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
@@ -71,6 +76,8 @@ void Window::MakeUserParemeters()
 	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
 	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
+
+	Debug::Log << Debug::Tabs << "MakeUserParemeters" << "  done  " << Debug::Done;
 }
 
 
@@ -80,32 +87,35 @@ void Window::MakeUserParemeters()
 Window::Window() :
 	glfw_window(NULL),
 	FrameNumberTerminate(0xFFFFFFFFFFFFFFFF),
-	FrameFunc(NULL),
-	InitFunc(NULL),
-	FreeFunc(NULL),
-	ResizeFunc(NULL),
-	KeyFunc(NULL),
-	TextFunc(NULL),
+	FrameCallBack(),
+	InitCallBack(),
+	FreeCallBack(),
+	ResizeCallBack(),
+	KeyCallBack(),
+	TextCallBack(),
 	Keys(7),
 	MouseManager(*this),
 	DefaultColor(0.5f, 0.5f, 0.5f)
 {
-	Debug::Log << "Engine Dir: " << ENGINE_DIR << Debug::Done;
+	Debug::Log << Debug::Tabs << "  ++++  " << "Window" << "  ....  " << Debug::Done;
+	Debug::Log << Debug::Tabs << "Engine Dir: " << ENGINE_DIR << Debug::Done;
+	Debug::Log << Debug::TabInc;
 	MakeUserParemeters();
-	UpdateSize();
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "  ++++  " << "Window" << "  done  " << Debug::Done;
 }
 Window::~Window()
 { }
 
 Window::Window(const Window & other) :
 	glfw_window(other.glfw_window),
-	FrameNumberTerminate(0xFFFFFFFFFFFFFFFF),
-	FrameFunc(other.FrameFunc),
-	InitFunc(other.InitFunc),
-	FreeFunc(other.FreeFunc),
-	ResizeFunc(other.ResizeFunc),
-	KeyFunc(other.KeyFunc),
-	TextFunc(other.TextFunc),
+	FrameNumberTerminate(other.FrameNumberTerminate),
+	FrameCallBack(other.FrameCallBack),
+	InitCallBack(other.InitCallBack),
+	FreeCallBack(other.FreeCallBack),
+	ResizeCallBack(other.ResizeCallBack),
+	KeyCallBack(other.KeyCallBack),
+	TextCallBack(other.TextCallBack),
 	Keys(7),
 	MouseManager(*this),
 	DefaultColor(other.DefaultColor)
@@ -116,20 +126,25 @@ Window & Window::operator=(const Window & other)
 {
 	glfw_window = other.glfw_window;
 	FrameNumberTerminate = 0xFFFFFFFFFFFFFFFF;
-	FrameFunc = other.FrameFunc;
-	InitFunc = other.InitFunc;
-	FreeFunc = other.FreeFunc;
-	ResizeFunc = other.ResizeFunc;
-	KeyFunc = other.KeyFunc;
-	TextFunc = other.TextFunc;
+	FrameCallBack = other.FrameCallBack;
+	InitCallBack = other.InitCallBack;
+	FreeCallBack = other.FreeCallBack;
+	ResizeCallBack = other.ResizeCallBack;
+	KeyCallBack = other.KeyCallBack;
+	TextCallBack = other.TextCallBack;
 	DefaultColor = other.DefaultColor;
 	return *this;
 }
 
 void Window::Create()
 {
+	Debug::Log << Debug::Tabs << "Window::Create()" << "  ....  " << Debug::Done;
+	Debug::Log << Debug::TabInc;
 	glfw_window = NormalWindow();
 	MakeCallbacks();
+	UpdateSize();
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "Window::Create()" << "  done  " << Debug::Done;
 }
 void Window::Delete()
 {
@@ -141,6 +156,8 @@ void Window::Delete()
 
 void Window::UpdateSize()
 {
+	if (glfw_window == NULL) { return; }
+
 	int w, h;
 
 	Point2D winSize;
@@ -203,7 +220,7 @@ void Window::Callback_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
 	UpdateSize();
-	if (ResizeFunc != NULL) { ResizeFunc(Size); }
+	ResizeCallBack(Size);
 }
 void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
@@ -213,11 +230,11 @@ void Window::Callback_Key(int key, int scancode, int action, int mods)
 		state.Update(UserParameter::Haptic::Action(action));
 	}
 
-	if (KeyFunc != NULL) { KeyFunc(UserParameter::KeyBoard::Key(key, scancode, action, mods)); }
+	KeyCallBack(UserParameter::KeyBoard::Key(key, scancode, action, mods));
 }
 void Window::Callback_Text(unsigned int codepoint)
 {
-	if (TextFunc != NULL) { TextFunc(UserParameter::KeyBoard::Text(codepoint)); }
+	TextCallBack(UserParameter::KeyBoard::Text(codepoint));
 }
 
 void Window::Callback_CursorClick(int button, int action, int mods)
@@ -242,58 +259,55 @@ void Window::Callback_CursorMove(double xPos, double yPos)
 
 
 
-void Window::ChangeCallback_CursorClick(void (*func)(UserParameter::Mouse::Click))
+void Window::ChangeCallback_CursorClick(BaseFunction<void, UserParameter::Mouse::Click> * func)
 {
-	MouseManager.ChangeCallbackClick(func);
-	(void)func;
+	MouseManager.ChangeClick(func);
 }
-void Window::ChangeCallback_CursorScroll(void (*func)(UserParameter::Mouse::Scroll))
+void Window::ChangeCallback_CursorScroll(BaseFunction<void, UserParameter::Mouse::Scroll> * func)
 {
-	MouseManager.ChangeCallbackScroll(func);
-	(void)func;
+	MouseManager.ChangeScroll(func);
 }
-void Window::ChangeCallback_CursorMove(void (*func)(UserParameter::Mouse::Position))
+void Window::ChangeCallback_CursorMove(BaseFunction<void, UserParameter::Mouse::Position> * func)
 {
-	MouseManager.ChangeCallbackMove(func);
-	(void)func;
+	MouseManager.ChangeMove(func);
 }
-void Window::ChangeCallback_CursorDrag(void (*func)(UserParameter::Mouse::Drag))
+void Window::ChangeCallback_CursorDrag(BaseFunction<void, UserParameter::Mouse::Drag> * func)
 {
-	MouseManager.ChangeCallbackDrag(func);
-	(void)func;
+	MouseManager.ChangeDrag(func);
 }
 
 
 
 
 
-Point3D Window::MoveFromKeys(float speed) const
+Point3D Window::MoveFromKeys() const
 {
 	Point3D move;
-
-	if (Keys[GLFW_KEY_A].IsDown())				{ move.X -= speed; }
-	if (Keys[GLFW_KEY_D].IsDown())				{ move.X += speed; }
-	if (Keys[GLFW_KEY_S].IsDown())				{ move.Z -= speed; }
-	if (Keys[GLFW_KEY_W].IsDown())				{ move.Z += speed; }
-	if (Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += speed; }
-	if (Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= speed; }
-	if (Keys[GLFW_KEY_LEFT_CONTROL].IsDown())	{ move = move * 10; }
-	(void)speed;
-
+	if (Keys[GLFW_KEY_A].IsDown())				{ move.X -= 1; }
+	if (Keys[GLFW_KEY_D].IsDown())				{ move.X += 1; }
+	if (Keys[GLFW_KEY_S].IsDown())				{ move.Z -= 1; }
+	if (Keys[GLFW_KEY_W].IsDown())				{ move.Z += 1; }
+	if (Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += 1; }
+	if (Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= 1; }
 	return move;
 }
-Angle3D Window::SpinFromCursor(float speed) const
+Angle3D Window::SpinFromCursor() const
 {
 	Angle3D spin;
-
 	Point2D cursor = MouseManager.CursorPixelPosition().Absolute;
-
-	spin.X = (+cursor.X) * speed;
-	spin.Y = (-cursor.Y) * speed;
+	spin.X = (+cursor.X);
+	spin.Y = (-cursor.Y);
 	spin.Z = 0;
-
 	return spin;
 }
+Trans3D Window::MoveSpinFromKeysCursor() const
+{
+	return Trans3D(
+		MoveFromKeys(),
+		SpinFromCursor()
+	);
+}
+
 
 
 void Window::RunGL_Setup()
@@ -310,19 +324,19 @@ void Window::RunGL_Setup()
 }
 void Window::Run_Init()
 {
-	if (InitFunc != NULL)
+	if (InitCallBack.Function != NULL)
 	{
 		Debug::Log << "Window Init() ..." << Debug::Done;
-		InitFunc();
+		InitCallBack();
 		Debug::Log << "Window Init() done" << Debug::Done;
 	}
 }
 void Window::Run_Free()
 {
-	if (FreeFunc != NULL)
+	if (FreeCallBack.Function != NULL)
 	{
 		Debug::Log << "Window Free() ..." << Debug::Done;
-		FreeFunc();
+		FreeCallBack();
 		Debug::Log << "Window Free() done" << Debug::Done;
 	}
 }
@@ -333,7 +347,7 @@ void Window::Run()
 		RunGL_Setup();
 		Run_Init();
 		UpdateSize();
-		if (ResizeFunc != NULL) { ResizeFunc(Size); }
+		ResizeCallBack(Size);
 		Debug::Log << "Window Loop ..." << Debug::Done;
 		std::cout << "Window Loop ..." << '\n';
 		double FrameTimeLast = glfwGetTime();
@@ -349,7 +363,7 @@ void Window::Run()
 				glfwPollEvents();
 				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
 				GL::Clear(GL::ClearMask::ColorBufferBit | GL::ClearMask::DepthBufferBit);
-				FrameFunc(FrameTimeDelta);
+				FrameCallBack(FrameTimeDelta);
 				glfwSwapBuffers(glfw_window);
 				FrameTimeLast = FrameTimeCurr;
 				FrameNumber++;

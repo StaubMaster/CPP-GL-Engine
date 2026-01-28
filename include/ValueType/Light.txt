@@ -1,0 +1,6 @@
+
+maybe put the Light into their own Folder
+Light/
+
+also View is also "more complex" then other things here
+so maybe put it into a ifferent Folder as wellc?
