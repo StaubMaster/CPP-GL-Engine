@@ -191,6 +191,7 @@ USERPARAMETER := \
 	UserParameter/KeyBoard/KeyRange2.cpp \
 	UserParameter/KeyBoard/Key.cpp \
 	UserParameter/KeyBoard/Text.cpp \
+	UserParameter/KeyBoard/EventManager.cpp \
 \
 	UserParameter/Mouse/ButtonRange.cpp \
 	UserParameter/Mouse/ButtonData.cpp \

@@ -8,11 +8,6 @@
 
 # include "Function/Pointer.hpp"
 
-/*	instead of putting all the managing logic in the Window, put it here
-*/
-
-
-
 class Window;
 
 namespace UserParameter
@@ -21,14 +16,14 @@ namespace UserParameter
 namespace Mouse
 {
 
-struct EventManager
+class EventManager
 {
 	private:
 	Window & window;
 	public:
 	UserParameter::Mouse::ButtonRange Buttons;
 
-	private:
+	public:
 	FunctionPointer<UserParameter::Mouse::Click>	CallbackClick;
 	FunctionPointer<UserParameter::Mouse::Scroll>	CallbackScroll;
 	FunctionPointer<UserParameter::Mouse::Position>	CallbackMove;
@@ -36,6 +31,9 @@ struct EventManager
 
 	public:
 	EventManager(Window & win);
+	~EventManager();
+	EventManager(const EventManager & other) = delete;
+	EventManager & operator=(const EventManager & other) = delete;
 
 	public:
 	bool	CursorModeIsLocked() const;
@@ -51,12 +49,6 @@ struct EventManager
 	void UpdateClick(int button, int action, int mods);
 	void UpdateScroll(float offset_x, float offset_y);
 	void UpdateMove(double x_pos, double y_pos);
-
-	public:
-	void ChangeClick(BaseFunction<void, UserParameter::Mouse::Click> * func);
-	void ChangeScroll(BaseFunction<void, UserParameter::Mouse::Scroll> * func);
-	void ChangeMove(BaseFunction<void, UserParameter::Mouse::Position> * func);
-	void ChangeDrag(BaseFunction<void, UserParameter::Mouse::Drag> * func);
 };
 
 };

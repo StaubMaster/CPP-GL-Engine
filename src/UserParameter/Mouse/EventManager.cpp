@@ -1,5 +1,6 @@
 #include "UserParameter/Mouse/EventManager.hpp"
 #include "UserParameter/MouseInclude.hpp"
+
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
 
@@ -12,6 +13,8 @@ UserParameter::Mouse::EventManager::EventManager(Window & win) :
 	CallbackScroll(),
 	CallbackMove(),
 	CallbackDrag()
+{ }
+UserParameter::Mouse::EventManager::~EventManager()
 { }
 
 
@@ -126,23 +129,4 @@ void UserParameter::Mouse::EventManager::UpdateMove(double x_pos, double y_pos)
 			CallbackDrag(params);
 		}
 	}
-}
-
-
-
-void UserParameter::Mouse::EventManager::ChangeClick(BaseFunction<void, UserParameter::Mouse::Click> * func)
-{
-	CallbackClick = func;
-}
-void UserParameter::Mouse::EventManager::ChangeScroll(BaseFunction<void, UserParameter::Mouse::Scroll> * func)
-{
-	CallbackScroll = func;
-}
-void UserParameter::Mouse::EventManager::ChangeMove(BaseFunction<void, UserParameter::Mouse::Position> * func)
-{
-	CallbackMove = func;
-}
-void UserParameter::Mouse::EventManager::ChangeDrag(BaseFunction<void, UserParameter::Mouse::Drag> * func)
-{
-	CallbackDrag = func;
 }

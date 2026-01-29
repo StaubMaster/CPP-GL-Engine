@@ -4,21 +4,16 @@
 template<typename ReturnType, typename ... Arguments>
 struct BaseFunction
 {
-	bool	ShouldDelete;
-
-	BaseFunction() :
-		ShouldDelete(false)
+	BaseFunction()
 	{ }
 	virtual ~BaseFunction()
 	{ }
 
-	BaseFunction(const BaseFunction & other) :
-		ShouldDelete(other.ShouldDelete)
+	BaseFunction(const BaseFunction & other)
 	{ }
 	BaseFunction & operator=(const BaseFunction & other)
 	{
 		//(void)other;
-		ShouldDelete = other.ShouldDelete;
 		return *this;
 	}
 

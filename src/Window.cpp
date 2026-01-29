@@ -67,13 +67,13 @@ void Window::MakeUserParemeters()
 {
 	Debug::Log << Debug::Tabs << "MakeUserParemeters" << "  ....  " << Debug::Done;
 
-	Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
-	Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
-	Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
-	Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
-	Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
-	Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
-	Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
+	KeyBoardManager.Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
+	KeyBoardManager.Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
+	KeyBoardManager.Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
+	KeyBoardManager.Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
+	KeyBoardManager.Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
+	KeyBoardManager.Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
+	KeyBoardManager.Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
 	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
 
@@ -91,9 +91,7 @@ Window::Window() :
 	InitCallBack(),
 	FreeCallBack(),
 	ResizeCallBack(),
-	KeyCallBack(),
-	TextCallBack(),
-	Keys(7),
+	KeyBoardManager(*this, 7),
 	MouseManager(*this),
 	DefaultColor(0.5f, 0.5f, 0.5f)
 {
@@ -114,9 +112,7 @@ Window::Window(const Window & other) :
 	InitCallBack(other.InitCallBack),
 	FreeCallBack(other.FreeCallBack),
 	ResizeCallBack(other.ResizeCallBack),
-	KeyCallBack(other.KeyCallBack),
-	TextCallBack(other.TextCallBack),
-	Keys(7),
+	KeyBoardManager(*this, 7),
 	MouseManager(*this),
 	DefaultColor(other.DefaultColor)
 {
@@ -130,8 +126,6 @@ Window & Window::operator=(const Window & other)
 	InitCallBack = other.InitCallBack;
 	FreeCallBack = other.FreeCallBack;
 	ResizeCallBack = other.ResizeCallBack;
-	KeyCallBack = other.KeyCallBack;
-	TextCallBack = other.TextCallBack;
 	DefaultColor = other.DefaultColor;
 	return *this;
 }
@@ -187,17 +181,6 @@ void Window::Callback_Resize(GLFWwindow * window, int w, int h)
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_Resize(w, h);
 }
-void Window::Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
-{
-	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_Key(key, scancode, action, mods);
-}
-void Window::Callback_Text(GLFWwindow * window, unsigned int codepoint)
-{
-	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_Text(codepoint);
-}
-
 void Window::Callback_CursorClick(GLFWwindow * window, int button, int action, int mods)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
@@ -213,6 +196,16 @@ void Window::Callback_CursorMove(GLFWwindow * window, double xPos, double yPos)
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
 	win -> Callback_CursorMove(xPos, yPos);
 }
+void Window::Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
+{
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
+	win -> Callback_Key(key, scancode, action, mods);
+}
+void Window::Callback_Text(GLFWwindow * window, unsigned int codepoint)
+{
+	Window * win = ((Window *)glfwGetWindowUserPointer(window));
+	win -> Callback_Text(codepoint);
+}
 
 
 
@@ -222,58 +215,25 @@ void Window::Callback_Resize(int w, int h)
 	UpdateSize();
 	ResizeCallBack(Size);
 }
-void Window::Callback_Key(int key, int scancode, int action, int mods)
-{
-	if (Keys.Has(key))
-	{
-		UserParameter::Haptic::State & state = Keys[key];
-		state.Update(UserParameter::Haptic::Action(action));
-	}
-
-	KeyCallBack(UserParameter::KeyBoard::Key(key, scancode, action, mods));
-}
-void Window::Callback_Text(unsigned int codepoint)
-{
-	TextCallBack(UserParameter::KeyBoard::Text(codepoint));
-}
-
 void Window::Callback_CursorClick(int button, int action, int mods)
 {
 	MouseManager.UpdateClick(button, action, mods);
-	(void)button;
-	(void)action;
-	(void)mods;
 }
 void Window::Callback_CursorScroll(double xOffset, double yOffset)
 {
 	MouseManager.UpdateScroll(xOffset, yOffset);
-	(void)xOffset;
-	(void)yOffset;
 }
 void Window::Callback_CursorMove(double xPos, double yPos)
 {
 	MouseManager.UpdateMove(xPos, yPos);
-	(void)xPos;
-	(void)yPos;
 }
-
-
-
-void Window::ChangeCallback_CursorClick(BaseFunction<void, UserParameter::Mouse::Click> * func)
+void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
-	MouseManager.ChangeClick(func);
+	KeyBoardManager.UpdateKey(key, scancode, action, mods);
 }
-void Window::ChangeCallback_CursorScroll(BaseFunction<void, UserParameter::Mouse::Scroll> * func)
+void Window::Callback_Text(unsigned int codepoint)
 {
-	MouseManager.ChangeScroll(func);
-}
-void Window::ChangeCallback_CursorMove(BaseFunction<void, UserParameter::Mouse::Position> * func)
-{
-	MouseManager.ChangeMove(func);
-}
-void Window::ChangeCallback_CursorDrag(BaseFunction<void, UserParameter::Mouse::Drag> * func)
-{
-	MouseManager.ChangeDrag(func);
+	KeyBoardManager.UpdateText(codepoint);
 }
 
 
@@ -283,12 +243,12 @@ void Window::ChangeCallback_CursorDrag(BaseFunction<void, UserParameter::Mouse::
 Point3D Window::MoveFromKeys() const
 {
 	Point3D move;
-	if (Keys[GLFW_KEY_A].IsDown())				{ move.X -= 1; }
-	if (Keys[GLFW_KEY_D].IsDown())				{ move.X += 1; }
-	if (Keys[GLFW_KEY_S].IsDown())				{ move.Z -= 1; }
-	if (Keys[GLFW_KEY_W].IsDown())				{ move.Z += 1; }
-	if (Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += 1; }
-	if (Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= 1; }
+	if (KeyBoardManager.Keys[GLFW_KEY_A].IsDown())				{ move.X -= 1; }
+	if (KeyBoardManager.Keys[GLFW_KEY_D].IsDown())				{ move.X += 1; }
+	if (KeyBoardManager.Keys[GLFW_KEY_S].IsDown())				{ move.Z -= 1; }
+	if (KeyBoardManager.Keys[GLFW_KEY_W].IsDown())				{ move.Z += 1; }
+	if (KeyBoardManager.Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += 1; }
+	if (KeyBoardManager.Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= 1; }
 	return move;
 }
 Angle3D Window::SpinFromCursor() const
@@ -358,7 +318,7 @@ void Window::Run()
 			double FrameTimeDelta = FrameTimeCurr - FrameTimeLast;
 			if (FrameTimeDelta >= (1.0 / 64.0))
 			{
-				Keys.Tick();
+				KeyBoardManager.Tick();
 				MouseManager.Tick();
 				glfwPollEvents();
 				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);

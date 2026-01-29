@@ -37,13 +37,6 @@ struct ObjectFunction : public BaseFunction<ReturnType, Arguments ...>
 		return *this;
 	}
 
-	static ObjectFunction * New(ObjectType * obj, FunctionType func)
-	{
-		ObjectFunction * obj_func = new ObjectFunction(obj, func);
-		obj_func -> ShouldDelete = true;
-		return obj_func;
-	}
-
 	void Change(ObjectType * obj)
 	{
 		Object = obj;
