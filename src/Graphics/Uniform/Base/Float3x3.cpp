@@ -12,5 +12,5 @@ Uniform::Float3x3::Float3x3(Uniform::NameShader name_shader, int count) : FloatN
 
 void Uniform::Float3x3::PutData(const float * val)
 {
-	GL::UniformMatrix3fv(Location, Count, true, val);
+	GL::UniformMatrix3fv(Location, Count, false, val);
 }

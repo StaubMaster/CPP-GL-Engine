@@ -144,8 +144,8 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 	for (int i = 0; i < segments; i++)
 	{
 		angle.Z = Angle::Section(segments) * i;
-		angle.CalcFore();
-		temp.Insert_Corn(angle.rotate(Point3D(0, +width, -height)));
+		angle.CalcMatrix();
+		temp.Insert_Corn(angle.rotateFore(Point3D(0, +width, -height)));
 	}
 	int idx_last = ph -> Corners.Count();
 	temp.Insert_Corn(Point3D(0, 0, -height));

@@ -330,9 +330,9 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 	for (int i = 0; i < step_abs; i++)
 	{
 		angle.Z = (Angle::Section(step_num) * (i + step_off)) + offset;
-		angle.CalcBack();
+		angle.CalcMatrix();
 		Point3D p;
-		p = angle.rotate(rad_p);
+		p = angle.rotateBack(rad_p);
 		p = p + center;
 		Data -> Insert_Corn(Corner(p));
 		//std::cout << p << "\n";
@@ -371,9 +371,9 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 		{
 			//angle.Z = ((i + step_off) * step) + offset;
 		}
-		angle.CalcBack();
+		angle.CalcMatrix();
 		Point3D p;
-		p = angle.rotate(radius) + center;
+		p = angle.rotateBack(radius) + center;
 		Data -> Insert_Corn(Corner(p));
 		//std::cout << p << "\n";
 	}

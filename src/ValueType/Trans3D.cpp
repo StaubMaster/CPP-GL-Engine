@@ -29,8 +29,7 @@ Trans3D & Trans3D::operator=(const Trans3D & other)
 void Trans3D::MoveFlatX(Point3D move)
 {
 	Angle3D a(Rot.X, Angle(), Angle());
-	a.CalcBack();
-	Pos += a.rotate(move);
+	Pos += a.rotateBack(move);
 	//Pos = Pos + (Angle3D(Rot.X, 0, 0).rotate(move));
 }
 void Trans3D::SpinFlatX(Angle3D spin)

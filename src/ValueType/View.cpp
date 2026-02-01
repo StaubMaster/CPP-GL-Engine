@@ -37,5 +37,5 @@ void View::TransformFlatX(Trans3D trans, float timeDelta)
 	trans.Rot.Z *= timeDelta;
 	Trans.TransformFlatX(trans.Pos, trans.Rot);
 	Trans.Rot.Y.Clamp();
-	Trans.Rot.CalcBack();
+	Trans.Rot.CalcMatrix();
 }

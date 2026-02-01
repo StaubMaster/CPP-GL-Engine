@@ -22,17 +22,18 @@ struct Angle3D
 	~Angle3D();
 
 	Angle3D(const Angle3D & other);
-	const Angle3D & operator =(const Angle3D & other);
+	const Angle3D & operator=(const Angle3D & other);
 
 	static Angle3D FromPoint3D(const Point3D & dir);
 
-	private:
 	public:
-	void	CalcFore();
-	void	CalcBack();
+	void	CalcMatrix();
 
-	Point3D	rotate(Point3D p) const;
-	Angle3D	rotate(Angle3D a) const;
+	public:
+	Point3D rotateFore(Point3D p) const;
+	Point3D rotateBack(Point3D p) const;
+	Angle3D	rotateFore(Angle3D a) const;
+	Angle3D	rotateBack(Angle3D a) const;
 
 	public:
 	Angle3D		operator+(const Angle3D & other) const;

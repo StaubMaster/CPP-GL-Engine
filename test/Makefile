@@ -8,7 +8,8 @@ FLAGS := -Wall -Wextra -Werror
 DIR_SRC := ../src
 
 FILES := \
-	CopyConstruct.cpp
+	Angle3D.cpp
+#	CopyConstruct.cpp
 #	Container.cpp
 #	Graphics.cpp
 #	Undex.cpp
@@ -49,8 +50,10 @@ FANCY_NAME := Engine
 
 
 
-LIBRARYS := ..//Engine.a ..//other//OpenGL/openGL.a ..//other//FileManager/FileManager.a
-INCLUDES := -I..//include/ -I..//other//OpenGL/../ -I..//other//FileManager/include
+#LIBRARYS := ..//Engine.a ..//other//OpenGL/openGL.a ..//other//FileManager/FileManager.a
+#INCLUDES := -I..//include/ -I..//other//OpenGL/../ -I..//other//FileManager/include
+LIBRARYS := ..//Engine.a
+INCLUDES := -I..//include/
 ARGUMENTS :=
 
 ifeq ($(CheckOS), Windows)
