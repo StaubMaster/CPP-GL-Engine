@@ -14,7 +14,7 @@ class Shader : public ::Shader::Base
 	Uniform::WindowBufferSize2D	WindowSize;
 	Uniform::Trans3D			View;
 	Uniform::Depth				Depth;
-	Uniform::Float1				FOV;
+	Uniform::Angle				FOV;
 
 	public:
 	Shader();

@@ -1,9 +1,9 @@
-#ifndef  UNI_Angle_3D_HPP
-# define UNI_Angle_3D_HPP
+#ifndef  UNI_ANGLE_3D_HPP
+# define UNI_ANGLE_3D_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Matrix3x3.hpp"
-# include "DataDeclare.hpp"
+struct Angle3D;
 
 namespace Uniform
 {

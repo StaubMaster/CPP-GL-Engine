@@ -1,4 +1,3 @@
-
 #ifndef  DATA_INCLUDE_HPP
 # define DATA_INCLUDE_HPP
 
@@ -6,6 +5,7 @@
 #include "ValueType/Point3D.hpp"
 #include "ValueType/Point4D.hpp"
 
+#include "ValueType/Angle.hpp"
 #include "ValueType/Angle3D.hpp"
 
 #include "ValueType/Trans3D.hpp"

@@ -22,6 +22,8 @@ namespace Uniform
 	class ColorF4;
 	class Depth;
 
+	class Angle;
+
 	class Point2D;
 
 	class Point3D;

@@ -1,9 +1,8 @@
-
 #ifndef  ATTRIB_UINT_1_HPP
 # define ATTRIB_UINT_1_HPP
 
-# include "Graphics/Attribute/Base/AttributeLocation.hpp"
-# include "Graphics/Attribute/Base/AttributeBase.hpp"
+# include "Graphics/Attribute/Base/Location.hpp"
+# include "Graphics/Attribute/Base/Base.hpp"
 
 namespace Attribute
 {

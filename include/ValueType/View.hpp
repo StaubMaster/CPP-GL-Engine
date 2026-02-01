@@ -3,12 +3,13 @@
 
 # include "ValueType/Trans3D.hpp"
 # include "ValueType/Depth.hpp"
+# include "ValueType/Angle.hpp"
 
 struct View
 {
 	Trans3D	Trans;
 	::Depth	Depth;
-	float	FOV;	//make a Point2D for different X and Y angle ?
+	Angle	FOV;	//make a Point2D for different X and Y angle ?
 
 	View();
 	~View();

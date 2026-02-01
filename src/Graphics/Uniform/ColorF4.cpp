@@ -6,7 +6,7 @@
 Uniform::ColorF4::ColorF4(Uniform::NameShader name_shader) : Float4(name_shader)
 { }
 
-void Uniform::ColorF4::Put(const ::ColorF4 & val)
+void Uniform::ColorF4::Put(const ::ColorF4 & obj)
 {
-	PutVoid(&val);
+	PutVoid(&obj);
 }

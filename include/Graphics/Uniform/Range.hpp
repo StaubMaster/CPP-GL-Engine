@@ -3,7 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float1.hpp"
-# include "DataDeclare.hpp"
+struct Range;
 
 namespace Uniform
 {

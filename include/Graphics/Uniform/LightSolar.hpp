@@ -2,10 +2,9 @@
 # define UNI_LIGHT_SOLAR_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "DataDeclare.hpp"
-
 # include "Graphics/Uniform/LightBase.hpp"
 # include "Graphics/Uniform/Point3D.hpp"
+struct LightSolar;
 
 namespace Uniform
 {

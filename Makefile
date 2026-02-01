@@ -20,6 +20,7 @@ ValueType/ := \
 	ValueType/Point2D.cpp \
 	ValueType/Point3D.cpp \
 	ValueType/Point4D.cpp \
+	ValueType/Angle.cpp \
 	ValueType/Angle3D.cpp \
 	ValueType/Trans3D.cpp \
 	ValueType/AxisBox1D.cpp \
@@ -83,6 +84,7 @@ UNIFORM := \
 	Graphics/Uniform/Matrix3x3.cpp \
 	Graphics/Uniform/DepthFactors.cpp \
 \
+	Graphics/Uniform/Angle.cpp \
 	Graphics/Uniform/Angle3D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
 	Graphics/Uniform/Range.cpp \
@@ -109,8 +111,6 @@ MULTIFORM := \
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
 MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
 
-#	Graphics/Buffer/BaseBufferArray.cpp
-#	Graphics/Buffer/BaseBuffer.cpp
 BUFFER := \
 	Graphics/Buffer/Base.cpp \
 	Graphics/Buffer/Attribute.cpp \
@@ -119,8 +119,8 @@ BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
 BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
 
 ATTRIBUTE := \
-	Graphics/Attribute/Base/AttributeLocation.cpp \
-	Graphics/Attribute/Base/AttributeBase.cpp \
+	Graphics/Attribute/Base/Location.cpp \
+	Graphics/Attribute/Base/Base.cpp \
 	Graphics/Attribute/Base/FloatN.cpp \
 \
 	Graphics/Attribute/Point3D.cpp \

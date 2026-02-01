@@ -15,6 +15,9 @@ struct Trans3D
 	Trans3D(Point3D pos, Angle3D rot);
 	~Trans3D();
 
+	Trans3D(const Trans3D & other);
+	Trans3D & operator=(const Trans3D & other);
+
 	public:
 	void MoveFlatX(Point3D move);
 	void SpinFlatX(Angle3D spin);

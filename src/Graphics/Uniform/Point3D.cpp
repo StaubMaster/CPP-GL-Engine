@@ -6,7 +6,7 @@
 Uniform::Point3D::Point3D(Uniform::NameShader name_shader) : Float3(name_shader)
 { }
 
-void Uniform::Point3D::Put(const ::Point3D & p)
+void Uniform::Point3D::Put(const ::Point3D & obj)
 {
-	PutVoid(&p);
+	PutVoid(&obj);
 }

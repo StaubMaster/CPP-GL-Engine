@@ -255,9 +255,8 @@ Angle3D Window::SpinFromCursor() const
 {
 	Angle3D spin;
 	Point2D cursor = MouseManager.CursorPixelPosition().Absolute;
-	spin.X = (+cursor.X);
-	spin.Y = (-cursor.Y);
-	spin.Z = 0;
+	spin.X.FromRadians(+cursor.X);
+	spin.Y.FromRadians(-cursor.Y);
 	return spin;
 }
 Trans3D Window::MoveSpinFromKeysCursor() const

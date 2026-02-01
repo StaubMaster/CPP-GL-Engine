@@ -15,6 +15,7 @@
 #include "FileParsing/Text/Exceptions.hpp"
 
 #include "ValueType/Point3D.hpp"
+#include "ValueType/Angle.hpp"
 #include "ValueType/Angle3D.hpp"
 #include "ValueType/AxisBox3D.hpp"
 #include "DataShow.hpp"
@@ -319,16 +320,16 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 		cmd.ToFloat(7),
 		cmd.ToFloat(8)
 	));
-	float offset = Angle3D::DegreeToRadian(cmd.ToFloat(9));
+	Angle offset = Angle::Degrees(cmd.ToFloat(9));
 
 	int step_abs = 0;
-	if (step_num > 0) { step_abs = +step_num; offset += PI * 0; }
-	if (step_num < 0) { step_abs = -step_num; offset += PI * 1; }
+	if (step_num > 0) { step_abs = +step_num; offset += Angle::Degrees(000); }
+	if (step_num < 0) { step_abs = -step_num; offset += Angle::Degrees(180); }
 
 	Point3D rad_p(radius, 0, 0);
 	for (int i = 0; i < step_abs; i++)
 	{
-		angle.Z = ((i + step_off) * (TAU / step_num)) + offset;
+		angle.Z = (Angle::Section(step_num) * (i + step_off)) + offset;
 		angle.CalcBack();
 		Point3D p;
 		p = angle.rotate(rad_p);
@@ -342,7 +343,7 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 	if (!(cmd.Count() == 11)) { throw InvalidCommandArgumentCount(cmd, "n == 11"); }
 	//Debug::Log << cmd << Debug::Done;
 
-	float step = (TAU / cmd.ToInt32(0));
+	Angle step = Angle::Section(cmd.ToInt32(0));
 	int step_num = cmd.ToInt32(1);
 	int step_off = cmd.ToInt32(2);
 
@@ -358,13 +359,13 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 		cmd.ToFloat(8),
 		cmd.ToFloat(9)
 	));
-	float offset = Angle3D::DegreeToRadian(cmd.ToFloat(10));
+	Angle offset = Angle::Degrees(cmd.ToFloat(10));
 
 	for (int i = 0; i < step_num; i++)
 	{
 		if (!direction)
 		{
-			angle.Z = ((i + step_off) * step) + offset;
+			angle.Z = (step * (i + step_off)) + offset;
 		}
 		else
 		{

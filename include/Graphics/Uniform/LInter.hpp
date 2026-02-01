@@ -3,7 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float1.hpp"
-# include "DataDeclare.hpp"
+struct LInter;
 
 namespace Uniform
 {
@@ -17,7 +17,7 @@ class LInter : public Uniform::GBase<::LInter>
 	LInter(Uniform::NameShader name_shader);
 
 	public:
-	void Put(const ::LInter & objl) override;
+	void Put(const ::LInter & obj) override;
 };
 };
 

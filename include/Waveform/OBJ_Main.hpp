@@ -10,8 +10,8 @@
 
 
 
-# include "Graphics/Attribute/Base/AttributeLocation.hpp"
-# include "Graphics/Attribute/Base/AttributeBase.hpp"
+# include "Graphics/Attribute/Base/Location.hpp"
+# include "Graphics/Attribute/Base/Base.hpp"
 
 # include "Graphics/Attribute/Point4D.hpp"
 # include "Graphics/Attribute/Point3D.hpp"

@@ -5,23 +5,24 @@
 
 # include <iosfwd>
 
-std::ostream & operator <<(std::ostream & o, const Point2D & val);
-std::ostream & operator <<(std::ostream & o, const Point3D & val);
-std::ostream & operator <<(std::ostream & o, const Point4D & val);
+std::ostream & operator <<(std::ostream & o, const Point2D & obj);
+std::ostream & operator <<(std::ostream & o, const Point3D & obj);
+std::ostream & operator <<(std::ostream & o, const Point4D & obj);
 
-std::ostream & operator <<(std::ostream & o, const Angle3D & val);
+std::ostream & operator <<(std::ostream & o, const Angle & obj);
+std::ostream & operator <<(std::ostream & o, const Angle3D & obj);
 
-std::ostream & operator <<(std::ostream & o, const Trans3D & val);
+std::ostream & operator <<(std::ostream & o, const Trans3D & obj);
 
-std::ostream & operator <<(std::ostream & o, const AxisBox1D & val);
-std::ostream & operator <<(std::ostream & o, const AxisBox2D & val);
-std::ostream & operator <<(std::ostream & o, const AxisBox3D & val);
+std::ostream & operator <<(std::ostream & o, const AxisBox1D & obj);
+std::ostream & operator <<(std::ostream & o, const AxisBox2D & obj);
+std::ostream & operator <<(std::ostream & o, const AxisBox3D & obj);
 
-std::ostream & operator <<(std::ostream & o, const Undex3D & val);
-std::ostream & operator <<(std::ostream & o, const UndexBox3D & val);
+std::ostream & operator <<(std::ostream & o, const Undex3D & obj);
+std::ostream & operator <<(std::ostream & o, const UndexBox3D & obj);
 
-std::ostream & operator <<(std::ostream & o, const Bool3D & val);
+std::ostream & operator <<(std::ostream & o, const Bool3D & obj);
 
-std::ostream & operator <<(std::ostream & o, const ColorF4 & val);
+std::ostream & operator <<(std::ostream & o, const ColorF4 & obj);
 
 #endif

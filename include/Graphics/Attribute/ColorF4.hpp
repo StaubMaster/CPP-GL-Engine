@@ -1,8 +1,8 @@
 #ifndef  ATTRIB_COLOR_F4_HPP
 # define ATTRIB_COLOR_F4_HPP
 
-# include "Graphics/Attribute/Base/AttributeLocation.hpp"
-# include "Graphics/Attribute/Base/AttributeBase.hpp"
+# include "Graphics/Attribute/Base/Location.hpp"
+# include "Graphics/Attribute/Base/Base.hpp"
 # include "Graphics/Attribute/Base/FloatN.hpp"
 
 namespace Attribute

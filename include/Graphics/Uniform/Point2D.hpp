@@ -3,7 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float2.hpp"
-# include "DataDeclare.hpp"
+struct Point2D;
 
 namespace Uniform
 {
@@ -13,7 +13,7 @@ class Point2D : public Uniform::Float2
 	Point2D(Uniform::NameShader name_shader);
 
 	public:
-	void Put(const ::Point2D & p);
+	void Put(const ::Point2D & obj);
 };
 };
 

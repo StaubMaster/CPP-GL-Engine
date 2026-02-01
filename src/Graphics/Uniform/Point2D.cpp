@@ -6,7 +6,7 @@
 Uniform::Point2D::Point2D(Uniform::NameShader name_shader) : Float2(name_shader)
 { }
 
-void Uniform::Point2D::Put(const ::Point2D & p)
+void Uniform::Point2D::Put(const ::Point2D & obj)
 {
-	PutVoid(&p);
+	PutVoid(&obj);
 }

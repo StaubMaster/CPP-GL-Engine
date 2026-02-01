@@ -1,4 +1,3 @@
-
 #ifndef  DATA_DECLARE_HPP
 # define DATA_DECLARE_HPP
 
@@ -7,6 +6,7 @@ struct Point2D;
 struct Point3D;
 struct Point4D;
 
+struct Angle;
 struct Angle3D;
 
 struct Trans3D;

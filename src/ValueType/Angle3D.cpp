@@ -6,10 +6,16 @@
 
 
 
-Angle3D::Angle3D() : X(0), Y(0), Z(0),
+Angle3D::Angle3D() :
+	X(),
+	Y(),
+	Z(),
 	Mat(Matrix3x3::Default())
 { }
-Angle3D::Angle3D(float x, float y, float z) : X(x), Y(y), Z(z),
+Angle3D::Angle3D(Angle x, Angle y, Angle z) :
+	X(x),
+	Y(y),
+	Z(z),
 	Mat(Matrix3x3::Default())
 { }
 Angle3D::~Angle3D()
@@ -17,7 +23,10 @@ Angle3D::~Angle3D()
 
 
 
-Angle3D::Angle3D(const Angle3D & other) : X(other.X), Y(other.Y), Z(other.Z),
+Angle3D::Angle3D(const Angle3D & other) :
+	X(other.X),
+	Y(other.Y),
+	Z(other.Z),
 	Mat(other.Mat)
 { }
 const Angle3D & Angle3D::operator =(const Angle3D & other)
@@ -35,48 +44,35 @@ Angle3D Angle3D::FromPoint3D(const Point3D & dir)
 {
 	float len = sqrt((dir.X * dir.X) + (dir.Z * dir.Z));
 
-	Angle3D a(
-		atan2(dir.X, dir.Z),
-		atan2(dir.Y, len),
-		0
+	return Angle3D(
+		Angle::SaTan2(dir.Z, dir.X),
+		Angle::SaTan2(len, dir.Y),
+		Angle()
 	);
-
-	return a;
-}
-
-
-
-float Angle3D::DegreeToRadian(float degree)
-{
-	return ((degree * TAU) / 360);
-}
-float Angle3D::RadianToDegree(float radian)
-{
-	return ((radian * 360) / TAU);
 }
 
 
 
 void Angle3D::CalcFore()
 {
-	float sinX = sin(X);
-	float cosX = cos(X);
+	float sinX = X.Sin();
+	float cosX = X.Cos();
 	Matrix3x3 matX(
 		 +cosX , 0 , -sinX ,
 		   0   , 1 ,   0   ,
 		 +sinX , 0 , +cosX
 	);
 
-	float sinY = sin(Y);
-	float cosY = cos(Y);
+	float sinY = Y.Sin();
+	float cosY = Y.Cos();
 	Matrix3x3 matY(
 		 1 ,   0   ,   0   ,
 		 0 , +cosY , -sinY ,
 		 0 , +sinY , +cosY
 	);
 
-	float sinZ = sin(Z);
-	float cosZ = cos(Z);
+	float sinZ = Z.Sin();
+	float cosZ = Z.Cos();
 	Matrix3x3 matZ(
 		 +cosZ , +sinZ , 0 ,
 		 -sinZ , +cosZ , 0 ,
@@ -90,24 +86,24 @@ void Angle3D::CalcFore()
 }
 void Angle3D::CalcBack()
 {
-	float sinZ = sin(Z);
-	float cosZ = cos(Z);
+	float sinZ = Z.Sin();
+	float cosZ = Z.Cos();
 	Matrix3x3 matZ(
 		 +cosZ , -sinZ , 0 ,
 		 +sinZ , +cosZ , 0 ,
 		   0   ,   0   , 1
 	);
 
-	float sinY = sin(Y);
-	float cosY = cos(Y);
+	float sinY = Y.Sin();
+	float cosY = Y.Cos();
 	Matrix3x3 matY(
 		 1 ,   0   ,   0   ,
 		 0 , +cosY , +sinY ,
 		 0 , -sinY , +cosY
 	);
 
-	float sinX = sin(X);
-	float cosX = cos(X);
+	float sinX = X.Sin();
+	float cosX = X.Cos();
 	Matrix3x3 matX(
 		 +cosX , 0 , +sinX ,
 		   0   , 1 ,   0   ,
@@ -135,8 +131,47 @@ Angle3D	Angle3D::rotate(Angle3D a) const
 	pZ = a.rotate(rotate(Point3D(0, 0, 1)));
 
 	return Angle3D(
+		Angle::SaTan2(pZ.Z, pX.Z),
+		Angle::SaSin(pY.Z),
+		Angle::SaTan2(pY.Y, pY.X)
+	);
+	/*return Angle3D(
 		atan2f(pX.Z, pZ.Z),
 		asinf(pY.Z),
 		atan2(pY.X, pY.Y)
+	);*/
+}
+
+
+
+Angle3D Angle3D::operator+(const Angle3D & other) const
+{
+	return Angle3D(
+		X + other.X,
+		Y + other.Y,
+		Z + other.Z
 	);
+}
+Angle3D Angle3D::operator-(const Angle3D & other) const
+{
+	return Angle3D(
+		X - other.X,
+		Y - other.Y,
+		Z - other.Z
+	);
+}
+
+Angle3D & Angle3D::operator+=(const Angle3D & other)
+{
+	X += other.X;
+	Y += other.Y;
+	Z += other.Z;
+	return *this;
+}
+Angle3D & Angle3D::operator-=(const Angle3D & other)
+{
+	X -= other.X;
+	Y -= other.Y;
+	Z -= other.Z;
+	return *this;
 }

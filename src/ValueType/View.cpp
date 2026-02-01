@@ -9,7 +9,7 @@ View::View() :
 		Range(0.8f, 1.0f),
 		ColorF4(0.5f, 0.5f, 0.5f)
 	),
-	FOV(90)
+	FOV(Angle::Degrees(90))
 { }
 View::~View()
 { }
@@ -36,7 +36,6 @@ void View::TransformFlatX(Trans3D trans, float timeDelta)
 	trans.Rot.Y *= timeDelta;
 	trans.Rot.Z *= timeDelta;
 	Trans.TransformFlatX(trans.Pos, trans.Rot);
-	if (Trans.Rot.Y > Angle3D::DegreeToRadian(+90)) { Trans.Rot.Y = Angle3D::DegreeToRadian(+90); }
-	if (Trans.Rot.Y < Angle3D::DegreeToRadian(-90)) { Trans.Rot.Y = Angle3D::DegreeToRadian(-90); }
+	Trans.Rot.Y.Clamp();
 	Trans.Rot.CalcBack();
 }

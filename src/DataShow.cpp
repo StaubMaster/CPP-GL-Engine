@@ -4,81 +4,87 @@
 
 
 
-std::ostream & operator <<(std::ostream & o, const Point2D & val)
+std::ostream & operator <<(std::ostream & o, const Point2D & obj)
 {
-	o << "( " << val.X << " | " << val.Y << " )";
+	o << "( " << obj.X << " | " << obj.Y << " )";
 	return o;
 }
-std::ostream & operator <<(std::ostream & o, const Point3D & val)
+std::ostream & operator <<(std::ostream & o, const Point3D & obj)
 {
-	o << "( " << val.X << " | " << val.Y << " | " << val.Z << " )";
+	o << "( " << obj.X << " | " << obj.Y << " | " << obj.Z << " )";
 	return o;
 }
-std::ostream & operator <<(std::ostream & o, const Point4D & val)
+std::ostream & operator <<(std::ostream & o, const Point4D & obj)
 {
-	o << "( " << val.X << " | " << val.Y << " | " << val.Z << " | " << val.W << " )";
-	return o;
-}
-
-
-
-std::ostream & operator <<(std::ostream & o, const Angle3D & val)
-{
-	o << "( " << val.X << " | " << val.Y << " | " << val.Z << " )";
-	//o << "#( " << val.sin_x << " | " << val.sin_y << " | " << val.sin_z << " )";
-	//o << "#( " << val.cos_x << " | " << val.cos_y << " | " << val.cos_z << " )";
+	o << "( " << obj.X << " | " << obj.Y << " | " << obj.Z << " | " << obj.W << " )";
 	return o;
 }
 
 
 
-std::ostream & operator <<(std::ostream & o, const Trans3D & val)
+std::ostream & operator <<(std::ostream & o, const Angle & obj)
 {
-	o << "{ " << val.Pos << " | " << val.Rot << " }";
+	//o << obj.ToRadians();
+	o << obj.ToDegrees() << "°";
+	return o;
+}
+std::ostream & operator <<(std::ostream & o, const Angle3D & obj)
+{
+	o << "( " << obj.X << " | " << obj.Y << " | " << obj.Z << " )";
+	//o << "#( " << obj.sin_x << " | " << obj.sin_y << " | " << obj.sin_z << " )";
+	//o << "#( " << obj.cos_x << " | " << obj.cos_y << " | " << obj.cos_z << " )";
 	return o;
 }
 
 
 
-std::ostream & operator <<(std::ostream & o, const AxisBox1D & val)
+std::ostream & operator <<(std::ostream & o, const Trans3D & obj)
 {
-	o << "{ " << val.Min << " : " << val.Max << " }";
-	return o;
-}
-std::ostream & operator <<(std::ostream & o, const AxisBox2D & val)
-{
-	o << "{ " << val.Min << " : " << val.Max << " }";
-	return o;
-}
-std::ostream & operator <<(std::ostream & o, const AxisBox3D & val)
-{
-	o << "{ " << val.Min << " : " << val.Max << " }";
+	o << "{ " << obj.Pos << " | " << obj.Rot << " }";
 	return o;
 }
 
 
 
-std::ostream & operator <<(std::ostream & o, const Undex3D & val)
+std::ostream & operator <<(std::ostream & o, const AxisBox1D & obj)
 {
-	o << "[" << val.X << ":" << val.Y << ":" << val.Z << "]";
+	o << "{ " << obj.Min << " : " << obj.Max << " }";
 	return o;
 }
-std::ostream & operator <<(std::ostream & o, const UndexBox3D & val)
+std::ostream & operator <<(std::ostream & o, const AxisBox2D & obj)
 {
-	o << "{ " << val.Min << " : " << val.Max << " }";
+	o << "{ " << obj.Min << " : " << obj.Max << " }";
+	return o;
+}
+std::ostream & operator <<(std::ostream & o, const AxisBox3D & obj)
+{
+	o << "{ " << obj.Min << " : " << obj.Max << " }";
 	return o;
 }
 
 
 
-std::ostream & operator <<(std::ostream & o, const Bool3D & val)
+std::ostream & operator <<(std::ostream & o, const Undex3D & obj)
+{
+	o << "[" << obj.X << ":" << obj.Y << ":" << obj.Z << "]";
+	return o;
+}
+std::ostream & operator <<(std::ostream & o, const UndexBox3D & obj)
+{
+	o << "{ " << obj.Min << " : " << obj.Max << " }";
+	return o;
+}
+
+
+
+std::ostream & operator <<(std::ostream & o, const Bool3D & obj)
 {
 	o << "( ";
-	if (val.GetX()) { o << "true"; } else { o << "false"; }
+	if (obj.GetX()) { o << "true"; } else { o << "false"; }
 	o << " : ";
-	if (val.GetY()) { o << "true"; } else { o << "false"; }
+	if (obj.GetY()) { o << "true"; } else { o << "false"; }
 	o << " : ";
-	if (val.GetZ()) { o << "true"; } else { o << "false"; }
+	if (obj.GetZ()) { o << "true"; } else { o << "false"; }
 	o << " )";
 	
 	return o;
@@ -86,8 +92,8 @@ std::ostream & operator <<(std::ostream & o, const Bool3D & val)
 
 
 
-std::ostream & operator <<(std::ostream & o, const ColorF4 & val)
+std::ostream & operator <<(std::ostream & o, const ColorF4 & obj)
 {
-	o << "(" << " R:" << val.R << " G:" << val.G << " B:" << val.B << " A:" << val.A << " )";
+	o << "(" << " R:" << obj.R << " G:" << obj.G << " B:" << obj.B << " A:" << obj.A << " )";
 	return o;
 }

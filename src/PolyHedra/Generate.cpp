@@ -143,7 +143,7 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 	temp.Insert_Corn(Point3D(0, 0, +height));
 	for (int i = 0; i < segments; i++)
 	{
-		angle.Z = (TAU * i) / segments;
+		angle.Z = Angle::Section(segments) * i;
 		angle.CalcFore();
 		temp.Insert_Corn(angle.rotate(Point3D(0, +width, -height)));
 	}

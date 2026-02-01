@@ -1,4 +1,4 @@
-#include "Graphics/Attribute/Base/AttributeLocation.hpp"
+#include "Graphics/Attribute/Base/Location.hpp"
 
 
 

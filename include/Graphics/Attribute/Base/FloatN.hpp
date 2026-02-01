@@ -1,9 +1,8 @@
-
 #ifndef  ATTRIB_FLOAT_N_HPP
 # define ATTRIB_FLOAT_N_HPP
 
-# include "Graphics/Attribute/Base/AttributeLocation.hpp"
-# include "Graphics/Attribute/Base/AttributeBase.hpp"
+# include "Graphics/Attribute/Base/Location.hpp"
+# include "Graphics/Attribute/Base/Base.hpp"
 
 # include "OpenGLTypes.hpp"
 

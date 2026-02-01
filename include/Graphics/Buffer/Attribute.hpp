@@ -3,7 +3,7 @@
 
 # include "Base.hpp"
 
-# include "Graphics/Attribute/Base/AttributeBase.hpp"
+# include "Graphics/Attribute/Base/Base.hpp"
 
 # include "Miscellaneous/Container/Fixed.hpp"
 # include "Miscellaneous/Container/Void.hpp"

@@ -3,7 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float3.hpp"
-# include "DataDeclare.hpp"
+struct Point3D;
 
 namespace Uniform
 {
@@ -13,7 +13,7 @@ class Point3D : public Uniform::Float3
 	Point3D(Uniform::NameShader name_shader);
 
 	public:
-	void Put(const ::Point3D & p);
+	void Put(const ::Point3D & obj);
 };
 };
 

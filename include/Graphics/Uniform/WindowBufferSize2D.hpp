@@ -2,9 +2,8 @@
 # define UNI_DISPLAY_SIZE_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Display/WindowBufferSize2D.hpp"
-
 # include "Graphics/Uniform/Point2D.hpp"
+struct WindowBufferSize2D;
 
 namespace Uniform
 {

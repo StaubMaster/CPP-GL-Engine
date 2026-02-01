@@ -2,11 +2,10 @@
 # define UNI_LIGHT_SPOT_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "DataDeclare.hpp"
-
 # include "Graphics/Uniform/LightBase.hpp"
 # include "Graphics/Uniform/Point3D.hpp"
 # include "Graphics/Uniform/Range.hpp"
+struct LightSpot;
 
 namespace Uniform
 {

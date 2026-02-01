@@ -20,6 +20,8 @@
 # include "Uniform/DepthFactors.hpp"
 # include "Uniform/Range.hpp"
 
+# include "Uniform/Angle.hpp"
+
 # include "Uniform/Point2D.hpp"
 
 # include "Uniform/Point3D.hpp"
