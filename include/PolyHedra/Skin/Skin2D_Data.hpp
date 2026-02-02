@@ -14,7 +14,6 @@ struct Skin2DFaceCorner
 	Point3D	Tex;
 
 	Skin2DFaceCorner();
-	Skin2DFaceCorner(Point2D tex);
 	Skin2DFaceCorner(Point3D tex);
 	Skin2DFaceCorner(float tex_x, float tex_y, float tex_z);
 };

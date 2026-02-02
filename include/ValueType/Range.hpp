@@ -5,17 +5,17 @@
 struct Range
 {
 	public:
-		float Min;
-		float Len;
-		float Max;
+	float Min;
+	float Len;
+	float Max;
 
 	public:
-		Range();
-		Range(float min, float max);
+	Range();
+	Range(float min, float max);
 
 	public:
-		void ChangeMin(float min);
-		void ChangeMax(float max);
+	void ChangeMin(float min);
+	void ChangeMax(float max);
 };
 
 #endif

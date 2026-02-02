@@ -32,7 +32,7 @@ PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
 	skin -> H = img.H();
 	skin -> Images.Insert(img);
 
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.0f, 1.0f)), Skin2DFaceCorner(Point2D(0.0f, 0.0f)), Skin2DFaceCorner(Point2D(1.0f, 1.0f)), Skin2DFaceCorner(Point2D(1.0f, 0.0f)));
+	skin -> Insert_Face4(Skin2DFaceCorner(0.0f, 1.0f, 0.0f), Skin2DFaceCorner(0.0f, 0.0f, 0.0f), Skin2DFaceCorner(1.0f, 1.0f, 0.0f), Skin2DFaceCorner(1.0f, 0.0f, 0.0f));
 
 	skin -> Done();
 
@@ -66,10 +66,10 @@ PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
 	skin -> H = 4;
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
-	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.00f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(0.25f, 0.00f)));
-	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.25f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(0.50f, 0.00f)));
-	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.50f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(0.75f, 0.00f)));
-	skin -> Insert_Face3(Skin2DFaceCorner(Point2D(0.75f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(1.00f, 0.00f)));
+	skin -> Insert_Face3(Skin2DFaceCorner(0.00f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.25f, 0.00f, 0.0f));
+	skin -> Insert_Face3(Skin2DFaceCorner(0.25f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.50f, 0.00f, 0.0f));
+	skin -> Insert_Face3(Skin2DFaceCorner(0.50f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.75f, 0.00f, 0.0f));
+	skin -> Insert_Face3(Skin2DFaceCorner(0.75f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(1.00f, 0.00f, 0.0f));
 
 	skin -> Done();
 
@@ -110,13 +110,13 @@ PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 	skin -> H = 4;
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.00f, 0.00f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)), Skin2DFaceCorner(Point2D(0.25f, 0.00f)), Skin2DFaceCorner(Point2D(0.25f, 0.50f)));
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.25f, 0.00f)), Skin2DFaceCorner(Point2D(0.25f, 0.50f)), Skin2DFaceCorner(Point2D(0.50f, 0.00f)), Skin2DFaceCorner(Point2D(0.50f, 0.50f)));
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.50f, 0.00f)), Skin2DFaceCorner(Point2D(0.50f, 0.50f)), Skin2DFaceCorner(Point2D(0.75f, 0.00f)), Skin2DFaceCorner(Point2D(0.75f, 0.50f)));
+	skin -> Insert_Face4(Skin2DFaceCorner(0.00f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.25f, 0.00f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f));
+	skin -> Insert_Face4(Skin2DFaceCorner(0.25f, 0.00f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f), Skin2DFaceCorner(0.50f, 0.00f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f));
+	skin -> Insert_Face4(Skin2DFaceCorner(0.50f, 0.00f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f), Skin2DFaceCorner(0.75f, 0.00f, 0.0f), Skin2DFaceCorner(0.75f, 0.50f, 0.0f));
 
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.25f, 1.00f)), Skin2DFaceCorner(Point2D(0.00f, 1.00f)), Skin2DFaceCorner(Point2D(0.25f, 0.50f)), Skin2DFaceCorner(Point2D(0.00f, 0.50f)));
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.50f, 1.00f)), Skin2DFaceCorner(Point2D(0.25f, 1.00f)), Skin2DFaceCorner(Point2D(0.50f, 0.50f)), Skin2DFaceCorner(Point2D(0.25f, 0.50f)));
-	skin -> Insert_Face4(Skin2DFaceCorner(Point2D(0.75f, 1.00f)), Skin2DFaceCorner(Point2D(0.50f, 1.00f)), Skin2DFaceCorner(Point2D(0.75f, 0.50f)), Skin2DFaceCorner(Point2D(0.50f, 0.50f)));
+	skin -> Insert_Face4(Skin2DFaceCorner(0.25f, 1.00f, 0.0f), Skin2DFaceCorner(0.00f, 1.00f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f));
+	skin -> Insert_Face4(Skin2DFaceCorner(0.50f, 1.00f, 0.0f), Skin2DFaceCorner(0.25f, 1.00f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f));
+	skin -> Insert_Face4(Skin2DFaceCorner(0.75f, 1.00f, 0.0f), Skin2DFaceCorner(0.50f, 1.00f, 0.0f), Skin2DFaceCorner(0.75f, 0.50f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f));
 
 	skin -> Done();
 
@@ -167,10 +167,10 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 		);
 
 		skin -> Insert_Face4(
-			Skin2DFaceCorner(Point2D(texM, 0.0f)),
-			Skin2DFaceCorner(Point2D(tex1, 1.0f)),
-			Skin2DFaceCorner(Point2D(tex0, 1.0f)),
-			Skin2DFaceCorner(Point2D(texM, 0.0f))
+			Skin2DFaceCorner(texM, 0.0f, 0.0f),
+			Skin2DFaceCorner(tex1, 1.0f, 0.0f),
+			Skin2DFaceCorner(tex0, 1.0f, 0.0f),
+			Skin2DFaceCorner(texM, 0.0f, 0.0f)
 		);
 	}
 

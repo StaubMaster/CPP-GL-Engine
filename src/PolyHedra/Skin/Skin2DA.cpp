@@ -14,7 +14,8 @@
 
 Skin2DA::Skin2DA() :
 	SkinGenericBase(),
-	W(0), H(0)
+	W(0), H(0),
+	TextureIndex(0)
 { }
 Skin2DA::~Skin2DA()
 { }
@@ -46,6 +47,8 @@ void Skin2DA::Parse(const ParsingCommand & cmd)
 	else if (name == "H")		{ Parse_H(cmd); }
 	else if (name == "File")	{ Parse_File(cmd); }
 	else if (name == "t")		{ Parse_t(cmd); }
+	else if (name == "Ti")		{ Parse_t(cmd); }
+	else if (name == "Tf")		{ Parse_t(cmd); }
 	else						{ std::cout << "unknown: " << cmd << "\n"; }
 }
 void Skin2DA::Parse_W(const ParsingCommand & cmd)
@@ -77,12 +80,12 @@ void Skin2DA::Parse_t(const ParsingCommand & cmd)
 {
 	unsigned int len = cmd.Count() / 2;
 	if (!cmd.CheckCount(CountCheckModulo(2, 0)) || len < 3 || len > 4) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckModulo(2, 0)); }
-	Point2D t[len];
+ 
+	Point3D t[len];
 	for (size_t i = 0; i < len; i++)
 	{
 		t[i].X = cmd.ToFloat(i * 2 + 0);
 		t[i].Y = cmd.ToFloat(i * 2 + 1);
-		//std::cout << t[i] << "\n";
 	}
 
 	if (len == 3)
@@ -93,4 +96,13 @@ void Skin2DA::Parse_t(const ParsingCommand & cmd)
 	{
 		Insert_Face4(Skin2DFaceCorner(t[0]), Skin2DFaceCorner(t[1]), Skin2DFaceCorner(t[2]), Skin2DFaceCorner(t[3]));
 	}
+}
+void Skin2DA::Parse_TextureIndex(const ParsingCommand & cmd)
+{
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+	TextureIndex = cmd.ToInt32(0);
+}
+void Skin2DA::Parse_TextureFace(const ParsingCommand & cmd)
+{
+	//	like t but uses TextureIndex
 }

@@ -16,6 +16,9 @@ class Skin2DA : public SkinGenericBase<Skin2DCorner, Skin2DFaceCorner, Skin2DFac
 	unsigned int W;
 	unsigned int H;
 
+	private:
+	unsigned int TextureIndex;
+
 	public:
 	Skin2DA();
 	~Skin2DA();
@@ -31,6 +34,8 @@ class Skin2DA : public SkinGenericBase<Skin2DCorner, Skin2DFaceCorner, Skin2DFac
 	void Parse_H(const ParsingCommand & cmd);
 	void Parse_File(const ParsingCommand & cmd);
 	void Parse_t(const ParsingCommand & cmd);
+	void Parse_TextureIndex(const ParsingCommand & cmd);
+	void Parse_TextureFace(const ParsingCommand & cmd);
 };
 
 #endif
