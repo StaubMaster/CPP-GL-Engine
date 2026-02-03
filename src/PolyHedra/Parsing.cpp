@@ -7,7 +7,7 @@
 #include "PolyHedra/Skin/Skin2DA.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
-//#include "FileInfo.hpp"
+#include "FileInfo.hpp"
 //#include "FilePath.hpp"
 //#include "FileParsing/LineCommand.hpp"
 #include "FileParsing/Text/TextCommand.hpp"
@@ -22,6 +22,7 @@
 
 #include "Debug.hpp"
 #include <sstream>
+#include <iostream>
 
 
 
@@ -60,41 +61,41 @@ void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 {
 	try
 	{
-	std::string name = cmd.Name();
-	if (name == "")				{ /*std::cout << "empty\n";*/ }
-	else if (name == "Type")	{ Parse_Type(cmd); }
-	else if (name == "Format")	{ Parse_Format(cmd); }
+		std::string name = cmd.Name();
+		if (name == "")				{ /*std::cout << "empty\n";*/ }
+		else if (name == "Type")	{ Parse_Type(cmd); }
+		else if (name == "Format")	{ Parse_Format(cmd); }
 
-	else if (name == "Skin")	{ Parse_Skin(cmd); }
+		else if (name == "Skin")	{ Parse_Skin(cmd); }
 
-	else if (name == "c")		{ Parse_Corner(cmd); }
-	else if (name == "f")		{ Parse_Face(cmd); }
+		else if (name == "c")		{ Parse_Corner(cmd); }
+		else if (name == "f")		{ Parse_Face(cmd); }
 
-	else if (name == "p")		{ Parse_Corner(cmd); }
-	else if (name == "d")		{ Parse_Face(cmd); }
-	else if (name == "o")		{ Parse_Face(cmd); }
+		else if (name == "p")		{ Parse_Corner(cmd); }
+		else if (name == "d")		{ Parse_Face(cmd); }
+		else if (name == "o")		{ Parse_Face(cmd); }
 
-	else if (name == "v")		{ Parse_Offset(cmd); }
-	else if (name == "circle")	{ Parse_CircleOLD(cmd); }
-	else if (name == "belt0")	{ Parse_Belt(cmd, false, false); }
-	else if (name == "belt1")	{ Parse_Belt(cmd, false, true); }
-	else if (name == "fan0")	{ Parse_Fan(cmd, false, true); }
-	else if (name == "fan1")	{ Parse_Fan(cmd, true, true); }
+		else if (name == "v")		{ Parse_Offset(cmd); }
+		else if (name == "circle")	{ Parse_CircleOLD(cmd); }
+		else if (name == "belt0")	{ Parse_Belt(cmd, false, false); }
+		else if (name == "belt1")	{ Parse_Belt(cmd, false, true); }
+		else if (name == "fan0")	{ Parse_Fan(cmd, false, true); }
+		else if (name == "fan1")	{ Parse_Fan(cmd, true, true); }
 
-	else if (name == "circle>")	{ Parse_Circle(cmd, false); }
-	else if (name == "circle<")	{ Parse_Circle(cmd, true); }
+		else if (name == "circle>")	{ Parse_Circle(cmd, false); }
+		else if (name == "circle<")	{ Parse_Circle(cmd, true); }
 
-	else if (name == "belt>0")	{ Parse_Belt(cmd, false, false); }
-	else if (name == "belt<0")	{ Parse_Belt(cmd, true, false); }
-	else if (name == "belt>1")	{ Parse_Belt(cmd, false, true); }
-	else if (name == "belt<1")	{ Parse_Belt(cmd, true, true); }
+		else if (name == "belt>0")	{ Parse_Belt(cmd, false, false); }
+		else if (name == "belt<0")	{ Parse_Belt(cmd, true, false); }
+		else if (name == "belt>1")	{ Parse_Belt(cmd, false, true); }
+		else if (name == "belt<1")	{ Parse_Belt(cmd, true, true); }
 
-	else if (name == "fan>0")	{ Parse_Fan(cmd, false, false); }
-	else if (name == "fan<0")	{ Parse_Fan(cmd, true, false); }
-	else if (name == "fan>1")	{ Parse_Fan(cmd, false, true); }
-	else if (name == "fan<1")	{ Parse_Fan(cmd, true, true); }
+		else if (name == "fan>0")	{ Parse_Fan(cmd, false, false); }
+		else if (name == "fan<0")	{ Parse_Fan(cmd, true, false); }
+		else if (name == "fan>1")	{ Parse_Fan(cmd, false, true); }
+		else if (name == "fan<1")	{ Parse_Fan(cmd, true, true); }
 
-	else						{ Debug::Log << "unknown: " << cmd << Debug::Done; }
+		else						{ Debug::Log << "unknown: " << cmd << Debug::Done; }
 	}
 	catch (std::exception & ex)
 	{

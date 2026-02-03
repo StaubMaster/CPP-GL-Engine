@@ -29,13 +29,13 @@ class Skin2DA : public SkinGenericBase<Skin2DCorner, Skin2DFaceCorner, Skin2DFac
 	void ToTexture(Texture::Array2D & tex) const;
 
 	public:
-	void Parse(const ParsingCommand & cmd) override;
-	void Parse_W(const ParsingCommand & cmd);
-	void Parse_H(const ParsingCommand & cmd);
-	void Parse_File(const ParsingCommand & cmd);
-	void Parse_t(const ParsingCommand & cmd);
-	void Parse_TextureIndex(const ParsingCommand & cmd);
-	void Parse_TextureFace(const ParsingCommand & cmd);
+	void Parse(const TextCommand & cmd) override;
+	void Parse_W(const TextCommand & cmd);
+	void Parse_H(const TextCommand & cmd);
+	void Parse_File(const TextCommand & cmd);
+	void Parse_t(const TextCommand & cmd);
+	void Parse_TextureIndex(const TextCommand & cmd);
+	void Parse_TextureFace(const TextCommand & cmd);
 };
 
 #endif

@@ -10,7 +10,12 @@
 
 #include "Image.hpp"
 
-
+//#include "FileInfo.hpp"
+//#include "DirectoryInfo.hpp"
+//#include "DataShow.hpp"
+#include "Debug.hpp"
+#include <sstream>
+#include <iostream>
 
 PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
 {
@@ -105,6 +110,7 @@ PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 	temp.Done();
 
 
+
 	Skin2DA * skin = new Skin2DA();
 	skin -> W = 8;
 	skin -> H = 4;
@@ -183,11 +189,6 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 
 
 
-//#include "FileInfo.hpp"
-//#include "DirectoryInfo.hpp"
-//#include <iostream>
-//#include "DataShow.hpp"
-#include "Debug.hpp"
 PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 {
 	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") ..." << Debug::Done;

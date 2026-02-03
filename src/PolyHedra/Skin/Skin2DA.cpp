@@ -3,8 +3,9 @@
 
 #include "Graphics/Texture/Array2D.hpp"
 
-#include "FileParsing/LineCommand.hpp"
 #include "FileInfo.hpp"
+#include "FileParsing/Text/TextCommand.hpp"
+#include "FileParsing/Text/Exceptions.hpp"
 
 #include "ValueType/Point2D.hpp"
 #include "DataShow.hpp"
@@ -39,32 +40,38 @@ void Skin2DA::ToTexture(Texture::Array2D & tex) const
 
 
 
-void Skin2DA::Parse(const ParsingCommand & cmd)
+void Skin2DA::Parse(const TextCommand & cmd)
 {
+	std::cout << "Skin2DA::Parsing: " << cmd << '\n';
 	std::string name = cmd.Name();
 	if (name == "")				{ /*std::cout << "Skin: Object: " << "Empty\n";*/ }
+
 	else if (name == "W")		{ Parse_W(cmd); }
 	else if (name == "H")		{ Parse_H(cmd); }
 	else if (name == "File")	{ Parse_File(cmd); }
 	else if (name == "t")		{ Parse_t(cmd); }
 	else if (name == "Ti")		{ Parse_t(cmd); }
 	else if (name == "Tf")		{ Parse_t(cmd); }
+
 	else						{ std::cout << "unknown: " << cmd << "\n"; }
 }
-void Skin2DA::Parse_W(const ParsingCommand & cmd)
+void Skin2DA::Parse_W(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(1))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(1)); }
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+
 	W = cmd.ToUInt32(0);
 }
-void Skin2DA::Parse_H(const ParsingCommand & cmd)
+void Skin2DA::Parse_H(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(1))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(1)); }
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+
 	H = cmd.ToUInt32(0);
 }
-void Skin2DA::Parse_File(const ParsingCommand & cmd)
+void Skin2DA::Parse_File(const TextCommand & cmd)
 {
-	if (!cmd.CheckCount(CountCheckEqual(1))) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckEqual(1)); }
-	FileInfo file((File -> DirectoryString() + "/" + cmd.ToString(0)).c_str());
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+
+	FileInfo file((File.DirectoryString() + "/" + cmd.ToString(0)).c_str());
 	std::string ext = file.Extension();
 	std::cout << ext << "\n";
 	if (ext == ".png" || ext == ".PNG")
@@ -76,10 +83,11 @@ void Skin2DA::Parse_File(const ParsingCommand & cmd)
 		std::cout << file.Path.ToString() << ": " << "Unknown Image Extension" << "\n";
 	}
 }
-void Skin2DA::Parse_t(const ParsingCommand & cmd)
+void Skin2DA::Parse_t(const TextCommand & cmd)
 {
 	unsigned int len = cmd.Count() / 2;
-	if (!cmd.CheckCount(CountCheckModulo(2, 0)) || len < 3 || len > 4) { throw ParsingCommand::ExceptionInvalidCount(cmd, CountCheckModulo(2, 0)); }
+	if (!((len % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "((n / 2) % 2) == 0"); }
+	//if (!cmd.CheckCount(CountCheckModulo(2, 0)) || len < 3 || len > 4) { throw TextCommand::ExceptionInvalidCount(cmd, CountCheckModulo(2, 0)); }
  
 	Point3D t[len];
 	for (size_t i = 0; i < len; i++)
@@ -97,12 +105,12 @@ void Skin2DA::Parse_t(const ParsingCommand & cmd)
 		Insert_Face4(Skin2DFaceCorner(t[0]), Skin2DFaceCorner(t[1]), Skin2DFaceCorner(t[2]), Skin2DFaceCorner(t[3]));
 	}
 }
-void Skin2DA::Parse_TextureIndex(const ParsingCommand & cmd)
+/*void Skin2DA::Parse_TextureIndex(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
 	TextureIndex = cmd.ToInt32(0);
-}
-void Skin2DA::Parse_TextureFace(const ParsingCommand & cmd)
+}*/
+/*void Skin2DA::Parse_TextureFace(const TextCommand & cmd)
 {
 	//	like t but uses TextureIndex
-}
+}*/

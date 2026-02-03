@@ -3,52 +3,43 @@
 
 # include "Miscellaneous/Container/Binary.hpp"
 
-# include "FileParsing/ParsingCommand.hpp"
-
 # include "Image.hpp"
+# include "FileInfo.hpp"
 
-namespace YMT
-{
-	class PolyHedra;
-};
+class TextCommand;
 
 namespace Texture
 {
 	class Base;
 };
 
-class FileInfo;
-class LineCommand;
-
 class SkinBase
 {
 	public:
-		Container::Binary<Image> Images;
-		const FileInfo * File;
+	Container::Binary<Image> Images;
+	FileInfo File;
 
 	public:
-		SkinBase();
-		virtual ~SkinBase();
+	SkinBase();
+	virtual ~SkinBase();
 
 	public:
-		virtual void Done() = 0;
+	virtual void Done() = 0;
 
-		virtual Texture::Base * ToTexture() const = 0;
+	virtual Texture::Base * ToTexture() const = 0;
 
+	protected:
+	virtual void Parse(const TextCommand & cmd) = 0;
+	struct ParserData
+	{
+		FileInfo	File;
+		SkinBase *	Skin;
+		void Parse(const TextCommand & cmd);
+		void Parse_Type(const TextCommand & cmd);
+		void Parse_Format(const TextCommand & cmd);
+	};
 	public:
-		struct ParsingEnvironmentData : public ParsingCommand::EnvironmentData
-		{
-			SkinBase * Skin;
-			ParsingEnvironmentData(const FileInfo & file);
-			void Parse(const ParsingCommand & cmd) override;
-
-			void Parse_Type(const ParsingCommand & cmd);
-			void Parse_Format(const ParsingCommand & cmd);
-		};
-	public:
-		virtual void Parse(const ParsingCommand & cmd) = 0;
-	public:
-		static SkinBase * Load(const FileInfo & file);
+	static SkinBase * Load(const FileInfo & file);
 };
 
 #endif
