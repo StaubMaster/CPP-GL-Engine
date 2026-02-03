@@ -10,15 +10,16 @@ class DirectoryInfo;
 class OBJ_3D_Shader : public Shader::Base
 {
 	public:
-		Uniform::SizeRatio2D	ViewPortSizeRatio;
-		Uniform::Trans3D		View;
-		Uniform::Depth			Depth;
-		Uniform::LInter			ColorToTex;
-		Uniform::LInter			ShowLightFactor;
+	Uniform::WindowBufferSize2D	WindowSize;
+	Uniform::Trans3D			View;
+	Uniform::Depth				Depth;
+	Uniform::LInter				ColorToTex;
+	Uniform::LInter				ShowLightFactor;
 
 	public:
-		OBJ_3D_Shader(const DirectoryInfo & dir);
-		~OBJ_3D_Shader();
+	OBJ_3D_Shader();
+	//OBJ_3D_Shader(const DirectoryInfo & dir);
+	~OBJ_3D_Shader();
 };
 
 #endif

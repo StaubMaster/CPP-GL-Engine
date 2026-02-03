@@ -4,28 +4,28 @@
 # include "Base.hpp"
 
 template<typename ReturnType, typename ... Arguments>
-struct StaticCallBack : public BaseFunction<ReturnType, Arguments ...>
+struct StaticFunction : public BaseFunction<ReturnType, Arguments ...>
 {
 	typedef ReturnType (*FunctionType)(Arguments ...);
 
 	FunctionType	Function;
 
-	StaticCallBack(FunctionType * func) :
+	StaticFunction() :
 		BaseFunction<ReturnType, Arguments ...>(),
 		Function(0)
 	{ }
-	StaticCallBack(FunctionType * func) :
+	StaticFunction(FunctionType func) :
 		BaseFunction<ReturnType, Arguments ...>(),
 		Function(func)
 	{ }
-	~StaticCallBack()
+	~StaticFunction()
 	{ }
 
-	StaticCallBack(const StaticCallBack & other) :
+	StaticFunction(const StaticFunction & other) :
 		BaseFunction<ReturnType, Arguments ...>(other),
 		Function(other.Function)
 	{ }
-	StaticCallBack & operator=(const StaticCallBack & other)
+	StaticFunction & operator=(const StaticFunction & other)
 	{
 		BaseFunction<ReturnType, Arguments ...>::operator=(other);
 		Function = other.Function;

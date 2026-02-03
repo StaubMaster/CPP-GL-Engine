@@ -31,5 +31,13 @@
 	//std::cout << "################################################################\n";
 	(void)dir;
 }*/
+OBJ_3D_Shader::OBJ_3D_Shader()
+	: Shader::Base(),
+	WindowSize(Uniform::NameShader("WindowSize", *this)),
+	View(Uniform::NameShader("View", *this)),
+	Depth(Uniform::NameShader("Depth", *this)),
+	ColorToTex(Uniform::NameShader("ColorToTex", *this)),
+	ShowLightFactor(Uniform::NameShader("ShowLightFactor", *this))
+{ }
 OBJ_3D_Shader::~OBJ_3D_Shader()
 { }

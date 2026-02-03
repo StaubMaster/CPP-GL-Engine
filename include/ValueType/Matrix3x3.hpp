@@ -3,7 +3,7 @@
 
 struct Point3D;
 
-class Matrix3x3
+struct Matrix3x3
 {
 	public:
 		float Data[3][3];

@@ -40,43 +40,18 @@ struct OBJ_MainData
 
 
 
-class OBJ_MainAttrib : public Attribute::Base
-{
-	private:
-		Attribute::Point4D	Position;
-		Attribute::Point3D	Texture;
-		Attribute::Point3D	Normal;
-		Attribute::ColorF4	Color;
-
-		Attribute::ColorF4	AmbientColor;
-		Attribute::ColorF4	DiffuseColor;
-		Attribute::FloatN	SpecularPower;
-		Attribute::ColorF4	SpecularColor;
-
-	public:
-		OBJ_MainAttrib(
-			unsigned int divisor,
-			unsigned int stride,
-			unsigned int indexPosition,
-			unsigned int indexTexture,
-			unsigned int indexNormal,
-			unsigned int indexColor,
-			unsigned int indexAmbientColor,
-			unsigned int indexDiffuseColor,
-			unsigned int indexSpecularPower,
-			unsigned int indexSpecularColor
-		);
-
-	public:
-		void Bind(const unsigned char * & offset) const override;
-};
-
-
-
 class OBJ_MainBuffer : public Buffer::Attribute
 {
 	private:
-	OBJ_MainAttrib	Attribute;
+	::Attribute::Point4D	Position;
+	::Attribute::Point3D	Texture;
+	::Attribute::Point3D	Normal;
+	::Attribute::ColorF4	Color;
+
+	::Attribute::ColorF4	AmbientColor;
+	::Attribute::ColorF4	DiffuseColor;
+	::Attribute::FloatN		SpecularPower;
+	::Attribute::ColorF4	SpecularColor;
 
 	public:
 	OBJ_MainBuffer(

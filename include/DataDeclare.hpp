@@ -23,7 +23,7 @@ struct UndexLoop3D;
 
 struct Bool3D;
 
-class Matrix3x3;
+struct Matrix3x3;
 
 struct DepthFactors;
 struct Depth;

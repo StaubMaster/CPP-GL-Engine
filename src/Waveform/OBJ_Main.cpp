@@ -4,43 +4,6 @@
 
 
 
-OBJ_MainAttrib::OBJ_MainAttrib(
-	GL::AttributeDivisor divisor,
-	unsigned int stride,
-	unsigned int indexPosition,
-	unsigned int indexTexture,
-	unsigned int indexNormal,
-	unsigned int indexColor,
-	unsigned int indexAmbientColor,
-	unsigned int indexDiffuseColor,
-	unsigned int indexSpecularPower,
-	unsigned int indexSpecularColor
-) :
-	Position(divisor, stride, indexPosition),
-	Texture(divisor, stride, indexTexture),
-	Normal(divisor, stride, indexNormal),
-	Color(divisor, stride, indexColor),
-	AmbientColor(divisor, stride, indexAmbientColor),
-	DiffuseColor(divisor, stride, indexDiffuseColor),
-	SpecularPower(divisor, stride, indexSpecularPower),
-	SpecularColor(divisor, stride, indexSpecularColor)
-{ }
-
-void OBJ_MainAttrib::Bind(const unsigned char * & offset) const
-{
-	Position.Bind(offset);
-	Texture.Bind(offset);
-	Normal.Bind(offset);
-	Color.Bind(offset);
-
-	AmbientColor.Bind(offset);
-	DiffuseColor.Bind(offset);
-	SpecularPower.Bind(offset);
-	SpecularColor.Bind(offset);
-}
-
-
-
 OBJ_MainBuffer::OBJ_MainBuffer(
 	unsigned int indexPosition,
 	unsigned int indexTexture,
@@ -56,10 +19,25 @@ OBJ_MainBuffer::OBJ_MainBuffer(
 	//	indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
 	//}) { }
 	Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, sizeof(OBJ_MainData)),
-	Attribute(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor, indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
+	//Attribute(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor, indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
+	Position(0, sizeof(OBJ_MainData), indexPosition),
+	Texture(0, sizeof(OBJ_MainData), indexTexture),
+	Normal(0, sizeof(OBJ_MainData), indexNormal),
+	Color(0, sizeof(OBJ_MainData), indexColor),
+	AmbientColor(0, sizeof(OBJ_MainData), indexAmbientColor),
+	DiffuseColor(0, sizeof(OBJ_MainData), indexDiffuseColor),
+	SpecularPower(0, sizeof(OBJ_MainData), indexSpecularPower),
+	SpecularColor(0, sizeof(OBJ_MainData), indexSpecularColor)
 {
-	Attributes.Allocate(1);
-	Attributes[0] = &Attribute;
+	Attributes.Allocate(8);
+	Attributes.Insert(&Position);
+	Attributes.Insert(&Texture);
+	Attributes.Insert(&Normal);
+	Attributes.Insert(&Color);
+	Attributes.Insert(&AmbientColor);
+	Attributes.Insert(&DiffuseColor);
+	Attributes.Insert(&SpecularPower);
+	Attributes.Insert(&SpecularColor);
 }
 OBJ_MainBuffer::~OBJ_MainBuffer()
 { }

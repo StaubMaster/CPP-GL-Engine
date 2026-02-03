@@ -17,7 +17,7 @@
 	Simple3D_InstData,
 	Simple3D_InstBuffer
 >*/
-class OBJ_3D_BufferArray : BufferArray::Base
+class OBJ_3D_BufferArray : public BufferArray::Base
 {
 	public:
 	OBJ_MainBuffer			Main;

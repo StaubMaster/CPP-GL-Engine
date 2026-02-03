@@ -10,10 +10,12 @@ struct BaseFunction
 	{ }
 
 	BaseFunction(const BaseFunction & other)
-	{ }
+	{
+		(void)other;
+	}
 	BaseFunction & operator=(const BaseFunction & other)
 	{
-		//(void)other;
+		(void)other;
 		return *this;
 	}
 
