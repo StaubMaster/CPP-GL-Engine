@@ -129,7 +129,11 @@ class Base : public Member<T>
 		Behaviour::Delete(member, MemB);
 	}
 
-	Base(const Base<T> & other) : Member<T>()
+	Base(const Base<T> & other) :
+		Member<T>(),
+		IncB(Behaviour::EIncrease::None),
+		DecB(Behaviour::EDecrease::None),
+		MemB(Behaviour::EMemory::Null)
 	{
 		Behaviour::Member<T> member(this -> ToBehaviour());
 		Behaviour::ConstMember<T> other_member(other.ToBehaviour());
