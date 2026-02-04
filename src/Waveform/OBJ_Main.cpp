@@ -1,5 +1,4 @@
 #include "Waveform/OBJ_Main.hpp"
-
 #include "OpenGL.hpp"
 
 
@@ -14,12 +13,7 @@ OBJ_MainBuffer::OBJ_MainBuffer(
 	unsigned int indexSpecularPower,
 	unsigned int indexSpecularColor
 ) :
-	//BaseBuffer(1, (Attribute::Base * []) {
-	//	new OBJ_MainAttrib(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor,
-	//	indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
-	//}) { }
 	Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, sizeof(OBJ_MainData)),
-	//Attribute(0, sizeof(OBJ_MainData), indexPosition, indexTexture, indexNormal, indexColor, indexAmbientColor, indexDiffuseColor, indexSpecularPower, indexSpecularColor)
 	Position(0, sizeof(OBJ_MainData), indexPosition),
 	Texture(0, sizeof(OBJ_MainData), indexTexture),
 	Normal(0, sizeof(OBJ_MainData), indexNormal),

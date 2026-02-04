@@ -28,6 +28,9 @@ class OBJ_3D_BufferArray : public BufferArray::Base
 	OBJ_3D_BufferArray();
 	~OBJ_3D_BufferArray();
 
+	OBJ_3D_BufferArray(const OBJ_3D_BufferArray & other) = delete;
+	OBJ_3D_BufferArray & operator=(const OBJ_3D_BufferArray & other) = delete;
+
 	void Draw();
 };
 

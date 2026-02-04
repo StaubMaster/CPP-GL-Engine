@@ -65,6 +65,9 @@ class OBJ_MainBuffer : public Buffer::Attribute
 		unsigned int indexSpecularColor
 	);
 	~OBJ_MainBuffer();
+
+	OBJ_MainBuffer(const OBJ_MainBuffer & other) = delete;
+	OBJ_MainBuffer & operator=(const OBJ_MainBuffer & other) = delete;
 };
 
 

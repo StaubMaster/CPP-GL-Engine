@@ -4,7 +4,7 @@
 //#include "OpenGL/Errors.hpp"
 //#include "Debug.hpp"
 //#include <sstream>
-#include <iostream>
+//#include <iostream>
 
 
 
@@ -49,18 +49,14 @@ Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 
 void Buffer::Attribute::Change(const Container::Void & data)
 {
-std::cerr << __FILE__ << ' ' << __LINE__ << ' ' << GL::GetError() << '\n';
 	GL::BindBuffer(Target, ID);
-std::cerr << __FILE__ << ' ' << __LINE__ << ' ' << GL::GetError() << '\n';
 	GL::BufferData(Target, data.VoidCount(), data.VoidData(), Usage);
-std::cerr << __FILE__ << ' ' << __LINE__ << ' ' << GL::GetError() << '\n';
-	DrawCount = data.Count();
 
 	const unsigned char * offset = NULL;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)
 	{
-std::cerr << __FILE__ << ' ' << __LINE__ << ' ' << i << ' ' << GL::GetError() << '\n';
 		Attributes[i] -> Bind(offset);
-std::cerr << __FILE__ << ' ' << __LINE__ << ' ' << i << ' ' << GL::GetError() << '\n';
 	}
+
+	DrawCount = data.Count();
 }
