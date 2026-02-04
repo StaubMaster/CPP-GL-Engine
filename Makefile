@@ -172,14 +172,15 @@ POLYHEDRA_MAIN :=
 POLYHEDRA_MAIN_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA_MAIN))
 POLYHEDRA_MAIN_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA_MAIN:.cpp=.o))
 
-WAVEFORM := \
-	Waveform/OBJ.cpp \
-	Waveform/OBJ_Main.cpp \
-	Waveform/OBJ_3D_BufferArray.cpp \
-	Waveform/OBJ_3D_Shader.cpp \
-	Waveform/MTL.cpp
-WAVEFORM_SRC := $(addprefix $(DIR_SRC)/,$(WAVEFORM))
-WAVEFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(WAVEFORM:.cpp=.o))
+WAVEFRONT := \
+	Wavefront/OBJ.cpp \
+	Wavefront/Main/Data.cpp \
+	Wavefront/Main/Buffer.cpp \
+	Wavefront/Simple3D/BufferArray.cpp \
+	Wavefront/Simple3D/Shader.cpp \
+	Wavefront/MTL.cpp
+WAVEFRONT_SRC := $(addprefix $(DIR_SRC)/,$(WAVEFRONT))
+WAVEFRONT_OBJ := $(addprefix $(DIR_OBJ)/,$(WAVEFRONT:.cpp=.o))
 
 USERPARAMETER := \
 	UserParameter/Haptic/Code.cpp \
@@ -219,7 +220,7 @@ ALL_SRC := \
 	$(INSTANCE_DATA_SRC)\
 	$(POLYHEDRA_MAIN_SRC)\
 	$(POLYHEDRA_SRC)\
-	$(WAVEFORM_SRC)\
+	$(WAVEFRONT_SRC)\
 	$(USERPARAMETER_SRC)\
 	$(OTHER_SRC)
 
@@ -231,7 +232,7 @@ ALL_OBJ := \
 	$(INSTANCE_DATA_OBJ)\
 	$(POLYHEDRA_MAIN_OBJ)\
 	$(POLYHEDRA_OBJ)\
-	$(WAVEFORM_OBJ)\
+	$(WAVEFRONT_OBJ)\
 	$(USERPARAMETER_OBJ)\
 	$(OTHER_OBJ)
 
@@ -357,9 +358,9 @@ remake_PolyHedra:
 	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
-remake_Waveform:
+remake_WavefRONT:
 	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(WAVEFORM_OBJ)
+	@$(REMOVER) $(WAVEFRONT_OBJ)
 	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 

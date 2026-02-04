@@ -1,7 +1,6 @@
-#include "Waveform/OBJ.hpp"
-#include "Waveform/OBJ_Main.hpp"
-
-#include "Waveform/MTL.hpp"
+#include "Wavefront/OBJ.hpp"
+#include "Wavefront/Main/Data.hpp"
+#include "Wavefront/MTL.hpp"
 
 #include "FileInfo.hpp"
 #include "FileParsing/LineCommand.hpp"
@@ -17,13 +16,13 @@
 
 
 
-OBJ::FaceCorner::FaceCorner()
+Wavefront::OBJ::FaceCorner::FaceCorner()
 {
 	Position = 0xFFFFFFFF;
 	Texture = 0xFFFFFFFF;
 	Normal = 0xFFFFFFFF;
 }
-OBJ::Face::Face()
+Wavefront::OBJ::Face::Face()
 {
 	Corner1 = FaceCorner();
 	Corner2 = FaceCorner();
@@ -32,14 +31,10 @@ OBJ::Face::Face()
 
 
 
-OBJ::OBJ()
-{
-
-}
-OBJ::~OBJ()
-{
-
-}
+Wavefront::OBJ::OBJ()
+{ }
+Wavefront::OBJ::~OBJ()
+{ }
 
 
 
@@ -58,11 +53,11 @@ static char SizeMid(Point3D val)
 	return 0;
 }
 
-Point4D OBJ::Position_MainData(unsigned int idx)
+Point4D Wavefront::OBJ::Position_MainData(unsigned int idx)
 {
 	return Positions[idx];
 }
-Point3D OBJ::Texture_MainData(unsigned int idx, Point4D pos, SizeRatio2D scale, char sides)
+Point3D Wavefront::OBJ::Texture_MainData(unsigned int idx, Point4D pos, SizeRatio2D scale, char sides)
 {
 	if (idx != 0xFFFFFFFF)
 	{
@@ -77,7 +72,7 @@ Point3D OBJ::Texture_MainData(unsigned int idx, Point4D pos, SizeRatio2D scale, 
 		return Point3D(tex.X * scale.Ratio.X, tex.Y * scale.Ratio.Y, 0);
 	}
 }
-Point3D OBJ::Normal_MainData(unsigned int idx, Point3D normal)
+Point3D Wavefront::OBJ::Normal_MainData(unsigned int idx, Point3D normal)
 {
 	if (idx != 0xFFFFFFFF)
 	{
@@ -88,10 +83,10 @@ Point3D OBJ::Normal_MainData(unsigned int idx, Point3D normal)
 		return normal;
 	}
 }
-OBJ_MainData * OBJ::ToMainData(int & count, SizeRatio2D texScale)
+Wavefront::Main::Data * Wavefront::OBJ::ToMainData(int & count, SizeRatio2D texScale)
 {
 	count = Faces.Count() * 3;
-	OBJ_MainData * data = new OBJ_MainData[count];
+	Main::Data * data = new Main::Data[count];
 
 	Point3D TexMin(+INFINITY, +INFINITY, +INFINITY);
 	Point3D TexMax(-INFINITY, -INFINITY, -INFINITY);
@@ -124,9 +119,9 @@ OBJ_MainData * OBJ::ToMainData(int & count, SizeRatio2D texScale)
 	{
 		const Face & face = Faces[f];
 		int c = f * 3;
-		OBJ_MainData & c0 = data[c + 0];
-		OBJ_MainData & c1 = data[c + 1];
-		OBJ_MainData & c2 = data[c + 2];
+		Main::Data & c0 = data[c + 0];
+		Main::Data & c1 = data[c + 1];
+		Main::Data & c2 = data[c + 2];
 
 		c0.Position = Position_MainData(face.Corner1.Position);
 		c1.Position = Position_MainData(face.Corner2.Position);
@@ -173,7 +168,7 @@ OBJ_MainData * OBJ::ToMainData(int & count, SizeRatio2D texScale)
 
 
 
-void OBJ::Parse_v(const LineCommand & cmd)
+void Wavefront::OBJ::Parse_v(const LineCommand & cmd)
 {
 	Point4D p;
 	if (cmd.Args.size() == 3)
@@ -187,7 +182,7 @@ void OBJ::Parse_v(const LineCommand & cmd)
 	//std::cout << "v" << p << "\n";
 	Positions.Insert(p);
 }
-void OBJ::Parse_vt(const LineCommand & cmd)
+void Wavefront::OBJ::Parse_vt(const LineCommand & cmd)
 {
 	Point3D p;
 	if (cmd.Args.size() == 2)
@@ -200,7 +195,7 @@ void OBJ::Parse_vt(const LineCommand & cmd)
 	//std::cout << "vt" << p << "\n";
 	Textures.Insert(p);
 }
-void OBJ::Parse_vn(const LineCommand & cmd)
+void Wavefront::OBJ::Parse_vn(const LineCommand & cmd)
 {
 	Point3D p;
 	if (cmd.Args.size() == 3)
@@ -214,7 +209,7 @@ void OBJ::Parse_vn(const LineCommand & cmd)
 	Textures.Insert(p);
 }
 
-OBJ::FaceCorner OBJ::Parse_f_element(std::string text)
+Wavefront::OBJ::FaceCorner Wavefront::OBJ::Parse_f_element(std::string text)
 {
 	std::vector<std::string> index_strings;
 	{
@@ -242,7 +237,7 @@ OBJ::FaceCorner OBJ::Parse_f_element(std::string text)
 
 	return corn;
 }
-void OBJ::Parse_f(const LineCommand & cmd)
+void Wavefront::OBJ::Parse_f(const LineCommand & cmd)
 {
 	if (cmd.Args.size() < 3) { std::cout << "Bad Num of Args\n"; }
 
@@ -284,20 +279,20 @@ void OBJ::Parse_f(const LineCommand & cmd)
 	}
 }
 
-void OBJ::Parse_mtllib(const LineCommand & cmd)
+void Wavefront::OBJ::Parse_mtllib(const LineCommand & cmd)
 {
 	if (cmd.Args.size() < 1) { std::cout << "Bad Num of Args\n"; }
 	MTL * mtl = MTL::Load(FileInfo((Path + "/" + cmd.Args[0]).c_str()));
 	Materials.Insert(*mtl);
 	delete mtl;
 }
-void OBJ::Parse_usemtl(const LineCommand & cmd)
+void Wavefront::OBJ::Parse_usemtl(const LineCommand & cmd)
 {
 	if (cmd.Args.size() < 1) { std::cout << "Bad Num of Args\n"; }
 	Materials.Select(cmd.Args[0]);
 }
 
-void OBJ::Parse(const LineCommand & cmd)
+void Wavefront::OBJ::Parse(const LineCommand & cmd)
 {
 	if (cmd.Name.empty())			{ }
 	else if (cmd.Name == "#")		{ }
@@ -315,7 +310,7 @@ void OBJ::Parse(const LineCommand & cmd)
 
 
 
-OBJ * OBJ::Load(const FileInfo & file)
+Wavefront::OBJ * Wavefront::OBJ::Load(const FileInfo & file)
 {
 	if (file.Exists())
 	{
@@ -339,7 +334,7 @@ OBJ * OBJ::Load(const FileInfo & file)
 
 
 
-AxisBox3D OBJ::ToAxisBox()
+AxisBox3D Wavefront::OBJ::ToAxisBox()
 {
 	AxisBox3D box;
 

@@ -1,4 +1,4 @@
-#include "Waveform/MTL.hpp"
+#include "Wavefront/MTL.hpp"
 
 #include "DataShow.hpp"
 
@@ -9,11 +9,11 @@
 
 
 
-MTL::Material::Material()
+Wavefront::MTL::Material::Material()
 {
 
 }
-std::string MTL::Material::ToString()
+std::string Wavefront::MTL::Material::ToString()
 {
 	std::ostringstream os;
 	os << "Name: " << Name;
@@ -29,7 +29,7 @@ std::string MTL::Material::ToString()
 
 
 
-MTL::MTL()
+Wavefront::MTL::MTL()
 {
 	DefaultMaterial.Ka = ColorF4(0.25, 0.0, 0.0);
 	DefaultMaterial.Kd = ColorF4(0.0, 0.0, 0.25);
@@ -44,14 +44,14 @@ MTL::MTL()
 	Index_Newest = 0xFFFFFFFF;
 	Index_Selected = 0xFFFFFFFF;
 }
-MTL::~MTL()
+Wavefront::MTL::~MTL()
 {
 
 }
 
 
 
-MTL::Material * MTL::Newest()
+Wavefront::MTL::Material * Wavefront::MTL::Newest()
 {
 	if (Index_Newest != 0xFFFFFFFF)
 	{
@@ -59,7 +59,7 @@ MTL::Material * MTL::Newest()
 	}
 	return NULL;
 }
-MTL::Material & MTL::Index(unsigned int idx)
+Wavefront::MTL::Material & Wavefront::MTL::Index(unsigned int idx)
 {
 	if (idx != 0xFFFFFFFF)
 	{
@@ -68,12 +68,12 @@ MTL::Material & MTL::Index(unsigned int idx)
 	return DefaultMaterial;
 }
 
-void MTL::Insert(MTL & mtl)
+void Wavefront::MTL::Insert(MTL & mtl)
 {
 	//Materials.Insert((Material*)mtl.Materials.Data(), mtl.Materials.Count());
 	Materials.Insert(mtl.Materials);
 }
-void MTL::Select(std::string name)
+void Wavefront::MTL::Select(std::string name)
 {
 	for (unsigned int i = 0; i < Materials.Count(); i++)
 	{
@@ -88,36 +88,36 @@ void MTL::Select(std::string name)
 
 
 
-void MTL::Parse_newmtl(const LineCommand & cmd)
+void Wavefront::MTL::Parse_newmtl(const LineCommand & cmd)
 {
 	Index_Newest = Materials.Count();
 	Materials.Insert(DefaultMaterial);
 	Newest() -> Name = cmd.Args[0];
 }
 
-void MTL::Parse_Ka(const LineCommand & cmd)
+void Wavefront::MTL::Parse_Ka(const LineCommand & cmd)
 {
 	Newest() -> Ka.R = std::stof(cmd.Args[0]);
 	Newest() -> Ka.G = std::stof(cmd.Args[1]);
 	Newest() -> Ka.B = std::stof(cmd.Args[2]);
 }
-void MTL::Parse_Kd(const LineCommand & cmd)
+void Wavefront::MTL::Parse_Kd(const LineCommand & cmd)
 {
 	Newest() -> Kd.R = std::stof(cmd.Args[0]);
 	Newest() -> Kd.G = std::stof(cmd.Args[1]);
 	Newest() -> Kd.B = std::stof(cmd.Args[2]);
 }
-void MTL::Parse_Ks(const LineCommand & cmd)
+void Wavefront::MTL::Parse_Ks(const LineCommand & cmd)
 {
 	Newest() -> Ks.R = std::stof(cmd.Args[0]);
 	Newest() -> Ks.G = std::stof(cmd.Args[1]);
 	Newest() -> Ks.B = std::stof(cmd.Args[2]);
 }
-void MTL::Parse_Ns(const LineCommand & cmd)
+void Wavefront::MTL::Parse_Ns(const LineCommand & cmd)
 {
 	Newest() -> Ns = std::stof(cmd.Args[0]);
 }
-void MTL::Parse_Ni(const LineCommand & cmd)
+void Wavefront::MTL::Parse_Ni(const LineCommand & cmd)
 {
 	Newest() -> Ni = std::stof(cmd.Args[0]);
 	if (Newest() -> Ni != 1.0f)
@@ -125,7 +125,7 @@ void MTL::Parse_Ni(const LineCommand & cmd)
 		std::cout << "Ni values other then 1.0 are currently not Implemented.\n";
 	}
 }
-void MTL::Parse_d(const LineCommand & cmd)
+void Wavefront::MTL::Parse_d(const LineCommand & cmd)
 {
 	Newest() -> d = std::stof(cmd.Args[0]);
 	if (Newest() -> d != 1.0f)
@@ -134,7 +134,7 @@ void MTL::Parse_d(const LineCommand & cmd)
 	}
 }
 
-void MTL::Parse_illum(const LineCommand & cmd)
+void Wavefront::MTL::Parse_illum(const LineCommand & cmd)
 {
 	Newest() -> illum = std::stoi(cmd.Args[0]);
 	if (Newest() -> illum != 2)
@@ -143,7 +143,7 @@ void MTL::Parse_illum(const LineCommand & cmd)
 	}
 }
 
-void MTL::Parse(const LineCommand & cmd)
+void Wavefront::MTL::Parse(const LineCommand & cmd)
 {
 	if (cmd.Name.empty())			{ }
 	else if (cmd.Name == "#")		{ }
@@ -163,7 +163,7 @@ void MTL::Parse(const LineCommand & cmd)
 
 
 
-MTL * MTL::Load(const FileInfo & file)
+Wavefront::MTL * Wavefront::MTL::Load(const FileInfo & file)
 {
 	if (file.Exists())
 	{

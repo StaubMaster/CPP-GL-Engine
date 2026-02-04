@@ -1,6 +1,5 @@
-
-#ifndef  MTL_HPP
-# define MTL_HPP
+#ifndef  WAVEFRONT_MTL_HPP
+# define WAVEFRONT_MTL_HPP
 
 # include "ValueType/ColorF4.hpp"
 
@@ -14,6 +13,8 @@
 class LineCommand;
 class FileInfo;
 
+namespace Wavefront
+{
 class MTL
 {
 	public:
@@ -68,6 +69,7 @@ class MTL
 
 	public:
 		static MTL * Load(const FileInfo & file);
+};
 };
 
 #endif

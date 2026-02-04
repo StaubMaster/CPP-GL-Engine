@@ -1,13 +1,14 @@
-
-#ifndef  OBJ_3D_SHADER_HPP
-# define OBJ_3D_SHADER_HPP
+#ifndef  WAVEFRONT_OBJ_SIMPLE3D_SHADER_HPP
+# define WAVEFRONT_OBJ_SIMPLE3D_SHADER_HPP
 
 # include "Graphics/Shader/Base.hpp"
 # include "Graphics/UniformsInclude.hpp"
 
-class DirectoryInfo;
-
-class OBJ_3D_Shader : public Shader::Base
+namespace Wavefront
+{
+namespace Simple3D
+{
+class Shader : public ::Shader::Base
 {
 	public:
 	Uniform::WindowBufferSize2D	WindowSize;
@@ -17,9 +18,10 @@ class OBJ_3D_Shader : public Shader::Base
 	Uniform::LInter				ShowLightFactor;
 
 	public:
-	OBJ_3D_Shader();
-	//OBJ_3D_Shader(const DirectoryInfo & dir);
-	~OBJ_3D_Shader();
+	Shader();
+	~Shader();
+};
+};
 };
 
 #endif
