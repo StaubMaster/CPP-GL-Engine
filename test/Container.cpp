@@ -1,22 +1,35 @@
 
 #include <iostream>
 
-#include "Miscellaneous/Container/Fixed.hpp"
-#include "Miscellaneous/Container/Tight.hpp"
 #include "Miscellaneous/Container/Binary.hpp"
-//#include "Miscellaneous/Container/Behaviour.cpp"
+#include "Miscellaneous/Container/Tight.hpp"
+#include "Miscellaneous/Container/Fixed.hpp"
+#include "Miscellaneous/Container/Array.hpp"
+#include "Miscellaneous/Container/Pointer.hpp"
 
-#include "Miscellaneous/EntryContainer/Binary.hpp"
 
 
-
-void ContainerData(Container::Base<int> & container)
+void Show_Header(const char * name)
 {
-	std::cout << "Limit: " << container.Limit() << " ";
-	std::cout << "Count: " << container.Count() << "\n";
+	std::cout << "\n\n";
+	std::cout << "################################\n";
+	std::cout << name << '\n';
+	std::cout << "################################\n";
+}
+void Show_Footer()
+{
+	std::cout << "################################\n";
+	std::cout << "\n\n";
+}
+
+
+
+void Container_Show(Container::Member<int> & container)
+{
+	std::cout << "[" << container.Limit() << "|" << container.Count() << "]";
 	for (unsigned int i = 0; i < container.Limit(); i++)
 	{
-		if (i != 0) { std::cout << " "; }
+		std::cout << " ";
 		if (i < container.Count())
 		{ std::cout << container[i]; }
 		else
@@ -24,390 +37,314 @@ void ContainerData(Container::Base<int> & container)
 	}
 	std::cout << "\n";
 }
-void ContainerInsert(Container::Base<int> & container, int item)
+void Container_Show_Insert(Container::Member<int> & container, int item)
 {
-	std::cout << "\n";
-	bool ret = container.Insert(item);
-	std::cout << "insert " << item << " return " << ret << "\n";
-	ContainerData(container);
-}
-void ContainerRemove(Container::Base<int> & container, unsigned int idx)
-{
-	std::cout << "\n";
-	bool ret = container.Remove(idx);
-	std::cout << "remove " << idx << " return " << ret << "\n";
-	ContainerData(container);
-}
-
-void ContainerData(EntryContainer::Binary<int> & container)
-{
-	std::cout << "Limit: " << container.Limit() << "\n";
-	std::cout << "Count: " << container.Count() << "\n";
-	for (unsigned int i = 0; i < container.Limit(); i++)
+	Container::Entry entry(container.Count(), 1);
+	std::cout << "[" << entry.Offset << "|" << entry.Length << "]";
+	//for (unsigned int i = 0; i < container.Limit(); i++)
+	for (unsigned int i = 0; i < entry.Limit(); i++)
 	{
-		if (i != 0) { std::cout << " "; }
-		//std::cout << container[i];	// check Count
-		std::cout << container.At(i);
+		std::cout << " ";
+		if (i >= entry.Min() && i <= entry.Max())
+		{ std::cout << "+"; }
+		else
+		{ std::cout << " "; }
 	}
-	if (container.Limit() != 0) { std::cout << "\n"; }
-}
-
-
-
-void Test_Contnainer_Function_Resize()
-{
-	std::cout << "################################\n";
-	std::cout << "Container Function Resize\n";
-	std::cout << "################################\n";
-
-	Container::Binary<int> cont;
-	cont.Insert(0);
-	cont.Insert(1);
-	cont.Insert(2);
-
-	ContainerData(cont);
-	std::cout << "##  " << "ResizeLimit(12)" << '\n';
-	cont.ResizeLimit(12);
-	ContainerData(cont);
-}
-void Test_Contnainer_Function_InsertGap()
-{
-	std::cout << "################################\n";
-	std::cout << "Container Function InsertGap\n";
-	std::cout << "################################\n";
-
-	Container::Binary<int> cont;
-	cont.Insert(0);
-	cont.Insert(1);
-	cont.Insert(2);
-	cont.Insert(3);
-	cont.Insert(4);
-	cont.ResizeLimit(12);
-
-	ContainerData(cont);
-	std::cout << "##  " << "InsertGap(Container::Entry(2, 3))" << '\n';
-	cont.InsertGap(Container::Entry(2, 3));
-	ContainerData(cont);
-}
-void Test_Contnainer_Function_RemoveGap()
-{
-	std::cout << "################################\n";
-	std::cout << "Container Function RemoveGap\n";
-	std::cout << "################################\n";
-
-	Container::Binary<int> cont;
-	cont.Insert(0);
-	cont.Insert(1);
-	cont.Insert(2);
-	cont.Insert(3);
-	cont.Insert(4);
-	cont.Insert(5);
-	cont.Insert(6);
-	cont.Insert(7);
-	cont.Insert(8);
-
-	ContainerData(cont);
-	std::cout << "##  " << "RemoveGap(Container::Entry(3, 3))" << '\n';
-	cont.RemoveGap(Container::Entry(3, 3));
-	ContainerData(cont);
-}
-
-void Test_Container_Base()
-{
-	std::cout << "Construct" << "\n";
-	//Container::Base<int> cont0(5);
-	Container::Base<int> cont0;
-	cont0.Allocate(5);
-
-	std::cout << "cont0: "; ContainerData(cont0);
 	std::cout << "\n";
-	
-	std::cout << "Change" << "\n";
-	for (unsigned int i = 0; i < cont0.Limit(); i++) { cont0[i] = i; }
-	std::cout << "cont0: "; ContainerData(cont0);
+	(void)item;
+}
+void Container_Show_Remove(Container::Member<int> & container, unsigned int idx)
+{
+	Container::Entry entry(idx, 1);
+	std::cout << "[" << entry.Offset << "|" << entry.Length << "]";
+	for (unsigned int i = 0; i < entry.Limit(); i++)
+	{
+		std::cout << " ";
+		if (i >= entry.Min() && i <= entry.Max())
+		{ std::cout << "-"; }
+		else
+		{ std::cout << " "; }
+	}
 	std::cout << "\n";
+	(void)container;
+}
 
-	std::cout << "Swap" << " " << "Constructor" << "\n";
-	Container::Base<int> cont1;;
+
+
+void Container_Insert(Container::Base<int> & container, int item)
+{
+	Container_Show_Insert(container, item);
+	container.Insert(item);
+	Container_Show(container);
+}
+void Container_Remove(Container::Base<int> & container, unsigned int idx)
+{
+	Container_Show_Remove(container, idx);
+	container.Remove(idx);
+	Container_Show(container);
+}
+
+
+
+void Test_Container_Binary_IncDec()
+{
+	Show_Header("Container::Binary::IncDec");
+
+	Container::Binary<int> cont;
+	Container_Show(cont);
+
+	Container_Insert(cont, 0);
+	Container_Insert(cont, 1);
+	Container_Insert(cont, 2);
+	Container_Insert(cont, 3);
+	Container_Insert(cont, 4);
+	Container_Insert(cont, 5);
+
+	Container_Remove(cont, 3);
+	Container_Remove(cont, 3);
+	Container_Remove(cont, 2);
+
+	Show_Footer();
+}
+void Test_Container_Binary_Swap()
+{
+	Show_Header("Container::Binary::Swap");
+
+	Container::Binary<int> cont0;
+	for (unsigned int i = 0; i < 5; i++)
+	{ cont0.Insert(0); }
+
+	Container::Binary<int> cont1;
+	for (unsigned int i = 0; i < 2; i++)
+	{ cont1.Insert(1); }
+
+	std::cout << '\n';
+	std::cout << "cont0: "; Container_Show(cont0);
+	std::cout << "cont1: "; Container_Show(cont1);
+
 	cont0.Swap(cont1);
-	std::cout << "cont0: "; ContainerData(cont0);
-	std::cout << "cont1: "; ContainerData(cont1);
-	std::cout << "\n";
+
+	std::cout << '\n';
+	std::cout << "cont0: "; Container_Show(cont0);
+	std::cout << "cont1: "; Container_Show(cont1);
+
+	cont1.Swap(cont0);
+
+	std::cout << '\n';
+	std::cout << "cont0: "; Container_Show(cont0);
+	std::cout << "cont1: "; Container_Show(cont1);
+
+	Show_Footer();
 }
-void Test_Container_Fixed()
+void Test_Container_Binary_Bind()
 {
-	std::cout << "################################\n";
-	std::cout << "Container Fixed\n";
-	std::cout << "################################\n";
+	Show_Header("Container::Binary::Bind");
 
-	Container::Fixed<int> container(4);
+	Container::Binary<int> cont;
+	for (unsigned int i = 0; i < 5; i++)
+	{ cont.Insert(i); }
 
-	ContainerData(container);
+	Container::Binary<int> bind;
+	std::cout << "cont.Data: " << cont.Data() << '\n';
+	std::cout << "bind.Data: " << bind.Data() << '\n';
+	std::cout << "== ?: " << (cont.Data() == bind.Data()) << '\n';
+	std::cout << '\n';
+	
+	bind.Bind(cont);
+	std::cout << "cont.Data: " << cont.Data() << '\n';
+	std::cout << "bind.Data: " << bind.Data() << '\n';
+	std::cout << "== ?: " << (cont.Data() == bind.Data()) << '\n';
+	std::cout << '\n';
 
-	ContainerInsert(container, 2);
-	ContainerInsert(container, 3);
-	ContainerInsert(container, 5);
-	ContainerInsert(container, 7);
-	ContainerInsert(container, 11);
+	Container_Show(cont);
+	Container_Show(bind);
+	std::cout << '\n';
 
-	ContainerRemove(container, 1);
-	ContainerRemove(container, 2);
-
-	std::cout << "\n";
+	Show_Footer();
 }
-void Test_Container_Fit()
+void Test_Container_Binary_Copy()
 {
-	std::cout << "################################\n";
-	std::cout << "Container Tight\n";
-	std::cout << "################################\n";
-	Container::Tight<int> container;
-	ContainerData(container);
+	Show_Header("Container::Binary::Copy");
 
-	ContainerInsert(container, 2);
-	ContainerInsert(container, 3);
-	ContainerInsert(container, 5);
-	ContainerInsert(container, 7);
-	ContainerInsert(container, 11);
+	Container::Binary<int> cont;
+	for (unsigned int i = 0; i < 5; i++)
+	{ cont.Insert(i); }
 
-	ContainerRemove(container, 1);
-	ContainerRemove(container, 2);
+	Container::Binary<int> copy;
+	std::cout << "cont.Data: " << cont.Data() << '\n';
+	std::cout << "copy.Data: " << copy.Data() << '\n';
+	std::cout << "== ?: " << (cont.Data() == copy.Data()) << '\n';
+	std::cout << '\n';
 
-	std::cout << "\n";
+	copy.Copy(cont);
+	std::cout << "cont.Data: " << cont.Data() << '\n';
+	std::cout << "copy.Data: " << copy.Data() << '\n';
+	std::cout << "== ?: " << (cont.Data() == copy.Data()) << '\n';
+	std::cout << '\n';
+
+	Container_Show(cont);
+	Container_Show(copy);
+	std::cout << '\n';
+
+	Show_Footer();
 }
 void Test_Container_Binary()
 {
-	std::cout << "################################\n";
-	std::cout << "Container Binary\n";
-	std::cout << "################################\n";
-	Container::Binary<int> container;
-	ContainerData(container);
-
-	ContainerInsert(container, 2);
-	ContainerInsert(container, 3);
-	ContainerInsert(container, 5);
-	ContainerInsert(container, 7);
-	ContainerInsert(container, 11);
-
-	ContainerRemove(container, 1);
-	ContainerRemove(container, 2);
-
-	std::cout << "\n";
+	Test_Container_Binary_IncDec();
+	Test_Container_Binary_Swap();
+	Test_Container_Binary_Bind();
+	Test_Container_Binary_Copy();
 }
 
-
-
-void Test_EntryContainer_Dynamic()
+void Test_Container_Tight_IncDec()
 {
-	EntryContainer::Binary<int> container;
-	ContainerData(container);
-	//container.ShowEntrys();
+	Show_Header("Container::Tight::IncDec");
 
-	std::cout << "Allocate\n";
-	EntryContainer::Entry<int> ent0(container, 4);
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-	
-	std::cout << "Allocate\n";
-	EntryContainer::Entry<int> ent1(container, 3);
-	//container.ShowEntrys();
-	ContainerData(container);
-	std::cout << "\n";
-	
-	std::cout << "Allocate\n";
-	EntryContainer::Entry<int> ent2(container, 2);
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-	
-	std::cout << "Allocate\n";
-	EntryContainer::Entry<int> ent3(container, 5);
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-	
-	std::cout << "Allocate\n";
-	EntryContainer::Entry<int> ent4(container, 5);
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
+	Container::Tight<int> cont;
+	Container_Show(cont);
 
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent0.Length(); i++) { ent0[i] = 1; }
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
+	Container_Insert(cont, 0);
+	Container_Insert(cont, 1);
+	Container_Insert(cont, 2);
+	Container_Insert(cont, 3);
+	Container_Insert(cont, 4);
+	Container_Insert(cont, 5);
 
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent1.Length(); i++) { ent1[i] = 2; }
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
+	Container_Remove(cont, 1);
+	Container_Remove(cont, 1);
+	Container_Remove(cont, 2);
 
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent2.Length(); i++) { ent2[i] = 3; }
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
+	Container_Remove(cont, 4);
 
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent3.Length(); i++) { ent3[i] = 4; }
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent4.Length(); i++) { ent4[i] = 5; }
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-	
-	std::cout << "Dispose\n";
-	ent1.Dispose();
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-	
-	std::cout << "Dispose\n";
-	ent3.Dispose();
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent0.Length(); i++) { ent0[i] = 10; }
-	for (unsigned int i = 0; i < ent2.Length(); i++) { ent2[i] = 20; }
-	for (unsigned int i = 0; i < ent4.Length(); i++) { ent4[i] = 30; }
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-	
-	std::cout << "Is Compact " << container.IsCompact() << "\n";
-	std::cout << "\n";
-
-	std::cout << "Compact Here\n";
-	//container.MakeCompact();
-	container.CompactHere();
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Is Compact " << container.IsCompact() << "\n";
-	std::cout << "\n";
-
-	//std::cout << "Allocate\n";
-	//ent1.Allocate(container, 9);
-	////container.ShowData();
-	//std::cout << "\n";
-
-	//std::cout << "Change\n";
-	//for (unsigned int i = 0; i < ent1.Length(); i++) { ent1[i] = 9; }
-	////container.ShowData();
-	//std::cout << "\n";
+	Show_Footer();
 }
-void Test_EntryContainer_EntryCopy()
+void Test_Container_Tight()
 {
-	EntryContainer::Binary<int> container;
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Allocate\n";
-	EntryContainer::Entry<int> ent0(container, 4);
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	//std::cout << "Copy\n";
-	//EntryContainer::Entry<int> ent1(ent0);
-	//ContainerData(container);
-	//container.ShowEntrys();
-	//std::cout << "\n";
-
-	std::cout << "Copy\n";
-	EntryContainer::Entry<int> ent2;
-	ent2 = ent0;
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Change\n";
-	for (unsigned int i = 0; i < ent0.Length(); i++) { ent0[i] = i; }
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Compact\n";
-	container.CompactHere();
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Dispose\n";
-	ent0.Dispose();
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	//std::cout << "Dispose\n";
-	//ent1.Dispose();
-	//ContainerData(container);
-	//container.ShowEntrys();
-	//std::cout << "\n";
-
-	std::cout << "Dispose\n";
-	ent2.Dispose();
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
-
-	std::cout << "Compact\n";
-	container.CompactHere();
-	ContainerData(container);
-	//container.ShowEntrys();
-	std::cout << "\n";
+	Test_Container_Tight_IncDec();
 }
-void Test_EntryContainer_Changed()
+
+void Test_Container_Fixed_IncDec()
 {
-	EntryContainer::Binary<int> container;
+	Show_Header("Container::Fixed::IncDec");
 
-	std::cout << "changed " << container.Changed << "\n";
-	std::cout << "Entry()\n";
-	EntryContainer::Entry<int> entry(container, 1);
-	std::cout << "changed " << container.Changed << "\n";
-	std::cout << '\n';
+	Container::Fixed<int> cont;
+	Container_Show(cont);
+	cont.Allocate(4);
+	Container_Show(cont);
 
-	container.Changed = false;
-	std::cout << "changed " << container.Changed << "\n";
-	std::cout << "Entry operator*\n";
-	*entry = 123;
-	std::cout << "changed " << container.Changed << "\n";
-	std::cout << '\n';
+	Container_Insert(cont, 0);
+	Container_Insert(cont, 1);
+	Container_Insert(cont, 2);
+	Container_Insert(cont, 3);
+	Container_Insert(cont, 4);
+	Container_Insert(cont, 5);
 
-	container.Changed = false;
-	std::cout << "changed " << container.Changed << "\n";
-	std::cout << "Entry operator[]\n";
-	entry[0] = 123;
-	std::cout << "changed " << container.Changed << "\n";
+	Container_Remove(cont, 1);
+	Container_Remove(cont, 1);
+	Container_Remove(cont, 2);
+
+	Container_Remove(cont, 4);
+
+	Show_Footer();
+}
+void Test_Container_Fixed_Contruct()
+{
+	Show_Header("Container::Fixed(n)");
+
+	Container::Fixed<int> cont(4);
+	Container_Show(cont);
+
+	Container_Insert(cont, 0);
+	Container_Insert(cont, 1);
+	Container_Insert(cont, 2);
+	Container_Insert(cont, 3);
+	Container_Insert(cont, 4);
+	Container_Insert(cont, 5);
+
+	Container_Remove(cont, 1);
+	Container_Remove(cont, 1);
+	Container_Remove(cont, 2);
+
+	Container_Remove(cont, 4);
+
+	Show_Footer();
+}
+void Test_Container_Fixed()
+{
+	Test_Container_Fixed_IncDec();
+	Test_Container_Fixed_Contruct();
+}
+
+void Test_Container_Array_Empty()
+{
+	Show_Header("Container::Array()");
+
+	Container::Array<int> cont;
+	Container_Show(cont);
+	cont.Allocate(4, 4);
+	Container_Show(cont);
+
+	Show_Footer();
+}
+void Test_Container_Array_Number()
+{
+	Show_Header("Container::Array(n)");
+
+	Container::Array<int> cont(4);
+	Container_Show(cont);
+
+	Show_Footer();
+}
+void Test_Container_Array()
+{
+	Test_Container_Array_Empty();
+	Test_Container_Array_Number();
+}
+
+void Test_Container_Pointer()
+{
+	int arr[4];
+	arr[0] = 3;
+	arr[1] = 2;
+	arr[2] = 1;
+	arr[3] = 0;
+	Container::Pointer<int> cont(arr, 4);
+	Container_Show(cont);
+
+	cont[0] = 9;
+	Container_Show(cont);
+
+	cont[3] = 8;
+	Container_Show(cont);
+}
+
+void Test_Container_Binary_Bind_Pointer()
+{
+	Container::Binary<int> binary;
+	for (unsigned int i = 0; i < 5; i++)
+	{ binary.Insert(i); }
+
+	Container_Show(binary);
+
+	Container::Pointer<int> pointer(binary);
+
+	Container_Show(pointer);
+}
+void Test_Container()
+{
+	Test_Container_Binary_Bind_Pointer();
 }
 
 
 
 int main()
 {
-	//Test_Contnainer_Function_Resize();
-	//Test_Contnainer_Function_InsertGap();
-	//Test_Contnainer_Function_RemoveGap();
-
-	//Test_Container_Base();
-	//Test_Container_Fixed();
-	//Test_Container_Fit();
 	//Test_Container_Binary();
-
-	Test_EntryContainer_Dynamic();
-	//Test_EntryContainer_EntryCopy();
-	//Test_EntryContainer_Changed();
-
+	//Test_Container_Tight();
+	//Test_Container_Fixed();
+	//Test_Container_Array();
+	//Test_Container_Pointer();
+	Test_Container();
 	std::cout << "\nmain() return\n";
 	return 0;
 }

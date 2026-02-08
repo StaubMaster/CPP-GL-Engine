@@ -3,6 +3,8 @@
 
 # include "Base.hpp"
 
+
+
 namespace Container
 {
 
@@ -10,18 +12,30 @@ template<typename T>
 class Binary : public Base<T>
 {
 	public:
-	Binary() :
-		Base<T>(Behaviour::EIncrease::Binary, Behaviour::EDecrease::Binary, Behaviour::EMemory::Copy)
+	Binary() : Base<T>()
 	{ }
-	virtual ~Binary()
+	~Binary()
 	{ }
 
-	Binary(const Binary<T> & other) : Base<T>(other)
-	{ }
-	Binary & operator=(const Binary<T> & other)
+	Binary(const Binary<T> & other) = delete;
+	Binary & operator=(const Binary<T> & other) = delete;
+
+	void	Clear() override
 	{
-		Base<T>::operator=(other);
-		return *this;
+		this -> mDelete();
+	}
+
+	unsigned int	CalcLimit(unsigned int wanted_count) override
+	{
+		for (unsigned char shift = 31; shift < 32; shift--)
+		{
+			unsigned int size = 0xFFFFFFFF >> shift;
+			if (size >= wanted_count)
+			{
+				return size;
+			}
+		}
+		return 0;
 	}
 };
 };

@@ -3,6 +3,8 @@
 
 # include "Base.hpp"
 
+
+
 namespace Container
 {
 
@@ -10,24 +12,35 @@ template<typename T>
 class Pointer : public Base<T>
 {
 	public:
-	Pointer() :
-		Base<T>(Behaviour::EIncrease::None, Behaviour::EDecrease::None, Behaviour::EMemory::Bind)
+	Pointer() : Base<T>()
 	{ }
-	Pointer(unsigned int limit) :
-		Base<T>(limit, limit, Behaviour::EIncrease::None, Behaviour::EDecrease::None, Behaviour::EMemory::Bind)
-	{ }
-	Pointer(unsigned int limit, T * data) :
-		Base<T>(limit, limit, data, Behaviour::EIncrease::None, Behaviour::EDecrease::None, Behaviour::EMemory::Bind)
-	{ }
-	virtual ~Pointer()
+	Pointer(const T * data, unsigned int limit) : Base<T>()
+	{
+		this -> Remember((T*)data, limit, limit);
+	}
+	Pointer(const T * data, unsigned int limit, unsigned int count) : Base<T>()
+	{
+		this -> Remember((T*)data, limit, count);
+	}
+	Pointer(Member<T> & other) : Base<T>()
+	{
+		this -> mBind(other);
+	}
+	~Pointer()
 	{ }
 
-	Pointer(const Pointer<T> & other) : Base<T>(other)
-	{ }
-	Pointer & operator=(const Pointer<T> & other)
+	Pointer(const Pointer<T> & other) = delete;
+	Pointer & operator=(const Pointer<T> & other) = delete;
+
+	void	Clear() override
 	{
-		Base<T>::operator=(other);
-		return *this;
+		this -> mForget();
+	}
+
+	unsigned int	CalcLimit(unsigned int wanted_count) override
+	{
+		(void)wanted_count;
+		return this -> _Limit;
 	}
 };
 };

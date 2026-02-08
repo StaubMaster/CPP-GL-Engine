@@ -15,9 +15,6 @@ struct Entry
 	unsigned int Max() const { return (Offset + Length) - 1; }
 	unsigned int Limit() const { return Offset + Length; }
 
-	bool	IsEmpty() const { return (Offset == 0) && (Length == 0); }
-	void	MakeEmpty() { Offset = 0; Length = 0; }
-
 	public:
 	virtual void DebugInfo() { }
 

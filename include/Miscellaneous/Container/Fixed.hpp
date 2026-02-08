@@ -3,6 +3,8 @@
 
 # include "Base.hpp"
 
+
+
 namespace Container
 {
 
@@ -10,37 +12,27 @@ template<typename T>
 class Fixed : public Base<T>
 {
 	public:
-	Fixed() :
-		Base<T>(Behaviour::EIncrease::None, Behaviour::EDecrease::None, Behaviour::EMemory::Copy)
+	Fixed() : Base<T>()
 	{ }
-	Fixed(unsigned int limit) :
-		Base<T>(limit, 0, Behaviour::EIncrease::None, Behaviour::EDecrease::None, Behaviour::EMemory::Copy)
-	{ }
-	virtual ~Fixed()
+	Fixed(unsigned int limit) : Base<T>()
+	{
+		this -> Allocate(limit, 0);
+	}
+	~Fixed()
 	{ }
 
-	Fixed(const Fixed<T> & other) : Base<T>(other)
-	{ }
-	Fixed & operator=(const Fixed<T> & other)
+	Fixed(const Fixed<T> & other) = delete;
+	Fixed & operator=(const Fixed<T> & other) = delete;
+
+	void	Clear() override
 	{
-		Base<T>::operator=(other);
-		return *this;
+		this -> mDelete();
 	}
 
-	void CopyHere(const Base<T> & other)
+	unsigned int	CalcLimit(unsigned int wanted_count) override
 	{
-		Behaviour::Member<T> member(this -> ToBehaviour());
-		Behaviour::ConstMember<T> member_other(other.ToBehaviour());
-		Behaviour::Delete(member, this -> MemB);
-		Behaviour::Assign(member, this -> MemB, member_other, Behaviour::EMemory::Copy);
-	}
-	static Fixed<T> Copy(const Base<T> & other)
-	{
-		Fixed<T> container;
-		Behaviour::Member<T> member(container.ToBehaviour());
-		Behaviour::ConstMember<T> member_other(other.ToBehaviour());
-		Behaviour::Assign(member, container.MemB, member_other, Behaviour::EMemory::Copy);
-		return container;
+		(void)wanted_count;
+		return this -> _Limit;
 	}
 };
 };
