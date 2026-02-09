@@ -136,9 +136,9 @@ void Test_Container_Binary_Swap()
 
 	Show_Footer();
 }
-void Test_Container_Binary_Bind()
+void Test_Container_Binary_Bind_Inn()
 {
-	Show_Header("Container::Binary::Bind");
+	Show_Header("Container::Binary::Bind Inn");
 
 	Container::Binary<int> cont;
 	for (unsigned int i = 0; i < 5; i++)
@@ -162,9 +162,30 @@ void Test_Container_Binary_Bind()
 
 	Show_Footer();
 }
-void Test_Container_Binary_Copy()
+void Test_Container_Binary_Bind_Out()
 {
-	Show_Header("Container::Binary::Copy");
+	Show_Header("Container::Binary::Bind Out");
+/*
+	Container::Binary<int> cont;
+	for (unsigned int i = 0; i < 5; i++)
+	{ cont.Insert(i); }
+
+	Container::Binary<int> bind(cont.Bind());
+	std::cout << "cont.Data: " << cont.Data() << '\n';
+	std::cout << "bind.Data: " << bind.Data() << '\n';
+	std::cout << "== ?: " << (cont.Data() == bind.Data()) << '\n';
+	std::cout << '\n';
+	
+	Container_Show(cont);
+	Container_Show(bind);
+	std::cout << '\n';
+	*/
+	std::cout << "//Commented out because it might cause double delete[].\n";
+	Show_Footer();
+}
+void Test_Container_Binary_Copy_Inn()
+{
+	Show_Header("Container::Binary::Copy Inn");
 
 	Container::Binary<int> cont;
 	for (unsigned int i = 0; i < 5; i++)
@@ -188,12 +209,34 @@ void Test_Container_Binary_Copy()
 
 	Show_Footer();
 }
+void Test_Container_Binary_Copy_Out()
+{
+	Show_Header("Container::Binary::Copy Out");
+
+	Container::Binary<int> cont;
+	for (unsigned int i = 0; i < 5; i++)
+	{ cont.Insert(i); }
+
+	Container::Binary<int> copy(cont.Copy());
+	std::cout << "cont.Data: " << cont.Data() << '\n';
+	std::cout << "copy.Data: " << copy.Data() << '\n';
+	std::cout << "== ?: " << (cont.Data() == copy.Data()) << '\n';
+	std::cout << '\n';
+
+	Container_Show(cont);
+	Container_Show(copy);
+	std::cout << '\n';
+
+	Show_Footer();
+}
 void Test_Container_Binary()
 {
 	Test_Container_Binary_IncDec();
 	Test_Container_Binary_Swap();
-	Test_Container_Binary_Bind();
-	Test_Container_Binary_Copy();
+	Test_Container_Binary_Bind_Inn();
+	Test_Container_Binary_Bind_Out();
+	//Test_Container_Binary_Copy_Inn();
+	//Test_Container_Binary_Copy_Out();
 }
 
 void Test_Container_Tight_IncDec()
@@ -339,7 +382,7 @@ void Test_Container()
 
 int main()
 {
-	//Test_Container_Binary();
+	Test_Container_Binary();
 	//Test_Container_Tight();
 	//Test_Container_Fixed();
 	//Test_Container_Array();

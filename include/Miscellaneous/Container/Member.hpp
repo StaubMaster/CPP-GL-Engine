@@ -69,68 +69,25 @@ class Member : public Void
 		_Count(0),
 		_Data(0)
 	{ }
-
-	/*Member(unsigned int size, void * data) :
-		_Limit(size / sizeof(T)),
-		_Count(size / sizeof(T)),
-		_Data((T*)data)
-	{ }*/
-	/*Member(unsigned int size, const void * data) :
-		_Limit(size / sizeof(T)),
-		_Count(size / sizeof(T)),
-		_Data((T*)data)
-	{ }*/
-
-	/*Member(unsigned int limit) :
-		_Limit(limit),
-		_Count(limit),
-		_Data(new T[limit])
-	{ }*/
-	/*Member(unsigned int limit, T * data) :
-		_Limit(limit),
-		_Count(limit),
-		_Data((T*)data)
-	{ }*/
-	/*Member(unsigned int limit, const T * data) :
-		_Limit(limit),
-		_Count(limit),
-		_Data((T*)data)
-	{ }*/
-
-	/*Member(unsigned int limit, unsigned int count) :
-		_Limit(limit),
-		_Count(count),
-		_Data(new T[limit])
-	{ }*/
-	/*Member(unsigned int limit, unsigned int count, T * data) :
-		_Limit(limit),
-		_Count(count),
-		_Data((T*)data)
-	{ }*/
-	/*Member(unsigned int limit, unsigned int count, const T * data) :
-		_Limit(limit),
-		_Count(count),
-		_Data((T*)data)
-	{ }*/
-
 	~Member()
 	{ }
 
 	public:
-	Member(const Member & other) = delete;
-//	Member(const Member & other) :
-//		_Limit(other._Limit),
-//		_Count(other._Count),
-//		_Data(other._Data)
-//	{ }
-	Member & operator=(const Member & other) = delete;
-//	Member & operator=(const Member & other)
-//	{
-//		_Limit = other._Limit;
-//		_Count = other._Count;
-//		_Data = other._Data;
-//		return *this;
-//	}
+	Member(const Member & other) :
+		_Limit(other._Limit),
+		_Count(other._Count),
+		_Data(other._Data)
+	{
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Member(other)\n";
+	}
+	Member & operator=(const Member & other)
+	{
+		_Limit = other._Limit;
+		_Count = other._Count;
+		_Data = other._Data;
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Member::operator=(other)\n";
+		return *this;
+	}
 
 
 
@@ -190,18 +147,6 @@ class Member : public Void
 		mAllocate(other._Limit, other._Count);
 		mTransfer(other);
 	}
-
-	protected:
-	/*Member<T> mResizeLimit(unsigned int limit)
-	{
-		Member<T> other;
-		other.mAllocate(limit, limit);
-		other.mTransfer(*this);
-		//other.mSwap(*this);
-		//other.mClear();
-		return other;
-	}*/
-	//virtual void mResizeCount(unsigned int wanted_count) = 0;
 };
 };
 

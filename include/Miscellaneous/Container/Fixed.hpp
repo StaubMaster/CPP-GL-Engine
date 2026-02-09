@@ -16,19 +16,64 @@ class Fixed : public Base<T>
 	{ }
 	Fixed(unsigned int limit) : Base<T>()
 	{
-		this -> Allocate(limit, 0);
+		this -> mAllocate(limit, 0);
 	}
 	~Fixed()
 	{ }
 
-	Fixed(const Fixed<T> & other) = delete;
-	Fixed & operator=(const Fixed<T> & other) = delete;
+	Fixed(const Fixed<T> & other) : Base<T>()
+	{
+		this -> mAssign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed(other)\n";
+	}
+	Fixed & operator=(const Fixed<T> & other)
+	{
+		this -> Assign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed::operator=(other)\n";
+		return *this;
+	}
+	Fixed(const Member<T> & other) : Base<T>()
+	{
+		this -> mAssign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed(other)\n";
+	}
+	Fixed & operator=(const Member<T> & other)
+	{
+		this -> Assign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed::operator=(other)\n";
+		return *this;
+	}
 
+	public:
 	void	Clear() override
 	{
 		this -> mDelete();
 	}
+	protected:
+	void	mAssign(const Member<T> other) override
+	{
+		this -> mCopy(other);
+	}
 
+	public:
+	using Base<T>::Bind;
+	using Base<T>::Copy;
+
+	public:
+	Fixed<T> Bind() const
+	{
+		Fixed<T> other;
+		other.Bind(*this);
+		return other;
+	}
+	Fixed<T> Copy() const
+	{
+		Fixed<T> other;
+		other.Copy(*this);
+		return other;
+	}
+
+	protected:
 	unsigned int	CalcLimit(unsigned int wanted_count) override
 	{
 		(void)wanted_count;

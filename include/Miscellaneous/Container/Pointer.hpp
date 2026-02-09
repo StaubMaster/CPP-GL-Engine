@@ -29,18 +29,73 @@ class Pointer : public Base<T>
 	~Pointer()
 	{ }
 
-	Pointer(const Pointer<T> & other) = delete;
-	Pointer & operator=(const Pointer<T> & other) = delete;
+	Pointer(const Pointer<T> & other) : Base<T>()
+	{
+		this -> mAssign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer(other)\n";
+	}
+	Pointer & operator=(const Pointer<T> & other)
+	{
+		this -> Assign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer::operator=(other)\n";
+		return *this;
+	}
+	Pointer(const Member<T> & other) : Base<T>()
+	{
+		this -> mAssign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer(other)\n";
+	}
+	Pointer & operator=(const Member<T> & other)
+	{
+		this -> Assign(other);
+		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer::operator=(other)\n";
+		return *this;
+	}
 
+	public:
 	void	Clear() override
 	{
 		this -> mForget();
 	}
+	protected:
+	void	mAssign(const Member<T> other) override
+	{
+		this -> mBind(other);
+	}
 
+	public:
+	using Base<T>::Bind;
+	using Base<T>::Copy;
+
+	public:
+	Pointer<T> Bind() const
+	{
+		Pointer<T> other;
+		other.Bind(*this);
+		return other;
+	}
+	Pointer<T> Copy() const
+	{
+		Pointer<T> other;
+		other.Copy(*this);
+		return other;
+	}
+
+	protected:
 	unsigned int	CalcLimit(unsigned int wanted_count) override
 	{
 		(void)wanted_count;
 		return this -> _Limit;
+	}
+
+	public:
+	void Forget()
+	{
+		this -> mForget();
+	}
+	void Delete()
+	{
+		this -> mDelete();
 	}
 };
 };

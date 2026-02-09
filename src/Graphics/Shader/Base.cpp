@@ -69,13 +69,13 @@ Shader::Base::Base() :
 	Code(),
 	Uniforms()
 { }
-Shader::Base::Base(Container::Base<Shader::Code> code) :
+/*Shader::Base::Base(Container::Member<Shader::Code> & code) :
 	ID(0),
 	Code(Container::Fixed<Shader::Code>::Copy(code)),
 	Uniforms()
 {
 	Create();
-}
+}*/
 Shader::Base::~Base()
 { }
 
@@ -87,7 +87,8 @@ Shader::Base::Base(const Shader::Base & other) :
 Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 {
 	ID = other.ID;
-	Code = other.Code;
+	//Code = other.Code;
+	Code.Copy(other.Code);
 	//Uniforms = other.Uniforms;
 	return *this;
 }
@@ -198,19 +199,19 @@ void Shader::Base::Create()
 	Debug::Log << "Create Shader: " << ID << Debug::Done;
 	LogInfo(true, true);
 }
-void Shader::Base::Change(Container::Base<Shader::Code> code)
+void Shader::Base::Change(Container::Member<Shader::Code> & code)
 {
 	if (Exists())
 	{
 		Delete();
 		//Code = Container::Fixed<Shader::Code>::Copy(code);
-		Code.CopyHere(code);
+		Code.Copy(code);
 		Create();
 	}
 	else
 	{
 		//Code = Container::Fixed<Shader::Code>::Copy(code);
-		Code.CopyHere(code);
+		Code.Copy(code);
 	}
 	(void)code;
 }

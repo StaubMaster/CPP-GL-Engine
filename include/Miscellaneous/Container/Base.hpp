@@ -33,6 +33,15 @@ class Base : public Member<T>
 		this -> mAllocate(limit, count);
 	}
 
+	protected:
+	virtual void	mAssign(const Member<T> other) = 0;
+
+	public:
+	void	Assign(const Member<T> other)
+	{
+		Clear();
+		mAssign(other);
+	}
 	void	Bind(const Member<T> & other)
 	{
 		Clear();

@@ -25,7 +25,7 @@ class Base
 
 	private:
 	GL::ShaderID ID;
-	Container::Fixed<Shader::Code> Code;	// these are the Shaders. the whole class is technically a Shader Program
+	Container::Fixed<Shader::Code> Code;
 	public:
 	Container::Binary<Uniform::Base*> Uniforms;
 
@@ -37,7 +37,7 @@ class Base
 
 	public:
 	Base();
-	Base(Container::Base<Shader::Code> code);
+	//Base(Container::Base<Shader::Code> code);
 	virtual ~Base();
 
 	Base(const Shader::Base & other);
@@ -59,7 +59,7 @@ class Base
 	bool Exists() const;
 	void Delete();
 	void Create();
-	void Change(Container::Base<Shader::Code> code);
+	void Change(Container::Member<Shader::Code> & code);
 
 
 
