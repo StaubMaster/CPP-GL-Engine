@@ -69,13 +69,6 @@ Shader::Base::Base() :
 	Code(),
 	Uniforms()
 { }
-/*Shader::Base::Base(Container::Member<Shader::Code> & code) :
-	ID(0),
-	Code(Container::Fixed<Shader::Code>::Copy(code)),
-	Uniforms()
-{
-	Create();
-}*/
 Shader::Base::~Base()
 { }
 

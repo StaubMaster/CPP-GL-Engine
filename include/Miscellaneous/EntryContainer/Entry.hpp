@@ -136,7 +136,7 @@ class Entry
 	void Allocate(Base<T> & container, unsigned int count)
 	{
 		Dispose();
-		Data = container.Alloc(count);
+		Data = container.InsertEntry(count);
 	}
 	void Dispose()
 	{
