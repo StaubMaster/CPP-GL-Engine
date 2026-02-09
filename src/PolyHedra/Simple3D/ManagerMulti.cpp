@@ -16,7 +16,7 @@ PolyHedra_Simple3D::ManagerMulti::~ManagerMulti()
 		MultiplePolyHedra[i] -> Dispose();
 		delete MultiplePolyHedra[i];
 	}
-	MultiplePolyHedra.Dispose();
+	MultiplePolyHedra.Clear();
 }
 
 
@@ -83,7 +83,7 @@ void PolyHedra_Simple3D::ManagerMulti::Clear()
 		MultiplePolyHedra[i] -> Dispose();
 		delete MultiplePolyHedra[i];
 	}
-	MultiplePolyHedra.Dispose();
+	MultiplePolyHedra.Clear();
 }
 
 

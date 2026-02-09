@@ -2,52 +2,45 @@
 # define ENTRY_CONTAINER_BASE_HPP
 
 # include "Entry.hpp"
-# include "Miscellaneous/Container/Base.hpp"
+# include "Miscellaneous/Container/Member.hpp"
 # include "Miscellaneous/Container/Binary.hpp"
 
 namespace EntryContainer
 {
 
 template<typename T>
-class Base : public Container::Base<T>
+class Base : public Container::Member<T>
 {
+//	protected:
+//	Container::Base<T> &	Data;
+
 	protected:
-	Container::Binary<EntryData<T>*> Entrys;
+	Container::Binary<EntryData<T>*>	Entrys;
+
 	protected:
-	bool _IsLocked;
+	bool	_IsLocked;
 
 	public:
-	bool Changed;
-	
-
+	bool	_Changed;
 
 	public:
 	bool IsLocked() const { return _IsLocked; }
 	void Lock() { _IsLocked = true; }
 	void UnLock() { _IsLocked = false; }
 
+	public:
+	bool Changed() const { return _Changed; }
+	void Change() { _Changed = true; }
+	void UnChange() { _Changed = false; }
+
 
 
 	public:
-	virtual void DebugInfo() override { }
-
-	public:
-	Base(Container::Behaviour::EIncrease incB, Container::Behaviour::EDecrease decB, Container::Behaviour::EMemory memB ) : Container::Base<T>(incB, decB, memB),
-		Entrys()
-	{
-		//_Limit = 0;
-		//_Data = new T[_Limit];
-		_IsLocked = false;
-		Changed = false;
-	}
-	/*Base(unsigned int limit) : Container::Base<T>(limit),
-		Entrys(Container::Behaviour::EIncrease::Binary,Container::Behaviour::EDecrease::Binary)
-	{
-		//_Limit = limit;
-		//_Data = new T[_Limit];
-		_IsLocked = false;
-		Changed = false;
-	}*/
+	Base() : Container::Member<T>(),
+		Entrys(),
+		_IsLocked(false),
+		_Changed(false)
+	{ }
 	virtual ~Base()
 	{
 		//delete[] _Data;
@@ -152,9 +145,17 @@ class Base : public Container::Base<T>
 
 
 	public:
-	virtual EntryData<T> * Alloc(unsigned int size) = 0;
-	virtual void Free(EntryData<T> * entry) = 0;
-	virtual EntryData<T> * Copy(EntryData<T> * entry) = 0;
+	virtual void	Clear() = 0;
+
+	protected:
+	virtual unsigned int	CalcLimit(unsigned int wanted_count) = 0;
+
+
+
+	public:
+	virtual EntryData<T> *	InsertEntry(unsigned int size) = 0;
+	virtual void			RemoveEntry(EntryData<T> * entry) = 0;
+	virtual EntryData<T> *	DuplicateEntry(EntryData<T> * entry) = 0;
 };
 
 };

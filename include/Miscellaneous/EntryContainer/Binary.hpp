@@ -11,21 +11,14 @@ namespace EntryContainer
 template<typename T>
 class Binary : public Base<T>
 {
-	//protected:
-	//	unsigned int _Count;
+//	//public:
+//	//	unsigned int Count() const { return _Count; }
 
-
-
-	//public:
-	//	unsigned int Count() const { return _Count; }
-
-
+//	public:
+//	virtual void DebugInfo() override { }
 
 	public:
-	virtual void DebugInfo() override { }
-
-	public:
-	Binary() : Base<T>(Container::Behaviour::EIncrease::Binary, Container::Behaviour::EDecrease::Binary, Container::Behaviour::EMemory::Copy)
+	Binary() : Base<T>()
 	{ }
 	~Binary()
 	{ }
@@ -83,6 +76,7 @@ class Binary : public Base<T>
 		this -> _Data = data;
 		this -> _Limit = limit;
 	}*/
+
 	void CompactHere()
 	{
 		unsigned int data_idx = 0;
@@ -107,24 +101,60 @@ class Binary : public Base<T>
 	}
 
 	public:
-	EntryData<T> * Alloc(unsigned int size) override
+	void	Clear() override
+	{
+		this -> mDelete();
+	}
+
+	private:
+	void mResizeLimit(unsigned int limit)
+	{
+		if (limit == this -> _Limit) { return; }
+
+		Container::Member<T> other;
+		this -> Swap(other);
+		this -> mAllocate(limit, limit);
+		this -> mTransfer(other);
+		this -> Swap(other);
+		this -> mDelete();
+		this -> Swap(other);
+	}
+
+	private:
+	unsigned int	CalcLimit(unsigned int wanted_count) override
+	{
+		for (unsigned char shift = 31; shift < 32; shift--)
+		{
+			unsigned int size = 0xFFFFFFFF >> shift;
+			if (size >= wanted_count)
+			{
+				return size;
+			}
+		}
+		return 0;
+	}
+
+	public:
+	EntryData<T> * InsertEntry(unsigned int size) override
 	{
 		if (this -> _IsLocked) { return NULL; }
-		unsigned int newCount = this -> _Count + size;
-		unsigned int newLimit = Container::Behaviour::BinarySize(newCount);
 
-		this -> ResizeLimit(newLimit);
+		unsigned int newCount = this -> _Count + size;
+		//unsigned int newLimit = Container::Behaviour::BinarySize(newCount);
+		unsigned int newLimit = CalcLimit(newCount);
+
+		mResizeLimit(newLimit);
 
 		EntryData<T> * entry = new EntryData<T>(this, this -> _Count, size);
 		this -> Entrys.Insert(entry);
-		this -> Changed = true;
+		this -> _Changed = true;
 		this -> _Count = newCount;
 		return entry;
 	}
-	void Free(EntryData<T> * entry) override
+	void RemoveEntry(EntryData<T> * entry) override
 	{
 		if (this -> _IsLocked) { return; }
-		this -> Changed = true;
+		this -> _Changed = true;
 		unsigned int entry_idx = this -> FindEntry(entry).Idx;
 		if (entry_idx == 0xFFFFFFFF)
 		{
@@ -138,7 +168,7 @@ class Binary : public Base<T>
 			_Count -= entry -> Length;
 		}*/
 	}
-	EntryData<T> * Copy(EntryData<T> * entry) override
+	EntryData<T> * DuplicateEntry(EntryData<T> * entry) override
 	{
 		if (this -> _IsLocked) { return NULL; }
 		if (entry == NULL)

@@ -53,7 +53,7 @@ class Base : public Member<T>
 		this -> mCopy(other);
 	}
 
-	protected:
+	private:
 	void mResizeLimit(unsigned int limit)
 	{
 		if (limit == this -> _Limit) { return; }
@@ -63,15 +63,25 @@ class Base : public Member<T>
 		this -> mAllocate(limit, limit);
 		this -> mTransfer(other);
 		this -> Swap(other);
-		this -> Clear();
+		this -> mDelete();
 		this -> Swap(other);
 	}
 
 	protected:
 	virtual unsigned int	CalcLimit(unsigned int wanted_count) = 0;
 
+	public:
+	void	Trim()
+	{
+		mResizeLimit(this -> _Count);
+	}
+	void	MakeNativeSize()
+	{
+		mResizeLimit(CalcLimit(this -> _Count));
+	}
+
 	private:
-	void InsertGap(Entry gap)
+	void	InsertGap(Entry gap)
 	{
 		//	done in reverse, else it would override
 		if (this -> _Count != 0)
@@ -82,7 +92,7 @@ class Base : public Member<T>
 			}
 		}
 	}
-	void RemoveGap(Entry gap)
+	void	RemoveGap(Entry gap)
 	{
 		for (unsigned int i = gap.Offset; i < this -> _Count; i++)
 		{
@@ -91,18 +101,21 @@ class Base : public Member<T>
 	}
 
 	public:
-	Entry	Insert(const T & item)
+	Entry	Insert(const Member<T> & items)
 	{
-		Entry entry(this -> _Count, 1);
+		Entry entry(this -> _Count, items.Count());
 
 		unsigned int newCount = this -> _Count + entry.Length;
 		unsigned int newLimit = CalcLimit(newCount);
 
-		this -> mResizeLimit(newLimit);
+		mResizeLimit(newLimit);
 
 		if (newCount <= this -> _Limit)
 		{
-			this -> _Data[entry.Offset] = item;
+			for (unsigned int i = 0; i < entry.Length; i++)
+			{
+				this -> _Data[entry.Offset + i] = items[i];
+			}
 			this -> _Count = newCount;
 		}
 		else
@@ -110,6 +123,14 @@ class Base : public Member<T>
 			entry.MakeEmpty();
 		}
 		return entry;
+	}
+
+	public:
+	Entry	Insert(const T & item)
+	{
+		Container::Member<T> items;
+		items.mRemember(&item, 1, 1);
+		return Insert(items);
 	}
 	void	Remove(unsigned int idx)
 	{
@@ -121,7 +142,7 @@ class Base : public Member<T>
 
 		RemoveGap(entry);
 
-		this -> mResizeLimit(newLimit);
+		mResizeLimit(newLimit);
 
 		this -> _Count = newCount;
 	}

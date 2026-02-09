@@ -20,7 +20,7 @@ class EntryData : public Container::Entry
 	public:
 	EntryData() : Container::Entry()
 	{
-		Container = NULL;
+		Container = nullptr;
 	}
 	EntryData(const EntryData & other) : Container::Entry(other)
 	{
@@ -32,16 +32,16 @@ class EntryData : public Container::Entry
 	}
 	virtual ~EntryData()
 	{
-		if (Container != NULL)
+		if (Container != nullptr)
 		{
-			Container -> Free(this);
+			Container -> RemoveEntry(this);
 		}
 	}
 
 	private:
 	void CheckContainer() const
 	{
-		if (Container == NULL)
+		if (Container == nullptr)
 		{
 			const char * msg = "EntryContainer::EntryData Entry Container Invalid.";
 			//std::cout << msg << "\n";
@@ -57,12 +57,14 @@ class EntryData : public Container::Entry
 			throw msg;
 		}
 	}
+
 	public:
 	T * Data() const
 	{
 		CheckContainer();
 		return &((*Container)[Offset]);
 	}
+
 	public:
 	const T & operator[](unsigned int idx) const
 	{
@@ -79,13 +81,13 @@ class EntryData : public Container::Entry
 	{
 		CheckContainer();
 		CheckIndex(idx);
-		Container -> Changed = true;
+		Container -> Change();
 		return (*Container)[Offset + idx];
 	}
 	T & operator*()
 	{
 		CheckContainer();
-		Container -> Changed = true;
+		Container -> Change();
 		return (*Container)[Offset];
 	}
 

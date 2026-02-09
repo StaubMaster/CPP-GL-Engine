@@ -15,6 +15,8 @@
 #include "FileParsing/Text/TextCommand.hpp"
 #include "FileParsing/Text/TextCommandStream.hpp"
 
+#include "Miscellaneous/Container/Fixed.hpp"
+
 //#include "FileInfo.hpp"
 
 #include <sstream>

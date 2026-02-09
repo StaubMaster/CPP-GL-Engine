@@ -25,68 +25,30 @@ class Entry
 	}
 	Entry(Base<T> & container, unsigned int count)
 	{
-		Data = container.Alloc(count);
+		Data = container.InsertEntry(count);
 	}
 	~Entry()
 	{
 		delete Data;
 	}
 
-	/*	Copying
-		I need it
-		problem:
-			when I copy from e0 to e1
-			when I then delete e0 it removes the entry
-			at which point e1 becomes invalid
-		problem:
-			i cant delete Data from e0 because it is constant
-		solution: ?
-			allow a Entry container to have duplicates of a Entry
-			the area is only freed once the last duplicate of that Entry is removed
-		question:
-			allow Entrys to overlap ?
-			to know the Count (how much Data is used) would require going over each bit of data
-			this would also mean that looking for space is inefficient ?
-		no it dosent ?
-			just start at 0,
-			then look for the first enty beginning
-				then go to the end
-				then check if it inside another enty
-				then go to the end of that
-				repeat until end is outside of entrys
-			this is now an area
-				remember those in entrys too ?
-				maybe save this for another time
-		looking for space:
-			go to the end of a entry
-			put offset of new enty there
-			check if it overlaps any other
-			repeat until space is found
-			else reallocate new space
-
-		the whole reason why I split this into EntryData and Entry is because of copying
-		if this works. merge them back together
-
-		no ???
-			I did it so I can use Entrys withour Pointer syntax
-	*/
 	Entry(const Entry<T> & other)
 	{
-		if (other.Data != NULL)
+		if (other.Data != NULL && other.Data -> Container != NULL)
 		{
-			Data = other.Data -> Container -> Copy(other.Data);
+			Data = other.Data -> Container -> DuplicateEntry(other.Data);
 		}
 		else
 		{
 			Data = NULL;
 		}
 	}
-	Entry<T> & operator =(const Entry<T> & other)
+	Entry<T> & operator=(const Entry<T> & other)
 	{
 		Dispose();
 		if (other.Data != NULL)
 		{
-			Data = other.Data -> Container -> Copy(other.Data);
+			Data = other.Data -> Container -> DuplicateEntry(other.Data);
 		}
 		return *this;
 	}
@@ -124,6 +86,7 @@ class Entry
 			throw msg;
 		}
 	}
+
 	public:
 	const T & operator[](unsigned int idx) const
 	{

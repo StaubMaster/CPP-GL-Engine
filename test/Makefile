@@ -6,6 +6,7 @@ FLAGS := -Wall -Wextra -Werror
 
 FILES := \
 	Container.cpp
+#	EntryContainer.cpp
 #	Angle3D.cpp
 #	CopyConstruct.cpp
 #	Graphics.cpp

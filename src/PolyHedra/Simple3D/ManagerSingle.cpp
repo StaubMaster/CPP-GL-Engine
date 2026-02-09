@@ -22,7 +22,7 @@ void PolyHedra_Simple3D::ManagerSingle::Dispose()
 {
 	_Buffer.Delete();
 	_Buffer.Texture.Delete();
-	_Instances.Dispose();
+	_Instances.Clear();
 
 	delete _PolyHedra;
 	_PolyHedra = NULL;
@@ -30,7 +30,7 @@ void PolyHedra_Simple3D::ManagerSingle::Dispose()
 void PolyHedra_Simple3D::ManagerSingle::Change(PolyHedra * polyhedra)
 {
 	delete _PolyHedra;
-	_Instances.Dispose();
+	_Instances.Clear();
 	_Buffer.Create();
 
 	_PolyHedra = polyhedra;
@@ -38,7 +38,7 @@ void PolyHedra_Simple3D::ManagerSingle::Change(PolyHedra * polyhedra)
 		_Buffer.Bind();
 		Container::Pointer<PolyHedra_Main::Data> data = _PolyHedra -> ToMainData();
 		_Buffer.Main.Change(data);
-		data.Dispose();
+		data.Clear();
 	}
 	if (_PolyHedra -> Skin != NULL)
 	{
@@ -55,11 +55,11 @@ void PolyHedra_Simple3D::ManagerSingle::Change(PolyHedra * polyhedra)
 
 void PolyHedra_Simple3D::ManagerSingle::Draw()
 {
-	if (_Instances.Changed)
+	if (_Instances.Changed())
 	{
 		_Buffer.Bind();
 		_Buffer.Inst.Change(_Instances);
-		_Instances.Changed = false;
+		_Instances.UnChange();
 	}
 	/*if (_Texture != NULL)
 	{

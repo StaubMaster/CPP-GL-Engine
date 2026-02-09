@@ -2,6 +2,7 @@
 # define CONTAINER_ARRAY_HPP
 
 # include "Base.hpp"
+# include <initializer_list>
 
 
 
@@ -14,33 +15,52 @@ class Array : public Base<T>
 	public:
 	Array() : Base<T>()
 	{ }
+	~Array()
+	{
+		Clear();
+	}
 	Array(unsigned int limit) : Base<T>()
 	{
 		this -> Allocate(limit, limit);
 	}
-	~Array()
-	{ }
+	Array(std::initializer_list<T> list) : Base<T>()
+	{
+		this -> Allocate(list.size(), list.size());
+		const T * ptr = list.begin();
+		for (unsigned int i = 0; i < this -> _Limit; i++)
+		{
+			this -> _Data[i] = ptr[i];
+		}
+	}
 
 	Array(const Array<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array(other)\n";
+# endif
 	}
 	Array & operator=(const Array<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array::operator=(other)\n";
+# endif
 		return *this;
 	}
 	Array(const Member<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array(other)\n";
+# endif
 	}
 	Array & operator=(const Member<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array::operator=(other)\n";
+# endif
 		return *this;
 	}
 

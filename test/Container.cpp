@@ -1,11 +1,10 @@
-
-#include <iostream>
-
 #include "Miscellaneous/Container/Binary.hpp"
 #include "Miscellaneous/Container/Tight.hpp"
 #include "Miscellaneous/Container/Fixed.hpp"
 #include "Miscellaneous/Container/Array.hpp"
 #include "Miscellaneous/Container/Pointer.hpp"
+
+#include <iostream>
 
 
 
@@ -338,10 +337,17 @@ void Test_Container_Array_Number()
 
 	Show_Footer();
 }
+
+void Test_Container_Array_List()
+{
+	Container::Array<int> cont({1, 2, 3, 9, 8, 7});
+	Container_Show(cont);
+}
 void Test_Container_Array()
 {
 	Test_Container_Array_Empty();
 	Test_Container_Array_Number();
+	Test_Container_Array_List();
 }
 
 void Test_Container_Pointer()
@@ -382,12 +388,12 @@ void Test_Container()
 
 int main()
 {
-	Test_Container_Binary();
+	//Test_Container_Binary();
 	//Test_Container_Tight();
 	//Test_Container_Fixed();
-	//Test_Container_Array();
+	Test_Container_Array();
 	//Test_Container_Pointer();
-	Test_Container();
+	//Test_Container();
 	std::cout << "\nmain() return\n";
 	return 0;
 }

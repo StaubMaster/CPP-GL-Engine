@@ -15,28 +15,39 @@ class Tight : public Base<T>
 	Tight() : Base<T>()
 	{ }
 	~Tight()
-	{ }
+	{
+		Clear();
+	}
+
 
 	Tight(const Tight<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Tight(other)\n";
+# endif
 	}
 	Tight & operator=(const Tight<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Tight::operator=(other)\n";
+# endif
 		return *this;
 	}
 	Tight(const Member<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Tight(other)\n";
+# endif
 	}
 	Tight & operator=(const Member<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Tight::operator=(other)\n";
+# endif
 		return *this;
 	}
 

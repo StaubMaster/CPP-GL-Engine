@@ -15,28 +15,38 @@ class Binary : public Base<T>
 	Binary() : Base<T>()
 	{ }
 	~Binary()
-	{ }
+	{
+		Clear();
+	}
 
 	Binary(const Binary<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Binary(other)\n";
+# endif
 	}
 	Binary & operator=(const Binary<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Binary::operator=(other)\n";
+# endif
 		return *this;
 	}
 	Binary(const Member<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Binary(other)\n";
+# endif
 	}
 	Binary & operator=(const Member<T> & other)
 	{
- 		this -> Assign(other);
+		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Binary::operator=(other)\n";
+# endif
 		return *this;
 	}
 
@@ -69,7 +79,7 @@ class Binary : public Base<T>
 		return other;
 	}
 
-	protected:
+	private:
 	unsigned int	CalcLimit(unsigned int wanted_count) override
 	{
 		for (unsigned char shift = 31; shift < 32; shift--)

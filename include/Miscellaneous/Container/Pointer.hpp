@@ -16,39 +16,57 @@ class Pointer : public Base<T>
 	{ }
 	Pointer(const T * data, unsigned int limit) : Base<T>()
 	{
-		this -> Remember((T*)data, limit, limit);
+		this -> mRemember((T*)data, limit, limit);
 	}
 	Pointer(const T * data, unsigned int limit, unsigned int count) : Base<T>()
 	{
-		this -> Remember((T*)data, limit, count);
+		this -> mRemember((T*)data, limit, count);
+	}
+	Pointer(unsigned int limit) : Base<T>()
+	{
+		this -> mAllocate(limit, limit);
+	}
+	Pointer(unsigned int limit, unsigned int count) : Base<T>()
+	{
+		this -> mAllocate(limit, count);
 	}
 	Pointer(Member<T> & other) : Base<T>()
 	{
 		this -> mBind(other);
 	}
 	~Pointer()
-	{ }
+	{
+		Clear();
+	}
 
 	Pointer(const Pointer<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer(other)\n";
+# endif
 	}
 	Pointer & operator=(const Pointer<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer::operator=(other)\n";
+# endif
 		return *this;
 	}
 	Pointer(const Member<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer(other)\n";
+# endif
 	}
 	Pointer & operator=(const Member<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Pointer::operator=(other)\n";
+# endif
 		return *this;
 	}
 

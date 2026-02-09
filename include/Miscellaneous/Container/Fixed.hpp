@@ -19,28 +19,38 @@ class Fixed : public Base<T>
 		this -> mAllocate(limit, 0);
 	}
 	~Fixed()
-	{ }
+	{
+		Clear();
+	}
 
 	Fixed(const Fixed<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed(other)\n";
+# endif
 	}
 	Fixed & operator=(const Fixed<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed::operator=(other)\n";
+# endif
 		return *this;
 	}
 	Fixed(const Member<T> & other) : Base<T>()
 	{
 		this -> mAssign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed(other)\n";
+# endif
 	}
 	Fixed & operator=(const Member<T> & other)
 	{
 		this -> Assign(other);
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Fixed::operator=(other)\n";
+# endif
 		return *this;
 	}
 

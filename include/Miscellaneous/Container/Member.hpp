@@ -5,6 +5,11 @@
 # include "Exception.hpp"
 # include "Behaviour/Member.hpp"
 
+//# define DEBUG_MESSAGES
+# ifdef DEBUG_MESSAGES
+#  include <iostream>
+# endif
+
 
 
 namespace Container
@@ -67,7 +72,7 @@ class Member : public Void
 	Member() :
 		_Limit(0),
 		_Count(0),
-		_Data(0)
+		_Data(nullptr)
 	{ }
 	~Member()
 	{ }
@@ -78,14 +83,18 @@ class Member : public Void
 		_Count(other._Count),
 		_Data(other._Data)
 	{
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Member(other)\n";
+# endif
 	}
 	Member & operator=(const Member & other)
 	{
 		_Limit = other._Limit;
 		_Count = other._Count;
 		_Data = other._Data;
+# ifdef DEBUG_MESSAGES
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Member::operator=(other)\n";
+# endif
 		return *this;
 	}
 
@@ -96,7 +105,7 @@ class Member : public Void
 	{
 		_Limit = 0;
 		_Count = 0;
-		_Data = 0;
+		_Data = nullptr;
 	}
 	void mDelete()
 	{
@@ -105,6 +114,7 @@ class Member : public Void
 	}
 
 	protected:
+	public:
 	void mTransfer(const Member<T> & other)
 	{
 		if (other._Count < _Count)
@@ -116,11 +126,11 @@ class Member : public Void
 			_Data[i] = other._Data[i];
 		}
 	}
-	void mRemember(T * data, unsigned int limit, unsigned int count)
+	void mRemember(const T * data, unsigned int limit, unsigned int count)
 	{
 		_Limit = limit;
 		_Count = count;
-		_Data = data;
+		_Data = (T*)data;
 	}
 	void mAllocate(unsigned int limit, unsigned int count)
 	{
