@@ -51,7 +51,8 @@ void Skin2DA::Parse(const TextCommand & cmd)
 	else if (name == "File")	{ Parse_File(cmd); }
 	else if (name == "t")		{ Parse_t(cmd); }
 	else if (name == "TexI")	{ Parse_TextureIndex(cmd); }
-	else if (name == "TexI4")	{ Parse_TextureFace4(cmd); }
+	else if (name == "TexI4")	{ Parse_TextureIndexFace4(cmd); }
+	else if (name == "TexIQ")	{ Parse_TextureIndexQuad(cmd); }
 
 	else						{ std::cout << "unknown: " << cmd << "\n"; }
 }
@@ -111,7 +112,7 @@ void Skin2DA::Parse_TextureIndex(const TextCommand & cmd)
 	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
 	TextureIndex = cmd.ToUInt32(0);
 }
-void Skin2DA::Parse_TextureFace4(const TextCommand & cmd)
+void Skin2DA::Parse_TextureIndexFace4(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 8)) { throw InvalidCommandArgumentCount(cmd, "n == 8"); }
 
@@ -122,6 +123,43 @@ void Skin2DA::Parse_TextureFace4(const TextCommand & cmd)
 		t[i].Y = cmd.ToFloat(i * 2 + 1);
 		t[i].Z = TextureIndex;
 	}
+
+	Insert_Face4(Skin2DFaceCorner(t[0]), Skin2DFaceCorner(t[1]), Skin2DFaceCorner(t[2]), Skin2DFaceCorner(t[3]));
+}
+void Skin2DA::Parse_TextureIndexQuad(const TextCommand & cmd)
+{
+	if (!(cmd.Count() == 4)) { throw InvalidCommandArgumentCount(cmd, "n == 4"); }
+
+	Point2D	min;
+	min.X = cmd.ToFloat(0);
+	min.Y = cmd.ToFloat(1);
+
+	Point2D	max;
+	max.X = cmd.ToFloat(2);
+	max.Y = cmd.ToFloat(3);
+
+	Point3D t[4];
+
+	t[0].X = min.X;
+	t[0].Y = min.Y;
+	t[0].Z = TextureIndex;
+
+	t[1].X = min.X;
+	t[1].Y = max.Y;
+	t[1].Z = TextureIndex;
+
+	t[2].X = max.X;
+	t[2].Y = min.Y;
+	t[2].Z = TextureIndex;
+
+	t[3].X = max.X;
+	t[3].Y = max.Y;
+	t[3].Z = TextureIndex;
+
+	std::cout << "[0]" << t[0] << '\n';
+	std::cout << "[1]" << t[1] << '\n';
+	std::cout << "[2]" << t[2] << '\n';
+	std::cout << "[3]" << t[3] << '\n';
 
 	Insert_Face4(Skin2DFaceCorner(t[0]), Skin2DFaceCorner(t[1]), Skin2DFaceCorner(t[2]), Skin2DFaceCorner(t[3]));
 }

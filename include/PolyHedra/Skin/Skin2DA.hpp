@@ -35,7 +35,8 @@ class Skin2DA : public SkinGenericBase<Skin2DCorner, Skin2DFaceCorner, Skin2DFac
 	void Parse_File(const TextCommand & cmd);
 	void Parse_t(const TextCommand & cmd);
 	void Parse_TextureIndex(const TextCommand & cmd);
-	void Parse_TextureFace4(const TextCommand & cmd);
+	void Parse_TextureIndexFace4(const TextCommand & cmd);
+	void Parse_TextureIndexQuad(const TextCommand & cmd);
 };
 
 #endif
