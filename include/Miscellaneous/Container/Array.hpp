@@ -21,11 +21,11 @@ class Array : public Base<T>
 	}
 	Array(unsigned int limit) : Base<T>()
 	{
-		this -> Allocate(limit, limit);
+		this -> mAllocate(limit, limit);
 	}
 	Array(std::initializer_list<T> list) : Base<T>()
 	{
-		this -> Allocate(list.size(), list.size());
+		this -> mAllocate(list.size(), list.size());
 		const T * ptr = list.begin();
 		for (unsigned int i = 0; i < this -> _Limit; i++)
 		{
@@ -62,6 +62,17 @@ class Array : public Base<T>
 		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array::operator=(other)\n";
 # endif
 		return *this;
+	}
+
+	public:
+	void	List(std::initializer_list<T> list)
+	{
+		this -> Allocate(list.size(), list.size());
+		const T * ptr = list.begin();
+		for (unsigned int i = 0; i < this -> _Limit; i++)
+		{
+			this -> _Data[i] = ptr[i];
+		}
 	}
 
 	public:

@@ -50,8 +50,8 @@ void Skin2DA::Parse(const TextCommand & cmd)
 	else if (name == "H")		{ Parse_H(cmd); }
 	else if (name == "File")	{ Parse_File(cmd); }
 	else if (name == "t")		{ Parse_t(cmd); }
-	else if (name == "Ti")		{ Parse_t(cmd); }
-	else if (name == "Tf")		{ Parse_t(cmd); }
+	else if (name == "TexI")	{ Parse_TextureIndex(cmd); }
+	else if (name == "TexI4")	{ Parse_TextureFace4(cmd); }
 
 	else						{ std::cout << "unknown: " << cmd << "\n"; }
 }
@@ -105,12 +105,23 @@ void Skin2DA::Parse_t(const TextCommand & cmd)
 		Insert_Face4(Skin2DFaceCorner(t[0]), Skin2DFaceCorner(t[1]), Skin2DFaceCorner(t[2]), Skin2DFaceCorner(t[3]));
 	}
 }
-/*void Skin2DA::Parse_TextureIndex(const TextCommand & cmd)
+
+void Skin2DA::Parse_TextureIndex(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
-	TextureIndex = cmd.ToInt32(0);
-}*/
-/*void Skin2DA::Parse_TextureFace(const TextCommand & cmd)
+	TextureIndex = cmd.ToUInt32(0);
+}
+void Skin2DA::Parse_TextureFace4(const TextCommand & cmd)
 {
-	//	like t but uses TextureIndex
-}*/
+	if (!(cmd.Count() == 8)) { throw InvalidCommandArgumentCount(cmd, "n == 8"); }
+
+	Point3D t[4];
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		t[i].X = cmd.ToFloat(i * 2 + 0);
+		t[i].Y = cmd.ToFloat(i * 2 + 1);
+		t[i].Z = TextureIndex;
+	}
+
+	Insert_Face4(Skin2DFaceCorner(t[0]), Skin2DFaceCorner(t[1]), Skin2DFaceCorner(t[2]), Skin2DFaceCorner(t[3]));
+}

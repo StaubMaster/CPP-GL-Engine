@@ -69,6 +69,18 @@ class Member : public Void
 
 
 	public:
+	unsigned int MinIndex() const { return 0; }
+	unsigned int MaxIndex() const { if (_Count != 0) { return _Count - 1; } return 0; }
+
+	const T & MinItem() const { return operator[](MinIndex()); }
+	const T & MaxItem() const { return operator[](MaxIndex()); }
+
+	T & MinItem() { return operator[](MinIndex()); }
+	T & MaxItem() { return operator[](MaxIndex()); }
+
+
+
+	public:
 	Member() :
 		_Limit(0),
 		_Count(0),
