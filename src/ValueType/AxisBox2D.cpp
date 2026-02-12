@@ -53,3 +53,10 @@ bool AxisBox2D::Intersekt(Point2D val) const
 	return (Min.X <= val.X && Max.X >= val.X)
 		&& (Min.Y <= val.Y && Max.Y >= val.Y);
 }
+bool AxisBox2D::Intersekt(const AxisBox2D & other) const
+{
+	return (
+		((Max.X > other.Min.X) & (Min.X < other.Max.X)) &
+		((Max.Y > other.Min.Y) & (Min.Y < other.Max.Y))
+	);
+}

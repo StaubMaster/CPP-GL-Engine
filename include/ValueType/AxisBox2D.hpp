@@ -25,6 +25,7 @@ struct AxisBox2D
 
 	public:
 	bool Intersekt(Point2D val) const;
+	bool Intersekt(const AxisBox2D & other) const;
 };
 
 #endif

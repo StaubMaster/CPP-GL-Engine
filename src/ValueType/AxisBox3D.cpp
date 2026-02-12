@@ -56,3 +56,11 @@ bool AxisBox3D::Intersekt(Point3D val) const
 		&& (Min.Y <= val.Y && Max.Y >= val.Y)
 		&& (Min.Z <= val.Z && Max.Z >= val.Z);
 }
+bool AxisBox3D::Intersekt(const AxisBox3D & other) const
+{
+	return (
+		((Max.X > other.Min.X) & (Min.X < other.Max.X)) &
+		((Max.Y > other.Min.Y) & (Min.Y < other.Max.Y)) &
+		((Max.Z > other.Min.Z) & (Min.Z < other.Max.Z))
+	);
+}
