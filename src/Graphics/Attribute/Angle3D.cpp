@@ -1,4 +1,5 @@
 #include "Graphics/Attribute/Angle3D.hpp"
+#include "ValueType/Angle.hpp"
 
 
 
@@ -35,7 +36,7 @@ Attribute::Angle3D & Attribute::Angle3D::operator=(const Angle3D & other)
 
 void Attribute::Angle3D::Bind(const unsigned char * & offset) const
 {
-	offset += sizeof(float) * 3;
+	offset += sizeof(Angle) * 3;
 	Location0.Bind(offset);
 	Location1.Bind(offset);
 	Location2.Bind(offset);

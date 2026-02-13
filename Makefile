@@ -136,11 +136,13 @@ ATTRIBUTE := \
 	Graphics/Attribute/Base/Base.cpp \
 	Graphics/Attribute/Base/FloatN.cpp \
 \
-	Graphics/Attribute/Point3D.cpp \
-	Graphics/Attribute/Angle3D.cpp \
-	Graphics/Attribute/Trans3D.cpp \
 	Graphics/Attribute/Point2D.cpp \
+	Graphics/Attribute/Point3D.cpp \
 	Graphics/Attribute/Point4D.cpp \
+	Graphics/Attribute/Angle2D.cpp \
+	Graphics/Attribute/Angle3D.cpp \
+	Graphics/Attribute/Trans2D.cpp \
+	Graphics/Attribute/Trans3D.cpp \
 	Graphics/Attribute/ColorF4.cpp
 ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
