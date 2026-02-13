@@ -10,11 +10,13 @@ namespace Uniform
 	class Float1;
 	class Float2;
 	class Float3;
+	class Float2x2;
 	class Float3x3;
 
 	class UIntN;
 	class UInt1;
 
+	class Matrix2x2;
 	class Matrix3x3;
 
 	class DepthFactors;
@@ -25,6 +27,7 @@ namespace Uniform
 	class Angle;
 
 	class Point2D;
+	class Angle2D;
 
 	class Point3D;
 	class Angle3D;

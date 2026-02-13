@@ -17,39 +17,39 @@ struct Point4D
 	~Point4D();
 
 	Point4D(const Point4D & other);
-	Point4D & operator =(const Point4D & other);
+	Point4D & operator=(const Point4D & other);
 
 	public:
 	float length2() const;
 	float length() const;
 	Point4D normalize() const;
 
-	Point4D operator +() const;
-	Point4D operator -() const;
-	Point4D operator !() const;
+	Point4D operator+() const;
+	Point4D operator-() const;
+	Point4D operator!() const;
 
-	Point4D operator +(const float & flt) const;
-	Point4D operator -(const float & flt) const;
-	Point4D operator *(const float & flt) const;
-	Point4D operator /(const float & flt) const;
+	Point4D operator+(const float & flt) const;
+	Point4D operator-(const float & flt) const;
+	Point4D operator*(const float & flt) const;
+	Point4D operator/(const float & flt) const;
 
-	Point4D & operator +=(const float & flt);
-	Point4D & operator -=(const float & flt);
-	Point4D & operator *=(const float & flt);
-	Point4D & operator /=(const float & flt);
+	Point4D & operator+=(const float & flt);
+	Point4D & operator-=(const float & flt);
+	Point4D & operator*=(const float & flt);
+	Point4D & operator/=(const float & flt);
 
-	Point4D operator +(const Point4D & other) const;
-	Point4D operator -(const Point4D & other) const;
-	Point4D operator *(const Point4D & other) const;
-	Point4D operator /(const Point4D & other) const;
+	Point4D operator+(const Point4D & other) const;
+	Point4D operator-(const Point4D & other) const;
+	Point4D operator*(const Point4D & other) const;
+	Point4D operator/(const Point4D & other) const;
 
-	Point4D & operator +=(const Point4D & other);
-	Point4D & operator -=(const Point4D & other);
-	Point4D & operator *=(const Point4D & other);
-	Point4D & operator /=(const Point4D & other);
+	Point4D & operator+=(const Point4D & other);
+	Point4D & operator-=(const Point4D & other);
+	Point4D & operator*=(const Point4D & other);
+	Point4D & operator/=(const Point4D & other);
 
 	float static dot(const Point4D & p0, const Point4D & p1);
-	float operator %(const Point4D & other) const;
+	float operator%(const Point4D & other) const;
 };
 
 #endif

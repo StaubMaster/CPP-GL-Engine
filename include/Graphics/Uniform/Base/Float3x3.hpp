@@ -1,6 +1,5 @@
-
-#ifndef  UNI_FLOAT_3X3_HPP
-# define UNI_FLOAT_3X3_HPP
+#ifndef  UNI_FLOAT_3_3_HPP
+# define UNI_FLOAT_3_3_HPP
 
 # include "Graphics/Uniform/Base/FloatN.hpp"
 

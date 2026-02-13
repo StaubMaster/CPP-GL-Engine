@@ -18,7 +18,7 @@ Point2D::~Point2D()
 Point2D::Point2D(const Point2D & other) :
 	X(other.X), Y(other.Y)
 { }
-Point2D & Point2D::operator =(const Point2D & other)
+Point2D & Point2D::operator=(const Point2D & other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -47,21 +47,21 @@ Point2D Point2D::normalize() const
 
 
 
-Point2D Point2D::operator +() const
+Point2D Point2D::operator+() const
 {
 	return Point2D(
 		+X,
 		+Y
 	);
 }
-Point2D Point2D::operator -() const
+Point2D Point2D::operator-() const
 {
 	return Point2D(
 		-X,
 		-Y
 	);
 }
-Point2D Point2D::operator !() const
+Point2D Point2D::operator!() const
 {
 	return normalize();
 }
@@ -70,28 +70,28 @@ Point2D Point2D::operator !() const
 
 
 
-Point2D Point2D::operator +(const float & flt) const
+Point2D Point2D::operator+(const float & flt) const
 {
 	return Point2D(
 		X + flt,
 		Y + flt
 	);
 }
-Point2D Point2D::operator -(const float & flt) const
+Point2D Point2D::operator-(const float & flt) const
 {
 	return Point2D(
 		X - flt,
 		Y - flt
 	);
 }
-Point2D Point2D::operator *(const float & flt) const
+Point2D Point2D::operator*(const float & flt) const
 {
 	return Point2D(
 		X * flt,
 		Y * flt
 	);
 }
-Point2D Point2D::operator /(const float & flt) const
+Point2D Point2D::operator/(const float & flt) const
 {
 	return Point2D(
 		X / flt,
@@ -101,25 +101,25 @@ Point2D Point2D::operator /(const float & flt) const
 
 
 
-Point2D & Point2D::operator +=(const float & flt)
+Point2D & Point2D::operator+=(const float & flt)
 {
 	X += flt;
 	Y += flt;
 	return *this;
 }
-Point2D & Point2D::operator -=(const float & flt)
+Point2D & Point2D::operator-=(const float & flt)
 {
 	X -= flt;
 	Y -= flt;
 	return *this;
 }
-Point2D & Point2D::operator *=(const float & flt)
+Point2D & Point2D::operator*=(const float & flt)
 {
 	X *= flt;
 	Y *= flt;
 	return *this;
 }
-Point2D & Point2D::operator /=(const float & flt)
+Point2D & Point2D::operator/=(const float & flt)
 {
 	X /= flt;
 	Y /= flt;
@@ -130,28 +130,28 @@ Point2D & Point2D::operator /=(const float & flt)
 
 
 
-Point2D Point2D::operator +(const Point2D & other) const
+Point2D Point2D::operator+(const Point2D & other) const
 {
 	return Point2D(
 		X + other.X,
 		Y + other.Y
 	);
 }
-Point2D Point2D::operator -(const Point2D & other) const
+Point2D Point2D::operator-(const Point2D & other) const
 {
 	return Point2D(
 		X - other.X,
 		Y - other.Y
 	);
 }
-Point2D Point2D::operator *(const Point2D & other) const
+Point2D Point2D::operator*(const Point2D & other) const
 {
 	return Point2D(
 		X * other.X,
 		Y * other.Y
 	);
 }
-Point2D Point2D::operator /(const Point2D & other) const
+Point2D Point2D::operator/(const Point2D & other) const
 {
 	return Point2D(
 		X / other.X,
@@ -161,25 +161,25 @@ Point2D Point2D::operator /(const Point2D & other) const
 
 
 
-Point2D & Point2D::operator +=(const Point2D & other)
+Point2D & Point2D::operator+=(const Point2D & other)
 {
 	X += other.X;
 	Y += other.Y;
 	return *this;
 }
-Point2D & Point2D::operator -=(const Point2D & other)
+Point2D & Point2D::operator-=(const Point2D & other)
 {
 	X -= other.X;
 	Y -= other.Y;
 	return *this;
 }
-Point2D & Point2D::operator *=(const Point2D & other)
+Point2D & Point2D::operator*=(const Point2D & other)
 {
 	X *= other.X;
 	Y *= other.Y;
 	return *this;
 }
-Point2D & Point2D::operator /=(const Point2D & other)
+Point2D & Point2D::operator/=(const Point2D & other)
 {
 	X /= other.X;
 	Y /= other.Y;
@@ -197,7 +197,7 @@ float Point2D::dot(const Point2D & p0, const Point2D & p1)
 		(p0.Y * p1.Y)
 	);
 }
-float Point2D::operator %(const Point2D & other) const
+float Point2D::operator%(const Point2D & other) const
 {
 	return dot(*this, other);
 }

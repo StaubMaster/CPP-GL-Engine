@@ -7,6 +7,7 @@ struct Point3D;
 struct Point4D;
 
 struct Angle;
+struct Angle2D;
 struct Angle3D;
 
 struct Trans3D;
@@ -23,6 +24,7 @@ struct UndexLoop3D;
 
 struct Bool3D;
 
+struct Matrix2x2;
 struct Matrix3x3;
 
 struct DepthFactors;

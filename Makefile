@@ -16,22 +16,24 @@ DIR_OBJ := obj/
 
 
 
-ValueType/ := \
+VALUE_TYPE := \
 	ValueType/Point2D.cpp \
 	ValueType/Point3D.cpp \
 	ValueType/Point4D.cpp \
-	ValueType/Angle.cpp \
-	ValueType/Angle3D.cpp \
-	ValueType/Trans3D.cpp \
-	ValueType/AxisBox1D.cpp \
-	ValueType/AxisBox2D.cpp \
-	ValueType/AxisBox3D.cpp \
 	ValueType/Ray3D.cpp \
 	ValueType/Undex3D.cpp \
 	ValueType/UndexBox3D.cpp \
 	ValueType/UndexLoop3D.cpp \
 	ValueType/Bool3D.cpp \
+	ValueType/Matrix2x2.cpp \
 	ValueType/Matrix3x3.cpp \
+	ValueType/Angle.cpp \
+	ValueType/Angle2D.cpp \
+	ValueType/Angle3D.cpp \
+	ValueType/Trans3D.cpp \
+	ValueType/AxisBox1D.cpp \
+	ValueType/AxisBox2D.cpp \
+	ValueType/AxisBox3D.cpp \
 	ValueType/DepthFactors.cpp \
 	ValueType/Depth.cpp \
 	ValueType/Range.cpp \
@@ -40,10 +42,11 @@ ValueType/ := \
 	ValueType/LightBase.cpp \
 	ValueType/LightSolar.cpp \
 	ValueType/LightSpot.cpp \
-	ValueType/View.cpp \
+	ValueType/View2D.cpp \
+	ValueType/View3D.cpp \
 	DataShow.cpp
-ValueType/_SRC := $(addprefix $(DIR_SRC)/,$(ValueType/))
-ValueType/_OBJ := $(addprefix $(DIR_OBJ)/,$(ValueType/:.cpp=.o))
+VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))
+VALUE_TYPE_OBJ := $(addprefix $(DIR_OBJ)/,$(VALUE_TYPE:.cpp=.o))
 
 DISPLAY := \
 	Display/AbsNormal2D.cpp \
@@ -74,6 +77,7 @@ UNIFORM := \
 	Graphics/Uniform/Base/Float2.cpp \
 	Graphics/Uniform/Base/Float3.cpp \
 	Graphics/Uniform/Base/Float4.cpp \
+	Graphics/Uniform/Base/Float2x2.cpp \
 	Graphics/Uniform/Base/Float3x3.cpp \
 	Graphics/Uniform/Base/UIntN.cpp \
 	Graphics/Uniform/Base/UInt1.cpp \
@@ -81,10 +85,12 @@ UNIFORM := \
 	Graphics/Uniform/Point2D.cpp \
 	Graphics/Uniform/Point3D.cpp \
 	Graphics/Uniform/ColorF4.cpp \
+	Graphics/Uniform/Matrix2x2.cpp \
 	Graphics/Uniform/Matrix3x3.cpp \
 	Graphics/Uniform/DepthFactors.cpp \
 \
 	Graphics/Uniform/Angle.cpp \
+	Graphics/Uniform/Angle2D.cpp \
 	Graphics/Uniform/Angle3D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
 	Graphics/Uniform/Range.cpp \
@@ -213,7 +219,7 @@ OTHER_OBJ := $(addprefix $(DIR_OBJ)/,$(OTHER:.cpp=.o))
 
 
 ALL_SRC := \
-	$(ValueType/_SRC) $(DISPLAY_SRC)\
+	$(VALUE_TYPE_SRC) $(DISPLAY_SRC)\
 	$(CONTAINER_SRC)\
 	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC)\
 	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC)\
@@ -225,7 +231,7 @@ ALL_SRC := \
 	$(OTHER_SRC)
 
 ALL_OBJ := \
-	$(ValueType/_OBJ) $(DISPLAY_OBJ)\
+	$(VALUE_TYPE_OBJ) $(DISPLAY_OBJ)\
 	$(CONTAINER_OBJ)\
 	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ)\
 	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ)\
@@ -286,9 +292,9 @@ $(DIR_OBJ)/%.o : $(DIR_SRC)/%.cpp
 
 ################################################################
 
-remake_ValueType/:
+remake_VALUE_TYPE:
 	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(ValueType/_OBJ)
+	@$(REMOVER) $(VALUE_TYPE_OBJ)
 	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 

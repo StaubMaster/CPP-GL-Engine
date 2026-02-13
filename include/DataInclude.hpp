@@ -6,6 +6,7 @@
 #include "ValueType/Point4D.hpp"
 
 #include "ValueType/Angle.hpp"
+#include "ValueType/Angle2D.hpp"
 #include "ValueType/Angle3D.hpp"
 
 #include "ValueType/Trans3D.hpp"
@@ -22,6 +23,7 @@
 
 #include "ValueType/Bool3D.hpp"
 
+#include "ValueType/Matrix2x2.hpp"
 #include "ValueType/Matrix3x3.hpp"
 
 #include "ValueType/DepthFactors.hpp"

@@ -10,11 +10,13 @@
 # include "Uniform/Base/Float1.hpp"
 # include "Uniform/Base/Float2.hpp"
 # include "Uniform/Base/Float3.hpp"
+# include "Uniform/Base/Float2x2.hpp"
 # include "Uniform/Base/Float3x3.hpp"
 
 # include "Uniform/Base/UIntN.hpp"
 # include "Uniform/Base/UInt1.hpp"
 
+# include "Uniform/Matrix2x2.hpp"
 # include "Uniform/Matrix3x3.hpp"
 
 # include "Uniform/DepthFactors.hpp"
@@ -23,6 +25,7 @@
 # include "Uniform/Angle.hpp"
 
 # include "Uniform/Point2D.hpp"
+# include "Uniform/Angle2D.hpp"
 
 # include "Uniform/Point3D.hpp"
 # include "Uniform/Angle3D.hpp"

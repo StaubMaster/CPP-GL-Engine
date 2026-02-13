@@ -1,8 +1,8 @@
-#include "ValueType/View.hpp"
+#include "ValueType/View3D.hpp"
 
 
 
-View::View() :
+View3D::View3D() :
 	Trans(),
 	Depth(
 		DepthFactors(0.1f, 1000.0f),
@@ -11,15 +11,15 @@ View::View() :
 	),
 	FOV(Angle::Degrees(90))
 { }
-View::~View()
+View3D::~View3D()
 { }
 
-View::View(const View & other) :
+View3D::View3D(const View3D & other) :
 	Trans(other.Trans),
 	Depth(other.Depth),
 	FOV(other.FOV)
 { }
-View & View::operator=(const View & other)
+View3D & View3D::operator=(const View3D & other)
 {
 	Trans = other.Trans;
 	Depth = other.Depth;
@@ -29,7 +29,7 @@ View & View::operator=(const View & other)
 
 
 
-void View::TransformFlatX(Trans3D trans, float timeDelta)
+void View3D::TransformFlatX(Trans3D trans, float timeDelta)
 {
 	trans.Pos *= timeDelta;
 	trans.Rot.X *= timeDelta;

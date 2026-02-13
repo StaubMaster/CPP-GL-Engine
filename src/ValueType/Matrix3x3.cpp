@@ -3,6 +3,8 @@
 
 
 
+Matrix3x3::~Matrix3x3()
+{ }
 Matrix3x3::Matrix3x3()
 {
 	for (int x = 0; x < 3; x++)
@@ -24,7 +26,7 @@ Matrix3x3::Matrix3x3(const Matrix3x3 & other)
 		}
 	}
 }
-Matrix3x3 & Matrix3x3::operator =(const Matrix3x3 & other)
+Matrix3x3 & Matrix3x3::operator=(const Matrix3x3 & other)
 {
 	for (int x = 0; x < 3; x++)
 	{
@@ -68,7 +70,7 @@ Matrix3x3 Matrix3x3::Default()
 
 
 
-Matrix3x3 Matrix3x3::operator *(const Matrix3x3 & other) const
+Matrix3x3 Matrix3x3::operator*(const Matrix3x3 & other) const
 {
 	Matrix3x3 mat;
 	for (int x = 0; x < 3; x++)
@@ -136,7 +138,7 @@ Matrix3x3 Matrix3x3::TransPose() const
 
 
 
-#include <iostream>
+/*#include <iostream>
 void Matrix3x3::ToString() const
 {
 	for (int i = 0; i < 3; i++)
@@ -150,4 +152,4 @@ void Matrix3x3::ToString() const
 		std::cout << " ]";
 		std::cout << "\n";
 	}
-}
+}*/
