@@ -52,6 +52,9 @@ struct Point2D
 
 	float static dot(const Point2D & p0, const Point2D & p1);
 	float operator%(const Point2D & other) const;
+
+	Point2D perpendicular0() const;
+	Point2D perpendicular1() const;
 };
 
 #endif

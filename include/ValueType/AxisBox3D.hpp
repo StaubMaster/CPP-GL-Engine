@@ -26,6 +26,7 @@ struct AxisBox3D
 	public:
 	bool Intersekt(Point3D val) const;
 	bool Intersekt(const AxisBox3D & other) const;
+	static bool Intersekt(const AxisBox3D & box0, const AxisBox3D & box1);
 };
 
 #endif

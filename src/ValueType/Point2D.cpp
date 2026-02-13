@@ -201,3 +201,10 @@ float Point2D::operator%(const Point2D & other) const
 {
 	return dot(*this, other);
 }
+
+
+
+
+
+Point2D Point2D::perpendicular0() const { return Point2D(+Y, -X); }
+Point2D Point2D::perpendicular1() const { return Point2D(-Y, +X); }

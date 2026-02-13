@@ -24,6 +24,7 @@ struct AxisBox1D
 	public:
 	bool Intersekt(float val) const;
 	bool Intersekt(const AxisBox1D & other) const;
+	static bool Intersekt(const AxisBox1D & box0, const AxisBox1D & box1);
 };
 
 #endif
