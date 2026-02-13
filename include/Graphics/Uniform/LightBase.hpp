@@ -4,6 +4,7 @@
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float1.hpp"
 # include "Graphics/Uniform/ColorF4.hpp"
+
 struct LightBase;
 
 namespace Uniform

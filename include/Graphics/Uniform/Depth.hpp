@@ -5,6 +5,7 @@
 # include "Graphics/Uniform/DepthFactors.hpp"
 # include "Graphics/Uniform/Range.hpp"
 # include "Graphics/Uniform/ColorF4.hpp"
+
 struct Depth;
 
 namespace Uniform

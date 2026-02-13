@@ -5,6 +5,7 @@
 # include "Graphics/Uniform/LightBase.hpp"
 # include "Graphics/Uniform/Point3D.hpp"
 # include "Graphics/Uniform/Range.hpp"
+
 struct LightSpot;
 
 namespace Uniform

@@ -2,6 +2,7 @@
 # define UNI_ANGLE_HPP
 
 # include "Graphics/Uniform/Base/Float1.hpp"
+
 struct Angle;
 
 namespace Uniform

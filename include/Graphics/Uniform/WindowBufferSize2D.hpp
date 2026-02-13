@@ -3,6 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Point2D.hpp"
+
 struct WindowBufferSize2D;
 
 namespace Uniform

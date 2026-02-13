@@ -3,6 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float2.hpp"
+
 struct Point2D;
 
 namespace Uniform

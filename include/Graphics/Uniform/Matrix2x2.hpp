@@ -2,6 +2,7 @@
 # define UNI_MATRIX_2_2_HPP
 
 # include "Graphics/Uniform/Base/Float2x2.hpp"
+
 struct Matrix2x2;
 
 namespace Uniform

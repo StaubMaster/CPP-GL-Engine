@@ -2,6 +2,7 @@
 # define UNI_DEPTH_FACTORS_HPP
 
 # include "Graphics/Uniform/Base/Float1.hpp"
+
 struct DepthFactors;
 
 namespace Uniform

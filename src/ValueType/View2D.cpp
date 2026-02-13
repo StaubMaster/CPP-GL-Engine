@@ -1,24 +1,21 @@
-#include "View2D.hpp"
+#include "ValueType/View2D.hpp"
 
 
 
 View2D::View2D()
-	: Pos()
-	, Rot()
+	: Trans()
 	, Scale(0.0f)
 { }
 View2D::~View2D()
 { }
 
 View2D::View2D(const View2D & other)
-	: Pos(other.Pos)
-	, Rot(other.Rot)
+	: Trans(other.Trans)
 	, Scale(other.Scale)
 { }
 View2D & View2D::operator=(const View2D & other)
 {
-	Pos = other.Pos;
-	Rot = other.Rot;
+	Trans = other.Trans;
 	Scale = other.Scale;
 	return *this;
 }
@@ -34,10 +31,10 @@ View2D View2D::Default()
 
 
 
-void View2D::Transform(Point2D move, Angle2D spin, float timeDelta)
+void View2D::Transform(Trans2D trans, float timeDelta)
 {
-	move = Rot.rotateBack(move);
-	Pos += move * timeDelta;
-	Rot.Ang += spin.Ang * timeDelta;
-	Rot.CalcMatrix();
+	trans.Pos *= timeDelta;
+	trans.Rot.Ang *= timeDelta;
+	Trans.Transform(trans.Pos, trans.Rot);
+	Trans.Rot.CalcMatrix();
 }

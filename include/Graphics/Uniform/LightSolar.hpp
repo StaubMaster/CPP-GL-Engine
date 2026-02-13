@@ -4,6 +4,7 @@
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/LightBase.hpp"
 # include "Graphics/Uniform/Point3D.hpp"
+
 struct LightSolar;
 
 namespace Uniform

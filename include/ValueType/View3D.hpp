@@ -3,7 +3,6 @@
 
 # include "ValueType/Trans3D.hpp"
 # include "ValueType/Depth.hpp"
-# include "ValueType/Angle.hpp"
 
 struct View3D
 {
@@ -16,6 +15,8 @@ struct View3D
 
 	View3D(const View3D & other);
 	View3D & operator=(const View3D & other);
+
+	static View3D Default();
 
 	void TransformFlatX(Trans3D trans, float timeDelta);
 };

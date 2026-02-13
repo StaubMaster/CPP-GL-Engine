@@ -133,7 +133,7 @@ bool Undex3D::loop_inclusive(Undex3D & idx, Undex3D min, Undex3D max)
 	idx.Z++;
 	if (idx.Z > max.Z)
 	{
-		idx.Z = min.Z,
+		idx.Z = min.Z;
 		idx.Y++;
 		if (idx.Y > max.Y)
 		{
@@ -153,7 +153,7 @@ bool Undex3D::loop_exclusive(Undex3D & idx, Undex3D min, Undex3D max)
 	idx.Z++;
 	if (idx.Z >= max.Z)
 	{
-		idx.Z = min.Z,
+		idx.Z = min.Z;
 		idx.Y++;
 		if (idx.Y >= max.Y)
 		{
@@ -173,7 +173,7 @@ bool Undex3D::loop_inclusive(Undex3D & idx, unsigned int min, unsigned int max)
 	idx.Z++;
 	if (idx.Z > max)
 	{
-		idx.Z = min,
+		idx.Z = min;
 		idx.Y++;
 		if (idx.Y > max)
 		{
@@ -193,7 +193,7 @@ bool Undex3D::loop_exclusive(Undex3D & idx, unsigned int min, unsigned int max)
 	idx.Z++;
 	if (idx.Z >= max)
 	{
-		idx.Z = min,
+		idx.Z = min;
 		idx.Y++;
 		if (idx.Y >= max)
 		{

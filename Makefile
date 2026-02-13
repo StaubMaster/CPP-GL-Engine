@@ -17,28 +17,34 @@ DIR_OBJ := obj/
 
 
 VALUE_TYPE := \
-	ValueType/Point2D.cpp \
-	ValueType/Point3D.cpp \
-	ValueType/Point4D.cpp \
-	ValueType/Ray3D.cpp \
+	ValueType/Bool2D.cpp \
+	ValueType/Bool3D.cpp \
+	ValueType/Undex2D.cpp \
+	ValueType/UndexBox2D.cpp \
+	ValueType/UndexLoop2D.cpp \
 	ValueType/Undex3D.cpp \
 	ValueType/UndexBox3D.cpp \
 	ValueType/UndexLoop3D.cpp \
-	ValueType/Bool3D.cpp \
+	ValueType/Point2D.cpp \
+	ValueType/Point3D.cpp \
+	ValueType/Point4D.cpp \
+	ValueType/AxisBox1D.cpp \
+	ValueType/AxisBox2D.cpp \
+	ValueType/AxisBox3D.cpp \
+	ValueType/Ray2D.cpp \
+	ValueType/Ray3D.cpp \
 	ValueType/Matrix2x2.cpp \
 	ValueType/Matrix3x3.cpp \
 	ValueType/Angle.cpp \
 	ValueType/Angle2D.cpp \
 	ValueType/Angle3D.cpp \
+	ValueType/Trans2D.cpp \
 	ValueType/Trans3D.cpp \
-	ValueType/AxisBox1D.cpp \
-	ValueType/AxisBox2D.cpp \
-	ValueType/AxisBox3D.cpp \
 	ValueType/DepthFactors.cpp \
 	ValueType/Depth.cpp \
+	ValueType/ColorF4.cpp \
 	ValueType/Range.cpp \
 	ValueType/LInter.cpp \
-	ValueType/ColorF4.cpp \
 	ValueType/LightBase.cpp \
 	ValueType/LightSolar.cpp \
 	ValueType/LightSpot.cpp \
@@ -82,19 +88,20 @@ UNIFORM := \
 	Graphics/Uniform/Base/UIntN.cpp \
 	Graphics/Uniform/Base/UInt1.cpp \
 \
+	Graphics/Uniform/ColorF4.cpp \
 	Graphics/Uniform/Point2D.cpp \
 	Graphics/Uniform/Point3D.cpp \
-	Graphics/Uniform/ColorF4.cpp \
 	Graphics/Uniform/Matrix2x2.cpp \
 	Graphics/Uniform/Matrix3x3.cpp \
-	Graphics/Uniform/DepthFactors.cpp \
-\
 	Graphics/Uniform/Angle.cpp \
 	Graphics/Uniform/Angle2D.cpp \
 	Graphics/Uniform/Angle3D.cpp \
+	Graphics/Uniform/Trans2D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
-	Graphics/Uniform/Range.cpp \
+\
+	Graphics/Uniform/DepthFactors.cpp \
 	Graphics/Uniform/Depth.cpp \
+	Graphics/Uniform/Range.cpp \
 	Graphics/Uniform/LInter.cpp \
 	Graphics/Uniform/LightBase.cpp \
 	Graphics/Uniform/LightSolar.cpp \

@@ -3,6 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Matrix2x2.hpp"
+
 struct Angle2D;
 
 namespace Uniform

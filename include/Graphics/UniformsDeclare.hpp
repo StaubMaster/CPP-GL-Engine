@@ -16,22 +16,26 @@ namespace Uniform
 	class UIntN;
 	class UInt1;
 
+	class ColorF4;
+
+	class Point2D;
+	class Point3D;
+
 	class Matrix2x2;
 	class Matrix3x3;
 
+	class Angle;
+	class Angle2D;
+	class Angle3D;
+	
+	class Trans2D;
+	class Trans3D;
+
 	class DepthFactors;
-	class Range;
-	class ColorF4;
 	class Depth;
 
-	class Angle;
-
-	class Point2D;
-	class Angle2D;
-
-	class Point3D;
-	class Angle3D;
-	class Trans3D;
+	class Range;
+	class LInter;
 
 	class LightBase;
 	class LightSolar;

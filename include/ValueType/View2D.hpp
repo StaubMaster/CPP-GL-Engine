@@ -1,15 +1,13 @@
 #ifndef  VIEW_2D_HPP
 # define VIEW_2D_HPP
 
-# include "ValueType/Point2D.hpp"
-# include "ValueType/Angle2D.hpp"
+# include "ValueType/Trans2D.hpp"
 
 struct Point3D;
 
 struct View2D
 {
-	Point2D	Pos;
-	Angle2D	Rot;
+	Trans2D	Trans;
 	float	Scale;
 
 	View2D();
@@ -20,7 +18,7 @@ struct View2D
 
 	static View2D Default();
 
-	void Transform(Point2D move, Angle2D spin, float timeDelta);
+	void Transform(Trans2D trans, float timeDelta);
 };
 
 #endif

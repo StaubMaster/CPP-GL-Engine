@@ -4,6 +4,7 @@
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Point3D.hpp"
 # include "Graphics/Uniform/Angle3D.hpp"
+
 struct Trans3D;
 
 namespace Uniform

@@ -16,24 +16,26 @@
 # include "Uniform/Base/UIntN.hpp"
 # include "Uniform/Base/UInt1.hpp"
 
+# include "Uniform/ColorF4.hpp"
+
+# include "Uniform/Point2D.hpp"
+# include "Uniform/Point3D.hpp"
+
 # include "Uniform/Matrix2x2.hpp"
 # include "Uniform/Matrix3x3.hpp"
 
-# include "Uniform/DepthFactors.hpp"
-# include "Uniform/Range.hpp"
-
 # include "Uniform/Angle.hpp"
-
-# include "Uniform/Point2D.hpp"
 # include "Uniform/Angle2D.hpp"
-
-# include "Uniform/Point3D.hpp"
 # include "Uniform/Angle3D.hpp"
+
+# include "Uniform/Trans2D.hpp"
 # include "Uniform/Trans3D.hpp"
 
-# include "Uniform/ColorF4.hpp"
-# include "Uniform/LInter.hpp"
+# include "Uniform/DepthFactors.hpp"
 # include "Uniform/Depth.hpp"
+
+# include "Uniform/Range.hpp"
+# include "Uniform/LInter.hpp"
 
 # include "Uniform/LightBase.hpp"
 # include "Uniform/LightSolar.hpp"
