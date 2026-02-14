@@ -34,7 +34,7 @@ View2D View2D::Default()
 void View2D::Transform(Trans2D trans, float timeDelta)
 {
 	trans.Pos *= timeDelta;
-	trans.Rot.Ang *= timeDelta;
+	trans.Rot *= timeDelta;
 	Trans.Transform(trans.Pos, trans.Rot);
 	Trans.Rot.CalcMatrix();
 }

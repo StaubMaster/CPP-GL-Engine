@@ -40,6 +40,11 @@ struct Angle3D
 	Angle3D		operator-(const Angle3D & other) const;
 	Angle3D &	operator+=(const Angle3D & other);
 	Angle3D &	operator-=(const Angle3D & other);
+
+	Angle3D		operator*(const float & flt) const;
+	Angle3D		operator/(const float & flt) const;
+	Angle3D &	operator*=(const float & flt);
+	Angle3D &	operator/=(const float & flt);
 };
 
 #endif

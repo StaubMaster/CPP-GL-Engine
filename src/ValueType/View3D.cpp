@@ -32,9 +32,7 @@ View3D & View3D::operator=(const View3D & other)
 void View3D::TransformFlatX(Trans3D trans, float timeDelta)
 {
 	trans.Pos *= timeDelta;
-	trans.Rot.X *= timeDelta;
-	trans.Rot.Y *= timeDelta;
-	trans.Rot.Z *= timeDelta;
+	trans.Rot *= timeDelta;
 	Trans.TransformFlatX(trans.Pos, trans.Rot);
 	Trans.Rot.Y.Clamp();
 	Trans.Rot.CalcMatrix();

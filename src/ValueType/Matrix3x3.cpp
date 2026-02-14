@@ -135,6 +135,18 @@ Matrix3x3 Matrix3x3::TransPose() const
 	}
 	return mat;
 }
+Matrix3x3 Matrix3x3::Inverse() const
+{
+	Matrix3x3 mat;
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			mat.Data[x][y] = 1 / Data[x][y];
+		}
+	}
+	return mat;
+}
 
 
 

@@ -167,3 +167,37 @@ Angle3D & Angle3D::operator-=(const Angle3D & other)
 	CalcMatrix();
 	return *this;
 }
+
+
+
+Angle3D Angle3D::operator*(const float & flt) const
+{
+	return Angle3D(
+		X * flt,
+		Y * flt,
+		Z * flt
+	);
+}
+Angle3D Angle3D::operator/(const float & flt) const
+{
+	return Angle3D(
+		X * flt,
+		Y * flt,
+		Z * flt
+	);
+}
+Angle3D & Angle3D::operator*=(const float & flt)
+{
+	X *= flt;
+	Y *= flt;
+	Z *= flt;
+	CalcMatrix();
+	return *this;
+}
+Angle3D & Angle3D::operator/=(const float & flt)
+{
+	X /= flt;
+	Y /= flt;
+	Z /= flt;
+	return *this;
+}

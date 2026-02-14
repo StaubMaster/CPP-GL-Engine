@@ -38,6 +38,11 @@ struct Angle2D
 	Angle2D		operator-(const Angle2D & other) const;
 	Angle2D &	operator+=(const Angle2D & other);
 	Angle2D &	operator-=(const Angle2D & other);
+
+	Angle2D		operator*(const float & flt) const;
+	Angle2D		operator/(const float & flt) const;
+	Angle2D &	operator*=(const float & flt);
+	Angle2D &	operator/=(const float & flt);
 };
 
 #endif

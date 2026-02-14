@@ -28,6 +28,7 @@ struct Matrix2x2
 
 	public:
 	Matrix2x2 TransPose() const;
+	Matrix2x2 Inverse() const;
 //	void ToString() const;
 };
 

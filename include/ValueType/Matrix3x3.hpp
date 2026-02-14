@@ -29,6 +29,7 @@ struct Matrix3x3
 
 	public:
 	Matrix3x3 TransPose() const;
+	Matrix3x3 Inverse() const;
 //	void ToString() const;
 };
 

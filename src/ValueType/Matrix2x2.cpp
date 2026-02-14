@@ -129,6 +129,18 @@ Matrix2x2 Matrix2x2::TransPose() const
 	}
 	return mat;
 }
+Matrix2x2 Matrix2x2::Inverse() const
+{
+	Matrix2x2 mat;
+	for (int x = 0; x < 2; x++)
+	{
+		for (int y = 0; y < 2; y++)
+		{
+			mat.Data[x][y] = 1 / Data[x][y];
+		}
+	}
+	return mat;
+}
 
 
 

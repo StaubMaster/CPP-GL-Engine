@@ -70,7 +70,5 @@ Max0 <=> Max1	: < : < : < : > : > : > :
 				: A : B : C : D : E : F :
 Max0  >  Min1 | Min0  <  Max1
 */
-	return (
-		((Max > other.Min) & (Min < other.Max))
-	);
+	return ((Max > other.Min) && (Min < other.Max));
 }

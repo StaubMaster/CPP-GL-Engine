@@ -115,3 +115,29 @@ Angle2D & Angle2D::operator-=(const Angle2D & other)
 	CalcMatrix();
 	return *this;
 }
+
+
+
+Angle2D Angle2D::operator*(const float & flt) const
+{
+	return Angle2D(
+		Ang * flt
+	);
+}
+Angle2D Angle2D::operator/(const float & flt) const
+{
+	return Angle2D(
+		Ang * flt
+	);
+}
+Angle2D & Angle2D::operator*=(const float & flt)
+{
+	Ang *= flt;
+	CalcMatrix();
+	return *this;
+}
+Angle2D & Angle2D::operator/=(const float & flt)
+{
+	Ang /= flt;
+	return *this;
+}
