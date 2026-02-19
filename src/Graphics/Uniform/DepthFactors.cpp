@@ -3,7 +3,8 @@
 
 
 
-Uniform::DepthFactors::DepthFactors(Uniform::NameShader name_shader) : Float1(name_shader, 7)
+Uniform::DepthFactors::DepthFactors(::Shader::Base & shader, std::string name)
+	: Float1(shader, name, 7)
 { }
 
 

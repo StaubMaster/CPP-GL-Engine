@@ -3,7 +3,8 @@
 
 
 
-Uniform::Matrix3x3::Matrix3x3(Uniform::NameShader name_shader) : Float3x3(name_shader)
+Uniform::Matrix3x3::Matrix3x3(::Shader::Base & shader, std::string name)
+	: Float3x3(shader, name)
 { }
 
 void Uniform::Matrix3x3::Put(const ::Matrix3x3 & obj)

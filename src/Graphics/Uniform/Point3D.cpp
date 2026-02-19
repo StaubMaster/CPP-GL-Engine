@@ -3,7 +3,8 @@
 
 
 
-Uniform::Point3D::Point3D(Uniform::NameShader name_shader) : Float3(name_shader)
+Uniform::Point3D::Point3D(::Shader::Base & shader, std::string name)
+	: Float3(shader, name)
 { }
 
 void Uniform::Point3D::Put(const ::Point3D & obj)

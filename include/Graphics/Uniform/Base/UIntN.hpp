@@ -17,7 +17,7 @@ class UIntN : public Uniform::Base
 	void LogInfo(bool self = true) const override;
 
 	public:
-	UIntN(Uniform::NameShader name_shader, int count);
+	UIntN(::Shader::Base & shader, std::string name, int count);
 
 	public:
 	virtual void ReLocate() override;

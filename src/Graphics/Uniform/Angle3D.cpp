@@ -3,8 +3,9 @@
 
 
 
-Uniform::Angle3D::Angle3D(Uniform::NameShader name_shader) : GBase(name_shader),
-	Mat(name_shader)
+Uniform::Angle3D::Angle3D(::Shader::Base & shader, std::string name)
+	: GBase(shader, name),
+	Mat(shader, name)
 { }
 
 

@@ -3,9 +3,10 @@
 
 
 
-Uniform::LightBase::LightBase(Uniform::NameShader name_shader) : GBase(name_shader),
-	Intensity(name_shader.Suffix(".Intensity")),
-	Color(name_shader.Suffix(".Color"))
+Uniform::LightBase::LightBase(::Shader::Base & shader, std::string name)
+	: GBase(shader, name)
+	, Intensity(shader, name + ".Intensity")
+	, Color(shader, name + ".Color")
 { }
 
 

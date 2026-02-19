@@ -3,10 +3,11 @@
 
 
 
-Uniform::WindowBufferSize2D::WindowBufferSize2D(Uniform::NameShader name_shader) : GBase(name_shader),
-	WindowSize(name_shader.Suffix(".WindowSize")),
-	BufferSize(name_shader.Suffix(".BufferSize")),
-	Ratio(name_shader.Suffix(".Ratio"))
+Uniform::WindowBufferSize2D::WindowBufferSize2D(::Shader::Base & shader, std::string name)
+	: GBase(shader, name)
+	, WindowSize(shader, name + ".WindowSize")
+	, BufferSize(shader, name + ".BufferSize")
+	, Ratio(shader, name + ".Ratio")
 { }
 
 

@@ -17,21 +17,22 @@ namespace Uniform
 template <typename UniformType, typename DataType>
 class GArray
 {
+	//	Use Containers
 	public:
 	const unsigned int	Limit;
 	private:
 	UniformType **	Uniforms;
 
 	public:
-	GArray(unsigned int count, Uniform::NameShader name_shader) :
-		Limit(count)
+	GArray(unsigned int count, ::Shader::Base & shader, std::string name)
+		: Limit(count)
 	{
 		Uniforms = new UniformType*[Limit];
 		for (unsigned int i = 0; i < Limit; i++)
 		{
 			std::stringstream ss;
-			ss << name_shader.Name << "[" << i << "]";
-			Uniforms[i] = new UniformType(Uniform::NameShader(ss.str(), name_shader.Shader));
+			ss << name << "[" << i << "]";
+			Uniforms[i] = new UniformType(shader, ss.str());
 		}
 	}
 	~GArray()

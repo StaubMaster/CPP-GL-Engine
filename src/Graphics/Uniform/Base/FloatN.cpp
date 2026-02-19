@@ -23,9 +23,10 @@ void Uniform::FloatN::LogInfo(bool self) const
 
 
 
-Uniform::FloatN::FloatN(Uniform::NameShader name_shader, int count) : Base(name_shader),
-	Location(Locate()),
-	Count(count)
+Uniform::FloatN::FloatN(::Shader::Base & shader, std::string name, int count)
+	: Base(shader, name)
+	, Location(Locate())
+	, Count(count)
 { }
 
 

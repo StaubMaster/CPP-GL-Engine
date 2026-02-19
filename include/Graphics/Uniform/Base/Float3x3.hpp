@@ -13,8 +13,8 @@ namespace Uniform
 class Float3x3 : public Uniform::FloatN
 {
 	public:
-	Float3x3(Uniform::NameShader name_shader);
-	Float3x3(Uniform::NameShader name_shader, int count);
+	Float3x3(::Shader::Base & shader, std::string name);
+	Float3x3(::Shader::Base & shader, std::string name, int count);
 
 	public:
 	void PutData(const float * val) override;

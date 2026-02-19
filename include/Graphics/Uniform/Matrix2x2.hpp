@@ -10,7 +10,7 @@ namespace Uniform
 class Matrix2x2 : public Uniform::Float2x2
 {
 	public:
-	Matrix2x2(Uniform::NameShader name_shader);
+	Matrix2x2(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Matrix2x2 & obj);

@@ -10,7 +10,7 @@ namespace Uniform
 class DepthFactors : public Uniform::Float1
 {
 	public:
-	DepthFactors(Uniform::NameShader name_shader);
+	DepthFactors(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::DepthFactors & obj);

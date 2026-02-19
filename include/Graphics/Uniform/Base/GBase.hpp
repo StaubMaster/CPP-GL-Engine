@@ -15,8 +15,9 @@ template <typename DataType>
 class GBase : public Uniform::Base
 {
 	protected:
-		GBase(Uniform::NameShader name_shader) :
-			Uniform::Base(name_shader) { }
+		GBase(::Shader::Base & shader, std::string name)
+			: Uniform::Base(shader, name)
+		{ }
 		virtual ~GBase() { }
 
 	public:

@@ -23,9 +23,10 @@ void Uniform::UIntN::LogInfo(bool self) const
 
 
 
-Uniform::UIntN::UIntN(Uniform::NameShader name_shader, int count) : Base(name_shader),
-	Location(Locate()),
-	Count(count)
+Uniform::UIntN::UIntN(::Shader::Base & shader, std::string name, int count)
+	: Base(shader, name)
+	, Location(Locate())
+	, Count(count)
 { }
 
 

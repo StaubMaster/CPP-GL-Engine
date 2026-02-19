@@ -16,7 +16,7 @@ class Trans2D : public Uniform::GBase<::Trans2D>
 	Uniform::Angle2D Rot;
 
 	public:
-	Trans2D(Uniform::NameShader name_shader);
+	Trans2D(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Trans2D & obj) override;

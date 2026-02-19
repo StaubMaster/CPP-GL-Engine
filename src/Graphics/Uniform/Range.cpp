@@ -3,10 +3,11 @@
 
 
 
-Uniform::Range::Range(Uniform::NameShader name_shader) : GBase(name_shader),
-	Min(name_shader.Suffix(".Min")),
-	Len(name_shader.Suffix(".Len")),
-	Max(name_shader.Suffix(".Max"))
+Uniform::Range::Range(::Shader::Base & shader, std::string name)
+	: GBase(shader, name)
+	, Min(shader, name + ".Min")
+	, Len(shader, name + ".Len")
+	, Max(shader, name + ".Max")
 { }
 
 

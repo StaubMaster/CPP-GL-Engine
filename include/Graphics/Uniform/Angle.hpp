@@ -10,7 +10,7 @@ namespace Uniform
 class Angle : public Uniform::Float1
 {
 	public:
-	Angle(Uniform::NameShader name_shader);
+	Angle(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Angle & obj);

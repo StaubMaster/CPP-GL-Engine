@@ -3,8 +3,9 @@
 
 
 
-Uniform::Angle2D::Angle2D(Uniform::NameShader name_shader) : GBase(name_shader),
-	Mat(name_shader)
+Uniform::Angle2D::Angle2D(::Shader::Base & shader, std::string name)
+	: GBase(shader, name),
+	Mat(shader, name)
 { }
 
 

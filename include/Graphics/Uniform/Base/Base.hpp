@@ -3,33 +3,19 @@
 
 # include <string>
 
-namespace Shader
-{
-	class Base;
-};
+namespace Shader { class Base; };
 
-namespace Multiform
-{
-	class Base;
-};
+namespace Multiform { class Base; };
 
 namespace Uniform
 {
-struct NameShader
-{
-	std::string		Name;
-	Shader::Base &	Shader;
-	NameShader(std::string name, Shader::Base & shader);
-	NameShader(const NameShader & other);
-	NameShader & operator=(const NameShader & other) = delete;
-	NameShader Suffix(std::string name) const;
-};
 
 class Base
 {
 	public:
+	::Shader::Base &	Shader;
 	std::string			Name;
-	Shader::Base &		Shader;
+
 	Multiform::Base *	Multiform;
 	bool				MultiformChanged;
 
@@ -37,8 +23,11 @@ class Base
 	virtual void LogInfo(bool self = true) const;
 
 	protected:
-	Base(Uniform::NameShader & name_shader);
 	virtual ~Base();
+	Base(::Shader::Base & shader, std::string name);
+
+	Base(const Base & other) = delete;
+	Base & operator=(const Base & other) = delete;
 
 	public:
 	int Locate() const;

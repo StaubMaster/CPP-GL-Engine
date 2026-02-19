@@ -15,7 +15,7 @@ class SizeRatio2D : public Uniform::GBase<::SizeRatio2D>
 	Uniform::Point2D Ratio;
 
 	public:
-	SizeRatio2D(Uniform::NameShader name_shader);
+	SizeRatio2D(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::SizeRatio2D & obj) override;

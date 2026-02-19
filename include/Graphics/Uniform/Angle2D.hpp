@@ -14,7 +14,7 @@ class Angle2D : public Uniform::GBase<::Angle2D>
 	Uniform::Matrix2x2	Mat;
 
 	public:
-	Angle2D(Uniform::NameShader name_shader);
+	Angle2D(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Angle2D & obj) override;

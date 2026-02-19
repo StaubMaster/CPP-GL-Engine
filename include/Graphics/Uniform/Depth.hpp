@@ -18,7 +18,7 @@ class Depth : public Uniform::GBase<::Depth>
 	Uniform::ColorF4 Color;
 
 	public:
-	Depth(Uniform::NameShader name_shader);
+	Depth(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Depth & obj) override;

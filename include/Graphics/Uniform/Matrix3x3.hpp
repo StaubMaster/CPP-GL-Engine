@@ -10,7 +10,7 @@ namespace Uniform
 class Matrix3x3 : public Uniform::Float3x3
 {
 	public:
-	Matrix3x3(Uniform::NameShader name_shader);
+	Matrix3x3(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Matrix3x3 & obj);

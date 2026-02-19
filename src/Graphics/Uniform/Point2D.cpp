@@ -3,7 +3,8 @@
 
 
 
-Uniform::Point2D::Point2D(Uniform::NameShader name_shader) : Float2(name_shader)
+Uniform::Point2D::Point2D(::Shader::Base & shader, std::string name)
+	: Float2(shader, name)
 { }
 
 void Uniform::Point2D::Put(const ::Point2D & obj)

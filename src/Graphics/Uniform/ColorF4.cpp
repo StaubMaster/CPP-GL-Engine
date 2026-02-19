@@ -3,7 +3,8 @@
 
 
 
-Uniform::ColorF4::ColorF4(Uniform::NameShader name_shader) : Float4(name_shader)
+Uniform::ColorF4::ColorF4(::Shader::Base & shader, std::string name)
+	: Float4(shader, name)
 { }
 
 void Uniform::ColorF4::Put(const ::ColorF4 & obj)

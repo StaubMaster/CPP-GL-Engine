@@ -11,7 +11,7 @@ namespace Uniform
 class Point3D : public Uniform::Float3
 {
 	public:
-	Point3D(Uniform::NameShader name_shader);
+	Point3D(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Point3D & obj);

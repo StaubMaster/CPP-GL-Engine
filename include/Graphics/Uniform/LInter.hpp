@@ -15,7 +15,7 @@ class LInter : public Uniform::GBase<::LInter>
 	Uniform::Float1 T1;
 
 	public:
-	LInter(Uniform::NameShader name_shader);
+	LInter(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::LInter & obj) override;

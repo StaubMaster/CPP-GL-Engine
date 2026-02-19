@@ -3,9 +3,11 @@
 
 
 
-Uniform::UInt1::UInt1(Uniform::NameShader name_shader) : UIntN(name_shader, 1)
+Uniform::UInt1::UInt1(::Shader::Base & shader, std::string name)
+	: UIntN(shader, name, 1)
 { }
-Uniform::UInt1::UInt1(Uniform::NameShader name_shader, int count) : UIntN(name_shader, count)
+Uniform::UInt1::UInt1(::Shader::Base & shader, std::string name, int count)
+	: UIntN(shader, name, count)
 { }
 
 

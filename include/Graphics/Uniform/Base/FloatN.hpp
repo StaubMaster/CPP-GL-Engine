@@ -19,7 +19,7 @@ class FloatN : public Uniform::Base
 	void LogInfo(bool self = true) const override;
 
 	public:
-	FloatN(Uniform::NameShader name_shader, int count);
+	FloatN(::Shader::Base & shader, std::string name, int count);
 
 	public:
 	virtual void ReLocate() override;

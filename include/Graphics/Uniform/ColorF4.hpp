@@ -11,7 +11,7 @@ namespace Uniform
 class ColorF4 : public Uniform::Float4
 {
 	public:
-	ColorF4(Uniform::NameShader name_shader);
+	ColorF4(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::ColorF4 & val);

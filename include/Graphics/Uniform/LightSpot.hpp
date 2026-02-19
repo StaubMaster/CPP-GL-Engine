@@ -19,7 +19,7 @@ class LightSpot : public Uniform::GBase<::LightSpot>
 	Uniform::Range		Range;
 
 	public:
-	LightSpot(Uniform::NameShader name_shader);
+	LightSpot(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::LightSpot & obj) override;

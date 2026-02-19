@@ -11,7 +11,7 @@ namespace Uniform
 class Point2D : public Uniform::Float2
 {
 	public:
-	Point2D(Uniform::NameShader name_shader);
+	Point2D(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Point2D & obj);

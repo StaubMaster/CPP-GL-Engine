@@ -3,12 +3,12 @@
 
 
 Wavefront::Simple3D::Shader::Shader()
-	: ::Shader::Base(),
-	WindowSize(Uniform::NameShader("WindowSize", *this)),
-	View(Uniform::NameShader("View", *this)),
-	Depth(Uniform::NameShader("Depth", *this)),
-	ColorToTex(Uniform::NameShader("ColorToTex", *this)),
-	ShowLightFactor(Uniform::NameShader("ShowLightFactor", *this))
+	: ::Shader::Base()
+	, WindowSize(*this, "WindowSize")
+	, View(*this, "View")
+	, Depth(*this, "Depth")
+	, ColorToTex(*this, "ColorToTex")
+	, ShowLightFactor(*this, "ShowLightFactor")
 { }
 Wavefront::Simple3D::Shader::~Shader()
 { }

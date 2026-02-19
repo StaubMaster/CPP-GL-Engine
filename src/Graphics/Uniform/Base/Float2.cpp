@@ -3,9 +3,11 @@
 
 
 
-Uniform::Float2::Float2(Uniform::NameShader name_shader) : FloatN(name_shader, 1)
+Uniform::Float2::Float2(::Shader::Base & shader, std::string name)
+	: FloatN(shader, name, 1)
 { }
-Uniform::Float2::Float2(Uniform::NameShader name_shader, int count) : FloatN(name_shader, count)
+Uniform::Float2::Float2(::Shader::Base & shader, std::string name, int count)
+	: FloatN(shader, name, count)
 { }
 
 

@@ -3,9 +3,10 @@
 
 
 
-Uniform::Trans2D::Trans2D(Uniform::NameShader name_shader) : GBase(name_shader),
-	Pos(name_shader.Suffix(".Pos")),
-	Rot(name_shader.Suffix(".Rot"))
+Uniform::Trans2D::Trans2D(::Shader::Base & shader, std::string name)
+	: GBase(shader, name)
+	, Pos(shader, name + ".Pos")
+	, Rot(shader, name + ".Rot")
 { }
 
 

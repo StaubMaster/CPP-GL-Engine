@@ -16,7 +16,7 @@ class LightSolar : public Uniform::GBase<::LightSolar>
 	Uniform::Point3D	Dir;
 
 	public:
-	LightSolar(Uniform::NameShader name_shader);
+	LightSolar(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::LightSolar & obj) override;

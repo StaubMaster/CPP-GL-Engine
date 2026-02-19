@@ -7,20 +7,6 @@
 
 
 
-Uniform::NameShader::NameShader(std::string name, Shader::Base & shader) :
-	Name(name), Shader(shader)
-{ }
-Uniform::NameShader::NameShader(const NameShader & other) :
-	Name(other.Name),
-	Shader(other.Shader)
-{ }
-Uniform::NameShader Uniform::NameShader::Suffix(std::string name) const
-{
-	return NameShader(Name + name, Shader);
-}
-
-
-
 void Uniform::Base::LogInfo(bool self) const
 {
 	if (self)
@@ -38,16 +24,31 @@ void Uniform::Base::LogInfo(bool self) const
 
 
 
-Uniform::Base::Base(Uniform::NameShader & name_shader) :
-	Name(name_shader.Name),
-	Shader(name_shader.Shader),
-	Multiform(NULL),
-	MultiformChanged(false)
+Uniform::Base::~Base()
+{ }
+Uniform::Base::Base(::Shader::Base & shader, std::string name)
+	: Shader(shader)
+	, Name(name)
+	, Multiform(NULL)
+	, MultiformChanged(false)
 {
 	Shader.Uniforms.Insert(this);
 }
-Uniform::Base::~Base()
-{ }
+
+/*Uniform::Base::Base(const Base & other)
+	: Shader(other.Shader)
+	, Name(other.Name)
+	, Multiform(other.Multiform)
+	, MultiformChanged(other.MultiformChanged)
+{ }*/
+/*Uniform::Base::Base & operator=(const Base & other)
+{
+	Shader = other.Shader;
+	Name = other.Name;
+	Multiform = other.Multiform;
+	MultiformChanged = other.MultiformChanged;
+	return *this;
+}*/
 
 
 
