@@ -7,8 +7,8 @@
 
 PolyHedra_Simple3D::BufferArray::BufferArray() :
 	::BufferArray::Base(),
-	Main(0, 1, 2),
-	Inst(3, 4),
+	Main(*this, 0, 1, 2),
+	Inst(*this, 3, 4),
 	Texture(),
 	DrawMode(GL::DrawMode::Triangles)
 {

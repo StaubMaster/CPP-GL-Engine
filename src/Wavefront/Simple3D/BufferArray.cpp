@@ -5,8 +5,8 @@
 
 Wavefront::Simple3D::BufferArray::BufferArray() :
 	::BufferArray::Base(),
-	Main(0, 1, 2, 3, 4, 5, 6, 7),
-	Inst(8, 9),
+	Main(*this, 0, 1, 2, 3, 4, 5, 6, 7),
+	Inst(*this, 8, 9),
 	DrawMode(GL::DrawMode::Triangles)
 {
 	Buffers.Allocate(2);

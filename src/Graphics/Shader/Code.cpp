@@ -8,10 +8,6 @@
 
 
 
-GL::ShaderID Shader::Code::None = 0;
-
-
-
 void Shader::Code::LogInfo(bool self, bool log) const
 {
 	if (self)
@@ -24,7 +20,7 @@ void Shader::Code::LogInfo(bool self, bool log) const
 	Debug::Log << Debug::Tabs << "Type: " << ((unsigned int)Type) << '\n';
 	Debug::Log << Debug::Tabs << "File: " << File.Path.ToString() << '\n';
 	{
-		if (ID != None)
+		if (ID != 0)
 		{
 			int len = GL::GetShaderiv(ID, GL::ShaderParameterName::InfoLogLength);
 			Debug::Log << Debug::Tabs << "InfoLog: " << len << '\n';
@@ -84,22 +80,22 @@ Shader::Code & Shader::Code::operator=(const Shader::Code & other)
 
 bool Shader::Code::Valid() const
 {
-	if (ID == None) { return false; }
+	if (ID == 0) { return false; }
 	if (GL::GetShaderiv(ID, GL::ShaderParameterName::InfoLogLength) != 0) { return false; }
 	if (GL::GetShaderiv(ID, GL::ShaderParameterName::CompileStatus) == 0) { return false; }
 	return true;
 }
 void Shader::Code::Dispose()
 {
-	if (ID == None) { return; }
+	if (ID == 0) { return; }
 	//Debug::Log << "Shader::Code Disposing " << ID << " ..." << Debug::Done;
 	GL::DeleteShader(ID);
-	ID = None;
+	ID = 0;
 	//Debug::Log << "Shader::Code Disposing " << ID << " done" << Debug::Done;
 }
 void Shader::Code::Compile()
 {
-	if (ID != None) { return; }
+	if (ID != 0) { return; }
 
 	//Debug::Log << "Shader::Code Compiling " << ID << " ..." << Debug::Done;
 	ID = GL::CreateShader(Type);

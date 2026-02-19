@@ -8,6 +8,8 @@
 # include "Graphics/Attribute/ColorF4.hpp"
 # include "Graphics/Attribute/Base/FloatN.hpp"
 
+namespace BufferArray { class Base; };
+
 namespace Wavefront
 {
 namespace Main
@@ -27,6 +29,7 @@ class Buffer : public ::Buffer::Attribute
 
 	public:
 	Buffer(
+		BufferArray::Base & buffer_array,
 		unsigned int indexPosition,
 		unsigned int indexTexture,
 		unsigned int indexNormal,

@@ -12,15 +12,11 @@
 # include "OpenGLEnums.hpp"
 # include <sstream>
 
-
-
 namespace Buffer
 {
 class Attribute : public Base
 {
-	private:
 	public:
-	GL::BufferTarget		Target;
 	GL::BufferDataUsage		Usage;
 	GL::AttributeDivisor	Divisor;
 	unsigned int			Stride;
@@ -28,9 +24,8 @@ class Attribute : public Base
 	Container::Binary<::Attribute::Base*>	Attributes;
 
 	public:
-	Attribute();
-	Attribute(GL::BufferTarget target, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, unsigned int stride);
-	~Attribute();
+	virtual ~Attribute();
+	Attribute(::BufferArray::Base & buffer_array, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, GL::AttributeStride stride);
 
 	Attribute(const Attribute & other);
 	Attribute & operator=(const Attribute & other);

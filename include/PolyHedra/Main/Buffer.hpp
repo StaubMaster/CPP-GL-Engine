@@ -5,6 +5,8 @@
 
 # include "Graphics/Attribute/Point3D.hpp"
 
+namespace BufferArray { class Base; };
+
 namespace PolyHedra_Main
 {
 class Buffer : public ::Buffer::Attribute
@@ -16,6 +18,7 @@ class Buffer : public ::Buffer::Attribute
 
 	public:
 	Buffer(
+		BufferArray::Base & buffer_array,
 		unsigned int indexPosition,
 		unsigned int indexNormal,
 		unsigned int indexTexture

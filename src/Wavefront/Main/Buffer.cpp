@@ -5,6 +5,7 @@
 
 
 Wavefront::Main::Buffer::Buffer(
+	BufferArray::Base & buffer_array,
 	unsigned int indexPosition,
 	unsigned int indexTexture,
 	unsigned int indexNormal,
@@ -13,8 +14,7 @@ Wavefront::Main::Buffer::Buffer(
 	unsigned int indexDiffuseColor,
 	unsigned int indexSpecularPower,
 	unsigned int indexSpecularColor
-) :
-	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data)),
+) :	::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data)),
 	Position(*this, indexPosition),
 	Texture(*this, indexTexture),
 	Normal(*this, indexNormal),

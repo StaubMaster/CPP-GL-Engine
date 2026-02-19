@@ -9,11 +9,11 @@
 
 
 PolyHedra_Simple3D::Shader::Shader()
-	: ::Shader::Base(),
-	WindowSize(Uniform::NameShader("WindowSize", *this)),
-	View(Uniform::NameShader("View", *this)),
-	Depth(Uniform::NameShader("Depth", *this)),
-	FOV(Uniform::NameShader("FOV", *this))
+	: ::Shader::Base()
+	, WindowSize(Uniform::NameShader("WindowSize", *this))
+	, View(Uniform::NameShader("View", *this))
+	, Depth(Uniform::NameShader("Depth", *this))
+	, FOV(Uniform::NameShader("FOV", *this))
 { }
 /*PolyHedra_Simple3D::Shader::Shader(const DirectoryInfo & dir)
 	: ::Shader::Base(

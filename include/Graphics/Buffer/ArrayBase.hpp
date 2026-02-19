@@ -11,12 +11,8 @@ namespace BufferArray
 {
 class Base
 {
-	private:
-	static GL::VertexArrayID None;
-
-	private:
-	GL::VertexArrayID ID;
 	protected:
+	GL::VertexArrayID ID;
 	Container::Fixed<Buffer::Base*> Buffers;
 
 	public:
@@ -25,8 +21,8 @@ class Base
 
 
 	public:
-	Base();
 	virtual ~Base();
+	Base();
 
 	Base(const Base & other);
 	Base & operator=(const Base & other);

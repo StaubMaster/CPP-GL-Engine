@@ -20,9 +20,6 @@ namespace Shader
 class Code
 {
 	private:
-	static GL::ShaderID None;
-
-	private:
 	public:
 	GL::ShaderID ID;
 	GL::ShaderType Type;

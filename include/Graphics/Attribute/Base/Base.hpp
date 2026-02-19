@@ -3,12 +3,6 @@
 
 # include "OpenGLTypes.hpp"
 
-namespace GL
-{
-	typedef const unsigned char * AttributeOffset;
-	typedef unsigned int AttributeStride;
-};
-
 namespace Attribute
 {
 class Base

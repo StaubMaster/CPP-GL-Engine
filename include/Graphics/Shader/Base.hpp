@@ -21,10 +21,7 @@ class Code;
 class Base
 {
 	private:
-	static GL::ShaderID None;
-
-	private:
-	GL::ShaderID ID;
+	GL::ShaderProgramID ID;
 	Container::Fixed<Shader::Code> Code;
 	public:
 	Container::Binary<Uniform::Base*> Uniforms;

@@ -8,8 +8,6 @@
 
 
 
-GL::VertexArrayID BufferArray::Base::None = 0;
-
 void BufferArray::Base::LogInfo(bool self) const
 {
 	if (self)
@@ -34,26 +32,26 @@ void BufferArray::Base::LogInfo(bool self) const
 
 
 
-BufferArray::Base::Base() :
-	ID(None),
-	Buffers()
-{ }
 BufferArray::Base::~Base()
 { }
-BufferArray::Base::Base(const Base & other) :
-	ID(other.ID)
-	//Buffers(other.Buffers)
+BufferArray::Base::Base()
+	: ID(0)
+	, Buffers()
+{ }
+
+BufferArray::Base::Base(const Base & other)
+	: ID(other.ID)
+//	, Buffers(other.Buffers.Copy())
 { }
 BufferArray::Base & BufferArray::Base::operator=(const Base & other)
 {
 	ID = other.ID;
-	//Buffers = other.Buffers;
 	return *this;
 }
 
 
 
-bool BufferArray::Base::Exists() const { return (ID != None); }
+bool BufferArray::Base::Exists() const { return (ID != 0); }
 bool BufferArray::Base::IsBound() const { return (Bound() == ID); }
 void BufferArray::Base::Bind()
 {
@@ -71,14 +69,14 @@ GL::VertexArrayID BufferArray::Base::Bound()
 }
 void BufferArray::Base::BindNone()
 {
-	GL::BindVertexArray(None);
+	GL::BindVertexArray(0);
 }
 
 
 
 void BufferArray::Base::Create()
 {
-	if (ID != None) { return; }
+	if (ID != 0) { return; }
 
 	Debug::Log << "Buffer::ArrayBase Creating " << ID << " ..." << Debug::Done;
 	ID = GL::CreateVertexArray();
@@ -94,14 +92,14 @@ void BufferArray::Base::Create()
 }
 void BufferArray::Base::Delete()
 {
-	if (ID == None) { return; }
+	if (ID == 0) { return; }
 
 	Debug::Log << "Delete BufferArray: " << ID << Debug::Done;
 	LogInfo();
 
 	Debug::Log << "Buffer::ArrayBase Deleting " << ID << " ..." << Debug::Done;
 	GL::DeleteVertexArray(ID);
-	ID = None;
+	ID = 0;
 	Debug::Log << "Buffer::ArrayBase Deleting " << ID << " done" << Debug::Done;
 
 	for (unsigned int i = 0; i < Buffers.Count(); i++)

@@ -4,11 +4,11 @@
 
 
 PolyHedra_Main::Buffer::Buffer(
+	BufferArray::Base & buffer_array,
 	unsigned int indexPosition,
 	unsigned int indexNormal,
 	unsigned int indexTexture
-) :
-	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyHedra_Main::Data)),
+) :	::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyHedra_Main::Data)),
 	Position(*this, indexPosition),
 	Normal(*this, indexNormal),
 	Texture(*this, indexTexture)

@@ -1,0 +1,27 @@
+
+ArrayBuffer:
+	a Buffer Target
+	the one that uses Attributes
+
+BufferArray:
+	OpenGL calls it VertexArray
+	this is what the one that "holds" all the other Buffers
+	so the Attributes Buffers
+
+
+
+rename	Buffer::Attribute
+to		Buffer::ArrayBuffer
+
+rename	BufferArray::Base
+to		BufferArray::Base
+
+
+
+Template<MainBufferType, InstBufferType>
+BufferArray::Instanced
+{
+	MainBufferType	Main;
+	InstBufferType	Inst;
+	DrawMode		Mode;
+}

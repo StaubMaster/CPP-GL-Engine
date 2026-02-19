@@ -8,10 +8,6 @@
 
 
 
-GL::ShaderID Shader::Base::None = 0;
-
-
-
 void Shader::Base::LogInfo(bool self, bool log) const
 {
 	if (self)
@@ -33,7 +29,7 @@ void Shader::Base::LogInfo(bool self, bool log) const
 	Debug::Log << Debug::TabDec;
 
 	{
-		if (ID != None)
+		if (ID != 0)
 		{
 			int len = GL::GetProgramiv(ID, GL::ShaderProgramParameterName::InfoLogLength);
 			Debug::Log << Debug::Tabs << "InfoLog: " << len << '\n';
@@ -121,7 +117,7 @@ bool Shader::Base::Validate() const
 }
 bool Shader::Base::Exists() const
 {
-	if (ID == None) { return false; }
+	if (ID == 0) { return false; }
 	if (GL::GetProgramiv(ID, GL::ShaderProgramParameterName::InfoLogLength) != 0) { return false; }
 	if (GL::GetProgramiv(ID, GL::ShaderProgramParameterName::LinkStatus) == 0) { return false; }
 	return true;
