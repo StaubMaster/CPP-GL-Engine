@@ -1,0 +1,10 @@
+
+when change a Buffer
+you need to first Bind BufferArray
+
+this needs to be done
+
+make the Buffer do that itself ?
+so the Buffers need to know the BufferArray
+
+so store a Referance internally

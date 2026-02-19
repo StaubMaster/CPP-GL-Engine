@@ -17,7 +17,6 @@ DIR_OBJ := obj/
 
 
 VALUE_TYPE := \
-	ValueType/Bool2D.cpp \
 	ValueType/Bool3D.cpp \
 	ValueType/Undex2D.cpp \
 	ValueType/UndexBox2D.cpp \

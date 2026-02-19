@@ -1,0 +1,28 @@
+
+Attributes
+currently the Buffer takes some stuff
+including data_size
+then the Attributes all use the same data_size
+and also the same Divisor
+and their individual Index
+
+make it so Divisor is given to Buffer
+and the Attribute takes Buffer (*this)
+and then get data_size and Divisor from that
+
+also the Contructor of the Buffer
+needs to Allocate the Attributes Container
+and then set all the Attributes individually
+
+make the Container a :Binary
+and make the Attributes Insert themselves
+like Uniforms
+
+the Container might be too big ?
+and waste space
+
+but there shouldnt be that many Attributes
+(below 16, generally)
+
+also Shader does the same
+
