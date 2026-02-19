@@ -9,9 +9,9 @@ Physics3D::Buffer::Buffer(
 	unsigned int indexVelPos,
 	unsigned int indexVelRot
 ) :
-	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StreamDraw, sizeof(Physics3D::Data)),
-	Trans(1, sizeof(Physics3D::Data), indexTransPos, indexTransRot),
-	Vel(1, sizeof(Physics3D::Data), indexVelPos, indexVelRot)
+	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StreamDraw, 1, sizeof(Physics3D::Data)),
+	Trans(*this, indexTransPos, indexTransRot),
+	Vel(*this, indexVelPos, indexVelRot)
 {
 	Attributes.Allocate(2);
 	Attributes.Insert(&Trans);

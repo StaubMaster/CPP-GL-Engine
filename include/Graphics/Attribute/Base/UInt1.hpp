@@ -4,6 +4,8 @@
 # include "Graphics/Attribute/Base/Location.hpp"
 # include "Graphics/Attribute/Base/Base.hpp"
 
+namespace Buffer { class Attribute; };
+
 namespace Attribute
 {
 class UInt1 : public Attribute::Base
@@ -14,9 +16,13 @@ class UInt1 : public Attribute::Base
 	public:
 	UInt1();
 	UInt1(
-		unsigned int divisor,
-		unsigned int stride,
-		unsigned int index
+		Buffer::Attribute & buffer,
+		GL::AttributeID index
+	);
+	UInt1(
+		Buffer::Attribute & buffer,
+		GL::AttributeID index,
+		unsigned int count
 	);
 	~UInt1();
 
@@ -24,7 +30,7 @@ class UInt1 : public Attribute::Base
 	UInt1 & operator=(const UInt1 & other);
 
 	public:
-	void Bind(const unsigned char * & offset) const override;
+	void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
 };
 

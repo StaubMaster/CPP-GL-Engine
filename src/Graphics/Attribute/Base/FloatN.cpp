@@ -1,4 +1,5 @@
 #include "Graphics/Attribute/Base/FloatN.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 #include "OpenGL.hpp"
 
 
@@ -6,22 +7,19 @@
 Attribute::FloatN::FloatN()
 { }
 Attribute::FloatN::FloatN(
-	unsigned int n,
-	GL::AttributeDivisor divisor,
-	unsigned int stride,
-	GL::AttributeID index
-) :	Attribute::Base(),
-	Location(GL::AttributeType::Float, sizeof(float) * n, n, divisor, stride, index)
-{ }
-Attribute::FloatN::~FloatN()
-{ }
-
-Attribute::FloatN::FloatN(
-	GL::AttributeDivisor divisor,
-	unsigned int stride,
+	Buffer::Attribute & buffer,
 	GL::AttributeID index
 ) :
-	Location(GL::AttributeType::Float, sizeof(float), 1, divisor, stride, index)
+	Location(GL::AttributeType::Float, sizeof(float), 1, index)
+{ (void)buffer; }
+Attribute::FloatN::FloatN(
+	Buffer::Attribute & buffer,
+	GL::AttributeID index,
+	unsigned int count
+) :	Attribute::Base(),
+	Location(GL::AttributeType::Float, sizeof(float) * count, count, index)
+{ (void)buffer; }
+Attribute::FloatN::~FloatN()
 { }
 
 Attribute::FloatN::FloatN(const FloatN & other) :
@@ -37,10 +35,10 @@ Attribute::FloatN & Attribute::FloatN::operator=(const FloatN & other)
 
 
 
-void Attribute::FloatN::Bind(const unsigned char * & offset) const
+void Attribute::FloatN::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
 	GL::EnableVertexAttribArray(Location.Index);
-	GL::VertexAttribPointer(Location.Index, Location.Count, Location.Type, GL_FALSE, Location.Stride, offset);
-	GL::VertexAttribDivisor(Location.Index, Location.Divisor);
+	GL::VertexAttribDivisor(Location.Index, divisor);
+	GL::VertexAttribPointer(Location.Index, Location.Count, Location.Type, GL_FALSE, stride, offset);
 	offset += Location.Size;
 }

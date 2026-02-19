@@ -1,15 +1,15 @@
 #include "Graphics/Attribute/Point3D.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 
 
 
 Attribute::Point3D::Point3D()
 { }
 Attribute::Point3D::Point3D(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int indexPos
+	Buffer::Attribute & buffer,
+	GL::AttributeID indexPos
 ) :	Attribute::Base(),
-	Location(3, divisor, stride, indexPos)
+	Location(buffer, indexPos, 3)
 { }
 Attribute::Point3D::~Point3D()
 { }
@@ -27,7 +27,7 @@ Attribute::Point3D & Attribute::Point3D::operator=(const Point3D & other)
 
 
 
-void Attribute::Point3D::Bind(const unsigned char * & offset) const
+void Attribute::Point3D::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
-	Location.Bind(offset);
+	Location.Bind(divisor, stride, offset);
 }

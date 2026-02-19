@@ -7,8 +7,8 @@ Simple3D::Buffer::Buffer(
 	unsigned int indexTransPos,
 	unsigned int indexTransRot
 ) :
-	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StreamDraw, sizeof(Simple3D::Data)),
-	Trans(1, sizeof(Simple3D::Data), indexTransPos, indexTransRot)
+	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StreamDraw, 1, sizeof(Simple3D::Data)),
+	Trans(*this, indexTransPos, indexTransRot)
 {
 	Attributes.Allocate(1);
 	Attributes.Insert(&Trans);

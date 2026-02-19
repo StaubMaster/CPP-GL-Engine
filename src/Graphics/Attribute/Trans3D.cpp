@@ -1,17 +1,17 @@
 #include "Graphics/Attribute/Trans3D.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 
 
 
 Attribute::Trans3D::Trans3D()
 { }
 Attribute::Trans3D::Trans3D(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int indexPos,
-	unsigned int indexRot
+	Buffer::Attribute & buffer,
+	GL::AttributeID indexPos,
+	GL::AttributeID indexRot
 ) :	Attribute::Base(),
-	Pos(divisor, stride, indexPos),
-	Rot(divisor, stride, indexRot)
+	Pos(buffer, indexPos),
+	Rot(buffer, indexRot)
 { }
 Attribute::Trans3D::~Trans3D()
 { }
@@ -31,8 +31,8 @@ Attribute::Trans3D & Attribute::Trans3D::operator=(const Trans3D & other)
 
 
 
-void Attribute::Trans3D::Bind(const unsigned char * & offset) const
+void Attribute::Trans3D::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
-	Pos.Bind(offset);
-	Rot.Bind(offset);
+	Pos.Bind(divisor, stride, offset);
+	Rot.Bind(divisor, stride, offset);
 }

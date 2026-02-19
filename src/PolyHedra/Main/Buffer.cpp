@@ -8,10 +8,10 @@ PolyHedra_Main::Buffer::Buffer(
 	unsigned int indexNormal,
 	unsigned int indexTexture
 ) :
-	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, sizeof(PolyHedra_Main::Data)),
-	Position(0, sizeof(PolyHedra_Main::Data), indexPosition),
-	Normal(0, sizeof(PolyHedra_Main::Data), indexNormal),
-	Texture(0, sizeof(PolyHedra_Main::Data), indexTexture)
+	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyHedra_Main::Data)),
+	Position(*this, indexPosition),
+	Normal(*this, indexNormal),
+	Texture(*this, indexTexture)
 {
 	Attributes.Allocate(3);
 	Attributes.Insert(&Position);

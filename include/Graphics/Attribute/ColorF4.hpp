@@ -5,6 +5,8 @@
 # include "Graphics/Attribute/Base/Base.hpp"
 # include "Graphics/Attribute/Base/FloatN.hpp"
 
+namespace Buffer { class Attribute; };
+
 namespace Attribute
 {
 class ColorF4 : public Attribute::Base
@@ -15,9 +17,8 @@ class ColorF4 : public Attribute::Base
 	public:
 	ColorF4();
 	ColorF4(
-		unsigned int divisor,
-		unsigned int stride,
-		unsigned int indexCol
+		Buffer::Attribute & buffer,
+		GL::AttributeID indexCol
 	);
 	~ColorF4();
 
@@ -25,7 +26,7 @@ class ColorF4 : public Attribute::Base
 	ColorF4 & operator=(const ColorF4 & other);
 
 	public:
-	void Bind(const unsigned char * & offset) const override;
+	void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
 };
 

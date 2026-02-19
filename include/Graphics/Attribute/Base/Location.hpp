@@ -21,8 +21,6 @@ class Location
 	const unsigned int Count;
 
 	//	from Buffer
-	const GL::AttributeDivisor Divisor;
-	const unsigned int Stride;
 	const GL::AttributeID Index;
 
 	public:
@@ -31,8 +29,6 @@ class Location
 		GL::AttributeType type,
 		unsigned int size,
 		unsigned int count,
-		GL::AttributeDivisor divisor,
-		unsigned int stride,
 		GL::AttributeID index);
 	~Location();
 

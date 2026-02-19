@@ -5,6 +5,8 @@
 # include "Graphics/Attribute/Base/Base.hpp"
 # include "Graphics/Attribute/Base/FloatN.hpp"
 
+namespace Buffer { class Attribute; };
+
 namespace Attribute
 {
 class Point2D : public Attribute::Base
@@ -15,8 +17,7 @@ class Point2D : public Attribute::Base
 	public:
 	Point2D();
 	Point2D(
-		unsigned int divisor,
-		unsigned int stride,
+		Buffer::Attribute & buffer,
 		unsigned int indexPos
 	);
 	~Point2D();
@@ -25,7 +26,7 @@ class Point2D : public Attribute::Base
 	Point2D & operator=(const Point2D & other);
 
 	public:
-	void Bind(const unsigned char * & offset) const override;
+	void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
 };
 

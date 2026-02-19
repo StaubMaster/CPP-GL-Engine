@@ -1,15 +1,15 @@
 #include "Graphics/Attribute/Point4D.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 
 
 
 Attribute::Point4D::Point4D()
 { }
 Attribute::Point4D::Point4D(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int indexPos
+	Buffer::Attribute & buffer,
+	GL::AttributeID indexPos
 ) :	Attribute::Base(),
-	Location(4, divisor, stride, indexPos)
+	Location(buffer, indexPos, 4)
 { }
 Attribute::Point4D::~Point4D()
 { }
@@ -27,7 +27,7 @@ Attribute::Point4D & Attribute::Point4D::operator=(const Point4D & other)
 
 
 
-void Attribute::Point4D::Bind(const unsigned char * & offset) const
+void Attribute::Point4D::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
-	Location.Bind(offset);
+	Location.Bind(divisor, stride, offset);
 }

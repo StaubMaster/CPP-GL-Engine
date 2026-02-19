@@ -6,6 +6,8 @@
 
 # include "OpenGLTypes.hpp"
 
+namespace Buffer { class Attribute; };
+
 namespace Attribute
 {
 class FloatN : public Attribute::Base
@@ -16,15 +18,13 @@ class FloatN : public Attribute::Base
 	public:
 	FloatN();
 	FloatN(
-		unsigned int n,
-		GL::AttributeDivisor divisor,
-		unsigned int stride,
-		unsigned int index
+		Buffer::Attribute & buffer,
+		GL::AttributeID index
 	);
 	FloatN(
-		GL::AttributeDivisor divisor,
-		unsigned int stride,
-		unsigned int index
+		Buffer::Attribute & buffer,
+		GL::AttributeID index,
+		unsigned int count
 	);
 	~FloatN();
 
@@ -32,7 +32,7 @@ class FloatN : public Attribute::Base
 	FloatN & operator=(const FloatN & other);
 
 	public:
-	void Bind(const unsigned char * & offset) const override;
+	void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
 };
 

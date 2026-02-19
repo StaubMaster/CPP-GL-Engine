@@ -5,6 +5,8 @@
 # include "Graphics/Attribute/Base/Base.hpp"
 # include "Graphics/Attribute/Base/FloatN.hpp"
 
+namespace Buffer { class Attribute; };
+
 namespace Attribute
 {
 class Angle3D : public Attribute::Base
@@ -17,8 +19,7 @@ class Angle3D : public Attribute::Base
 	public:
 	Angle3D();
 	Angle3D(
-		unsigned int divisor,
-		unsigned int stride,
+		Buffer::Attribute & buffer,
 		unsigned int index
 	);
 	~Angle3D();
@@ -27,7 +28,7 @@ class Angle3D : public Attribute::Base
 	Angle3D & operator=(const Angle3D & other);
 
 	public:
-	void Bind(const unsigned char * & offset) const override;
+	void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
 };
 

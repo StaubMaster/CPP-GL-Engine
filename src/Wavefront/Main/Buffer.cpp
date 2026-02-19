@@ -14,15 +14,15 @@ Wavefront::Main::Buffer::Buffer(
 	unsigned int indexSpecularPower,
 	unsigned int indexSpecularColor
 ) :
-	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, sizeof(Main::Data)),
-	Position(0, sizeof(Main::Data), indexPosition),
-	Texture(0, sizeof(Main::Data), indexTexture),
-	Normal(0, sizeof(Main::Data), indexNormal),
-	Color(0, sizeof(Main::Data), indexColor),
-	AmbientColor(0, sizeof(Main::Data), indexAmbientColor),
-	DiffuseColor(0, sizeof(Main::Data), indexDiffuseColor),
-	SpecularPower(0, sizeof(Main::Data), indexSpecularPower),
-	SpecularColor(0, sizeof(Main::Data), indexSpecularColor)
+	::Buffer::Attribute(GL::BufferTarget::ArrayBuffer, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data)),
+	Position(*this, indexPosition),
+	Texture(*this, indexTexture),
+	Normal(*this, indexNormal),
+	Color(*this, indexColor),
+	AmbientColor(*this, indexAmbientColor),
+	DiffuseColor(*this, indexDiffuseColor),
+	SpecularPower(*this, indexSpecularPower),
+	SpecularColor(*this, indexSpecularColor)
 {
 	Attributes.Allocate(8);
 	Attributes.Insert(&Position);

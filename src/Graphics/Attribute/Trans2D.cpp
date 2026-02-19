@@ -1,17 +1,17 @@
 #include "Graphics/Attribute/Trans2D.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 
 
 
 Attribute::Trans2D::Trans2D()
 { }
 Attribute::Trans2D::Trans2D(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int indexPos,
-	unsigned int indexRot
+	Buffer::Attribute & buffer,
+	GL::AttributeID indexPos,
+	GL::AttributeID indexRot
 ) :	Attribute::Base(),
-	Pos(divisor, stride, indexPos),
-	Rot(divisor, stride, indexRot)
+	Pos(buffer, indexPos),
+	Rot(buffer, indexRot)
 { }
 Attribute::Trans2D::~Trans2D()
 { }
@@ -31,8 +31,8 @@ Attribute::Trans2D & Attribute::Trans2D::operator=(const Trans2D & other)
 
 
 
-void Attribute::Trans2D::Bind(const unsigned char * & offset) const
+void Attribute::Trans2D::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
-	Pos.Bind(offset);
-	Rot.Bind(offset);
+	Pos.Bind(divisor, stride, offset);
+	Rot.Bind(divisor, stride, offset);
 }

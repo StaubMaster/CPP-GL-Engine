@@ -7,6 +7,8 @@
 # include "Point3D.hpp"
 # include "Angle3D.hpp"
 
+namespace Buffer { class Attribute; };
+
 namespace Attribute
 {
 class Trans3D : public Attribute::Base
@@ -18,8 +20,7 @@ class Trans3D : public Attribute::Base
 	public:
 	Trans3D();
 	Trans3D(
-		unsigned int divisor,
-		unsigned int stride,
+		Buffer::Attribute & buffer,
 		unsigned int indexPos,
 		unsigned int indexRot
 	);
@@ -29,7 +30,7 @@ class Trans3D : public Attribute::Base
 	Trans3D & operator=(const Trans3D & other);
 
 	public:
-	void Bind(const unsigned char * & offset) const override;
+	void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
 };
 

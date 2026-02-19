@@ -1,4 +1,5 @@
 #include "Graphics/Attribute/Angle3D.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 #include "ValueType/Angle.hpp"
 
 
@@ -6,13 +7,12 @@
 Attribute::Angle3D::Angle3D()
 { }
 Attribute::Angle3D::Angle3D(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int index
+	Buffer::Attribute & buffer,
+	GL::AttributeID index
 ) :	Attribute::Base(),
-	Location0(3, divisor, stride, index + 0),
-	Location1(3, divisor, stride, index + 1),
-	Location2(3, divisor, stride, index + 2)
+	Location0(buffer, index + 0, 3),
+	Location1(buffer, index + 1, 3),
+	Location2(buffer, index + 2, 3)
 { }
 Attribute::Angle3D::~Angle3D()
 { }
@@ -34,10 +34,10 @@ Attribute::Angle3D & Attribute::Angle3D::operator=(const Angle3D & other)
 
 
 
-void Attribute::Angle3D::Bind(const unsigned char * & offset) const
+void Attribute::Angle3D::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
 	offset += sizeof(Angle) * 3;
-	Location0.Bind(offset);
-	Location1.Bind(offset);
-	Location2.Bind(offset);
+	Location0.Bind(divisor, stride, offset);
+	Location1.Bind(divisor, stride, offset);
+	Location2.Bind(divisor, stride, offset);
 }

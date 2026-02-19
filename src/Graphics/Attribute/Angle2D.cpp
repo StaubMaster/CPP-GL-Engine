@@ -1,4 +1,5 @@
 #include "Graphics/Attribute/Angle2D.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 #include "ValueType/Angle.hpp"
 
 
@@ -6,12 +7,11 @@
 Attribute::Angle2D::Angle2D()
 { }
 Attribute::Angle2D::Angle2D(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int index
+	Buffer::Attribute & buffer,
+	GL::AttributeID index
 ) :	Attribute::Base(),
-	Location0(2, divisor, stride, index + 0),
-	Location1(2, divisor, stride, index + 1)
+	Location0(buffer, index + 0, 2),
+	Location1(buffer, index + 1, 2)
 { }
 Attribute::Angle2D::~Angle2D()
 { }
@@ -31,9 +31,9 @@ Attribute::Angle2D & Attribute::Angle2D::operator=(const Angle2D & other)
 
 
 
-void Attribute::Angle2D::Bind(const unsigned char * & offset) const
+void Attribute::Angle2D::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
 	offset += sizeof(Angle) * 1;
-	Location0.Bind(offset);
-	Location1.Bind(offset);
+	Location0.Bind(divisor, stride, offset);
+	Location1.Bind(divisor, stride, offset);
 }

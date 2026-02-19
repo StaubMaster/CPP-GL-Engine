@@ -1,15 +1,15 @@
 #include "Graphics/Attribute/ColorF4.hpp"
+#include "Graphics/Buffer/Attribute.hpp"
 
 
 
 Attribute::ColorF4::ColorF4()
 { }
 Attribute::ColorF4::ColorF4(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int indexCol
+	Buffer::Attribute & buffer,
+	GL::AttributeID indexCol
 ) :	Attribute::Base(),
-	Location(4, divisor, stride, indexCol)
+	Location(buffer, indexCol, 4)
 { }
 Attribute::ColorF4::~ColorF4()
 { }
@@ -27,7 +27,7 @@ Attribute::ColorF4 & Attribute::ColorF4::operator=(const ColorF4 & other)
 
 
 
-void Attribute::ColorF4::Bind(const unsigned char * & offset) const
+void Attribute::ColorF4::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
-	Location.Bind(offset);
+	Location.Bind(divisor, stride, offset);
 }

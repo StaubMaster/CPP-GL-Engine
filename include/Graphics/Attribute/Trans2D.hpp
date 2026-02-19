@@ -7,6 +7,8 @@
 # include "Point2D.hpp"
 # include "Angle2D.hpp"
 
+namespace Buffer { class Attribute; };
+
 namespace Attribute
 {
 class Trans2D : public Attribute::Base
@@ -18,8 +20,7 @@ class Trans2D : public Attribute::Base
 	public:
 	Trans2D();
 	Trans2D(
-		unsigned int divisor,
-		unsigned int stride,
+		Buffer::Attribute & buffer,
 		unsigned int indexPos,
 		unsigned int indexRot
 	);
@@ -29,7 +30,7 @@ class Trans2D : public Attribute::Base
 	Trans2D & operator=(const Trans2D & other);
 
 	public:
-	void Bind(const unsigned char * & offset) const override;
+	void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
 };
 
