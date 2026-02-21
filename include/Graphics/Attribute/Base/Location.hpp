@@ -7,6 +7,9 @@ namespace Attribute
 {
 class Location
 {
+	public:
+	void LogInfo() const;
+
 	/*
 		Offset inside Data Pointer
 		Size is not directly used by gl
@@ -17,23 +20,29 @@ class Location
 	public:
 	//	from Child
 	const GL::AttributeType Type;
-	const unsigned int Size;
 	const unsigned int Count;
+	const unsigned int Size;
 
 	//	from Buffer
-	const GL::AttributeID Index;
+	GL::AttributeLocation Index;
 
 	public:
-	Location();
+	~Location();
+	Location() = delete;
 	Location(
 		GL::AttributeType type,
-		unsigned int size,
 		unsigned int count,
-		GL::AttributeID index);
-	~Location();
+		unsigned int size
+	);
 
 	Location(const Location & other);
-	Location & operator=(const Location & other) = delete;
+	Location & operator=(const Location & other);
+
+	public:
+	void Change(GL::AttributeLocation index);
+
+	public:
+	virtual void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const = 0;
 };
 };
 

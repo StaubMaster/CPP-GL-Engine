@@ -1,19 +1,13 @@
 #include "Graphics/Attribute/Trans2D.hpp"
-#include "Graphics/Buffer/Attribute.hpp"
 
 
+
+Attribute::Trans2D::~Trans2D() { }
 
 Attribute::Trans2D::Trans2D()
-{ }
-Attribute::Trans2D::Trans2D(
-	Buffer::Attribute & buffer,
-	GL::AttributeID indexPos,
-	GL::AttributeID indexRot
-) :	Attribute::Base(),
-	Pos(buffer, indexPos),
-	Rot(buffer, indexRot)
-{ }
-Attribute::Trans2D::~Trans2D()
+	: Attribute::Base()
+	, Pos()
+	, Rot()
 { }
 
 Attribute::Trans2D::Trans2D(const Trans2D & other) :

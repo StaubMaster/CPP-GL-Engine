@@ -2,8 +2,9 @@
 
 
 
-Attribute::Base::Base() { }
 Attribute::Base::~Base() { }
+
+Attribute::Base::Base() { }
 
 Attribute::Base::Base(const Base & other)
 {

@@ -3,26 +3,18 @@
 #include "OpenGL.hpp"
 
 
+Wavefront::Main::Buffer::~Buffer() { }
 
-Wavefront::Main::Buffer::Buffer(
-	BufferArray::Base & buffer_array,
-	unsigned int indexPosition,
-	unsigned int indexTexture,
-	unsigned int indexNormal,
-	unsigned int indexColor,
-	unsigned int indexAmbientColor,
-	unsigned int indexDiffuseColor,
-	unsigned int indexSpecularPower,
-	unsigned int indexSpecularColor
-) :	::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data)),
-	Position(*this, indexPosition),
-	Texture(*this, indexTexture),
-	Normal(*this, indexNormal),
-	Color(*this, indexColor),
-	AmbientColor(*this, indexAmbientColor),
-	DiffuseColor(*this, indexDiffuseColor),
-	SpecularPower(*this, indexSpecularPower),
-	SpecularColor(*this, indexSpecularColor)
+Wavefront::Main::Buffer::Buffer(BufferArray::Base & buffer_array)
+	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data))
+	, Position()
+	, Texture()
+	, Normal()
+	, Color()
+	, AmbientColor()
+	, DiffuseColor()
+	, SpecularPower()
+	, SpecularColor()
 {
 	Attributes.Allocate(8);
 	Attributes.Insert(&Position);
@@ -34,5 +26,3 @@ Wavefront::Main::Buffer::Buffer(
 	Attributes.Insert(&SpecularPower);
 	Attributes.Insert(&SpecularColor);
 }
-Wavefront::Main::Buffer::~Buffer()
-{ }

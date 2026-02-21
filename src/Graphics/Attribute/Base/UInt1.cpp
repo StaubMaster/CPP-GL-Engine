@@ -8,13 +8,13 @@ Attribute::UInt1::UInt1()
 { }
 Attribute::UInt1::UInt1(
 	Buffer::Attribute & buffer,
-	GL::AttributeID index
+	GL::AttributeLocation index
 ) :	Attribute::Base(),
 	Location(GL_UNSIGNED_INT, sizeof(unsigned int), 1, index)
 { }
 Attribute::UInt1::UInt1(
 	Buffer::Attribute & buffer,
-	GL::AttributeID index,
+	GL::AttributeLocation index,
 	unsigned int count
 ) :	Attribute::Base(),
 	Location(GL_UNSIGNED_INT, sizeof(unsigned int) * count, count, index)

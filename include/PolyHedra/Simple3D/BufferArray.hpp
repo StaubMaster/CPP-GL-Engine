@@ -19,8 +19,8 @@ class BufferArray : public ::BufferArray::Base
 	GL::DrawMode			DrawMode;
 
 	public:
-	BufferArray();
 	~BufferArray();
+	BufferArray();
 	
 	BufferArray(const BufferArray & other);
 	BufferArray & operator=(const BufferArray & other);

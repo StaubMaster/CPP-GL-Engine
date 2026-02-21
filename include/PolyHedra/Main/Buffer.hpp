@@ -11,19 +11,14 @@ namespace PolyHedra_Main
 {
 class Buffer : public ::Buffer::Attribute
 {
-	private:
+	public:
 	::Attribute::Point3D	Position;
 	::Attribute::Point3D	Normal;
 	::Attribute::Point3D	Texture;
 
 	public:
-	Buffer(
-		BufferArray::Base & buffer_array,
-		unsigned int indexPosition,
-		unsigned int indexNormal,
-		unsigned int indexTexture
-	);
 	~Buffer();
+	Buffer(BufferArray::Base & buffer_array);
 
 	Buffer(const Buffer & other);
 	Buffer & operator=(const Buffer & other);

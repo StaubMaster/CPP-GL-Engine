@@ -17,11 +17,11 @@ class UInt1 : public Attribute::Base
 	UInt1();
 	UInt1(
 		Buffer::Attribute & buffer,
-		GL::AttributeID index
+		GL::AttributeLocation index
 	);
 	UInt1(
 		Buffer::Attribute & buffer,
-		GL::AttributeID index,
+		GL::AttributeLocation index,
 		unsigned int count
 	);
 	~UInt1();

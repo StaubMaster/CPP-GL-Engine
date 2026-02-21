@@ -3,31 +3,17 @@
 
 
 
+Attribute::Point4D::~Point4D() { }
+
 Attribute::Point4D::Point4D()
-{ }
-Attribute::Point4D::Point4D(
-	Buffer::Attribute & buffer,
-	GL::AttributeID indexPos
-) :	Attribute::Base(),
-	Location(buffer, indexPos, 4)
-{ }
-Attribute::Point4D::~Point4D()
+	: Attribute::Float4()
 { }
 
-Attribute::Point4D::Point4D(const Point4D & other) :
-	Attribute::Base(),
-	Location(other.Location)
+Attribute::Point4D::Point4D(const Point4D & other)
+	: Attribute::Float4(other)
 { }
 Attribute::Point4D & Attribute::Point4D::operator=(const Point4D & other)
 {
-	Attribute::Base::operator=(other);
-	Location = other.Location;
+	Attribute::Float4::operator=(other);
 	return *this;
-}
-
-
-
-void Attribute::Point4D::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
-{
-	Location.Bind(divisor, stride, offset);
 }

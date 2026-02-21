@@ -8,8 +8,11 @@ namespace Attribute
 class Base
 {
 	public:
-	Base();
+	virtual void LogInfo() const = 0;
+
+	public:
 	virtual ~Base();
+	Base();
 
 	Base(const Base & other);
 	Base & operator=(const Base & other);

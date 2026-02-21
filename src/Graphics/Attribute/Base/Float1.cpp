@@ -1,23 +1,18 @@
-#include "Graphics/Attribute/Float1.hpp"
-#include "OpenGL/openGL.h"
+#include "Graphics/Attribute/Base/Float1.hpp"
+#include "OpenGLEnums.hpp"
 
 
+
+Attribute::Float1::~Float1() { }
 
 Attribute::Float1::Float1()
-{ }
-Attribute::Float1::Float1(
-	unsigned int divisor,
-	unsigned int stride,
-	unsigned int index
-) :	Attribute::Base(),
-	Location(GL_FLOAT, sizeof(float) * 1, 1, divisor, stride, index)
-{ }
-Attribute::Float1::~Float1()
+	: Attribute::Base()
+	, Location(1)
 { }
 
-Attribute::Float1::Float1(const Float1 & other) :
-	Attribute::Base(),
-	Location(other.Location)
+Attribute::Float1::Float1(const Float1 & other)
+	: Attribute::Base(other)
+	, Location(other.Location)
 { }
 Attribute::Float1 & Attribute::Float1::operator=(const Float1 & other)
 {
@@ -28,7 +23,14 @@ Attribute::Float1 & Attribute::Float1::operator=(const Float1 & other)
 
 
 
-void Attribute::Float1::Bind(const unsigned char * & offset) const
+void Attribute::Float1::Change(GL::AttributeLocation index)
 {
-	Location.Bind(offset);
+	Location.Change(index);
+}
+
+
+
+void Attribute::Float1::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
+{
+	Location.Bind(divisor, stride, offset);
 }

@@ -8,9 +8,7 @@
 # include "Miscellaneous/Container/Binary.hpp"
 # include "Miscellaneous/Container/Void.hpp"
 
-# include "Debug.hpp"
 # include "OpenGLEnums.hpp"
-# include <sstream>
 
 namespace Buffer
 {
@@ -22,6 +20,9 @@ class Attribute : public Base
 	unsigned int			Stride;
 	unsigned int			DrawCount;
 	Container::Binary<::Attribute::Base*>	Attributes;
+
+	public:
+	void LogInfo(bool self = true) const override;
 
 	public:
 	virtual ~Attribute();

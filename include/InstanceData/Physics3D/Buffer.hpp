@@ -11,19 +11,13 @@ namespace Physics3D
 {
 class Buffer : public ::Buffer::Attribute
 {
-	private:
+	public:
 	::Attribute::Trans3D	Trans;
 	::Attribute::Trans3D	Vel;
 
 	public:
-	Buffer(
-		BufferArray::Base & buffer_array,
-		unsigned int indexTransPos,
-		unsigned int indexTransRot,
-		unsigned int indexVelPos,
-		unsigned int indexVelRot
-	);
 	~Buffer();
+	Buffer(BufferArray::Base & buffer_array);
 };
 };
 

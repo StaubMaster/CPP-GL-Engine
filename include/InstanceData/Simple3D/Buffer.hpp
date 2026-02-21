@@ -11,16 +11,12 @@ namespace Simple3D
 {
 class Buffer : public ::Buffer::Attribute
 {
-	private:
+	public:
 	::Attribute::Trans3D	Trans;
 
 	public:
-	Buffer(
-		BufferArray::Base & buffer_array,
-		unsigned int indexTransPos,
-		unsigned int indexTransRot
-	);
 	~Buffer();
+	Buffer(BufferArray::Base & buffer_array);
 
 	Buffer(const Buffer & other);
 	Buffer & operator=(const Buffer & other);

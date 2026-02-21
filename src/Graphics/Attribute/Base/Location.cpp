@@ -2,39 +2,35 @@
 
 
 
-Attribute::Location::Location()
-	: Type((GL::AttributeType)0)
-	, Size(0)
-	, Count(0)
-	, Index((GL::AttributeID)0)
-{ }
+Attribute::Location::~Location() { }
+
 Attribute::Location::Location(
 	GL::AttributeType type,
-	unsigned int size,
 	unsigned int count,
-	GL::AttributeID index
+	unsigned int size
 )
 	: Type(type)
-	, Size(size)
 	, Count(count)
-	, Index(index)
-{ }
-Attribute::Location::~Location()
+	, Size(size)
+	, Index(-1)
 { }
 
 Attribute::Location::Location(const Location & other)
 	: Type(other.Type)
-	, Size(other.Size)
 	, Count(other.Count)
+	, Size(other.Size)
 	, Index(other.Index)
 { }
-/*Attribute::Location & Attribute::Location::operator=(const Location & other)
+Attribute::Location & Attribute::Location::operator=(const Location & other)
 {
-	Type = other.Type;
-	Size = other.Size;
-	Count = other.Count;
-	Divisor = other.Divisor;
-	Stride = other.Stride;
+//	Type = other.Type;
+//	Size = other.Size;
+//	Count = other.Count;
 	Index = other.Index;
 	return *this;
-}*/
+}
+
+void Attribute::Location::Change(GL::AttributeLocation index)
+{
+	Index = index;
+}

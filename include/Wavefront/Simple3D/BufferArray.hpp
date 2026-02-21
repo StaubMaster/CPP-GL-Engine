@@ -17,8 +17,8 @@ class BufferArray : public ::BufferArray::Base
 	GL::DrawMode			DrawMode;
 
 	public:
-	BufferArray();
 	~BufferArray();
+	BufferArray();
 
 	BufferArray(const BufferArray & other) = delete;
 	BufferArray & operator=(const BufferArray & other) = delete;

@@ -15,7 +15,7 @@ class Base
 	GL::BufferID ID;
 
 	public:
-	void LogInfo(bool self = true) const;
+	virtual void LogInfo(bool self = true) const;
 
 
 

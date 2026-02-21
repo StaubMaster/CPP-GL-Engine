@@ -3,23 +3,19 @@
 
 
 
-PolyHedra_Main::Buffer::Buffer(
-	BufferArray::Base & buffer_array,
-	unsigned int indexPosition,
-	unsigned int indexNormal,
-	unsigned int indexTexture
-) :	::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyHedra_Main::Data)),
-	Position(*this, indexPosition),
-	Normal(*this, indexNormal),
-	Texture(*this, indexTexture)
+PolyHedra_Main::Buffer::~Buffer() { }
+
+PolyHedra_Main::Buffer::Buffer(BufferArray::Base & buffer_array)
+	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyHedra_Main::Data))
+	, Position()
+	, Normal()
+	, Texture()
 {
 	Attributes.Allocate(3);
 	Attributes.Insert(&Position);
 	Attributes.Insert(&Normal);
 	Attributes.Insert(&Texture);
 }
-PolyHedra_Main::Buffer::~Buffer()
-{ }
 
 PolyHedra_Main::Buffer::Buffer(const PolyHedra_Main::Buffer & other) :
 	Buffer::Attribute(other),

@@ -133,8 +133,14 @@ BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
 
 ATTRIBUTE := \
 	Graphics/Attribute/Base/Location.cpp \
+	Graphics/Attribute/Base/LocationFloatN.cpp \
 	Graphics/Attribute/Base/Base.cpp \
-	Graphics/Attribute/Base/FloatN.cpp \
+	Graphics/Attribute/Base/Float1.cpp \
+	Graphics/Attribute/Base/Float2.cpp \
+	Graphics/Attribute/Base/Float3.cpp \
+	Graphics/Attribute/Base/Float4.cpp \
+	Graphics/Attribute/Base/Float2x2.cpp \
+	Graphics/Attribute/Base/Float3x3.cpp \
 \
 	Graphics/Attribute/Point2D.cpp \
 	Graphics/Attribute/Point3D.cpp \
@@ -143,7 +149,9 @@ ATTRIBUTE := \
 	Graphics/Attribute/Angle3D.cpp \
 	Graphics/Attribute/Trans2D.cpp \
 	Graphics/Attribute/Trans3D.cpp \
-	Graphics/Attribute/ColorF4.cpp
+	Graphics/Attribute/ColorF4.cpp \
+\
+	Graphics/Attribute/Log.cpp
 ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
 

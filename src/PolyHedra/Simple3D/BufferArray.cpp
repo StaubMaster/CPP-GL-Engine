@@ -5,26 +5,26 @@
 
 
 
-PolyHedra_Simple3D::BufferArray::BufferArray() :
-	::BufferArray::Base(),
-	Main(*this, 0, 1, 2),
-	Inst(*this, 3, 4),
-	Texture(),
-	DrawMode(GL::DrawMode::Triangles)
+PolyHedra_Simple3D::BufferArray::~BufferArray() { }
+
+PolyHedra_Simple3D::BufferArray::BufferArray()
+	: ::BufferArray::Base()
+	, Main(*this)
+	, Inst(*this)
+	, Texture()
+	, DrawMode(GL::DrawMode::Triangles)
 {
 	Buffers.Allocate(2);
 	Buffers.Insert(&Main);
 	Buffers.Insert(&Inst);
 }
-PolyHedra_Simple3D::BufferArray::~BufferArray()
-{ }
 
-PolyHedra_Simple3D::BufferArray::BufferArray(const BufferArray & other) :
-	::BufferArray::Base(),
-	Main(other.Main),
-	Inst(other.Inst),
-	Texture(other.Texture),
-	DrawMode(other.DrawMode)
+PolyHedra_Simple3D::BufferArray::BufferArray(const BufferArray & other)
+	: ::BufferArray::Base()
+	, Main(other.Main)
+	, Inst(other.Inst)
+	, Texture(other.Texture)
+	, DrawMode(other.DrawMode)
 {
 	Buffers.Allocate(2);
 	Buffers.Insert(&Main);

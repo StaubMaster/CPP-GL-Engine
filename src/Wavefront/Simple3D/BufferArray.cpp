@@ -3,18 +3,18 @@
 
 
 
-Wavefront::Simple3D::BufferArray::BufferArray() :
-	::BufferArray::Base(),
-	Main(*this, 0, 1, 2, 3, 4, 5, 6, 7),
-	Inst(*this, 8, 9),
-	DrawMode(GL::DrawMode::Triangles)
+Wavefront::Simple3D::BufferArray::~BufferArray() { }
+
+Wavefront::Simple3D::BufferArray::BufferArray()
+	: ::BufferArray::Base()
+	, Main(*this)
+	, Inst(*this)
+	, DrawMode(GL::DrawMode::Triangles)
 {
 	Buffers.Allocate(2);
 	Buffers.Insert(&Main);
 	Buffers.Insert(&Inst);
 }
-Wavefront::Simple3D::BufferArray::~BufferArray()
-{ }
 
 
 
