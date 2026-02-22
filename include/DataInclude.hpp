@@ -22,6 +22,8 @@
 # include "ValueType/AxisBox2D.hpp"
 # include "ValueType/AxisBox3D.hpp"
 
+# include "ValueType/Line2D.hpp"
+
 # include "ValueType/Ray2D.hpp"
 # include "ValueType/Ray3D.hpp"
 

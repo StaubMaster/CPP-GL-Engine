@@ -197,12 +197,32 @@ float Point2D::dot(const Point2D & p0, const Point2D & p1)
 		(p0.Y * p1.Y)
 	);
 }
+float Point2D::dot(const Point2D & other) const
+{
+	return dot(*this, other);
+}
 float Point2D::operator%(const Point2D & other) const
 {
 	return dot(*this, other);
 }
 
 
+
+float Point2D::cross(const Point2D & p0, const Point2D & p1)
+{
+	return (
+		(p0.X * p1.Y) -
+		(p0.Y * p1.X)
+	);
+}
+float Point2D::cross(const Point2D & other) const
+{
+	return cross(*this, other);
+}
+float Point2D::operator^(const Point2D & other) const
+{
+	return cross(*this, other);
+}
 
 
 

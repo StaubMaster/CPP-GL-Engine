@@ -22,6 +22,8 @@ struct AxisBox1D;
 struct AxisBox2D;
 struct AxisBox3D;
 
+struct Line2D;
+
 struct Ray2D;
 struct Ray3D;
 

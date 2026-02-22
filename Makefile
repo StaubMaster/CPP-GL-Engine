@@ -32,6 +32,7 @@ VALUE_TYPE := \
 	ValueType/AxisBox3D.cpp \
 	ValueType/Ray2D.cpp \
 	ValueType/Ray3D.cpp \
+	ValueType/Line2D.cpp \
 	ValueType/Matrix2x2.cpp \
 	ValueType/Matrix3x3.cpp \
 	ValueType/Angle.cpp \
@@ -49,6 +50,7 @@ VALUE_TYPE := \
 	ValueType/LightSpot.cpp \
 	ValueType/View2D.cpp \
 	ValueType/View3D.cpp \
+	ValueType/Intersect.cpp \
 	DataShow.cpp
 VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))
 VALUE_TYPE_OBJ := $(addprefix $(DIR_OBJ)/,$(VALUE_TYPE:.cpp=.o))

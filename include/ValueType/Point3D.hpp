@@ -53,9 +53,11 @@ struct Point3D
 	Point3D & operator/=(const Point3D & other);
 
 	float static dot(const Point3D & p0, const Point3D & p1);
+	float dot(const Point3D & other) const;
 	float operator%(const Point3D & other) const;
 
 	Point3D static cross(const Point3D & p0, const Point3D & p1);
+	Point3D cross(const Point3D & other) const;
 	Point3D operator^(const Point3D & other) const;
 };
 

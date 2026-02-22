@@ -30,6 +30,7 @@ struct Angle2D
 	public:
 	Point2D rotateFore(Point2D p) const;
 	Point2D rotateBack(Point2D p) const;
+
 	Angle2D	rotateFore(Angle2D a) const;
 	Angle2D	rotateBack(Angle2D a) const;
 

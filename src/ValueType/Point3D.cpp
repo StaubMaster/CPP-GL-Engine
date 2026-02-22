@@ -218,6 +218,10 @@ float Point3D::dot(const Point3D & p0, const Point3D & p1)
 		(p0.Z * p1.Z)
 	);
 }
+float Point3D::dot(const Point3D & other) const
+{
+	return dot(*this, other);
+}
 float Point3D::operator%(const Point3D & other) const
 {
 	return dot(*this, other);
@@ -228,10 +232,14 @@ float Point3D::operator%(const Point3D & other) const
 Point3D Point3D::cross(const Point3D & p0, const Point3D & p1)
 {
 	return Point3D(
-		p0.Y * p1.Z - p0.Z * p1.Y,
-		p0.Z * p1.X - p0.X * p1.Z,
-		p0.X * p1.Y - p0.Y * p1.X
+		(p0.Y * p1.Z) - (p0.Z * p1.Y),
+		(p0.Z * p1.X) - (p0.X * p1.Z),
+		(p0.X * p1.Y) - (p0.Y * p1.X)
 	);
+}
+Point3D Point3D::cross(const Point3D & other) const
+{
+	return cross(*this, other);
 }
 Point3D Point3D::operator^(const Point3D & other) const
 {
