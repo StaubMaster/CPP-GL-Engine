@@ -1,7 +1,7 @@
 #ifndef  BUFFER_ATTRIBUTE_HPP
 # define BUFFER_ATTRIBUTE_HPP
 
-# include "Base.hpp"
+# include "Graphics/Buffer/Base.hpp"
 
 # include "Graphics/Attribute/Base/Base.hpp"
 

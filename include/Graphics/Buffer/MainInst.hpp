@@ -6,7 +6,6 @@
 
 # include "Miscellaneous/Container/Binary.hpp"
 
-namespace Buffer { class Base; };
 namespace Texture { class Base; };
 
 namespace BufferArray
