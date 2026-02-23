@@ -13,6 +13,7 @@ class Base
 {
 	protected:
 	GL::VertexArrayID ID;
+	public:
 	Container::Fixed<Buffer::Base*> Buffers;
 
 	public:
