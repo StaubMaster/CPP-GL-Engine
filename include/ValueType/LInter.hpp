@@ -24,8 +24,8 @@ struct LInter
 		void SetT0(float val);
 		void SetT1(float val);
 
-		float GetT0();
-		float GetT1();
+		float GetT0() const;
+		float GetT1() const;
 };
 
 #endif

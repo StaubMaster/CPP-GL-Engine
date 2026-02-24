@@ -19,7 +19,7 @@ class UIntN : public Uniform::Base
 	public:
 	UIntN(::Shader::Base & shader, std::string name, int count);
 
-	public:
+	protected:
 	virtual void ReLocate() override;
 	virtual void PutData(const unsigned int * val) = 0;
 	void PutVoid(const void * val);

@@ -21,7 +21,7 @@ class FloatN : public Uniform::Base
 	public:
 	FloatN(::Shader::Base & shader, std::string name, int count);
 
-	public:
+	protected:
 	virtual void ReLocate() override;
 	virtual void PutData(const float * val) = 0;
 	void PutVoid(const void * val);

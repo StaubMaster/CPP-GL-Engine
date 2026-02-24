@@ -13,8 +13,12 @@ class Float1 : public Uniform::FloatN
 	Float1(::Shader::Base & shader, std::string name);
 	Float1(::Shader::Base & shader, std::string name, int count);
 
-	public:
+	protected:
 	void PutData(const float * val) override;
+
+	public:
+	//void Put(float val[1]);
+	void Put(float val);
 };
 };
 

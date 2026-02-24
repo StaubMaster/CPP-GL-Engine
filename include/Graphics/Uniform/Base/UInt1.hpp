@@ -13,7 +13,7 @@ class UInt1 : public Uniform::UIntN
 	UInt1(::Shader::Base & shader, std::string name);
 	UInt1(::Shader::Base & shader, std::string name, int count);
 
-	public:
+	protected:
 	void PutData(const unsigned int * val) override;
 };
 };

@@ -13,6 +13,6 @@ Uniform::LightBase::LightBase(::Shader::Base & shader, std::string name)
 
 void Uniform::LightBase::Put(const ::LightBase & obj)
 {
-	Intensity.PutData(&obj.Intensity);
+	Intensity.Put(obj.Intensity);
 	Color.Put(obj.Color);
 }

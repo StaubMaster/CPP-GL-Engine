@@ -13,6 +13,6 @@ Uniform::LInter::LInter(::Shader::Base & shader, std::string name)
 
 void Uniform::LInter::Put(const ::LInter & obj)
 {
-	T0.PutData(((const float *)&obj) + 0);
-	T1.PutData(((const float *)&obj) + 1);
+	T0.Put(obj.GetT0());
+	T1.Put(obj.GetT1());
 }

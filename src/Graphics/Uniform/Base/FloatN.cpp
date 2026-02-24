@@ -37,5 +37,9 @@ void Uniform::FloatN::ReLocate()
 }
 void Uniform::FloatN::PutVoid(const void * val)
 {
+	if (!Shader.IsBound())
+	{
+		Shader.Bind();
+	}
 	PutData((const float *)val);
 }

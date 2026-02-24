@@ -14,7 +14,7 @@ Uniform::Range::Range(::Shader::Base & shader, std::string name)
 
 void Uniform::Range::Put(const ::Range & obj)
 {
-	Min.PutVoid(&obj.Min);
-	Len.PutVoid(&obj.Len);
-	Max.PutVoid(&obj.Max);
+	Min.Put(obj.Min);
+	Len.Put(obj.Len);
+	Max.Put(obj.Max);
 }
