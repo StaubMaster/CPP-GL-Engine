@@ -1,6 +1,5 @@
-
-#ifndef  GENERIC_MULTIFORM_BASE_HPP
-# define GENERIC_MULTIFORM_BASE_HPP
+#ifndef  MULTIFORM_GENERIC_BASE_HPP
+# define MULTIFORM_GENERIC_BASE_HPP
 
 # include "Graphics/Shader/Base.hpp"
 # include "Graphics/Multiform/Base/Base.hpp"
@@ -14,10 +13,7 @@
 
 
 
-namespace Shader
-{
-	class Base;
-};
+namespace Shader { class Base; };
 
 namespace Multiform
 {
@@ -29,55 +25,53 @@ class GBase : public Base
 	DataType Data;
 
 	public:
-		GBase(std::string name) :
-			Base(name)
-		{ }
-		virtual ~GBase()
-		{ }
+	virtual ~GBase() { }
+	GBase(std::string name)
+		: Base(name)
+	{ }
 
 	public:
-		void FindUniforms(Container::Base<Shader::Base *> & shaders) override
+	void FindUniforms(Container::Base<Shader::Base *> & shaders) override
+	{
+		Uniforms.Allocate(shaders.Count());
+		for (unsigned int s = 0; s < shaders.Count(); s++)
 		{
-			Uniforms.Allocate(shaders.Count());
-
-			for (unsigned int s = 0; s < shaders.Count(); s++)
+			Shader::Base * shader = shaders[s];
+			for (unsigned int u = 0; u < shader -> Uniforms.Count(); u++)
 			{
-				Shader::Base * shader = shaders[s];
-				for (unsigned int u = 0; u < shader -> Uniforms.Count(); u++)
+				Uniform::Base * uni = shader -> Uniforms[u];
+				if (uni -> Name == this -> Name)
 				{
-					Uniform::Base * uni = shader -> Uniforms[u];
-					if (uni -> Name == this -> Name)
+					if (typeid(*uni) == typeid(UniformType))
 					{
-						if (typeid(*uni) == typeid(UniformType))
-						{
-							uni -> Multiform = this;
-							Uniforms.Insert((UniformType*)(uni));
-						}
-						else { /* Uniform has correct name but wrong Type */ }
+						uni -> Multiform = this;
+						Uniforms.Insert((UniformType*)(uni));
 					}
+					else
+					{ /* Uniform has correct name but wrong Type */ }
 				}
 			}
+		}
+		Uniforms.Trim();
+	}
 
-			Uniforms.Trim();
-		}
-
-		void PutUniformData(Uniform::Base * uni_base) override
+	void PutUniformData(Uniform::Base * uni_base) override
+	{
+		UniformType * uni = (UniformType*)uni_base;
+		uni -> Put(Data);
+		uni -> MultiformChanged = false;
+	}
+	void ChangeData(DataType data)
+	{
+		Data = data;
+		for (unsigned int i = 0; i < Uniforms.Count(); i++)
 		{
-			UniformType * uni = (UniformType*)uni_base;
-			uni -> Put(Data);
-			uni -> MultiformChanged = false;
+			if (Uniforms[i] -> Shader.IsBound())
+			{ PutUniformData(Uniforms[i]); }
+			else
+			{ Uniforms[i] -> MultiformChanged = true; }
 		}
-		void ChangeData(DataType data)
-		{
-			Data = data;
-			for (unsigned int i = 0; i < Uniforms.Count(); i++)
-			{
-				if (Uniforms[i] -> Shader.IsBound())
-				{ PutUniformData(Uniforms[i]); }
-				else
-				{ Uniforms[i] -> MultiformChanged = true; }
-			}
-		}
+	}
 };
 };
 

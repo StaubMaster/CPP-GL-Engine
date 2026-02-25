@@ -2,7 +2,4 @@
 
 
 
-Multiform::WindowBufferSize2D::WindowBufferSize2D(std::string name) : GBase(name)
-{
-
-}
+//Multiform::WindowBufferSize2D::WindowBufferSize2D(std::string name) : GBase(name) { }

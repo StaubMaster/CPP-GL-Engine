@@ -2,5 +2,4 @@
 
 
 
-Multiform::ColorF4::ColorF4(std::string name) : GBase(name)
-{ }
+//Multiform::ColorF4::ColorF4(std::string name) : GBase(name) { }

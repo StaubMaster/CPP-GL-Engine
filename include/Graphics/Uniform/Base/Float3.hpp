@@ -15,10 +15,6 @@ class Float3 : public Uniform::FloatN
 
 	protected:
 	void PutData(const float * val) override;
-
-	/*public:
-	void Put(float val[3]);
-	void Put(float val0, float val1, float val2);*/
 };
 };
 

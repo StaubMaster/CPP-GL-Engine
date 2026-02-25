@@ -2,7 +2,4 @@
 
 
 
-Multiform::LInter::LInter(std::string name) : GBase(name)
-{
-
-}
+//Multiform::LInter::LInter(std::string name) : GBase(name) { }

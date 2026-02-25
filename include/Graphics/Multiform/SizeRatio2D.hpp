@@ -1,6 +1,5 @@
-
-#ifndef  MULTI_SIZE_RATIO_2D_HPP
-# define MULTI_SIZE_RATIO_2D_HPP
+#ifndef  MULTIFORM_SIZE_RATIO_2D_HPP
+# define MULTIFORM_SIZE_RATIO_2D_HPP
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/SizeRatio2D.hpp"
@@ -8,12 +7,12 @@
 
 namespace Multiform
 {
-class SizeRatio2D : public GBase<Uniform::SizeRatio2D, ::SizeRatio2D>
+typedef GBase<Uniform::SizeRatio2D, ::SizeRatio2D> SizeRatio2D;
+/*class SizeRatio2D : public GBase<Uniform::SizeRatio2D, ::SizeRatio2D>
 {
 	public:
 		SizeRatio2D(std::string name);
-};
+};*/
 };
 
 #endif
-

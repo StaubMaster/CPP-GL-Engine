@@ -1,6 +1,5 @@
-
-#ifndef  MULTI_DEPTH_FACTORS_3D_HPP
-# define MULTI_DEPTH_FACTORS_3D_HPP
+#ifndef  MULTIFORM_DEPTH_FACTORS_3D_HPP
+# define MULTIFORM_DEPTH_FACTORS_3D_HPP
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/DepthFactors.hpp"
@@ -8,11 +7,12 @@
 
 namespace Multiform
 {
-class DepthFactors : public GBase<Uniform::DepthFactors, ::DepthFactors>
+typedef GBase<Uniform::DepthFactors, ::DepthFactors> DepthFactors;
+/*class DepthFactors : public GBase<Uniform::DepthFactors, ::DepthFactors>
 {
 	public:
 		DepthFactors(std::string name);
-};
+};*/
 };
 
 #endif

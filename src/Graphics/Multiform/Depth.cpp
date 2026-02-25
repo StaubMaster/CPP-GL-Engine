@@ -2,7 +2,4 @@
 
 
 
-Multiform::Depth::Depth(std::string name) : GBase(name)
-{
-
-}
+//Multiform::Depth::Depth(std::string name) : GBase(name) { }

@@ -1,6 +1,5 @@
-
-#ifndef  MULTI_RANGE_HPP
-# define MULTI_RANGE_HPP
+#ifndef  MULTIFORM_RANGE_HPP
+# define MULTIFORM_RANGE_HPP
 
 # include "Graphics/Multiform/Base/GBase.hpp"
 # include "Graphics/Uniform/Range.hpp"
@@ -8,11 +7,12 @@
 
 namespace Multiform
 {
-class Range : public GBase<Uniform::Range, ::Range>
+typedef GBase<Uniform::Range, ::Range> Range;
+/*class Range : public GBase<Uniform::Range, ::Range>
 {
 	public:
 		Range(std::string name);
-};
+};*/
 };
 
 #endif

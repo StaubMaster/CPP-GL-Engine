@@ -2,7 +2,7 @@
 # define UNI_RANGE_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Base/Float1.hpp"
+# include "Graphics/Uniform/Float.hpp"
 
 struct Range;
 
@@ -11,9 +11,9 @@ namespace Uniform
 class Range : public Uniform::GBase<::Range>
 {
 	private:
-	Uniform::Float1 Min;
-	Uniform::Float1 Len;
-	Uniform::Float1 Max;
+	Uniform::Float Min;
+	Uniform::Float Len;
+	Uniform::Float Max;
 
 	public:
 	Range(::Shader::Base & shader, std::string name);

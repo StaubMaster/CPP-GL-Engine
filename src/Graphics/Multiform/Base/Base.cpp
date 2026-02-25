@@ -3,10 +3,7 @@
 
 
 Multiform::Base::Base(std::string name)
-{
-	Name = name;
-}
+	: Name(name)
+{ }
 Multiform::Base::~Base()
-{
-
-}
+{ }

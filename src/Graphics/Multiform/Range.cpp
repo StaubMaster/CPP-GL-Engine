@@ -2,7 +2,4 @@
 
 
 
-Multiform::Range::Range(std::string name) : GBase(name)
-{
-
-}
+//Multiform::Range::Range(std::string name) : GBase(name) { }

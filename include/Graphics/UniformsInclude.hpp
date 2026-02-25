@@ -16,6 +16,8 @@
 # include "Uniform/Base/UIntN.hpp"
 # include "Uniform/Base/UInt1.hpp"
 
+# include "Uniform/Float.hpp"
+
 # include "Uniform/ColorF4.hpp"
 
 # include "Uniform/Point2D.hpp"

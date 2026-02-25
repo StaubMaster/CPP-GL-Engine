@@ -16,6 +16,8 @@ namespace Uniform
 	class UIntN;
 	class UInt1;
 
+	class Float;
+
 	class ColorF4;
 
 	class Point2D;

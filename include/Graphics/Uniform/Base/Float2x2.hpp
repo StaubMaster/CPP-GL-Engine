@@ -18,13 +18,6 @@ class Float2x2 : public Uniform::FloatN
 
 	protected:
 	void PutData(const float * val) override;
-
-	/*public:
-	void Put(float val[4]);
-	void Put(
-		float val00, float val01,
-		float val10, float val11
-	);*/
 };
 };
 

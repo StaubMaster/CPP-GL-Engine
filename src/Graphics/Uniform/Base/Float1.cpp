@@ -17,14 +17,3 @@ void Uniform::Float1::PutData(const float * val)
 {
 	GL::Uniform1fv(Location, Count, val);
 }
-
-
-
-void Uniform::Float1::Put(float val)
-{
-	if (!Shader.IsBound())
-	{
-		Shader.Bind();
-	}
-	PutData(&val);
-}

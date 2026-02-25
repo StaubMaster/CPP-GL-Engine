@@ -89,6 +89,8 @@ UNIFORM := \
 	Graphics/Uniform/Base/UIntN.cpp \
 	Graphics/Uniform/Base/UInt1.cpp \
 \
+	Graphics/Uniform/Float.cpp \
+\
 	Graphics/Uniform/ColorF4.cpp \
 	Graphics/Uniform/Point2D.cpp \
 	Graphics/Uniform/Point3D.cpp \
@@ -114,12 +116,14 @@ UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
 
 MULTIFORM := \
 	Graphics/Multiform/Base/Base.cpp \
+	Graphics/Multiform/Float.cpp \
+	Graphics/Multiform/ColorF4.cpp \
+	Graphics/Multiform/Trans2D.cpp \
 	Graphics/Multiform/Trans3D.cpp \
 	Graphics/Multiform/DepthFactors.cpp \
-	Graphics/Multiform/Range.cpp \
 	Graphics/Multiform/Depth.cpp \
+	Graphics/Multiform/Range.cpp \
 	Graphics/Multiform/LInter.cpp \
-	Graphics/Multiform/ColorF4.cpp \
 	Graphics/Multiform/SizeRatio2D.cpp \
 	Graphics/Multiform/WindowBufferSize2D.cpp
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
