@@ -4,6 +4,8 @@
 struct Bool2D;
 struct Bool3D;
 
+struct Undex;
+
 struct Undex2D;
 struct UndexBox2D;
 struct UndexLoop2D;

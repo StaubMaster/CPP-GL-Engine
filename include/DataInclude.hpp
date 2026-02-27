@@ -4,6 +4,8 @@
 # include "ValueType/Bool2D.hpp"
 # include "ValueType/Bool3D.hpp"
 
+# include "ValueType/Undex.hpp"
+
 # include "ValueType/Undex2D.hpp"
 # include "ValueType/UndexBox2D.hpp"
 # include "ValueType/UndexLoop2D.hpp"

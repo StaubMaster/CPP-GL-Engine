@@ -3,5 +3,6 @@
 
 # include "UserParameter/KeyBoard/Key.hpp"
 # include "UserParameter/KeyBoard/Text.hpp"
+# include "UserParameter/KeyBoard/Codes.hpp"
 
 #endif

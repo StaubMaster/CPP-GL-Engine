@@ -18,7 +18,8 @@ struct Code
 	Code(int flags);
 
 	public:
-	bool	operator ==(int code) const;
+	bool	operator==(const Code & other) const;
+	bool	operator==(int code) const;
 };
 
 };

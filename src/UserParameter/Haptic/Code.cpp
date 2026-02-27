@@ -2,16 +2,14 @@
 
 
 
-UserParameter::Haptic::Code::Code() :
-	Flags(0)
+UserParameter::Haptic::Code::Code()
+	: Flags(0)
 { }
-UserParameter::Haptic::Code::Code(int flags) :
-	Flags(flags)
+UserParameter::Haptic::Code::Code(int flags)
+	: Flags(flags)
 { }
 
 
 
-bool UserParameter::Haptic::Code::operator==(int code) const
-{
-	return Flags == code;
-}
+bool UserParameter::Haptic::Code::operator==(const Code & other) const { return Flags == other.Flags; }
+bool UserParameter::Haptic::Code::operator==(int code) const { return Flags == code; }

@@ -18,6 +18,7 @@ DIR_OBJ := obj/
 
 VALUE_TYPE := \
 	ValueType/Bool3D.cpp \
+	ValueType/Undex.cpp \
 	ValueType/Undex2D.cpp \
 	ValueType/UndexBox2D.cpp \
 	ValueType/UndexLoop2D.cpp \
@@ -220,6 +221,7 @@ USERPARAMETER := \
 	UserParameter/KeyBoard/KeyRange2.cpp \
 	UserParameter/KeyBoard/Key.cpp \
 	UserParameter/KeyBoard/Text.cpp \
+	UserParameter/KeyBoard/Codes.cpp \
 	UserParameter/KeyBoard/EventManager.cpp \
 \
 	UserParameter/Mouse/ButtonRange.cpp \
@@ -227,6 +229,7 @@ USERPARAMETER := \
 	UserParameter/Mouse/Position.cpp \
 	UserParameter/Mouse/Click.cpp \
 	UserParameter/Mouse/Scroll.cpp \
+	UserParameter/Mouse/Codes.cpp \
 	UserParameter/Mouse/EventManager.cpp
 USERPARAMETER_SRC := $(addprefix $(DIR_SRC)/,$(USERPARAMETER))
 USERPARAMETER_OBJ := $(addprefix $(DIR_OBJ)/,$(USERPARAMETER:.cpp=.o))
