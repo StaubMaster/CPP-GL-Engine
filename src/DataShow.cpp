@@ -30,6 +30,13 @@ std::ostream & operator<<(std::ostream & o, const Angle & obj)
 	o << obj.ToDegrees() << "°";
 	return o;
 }
+std::ostream & operator<<(std::ostream & o, const Angle2D & obj)
+{
+	o << "( " << obj.Ang << " )";
+	//o << "#( " << obj.sin_x << " | " << obj.sin_y << " | " << obj.sin_z << " )";
+	//o << "#( " << obj.cos_x << " | " << obj.cos_y << " | " << obj.cos_z << " )";
+	return o;
+}
 std::ostream & operator<<(std::ostream & o, const Angle3D & obj)
 {
 	o << "( " << obj.X << " | " << obj.Y << " | " << obj.Z << " )";
@@ -40,6 +47,11 @@ std::ostream & operator<<(std::ostream & o, const Angle3D & obj)
 
 
 
+std::ostream & operator<<(std::ostream & o, const Trans2D & obj)
+{
+	o << "{ " << obj.Pos << " | " << obj.Rot << " }";
+	return o;
+}
 std::ostream & operator<<(std::ostream & o, const Trans3D & obj)
 {
 	o << "{ " << obj.Pos << " | " << obj.Rot << " }";

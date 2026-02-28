@@ -10,8 +10,10 @@ std::ostream & operator<<(std::ostream & o, const Point3D & obj);
 std::ostream & operator<<(std::ostream & o, const Point4D & obj);
 
 std::ostream & operator<<(std::ostream & o, const Angle & obj);
+std::ostream & operator<<(std::ostream & o, const Angle2D & obj);
 std::ostream & operator<<(std::ostream & o, const Angle3D & obj);
 
+std::ostream & operator<<(std::ostream & o, const Trans2D & obj);
 std::ostream & operator<<(std::ostream & o, const Trans3D & obj);
 
 std::ostream & operator<<(std::ostream & o, const AxisBox1D & obj);
