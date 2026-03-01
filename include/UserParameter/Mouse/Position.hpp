@@ -9,12 +9,24 @@ namespace UserParameter
 namespace Mouse
 {
 
+struct PixelPosition
+{
+	Point2D Corner;
+	Point2D Center;
+};
+
+struct CornerPosition
+{
+	Point2D Normal0;
+	Point2D Normal1;
+	PixelPosition Window;
+	PixelPosition Buffer;
+};
+
 struct Position
 {
-	Point2D	Absolute;
-
-	//public:
-	//Position();
+	CornerPosition TopLeft;
+	CornerPosition BottomLeft;
 };
 
 };

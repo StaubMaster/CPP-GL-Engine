@@ -45,7 +45,20 @@ class Window
 
 	public:
 	WindowBufferSize2D Size;
+	/* WindowBufferSize
+		Window
+			Full
+			Half
+		(Frame)Buffer
+			Full
+			Half
+		Ratio
+		dont need to specify 2D, it's a Window
+		
+	*/
+
 	private:
+	// Center isn't used ?
 	Point2D WindowCenter;
 	Point2D BufferCenter;
 
