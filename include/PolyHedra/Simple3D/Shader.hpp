@@ -11,7 +11,7 @@ namespace PolyHedra_Simple3D
 class Shader : public ::Shader::Base
 {
 	public:
-	Uniform::WindowBufferSize2D	WindowSize;
+	Uniform::DisplaySize		DisplaySize;
 	Uniform::Trans3D			View;
 	Uniform::Depth				Depth;
 	Uniform::Angle				FOV;

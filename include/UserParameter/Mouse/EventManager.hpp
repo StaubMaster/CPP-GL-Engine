@@ -5,6 +5,7 @@
 # include "UserParameter/MouseDeclare.hpp"
 
 # include "ValueType/Point2D.hpp"
+# include "Display/DisplayPosition.hpp"
 
 # include "Function/Pointer.hpp"
 
@@ -26,7 +27,7 @@ class EventManager
 	public:
 	FunctionPointer<UserParameter::Mouse::Click>	CallbackClick;
 	FunctionPointer<UserParameter::Mouse::Scroll>	CallbackScroll;
-	FunctionPointer<UserParameter::Mouse::Position>	CallbackMove;
+	FunctionPointer<DisplayPosition>	CallbackMove;
 	FunctionPointer<UserParameter::Mouse::Drag>		CallbackDrag;
 
 	public:
@@ -41,8 +42,9 @@ class EventManager
 	void	CursorModeFree();
 	void	CursorModeToggle();
 
-	Mouse::Position CursorPixelPosition() const;
-	Mouse::Position CursorPixelCentered() const;
+	DisplayPosition CursorPosition() const;
+//	DisplayPosition CursorPixelPosition() const;
+//	DisplayPosition CursorPixelCentered() const;
 
 	public:
 	void Tick();

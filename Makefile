@@ -57,12 +57,12 @@ VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))
 VALUE_TYPE_OBJ := $(addprefix $(DIR_OBJ)/,$(VALUE_TYPE:.cpp=.o))
 
 DISPLAY := \
-	Display/AbsNormal2D.cpp \
-	Display/RelNormal2D.cpp \
-	Display/PixelCoord2D.cpp \
-	Display/ScreenCoord2D.cpp \
-	Display/SizeRatio2D.cpp \
-	Display/WindowBufferSize2D.cpp
+	Display/AspectRatio.cpp \
+	Display/PixelSize.cpp \
+	Display/DisplaySize.cpp \
+	Display/PixelPosition.cpp \
+	Display/DisplayPosition.cpp \
+	Display/SizeRatio2D.cpp
 DISPLAY_SRC := $(addprefix $(DIR_SRC)/,$(DISPLAY))
 DISPLAY_OBJ := $(addprefix $(DIR_OBJ)/,$(DISPLAY:.cpp=.o))
 
@@ -110,8 +110,9 @@ UNIFORM := \
 	Graphics/Uniform/LightBase.cpp \
 	Graphics/Uniform/LightSolar.cpp \
 	Graphics/Uniform/LightSpot.cpp \
-	Graphics/Uniform/SizeRatio2D.cpp \
-	Graphics/Uniform/WindowBufferSize2D.cpp
+	Graphics/Uniform/PixelSize.cpp \
+	Graphics/Uniform/DisplaySize.cpp \
+	Graphics/Uniform/SizeRatio2D.cpp
 UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))
 UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
 
@@ -125,8 +126,7 @@ MULTIFORM := \
 	Graphics/Multiform/Depth.cpp \
 	Graphics/Multiform/Range.cpp \
 	Graphics/Multiform/LInter.cpp \
-	Graphics/Multiform/SizeRatio2D.cpp \
-	Graphics/Multiform/WindowBufferSize2D.cpp
+	Graphics/Multiform/SizeRatio2D.cpp
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
 MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
 
@@ -226,7 +226,6 @@ USERPARAMETER := \
 \
 	UserParameter/Mouse/ButtonRange.cpp \
 	UserParameter/Mouse/ButtonData.cpp \
-	UserParameter/Mouse/Position.cpp \
 	UserParameter/Mouse/Click.cpp \
 	UserParameter/Mouse/Scroll.cpp \
 	UserParameter/Mouse/Codes.cpp \

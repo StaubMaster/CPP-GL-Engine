@@ -43,7 +43,9 @@
 # include "Uniform/LightSolar.hpp"
 # include "Uniform/LightSpot.hpp"
 
+# include "Uniform/PixelSize.hpp"
+# include "Uniform/DisplaySize.hpp"
+
 # include "Uniform/SizeRatio2D.hpp"
-# include "Uniform/WindowBufferSize2D.hpp"
 
 #endif

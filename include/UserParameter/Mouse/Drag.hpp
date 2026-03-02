@@ -3,7 +3,8 @@
 
 # include "UserParameter/Haptic/Code.hpp"
 # include "UserParameter/Haptic/Modifier.hpp"
-# include "UserParameter/Mouse/Position.hpp"
+
+# include "Display/DisplayPosition.hpp"
 
 namespace UserParameter
 {
@@ -15,8 +16,8 @@ struct Drag
 {
 	Haptic::Code		Code;
 	Haptic::Modifier	Mods;
-	Mouse::Position		Origin;
-	Mouse::Position		Position;
+	DisplayPosition		Origin;
+	DisplayPosition		Position;
 };
 
 };

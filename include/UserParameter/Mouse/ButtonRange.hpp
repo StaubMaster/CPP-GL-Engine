@@ -2,9 +2,10 @@
 # define USER_PARAMETER_MOUSE_BUTTONRANGE_HPP
 
 # include "UserParameter/Mouse/ButtonData.hpp"
-# include "UserParameter/Mouse/Position.hpp"
 # include "UserParameter/Haptic/Action.hpp"
 # include "UserParameter/Haptic/Code.hpp"
+
+# include "Display/DisplayPosition.hpp"
 
 
 
@@ -46,7 +47,7 @@ struct ButtonRange
 	bool	IsPress(unsigned short token) const;
 	bool	IsRelease(unsigned short token) const;
 
-	void	Update(Mouse::Position pos, Haptic::Code code, Haptic::Action action);
+	void	Update(DisplayPosition pos, Haptic::Code code, Haptic::Action action);
 	void	Tick();
 };
 

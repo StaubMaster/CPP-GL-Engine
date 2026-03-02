@@ -5,7 +5,7 @@
 # include "UserParameter/Haptic/Action.hpp"
 # include "UserParameter/Haptic/Modifier.hpp"
 
-# include "UserParameter/Mouse/Position.hpp"
+# include "Display/DisplayPosition.hpp"
 
 namespace UserParameter
 {
@@ -18,7 +18,7 @@ struct Click
 	Haptic::Code		Code;
 	Haptic::Action		Action;
 	Haptic::Modifier	Mods;
-	Mouse::Position		Position;
+	DisplayPosition		Position;
 
 	//public:
 	//Click();

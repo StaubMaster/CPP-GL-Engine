@@ -163,8 +163,6 @@ void Window::UpdateSize()
 	bufSize = Point2D(w, h);
 
 	Size.Change(winSize, bufSize);
-	WindowCenter = winSize * 0.5f;
-	BufferCenter = bufSize * 0.5f;
 }
 
 
@@ -254,9 +252,9 @@ Point3D Window::MoveFromKeys() const
 Angle3D Window::SpinFromCursor() const
 {
 	Angle3D spin;
-	Point2D cursor = MouseManager.CursorPixelPosition().Absolute;
-	spin.X.FromRadians(+cursor.X);
-	spin.Y.FromRadians(-cursor.Y);
+	DisplayPosition cursor = MouseManager.CursorPosition();
+	spin.X.FromRadians(+cursor.Window.Corner.X);
+	spin.Y.FromRadians(-cursor.Window.Corner.Y);
 	return spin;
 }
 Trans3D Window::MoveSpinFromKeysCursor() const

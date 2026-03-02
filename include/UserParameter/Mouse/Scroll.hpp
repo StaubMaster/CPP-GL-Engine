@@ -2,9 +2,8 @@
 # define USER_PARAMETER_MOUSE_SCROLL_HPP
 
 # include "UserParameter/Haptic/Modifier.hpp"
-# include "UserParameter/Mouse/Position.hpp"
 
-# include "ValueType/Point2D.hpp"
+# include "Display/DisplayPosition.hpp"
 
 namespace UserParameter
 {
@@ -17,7 +16,7 @@ struct Scroll
 	float				X;
 	float				Y;
 	Haptic::Modifier	Mods;
-	Mouse::Position		Position;
+	DisplayPosition		Position;
 
 	//public:
 	//Scroll();

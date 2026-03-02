@@ -2,7 +2,7 @@
 
 
 
-void UserParameter::Mouse::ButtonData::Update(Mouse::Position pos, Haptic::Action action)
+void UserParameter::Mouse::ButtonData::Update(DisplayPosition pos, Haptic::Action action)
 {
 	if (action.IsPress())
 	{

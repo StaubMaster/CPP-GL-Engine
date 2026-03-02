@@ -15,9 +15,8 @@ namespace Multiform
 	class Range;
 
 	class Trans3D;
-	
+
 	class SizeRatio2D;
-	class WindowBufferSize2D;
 };
 
 #endif

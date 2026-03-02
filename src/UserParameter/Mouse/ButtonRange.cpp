@@ -92,7 +92,7 @@ bool UserParameter::Mouse::ButtonRange::IsRelease(unsigned short token) const
 
 
 
-void	UserParameter::Mouse::ButtonRange::Update(Mouse::Position pos, Haptic::Code code, Haptic::Action action)
+void	UserParameter::Mouse::ButtonRange::Update(DisplayPosition pos, Haptic::Code code, Haptic::Action action)
 {
 	if (Has(code.Flags))
 	{

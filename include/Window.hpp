@@ -6,7 +6,8 @@
 
 # include "Function/Pointer.hpp"
 
-# include "Display/WindowBufferSize2D.hpp"
+# include "Display/DisplaySize.hpp"
+# include "Display/DisplayPosition.hpp"
 
 # include "UserParameter/KeyBoard/EventManager.hpp"
 # include "UserParameter/Mouse/EventManager.hpp"
@@ -36,7 +37,7 @@ class Window
 	FunctionPointer<double>	FrameCallBack;
 	FunctionPointer<>		InitCallBack;
 	FunctionPointer<>		FreeCallBack;
-	FunctionPointer<const WindowBufferSize2D &>		ResizeCallBack;
+	FunctionPointer<const DisplaySize &>		ResizeCallBack;
 
 	public:
 	UserParameter::KeyBoard::EventManager	KeyBoardManager;
@@ -44,23 +45,7 @@ class Window
 	ColorF4 DefaultColor;
 
 	public:
-	WindowBufferSize2D Size;
-	/* WindowBufferSize
-		Window
-			Full
-			Half
-		(Frame)Buffer
-			Full
-			Half
-		Ratio
-		dont need to specify 2D, it's a Window
-		
-	*/
-
-	private:
-	// Center isn't used ?
-	Point2D WindowCenter;
-	Point2D BufferCenter;
+	DisplaySize Size;
 
 	public:
 	Window();

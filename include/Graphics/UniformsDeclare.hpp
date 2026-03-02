@@ -43,8 +43,11 @@ namespace Uniform
 	class LightSolar;
 	class LightSpot;
 
+	class PixelSize;
+	class DisplaySize;
+
 	class SizeRatio2D;
-	class WindowBufferSize2D;
+//	class WindowBufferSize2D;
 };
 
 #endif

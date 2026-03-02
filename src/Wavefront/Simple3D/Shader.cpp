@@ -4,7 +4,7 @@
 
 Wavefront::Simple3D::Shader::Shader()
 	: ::Shader::Base()
-	, WindowSize(*this, "WindowSize")
+	, DisplaySize(*this, "DisplaySize")
 	, View(*this, "View")
 	, Depth(*this, "Depth")
 	, ColorToTex(*this, "ColorToTex")

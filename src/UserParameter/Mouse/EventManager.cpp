@@ -48,15 +48,31 @@ void UserParameter::Mouse::EventManager::CursorModeToggle()
 
 
 
-UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelPosition() const
+DisplayPosition UserParameter::Mouse::EventManager::CursorPosition() const
 {
 	double x, y;
 	glfwGetCursorPos(window.glfw_window, &x, &y);
+	Point2D p(x, y);
+
+	DisplayPosition pos;
+	pos.Window.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
+	pos.Buffer.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
+	pos.Window.Center = pos.Window.Corner - window.Size.Window.Half;
+	pos.Buffer.Center = pos.Buffer.Corner - window.Size.Buffer.Half;
+	pos.NormalAbs = pos.Window.Corner / window.Size.Window.Full;
+	pos.NormalRel = pos.Window.Center / window.Size.Window.Half;
+	return pos;
+}
+/*UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelPosition() const
+{
+	double x, y;
+	glfwGetCursorPos(window.glfw_window, &x, &y);
+
 	UserParameter::Mouse::Position pos;
 	pos.Absolute.X = x;
 	pos.Absolute.Y = y;
 	return pos;
-}
+}*/
 /*UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelCentered() const
 {
 	if (CursorModeIsLocked()) { return Point2D(0, 0); }
@@ -87,13 +103,13 @@ void UserParameter::Mouse::EventManager::Tick()
 }
 void UserParameter::Mouse::EventManager::UpdateClick(int button, int action, int mods)
 {
-	Buttons.Update(CursorPixelPosition(), Haptic::Code(button), Haptic::Action(action));
+	Buttons.Update(CursorPosition(), Haptic::Code(button), Haptic::Action(action));
 
 	UserParameter::Mouse::Click params;
 	params.Code = button;
 	params.Action = action;
 	params.Mods = mods;
-	params.Position = CursorPixelPosition();
+	params.Position = CursorPosition();
 	CallbackClick(params);
 }
 void UserParameter::Mouse::EventManager::UpdateScroll(float offset_x, float offset_y)
@@ -105,9 +121,15 @@ void UserParameter::Mouse::EventManager::UpdateScroll(float offset_x, float offs
 }
 void UserParameter::Mouse::EventManager::UpdateMove(double x_pos, double y_pos)
 {
-	UserParameter::Mouse::Position pos;
-	pos.Absolute.X = x_pos;
-	pos.Absolute.Y = y_pos;
+	Point2D p(x_pos, y_pos);
+
+	DisplayPosition pos;
+	pos.Window.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
+	pos.Buffer.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
+	pos.Window.Center = pos.Window.Corner - window.Size.Window.Half;
+	pos.Buffer.Center = pos.Buffer.Corner - window.Size.Buffer.Half;
+	pos.NormalAbs = pos.Window.Corner / window.Size.Window.Full;
+	pos.NormalRel = pos.Window.Center / window.Size.Window.Half;
 
 	CallbackMove(pos);
 	/*	Dragging

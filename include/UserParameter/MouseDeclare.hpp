@@ -5,7 +5,6 @@ namespace UserParameter
 {
 namespace Mouse
 {
-struct Position;
 struct Click;
 struct Scroll;
 struct Drag;
