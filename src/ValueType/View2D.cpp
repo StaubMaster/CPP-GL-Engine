@@ -31,10 +31,14 @@ View2D View2D::Default()
 
 
 
-void View2D::Transform(Trans2D trans, float timeDelta)
+void View2D::Change(Trans2D trans, float timeDelta)
 {
 	trans.Pos *= timeDelta;
 	trans.Rot *= timeDelta;
-	Trans.Transform(trans.Pos, trans.Rot);
-	Trans.Rot.CalcMatrix();
+	Trans.Change(trans.Pos, trans.Rot);
 }
+
+
+
+Point2D View2D::operator*(const Point2D & pos) const { return Trans * (pos * Scale); }
+Point2D View2D::operator/(const Point2D & pos) const { return (Trans / pos) / Scale; }

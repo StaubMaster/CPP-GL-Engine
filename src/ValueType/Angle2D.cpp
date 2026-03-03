@@ -1,31 +1,29 @@
 #include "ValueType/Angle2D.hpp"
 #include "ValueType/Point2D.hpp"
 
-#include <math.h>
 
 
-
-Angle2D::Angle2D() :
-	Ang(),
-	Mat(Matrix2x2::Default())
-{ CalcMatrix(); }
-Angle2D::Angle2D(Angle ang) :
-	Ang(ang),
-	Mat(Matrix2x2::Default())
-{ CalcMatrix(); }
 Angle2D::~Angle2D()
 { }
+Angle2D::Angle2D()
+	: Ang()
+	, Mat(Matrix2x2::Default())
+{ CalcMatrix(); }
+Angle2D::Angle2D(Angle ang)
+	: Ang(ang)
+	, Mat(Matrix2x2::Default())
+{ CalcMatrix(); }
 
 
 
-Angle2D::Angle2D(const Angle2D & other) :
-	Ang(other.Ang),
-	Mat(other.Mat)
+Angle2D::Angle2D(const Angle2D & other)
+	: Ang(other.Ang)
+	, Mat(other.Mat)
 { }
-const Angle2D & Angle2D::operator =(const Angle2D & other)
+Angle2D & Angle2D::operator =(const Angle2D & other)
 {
-	this -> Ang = other.Ang;
-	this -> Mat = other.Mat;
+	Ang = other.Ang;
+	Mat = other.Mat;
 	return *this;
 }
 
@@ -44,22 +42,17 @@ void Angle2D::CalcMatrix()
 {
 	float sin_ = Ang.Sin();
 	float cos_ = Ang.Cos();
-	Mat = Matrix2x2(
-		 +cos_ , -sin_ ,
-		 +sin_ , +cos_
-	);
+	float data[4] {
+		+cos_ , -sin_ ,
+		+sin_ , +cos_ ,
+	};
+	Mat = Matrix2x2(data);
 }
 
 
 
-Point2D	Angle2D::rotateFore(Point2D p) const
-{
-	return Mat.Multiply0(p);
-}
-Point2D	Angle2D::rotateBack(Point2D p) const
-{
-	return Mat.Multiply1(p);
-}
+Point2D	Angle2D::operator*(const Point2D & p) const { return Mat * p; }
+Point2D	Angle2D::operator/(const Point2D & p) const { return Mat / p; }
 
 /*Angle2D	Angle2D::rotateFore(Angle2D a) const
 {
@@ -102,7 +95,6 @@ Angle2D Angle2D::operator-(const Angle2D & other) const
 		Ang - other.Ang
 	);
 }
-
 Angle2D & Angle2D::operator+=(const Angle2D & other)
 {
 	Ang += other.Ang;
@@ -139,5 +131,6 @@ Angle2D & Angle2D::operator*=(const float & flt)
 Angle2D & Angle2D::operator/=(const float & flt)
 {
 	Ang /= flt;
+	CalcMatrix();
 	return *this;
 }

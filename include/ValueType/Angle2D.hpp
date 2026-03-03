@@ -15,12 +15,12 @@ struct Angle2D
 	Matrix2x2	Mat;
 
 	public:
+	~Angle2D();
 	Angle2D();
 	Angle2D(Angle ang);
-	~Angle2D();
 
 	Angle2D(const Angle2D & other);
-	const Angle2D & operator=(const Angle2D & other);
+	Angle2D & operator=(const Angle2D & other);
 
 	static Angle2D FromPoint2D(const Point2D & dir);
 
@@ -28,11 +28,11 @@ struct Angle2D
 	void	CalcMatrix();
 
 	public:
-	Point2D rotateFore(Point2D p) const;
-	Point2D rotateBack(Point2D p) const;
+	Point2D	operator*(const Point2D & p) const;
+	Point2D	operator/(const Point2D & p) const;
 
-	Angle2D	rotateFore(Angle2D a) const;
-	Angle2D	rotateBack(Angle2D a) const;
+//	Angle2D	RotateRegular(Angle2D a) const;
+//	Angle2D	RotateReverse(Angle2D a) const;
 
 	public:
 	Angle2D		operator+(const Angle2D & other) const;

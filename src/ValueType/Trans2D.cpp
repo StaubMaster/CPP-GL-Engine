@@ -29,40 +29,44 @@ Trans2D & Trans2D::operator=(const Trans2D & other)
 
 void Trans2D::Move(Point2D move)
 {
-	Pos += Rot.rotateBack(move);
+	Pos += (Rot * move);
 }
 void Trans2D::Spin(Angle2D spin)
 {
 	Rot += spin;
 }
-void Trans2D::Transform(Point2D move, Angle2D spin)
+void Trans2D::Change(Point2D move, Angle2D spin)
 {
 	Move(move);
 	Spin(spin);
 }
+void Trans2D::Change(Trans2D trans)
+{
+	Change(trans.Pos, trans.Rot);
+}
 
 
 
 
 
-Point2D Trans2D::Transform0(Point2D pos) const { return Rot.rotateBack(pos) + Pos; }
-//Angle2D Trans2D::Transform0(Angle2D rot) const { return Rot.rotateBack(rot); }
-//Trans2D Trans2D::oTransform0(Trans2D trans) const { }
-Ray2D Trans2D::Transform0(Ray2D ray) const
+Point2D Trans2D::operator*(Point2D pos) const { return (Rot * pos) + Pos; }
+//Angle2D Trans2D::operator*(Angle2D rot) const { return Rot.rotateBack(rot); }
+//Trans2D Trans2D::operator*(Trans2D trans) const { }
+Ray2D Trans2D::operator*(Ray2D ray) const
 {
 	return Ray2D(
-		Rot.rotateBack(ray.Pos) + Pos,
-		Rot.rotateBack(ray.Dir)
+		(Rot * ray.Pos) + Pos,
+		(Rot * ray.Dir)
 	);
 }
 
-Point2D Trans2D::Transform1(Point2D pos) const { return Rot.rotateFore(pos - Pos); }
-//Angle2D Trans2D::Transform1(Angle2D rot) const { return Rot.rotateFore(rot); }
-//Trans2D Trans2D::Transform1(Trans2D trans) const;
-Ray2D Trans2D::Transform1(Ray2D ray) const
+Point2D Trans2D::operator/(Point2D pos) const { return Rot / (pos - Pos); }
+//Angle2D Trans2D::operator/(Angle2D rot) const { return Rot.rotateFore(rot); }
+//Trans2D Trans2D::operator/(Trans2D trans) const;
+Ray2D Trans2D::operator/(Ray2D ray) const
 {
 	return Ray2D(
-		Rot.rotateFore(ray.Pos - Pos),
-		Rot.rotateFore(ray.Dir)
+		Rot / (ray.Pos - Pos),
+		Rot / (ray.Dir)
 	);
 }

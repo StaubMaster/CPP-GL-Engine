@@ -21,8 +21,8 @@ struct Line2D;
 struct Trans2D
 {
 	public:
-	Point2D	Pos;
-	Angle2D	Rot;
+	Point2D	Pos; // Position
+	Angle2D	Rot; // Rotation
 
 	public:
 	Trans2D();
@@ -35,19 +35,20 @@ struct Trans2D
 	public:
 	void Move(Point2D move);
 	void Spin(Angle2D spin);
-	void Transform(Point2D move, Angle2D spin);
+	void Change(Point2D move, Angle2D spin);
+	void Change(Trans2D trans);
 
 	public:
-	Point2D	Transform0(Point2D pos) const;
-	Angle2D	Transform0(Angle2D rot) const;
-	Trans2D	Transform0(Trans2D trans) const;
-	Ray2D	Transform0(Ray2D ray) const;
+	Point2D	operator*(Point2D pos) const;
+//	Angle2D	operator*(Angle2D rot) const;
+//	Trans2D	operator*(Trans2D trans) const;
+	Ray2D	operator*(Ray2D ray) const;
 
 	public:
-	Point2D	Transform1(Point2D pos) const;
-	Angle2D	Transform1(Angle2D rot) const;
-	Trans2D	Transform1(Trans2D trans) const;
-	Ray2D	Transform1(Ray2D ray) const;
+	Point2D	operator/(Point2D pos) const;
+//	Angle2D	operator/(Angle2D rot) const;
+//	Trans2D	operator/(Trans2D trans) const;
+	Ray2D	operator/(Ray2D ray) const;
 };
 
 #endif
