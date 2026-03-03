@@ -52,44 +52,8 @@ DisplayPosition UserParameter::Mouse::EventManager::CursorPosition() const
 {
 	double x, y;
 	glfwGetCursorPos(window.glfw_window, &x, &y);
-	Point2D p(x, y);
-
-	DisplayPosition pos;
-	pos.Window.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
-	pos.Buffer.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
-	pos.Window.Center = pos.Window.Corner - window.Size.Window.Half;
-	pos.Buffer.Center = pos.Buffer.Corner - window.Size.Buffer.Half;
-	pos.NormalAbs = pos.Window.Corner / window.Size.Window.Full;
-	pos.NormalRel = pos.Window.Center / window.Size.Window.Half;
-	return pos;
+	return DisplayPosition::FromWindowCorner(Point2D(x, y), window.Size);
 }
-/*UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelPosition() const
-{
-	double x, y;
-	glfwGetCursorPos(window.glfw_window, &x, &y);
-
-	UserParameter::Mouse::Position pos;
-	pos.Absolute.X = x;
-	pos.Absolute.Y = y;
-	return pos;
-}*/
-/*UserParameter::Mouse::Position UserParameter::Mouse::EventManager::CursorPixelCentered() const
-{
-	if (CursorModeIsLocked()) { return Point2D(0, 0); }
-
-	Point2D p = CursorPixelPosition();
-
-	p.X = (p.X - ((win -> ViewPortSizeRatio).Size.X / 2));
-	p.Y = (((win -> ViewPortSizeRatio).Size.Y / 2) - p.Y);
-
-	p.X = p.X / ((win -> ViewPortSizeRatio).Size.X * (win -> ViewPortSizeRatio).Ratio.X);
-	p.Y = p.Y / ((win -> ViewPortSizeRatio).Size.Y * (win -> ViewPortSizeRatio).Ratio.Y);
-
-	p.X = p.X * 2;
-	p.Y = p.Y * 2;
-
-	return p;
-}*/
 
 
 

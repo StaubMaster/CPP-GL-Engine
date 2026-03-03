@@ -1,8 +1,21 @@
 #include "Display/AspectRatio.hpp"
 
 
-AspectRatio::AspectRatio()
+AspectRatio::~AspectRatio()
 { }
+AspectRatio::AspectRatio()
+	: Value()
+{ }
+
+AspectRatio::AspectRatio(const AspectRatio & other)
+	: Value(other.Value)
+{ }
+AspectRatio & AspectRatio::operator=(const AspectRatio & other)
+{
+	Value = other.Value;
+	return *this;
+}
+
 AspectRatio::AspectRatio(Point2D size)
 {
 	Change(size);
@@ -10,21 +23,22 @@ AspectRatio::AspectRatio(Point2D size)
 
 void AspectRatio::Change(Point2D size)
 {
+	// == 0.0f ?
 	if (size.X == size.Y)
 	{
-		X = 1.0f;
-		Y = 1.0f;
+		Value.X = 1.0f;
+		Value.Y = 1.0f;
 	}
 	else if (size.X > size.Y)
 	{
-		X = size.Y / size.X;
-		Y = 1.0f;
+		Value.X = size.Y / size.X;
+		Value.Y = 1.0f;
 	}
 	else if (size.X < size.Y)
 	{
-		X = 1.0f;
-		Y = size.X / size.Y;
+		Value.X = 1.0f;
+		Value.Y = size.X / size.Y;
 	}
-	else // NAN ?
-	{ }
+	//else // NAN ?
+	//{ }
 }

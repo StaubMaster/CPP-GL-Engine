@@ -110,7 +110,7 @@ UNIFORM := \
 	Graphics/Uniform/LightBase.cpp \
 	Graphics/Uniform/LightSolar.cpp \
 	Graphics/Uniform/LightSpot.cpp \
-	Graphics/Uniform/PixelSize.cpp \
+	Graphics/Uniform/AspectRatio.cpp \
 	Graphics/Uniform/DisplaySize.cpp \
 	Graphics/Uniform/SizeRatio2D.cpp
 UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))

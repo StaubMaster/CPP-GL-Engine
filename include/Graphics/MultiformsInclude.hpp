@@ -14,7 +14,6 @@
 
 # include "Multiform/Trans3D.hpp"
 
-# include "Multiform/PixelSize.hpp"
 # include "Multiform/DisplaySize.hpp"
 
 # include "Multiform/SizeRatio2D.hpp"
