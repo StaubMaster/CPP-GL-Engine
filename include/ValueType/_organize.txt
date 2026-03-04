@@ -1,0 +1,31 @@
+
+organize things
+
+
+Light could be put into its own subFolder
+
+maybe View too, along with Depth since thats a part of View
+
+also Display,
+put that in the same as View and Depth ?
+
+
+
+LInter,
+I made some gener InterPolation stuff, should LInter be a part of that ?
+
+
+
+Geometric
+	Point
+	Angle
+	Trans
+	Ray
+	Line
+
+Matrix is more general
+and Bool and Undex are different as well
+
+also AxisBox, probably Geometric as well
+
+

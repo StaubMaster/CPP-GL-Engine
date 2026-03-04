@@ -1,5 +1,0 @@
-
-right now Angle spins the wrong way ?
-
-positive should be counter clockwise
-negative should be clockwise

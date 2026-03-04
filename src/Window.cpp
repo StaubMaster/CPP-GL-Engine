@@ -67,6 +67,9 @@ void Window::MakeUserParemeters()
 {
 	Debug::Log << Debug::Tabs << "MakeUserParemeters" << "  ....  " << Debug::Done;
 
+	// these arent all Keys that openGL provides
+	// maybe just put all keys in one list, instead of subLists
+	// it's < 400 keys so a for loop that checks and int should be fine
 	KeyBoardManager.Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
 	KeyBoardManager.Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
 	KeyBoardManager.Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters

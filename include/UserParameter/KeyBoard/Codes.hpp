@@ -3,6 +3,11 @@
 
 # include "UserParameter/Haptic/Code.hpp"
 
+// I dont like these being so deep in namespaces
+// and there are no ther "Keys"
+
+// also these arent all keys that glfw provides
+
 namespace UserParameter
 {
 namespace KeyBoard
