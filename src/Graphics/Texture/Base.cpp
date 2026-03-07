@@ -156,12 +156,12 @@ void Texture::Base::Full3D(Undex3D size, const void * data)
 {
 	//Debug::Log << "Texture: Full3D: " << size << Debug::Done;
 	//std::cout << "Texture: Full3D: " << size << '\n';
-	GL::TexImage3D(Target, 0, GL::TextureInternalFormat::Rgba8, size.X, size.Y, size.Z, 0, GL::TextureFormat::Rgba, GL::TextureType::UnsignedInt8888Rev, data);
+	GL::TexImage3D(Target, 0, GL::InternalFormat::Rgba8, size.X, size.Y, size.Z, 0, GL::PixelDataFormat::Rgba, GL::PixelDataType::UnsignedInt8888Rev, data);
 }
 void Texture::Base::Part3D(Undex3D size, Undex3D offset, const void * data)
 {
 	//Debug::Log << "Texture: Part3D: " << size << " | " << offset << Debug::Done;
 	//std::cout << "Texture: Part3D: " << size << " | " << offset << '\n';
-	GL::TexSubImage3D(Target, 0, offset.X, offset.Y, offset.Z, size.X, size.Y, size.Z, GL::TextureFormat::Rgba, GL::TextureType::UnsignedInt8888Rev, data);
+	GL::TexSubImage3D(Target, 0, offset.X, offset.Y, offset.Z, size.X, size.Y, size.Z, GL::PixelDataFormat::Rgba, GL::PixelDataType::UnsignedInt8888Rev, data);
 }
 
