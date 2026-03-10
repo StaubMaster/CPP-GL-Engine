@@ -208,6 +208,11 @@ float Point2D::operator%(const Point2D & other) const
 
 
 
+/*
+(p0.Y * p1.Z) - (p0.Z * p1.Y)
+(p0.Z * p1.X) - (p0.X * p1.Z)
+(p0.X * p1.Y) - (p0.Y * p1.X)
+*/
 float Point2D::cross(const Point2D & p0, const Point2D & p1)
 {
 	return (
@@ -215,14 +220,34 @@ float Point2D::cross(const Point2D & p0, const Point2D & p1)
 		(p0.Y * p1.X)
 	);
 }
-float Point2D::cross(const Point2D & other) const
+Point2D Point2D::cross(float f0, const Point2D & p1)
 {
-	return cross(*this, other);
+/*
++(00 * 0000) -(f0 * p1.Y)
++(f0 * p1.X) -(00 * 0000)
++(00 * p1.Y) -(00 * p1.X)
+*/
+	return Point2D(
+		-(f0 * p1.Y),
+		+(f0 * p1.X)
+	);
 }
-float Point2D::operator^(const Point2D & other) const
+Point2D Point2D::cross(const Point2D & p0, float f1)
 {
-	return cross(*this, other);
+/*
++(p0.Y * f1) -(0000 * 00)
++(0000 * 00) -(p0.X * f1)
++(p0.X * 00) -(p0.Y * 00)
+*/
+	return Point2D(
+		+(p0.Y * f1),
+		-(p0.X * f1)
+	);
 }
+
+
+//float Point2D::cross(const Point2D & other) const { return cross(*this, other); }
+//float Point2D::operator^(const Point2D & other) const { return cross(*this, other); }
 
 
 
