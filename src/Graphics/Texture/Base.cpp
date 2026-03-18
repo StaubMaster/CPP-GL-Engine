@@ -143,11 +143,31 @@ GL_TEXTURE_WRAP_R	Z
 */
 void Texture::Base::DefaultParams()
 {
-	GL::TexParameteri(Target, GL::TextureParameterName::TextureWrapS, GL_REPEAT);
-	GL::TexParameteri(Target, GL::TextureParameterName::TextureWrapT, GL_REPEAT);
-	GL::TexParameteri(Target, GL::TextureParameterName::TextureMinFilter, GL_NEAREST);
-	GL::TexParameteri(Target, GL::TextureParameterName::TextureMagFilter, GL_NEAREST);
+	WrapX(WrapType::Repeat);
+	WrapY(WrapType::Repeat);
+	FilterMin(FilterMinType::Nearest);
+	FilterMag(FilterMagType::Nearest);
 	glGenerateMipmap((unsigned int)Target);
+}
+void Texture::Base::WrapX(WrapType wrap)
+{
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureWrapS, (int)wrap);
+}
+void Texture::Base::WrapY(WrapType wrap)
+{
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureWrapT, (int)wrap);
+}
+void Texture::Base::WrapZ(WrapType wrap)
+{
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureWrapR, (int)wrap);
+}
+void Texture::Base::FilterMin(FilterMinType filter)
+{
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureMinFilter, (int)filter);
+}
+void Texture::Base::FilterMag(FilterMagType filter)
+{
+	GL::TexParameteri(Target, GL::TextureParameterName::TextureMagFilter, (int)filter);
 }
 
 

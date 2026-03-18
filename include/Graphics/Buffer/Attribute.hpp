@@ -32,6 +32,7 @@ class Attribute : public Base
 	Attribute & operator=(const Attribute & other);
 
 	public:
+	void ChangeAttributeBinding();
 	void Change(const Container::Void & data);
 };
 };

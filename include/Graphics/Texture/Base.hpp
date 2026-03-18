@@ -2,6 +2,7 @@
 # define TEXTURE_BASE_HPP
 
 # include "OpenGLTypes.hpp"
+# include "OpenGLEnums.hpp"
 
 class FileInfo;
 
@@ -47,8 +48,36 @@ class Base
 	void Delete();
 
 
+
 	public:
 	void DefaultParams();
+	enum class WrapType : int
+	{
+		ClampToEdge = GL_CLAMP_TO_EDGE,
+		ClampToBorder = GL_CLAMP_TO_BORDER,
+		MirroredRepeat = GL_MIRRORED_REPEAT,
+		Repeat = GL_REPEAT,
+		MirrorClampToEdge = GL_MIRROR_CLAMP_TO_EDGE,
+	};
+	void WrapX(WrapType wrap);
+	void WrapY(WrapType wrap);
+	void WrapZ(WrapType wrap);
+	enum class FilterMinType : int
+	{
+		Nearest = GL_NEAREST,
+		Linear = GL_LINEAR,
+		NearestMipmapNearest = GL_NEAREST_MIPMAP_NEAREST,
+		LinearMipmapNearest = GL_LINEAR_MIPMAP_NEAREST,
+		NearestMipmapLinear = GL_NEAREST_MIPMAP_LINEAR,
+		LinearMipmapLinear = GL_LINEAR_MIPMAP_LINEAR,
+	};
+	void FilterMin(FilterMinType filter);
+	enum class FilterMagType : int
+	{
+		Nearest = GL_NEAREST,
+		Linear = GL_LINEAR,
+	};
+	void FilterMag(FilterMagType filter);
 
 	void Full3D(Undex3D size, const void * data);
 	void Part3D(Undex3D size, Undex3D offset, const void * data);

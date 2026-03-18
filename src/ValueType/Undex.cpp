@@ -23,6 +23,7 @@ Undex & Undex::operator=(const Undex & other)
 
 bool Undex::IsValid() const { return (Value != 0xFFFFFFFF); }
 Undex Undex::Invalid() { return Undex(0xFFFFFFFF); }
+Undex::operator bool() const { return IsValid(); }
 
 
 

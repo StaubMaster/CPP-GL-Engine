@@ -55,16 +55,19 @@ Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 
 
 
-void Buffer::Attribute::Change(const Container::Void & data)
+void Buffer::Attribute::ChangeAttributeBinding()
 {
 	Bind();
-	GL::BufferData(Target, data.VoidCount(), data.VoidData(), Usage);
-
+	GL::BufferData(Target, 0, nullptr, Usage);
 	GL::AttributeOffset offset = nullptr;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)
 	{
 		Attributes[i] -> Bind(Divisor, Stride, offset);
 	}
-
+}
+void Buffer::Attribute::Change(const Container::Void & data)
+{
+	Bind();
+	GL::BufferData(Target, data.VoidCount(), data.VoidData(), Usage);
 	DrawCount = data.Count();
 }

@@ -83,7 +83,7 @@ struct Angle
 
 	static Angle	SaSin(float val);
 	static Angle	SaCos(float val);
-	static Angle	SaTan2(float x, float y);
+	static Angle	SaTan2(float y, float x);
 
 
 

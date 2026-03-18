@@ -18,6 +18,7 @@ struct Undex
 
 	bool IsValid() const;
 	static Undex Invalid();
+	operator bool() const;
 
 
 

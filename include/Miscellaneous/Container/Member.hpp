@@ -3,7 +3,8 @@
 
 # include "Void.hpp"
 # include "Exception.hpp"
-# include "Behaviour/Member.hpp"
+
+# include "ValueType/Undex.hpp"
 
 //# define DEBUG_MESSAGES
 # ifdef DEBUG_MESSAGES
@@ -12,8 +13,20 @@
 
 
 
+template<typename T>
+static void swap(T & a, T & b)
+{
+	T t;
+	t = a;
+	a = b;
+	b = t;
+}
+
+
+
 namespace Container
 {
+
 template<typename T>
 class Member : public Void
 {
@@ -30,18 +43,6 @@ class Member : public Void
 
 	const void * VoidData() const override { return _Data; }
 	void * VoidData() override { return _Data; }
-
-
-
-	public:
-	Container::Behaviour::Member<T> ToBehaviour()
-	{
-		return Container::Behaviour::Member<T>(_Limit, _Count, _Data);
-	}
-	Container::Behaviour::ConstMember<T> ToBehaviour() const
-	{
-		return Container::Behaviour::ConstMember<T>(_Limit, _Count, _Data);
-	}
 
 
 
@@ -64,6 +65,22 @@ class Member : public Void
 	{
 		if (idx >= _Count) { throw Exception::InvalidIndex(); }
 		return _Data[idx];
+	}
+
+
+
+	const T & At(const Undex & udx) const { return _Data[udx.Value]; }
+	T & At(const Undex & udx) { return _Data[udx.Value]; }
+
+	const T & operator[](const Undex & udx) const
+	{
+		if (udx.Value >= _Count) { throw Exception::InvalidIndex(); }
+		return _Data[udx.Value];
+	}
+	T & operator[](const Undex & udx)
+	{
+		if (udx.Value >= _Count) { throw Exception::InvalidIndex(); }
+		return _Data[udx.Value];
 	}
 
 

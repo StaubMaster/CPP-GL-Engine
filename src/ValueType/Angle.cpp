@@ -57,7 +57,7 @@ void Angle::aTan2(float x, float y) { Value = atan2f(y, x); }
 
 Angle Angle::SaSin(float val) { return Angle(asinf(val)); }
 Angle Angle::SaCos(float val) { return Angle(acosf(val)); }
-Angle Angle::SaTan2(float x, float y) { return Angle(atan2f(y, x)); }
+Angle Angle::SaTan2(float y, float x) { return Angle(atan2f(y, x)); }
 
 
 
