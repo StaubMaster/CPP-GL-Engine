@@ -53,7 +53,7 @@ float Angle::Tan() const { return tanf(Value); }
 
 void Angle::aSin(float val) { Value = asinf(val); }
 void Angle::aCos(float val) { Value = acosf(val); }
-void Angle::aTan2(float x, float y) { Value = atan2f(y, x); }
+void Angle::aTan2(float y, float x) { Value = atan2f(y, x); }
 
 Angle Angle::SaSin(float val) { return Angle(asinf(val)); }
 Angle Angle::SaCos(float val) { return Angle(acosf(val)); }
