@@ -5,6 +5,20 @@
 
 namespace Intersect { };
 
-bool IsIntersecting(const Ray2D & ray, const Line2D & line);
+bool IsIntersecting(
+	const Ray2D & ray,
+	const Line2D & line
+);
+
+bool IsIntersecting(
+	const Line2D & line0,
+	const Line2D & line1
+);
+
+bool Intersection(
+	const Line2D & line0,
+	const Line2D & line1,
+	Point2D & ret
+);
 
 #endif
