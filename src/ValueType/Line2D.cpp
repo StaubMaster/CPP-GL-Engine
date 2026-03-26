@@ -48,7 +48,7 @@ float Line2D::Length() const
 
 Point2D Line2D::Normal() const
 {
-	return Differance().perpendicular0().normalize();
+	return Differance().cross(1.0f).normalize();
 }
 Point2D Line2D::Middle() const
 {

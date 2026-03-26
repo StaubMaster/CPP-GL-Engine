@@ -14,9 +14,10 @@ struct Point2D
 	//	Referances take Space
 
 	public:
+	~Point2D();
+
 	Point2D();
 	Point2D(float x, float y);
-	~Point2D();
 
 	Point2D(const Point2D & other);
 	Point2D & operator=(const Point2D & other);
@@ -24,21 +25,18 @@ struct Point2D
 	public:
 	float length2() const;
 	float length() const;
+
 	Point2D normalize() const;
+	Point2D normalize(float & len) const;
 
-	Point2D operator+() const;
-	Point2D operator-() const;
-	Point2D operator!() const;
+	Point2D operator+() const; // dosent do anything
+	Point2D operator-() const; // reverses floats
+	Point2D operator!() const; // normalize
 
-	Point2D operator+(const float & flt) const;
-	Point2D operator-(const float & flt) const;
-	Point2D operator*(const float & flt) const;
-	Point2D operator/(const float & flt) const;
-
-	Point2D & operator+=(const float & flt);
-	Point2D & operator-=(const float & flt);
-	Point2D & operator*=(const float & flt);
-	Point2D & operator/=(const float & flt);
+	Point2D & operator+=(float f);
+	Point2D & operator-=(float f);
+	Point2D & operator*=(float f);
+	Point2D & operator/=(float f);
 
 	Point2D operator+(const Point2D & other) const;
 	Point2D operator-(const Point2D & other) const;
@@ -50,16 +48,28 @@ struct Point2D
 	Point2D & operator*=(const Point2D & other);
 	Point2D & operator/=(const Point2D & other);
 
-	float static dot(const Point2D & p0, const Point2D & p1);
-	float dot(const Point2D & other) const;
-	float operator%(const Point2D & other) const;
+			float dot(const Point2D & other) const;
+	static	float dot(const Point2D & p0, const Point2D & p1);
 
-	float   static cross(const Point2D & p0, const Point2D & p1);
-	Point2D static cross(float f0, const Point2D & p1);
-	Point2D static cross(const Point2D & p0, float f1);
+			float cross(const Point2D & other) const;
+	static	float cross(const Point2D & p0, const Point2D & p1);
 
-	Point2D perpendicular0() const;
-	Point2D perpendicular1() const;
+			Point2D cross(float f) const;
+	static	Point2D cross(float f, const Point2D & p);
+	static	Point2D cross(const Point2D & p, float f);
+
+	// operator % as dot
+	// operator ^ as cross
 };
+
+Point2D operator+(Point2D p, float f);
+Point2D operator-(Point2D p, float f);
+Point2D operator*(Point2D p, float f);
+Point2D operator/(Point2D p, float f);
+
+Point2D operator+(float f, Point2D p);
+Point2D operator-(float f, Point2D p);
+Point2D operator*(float f, Point2D p);
+Point2D operator/(float f, Point2D p);
 
 #endif

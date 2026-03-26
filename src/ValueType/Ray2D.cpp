@@ -51,7 +51,7 @@ Line2D Ray2D::ToLine(float scalar0, float scalar1) const
 
 Point2D Ray2D::Normal() const
 {
-	return Dir.perpendicular0().normalize();
+	return Dir.cross(1.0f).normalize();
 }
 
 
