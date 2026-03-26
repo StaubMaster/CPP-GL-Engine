@@ -3,20 +3,34 @@
 
 # include "ValueType/Point2D.hpp"
 
+struct Ray2D;
+
 struct Line2D
 {
 	public:
-	Point2D Pos0;
-	Point2D Pos1;
+	Point2D Pos0; // rename to Origin
+	Point2D Pos1; // rename to Target
 
 	public:
 	~Line2D();
 
 	Line2D();
 	Line2D(Point2D pos0, Point2D pos1);
-
+	
 	Line2D(const Line2D & other);
 	Line2D & operator=(const Line2D & other);
+	
+	Line2D(const Ray2D & ray);
+
+
+
+	Line2D Reverse() const;
+
+	Point2D Differance() const;
+	float Length() const;
+
+	Point2D Normal() const;
+	Point2D Middle() const;
 };
 
 #endif

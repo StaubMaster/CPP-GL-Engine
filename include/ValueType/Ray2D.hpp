@@ -20,9 +20,13 @@ struct Ray2D
 	Ray2D(const Ray2D & other);
 	Ray2D & operator=(const Ray2D & other);
 
+	Ray2D(const Line2D & line);
+
 	Point2D ToPoint(float scalar) const;
 	Line2D ToLine(float scalar) const;
 	Line2D ToLine(float scalar0, float scalar1) const;
+
+	Point2D Normal() const;
 
 //	public:
 //	class Interval

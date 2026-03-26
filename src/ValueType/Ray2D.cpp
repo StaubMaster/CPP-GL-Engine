@@ -29,6 +29,13 @@ Ray2D & Ray2D::operator=(const Ray2D & other)
 
 
 
+Ray2D::Ray2D(const Line2D & line)
+	: Pos(line.Pos0)
+	, Dir(line.Differance())
+{ }
+
+
+
 Point2D Ray2D::ToPoint(float scalar) const
 {
 	return Pos + (Dir * scalar);
@@ -42,6 +49,10 @@ Line2D Ray2D::ToLine(float scalar0, float scalar1) const
 	return Line2D(Pos + (Dir * scalar0), Pos + (Dir * scalar1));
 }
 
+Point2D Ray2D::Normal() const
+{
+	return Dir.perpendicular0().normalize();
+}
 
 
 //Ray2D::Interval::Interval(const Ray2D & ray, float inter = NAN, int index = -1) :
