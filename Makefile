@@ -228,7 +228,26 @@ USERPARAMETER := \
 	UserParameter/Mouse/Click.cpp \
 	UserParameter/Mouse/Scroll.cpp \
 	UserParameter/Mouse/Codes.cpp \
-	UserParameter/Mouse/EventManager.cpp
+	UserParameter/Mouse/EventManager.cpp \
+\
+	User/Enums/Modifier.cpp \
+	User/Enums/Action.cpp \
+	User/Enums/State.cpp \
+	User/Enums/MouseButtons.cpp \
+	User/Enums/Keys.cpp \
+\
+	User/Args/KeyArgs.cpp \
+	User/Args/TextArgs.cpp \
+	User/Args/ClickArgs.cpp \
+	User/Args/DragArgs.cpp \
+	User/Args/MoveArgs.cpp \
+	User/Args/ScrollArgs.cpp \
+\
+	User/KeyState.cpp \
+	User/MouseState.cpp \
+	User/MouseManager.cpp \
+	User/KeyBoardManager.cpp \
+
 USERPARAMETER_SRC := $(addprefix $(DIR_SRC)/,$(USERPARAMETER))
 USERPARAMETER_OBJ := $(addprefix $(DIR_OBJ)/,$(USERPARAMETER:.cpp=.o))
 

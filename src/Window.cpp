@@ -70,15 +70,15 @@ void Window::MakeUserParemeters()
 	// these arent all Keys that openGL provides
 	// maybe just put all keys in one list, instead of subLists
 	// it's < 400 keys so a for loop that checks and int should be fine
-	KeyBoardManager.Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
-	KeyBoardManager.Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
-	KeyBoardManager.Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
-	KeyBoardManager.Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
-	KeyBoardManager.Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
-	KeyBoardManager.Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
-	KeyBoardManager.Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
+	//KeyBoardManager.Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
+	//KeyBoardManager.Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
+	//KeyBoardManager.Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
+	//KeyBoardManager.Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
+	//KeyBoardManager.Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
+	//KeyBoardManager.Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
+	//KeyBoardManager.Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
 
-	MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
+	//MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
 
 	Debug::Log << Debug::Tabs << "MakeUserParemeters" << "  done  " << Debug::Done;
 }
@@ -87,16 +87,18 @@ void Window::MakeUserParemeters()
 
 
 
-Window::Window() :
-	glfw_window(NULL),
-	FrameNumberTerminate(0xFFFFFFFFFFFFFFFF),
-	FrameCallBack(),
-	InitCallBack(),
-	FreeCallBack(),
-	ResizeCallBack(),
-	KeyBoardManager(*this, 7),
-	MouseManager(*this),
-	DefaultColor(0.5f, 0.5f, 0.5f)
+Window::Window()
+	: glfw_window(NULL)
+	, FrameNumberTerminate(0xFFFFFFFFFFFFFFFF)
+	, FrameCallBack()
+	, InitCallBack()
+	, FreeCallBack()
+	, ResizeCallBack()
+	//, KeyBoardManager(*this, 7)
+	//, MouseManager(*this)
+	, KeyBoardManager(*this)
+	, MouseManager(*this)
+	, DefaultColor(0.5f, 0.5f, 0.5f)
 {
 	Debug::Log << Debug::Tabs << "  ++++  " << "Window" << "  ....  " << Debug::Done;
 	Debug::Log << Debug::Tabs << "Engine Dir: " << ENGINE_DIR << Debug::Done;
@@ -108,16 +110,18 @@ Window::Window() :
 Window::~Window()
 { }
 
-Window::Window(const Window & other) :
-	glfw_window(other.glfw_window),
-	FrameNumberTerminate(other.FrameNumberTerminate),
-	FrameCallBack(other.FrameCallBack),
-	InitCallBack(other.InitCallBack),
-	FreeCallBack(other.FreeCallBack),
-	ResizeCallBack(other.ResizeCallBack),
-	KeyBoardManager(*this, 7),
-	MouseManager(*this),
-	DefaultColor(other.DefaultColor)
+Window::Window(const Window & other)
+	: glfw_window(other.glfw_window)
+	, FrameNumberTerminate(other.FrameNumberTerminate)
+	, FrameCallBack(other.FrameCallBack)
+	, InitCallBack(other.InitCallBack)
+	, FreeCallBack(other.FreeCallBack)
+	, ResizeCallBack(other.ResizeCallBack)
+	//, KeyBoardManager(*this, 7)
+	//, MouseManager(*this)
+	, KeyBoardManager(*this)
+	, MouseManager(*this)
+	, DefaultColor(other.DefaultColor)
 {
 	MakeUserParemeters();
 }
@@ -218,23 +222,28 @@ void Window::Callback_Resize(int w, int h)
 }
 void Window::Callback_CursorClick(int button, int action, int mods)
 {
-	MouseManager.UpdateClick(button, action, mods);
+	//MouseManager.UpdateClick(button, action, mods);
+	MouseManager.Invoke_ClickEvent(button, action, mods);
 }
 void Window::Callback_CursorScroll(double xOffset, double yOffset)
 {
-	MouseManager.UpdateScroll(xOffset, yOffset);
+	//MouseManager.UpdateScroll(xOffset, yOffset);
+	MouseManager.Invoke_ScrollEvent(xOffset, yOffset);
 }
 void Window::Callback_CursorMove(double xPos, double yPos)
 {
-	MouseManager.UpdateMove(xPos, yPos);
+	//MouseManager.UpdateMove(xPos, yPos);
+	MouseManager.Invoke_MoveEvent(xPos, yPos);
 }
 void Window::Callback_Key(int key, int scancode, int action, int mods)
 {
-	KeyBoardManager.UpdateKey(key, scancode, action, mods);
+	//KeyBoardManager.UpdateKey(key, scancode, action, mods);
+	KeyBoardManager.Invoke_KeyEvent(key, scancode, action, mods);
 }
 void Window::Callback_Text(unsigned int codepoint)
 {
-	KeyBoardManager.UpdateText(codepoint);
+	//KeyBoardManager.UpdateText(codepoint);
+	KeyBoardManager.Invoke_TextEvent(codepoint);
 }
 
 
@@ -244,12 +253,18 @@ void Window::Callback_Text(unsigned int codepoint)
 Point3D Window::MoveFromKeys() const
 {
 	Point3D move;
-	if (KeyBoardManager.Keys[GLFW_KEY_A].IsDown())				{ move.X -= 1; }
-	if (KeyBoardManager.Keys[GLFW_KEY_D].IsDown())				{ move.X += 1; }
-	if (KeyBoardManager.Keys[GLFW_KEY_S].IsDown())				{ move.Z -= 1; }
-	if (KeyBoardManager.Keys[GLFW_KEY_W].IsDown())				{ move.Z += 1; }
-	if (KeyBoardManager.Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += 1; }
-	if (KeyBoardManager.Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= 1; }
+	//if (KeyBoardManager.Keys[GLFW_KEY_A].IsDown())				{ move.X -= 1; }
+	//if (KeyBoardManager.Keys[GLFW_KEY_D].IsDown())				{ move.X += 1; }
+	//if (KeyBoardManager.Keys[GLFW_KEY_S].IsDown())				{ move.Z -= 1; }
+	//if (KeyBoardManager.Keys[GLFW_KEY_W].IsDown())				{ move.Z += 1; }
+	//if (KeyBoardManager.Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += 1; }
+	//if (KeyBoardManager.Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= 1; }
+	if (KeyBoardManager[Keys::A].State == State::Down)				{ move.X -= 1; }
+	if (KeyBoardManager[Keys::D].State == State::Down)				{ move.X += 1; }
+	if (KeyBoardManager[Keys::S].State == State::Down)				{ move.Z -= 1; }
+	if (KeyBoardManager[Keys::W].State == State::Down)				{ move.Z += 1; }
+	if (KeyBoardManager[Keys::Space].State == State::Down)			{ move.Y += 1; }
+	if (KeyBoardManager[Keys::LeftShift].State == State::Down)		{ move.Y -= 1; }
 	return move;
 }
 Angle3D Window::SpinFromCursor() const

@@ -1,0 +1,54 @@
+#ifndef  USER_MOUSE_MANAGER_HPP
+# define USER_MOUSE_MANAGER_HPP
+
+# include "User/MouseState.hpp"
+
+# include "User/Args/ClickArgs.hpp"
+# include "User/Args/DragArgs.hpp"
+# include "User/Args/MoveArgs.hpp"
+# include "User/Args/ScrollArgs.hpp"
+
+# include "Function/Pointer.hpp"
+
+class Window;
+
+struct MouseManager
+{
+	private:
+	Window & window;
+	MouseState MouseStates[8];
+
+	public:
+	MouseState & operator[](const MouseButtons & button);
+
+	public:
+	FunctionPointer<ClickArgs>		Callback_ClickEvent;
+	FunctionPointer<MoveArgs>		Callback_MoveEvent;
+	FunctionPointer<DragArgs>		Callback_DragEvent;
+	FunctionPointer<ScrollArgs>		Callback_ScrollEvent;
+
+	public:
+	~MouseManager();
+	MouseManager(Window & win);
+	MouseManager(const MouseManager & other) = delete;
+	MouseManager & operator=(const MouseManager & other) = delete;
+
+	public:
+	bool	CursorModeIsLocked() const;
+	void	CursorModeLock();
+	void	CursorModeFree();
+	void	CursorModeToggle();
+
+	DisplayPosition	CursorPosition() const;
+
+	public:
+	void	Tick();
+	void	Update(MouseButtons button, Action action);
+
+	public:
+	void	Invoke_ClickEvent(int button, int action, int mods);
+	void	Invoke_ScrollEvent(float offset_x, float offset_y);
+	void	Invoke_MoveEvent(double x_pos, double y_pos);
+};
+
+#endif

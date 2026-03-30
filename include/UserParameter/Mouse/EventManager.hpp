@@ -27,7 +27,7 @@ class EventManager
 	public:
 	FunctionPointer<UserParameter::Mouse::Click>	CallbackClick;
 	FunctionPointer<UserParameter::Mouse::Scroll>	CallbackScroll;
-	FunctionPointer<DisplayPosition>	CallbackMove;
+	FunctionPointer<DisplayPosition>				CallbackMove;
 	FunctionPointer<UserParameter::Mouse::Drag>		CallbackDrag;
 
 	public:

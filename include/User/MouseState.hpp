@@ -1,0 +1,24 @@
+#ifndef  USER_MOUSE_STATE_HPP
+# define USER_MOUSE_STATE_HPP
+
+# include "User/Enums/MouseButtons.hpp"
+# include "User/Enums/State.hpp"
+# include "User/Enums/Action.hpp"
+
+# include "Display/DisplayPosition.hpp"
+
+struct MouseState
+{
+	::MouseButtons	MouseButton;
+	::State			State;
+
+	DisplayPosition	LastPressPosition;
+	DisplayPosition	LastReleasePosition;
+
+	MouseState(::MouseButtons button);
+
+	void	Tick();
+	void	Update(DisplayPosition pos, Action action);
+};
+
+#endif

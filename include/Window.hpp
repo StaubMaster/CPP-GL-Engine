@@ -12,6 +12,9 @@
 # include "UserParameter/KeyBoard/EventManager.hpp"
 # include "UserParameter/Mouse/EventManager.hpp"
 
+# include "User/KeyBoardManager.hpp"
+# include "User/MouseManager.hpp"
+
 
 
 struct GLFWwindow;
@@ -40,12 +43,16 @@ class Window
 	FunctionPointer<const DisplaySize &>		ResizeCallBack;
 
 	public:
-	UserParameter::KeyBoard::EventManager	KeyBoardManager;
-	UserParameter::Mouse::EventManager		MouseManager;
-	ColorF4 DefaultColor;
+	//UserParameter::KeyBoard::EventManager		KeyBoardManager;
+	//UserParameter::Mouse::EventManager		MouseManager;
+	::KeyBoardManager	KeyBoardManager;
+	::MouseManager		MouseManager;
 
 	public:
-	DisplaySize Size;
+	ColorF4			DefaultColor;
+	
+	public:
+	DisplaySize		Size;
 
 	public:
 	Window();
