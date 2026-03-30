@@ -13,8 +13,9 @@
 	void	Update(DisplayPosition pos, Action action);
 };*/
 MouseState::MouseState(::MouseButtons button)
-	: MouseButton(button)
+	: Button(button)
 	, State(::State::Up)
+	, IsDragging(false)
 { }
 
 

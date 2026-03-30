@@ -20,6 +20,7 @@ struct MouseManager
 
 	public:
 	MouseState & operator[](const MouseButtons & button);
+	const MouseState & operator[](const MouseButtons & button) const;
 
 	public:
 	FunctionPointer<ClickArgs>		Callback_ClickEvent;

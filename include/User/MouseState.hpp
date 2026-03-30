@@ -9,9 +9,10 @@
 
 struct MouseState
 {
-	::MouseButtons	MouseButton;
+	::MouseButtons	Button;
 	::State			State;
 
+	bool			IsDragging;
 	DisplayPosition	LastPressPosition;
 	DisplayPosition	LastReleasePosition;
 

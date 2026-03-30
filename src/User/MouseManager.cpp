@@ -9,7 +9,18 @@ MouseState & MouseManager::operator[](const MouseButtons & button)
 {
 	for (unsigned int i = 0; i < 8; i++)
 	{
-		if (MouseStates[i].MouseButton == button)
+		if (MouseStates[i].Button == button)
+		{
+			return MouseStates[i];
+		}
+	}
+	throw "MouseManager[]: MouseButton not found.";
+}
+const MouseState & MouseManager::operator[](const MouseButtons & button) const
+{
+	for (unsigned int i = 0; i < 8; i++)
+	{
+		if (MouseStates[i].Button == button)
 		{
 			return MouseStates[i];
 		}
@@ -63,6 +74,8 @@ void MouseManager::CursorModeToggle()
 	}
 }
 
+// Cache CursorPosition when Tick is called ?
+// or only Calculate when Cursor Moves ?
 DisplayPosition MouseManager::CursorPosition() const
 {
 	double x, y;
@@ -88,7 +101,7 @@ void MouseManager::Update(MouseButtons button, Action action)
 {
 	for (unsigned int i = 0; i < 8; i++)
 	{
-		if (MouseStates[i].MouseButton == button)
+		if (MouseStates[i].Button == button)
 		{
 			MouseStates[i].Update(CursorPosition(), action);
 		}
@@ -101,36 +114,51 @@ void MouseManager::Invoke_ClickEvent(int button, int action, int mods)
 {
 	Update((MouseButtons)button, (Action)action);
 
-	Callback_ClickEvent(ClickArgs((Modifier)mods, (Action)action, (MouseButtons)button, CursorPosition()));
-}
-void MouseManager::Invoke_ScrollEvent(float offset_x, float offset_y)
-{
-	Callback_ScrollEvent(ScrollArgs((Modifier)0, offset_x, offset_y, CursorPosition()));
-}
-void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
-{
-	Point2D p(x_pos, y_pos);
-
-	DisplayPosition pos;
-	pos.Window.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
-	pos.Buffer.Corner = p; // one of these is wrong. calculat the first, then normal, then the other.
-	pos.Window.Center = pos.Window.Corner - window.Size.Window.Half;
-	pos.Buffer.Center = pos.Buffer.Corner - window.Size.Buffer.Half;
-	pos.NormalAbs = pos.Window.Corner / window.Size.Window.Full;
-	pos.NormalRel = pos.Window.Center / window.Size.Window.Half;
-
-	MoveArgs args;
-	args.Position = pos;
-	Callback_MoveEvent(args);
+	//Callback_ClickEvent(ClickArgs((Modifier)mods, (Action)action, (MouseButtons)button, CursorPosition()));
+	Callback_ClickEvent(ClickArgs(mods, action, button, CursorPosition()));
 
 	for (unsigned int i = 0; i < 8; i++)
 	{
-		if (MouseStates[i].State == State::Down)
+		MouseState & state = MouseStates[i];
+		if (state.State == State::Release)
 		{
-			DragArgs args;
-			args.Origin = MouseStates[i].LastPressPosition;
-			args.Position = pos;
-			Callback_DragEvent(args);
+			if (state.IsDragging)
+			{
+				state.IsDragging = false;
+				//DragArgs args;
+				//args.Button = MouseStates[i].Button;
+				//args.Action = Action::Release;
+				//args.Position = MouseStates[i].LastReleasePosition;
+				//Callback_DragEvent(args);
+				Callback_DragEvent(DragArgs(Modifier::None, Action::Release, state.Button, state.LastReleasePosition));
+			}
+		}
+	}
+}
+void MouseManager::Invoke_ScrollEvent(float offset_x, float offset_y)
+{
+	Callback_ScrollEvent(ScrollArgs(Modifier::None, offset_x, offset_y, CursorPosition()));
+}
+void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
+{
+	DisplayPosition pos = DisplayPosition::FromWindowCorner(Point2D(x_pos, y_pos), window.Size);
+
+	Callback_MoveEvent(MoveArgs(pos));
+
+	for (unsigned int i = 0; i < 8; i++)
+	{
+		MouseState & state = MouseStates[i];
+		if (state.State == State::Down)
+		{
+			if (!state.IsDragging)
+			{
+				state.IsDragging = true;
+				Callback_DragEvent(DragArgs(Modifier::None, Action::Press, state.Button, state.LastPressPosition));
+			}
+			if (state.IsDragging)
+			{
+				Callback_DragEvent(DragArgs(Modifier::None, Action::Repeat, state.Button, pos));
+			}
 		}
 	}
 }

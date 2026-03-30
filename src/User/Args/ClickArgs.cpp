@@ -1,8 +1,10 @@
 #include "User/Args/ClickArgs.hpp"
 
-ClickArgs::ClickArgs(::Modifier mods, ::Action action, ::MouseButtons button, DisplayPosition position)
-	: Mods(mods)
-	, Action(action)
-	, Button(button)
+
+
+ClickArgs::ClickArgs(int mods, int action, int button, DisplayPosition position)
+	: Mods((::Modifier)mods)
+	, Action((::Action)action)
+	, Button((::MouseButtons)button)
 	, Position(position)
 { }

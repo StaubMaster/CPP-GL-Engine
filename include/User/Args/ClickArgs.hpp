@@ -15,7 +15,7 @@ struct ClickArgs
 
 	DisplayPosition		Position;
 
-	ClickArgs(::Modifier mods, ::Action action, ::MouseButtons button, DisplayPosition position);
+	ClickArgs(int mods, int action, int button, DisplayPosition position);
 };
 
 #endif

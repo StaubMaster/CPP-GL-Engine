@@ -16,6 +16,6 @@ Modifier operator&(const Modifier & val0, const Modifier & val1) { return (Modif
 #include <iostream>
 std::ostream & operator<<(std::ostream & s, const Modifier & val)
 {
-	(void)val;
+	s << "Modifier: " << ((unsigned int)val);
 	return s;
 }

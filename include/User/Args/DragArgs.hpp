@@ -10,11 +10,17 @@
 struct DragArgs
 {
 	::Modifier			Mods;
+	/* Action does not refer to MouseButton
+		Press: start of Drag
+		Repeat: Drag movement
+		Release: end of Drag
+	*/
 	::Action			Action;
 	::MouseButtons		Button;
 
-	DisplayPosition		Origin;
 	DisplayPosition		Position;
+
+	DragArgs(::Modifier mods, ::Action action, ::MouseButtons button, DisplayPosition pos);
 };
 
 #endif

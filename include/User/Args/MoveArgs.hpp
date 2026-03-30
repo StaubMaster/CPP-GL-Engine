@@ -6,6 +6,8 @@
 struct MoveArgs
 {
 	DisplayPosition		Position;
+
+	MoveArgs(DisplayPosition pos);
 };
 
 #endif
