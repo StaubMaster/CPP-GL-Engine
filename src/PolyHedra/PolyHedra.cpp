@@ -83,7 +83,7 @@ Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 	std::cout << "\n";
 	*/
 
-	for (unsigned int f = 0; f < Faces.Count(); f++)
+	/*for (unsigned int f = 0; f < Faces.Count(); f++)
 	{
 		int c = f * 3;
 		const Face & face = Faces[f];
@@ -116,9 +116,9 @@ Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 		{
 			//std::cout << "Invalid Face\n";
 		}
-	}
+	}*/
 
-	if (Skin == NULL)
+	/*if (Skin == NULL)
 	{
 		for (unsigned int i = 0; i < data.Count(); i++)
 		{
@@ -136,7 +136,7 @@ Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 			data[c + 1].Texture = face.Corner1.Tex;
 			data[c + 2].Texture = face.Corner2.Tex;
 		}
-	}
+	}*/
 
 	//std::cout << "Main: " << data.Limit() << ' ' << data.Count() << '\n';
 	//for (unsigned int i = 0; i < data.Count(); i++)

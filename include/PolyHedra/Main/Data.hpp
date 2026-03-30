@@ -8,8 +8,8 @@ namespace PolyHedra_Main
 struct Data
 {
 	Point3D	Position;
-	Point3D	Normal;
-	Point3D	Texture;
+//	Point3D	Normal;
+//	Point3D	Texture;
 
 	//PolyHedra_MainData();
 	//~PolyHedra_MainData();

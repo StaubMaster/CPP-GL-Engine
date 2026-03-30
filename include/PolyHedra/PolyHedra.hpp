@@ -78,9 +78,10 @@ class PolyHedra
 	struct FaceCorner;
 	struct Face;
 
-	private:
+	public:
 	Container::Binary<Corner>	Corners;
 	Container::Binary<Face>		Faces;
+
 	public:
 	FileInfo	File;
 	SkinBase *	Skin;

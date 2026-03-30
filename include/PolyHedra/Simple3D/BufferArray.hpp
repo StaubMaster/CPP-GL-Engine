@@ -21,7 +21,7 @@ class BufferArray : public ::BufferArray::Base
 	public:
 	~BufferArray();
 	BufferArray();
-	
+
 	BufferArray(const BufferArray & other);
 	BufferArray & operator=(const BufferArray & other);
 

@@ -12,7 +12,8 @@ namespace Simple3D
 class Buffer : public ::Buffer::Attribute
 {
 	public:
-	::Attribute::Trans3D	Trans;
+//	::Attribute::Trans3D	Trans;
+	::Attribute::Point3D	Point;
 
 	public:
 	~Buffer();
