@@ -7,8 +7,7 @@ namespace Simple3D
 {
 struct Data
 {
-//	Trans3D Trans;
-	Point3D Point;
+	Trans3D Trans;
 
 	Data();
 	Data(const Trans3D & trans);

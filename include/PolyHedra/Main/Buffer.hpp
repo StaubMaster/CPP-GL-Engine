@@ -13,8 +13,8 @@ class Buffer : public ::Buffer::Attribute
 {
 	public:
 	::Attribute::Point3D	Position;
-//	::Attribute::Point3D	Normal;
-//	::Attribute::Point3D	Texture;
+	::Attribute::Point3D	Normal;
+	::Attribute::Point3D	Texture;
 
 	public:
 	~Buffer();

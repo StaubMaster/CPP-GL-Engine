@@ -53,18 +53,17 @@ bool MouseManager::CursorModeIsLocked() const
 }
 void MouseManager::CursorModeLock()
 {
-	glfwSetCursorPos(window.glfw_window, 0, 0);
-	glfwSetInputMode(window.glfw_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-}
-void MouseManager::CursorModeFree()
-{
 	glfwSetInputMode(window.glfw_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPos(window.glfw_window, 0, 0);
 }
+void MouseManager::CursorModeFree()
+{
+	glfwSetCursorPos(window.glfw_window, 0, 0);
+	glfwSetInputMode(window.glfw_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
 void MouseManager::CursorModeToggle()
 {
-	int mode = glfwGetInputMode(window.glfw_window, GLFW_CURSOR);
-	if (mode == GLFW_CURSOR_DISABLED)
+	if (CursorModeIsLocked())
 	{
 		CursorModeFree();
 	}

@@ -6,6 +6,5 @@ Simple3D::Data::Data()
 { }
 
 Simple3D::Data::Data(const Trans3D & trans) :
-//	Trans(trans)
-	Point(trans.Pos)
+	Trans(trans)
 { }
