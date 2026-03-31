@@ -90,6 +90,7 @@ UNIFORM := \
 	Graphics/Uniform/Base/UInt1.cpp \
 \
 	Graphics/Uniform/Float.cpp \
+	Graphics/Uniform/UInt.cpp \
 \
 	Graphics/Uniform/ColorF4.cpp \
 	Graphics/Uniform/Point2D.cpp \

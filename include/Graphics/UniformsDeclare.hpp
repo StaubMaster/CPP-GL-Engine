@@ -17,6 +17,7 @@ namespace Uniform
 	class UInt1;
 
 	class Float;
+	class UInt;
 
 	class ColorF4;
 
