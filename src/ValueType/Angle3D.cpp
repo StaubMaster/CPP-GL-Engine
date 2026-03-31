@@ -44,8 +44,8 @@ Angle3D Angle3D::FromPoint3D(const Point3D & dir)
 	float len = sqrt((dir.X * dir.X) + (dir.Z * dir.Z));
 
 	return Angle3D(
-		Angle::SaTan2(dir.Z, dir.X),
-		Angle::SaTan2(len, dir.Y),
+		Angle::SaTan2(dir.X, dir.Z),
+		Angle::SaTan2(dir.Y, len),
 		Angle()
 	);
 }
