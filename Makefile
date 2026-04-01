@@ -37,9 +37,11 @@ VALUE_TYPE := \
 	ValueType/Line2D.cpp \
 	ValueType/Matrix2x2.cpp \
 	ValueType/Matrix3x3.cpp \
+	ValueType/Matrix4x4.cpp \
 	ValueType/Angle.cpp \
 	ValueType/Angle2D.cpp \
 	ValueType/Angle3D.cpp \
+	ValueType/EulerAngle3D.cpp \
 	ValueType/Trans2D.cpp \
 	ValueType/Trans3D.cpp \
 	ValueType/DepthFactors.cpp \
@@ -263,7 +265,7 @@ OTHER_OBJ := $(addprefix $(DIR_OBJ)/,$(OTHER:.cpp=.o))
 
 
 ALL_SRC := \
-	$(VALUE_TYPE_SRC) $(DISPLAY_SRC)\
+	$(VALUE_TYPE_SRC) #$(DISPLAY_SRC)\
 	$(CONTAINER_SRC)\
 	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC)\
 	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC)\
@@ -275,7 +277,7 @@ ALL_SRC := \
 	$(OTHER_SRC)
 
 ALL_OBJ := \
-	$(VALUE_TYPE_OBJ) $(DISPLAY_OBJ)\
+	$(VALUE_TYPE_OBJ) #$(DISPLAY_OBJ)\
 	$(CONTAINER_OBJ)\
 	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ)\
 	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ)\

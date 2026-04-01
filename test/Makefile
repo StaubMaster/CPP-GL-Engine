@@ -4,8 +4,11 @@ NAME := test.exe
 COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror
 
+
+
 FILES := \
-	Container.cpp
+	EulerMatrixStuff.cpp
+#	Container.cpp
 #	EntryContainer.cpp
 #	Angle3D.cpp
 #	CopyConstruct.cpp
@@ -16,17 +19,12 @@ FILES := \
 
 
 
-test:
-	$(MAKE) $(NAME)
+all:
+#	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES)
+	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES) $(LIBRARYS) $(ARGUMENTS)
 
-tclean:
+fclean:
 	rm -f $(NAME)
-
-#$(NAME) : $(FILES) $(LIBRARYS)
-$(NAME) : $(FILES)
-	@$(call fancyEcho,$(FANCY_NAME),Compiling,$@)
-	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES)
-#	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES) $(LIBRARYS) $(ARGUMENTS)
 
 
 

@@ -2,6 +2,8 @@
 # define MATRIX_3_3_HPP
 
 struct Point3D;
+struct Angle;
+struct EulerAngle3D;
 
 struct Matrix3x3
 {
@@ -18,19 +20,23 @@ struct Matrix3x3
 	Matrix3x3(	float data00, float data01, float data02,
 				float data10, float data11, float data12,
 				float data20, float data21, float data22);
-	static Matrix3x3 Default();
+
+	Matrix3x3	ToTranspose() const;
+
+	static Matrix3x3	Identity();
+	static Matrix3x3	RotationX(Angle a);
+	static Matrix3x3	RotationY(Angle a);
+	static Matrix3x3	RotationZ(Angle a);
+	static Matrix3x3	Rotation(EulerAngle3D a);
+
 
 	public:
 	Matrix3x3 operator*(const Matrix3x3 & other) const;
+	Matrix3x3 operator/(const Matrix3x3 & other) const;
 
 	public:
-	Point3D Multiply0(const Point3D & p) const;
-	Point3D Multiply1(const Point3D & p) const;
-
-	public:
-	Matrix3x3 TransPose() const;
-	Matrix3x3 Inverse() const;
-//	void ToString() const;
+	Point3D		operator*(Point3D p) const;
+	Point3D		operator/(Point3D p) const;
 };
 
 #endif

@@ -7,11 +7,11 @@ Angle2D::~Angle2D()
 { }
 Angle2D::Angle2D()
 	: Ang()
-	, Mat(Matrix2x2::Default())
+	, Mat(Matrix2x2::Identity())
 { CalcMatrix(); }
 Angle2D::Angle2D(Angle ang)
 	: Ang(ang)
-	, Mat(Matrix2x2::Default())
+	, Mat(Matrix2x2::Identity())
 { CalcMatrix(); }
 
 
@@ -40,13 +40,7 @@ Angle2D Angle2D::FromPoint2D(const Point2D & dir)
 
 void Angle2D::CalcMatrix()
 {
-	float sin_ = Ang.Sin();
-	float cos_ = Ang.Cos();
-	float data[4] {
-		+cos_ , -sin_ ,
-		+sin_ , +cos_ ,
-	};
-	Mat = Matrix2x2(data);
+	Mat = Matrix2x2::Rotation(Ang);
 }
 
 

@@ -9,13 +9,13 @@ Angle3D::Angle3D() :
 	X(),
 	Y(),
 	Z(),
-	Mat(Matrix3x3::Default())
+	Mat(Matrix3x3::Identity())
 { CalcMatrix(); }
 Angle3D::Angle3D(Angle x, Angle y, Angle z) :
 	X(x),
 	Y(y),
 	Z(z),
-	Mat(Matrix3x3::Default())
+	Mat(Matrix3x3::Identity())
 { CalcMatrix(); }
 Angle3D::~Angle3D()
 { }
@@ -54,45 +54,48 @@ Angle3D Angle3D::FromPoint3D(const Point3D & dir)
 
 void Angle3D::CalcMatrix()
 {
-	float sinX = X.Sin();
+	/*float sinX = X.Sin();
 	float cosX = X.Cos();
 	Matrix3x3 matX(
-		 +cosX , 0 , -sinX ,
+		 +cosX , 0 , +sinX ,
 		   0   , 1 ,   0   ,
-		 +sinX , 0 , +cosX
-	);
+		 -sinX , 0 , +cosX
+	);*/
 
-	float sinY = Y.Sin();
+	/*float sinY = Y.Sin();
 	float cosY = Y.Cos();
 	Matrix3x3 matY(
 		 1 ,   0   ,   0   ,
-		 0 , +cosY , -sinY ,
-		 0 , +sinY , +cosY
-	);
+		 0 , +cosY , +sinY ,
+		 0 , -sinY , +cosY
+	);*/
 
-	float sinZ = Z.Sin();
+	/*float sinZ = Z.Sin();
 	float cosZ = Z.Cos();
 	Matrix3x3 matZ(
-		 +cosZ , +sinZ , 0 ,
-		 -sinZ , +cosZ , 0 ,
+		 +cosZ , -sinZ , 0 ,
+		 +sinZ , +cosZ , 0 ,
 		   0   ,   0   , 1
-	);
+	);*/
 
-	Mat = Matrix3x3::Default();
-	Mat = Mat * matZ;
-	Mat = Mat * matY;
-	Mat = Mat * matX;
+	Mat = Matrix3x3::Identity();
+	//Mat = Mat * matZ;
+	//Mat = Mat * matY;
+	//Mat = Mat * matX;
+	Mat = Mat * Matrix3x3::RotationZ(Z);
+	Mat = Mat * Matrix3x3::RotationY(Y);
+	Mat = Mat * Matrix3x3::RotationX(X);
 }
 
 
 
 Point3D	Angle3D::rotateFore(Point3D p) const
 {
-	return Mat.Multiply0(p);
+	return Mat * p;
 }
 Point3D	Angle3D::rotateBack(Point3D p) const
 {
-	return Mat.Multiply1(p);
+	return Mat / p;
 }
 
 Angle3D	Angle3D::rotateFore(Angle3D a) const

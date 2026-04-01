@@ -1,5 +1,6 @@
 #include "ValueType/Matrix2x2.hpp"
 #include "ValueType/Point2D.hpp"
+#include "ValueType/Angle.hpp"
 
 
 
@@ -38,32 +39,32 @@ Matrix2x2 & Matrix2x2::operator=(const Matrix2x2 & other)
 	return *this;
 }
 
-Matrix2x2::Matrix2x2(const float data[4])
-{
-	Data[0][0] = data[0b00];
-	Data[0][1] = data[0b01];
-	Data[1][0] = data[0b10];
-	Data[1][1] = data[0b11];
-}
-/*Matrix2x2::Matrix2x2(const float data[2][2])
-{
-	Data[0][0] = data[0][0];
-	Data[0][1] = data[0][1];
-	Data[1][0] = data[1][0];
-	Data[1][1] = data[1][1];
-}*/
-/*Matrix2x2::Matrix2x2(	float data00, float data01,
+Matrix2x2::Matrix2x2(	float data00, float data01,
 						float data10, float data11)
 {
 	Data[0][0] = data00;
 	Data[0][1] = data01;
+
 	Data[1][0] = data10;
 	Data[1][1] = data11;
-}*/
+}
 
 
 
-Matrix2x2 Matrix2x2::Default()
+Matrix2x2 Matrix2x2::ToTranspose() const
+{
+	Matrix2x2 mat;
+	for (int x = 0; x < 2; x++)
+	{
+		for (int y = 0; y < 2; y++)
+		{
+			mat.Data[x][y] = Data[y][x];
+		}
+	}
+	return mat;
+}
+
+Matrix2x2 Matrix2x2::Identity()
 {
 	Matrix2x2 mat;
 	for (int x = 0; x < 2; x++)
@@ -75,6 +76,17 @@ Matrix2x2 Matrix2x2::Default()
 	}
 	return mat;
 }
+Matrix2x2 Matrix2x2::Rotation(Angle a)
+{
+	float sin_ = a.Sin();
+	float cos_ = a.Cos();
+	return Matrix2x2(
+		+cos_ , -sin_ ,
+		+sin_ , +cos_
+	);
+}
+
+
 
 
 
@@ -98,7 +110,7 @@ Matrix2x2 Matrix2x2::operator*(const Matrix2x2 & other) const
 
 
 
-Point2D Matrix2x2::operator*(const Point2D & p) const
+Point2D Matrix2x2::operator*(Point2D p) const
 {
 	float flt[2] = { p.X, p.Y };
 	float n[2];
@@ -113,7 +125,7 @@ Point2D Matrix2x2::operator*(const Point2D & p) const
 	}
 	return Point2D(n[0], n[1]);
 }
-Point2D Matrix2x2::operator/(const Point2D & p) const
+Point2D Matrix2x2::operator/(Point2D p) const
 {
 	float flt[2] = { p.X, p.Y };
 	float n[2];
@@ -128,48 +140,3 @@ Point2D Matrix2x2::operator/(const Point2D & p) const
 	}
 	return Point2D(n[0], n[1]);
 }
-
-
-
-Matrix2x2 Matrix2x2::TransPose() const
-{
-	Matrix2x2 mat;
-	for (int x = 0; x < 2; x++)
-	{
-		for (int y = 0; y < 2; y++)
-		{
-			mat.Data[x][y] = Data[y][x];
-		}
-	}
-	return mat;
-}
-Matrix2x2 Matrix2x2::Inverse() const
-{
-	Matrix2x2 mat;
-	for (int x = 0; x < 2; x++)
-	{
-		for (int y = 0; y < 2; y++)
-		{
-			mat.Data[x][y] = 1 / Data[x][y];
-		}
-	}
-	return mat;
-}
-
-
-
-/*#include <iostream>
-void Matrix2x2::ToString() const
-{
-	for (int i = 0; i < 2; i++)
-	{
-		std::cout << "[ ";
-		for (int j = 0; j < 2; j++)
-		{
-			if (j != 0) { std::cout << " | "; }
-			std::cout << Data[i][j];
-		}
-		std::cout << " ]";
-		std::cout << "\n";
-	}
-}*/

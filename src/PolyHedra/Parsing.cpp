@@ -382,7 +382,8 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 
 PolyHedra * PolyHedra::Load(const FileInfo & file)
 {
-	Debug::Log << "Loading PolyHedra File " << file.Name() << " ..." << Debug::Done;
+	Debug::Log << "Loading PolyHedra File " << '"' << file.Name() << '"' << " ..." << Debug::Done;
+
 	ParsingData data(file);
 	data.PH = new PolyHedra();
 	data.Data = new PolyHedra::Template(*data.PH);
@@ -411,21 +412,16 @@ PolyHedra * PolyHedra::Load(const FileInfo & file)
 	{
 		data.PH = Generate::HexaHedron();
 	}
-	Debug::Log << "Loading PolyHedra File " << file.Name() << " done" << Debug::Done;
-	Debug::Log << "Count:" << " V:" << data.PH -> Corners.Count() << Debug::Done;
-	Debug::Log << "Count:" << " F:" << data.PH -> Faces.Count() << Debug::Done;
-	AxisBox3D bound = data.PH -> CalcBound();
-	Debug::Log << "Bound:" << "Limit:" << bound << Debug::Done;
-	Debug::Log << "Bound:" << "Size:" << bound.Size() << Debug::Done;
 
-	/*	Unit Converter
-		Length:	to make Data more cohereent
-		Area:	not sure where I would need this
-		Volume:	might be interesting ?
-		Angle:	Deg to Rad & Rad to Deg
-		Time:	?
-		once a base is made it shouldnt be very difficult to add new Units
-	*/
+	PolyHedra & polyhedra = *data.PH;
+	AxisBox3D bound = polyhedra.CalcBound();
+
+	Debug::Log << "Loading PolyHedra File " << '"' << file.Name() << '"' << " done" << '\n';
+	Debug::Log << "PolyHedra Count Vertex: " << polyhedra.Corners.Count() << '\n';
+	Debug::Log << "PolyHedra Count Face: " << polyhedra.Faces.Count() << '\n';
+	Debug::Log << "PolyHedra Bound Limit: " << bound << '\n';
+	Debug::Log << "PolyHedra Bound Size: " << bound.Size() << '\n';
+	Debug::Log << Debug::Done;
 
 	return data.PH;
 }

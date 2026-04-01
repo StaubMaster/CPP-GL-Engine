@@ -1,13 +1,15 @@
 #include "ValueType/Angle.hpp"
+#include "ValueType/Matrix2x2.hpp"
+#include "ValueType/Matrix3x3.hpp"
 
 #include <math.h>
 
 
 
+Angle::~Angle()
+{ }
 Angle::Angle() :
 	Value(0.0f)
-{ }
-Angle::~Angle()
 { }
 Angle::Angle(const Angle & other) :
 	Value(other.Value)
@@ -18,19 +20,11 @@ Angle & Angle::operator=(const Angle & other)
 	return *this;
 }
 
+
+
 Angle::Angle(float val) :
 	Value(val)
 { }
-
-
-
-void Angle::Clamp()
-{
-	if (Value > +(PI / 2)) { Value = +(PI / 2); }
-	if (Value < -(PI / 2)) { Value = -(PI / 2); }
-}
-
-
 
 float Angle::DegreesToRadians(float val) { return val * (TAU / 360); }
 float Angle::RadiansToDegrees(float val) { return val * (360 / TAU); }
@@ -44,6 +38,14 @@ float Angle::ToDegrees() const { return RadiansToDegrees(Value); }
 Angle Angle::Radians(float val) { return Angle(val); }
 Angle Angle::Degrees(float val) { return Angle(DegreesToRadians(val)); }
 Angle Angle::Section(float val) { return Angle(TAU / val); }
+
+
+
+void Angle::Clamp()
+{
+	if (Value > +(PI / 2)) { Value = +(PI / 2); }
+	if (Value < -(PI / 2)) { Value = -(PI / 2); }
+}
 
 
 
