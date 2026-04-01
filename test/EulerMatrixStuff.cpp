@@ -156,8 +156,7 @@ void Transformation3Test()
 	Point3D p3(1, 2, 3);
 	Point4D p4(p3.X, p3.Y, p3.Z, 1);
 
-	//Point3D diff(3, 4, 5);
-	Point3D diff(0, 0, 0);
+	Point3D diff(3, 4, 5);
 	
 	Angle3D a(Angle::Degrees(9), Angle::Degrees(321), Angle::Degrees(123));
 	EulerAngle3D e(a.X, a.Y, a.Z);
@@ -167,21 +166,13 @@ void Transformation3Test()
 	Matrix4x4 mat2 = Matrix4x4::Rotation(e);
 
 	std::cout << "p old * " << ((a.Mat * p3) + diff) << '\n';
-	std::cout << "p old * " << (a.Mat * (p3 + diff)) << '\n';
-	std::cout << "p old / " << (a.Mat / (p3 - diff)) << '\n';
-	std::cout << "p old / " << ((a.Mat / p3) - diff) << '\n';
-	std::cout << '\n';
-
 	std::cout << "p new * " << (mat0 * (mat2 * p4)) << '\n';
-	std::cout << "p new * " << (mat1 * (mat2 * p4)) << '\n';
-	std::cout << "p new * " << (mat2 * (mat0 * p4)) << '\n';
-	std::cout << "p new * " << (mat2 * (mat1 * p4)) << '\n';
 	std::cout << '\n';
 
-	std::cout << "p new * " << (mat0 * (mat2.ToTranspose() * p4)) << '\n';
-	std::cout << "p new * " << (mat1 * (mat2.ToTranspose() * p4)) << '\n';
-	std::cout << "p new * " << (mat2.ToTranspose() * (mat0 * p4)) << '\n';
+	std::cout << "p old / " << (a.Mat / (p3 - diff)) << '\n';
 	std::cout << "p new * " << (mat2.ToTranspose() * (mat1 * p4)) << '\n';
+	std::cout << '\n';
+
 	std::cout << '\n';
 }
 
@@ -192,8 +183,8 @@ int main()
 	//Transformation2Test();
 
 	//Position3Test();
-	Rotation3Test();
-	//Transformation3Test();
+	//Rotation3Test();
+	Transformation3Test();
 
 	return 0;
 }
