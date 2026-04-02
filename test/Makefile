@@ -1,12 +1,20 @@
 
-NAME := test.exe
 #COMPILER := c++ -std=c++11
 COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror
 
 
+################################################################
 
-FILES := \
+BASE_DIR := ../
+include $(BASE_DIR)fancy.mk
+FANCY_NAME := Light
+
+################################################################
+
+NAME := test.exe
+
+FILES_SRC := \
 	EulerMatrixStuff.cpp
 #	Container.cpp
 #	EntryContainer.cpp
@@ -17,26 +25,27 @@ FILES := \
 #	$(DIR_SRC)/Debug.cpp \
 #	../src/Miscellaneous/Container/Behaviour.cpp
 
+FILES_OBJ := $(FILES_SRC:.cpp=.o)
 
+################################################################
 
 all:
+	$(MAKE) -C $(BASE_DIR) -s
 #	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES)
-	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES) $(LIBRARYS) $(ARGUMENTS)
+	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES_SRC) $(LIBRARYS) $(ARGUMENTS)
 
 fclean:
 	rm -f $(NAME)
 
+.PHONY: all fclean
 
-
-include ../fancy.mk
-FANCY_NAME := Engine
-
-
+################################################################
 
 #LIBRARYS := ..//Engine.a ..//other//OpenGL/openGL.a ..//other//FileManager/FileManager.a
 #INCLUDES := -I..//include/ -I..//other//OpenGL/../ -I..//other//FileManager/include
-LIBRARYS := ..//Engine.a
-INCLUDES := -I..//include/
+
+LIBRARYS := $(BASE_DIR)/Engine.a
+INCLUDES := -I$(BASE_DIR)/include/
 ARGUMENTS :=
 
 ifeq ($(CheckOS), Windows)

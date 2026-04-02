@@ -63,6 +63,10 @@ Matrix2x2 Matrix2x2::ToTranspose() const
 	}
 	return mat;
 }
+Matrix2x2 Matrix2x2::operator~() const
+{
+	return ToTranspose();
+}
 
 Matrix2x2 Matrix2x2::Identity()
 {
@@ -88,55 +92,64 @@ Matrix2x2 Matrix2x2::Rotation(Angle a)
 
 
 
-
-
 Matrix2x2 Matrix2x2::operator*(const Matrix2x2 & other) const
 {
-	Matrix2x2 mat;
+	Matrix2x2 ret;
 	for (int x = 0; x < 2; x++)
 	{
 		for (int y = 0; y < 2; y++)
 		{
-			float sum = 0;
 			for (int n = 0; n < 2; n++)
 			{
-				sum += Data[x][n] * other.Data[n][y];
+				ret.Data[x][y] += Data[x][n] * other.Data[n][y];
 			}
-			mat.Data[x][y] = sum;
 		}
 	}
-	return mat;
+	return ret;
 }
-
-
-
-Point2D Matrix2x2::operator*(Point2D p) const
+Matrix2x2 Matrix2x2::operator/(const Matrix2x2 & other) const
 {
-	float flt[2] = { p.X, p.Y };
-	float n[2];
+	Matrix2x2 ret;
 	for (int x = 0; x < 2; x++)
 	{
-		float sum = 0;
 		for (int y = 0; y < 2; y++)
 		{
-			sum += Data[x][y] * flt[y];
+			for (int n = 0; n < 2; n++)
+			{
+				ret.Data[x][y] += Data[n][x] * other.Data[n][y];
+			}
 		}
-		n[x] = sum;
 	}
-	return Point2D(n[0], n[1]);
+	return ret;
 }
-Point2D Matrix2x2::operator/(Point2D p) const
+
+
+
+Point2D operator*(const Point2D & p, const Matrix2x2 & mat)
 {
-	float flt[2] = { p.X, p.Y };
-	float n[2];
+	Point2D r;
+	float * i = (float*)&p;
+	float * o = (float*)&r;
+	for (int x = 0; x < 2; x++)
+	{
+		for (int y = 0; y < 2; y++)
+		{
+			o[x] += mat.Data[x][y] * i[y];
+		}
+	}
+	return r;
+}
+Point2D operator/(const Point2D & p, const Matrix2x2 & mat)
+{
+	Point2D r;
+	float * i = (float*)&p;
+	float * o = (float*)&r;
 	for (int y = 0; y < 2; y++)
 	{
-		float sum = 0;
 		for (int x = 0; x < 2; x++)
 		{
-			sum += Data[x][y] * flt[x];
+			o[y] += mat.Data[x][y] * i[y];
 		}
-		n[y] = sum;
 	}
-	return Point2D(n[0], n[1]);
+	return r;
 }

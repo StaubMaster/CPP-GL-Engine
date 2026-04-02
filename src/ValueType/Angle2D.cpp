@@ -45,8 +45,8 @@ void Angle2D::CalcMatrix()
 
 
 
-Point2D	Angle2D::operator*(const Point2D & p) const { return Mat * p; }
-Point2D	Angle2D::operator/(const Point2D & p) const { return Mat / p; }
+Point2D	Angle2D::operator*(const Point2D & p) const { return p * Mat; }
+Point2D	Angle2D::operator/(const Point2D & p) const { return p / Mat; }
 
 /*Angle2D	Angle2D::rotateFore(Angle2D a) const
 {

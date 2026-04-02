@@ -19,17 +19,19 @@ struct Matrix2x2
 	Matrix2x2(	float data00, float data01,
 				float data10, float data11);
 
+	public:
 	Matrix2x2	ToTranspose() const;
+	Matrix2x2	operator~() const;
 
 	static Matrix2x2	Identity();
 	static Matrix2x2	Rotation(Angle a);
 
 	public:
 	Matrix2x2	operator*(const Matrix2x2 & other) const;
-
-	public:
-	Point2D		operator*(Point2D p) const;
-	Point2D		operator/(Point2D p) const;
+	Matrix2x2	operator/(const Matrix2x2 & other) const;
 };
+
+Point2D	operator*(const Point2D & p, const Matrix2x2 & mat);
+Point2D	operator/(const Point2D & p, const Matrix2x2 & mat);
 
 #endif

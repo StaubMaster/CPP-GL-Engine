@@ -89,14 +89,8 @@ void Angle3D::CalcMatrix()
 
 
 
-Point3D	Angle3D::rotateFore(Point3D p) const
-{
-	return Mat * p;
-}
-Point3D	Angle3D::rotateBack(Point3D p) const
-{
-	return Mat / p;
-}
+Point3D	Angle3D::rotateFore(Point3D p) const { return p * Mat; }
+Point3D	Angle3D::rotateBack(Point3D p) const { return p / Mat; }
 
 Angle3D	Angle3D::rotateFore(Angle3D a) const
 {

@@ -73,6 +73,10 @@ Matrix3x3 Matrix3x3::ToTranspose() const
 	}
 	return mat;
 }
+Matrix3x3 Matrix3x3::operator~() const
+{
+	return ToTranspose();
+}
 
 Matrix3x3 Matrix3x3::Identity()
 {
@@ -126,51 +130,62 @@ Matrix3x3 Matrix3x3::Rotation(EulerAngle3D a)
 
 Matrix3x3 Matrix3x3::operator*(const Matrix3x3 & other) const
 {
-	Matrix3x3 mat;
+	Matrix3x3 ret;
 	for (int x = 0; x < 3; x++)
 	{
 		for (int y = 0; y < 3; y++)
 		{
-			float sum = 0;
 			for (int n = 0; n < 3; n++)
 			{
-				sum += Data[x][n] * other.Data[n][y];
+				ret.Data[x][y] += Data[x][n] * other.Data[n][y];
 			}
-			mat.Data[x][y] = sum;
 		}
 	}
-	return mat;
+	return ret;
 }
-
-
-
-Point3D Matrix3x3::operator*(Point3D p) const
+Matrix3x3 Matrix3x3::operator/(const Matrix3x3 & other) const
 {
-	float flt[3] = { p.X, p.Y, p.Z };
-	float n[3];
+	Matrix3x3 ret;
 	for (int x = 0; x < 3; x++)
 	{
-		float sum = 0;
 		for (int y = 0; y < 3; y++)
 		{
-			sum += Data[x][y] * flt[y];
+			for (int n = 0; n < 3; n++)
+			{
+				ret.Data[x][y] += Data[n][x] * other.Data[n][y];
+			}
 		}
-		n[x] = sum;
 	}
-	return Point3D(n[0], n[1], n[2]);
+	return ret;
 }
-Point3D Matrix3x3::operator/(Point3D p) const
+
+
+
+Point3D operator*(const Point3D & p, const Matrix3x3 & mat)
 {
-	float flt[3] = { p.X, p.Y, p.Z };
-	float n[3];
+	Point3D r;
+	float * i = (float*)&p;
+	float * o = (float*)&r;
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			o[x] += mat.Data[x][y] * i[y];
+		}
+	}
+	return r;
+}
+Point3D operator/(const Point3D & p, const Matrix3x3 & mat)
+{
+	Point3D r;
+	float * i = (float*)&p;
+	float * o = (float*)&r;
 	for (int y = 0; y < 3; y++)
 	{
-		float sum = 0;
 		for (int x = 0; x < 3; x++)
 		{
-			sum += Data[x][y] * flt[y];
+			o[y] += mat.Data[x][y] * i[y];
 		}
-		n[y] = sum;
 	}
-	return Point3D(n[0], n[1], n[2]);
+	return r;
 }

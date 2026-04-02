@@ -83,6 +83,12 @@ Matrix4x4 Matrix4x4::ToTranspose() const
 	}
 	return mat;
 }
+Matrix4x4 Matrix4x4::operator~() const
+{
+	return ToTranspose();
+}
+
+
 
 Matrix4x4 Matrix4x4::Identity()
 {
@@ -120,51 +126,73 @@ Matrix4x4 Matrix4x4::Rotation(EulerAngle3D a)
 
 Matrix4x4 Matrix4x4::operator*(const Matrix4x4 & other) const
 {
-	Matrix4x4 mat;
+	Matrix4x4 ret;
 	for (int x = 0; x < 4; x++)
 	{
 		for (int y = 0; y < 4; y++)
 		{
-			float sum = 0;
-			for (int n = 0; n < 3; n++)
+			for (int n = 0; n < 4; n++)
 			{
-				sum += Data[x][n] * other.Data[n][y];
+				ret.Data[x][y] += Data[x][n] * other.Data[n][y];
 			}
-			mat.Data[x][y] = sum;
 		}
 	}
-	return mat;
+	return ret;
 }
-
-
-
-Point4D Matrix4x4::operator*(Point4D p) const
+Matrix4x4 Matrix4x4::operator/(const Matrix4x4 & other) const
 {
-	float flt[4] = { p.X, p.Y, p.Z, p.W };
-	float n[4];
+	Matrix4x4 ret;
 	for (int x = 0; x < 4; x++)
 	{
-		float sum = 0;
 		for (int y = 0; y < 4; y++)
 		{
-			sum += Data[x][y] * flt[y];
+			for (int n = 0; n < 4; n++)
+			{
+				ret.Data[x][y] += Data[n][x] * other.Data[n][y];
+			}
 		}
-		n[x] = sum;
 	}
-	return Point4D(n[0], n[1], n[2], n[3]);
+	return ret;
 }
-Point4D Matrix4x4::operator/(Point4D p) const
+
+
+
+Point4D operator*(const Point4D & p, const Matrix4x4 & mat)
 {
-	float flt[4] = { p.X, p.Y, p.Z, p.W };
-	float n[4];
+	Point4D r;
+	float * i = (float*)&p;
+	float * o = (float*)&r;
+	for (int x = 0; x < 4; x++)
+	{
+		for (int y = 0; y < 4; y++)
+		{
+			o[x] += mat.Data[x][y] * i[y];
+		}
+	}
+	return r;
+}
+Point4D operator/(const Point4D & p, const Matrix4x4 & mat)
+{
+	Point4D r;
+	float * i = (float*)&p;
+	float * o = (float*)&r;
 	for (int y = 0; y < 4; y++)
 	{
-		float sum = 0;
 		for (int x = 0; x < 4; x++)
 		{
-			sum += Data[x][y] * flt[y];
+			o[y] += mat.Data[x][y] * i[y];
 		}
-		n[y] = sum;
 	}
-	return Point4D(n[0], n[1], n[2], n[3]);
+	return r;
+}
+
+Point3D operator*(const Point3D & p, const Matrix4x4 & mat)
+{
+	Point4D temp = Point4D(p.X, p.Y, p.Z, 1) * mat;
+	return Point3D(temp.X, temp.Y, temp.Z);
+}
+Point3D operator/(const Point3D & p, const Matrix4x4 & mat)
+{
+	Point4D temp = Point4D(p.X, p.Y, p.Z, 1) / mat;
+	return Point3D(temp.X, temp.Y, temp.Z);
 }
