@@ -54,7 +54,7 @@ Point3D EulerAngle3D::Forward(Point3D p) const
 {
 	Point2D temp;
 	Z0.Forward(p.X, p.Y);
-	X1.Forward(p.Y, p.Z);
+	X1.Forward(p.Z, p.Y);
 	Y2.Forward(p.Z, p.X);
 	return p;
 }
@@ -62,7 +62,7 @@ Point3D EulerAngle3D::Reverse(Point3D p) const
 {
 	Point2D temp;
 	Y2.Reverse(p.Z, p.X);
-	X1.Reverse(p.Y, p.Z);
+	X1.Reverse(p.Z, p.Y);
 	Z0.Reverse(p.X, p.Y);
 	return p;
 }
