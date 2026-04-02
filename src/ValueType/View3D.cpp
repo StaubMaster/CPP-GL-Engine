@@ -34,9 +34,9 @@ void View3D::TransformFlatX(Trans3D trans, float timeDelta)
 	trans.Position *= timeDelta;
 	trans.Rotation *= timeDelta;
 	{
-		EulerAngle3D e(Trans.Rotation.Y2, Angle(), Angle());
-		Trans.Position += e.Reverse(trans.Position);
+		EulerAngle3D e(Angle(), Angle(), Trans.Rotation.Y2);
+		Trans.Position += e.Forward(trans.Position);
 		Trans.Rotation += trans.Rotation;
 	}
-	Trans.Rotation.Y2.Clamp();
+	Trans.Rotation.X1.Clamp();
 }

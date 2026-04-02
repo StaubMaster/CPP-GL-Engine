@@ -10,6 +10,7 @@
 #include "Graphics/Attribute/Base/Float4.hpp"
 #include "Graphics/Attribute/Base/Float2x2.hpp"
 #include "Graphics/Attribute/Base/Float3x3.hpp"
+#include "Graphics/Attribute/Base/Float4x4.hpp"
 
 #include "Graphics/Attribute/Trans2D.hpp"
 #include "Graphics/Attribute/Trans3D.hpp"
@@ -61,6 +62,15 @@ void Attribute::Float2x2::LogInfo() const
 //	Debug::Log << Debug::TabDec;
 }
 void Attribute::Float3x3::LogInfo() const
+{
+//	Debug::Log << "Float3x3:\n";
+//	Debug::Log << Debug::TabInc;
+	Location0.LogInfo();
+	Location1.LogInfo();
+	Location2.LogInfo();
+//	Debug::Log << Debug::TabDec;
+}
+void Attribute::Float4x4::LogInfo() const
 {
 //	Debug::Log << "Float3x3:\n";
 //	Debug::Log << Debug::TabInc;
