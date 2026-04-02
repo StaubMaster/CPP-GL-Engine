@@ -180,7 +180,7 @@ Point4D operator/(const Point4D & p, const Matrix4x4 & mat)
 	{
 		for (int x = 0; x < 4; x++)
 		{
-			o[y] += mat.Data[x][y] * i[y];
+			o[y] += mat.Data[x][y] * i[x];
 		}
 	}
 	return r;

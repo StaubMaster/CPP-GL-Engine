@@ -94,18 +94,18 @@ Matrix3x3 Matrix3x3::RotationX(Angle a)
 {
 	Matrix2x2 mat = Matrix2x2::Rotation(a);
 	return Matrix3x3(
-		mat.Data[0][1], 0, mat.Data[0][0],
-		0, 1, 0,
-		mat.Data[1][1], 0, mat.Data[1][0]
+		1, 0, 0,
+		0, mat.Data[0][0], mat.Data[0][1],
+		0, mat.Data[1][0], mat.Data[1][1]
 	);
 }
 Matrix3x3 Matrix3x3::RotationY(Angle a)
 {
 	Matrix2x2 mat = Matrix2x2::Rotation(a);
 	return Matrix3x3(
-		1, 0, 0,
-		0, mat.Data[0][0], mat.Data[0][1],
-		0, mat.Data[1][0], mat.Data[1][1]
+		mat.Data[1][1], 0, mat.Data[1][0],
+		0, 1, 0,
+		mat.Data[0][1], 0, mat.Data[0][0]
 	);
 }
 Matrix3x3 Matrix3x3::RotationZ(Angle a)
@@ -120,9 +120,9 @@ Matrix3x3 Matrix3x3::RotationZ(Angle a)
 Matrix3x3 Matrix3x3::Rotation(EulerAngle3D a)
 {
 	Matrix3x3 mat = Identity();
-	mat = mat * RotationZ(a.Z);
-	mat = mat * RotationY(a.Y);
-	mat = mat * RotationX(a.X);
+	mat = mat * RotationY(a.Y2);
+	mat = mat * RotationX(a.X1);
+	mat = mat * RotationZ(a.Z0);
 	return mat;
 }
 
@@ -184,7 +184,7 @@ Point3D operator/(const Point3D & p, const Matrix3x3 & mat)
 	{
 		for (int x = 0; x < 3; x++)
 		{
-			o[y] += mat.Data[x][y] * i[y];
+			o[y] += mat.Data[x][y] * i[x];
 		}
 	}
 	return r;

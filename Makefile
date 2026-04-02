@@ -44,6 +44,7 @@ VALUE_TYPE := \
 	ValueType/EulerAngle3D.cpp \
 	ValueType/Trans2D.cpp \
 	ValueType/Trans3D.cpp \
+	ValueType/Transformation3D.cpp \
 	ValueType/DepthFactors.cpp \
 	ValueType/Depth.cpp \
 	ValueType/ColorF4.cpp \
@@ -190,7 +191,7 @@ POLYHEDRA := \
 	PolyHedra/Skin/SkinBase.cpp \
 	PolyHedra/Skin/Skin2DA.cpp \
 	PolyHedra/Skin/Skin2D_Data.cpp \
-\
+#\
 	PolyHedra/Main/Data.cpp \
 	PolyHedra/Main/Buffer.cpp \
 	PolyHedra/Simple3D/Shader.cpp \

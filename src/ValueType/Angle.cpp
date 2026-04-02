@@ -1,6 +1,5 @@
 #include "ValueType/Angle.hpp"
-#include "ValueType/Matrix2x2.hpp"
-#include "ValueType/Matrix3x3.hpp"
+#include "ValueType/Point2D.hpp"
 
 #include <math.h>
 
@@ -62,6 +61,35 @@ Angle Angle::SaCos(float val) { return Angle(acosf(val)); }
 Angle Angle::SaTan2(float y, float x) { return Angle(atan2f(y, x)); }
 
 
+
+void Angle::Forward(float & x, float & y) const
+{
+	float t;
+	float _sin = Sin();
+	float _cos = Cos();
+	t = _cos * x - _sin * y;
+	y = _cos * y + _sin * x;
+	x = t;
+}
+void Angle::Reverse(float & x, float & y) const
+{
+	float t;
+	float _sin = Sin();
+	float _cos = Cos();
+	t = _cos * x + _sin * y;
+	y = _cos * y - _sin * x;
+	x = t;
+}
+Point2D Angle::Forward(Point2D p) const
+{
+	Forward(p.X, p.Y);
+	return p;
+}
+Point2D Angle::Reverse(Point2D p) const
+{
+	Reverse(p.X, p.Y);
+	return p;
+}
 
 
 

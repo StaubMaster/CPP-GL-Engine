@@ -148,7 +148,7 @@ Point2D operator/(const Point2D & p, const Matrix2x2 & mat)
 	{
 		for (int x = 0; x < 2; x++)
 		{
-			o[y] += mat.Data[x][y] * i[y];
+			o[y] += mat.Data[x][y] * i[x];
 		}
 	}
 	return r;

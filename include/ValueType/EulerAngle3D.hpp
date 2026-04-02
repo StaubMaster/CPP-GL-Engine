@@ -9,9 +9,9 @@ struct Matrix3x3;
 struct EulerAngle3D
 {
 	public:
-	Angle	X;
-	Angle	Y;
-	Angle	Z;
+	Angle	Z0;
+	Angle	X1;
+	Angle	Y2;
 
 	public:
 	~EulerAngle3D();
@@ -20,12 +20,13 @@ struct EulerAngle3D
 	const EulerAngle3D & operator=(const EulerAngle3D & other);
 
 	public:
-	EulerAngle3D(Angle x, Angle y, Angle z);
-	static EulerAngle3D Degrees(float x, float y, float z);
-	static EulerAngle3D Radians(float x, float y, float z);
+	EulerAngle3D(Angle a0, Angle a1, Angle a2);
+	static EulerAngle3D Degrees(float a0, float a1, float a2);
+	static EulerAngle3D Radians(float a0, float a1, float a2);
 
 	public:
-	Matrix3x3	ToMatrix() const;
+	Point3D	Forward(Point3D p) const;
+	Point3D	Reverse(Point3D p) const;
 
 	public:
 	EulerAngle3D	operator+(const EulerAngle3D & other) const;
