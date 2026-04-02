@@ -1,46 +1,65 @@
 #include "ValueType/Trans3D.hpp"
+#include "ValueType/Matrix4x4.hpp"
 
 
 
-Trans3D::Trans3D() :
-	Pos(),
-	Rot()
-{ }
-Trans3D::Trans3D(Point3D pos, Angle3D rot) :
-	Pos(pos),
-	Rot(rot)
-{ }
 Trans3D::~Trans3D()
 { }
+Trans3D::Trans3D()
+	: Position()
+	, Rotation()
+{ }
 
-Trans3D::Trans3D(const Trans3D & other) :
-	Pos(other.Pos),
-	Rot(other.Rot)
+Trans3D::Trans3D(const Trans3D & other)
+	: Position(other.Position)
+	, Rotation(other.Rotation)
 { }
 Trans3D & Trans3D::operator=(const Trans3D & other)
 {
-	Pos = other.Pos;
-	Rot = other.Rot;
+	Position = other.Position;
+	Rotation = other.Rotation;
 	return *this;
 }
 
 
 
-void Trans3D::MoveFlatX(Point3D move)
+Trans3D::Trans3D(Point3D pos)
+	: Position(pos)
+	, Rotation()
+{ }
+Trans3D::Trans3D(EulerAngle3D rot)
+	: Position()
+	, Rotation(rot)
+{ }
+Trans3D::Trans3D(Point3D pos, EulerAngle3D rot)
+	: Position(pos)
+	, Rotation(rot)
+{ }
+
+
+
+Point3D Trans3D::Forward(Point3D p) const
 {
-	Angle3D a(Rot.X, Angle(), Angle());
-	Pos += a.rotateBack(move);
-	//Pos = Pos + (Angle3D(Rot.X, 0, 0).rotate(move));
+	return Rotation.Forward(p) + Position;
 }
-void Trans3D::SpinFlatX(Angle3D spin)
+Point3D Trans3D::Reverse(Point3D p) const
 {
-	Rot += spin;
-	//Rot.X = Rot.X + spin.X;
-	//Rot.Y = Rot.Y + spin.Y;
-	//Rot.Z = 0;
+	return Rotation.Reverse(p - Position);
 }
-void Trans3D::TransformFlatX(Point3D move, Angle3D spin)
+
+
+
+Matrix4x4 Trans3D::ToMatrixForward() const
 {
-	MoveFlatX(move);
-	SpinFlatX(spin);
+	Matrix4x4 mat = Matrix4x4::Identity();
+	mat = mat * Matrix4x4::Position(+Position);
+	mat = mat * Matrix4x4::Rotation(Rotation);
+	return mat;
+}
+Matrix4x4 Trans3D::ToMatrixReverse() const
+{
+	Matrix4x4 mat = Matrix4x4::Identity();
+	mat = mat * Matrix4x4::Position(-Position);
+	mat = mat / Matrix4x4::Rotation(Rotation);
+	return ~mat;
 }

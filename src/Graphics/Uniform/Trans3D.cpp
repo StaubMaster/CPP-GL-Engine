@@ -1,5 +1,6 @@
 #include "Graphics/Uniform/Trans3D.hpp"
 #include "ValueType/Trans3D.hpp"
+#include "ValueType/Matrix3x3.hpp"
 
 
 
@@ -13,6 +14,6 @@ Uniform::Trans3D::Trans3D(::Shader::Base & shader, std::string name)
 
 void Uniform::Trans3D::Put(const ::Trans3D & obj)
 {
-	Pos.Put(obj.Pos);
-	Rot.Put(obj.Rot);
+	Pos.Put(obj.Position);
+	Rot.Put(~::Matrix3x3::Rotation(obj.Rotation));
 }

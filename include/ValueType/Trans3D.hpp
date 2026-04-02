@@ -1,27 +1,35 @@
-#ifndef TRANS_3D_HPP
+#ifndef  TRANS_3D_HPP
 # define TRANS_3D_HPP
 
-# include "Point3D.hpp"
-# include "Angle3D.hpp"
+# include "ValueType/Point3D.hpp"
+# include "ValueType/EulerAngle3D.hpp"
+
+struct Matrix4x4;
 
 struct Trans3D
 {
-	public:
-	Point3D	Pos;
-	Angle3D	Rot;
+	Point3D			Position;
+	EulerAngle3D	Rotation;
+	// Scale
+	// Shear
+	// Distort
 
-	public:
-	Trans3D();
-	Trans3D(Point3D pos, Angle3D rot);
 	~Trans3D();
+	Trans3D();
 
 	Trans3D(const Trans3D & other);
 	Trans3D & operator=(const Trans3D & other);
 
-	public:
-	void MoveFlatX(Point3D move);
-	void SpinFlatX(Angle3D spin);
-	void TransformFlatX(Point3D move, Angle3D spin);
+	Trans3D(Point3D pos);
+	Trans3D(EulerAngle3D rot);
+	Trans3D(Point3D pos, EulerAngle3D rot);
+
+	Point3D Forward(Point3D p) const;
+	Point3D Reverse(Point3D p) const;
+
+	Matrix4x4 ToMatrixForward() const;
+	Matrix4x4 ToMatrixReverse() const;
 };
+
 
 #endif

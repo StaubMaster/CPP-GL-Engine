@@ -17,8 +17,6 @@
 #include "ValueType/Matrix3x3.hpp"
 #include "ValueType/Matrix4x4.hpp"
 
-#include "ValueType/Transformation3D.hpp"
-
 
 
 void TestRotate2D()
@@ -45,7 +43,7 @@ void Test()
 	std::cout << "Test\n";
 
 	Point3D p3(1, 2, 3);
-	Transformation3D trans(Point3D(3, 4, 5), EulerAngle3D::Degrees(9, 321, 123));
+	Trans3D trans(Point3D(3, 4, 5), EulerAngle3D::Degrees(9, 321, 123));
 
 	std::cout << (p3) << '\n';
 	std::cout << '\n';
@@ -57,9 +55,11 @@ void Test()
 	std::cout << (p3 * trans.ToMatrixReverse()) << '\n';
 	std::cout << (trans.Reverse(p3)) << '\n';
 	std::cout << '\n';
-	
+
 	std::cout << (trans.Reverse(trans.Forward(p3))) << '\n';
 	std::cout << (trans.Forward(trans.Reverse(p3))) << '\n';
+	std::cout << ((p3 * trans.ToMatrixReverse()) * trans.ToMatrixForward()) << '\n';
+	std::cout << ((p3 * trans.ToMatrixForward()) * trans.ToMatrixReverse()) << '\n';
 	std::cout << '\n';
 }
 

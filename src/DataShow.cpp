@@ -44,6 +44,11 @@ std::ostream & operator<<(std::ostream & o, const Angle3D & obj)
 	//o << "#( " << obj.cos_x << " | " << obj.cos_y << " | " << obj.cos_z << " )";
 	return o;
 }
+std::ostream & operator<<(std::ostream & o, const EulerAngle3D & obj)
+{
+	o << "( Z: " << obj.Z0 << " | X: " << obj.X1 << " | Y: " << obj.Y2 << " )";
+	return o;
+}
 
 
 
@@ -54,7 +59,7 @@ std::ostream & operator<<(std::ostream & o, const Trans2D & obj)
 }
 std::ostream & operator<<(std::ostream & o, const Trans3D & obj)
 {
-	o << "{ " << obj.Pos << " | " << obj.Rot << " }";
+	o << "{ " << obj.Position << " | " << obj.Rotation << " }";
 	return o;
 }
 

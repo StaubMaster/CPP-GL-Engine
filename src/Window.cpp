@@ -271,15 +271,16 @@ Angle3D Window::SpinFromCursor() const
 {
 	Angle3D spin;
 	DisplayPosition cursor = MouseManager.CursorPosition();
-	spin.X.FromRadians(+cursor.Window.Corner.X);
-	spin.Y.FromRadians(-cursor.Window.Corner.Y);
+	spin.X.FromRadians(+cursor.Window.Corner.Y);
+	spin.Y.FromRadians(+cursor.Window.Corner.X);
 	return spin;
 }
 Trans3D Window::MoveSpinFromKeysCursor() const
 {
+	Point3D pos = MoveFromKeys();
+	Angle3D rot = SpinFromCursor();
 	return Trans3D(
-		MoveFromKeys(),
-		SpinFromCursor()
+		pos, EulerAngle3D(rot.Z, rot.X, rot.Y)
 	);
 }
 

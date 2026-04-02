@@ -3,7 +3,8 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Point3D.hpp"
-# include "Graphics/Uniform/Angle3D.hpp"
+//# include "Graphics/Uniform/Angle3D.hpp"
+# include "Graphics/Uniform/Matrix3x3.hpp"
 
 struct Trans3D;
 
@@ -13,7 +14,8 @@ class Trans3D : public Uniform::GBase<::Trans3D>
 {
 	private:
 	Uniform::Point3D Pos;
-	Uniform::Angle3D Rot;
+	//Uniform::Angle3D Rot;
+	Uniform::Matrix3x3 Rot;
 
 	public:
 	Trans3D(::Shader::Base & shader, std::string name);

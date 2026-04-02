@@ -31,10 +31,12 @@ struct Ray3D;
 
 struct Matrix2x2;
 struct Matrix3x3;
+struct Matrix4x4;
 
 struct Angle;
 struct Angle2D;
 struct Angle3D;
+struct EulerAngle3D;
 
 struct Trans2D;
 struct Trans3D;

@@ -31,10 +31,12 @@
 
 # include "ValueType/Matrix2x2.hpp"
 # include "ValueType/Matrix3x3.hpp"
+# include "ValueType/Matrix4x4.hpp"
 
 # include "ValueType/Angle.hpp"
 # include "ValueType/Angle2D.hpp"
 # include "ValueType/Angle3D.hpp"
+# include "ValueType/EulerAngle3D.hpp"
 
 # include "ValueType/Trans2D.hpp"
 # include "ValueType/Trans3D.hpp"

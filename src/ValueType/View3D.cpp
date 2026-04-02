@@ -31,9 +31,12 @@ View3D & View3D::operator=(const View3D & other)
 
 void View3D::TransformFlatX(Trans3D trans, float timeDelta)
 {
-	trans.Pos *= timeDelta;
-	trans.Rot *= timeDelta;
-	Trans.TransformFlatX(trans.Pos, trans.Rot);
-	Trans.Rot.Y.Clamp();
-	Trans.Rot.CalcMatrix();
+	trans.Position *= timeDelta;
+	trans.Rotation *= timeDelta;
+	{
+		EulerAngle3D e(Trans.Rotation.Y2, Angle(), Angle());
+		Trans.Position += e.Reverse(trans.Position);
+		Trans.Rotation += trans.Rotation;
+	}
+	Trans.Rotation.Y2.Clamp();
 }
