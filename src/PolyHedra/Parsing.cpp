@@ -3,10 +3,12 @@
 #include "PolyHedra/Template.hpp"
 #include "PolyHedra/Generate.hpp"
 
+// Skin
 #include "PolyHedra/Skin/SkinBase.hpp"
 #include "PolyHedra/Skin/Skin2DA.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
+// File
 #include "FileInfo.hpp"
 //#include "FilePath.hpp"
 //#include "FileParsing/LineCommand.hpp"
@@ -14,12 +16,15 @@
 #include "FileParsing/Text/TextCommandStream.hpp"
 #include "FileParsing/Text/Exceptions.hpp"
 
+// ValueType
 #include "ValueType/Point3D.hpp"
 #include "ValueType/Angle.hpp"
 #include "ValueType/Angle3D.hpp"
+#include "ValueType/EulerAngle3D.hpp"
 #include "ValueType/AxisBox3D.hpp"
 #include "DataShow.hpp"
 
+// Debug
 #include "Debug.hpp"
 #include <sstream>
 #include <iostream>
@@ -316,7 +321,12 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 	);
 	float radius = cmd.ToFloat(5);
 
-	Angle3D angle = Angle3D::FromPoint3D(Point3D(
+	/*Angle3D angle = Angle3D::FromPoint3D(Point3D(
+		cmd.ToFloat(6),
+		cmd.ToFloat(7),
+		cmd.ToFloat(8)
+	));*/
+	EulerAngle3D angle = EulerAngle3D::PointToZ(Point3D(
 		cmd.ToFloat(6),
 		cmd.ToFloat(7),
 		cmd.ToFloat(8)
@@ -330,12 +340,13 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 	Point3D rad_p(radius, 0, 0);
 	for (int i = 0; i < step_abs; i++)
 	{
-		angle.Z = (Angle::Section(step_num) * (i + step_off)) + offset;
-		angle.CalcMatrix();
+		angle.Z0 = (Angle::Section(step_num) * (i + step_off)) + offset;
+
 		Point3D p;
-		p = angle.rotateBack(rad_p);
+		p = angle.Forward(rad_p);
 		p = p + center;
 		Data -> Insert_Corn(Corner(p));
+
 		//std::cout << p << "\n";
 	}
 }
