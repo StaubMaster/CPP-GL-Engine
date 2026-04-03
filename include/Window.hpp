@@ -4,13 +4,10 @@
 # include "ValueType/ColorF4.hpp"
 # include "ValueType/Point2D.hpp"
 
-# include "Function/Pointer.hpp"
+# include "Miscellaneous/Function/Pointer.hpp"
 
 # include "Display/DisplaySize.hpp"
 # include "Display/DisplayPosition.hpp"
-
-# include "UserParameter/KeyBoard/EventManager.hpp"
-# include "UserParameter/Mouse/EventManager.hpp"
 
 # include "User/KeyBoardManager.hpp"
 # include "User/MouseManager.hpp"

@@ -27,16 +27,27 @@ View3D & View3D::operator=(const View3D & other)
 	return *this;
 }
 
+View3D View3D::Default()
+{
+	View3D view;
+	return view;
+}
 
 
-void View3D::TransformFlatX(Trans3D trans, float timeDelta)
+
+void View3D::ChangeFlatX(Trans3D trans, float timeDelta)
 {
 	trans.Position *= timeDelta;
 	trans.Rotation *= timeDelta;
 	{
 		EulerAngle3D e(Angle(), Angle(), Trans.Rotation.Y2);
-		Trans.Position += e.Forward(trans.Position);
+		Trans.Position += e.forward(trans.Position);
 		Trans.Rotation += trans.Rotation;
 	}
-	Trans.Rotation.X1.Clamp();
+	Trans.Rotation.X1.clampPI();
 }
+
+
+
+//Point3D View3D::forward(Point3D p) const { }
+//Point3D View3D::reverse(Point3D p) const { }

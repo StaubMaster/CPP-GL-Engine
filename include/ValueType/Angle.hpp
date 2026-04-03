@@ -11,54 +11,63 @@ struct Angle
 	private:
 	float	Value;
 
+
+
 	public:
 	~Angle();
 	Angle();
 	Angle(const Angle & other);
 	Angle & operator=(const Angle & other);
 
-	private:
-	Angle(float val);
+
 
 	private:
 	static float	DegreesToRadians(float val);
 	static float	RadiansToDegrees(float val);
 
+	Angle(float val);
+
 	public:
-	void	FromRadians(float val);
-	void	FromDegrees(float val);
-
-	float	ToRadians() const;
-	float	ToDegrees() const;
-
 	static Angle	Radians(float val);
 	static Angle	Degrees(float val);
 	static Angle	Section(float val);
 
-	// PointToX()
-	// PointToY()
+	static Angle	PointToX(Point2D dir);
+	static Angle	PointToY(Point2D dir);
+
+	float	ToRadians() const;
+	float	ToDegrees() const;
+
+
 
 	public:
-	void	Clamp();
+	void	clampPI();
+
+	Angle	round(Angle size) const;
+	Angle	roundC(Angle size) const;
+	Angle	roundF(Angle size) const;
+
+
 
 	public:
 	float	Sin() const;
 	float	Cos() const;
 	float	Tan() const;
 
-	void	aSin(float val);
-	void	aCos(float val);
-	void	aTan2(float y, float x);
+	static Angle	aSin(float val);
+	static Angle	aCos(float val);
+	static Angle	aTan2(float y, float x);
 
-	static Angle	SaSin(float val);
-	static Angle	SaCos(float val);
-	static Angle	SaTan2(float y, float x);
+
 
 	public:
-	void	Forward(float & x, float & y) const;
-	void	Reverse(float & x, float & y) const;
-	Point2D	Forward(Point2D p) const;
-	Point2D	Reverse(Point2D p) const;
+	void	forward(float & x, float & y) const;
+	void	reverse(float & x, float & y) const;
+
+	Point2D	forward(Point2D p) const;
+	Point2D	reverse(Point2D p) const;
+
+
 
 	public:
 	Angle		operator+() const;
@@ -74,11 +83,16 @@ struct Angle
 	Angle &		operator*=(const Angle & other);
 	Angle &		operator/=(const Angle & other);
 
-	Angle		operator*(const float & flt) const;
-	Angle		operator/(const float & flt) const;
 
-	Angle &		operator*=(const float & flt);
-	Angle &		operator/=(const float & flt);
+
+	Angle &		operator*=(float f);
+	Angle &		operator/=(float f);
 };
+
+Angle	operator*(Angle a, float f);
+Angle	operator/(Angle a, float f);
+
+Angle	operator*(float f, Angle a);
+Angle	operator/(float f, Angle a);
 
 #endif

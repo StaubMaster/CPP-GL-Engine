@@ -32,7 +32,7 @@ Angle2D & Angle2D::operator =(const Angle2D & other)
 Angle2D Angle2D::FromPoint2D(const Point2D & dir)
 {
 	return Angle2D(
-		Angle::SaTan2(dir.Y, dir.X)
+		Angle::aTan2(dir.Y, dir.X)
 	);
 }
 

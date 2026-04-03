@@ -10,6 +10,8 @@ struct View2D
 	Trans2D	Trans;
 	float	Scale;
 
+
+
 	View2D();
 	~View2D();
 
@@ -18,10 +20,12 @@ struct View2D
 
 	static View2D Default();
 
-	void Change(Trans2D trans, float timeDelta);
+	void Change(Trans2D change, float timeDelta);
 
-	Point2D operator*(const Point2D & pos) const;
-	Point2D operator/(const Point2D & pos) const;
+
+
+	Point2D forward(Point2D p) const;
+	Point2D reverse(Point2D p) const;
 };
 
 #endif

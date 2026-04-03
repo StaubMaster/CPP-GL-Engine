@@ -56,7 +56,7 @@ Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
 
 
 
-void Buffer::Attribute::ChangeAttributeBinding()
+void Buffer::Attribute::Init()
 {
 	Bind();
 	GL::BufferData(Target, 0, nullptr, Usage);

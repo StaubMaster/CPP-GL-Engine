@@ -179,7 +179,11 @@ INSTANCE_DATA := \
 	InstanceData/Simple3D/Buffer.cpp \
 \
 	InstanceData/Physics3D/Data.cpp \
-	InstanceData/Physics3D/Buffer.cpp
+	InstanceData/Physics3D/Buffer.cpp \
+\
+	Instance/Basic3D/Buffer.cpp \
+	Instance/Basic3D/Data.cpp \
+
 INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
 INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
 
@@ -193,13 +197,15 @@ POLYHEDRA := \
 	PolyHedra/Skin/SkinBase.cpp \
 	PolyHedra/Skin/Skin2DA.cpp \
 	PolyHedra/Skin/Skin2D_Data.cpp \
-#\
-	PolyHedra/Main/Data.cpp \
-	PolyHedra/Main/Buffer.cpp \
-	PolyHedra/Simple3D/Shader.cpp \
-	PolyHedra/Simple3D/BufferArray.cpp \
-	PolyHedra/Simple3D/ManagerSingle.cpp \
-	PolyHedra/Simple3D/ManagerMulti.cpp
+\
+	PolyHedra/Graphics/Full/Main/Buffer.cpp \
+	PolyHedra/Graphics/Full/Buffer.cpp \
+	PolyHedra/Graphics/Full/Shader.cpp \
+	PolyHedra/InstanceManager.cpp \
+	PolyHedra/ObjectData.cpp \
+	PolyHedra/Manager.cpp \
+	PolyHedra/Object.cpp
+
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
 POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))
 
@@ -218,24 +224,6 @@ WAVEFRONT_SRC := $(addprefix $(DIR_SRC)/,$(WAVEFRONT))
 WAVEFRONT_OBJ := $(addprefix $(DIR_OBJ)/,$(WAVEFRONT:.cpp=.o))
 
 USERPARAMETER := \
-	UserParameter/Haptic/Code.cpp \
-	UserParameter/Haptic/Action.cpp \
-	UserParameter/Haptic/Modifier.cpp \
-	UserParameter/Haptic/State.cpp \
-\
-	UserParameter/KeyBoard/KeyRange1.cpp \
-	UserParameter/KeyBoard/KeyRange2.cpp \
-	UserParameter/KeyBoard/Key.cpp \
-	UserParameter/KeyBoard/Text.cpp \
-	UserParameter/KeyBoard/Codes.cpp \
-	UserParameter/KeyBoard/EventManager.cpp \
-\
-	UserParameter/Mouse/ButtonRange.cpp \
-	UserParameter/Mouse/ButtonData.cpp \
-	UserParameter/Mouse/Click.cpp \
-	UserParameter/Mouse/Scroll.cpp \
-	UserParameter/Mouse/Codes.cpp \
-	UserParameter/Mouse/EventManager.cpp \
 \
 	User/Enums/Modifier.cpp \
 	User/Enums/Action.cpp \

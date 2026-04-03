@@ -5,7 +5,6 @@
 #include "ValueType/Angle3D.hpp"
 #include "ValueType/Point2D.hpp"
 #include "ValueType/Trans3D.hpp"
-#include "UserParameter/MouseInclude.hpp"
 
 #include "Debug.hpp"
 #include <sstream>
@@ -271,8 +270,8 @@ Angle3D Window::SpinFromCursor() const
 {
 	Angle3D spin;
 	DisplayPosition cursor = MouseManager.CursorPosition();
-	spin.X.FromRadians(+cursor.Window.Corner.Y);
-	spin.Y.FromRadians(+cursor.Window.Corner.X);
+	spin.X = Angle::Radians(+cursor.Window.Corner.Y);
+	spin.Y = Angle::Radians(+cursor.Window.Corner.X);
 	return spin;
 }
 Trans3D Window::MoveSpinFromKeysCursor() const

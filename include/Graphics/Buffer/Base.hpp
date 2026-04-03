@@ -29,6 +29,9 @@ class Base
 
 
 	public:
+	virtual void Init() = 0;
+
+	public:
 	void Create();
 	void Delete();
 

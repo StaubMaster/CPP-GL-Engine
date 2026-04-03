@@ -343,7 +343,7 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 		angle.Z0 = (Angle::Section(step_num) * (i + step_off)) + offset;
 
 		Point3D p;
-		p = angle.Forward(rad_p);
+		p = angle.forward(rad_p);
 		p = p + center;
 		Data -> Insert_Corn(Corner(p));
 

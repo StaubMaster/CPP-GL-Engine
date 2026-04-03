@@ -14,21 +14,29 @@ struct Trans3D
 	// Shear
 	// Distort
 
+	// Is Scaling done before or after everything else ?
+	// what about the others
+	// does it depend on the order of making the Matrixes ?
+
+
+
 	~Trans3D();
+	
 	Trans3D();
-
-	Trans3D(const Trans3D & other);
-	Trans3D & operator=(const Trans3D & other);
-
 	Trans3D(Point3D pos);
 	Trans3D(EulerAngle3D rot);
 	Trans3D(Point3D pos, EulerAngle3D rot);
 
-	Point3D Forward(Point3D p) const;
-	Point3D Reverse(Point3D p) const;
+	Trans3D(const Trans3D & other);
+	Trans3D & operator=(const Trans3D & other);
 
-	Matrix4x4 ToMatrixForward() const;
-	Matrix4x4 ToMatrixReverse() const;
+
+
+	Point3D		forward(Point3D p) const;
+	Point3D		reverse(Point3D p) const;
+
+	Matrix4x4	ToMatrixForward() const;
+	Matrix4x4	ToMatrixReverse() const;
 };
 
 

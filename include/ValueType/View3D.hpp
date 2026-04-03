@@ -10,6 +10,8 @@ struct View3D
 	::Depth	Depth;
 	Angle	FOV;	//make a Point2D for different X and Y angle ?
 
+
+
 	View3D();
 	~View3D();
 
@@ -18,7 +20,12 @@ struct View3D
 
 	static View3D Default();
 
-	void TransformFlatX(Trans3D trans, float timeDelta);
+	void ChangeFlatX(Trans3D trans, float timeDelta);
+
+
+
+	Point3D forward(Point3D p) const;
+	Point3D reverse(Point3D p) const;
 };
 
 #endif

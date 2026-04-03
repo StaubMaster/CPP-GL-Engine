@@ -6,7 +6,7 @@
 # include "User/Args/KeyArgs.hpp"
 # include "User/Args/TextArgs.hpp"
 
-# include "Function/Pointer.hpp"
+# include "Miscellaneous/Function/Pointer.hpp"
 
 class Window;
 

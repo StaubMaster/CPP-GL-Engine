@@ -3,11 +3,23 @@
 
 
 
-Trans3D::~Trans3D()
-{ }
+Trans3D::~Trans3D() { }
+
 Trans3D::Trans3D()
 	: Position()
 	, Rotation()
+{ }
+Trans3D::Trans3D(Point3D pos)
+	: Position(pos)
+	, Rotation()
+{ }
+Trans3D::Trans3D(EulerAngle3D rot)
+	: Position()
+	, Rotation(rot)
+{ }
+Trans3D::Trans3D(Point3D pos, EulerAngle3D rot)
+	: Position(pos)
+	, Rotation(rot)
 { }
 
 Trans3D::Trans3D(const Trans3D & other)
@@ -23,28 +35,15 @@ Trans3D & Trans3D::operator=(const Trans3D & other)
 
 
 
-Trans3D::Trans3D(Point3D pos)
-	: Position(pos)
-	, Rotation()
-{ }
-Trans3D::Trans3D(EulerAngle3D rot)
-	: Position()
-	, Rotation(rot)
-{ }
-Trans3D::Trans3D(Point3D pos, EulerAngle3D rot)
-	: Position(pos)
-	, Rotation(rot)
-{ }
 
 
-
-Point3D Trans3D::Forward(Point3D p) const
+Point3D Trans3D::forward(Point3D p) const
 {
-	return Rotation.Forward(p) + Position;
+	return Rotation.forward(p) + Position;
 }
-Point3D Trans3D::Reverse(Point3D p) const
+Point3D Trans3D::reverse(Point3D p) const
 {
-	return Rotation.Reverse(p - Position);
+	return Rotation.reverse(p - Position);
 }
 
 

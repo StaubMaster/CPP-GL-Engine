@@ -44,8 +44,8 @@ Angle3D Angle3D::FromPoint3D(const Point3D & dir)
 	float len = sqrt((dir.X * dir.X) + (dir.Z * dir.Z));
 
 	return Angle3D(
-		Angle::SaTan2(dir.X, dir.Z),
-		Angle::SaTan2(dir.Y, len),
+		Angle::aTan2(dir.X, dir.Z),
+		Angle::aTan2(dir.Y, len),
 		Angle()
 	);
 }
@@ -100,15 +100,10 @@ Angle3D	Angle3D::rotateFore(Angle3D a) const
 	pZ = a.rotateFore(rotateFore(Point3D(0, 0, 1)));
 
 	return Angle3D(
-		Angle::SaTan2(pZ.Z, pX.Z),
-		Angle::SaSin(pY.Z),
-		Angle::SaTan2(pY.Y, pY.X)
+		Angle::aTan2(pZ.Z, pX.Z),
+		Angle::aSin(pY.Z),
+		Angle::aTan2(pY.Y, pY.X)
 	);
-	/*return Angle3D(
-		atan2f(pX.Z, pZ.Z),
-		asinf(pY.Z),
-		atan2(pY.X, pY.Y)
-	);*/
 }
 Angle3D	Angle3D::rotateBack(Angle3D a) const
 {
@@ -118,15 +113,10 @@ Angle3D	Angle3D::rotateBack(Angle3D a) const
 	pZ = a.rotateBack(rotateBack(Point3D(0, 0, 1)));
 
 	return Angle3D(
-		Angle::SaTan2(pZ.Z, pX.Z),
-		Angle::SaSin(pY.Z),
-		Angle::SaTan2(pY.Y, pY.X)
+		Angle::aTan2(pZ.Z, pX.Z),
+		Angle::aSin(pY.Z),
+		Angle::aTan2(pY.Y, pY.X)
 	);
-	/*return Angle3D(
-		atan2f(pX.Z, pZ.Z),
-		asinf(pY.Z),
-		atan2(pY.X, pY.Y)
-	);*/
 }
 
 

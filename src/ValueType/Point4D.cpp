@@ -40,12 +40,86 @@ float Point4D::length() const
 Point4D Point4D::normalize() const
 {
 	float len = length();
-	if (len <= 0.0f) { return Point4D(0, 0, 0, 0); }
+	if (len > 0.0f)
+	{
+		return Point4D(
+			X / len,
+			Y / len,
+			Z / len,
+			W / len
+		);
+	}
+	return Point4D(0, 0, 0, 0);
+}
+Point4D Point4D::normalize(float & len) const
+{
+	len = length();
+	if (len > 0.0f)
+	{
+		return Point4D(
+			X / len,
+			Y / len,
+			Z / len,
+			W / len
+		);
+	}
+	len = 0.0f;
+	return Point4D(0, 0, 0, 0);
+}
+
+Point4D Point4D::round() const
+{
 	return Point4D(
-		X / len,
-		Y / len,
-		Z / len,
-		W / len
+		roundf(X),
+		roundf(Y),
+		roundf(Z),
+		roundf(W)
+	);
+}
+Point4D Point4D::roundC() const
+{
+	return Point4D(
+		ceilf(X),
+		ceilf(Y),
+		ceilf(Z),
+		ceilf(W)
+	);
+}
+Point4D Point4D::roundF() const
+{
+	return Point4D(
+		floorf(X),
+		floorf(Y),
+		floorf(Z),
+		floorf(W)
+	);
+}
+
+Point4D Point4D::round(float size) const
+{
+	return Point4D(
+		roundf(X / size) * size,
+		roundf(Y / size) * size,
+		roundf(Z / size) * size,
+		roundf(W / size) * size
+	);
+}
+Point4D Point4D::roundC(float size) const
+{
+	return Point4D(
+		ceilf(X / size) * size,
+		ceilf(Y / size) * size,
+		ceilf(Z / size) * size,
+		ceilf(W / size) * size
+	);
+}
+Point4D Point4D::roundF(float size) const
+{
+	return Point4D(
+		floorf(X / size) * size,
+		floorf(Y / size) * size,
+		floorf(Z / size) * size,
+		floorf(W / size) * size
 	);
 }
 
@@ -240,8 +314,4 @@ float Point4D::dot(const Point4D & p0, const Point4D & p1)
 		(p0.Z * p1.Z) +
 		(p0.W * p1.W)
 	);
-}
-float Point4D::operator%(const Point4D & other) const
-{
-	return dot(*this, other);
 }

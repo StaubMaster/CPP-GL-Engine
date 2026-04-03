@@ -9,7 +9,7 @@ struct Point4D
 	float	Z;
 	float	W;
 
-	//	no Synonyms because W (4th Dimension) and W (1st Dimension Synonym)
+
 
 	public:
 	Point4D();
@@ -19,11 +19,26 @@ struct Point4D
 	Point4D(const Point4D & other);
 	Point4D & operator=(const Point4D & other);
 
-	public:
-	float length2() const;
-	float length() const;
-	Point4D normalize() const;
 
+
+	public:
+	float		length2() const;
+	float		length() const;
+
+	Point4D		normalize() const;
+	Point4D		normalize(float & len) const;
+
+	Point4D		round() const;
+	Point4D		roundC() const;
+	Point4D		roundF() const;
+
+	Point4D		round(float size) const;
+	Point4D		roundC(float size) const;
+	Point4D		roundF(float size) const;
+
+
+
+	public:
 	Point4D operator+() const;
 	Point4D operator-() const;
 	Point4D operator!() const;
@@ -48,8 +63,9 @@ struct Point4D
 	Point4D & operator*=(const Point4D & other);
 	Point4D & operator/=(const Point4D & other);
 
+
+
 	float static dot(const Point4D & p0, const Point4D & p1);
-	float operator%(const Point4D & other) const;
 };
 
 #endif

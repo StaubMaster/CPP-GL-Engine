@@ -20,25 +20,22 @@ View2D & View2D::operator=(const View2D & other)
 	return *this;
 }
 
-
-
 View2D View2D::Default()
 {
 	View2D view;
-	view.Scale = 10.0f;
+	view.Scale = 1.0f;
 	return view;
 }
 
-
-
-void View2D::Change(Trans2D trans, float timeDelta)
+void View2D::Change(Trans2D change, float timeDelta)
 {
-	trans.Pos *= timeDelta;
-	trans.Rot *= timeDelta;
-	Trans.Change(trans.Pos, trans.Rot);
+	change.Pos *= timeDelta;
+	change.Rot *= timeDelta;
+	Trans.Pos += (Trans.Rot * change.Pos);
+	Trans.Rot += change.Rot;
 }
 
 
 
-Point2D View2D::operator*(const Point2D & pos) const { return Trans * (pos * Scale); }
-Point2D View2D::operator/(const Point2D & pos) const { return (Trans / pos) / Scale; }
+Point2D View2D::forward(Point2D p) const { return Trans.forward(p * Scale); }
+Point2D View2D::reverse(Point2D p) const { return Trans.reverse(p) / Scale; }

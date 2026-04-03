@@ -1,0 +1,8 @@
+
+Container::Block
+	takes a Block size (1024)
+	then allocates in Blocks
+	so that it has to reallocate only a few times
+
+	this is similar to Binary
+	but Binary reallocates less, the more it has
