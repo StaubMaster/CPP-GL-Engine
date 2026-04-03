@@ -39,12 +39,20 @@ float Point2D::length() const
 Point2D Point2D::normalize() const
 {
 	float len = length();
-	return Point2D(X / len, Y / len);
+	if (len <= 0.0f) { return Point2D(0, 0); }
+	return Point2D(
+		X / len,
+		Y / len
+	);
 }
 Point2D Point2D::normalize(float & len) const
 {
 	len = length();
-	return Point2D(X / len, Y / len);
+	if (len <= 0.0f) { return Point2D(0, 0); }
+	return Point2D(
+		X / len,
+		Y / len
+	);
 }
 
 

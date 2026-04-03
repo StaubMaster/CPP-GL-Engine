@@ -40,6 +40,7 @@ float Point4D::length() const
 Point4D Point4D::normalize() const
 {
 	float len = length();
+	if (len <= 0.0f) { return Point4D(0, 0, 0, 0); }
 	return Point4D(
 		X / len,
 		Y / len,

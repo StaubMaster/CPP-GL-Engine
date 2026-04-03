@@ -39,6 +39,7 @@ float Point3D::length() const
 Point3D Point3D::normalize() const
 {
 	float len = length();
+	if (len <= 0.0f) { return Point3D(0, 0, 0); }
 	return Point3D(
 		X / len,
 		Y / len,

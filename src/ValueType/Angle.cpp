@@ -93,6 +93,9 @@ Point2D Angle::Reverse(Point2D p) const
 
 
 
+Angle Angle::operator+() const { return Angle(+Value); }
+Angle Angle::operator-() const { return Angle(-Value); }
+
 Angle Angle::operator+(const Angle & other) const { return Angle(Value + other.Value); }
 Angle Angle::operator-(const Angle & other) const { return Angle(Value - other.Value); }
 Angle Angle::operator*(const Angle & other) const { return Angle(Value * other.Value); }

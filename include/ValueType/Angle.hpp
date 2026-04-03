@@ -35,6 +35,9 @@ struct Angle
 	static Angle	Degrees(float val);
 	static Angle	Section(float val);
 
+	// PointToX()
+	// PointToY()
+
 	public:
 	void	Clamp();
 
@@ -58,6 +61,9 @@ struct Angle
 	Point2D	Reverse(Point2D p) const;
 
 	public:
+	Angle		operator+() const;
+	Angle		operator-() const;
+
 	Angle		operator+(const Angle & other) const;
 	Angle		operator-(const Angle & other) const;
 	Angle		operator*(const Angle & other) const;

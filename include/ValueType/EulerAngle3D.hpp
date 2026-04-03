@@ -20,9 +20,13 @@ struct EulerAngle3D
 	const EulerAngle3D & operator=(const EulerAngle3D & other);
 
 	public:
-	EulerAngle3D(Angle a0, Angle a1, Angle a2);
-	static EulerAngle3D Degrees(float a0, float a1, float a2);
-	static EulerAngle3D Radians(float a0, float a1, float a2);
+	EulerAngle3D(Angle z0, Angle x1, Angle y2);
+	static EulerAngle3D Degrees(float z0, float x1, float y2);
+	static EulerAngle3D Radians(float z0, float x1, float y2);
+
+	static EulerAngle3D PointToX(Point3D dir);
+	static EulerAngle3D PointToY(Point3D dir);
+	static EulerAngle3D PointToZ(Point3D dir);
 
 	public:
 	Point3D	Forward(Point3D p) const;

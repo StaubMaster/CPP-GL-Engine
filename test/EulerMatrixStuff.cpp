@@ -83,54 +83,59 @@ void TestPointTo2D()
 	std::cout << (a.Reverse(unit)) << '\n';
 	std::cout << '\n';
 }
-void TestPointTo3D()
-{
-//	EulerAngle3D a0 = EulerAngle3D::Degrees(0, 155, 127);
-	EulerAngle3D a0 = EulerAngle3D::Degrees(0, 65, 97);
 
-//	Point3D axis(1, 0, 0);
-//	Point3D axis(0, 1, 0);
-	Point3D axis(0, 0, 1);
+void TestPointToX3D()
+{
+	EulerAngle3D a0 = EulerAngle3D::Degrees(65, 0, 81);
+	Point3D axis(1, 0, 0);
+
+	Point3D p1 = a0.Forward(axis);
+	EulerAngle3D a1 = EulerAngle3D::PointToX(p1);
+
+	std::cout << "a1.Z0: " << a1.Z0.ToDegrees() << '\n';
+	std::cout << "a1.X1: " << a1.X1.ToDegrees() << '\n';
+	std::cout << "a1.Y2: " << a1.Y2.ToDegrees() << '\n';
+	std::cout << '\n';
 
 	std::cout << "a0.Z0: " << a0.Z0.ToDegrees() << '\n';
 	std::cout << "a0.X1: " << a0.X1.ToDegrees() << '\n';
 	std::cout << "a0.Y2: " << a0.Y2.ToDegrees() << '\n';
 	std::cout << '\n';
+}
+void TestPointToY3D()
+{
+	EulerAngle3D a0 = EulerAngle3D::Degrees(65, 81, 0);
+	Point3D axis(0, 1, 0);
 
 	Point3D p1 = a0.Forward(axis);
+	EulerAngle3D a1 = EulerAngle3D::PointToY(p1);
 
-	float lenX = sqrt((p1.Y * p1.Y) + (p1.Z * p1.Z));
-	float lenY = sqrt((p1.Z * p1.Z) + (p1.X * p1.X));
-	float lenZ = sqrt((p1.X * p1.X) + (p1.Y * p1.Y));
-
-	std::cout << Angle::SaTan2(p1.Y, p1.Z).ToDegrees() << '\n'; 
-	std::cout << Angle::SaTan2(p1.Z, p1.X).ToDegrees() << '\n';
-	std::cout << Angle::SaTan2(p1.X, p1.Y).ToDegrees() << '\n';
+	std::cout << "a1.Z0: " << a1.Z0.ToDegrees() << '\n';
+	std::cout << "a1.X1: " << a1.X1.ToDegrees() << '\n';
+	std::cout << "a1.Y2: " << a1.Y2.ToDegrees() << '\n';
 	std::cout << '\n';
 
-	std::cout << Angle::SaTan2(p1.Z, p1.Y).ToDegrees() << '\n';
-	std::cout << Angle::SaTan2(p1.X, p1.Z).ToDegrees() << '\n'; // axisZ Y2
-	std::cout << Angle::SaTan2(p1.Y, p1.X).ToDegrees() << '\n';
+	std::cout << "a0.Z0: " << a0.Z0.ToDegrees() << '\n';
+	std::cout << "a0.X1: " << a0.X1.ToDegrees() << '\n';
+	std::cout << "a0.Y2: " << a0.Y2.ToDegrees() << '\n';
+	std::cout << '\n';
+}
+void TestPointToZ3D()
+{
+	EulerAngle3D a0 = EulerAngle3D::Degrees(0, 65, 81);
+	Point3D axis(0, 0, 1);
+
+	Point3D p1 = a0.Forward(axis);
+	EulerAngle3D a1 = EulerAngle3D::PointToZ(p1);
+
+	std::cout << "a1.Z0: " << a1.Z0.ToDegrees() << '\n';
+	std::cout << "a1.X1: " << a1.X1.ToDegrees() << '\n';
+	std::cout << "a1.Y2: " << a1.Y2.ToDegrees() << '\n';
 	std::cout << '\n';
 
-	std::cout << Angle::SaTan2(p1.X, lenX).ToDegrees() << '\n';
-	std::cout << Angle::SaTan2(p1.Y, lenY).ToDegrees() << '\n'; // axisZ X1
-	std::cout << Angle::SaTan2(p1.Z, lenZ).ToDegrees() << '\n';
-	std::cout << '\n';
-
-	std::cout << Angle::SaTan2(lenX, p1.X).ToDegrees() << '\n'; // axisX Y2
-	std::cout << Angle::SaTan2(lenY, p1.Y).ToDegrees() << '\n'; // axisY X1
-	std::cout << Angle::SaTan2(lenZ, p1.Z).ToDegrees() << '\n';
-	std::cout << '\n';
-
-	EulerAngle3D AngleToZ = EulerAngle3D(
-		Angle(),
-		Angle::SaTan2(p1.Y, lenY),
-		Angle::SaTan2(p1.X, p1.Z)
-	);
-	std::cout << "AngleToZ.Z0: " << AngleToZ.Z0.ToDegrees() << '\n';
-	std::cout << "AngleToZ.X1: " << AngleToZ.X1.ToDegrees() << '\n';
-	std::cout << "AngleToZ.Y2: " << AngleToZ.Y2.ToDegrees() << '\n';
+	std::cout << "a0.Z0: " << a0.Z0.ToDegrees() << '\n';
+	std::cout << "a0.X1: " << a0.X1.ToDegrees() << '\n';
+	std::cout << "a0.Y2: " << a0.Y2.ToDegrees() << '\n';
 	std::cout << '\n';
 }
 
@@ -143,7 +148,14 @@ int main()
 	std::cout << '\n';
 	//TestPointTo2D();
 	std::cout << '\n';
-	TestPointTo3D();
+
 	std::cout << '\n';
+	TestPointToX3D();
+	std::cout << '\n';
+	TestPointToY3D();
+	std::cout << '\n';
+	TestPointToZ3D();
+	std::cout << '\n';
+
 	return 0;
 }
