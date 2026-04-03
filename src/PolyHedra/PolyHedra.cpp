@@ -4,7 +4,7 @@
 
 #include "PolyHedra/Skin/Skin2DA.hpp"
 
-#include "PolyHedra/Main/Data.hpp"
+#include "PolyHedra/Graphics/Full/Main/Data.hpp"
 
 #include "ValueType/Angle3D.hpp"
 #include "ValueType/AxisBox3D.hpp"
@@ -67,21 +67,9 @@ AxisBox3D	PolyHedra::CalcBound() const
 
 
 
-#include <iostream>
-#include "DataShow.hpp"
-Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
+Container::Pointer<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 {
-	Container::Pointer<PolyHedra_Main::Data> data(Faces.Count() * 3);
-
-	/*
-	std::cout << "C " << Corners.Count() << "\n";
-	std::cout << "F " << Faces.Count() << "\n";
-	for (unsigned int i = 0; i < Corners.Count(); i++)
-	{
-		std::cout << Corners[i].Position << "\n";
-	}
-	std::cout << "\n";
-	*/
+	Container::Pointer<PolyHedraFull::Main::Data> data(Faces.Count() * 3);
 
 	for (unsigned int f = 0; f < Faces.Count(); f++)
 	{
@@ -137,10 +125,6 @@ Container::Pointer<PolyHedra_Main::Data> PolyHedra::ToMainData()
 			data[c + 2].Texture = face.Corner2.Tex;
 		}
 	}
-
-	//std::cout << "Main: " << data.Limit() << ' ' << data.Count() << '\n';
-	//for (unsigned int i = 0; i < data.Count(); i++)
-	//{ std::cout << data[i].Position << " : " << data[i].Normal << " : " << data[i].Texture << '\n'; }
 
 	return data;
 }

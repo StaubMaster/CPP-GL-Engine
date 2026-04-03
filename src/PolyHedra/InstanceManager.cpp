@@ -2,7 +2,6 @@
 #include "PolyHedra/ObjectData.hpp"
 
 #include "PolyHedra/PolyHedra.hpp"
-#include "PolyHedra/Main/Data.hpp"
 #include "Miscellaneous/Container/Pointer.hpp"
 #include "PolyHedra/Graphics/Full/Main/Data.hpp"
 #include "Miscellaneous/Container/Array.hpp"
@@ -71,16 +70,9 @@ void PolyHedraInstanceManager::UpdateBufferMain()
 {
 	if (PolyHedra == nullptr) { return; }
 
-	Container::Pointer<PolyHedra_Main::Data> data0 = PolyHedra -> ToMainData();
-	Container::Array<PolyHedraFull::Main::Data> data1(data0.Count());
-	for (unsigned int i = 0; i < data1.Count(); i++)
-	{
-		data1[i].Position = data0[i].Position;
-		data1[i].Normal = -data0[i].Normal;
-		data1[i].Texture = data0[i].Texture;
-	}
-	BufferFull.Main.Change(data1);
-	data0.Clear();
+	Container::Pointer<PolyHedraFull::Main::Data> data = PolyHedra -> ToMainData();
+	BufferFull.Main.Change(data);
+	data.Clear();
 
 	if (PolyHedra -> Skin != NULL)
 	{
