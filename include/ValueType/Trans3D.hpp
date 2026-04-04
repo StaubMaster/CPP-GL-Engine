@@ -14,7 +14,7 @@ struct Trans3D
 	// Shear
 	// Distort
 
-	// Is Scaling done before or after everything else ?
+	// is Scaling done before or after everything else ?
 	// what about the others
 	// does it depend on the order of making the Matrixes ?
 
@@ -34,9 +34,6 @@ struct Trans3D
 
 	Point3D		forward(Point3D p) const;
 	Point3D		reverse(Point3D p) const;
-
-	Matrix4x4	ToMatrixForward() const;
-	Matrix4x4	ToMatrixReverse() const;
 };
 
 

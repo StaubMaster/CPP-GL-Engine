@@ -72,7 +72,7 @@ void PolyHedraInstanceManager::UpdateBufferMain()
 
 	Container::Pointer<PolyHedraFull::Main::Data> data = PolyHedra -> ToMainData();
 	BufferFull.Main.Change(data);
-	data.Clear();
+	data.Delete();
 
 	if (PolyHedra -> Skin != NULL)
 	{

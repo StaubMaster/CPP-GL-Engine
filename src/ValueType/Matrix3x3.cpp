@@ -1,9 +1,12 @@
 #include "ValueType/Matrix3x3.hpp"
 #include "ValueType/Point3D.hpp"
-#include "ValueType/Angle.hpp"
-#include "ValueType/EulerAngle3D.hpp"
 
+#include "ValueType/Angle.hpp"
 #include "ValueType/Matrix2x2.hpp"
+
+#include "ValueType/Point2D.hpp"
+#include "ValueType/EulerAngle3D.hpp"
+#include "ValueType/Trans2D.hpp"
 
 
 
@@ -90,6 +93,39 @@ Matrix3x3 Matrix3x3::Identity()
 	}
 	return mat;
 }
+
+Matrix3x3 Matrix3x3::Position(Point2D p)
+{
+	return Matrix3x3(
+		1, 0, p.X,
+		0, 1, p.Y,
+		0, 0, 1
+	);
+}
+Matrix3x3 Matrix3x3::Rotation(Angle a)
+{
+	Matrix2x2 mat = Matrix2x2::Rotation(a);
+	return Matrix3x3(
+		mat.Data[0][0], mat.Data[0][1], 0,
+		mat.Data[1][0], mat.Data[1][1], 0,
+		0, 0, 1
+	);
+}
+Matrix3x3 Matrix3x3::TransformForward(Trans2D t)
+{
+	Matrix3x3 mat = Matrix3x3::Identity();
+	mat = mat * Matrix3x3::Position(+t.Pos);
+	mat = mat * Matrix3x3::Rotation(t.Rot.Ang);
+	return mat;
+}
+Matrix3x3 Matrix3x3::TransformReverse(Trans2D t)
+{
+	Matrix3x3 mat = Matrix3x3::Identity();
+	mat = mat * Matrix3x3::Position(-t.Pos);
+	mat = mat / Matrix3x3::Rotation(t.Rot.Ang);
+	return ~mat;
+}
+
 Matrix3x3 Matrix3x3::RotationX(Angle a)
 {
 	Matrix2x2 mat = Matrix2x2::Rotation(a);
@@ -117,6 +153,7 @@ Matrix3x3 Matrix3x3::RotationZ(Angle a)
 		0, 0, 1
 	);
 }
+
 Matrix3x3 Matrix3x3::Rotation(EulerAngle3D a)
 {
 	Matrix3x3 mat = Identity();

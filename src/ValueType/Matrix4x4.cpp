@@ -1,10 +1,12 @@
 #include "ValueType/Matrix4x4.hpp"
 #include "ValueType/Point4D.hpp"
+
 #include "ValueType/Angle.hpp"
-#include "ValueType/EulerAngle3D.hpp"
+#include "ValueType/Matrix3x3.hpp"
 
 #include "ValueType/Point3D.hpp"
-#include "ValueType/Matrix3x3.hpp"
+#include "ValueType/EulerAngle3D.hpp"
+#include "ValueType/Trans3D.hpp"
 
 
 
@@ -102,6 +104,7 @@ Matrix4x4 Matrix4x4::Identity()
 	}
 	return mat;
 }
+
 Matrix4x4 Matrix4x4::Position(Point3D p)
 {
 	return Matrix4x4(
@@ -120,6 +123,20 @@ Matrix4x4 Matrix4x4::Rotation(EulerAngle3D a)
 		mat.Data[2][0], mat.Data[2][1], mat.Data[2][2], 0,
 		0, 0, 0, 1
 	);
+}
+Matrix4x4 Matrix4x4::TransformForward(Trans3D t)
+{
+	Matrix4x4 mat = Matrix4x4::Identity();
+	mat = mat * Matrix4x4::Position(+t.Position);
+	mat = mat * Matrix4x4::Rotation(t.Rotation);
+	return mat;
+}
+Matrix4x4 Matrix4x4::TransformReverse(Trans3D t)
+{
+	Matrix4x4 mat = Matrix4x4::Identity();
+	mat = mat * Matrix4x4::Position(-t.Position);
+	mat = mat / Matrix4x4::Rotation(t.Rotation);
+	return ~mat;
 }
 
 

@@ -6,6 +6,7 @@ struct Point4D;
 
 struct Point3D;
 struct EulerAngle3D;
+struct Trans3D;
 
 struct Matrix4x4
 {
@@ -29,8 +30,11 @@ struct Matrix4x4
 	Matrix4x4	operator~() const;
 
 	static Matrix4x4	Identity();
+
 	static Matrix4x4	Position(Point3D p);
 	static Matrix4x4	Rotation(EulerAngle3D a);
+	static Matrix4x4	TransformForward(Trans3D t);
+	static Matrix4x4	TransformReverse(Trans3D t);
 
 	public:
 	Matrix4x4	operator*(const Matrix4x4 & other) const;

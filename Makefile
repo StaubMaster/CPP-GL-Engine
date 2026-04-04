@@ -17,7 +17,6 @@ DIR_OBJ := obj/
 
 
 VALUE_TYPE := \
-	ValueType/Bool2D.cpp \
 	ValueType/Bool3D.cpp \
 	ValueType/Undex.cpp \
 	ValueType/Undex2D.cpp \
@@ -181,6 +180,9 @@ INSTANCE_DATA := \
 	InstanceData/Physics3D/Data.cpp \
 	InstanceData/Physics3D/Buffer.cpp \
 \
+	Instance/Basic2D/Buffer.cpp \
+	Instance/Basic2D/Data.cpp \
+\
 	Instance/Basic3D/Buffer.cpp \
 	Instance/Basic3D/Data.cpp \
 
@@ -201,6 +203,7 @@ POLYHEDRA := \
 	PolyHedra/Graphics/Full/Main/Buffer.cpp \
 	PolyHedra/Graphics/Full/Buffer.cpp \
 	PolyHedra/Graphics/Full/Shader.cpp \
+\
 	PolyHedra/InstanceManager.cpp \
 	PolyHedra/ObjectData.cpp \
 	PolyHedra/Manager.cpp \

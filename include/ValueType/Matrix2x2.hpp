@@ -24,6 +24,7 @@ struct Matrix2x2
 	Matrix2x2	operator~() const;
 
 	static Matrix2x2	Identity();
+
 	static Matrix2x2	Rotation(Angle a);
 
 	public:

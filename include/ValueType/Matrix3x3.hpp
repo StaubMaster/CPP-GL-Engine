@@ -2,8 +2,12 @@
 # define MATRIX_3_3_HPP
 
 struct Point3D;
+
 struct Angle;
+
+struct Point2D;
 struct EulerAngle3D;
+struct Trans2D;
 
 struct Matrix3x3
 {
@@ -25,6 +29,12 @@ struct Matrix3x3
 	Matrix3x3	operator~() const;
 
 	static Matrix3x3	Identity();
+	
+	static Matrix3x3	Position(Point2D p);
+	static Matrix3x3	Rotation(Angle a);
+	static Matrix3x3	TransformForward(Trans2D t);
+	static Matrix3x3	TransformReverse(Trans2D t);
+
 	static Matrix3x3	RotationX(Angle a);
 	static Matrix3x3	RotationY(Angle a);
 	static Matrix3x3	RotationZ(Angle a);

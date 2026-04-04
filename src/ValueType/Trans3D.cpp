@@ -45,20 +45,3 @@ Point3D Trans3D::reverse(Point3D p) const
 {
 	return Rotation.reverse(p - Position);
 }
-
-
-
-Matrix4x4 Trans3D::ToMatrixForward() const
-{
-	Matrix4x4 mat = Matrix4x4::Identity();
-	mat = mat * Matrix4x4::Position(+Position);
-	mat = mat * Matrix4x4::Rotation(Rotation);
-	return mat;
-}
-Matrix4x4 Trans3D::ToMatrixReverse() const
-{
-	Matrix4x4 mat = Matrix4x4::Identity();
-	mat = mat * Matrix4x4::Position(-Position);
-	mat = mat / Matrix4x4::Rotation(Rotation);
-	return ~mat;
-}
