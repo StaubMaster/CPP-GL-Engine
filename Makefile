@@ -136,6 +136,7 @@ MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
 
 BUFFER := \
 	Graphics/Buffer/Base.cpp \
+	Graphics/Buffer/Element.cpp \
 	Graphics/Buffer/Attribute.cpp \
 	Graphics/Buffer/ArrayBase.cpp
 BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
@@ -189,6 +190,25 @@ INSTANCE_DATA := \
 INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
 INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
 
+POLYGON := \
+	PolyGon/PolyGon.cpp \
+\
+	PolyGon/Graphics/Full/Main/Data.cpp \
+	PolyGon/Graphics/Full/Main/Buffer.cpp \
+	PolyGon/Graphics/Full/Shader.cpp \
+\
+	PolyGon/Graphics/Wire/Main/Buffer.cpp \
+	PolyGon/Graphics/Wire/Elem/Buffer.cpp \
+	PolyGon/Graphics/Wire/Shader.cpp \
+\
+	PolyGon/InstanceManager.cpp \
+	PolyGon/ObjectData.cpp \
+	PolyGon/Manager.cpp \
+	PolyGon/Object.cpp \
+
+POLYGON_SRC := $(addprefix $(DIR_SRC)/,$(POLYGON))
+POLYGON_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYGON:.cpp=.o))
+
 POLYHEDRA := \
 	PolyHedra/PolyHedra.cpp \
 	PolyHedra/Data.cpp \
@@ -211,10 +231,6 @@ POLYHEDRA := \
 
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
 POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))
-
-POLYHEDRA_MAIN := 
-POLYHEDRA_MAIN_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA_MAIN))
-POLYHEDRA_MAIN_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA_MAIN:.cpp=.o))
 
 WAVEFRONT := \
 	Wavefront/OBJ.cpp \
@@ -251,6 +267,7 @@ USERPARAMETER_OBJ := $(addprefix $(DIR_OBJ)/,$(USERPARAMETER:.cpp=.o))
 
 OTHER := \
 	TimeMeasure.cpp \
+	FrameTime.cpp \
 	Window.cpp \
 	Debug.cpp
 OTHER_SRC := $(addprefix $(DIR_SRC)/,$(OTHER))
@@ -259,27 +276,24 @@ OTHER_OBJ := $(addprefix $(DIR_OBJ)/,$(OTHER:.cpp=.o))
 
 
 ALL_SRC := \
-	$(VALUE_TYPE_SRC) $(DISPLAY_SRC)\
-	$(CONTAINER_SRC)\
-	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC)\
-	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC)\
-	$(INSTANCE_DATA_SRC)\
-	$(POLYHEDRA_MAIN_SRC)\
-	$(POLYHEDRA_SRC)\
-	$(WAVEFRONT_SRC)\
-	$(USERPARAMETER_SRC)\
+	$(VALUE_TYPE_SRC) $(DISPLAY_SRC) \
+	$(CONTAINER_SRC) \
+	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC) \
+	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC) \
+	$(INSTANCE_DATA_SRC) \
+	$(POLYGON_SRC) $(POLYHEDRA_SRC) \
+	$(USERPARAMETER_SRC) \
 	$(OTHER_SRC)
 
 ALL_OBJ := \
-	$(VALUE_TYPE_OBJ) $(DISPLAY_OBJ)\
-	$(CONTAINER_OBJ)\
-	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ)\
-	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ)\
-	$(INSTANCE_DATA_OBJ)\
-	$(POLYHEDRA_MAIN_OBJ)\
-	$(POLYHEDRA_OBJ)\
-	$(WAVEFRONT_OBJ)\
-	$(USERPARAMETER_OBJ)\
+	$(VALUE_TYPE_OBJ) $(DISPLAY_OBJ) \
+	$(CONTAINER_OBJ) \
+	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ) \
+	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ) \
+	$(INSTANCE_DATA_OBJ) \
+	$(POLYHEDRA_MAIN_OBJ) \
+	$(POLYGON_OBJ) $(POLYHEDRA_OBJ) \
+	$(USERPARAMETER_OBJ) \
 	$(OTHER_OBJ)
 
 
