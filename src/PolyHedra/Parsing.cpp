@@ -366,7 +366,7 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 	);
 	Point3D radius(cmd.ToFloat(6), 0, 0);
 
-	Angle3D angle = Angle3D::FromPoint3D(Point3D(
+	EulerAngle3D angle = EulerAngle3D::PointToZ(Point3D(
 		cmd.ToFloat(7),
 		cmd.ToFloat(8),
 		cmd.ToFloat(9)
@@ -377,15 +377,16 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 	{
 		if (!direction)
 		{
-			angle.Z = (step * (i + step_off)) + offset;
+			angle.Z0 = (step * (i + step_off)) + offset;
 		}
 		else
 		{
 			//angle.Z = ((i + step_off) * step) + offset;
 		}
-		angle.CalcMatrix();
+		//angle.CalcMatrix();
 		Point3D p;
-		p = angle.rotateBack(radius) + center;
+		//p = angle.rotateBack(radius) + center;
+		p = angle.forward(radius) + center;
 		Data -> Insert_Corn(Corner(p));
 		//std::cout << p << "\n";
 	}
