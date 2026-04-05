@@ -54,9 +54,17 @@ PolyGonObject & PolyGonObject::operator=(const PolyGonObject & other)
 PolyGonObject::PolyGonObject(unsigned int PolyGon)
 	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D()))
 { }
+PolyGonObject::PolyGonObject(unsigned int PolyGon, Trans2D trans)
+	: Data(PolyGonManager::Current().PlaceObject(PolyGon, trans))
+{ }
+
+
 
 PolyGonObject::PolyGonObject(::PolyGon * PolyGon)
 	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D()))
+{ }
+PolyGonObject::PolyGonObject(::PolyGon * PolyGon, Trans2D trans)
+	: Data(PolyGonManager::Current().PlaceObject(PolyGon, trans))
 { }
 
 

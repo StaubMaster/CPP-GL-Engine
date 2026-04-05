@@ -31,7 +31,10 @@ struct PolyHedraObject
 	PolyHedraObject & operator=(const PolyHedraObject & other);
 
 	PolyHedraObject(unsigned int polyhedra);
+	PolyHedraObject(unsigned int polyhedra, Trans3D trans);
+
 	PolyHedraObject(::PolyHedra * polyhedra);
+	PolyHedraObject(::PolyHedra * polyhedra, Trans3D trans);
 
 	void	Delete();
 	void	Create(unsigned int polyhedra);
