@@ -32,15 +32,14 @@ VALUE_TYPE := \
 	ValueType/AxisBox1D.cpp \
 	ValueType/AxisBox2D.cpp \
 	ValueType/AxisBox3D.cpp \
+	ValueType/Line2D.cpp \
+	ValueType/Line3D.cpp \
 	ValueType/Ray2D.cpp \
 	ValueType/Ray3D.cpp \
-	ValueType/Line2D.cpp \
 	ValueType/Matrix2x2.cpp \
 	ValueType/Matrix3x3.cpp \
 	ValueType/Matrix4x4.cpp \
 	ValueType/Angle.cpp \
-	ValueType/Angle2D.cpp \
-	ValueType/Angle3D.cpp \
 	ValueType/EulerAngle3D.cpp \
 	ValueType/Trans2D.cpp \
 	ValueType/Trans3D.cpp \
@@ -55,7 +54,7 @@ VALUE_TYPE := \
 	ValueType/View2D.cpp \
 	ValueType/View3D.cpp \
 	ValueType/Intersect.cpp \
-	DataShow.cpp
+	ValueTypeShow.cpp
 VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))
 VALUE_TYPE_OBJ := $(addprefix $(DIR_OBJ)/,$(VALUE_TYPE:.cpp=.o))
 
@@ -102,8 +101,6 @@ UNIFORM := \
 	Graphics/Uniform/Matrix3x3.cpp \
 	Graphics/Uniform/Matrix4x4.cpp \
 	Graphics/Uniform/Angle.cpp \
-	Graphics/Uniform/Angle2D.cpp \
-	Graphics/Uniform/Angle3D.cpp \
 	Graphics/Uniform/Trans2D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
 \
@@ -158,10 +155,6 @@ ATTRIBUTE := \
 	Graphics/Attribute/Point2D.cpp \
 	Graphics/Attribute/Point3D.cpp \
 	Graphics/Attribute/Point4D.cpp \
-	Graphics/Attribute/Angle2D.cpp \
-	Graphics/Attribute/Angle3D.cpp \
-	Graphics/Attribute/Trans2D.cpp \
-	Graphics/Attribute/Trans3D.cpp \
 	Graphics/Attribute/ColorF4.cpp \
 \
 	Graphics/Attribute/Log.cpp
@@ -176,11 +169,6 @@ TEXTURE_SRC := $(addprefix $(DIR_SRC)/,$(TEXTURE))
 TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))
 
 INSTANCE_DATA := \
-	InstanceData/Simple3D/Data.cpp \
-	InstanceData/Simple3D/Buffer.cpp \
-\
-	InstanceData/Physics3D/Data.cpp \
-	InstanceData/Physics3D/Buffer.cpp \
 \
 	Instance/Basic2D/Buffer.cpp \
 	Instance/Basic2D/Data.cpp \

@@ -4,7 +4,7 @@
 #include <sstream>
 
 #include "Debug.hpp"
-#include "DataShow.hpp"
+#include "ValueTypeShow.hpp"
 #include <iostream>
 
 GL::TextureID Texture::Base::None = 0;

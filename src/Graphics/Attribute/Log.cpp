@@ -12,9 +12,6 @@
 #include "Graphics/Attribute/Base/Float3x3.hpp"
 #include "Graphics/Attribute/Base/Float4x4.hpp"
 
-#include "Graphics/Attribute/Trans2D.hpp"
-#include "Graphics/Attribute/Trans3D.hpp"
-
 
 
 void Attribute::Location::LogInfo() const
@@ -77,28 +74,5 @@ void Attribute::Float4x4::LogInfo() const
 	Location0.LogInfo();
 	Location1.LogInfo();
 	Location2.LogInfo();
-//	Debug::Log << Debug::TabDec;
-}
-
-
-
-void Attribute::Trans2D::LogInfo() const
-{
-//	Debug::Log << "Trans2D:" << '\n';
-//	Debug::Log << Debug::TabInc;
-//	Debug::Log << Debug::Tabs << "Pos:\n";
-	Pos.LogInfo();
-//	Debug::Log << Debug::Tabs << "Rot:\n";
-	Rot.LogInfo();
-//	Debug::Log << Debug::TabDec;
-}
-void Attribute::Trans3D::LogInfo() const
-{
-//	Debug::Log << "Trans3D:" << '\n';
-//	Debug::Log << Debug::TabInc;
-//	Debug::Log << Debug::Tabs << "Pos:\n";
-	Pos.LogInfo();
-//	Debug::Log << Debug::Tabs << "Rot:\n";
-	Rot.LogInfo();
 //	Debug::Log << Debug::TabDec;
 }

@@ -19,10 +19,9 @@
 // ValueType
 #include "ValueType/Point3D.hpp"
 #include "ValueType/Angle.hpp"
-#include "ValueType/Angle3D.hpp"
 #include "ValueType/EulerAngle3D.hpp"
 #include "ValueType/AxisBox3D.hpp"
-#include "DataShow.hpp"
+#include "ValueTypeShow.hpp"
 
 // Debug
 #include "Debug.hpp"

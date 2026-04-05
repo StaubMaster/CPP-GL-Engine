@@ -30,7 +30,7 @@ Ray2D & Ray2D::operator=(const Ray2D & other)
 
 
 Ray2D::Ray2D(const Line2D & line)
-	: Pos(line.Pos0)
+	: Pos(line.Origin)
 	, Dir(line.Differance())
 { }
 

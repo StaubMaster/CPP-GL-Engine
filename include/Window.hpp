@@ -17,7 +17,7 @@
 struct GLFWwindow;
 
 struct Point3D;
-struct Angle3D;
+struct EulerAngle3D;
 struct Trans3D;
 
 class Window
@@ -95,7 +95,7 @@ class Window
 
 	public:
 	Point3D MoveFromKeys() const;
-	Angle3D SpinFromCursor() const;
+	EulerAngle3D SpinFromCursor() const;
 	Trans3D MoveSpinFromKeysCursor() const;
 
 	private:

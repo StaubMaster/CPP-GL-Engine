@@ -1,7 +1,7 @@
 #ifndef  INTERSECT_HPP
 # define INTERSECT_HPP
 
-# include "DataDeclare.hpp"
+# include "ValueTypeDeclare.hpp"
 
 namespace Intersect { };
 

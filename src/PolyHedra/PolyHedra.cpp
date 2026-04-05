@@ -6,7 +6,6 @@
 
 #include "PolyHedra/Graphics/Full/Main/Data.hpp"
 
-#include "ValueType/Angle3D.hpp"
 #include "ValueType/AxisBox3D.hpp"
 
 #include "Graphics/Texture/Generate.hpp"

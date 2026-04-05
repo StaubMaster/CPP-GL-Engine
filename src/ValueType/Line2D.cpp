@@ -6,51 +6,51 @@
 Line2D::~Line2D() { }
 
 Line2D::Line2D()
-	: Pos0()
-	, Pos1()
+	: Origin()
+	, Target()
 { }
-Line2D::Line2D(Point2D pos0, Point2D pos1)
-	: Pos0(pos0)
-	, Pos1(pos1)
+Line2D::Line2D(Point2D origin, Point2D target)
+	: Origin(origin)
+	, Target(target)
 { }
 
 Line2D::Line2D(const Line2D & other)
-	: Pos0(other.Pos0)
-	, Pos1(other.Pos1)
+	: Origin(other.Origin)
+	, Target(other.Target)
 { }
 Line2D & Line2D::operator=(const Line2D & other)
 {
-	Pos0 = other.Pos0;
-	Pos1 = other.Pos1;
+	Origin = other.Origin;
+	Target = other.Target;
 	return *this;
 }
 
 Line2D::Line2D(const Ray2D & ray)
-	: Pos0(ray.Pos)
-	, Pos1(ray.Pos + ray.Dir)
+	: Origin(ray.Pos)
+	, Target(ray.Pos + ray.Dir)
 { }
 
 
 
 Line2D Line2D::Reverse() const
 {
-	return Line2D(Pos1, Pos0);
+	return Line2D(Target, Origin);
 }
 
 Point2D Line2D::Differance() const
 {
-	return (Pos1 - Pos0);
+	return (Target - Origin);
 }
 float Line2D::Length() const
 {
 	return Differance().length();
 }
 
+Point2D Line2D::Middle() const
+{
+	return (Origin + Target) / 2;
+}
 Point2D Line2D::Normal() const
 {
 	return Differance().cross(1.0f).normalize();
-}
-Point2D Line2D::Middle() const
-{
-	return (Pos0 + Pos1) / 2;
 }

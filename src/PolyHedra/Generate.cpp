@@ -6,7 +6,8 @@
 #include "PolyHedra/Skin/Skin2DA.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
-#include "ValueType/Angle3D.hpp"
+#include "ValueType/Angle.hpp"
+#include "ValueType/EulerAngle3D.hpp"
 
 #include "Image.hpp"
 
@@ -143,15 +144,14 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 	skin -> H = 4;
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
-	Angle3D angle;
+	EulerAngle3D angle;
 
 	int idx_frst = ph -> Corners.Count();
 	temp.Insert_Corn(Point3D(0, 0, +height));
 	for (int i = 0; i < segments; i++)
 	{
-		angle.Z = Angle::Section(segments) * i;
-		angle.CalcMatrix();
-		temp.Insert_Corn(angle.rotateFore(Point3D(0, +width, -height)));
+		angle.Z0 = Angle::Section(segments) * i;
+		temp.Insert_Corn(angle.forward(Point3D(0, +width, -height)));
 	}
 	int idx_last = ph -> Corners.Count();
 	temp.Insert_Corn(Point3D(0, 0, -height));

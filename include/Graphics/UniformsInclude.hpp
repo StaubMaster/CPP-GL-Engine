@@ -28,11 +28,6 @@
 # include "Uniform/Matrix3x3.hpp"
 
 # include "Uniform/Angle.hpp"
-# include "Uniform/Angle2D.hpp"
-# include "Uniform/Angle3D.hpp"
-
-# include "Uniform/Trans2D.hpp"
-# include "Uniform/Trans3D.hpp"
 
 # include "Uniform/DepthFactors.hpp"
 # include "Uniform/Depth.hpp"

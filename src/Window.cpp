@@ -2,8 +2,8 @@
 #include "TimeMeasure.hpp"
 
 #include "ValueType/Point3D.hpp"
-#include "ValueType/Angle3D.hpp"
 #include "ValueType/Point2D.hpp"
+#include "ValueType/EulerAngle3D.hpp"
 #include "ValueType/Trans3D.hpp"
 
 #include "Debug.hpp"
@@ -266,20 +266,19 @@ Point3D Window::MoveFromKeys() const
 	if (KeyBoardManager[Keys::LeftShift].State == State::Down)		{ move.Y -= 1; }
 	return move;
 }
-Angle3D Window::SpinFromCursor() const
+EulerAngle3D Window::SpinFromCursor() const
 {
-	Angle3D spin;
+	EulerAngle3D spin;
 	DisplayPosition cursor = MouseManager.CursorPosition();
-	spin.X = Angle::Radians(+cursor.Window.Corner.Y);
-	spin.Y = Angle::Radians(+cursor.Window.Corner.X);
+	spin.X1 = Angle::Radians(+cursor.Window.Corner.Y);
+	spin.Y2 = Angle::Radians(+cursor.Window.Corner.X);
 	return spin;
 }
 Trans3D Window::MoveSpinFromKeysCursor() const
 {
-	Point3D pos = MoveFromKeys();
-	Angle3D rot = SpinFromCursor();
 	return Trans3D(
-		pos, EulerAngle3D(rot.Z, rot.X, rot.Y)
+		MoveFromKeys(),
+		SpinFromCursor()
 	);
 }
 
