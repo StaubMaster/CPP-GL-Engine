@@ -15,8 +15,8 @@ struct PolyHedra::Template
 	void Calc_Corn_Normals();
 
 	void Insert_Corn(Corner corn);
-	void Insert_Face3(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2);
-	void Insert_Face4(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2, FaceCorner corn3);
+	void Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned int corn2);
+	void Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3);
 
 	void Belt(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);
 	void Band(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);

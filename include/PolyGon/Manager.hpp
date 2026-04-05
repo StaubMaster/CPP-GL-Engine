@@ -54,6 +54,7 @@ struct PolyGonManager
 
 	void	ClearInstances();
 	void	PlaceInstance(const PolyGonObjectData & obj);
+
 	void	Update();
 	void	DrawFull();
 	void	DrawWire();

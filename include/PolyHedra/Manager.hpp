@@ -1,8 +1,10 @@
 #ifndef  POLYHEDRA_MANAGER_HPP
 # define POLYHEDRA_MANAGER_HPP
 
-# include "PolyHedra/Graphics/Full/Shader.hpp"
 # include "PolyHedra/InstanceManager.hpp"
+
+# include "PolyHedra/Graphics/Full/Shader.hpp"
+# include "PolyHedra/Graphics/Wire/Shader.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
 
@@ -26,7 +28,9 @@ struct PolyHedraManager
 	Container::Binary<PolyHedraObjectData*>		ObjectDatas;
 
 	PolyHedraFull::Shader						ShaderFullDefault;
+	PolyHedraWire::Shader						ShaderWireDefault;
 	PolyHedraFull::Shader *						ShaderFullOther;
+	PolyHedraWire::Shader *						ShaderWireOther;
 
 	Container::Binary<PolyHedraInstanceManager>	InstanceManagers;
 
@@ -50,8 +54,10 @@ struct PolyHedraManager
 
 	void	ClearInstances();
 	void	PlaceInstance(const PolyHedraObjectData & obj);
+
 	void	Update();
-	void	Draw();
+	void	DrawFull();
+	void	DrawWire();
 };
 
 #endif

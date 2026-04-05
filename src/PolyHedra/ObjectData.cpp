@@ -8,20 +8,23 @@ PolyHedraObjectData::PolyHedraObjectData()
 	: PolyHedra(nullptr)
 	, Trans()
 	, Remove(false)
-	, Draw(true)
+	, DrawFull(true)
+	, DrawWire(false)
 { }
 PolyHedraObjectData::PolyHedraObjectData(const PolyHedraObjectData & other)
 	: PolyHedra(other.PolyHedra)
 	, Trans(other.Trans)
 	, Remove(other.Remove)
-	, Draw(other.Draw)
+	, DrawFull(other.DrawFull)
+	, DrawWire(other.DrawWire)
 { }
 PolyHedraObjectData & PolyHedraObjectData::operator=(const PolyHedraObjectData & other)
 {
 	PolyHedra = other.PolyHedra;
 	Trans = other.Trans;
 	Remove = other.Remove;
-	Draw = other.Draw;
+	DrawFull = other.DrawFull;
+	DrawWire = other.DrawWire;
 	return *this;
 }
 
@@ -31,11 +34,13 @@ PolyHedraObjectData::PolyHedraObjectData(::PolyHedra * polyhedra)
 	: PolyHedra(polyhedra)
 	, Trans()
 	, Remove(false)
-	, Draw(true)
+	, DrawFull(true)
+	, DrawWire(false)
 { }
 PolyHedraObjectData::PolyHedraObjectData(::PolyHedra * polyhedra, Trans3D trans)
 	: PolyHedra(polyhedra)
 	, Trans(trans)
 	, Remove(false)
-	, Draw(true)
+	, DrawFull(true)
+	, DrawWire(false)
 { }

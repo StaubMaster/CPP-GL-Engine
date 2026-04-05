@@ -25,7 +25,9 @@ PolyHedraManager::~PolyHedraManager()
 PolyHedraManager::PolyHedraManager()
 	: ObjectDatas()
 	, ShaderFullDefault()
+	, ShaderWireDefault()
 	, ShaderFullOther(nullptr)
+	, ShaderWireOther(nullptr)
 	, InstanceManagers()
 { }
 
@@ -34,6 +36,7 @@ PolyHedraManager::PolyHedraManager()
 void PolyHedraManager::GraphicsCreate()
 {
 	ShaderFullDefault.Create();
+	ShaderWireDefault.Create();
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
 		InstanceManagers[i].GraphicsCreate();
@@ -42,6 +45,7 @@ void PolyHedraManager::GraphicsCreate()
 void PolyHedraManager::GraphicsDelete()
 {
 	ShaderFullDefault.Delete();
+	ShaderWireDefault.Delete();
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
 		InstanceManagers[i].GraphicsDelete();
@@ -56,6 +60,13 @@ void PolyHedraManager::InitExternal(DirectoryInfo & media_dir)
 			Shader::Code(media_dir.File("Shaders/PH/Full.frag")),
 		});
 		ShaderFullDefault.Change(code);
+	}
+	{
+		Container::Array<Shader::Code> code({
+			Shader::Code(media_dir.File("Shaders/Basic3D/Wire.vert")),
+			Shader::Code(media_dir.File("Shaders/Basic3D/Wire.frag")),
+		});
+		ShaderWireDefault.Change(code);
 	}
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
@@ -117,14 +128,14 @@ void PolyHedraManager::ClearInstances()
 {
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].Clear();
+		InstanceManagers[i].ClearInstances();
 	}
 }
 void PolyHedraManager::PlaceInstance(const PolyHedraObjectData & obj)
 {
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].Place(obj);
+		InstanceManagers[i].PlaceInstance(obj);
 	}
 }
 
@@ -138,10 +149,7 @@ void PolyHedraManager::Update()
 		if (ObjectDatas[i] != nullptr)
 		{
 			PolyHedraObjectData & obj = *ObjectDatas[i];
-			if (obj.Draw)
-			{
-				PlaceInstance(obj);
-			}
+			PlaceInstance(obj);
 			if (obj.Remove)
 			{
 				ObjectDatas.Remove(i);
@@ -151,7 +159,7 @@ void PolyHedraManager::Update()
 		}
 	}
 }
-void PolyHedraManager::Draw()
+void PolyHedraManager::DrawFull()
 {
 	if (ShaderFullOther == nullptr)
 	{
@@ -164,5 +172,20 @@ void PolyHedraManager::Draw()
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
 		InstanceManagers[i].DrawFull();
+	}
+}
+void PolyHedraManager::DrawWire()
+{
+	if (ShaderWireOther == nullptr)
+	{
+		ShaderWireDefault.Bind();
+	}
+	else
+	{
+		ShaderWireOther -> Bind();
+	}
+	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+	{
+		InstanceManagers[i].DrawWire();
 	}
 }

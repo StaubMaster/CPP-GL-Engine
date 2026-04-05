@@ -12,15 +12,14 @@ Trans2D &			PolyGonObject::Trans() { return (Data -> Trans); }
 
 
 
-bool PolyGonObject::IsFullVisible() const { return (Data -> DrawFull); }
-bool PolyGonObject::IsWireVisible() const { return (Data -> DrawWire); }
+bool PolyGonObject::FullVisibility() const { return (Data -> DrawFull); }
+bool PolyGonObject::WireVisibility() const { return (Data -> DrawWire); }
 
 void PolyGonObject::HideFull() { (Data -> DrawFull) = false; }
 void PolyGonObject::HideWire() { (Data -> DrawWire) = false; }
 
 void PolyGonObject::ShowFull() { (Data -> DrawFull) = true; }
 void PolyGonObject::ShowWire() { (Data -> DrawWire) = true; }
-
 
 
 

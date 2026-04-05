@@ -22,12 +22,13 @@ class PolyHedra
 {
 	public:
 	struct Corner;
-	struct FaceCorner;
 	struct Face;
+	struct Edge;
 
 	public:
 	Container::Binary<Corner>	Corners;
 	Container::Binary<Face>		Faces;
+	Container::Binary<Edge>		Edges;
 
 	public:
 	FileInfo	File;

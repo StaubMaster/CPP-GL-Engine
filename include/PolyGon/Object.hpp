@@ -16,8 +16,8 @@ struct PolyGonObject
 	const Trans2D &	Trans() const;
 	Trans2D &		Trans();
 
-	bool	IsFullVisible() const;
-	bool	IsWireVisible() const;
+	bool	FullVisibility() const;
+	bool	WireVisibility() const;
 
 	void	HideFull();
 	void	HideWire();

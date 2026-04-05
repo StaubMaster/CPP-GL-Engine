@@ -4,9 +4,22 @@
 
 
 
-bool			PolyHedraObject::Is() const { return (Data != nullptr); }
-const Trans3D &	PolyHedraObject::Trans() const { return (Data -> Trans); }
-Trans3D &		PolyHedraObject::Trans() { return (Data -> Trans); }
+bool				PolyHedraObject::Is() const { return (Data != nullptr); }
+::PolyHedra *		PolyHedraObject::PolyHedra() const { return (Data -> PolyHedra); }
+
+const Trans3D &		PolyHedraObject::Trans() const { return (Data -> Trans); }
+Trans3D &			PolyHedraObject::Trans() { return (Data -> Trans); }
+
+
+
+bool PolyHedraObject::FullVisibility() const { return (Data -> DrawFull); }
+bool PolyHedraObject::WireVisibility() const { return (Data -> DrawWire); }
+
+void PolyHedraObject::HideFull() { (Data -> DrawFull) = false; }
+void PolyHedraObject::HideWire() { (Data -> DrawWire) = false; }
+
+void PolyHedraObject::ShowFull() { (Data -> DrawFull) = true; }
+void PolyHedraObject::ShowWire() { (Data -> DrawWire) = true; }
 
 
 

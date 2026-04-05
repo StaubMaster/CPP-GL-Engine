@@ -10,8 +10,9 @@ struct PolyHedraObjectData
 	::PolyHedra *	PolyHedra;
 	Trans3D			Trans;
 
-	bool	Remove;	// Remove this Frame
-	bool	Draw;	// Draw this Frame
+	bool	Remove;
+	bool	DrawFull;
+	bool	DrawWire;
 
 	~PolyHedraObjectData();
 	PolyHedraObjectData();

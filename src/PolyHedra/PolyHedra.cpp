@@ -75,13 +75,11 @@ Container::Pointer<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 	{
 		int c = f * 3;
 		const Face & face = Faces[f];
-		if (face.Corner0.Udx < Corners.Count() &&
-			face.Corner1.Udx < Corners.Count() &&
-			face.Corner2.Udx < Corners.Count())
+		if (face.Check(Corners.Count()))
 		{
-			const Corner & cornerX = Corners[face.Corner0.Udx];
-			const Corner & cornerY = Corners[face.Corner1.Udx];
-			const Corner & cornerZ = Corners[face.Corner2.Udx];
+			const Corner & cornerX = Corners[face.udx[0]];
+			const Corner & cornerY = Corners[face.udx[1]];
+			const Corner & cornerZ = Corners[face.udx[2]];
 
 			data[c + 0].Position = cornerX.Position;
 			data[c + 1].Position = cornerY.Position;

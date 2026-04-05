@@ -27,13 +27,11 @@ void PolyHedra::Template::Calc_Face_Normals()
 	for (unsigned int i = 0; i < Referance.Faces.Count(); i++)
 	{
 		Face & face = Referance.Faces[i];
-		if (face.Corner0.Udx < Referance.Corners.Count() &&
-			face.Corner1.Udx < Referance.Corners.Count() &&
-			face.Corner2.Udx < Referance.Corners.Count())
+		if (face.Check(Referance.Corners.Count()))
 		{
-			const Point3D & cornerX = Referance.Corners[face.Corner0.Udx].Position;
-			const Point3D & cornerY = Referance.Corners[face.Corner1.Udx].Position;
-			const Point3D & cornerZ = Referance.Corners[face.Corner2.Udx].Position;
+			const Point3D & cornerX = Referance.Corners[face.udx[0]].Position;
+			const Point3D & cornerY = Referance.Corners[face.udx[1]].Position;
+			const Point3D & cornerZ = Referance.Corners[face.udx[2]].Position;
 			face.Normal = Point3D::cross(cornerY - cornerX, cornerZ - cornerX).normalize();
 		}
 		else
@@ -50,9 +48,9 @@ void PolyHedra::Template::Calc_Corn_Normals()
 		for (unsigned int j = 0; j < Referance.Faces.Count(); j++)
 		{
 			const Face & face = Referance.Faces[j];
-			if (face.Corner0.Udx == i ||
-				face.Corner1.Udx == i ||
-				face.Corner2.Udx == i
+			if (face.udx[0] == i ||
+				face.udx[1] == i ||
+				face.udx[2] == i
 			)
 			{
 				normal_sum = normal_sum + face.Normal;
@@ -68,11 +66,11 @@ void PolyHedra::Template::Insert_Corn(Corner corn)
 {
 	Referance.Corners.Insert(corn);
 }
-void PolyHedra::Template::Insert_Face3(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2)
+void PolyHedra::Template::Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned int corn2)
 {
 	Referance.Faces.Insert(Face(corn0, corn1, corn2));
 }
-void PolyHedra::Template::Insert_Face4(FaceCorner corn0, FaceCorner corn1, FaceCorner corn2, FaceCorner corn3)
+void PolyHedra::Template::Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3)
 {
 	Insert_Face3(corn0, corn1, corn2);
 	Insert_Face3(corn2, corn1, corn3);

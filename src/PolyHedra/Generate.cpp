@@ -27,7 +27,7 @@ PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
 	temp.Insert_Corn(Point3D(+scale, -scale, 0));
 	temp.Insert_Corn(Point3D(+scale, +scale, 0));
 
-	temp.Insert_Face4(FaceCorner(0), FaceCorner(1), FaceCorner(2), FaceCorner(3));
+	temp.Insert_Face4(0, 1, 2, 3);
 
 	temp.Done();
 
@@ -58,10 +58,10 @@ PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
 	temp.Insert_Corn(Point3D(+scale, -scale, +scale));
 	temp.Insert_Corn(Point3D(-scale, +scale, +scale));
 
-	temp.Insert_Face3(FaceCorner(0b00), FaceCorner(0b01), FaceCorner(0b10));
-	temp.Insert_Face3(FaceCorner(0b00), FaceCorner(0b10), FaceCorner(0b11));
-	temp.Insert_Face3(FaceCorner(0b00), FaceCorner(0b11), FaceCorner(0b01));
-	temp.Insert_Face3(FaceCorner(0b11), FaceCorner(0b10), FaceCorner(0b01));
+	temp.Insert_Face3(0b00, 0b01, 0b10);
+	temp.Insert_Face3(0b00, 0b10, 0b11);
+	temp.Insert_Face3(0b00, 0b11, 0b01);
+	temp.Insert_Face3(0b11, 0b10, 0b01);
 
 	temp.Done();
 
@@ -99,13 +99,13 @@ PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 	temp.Insert_Corn(Point3D(-scale, +scale, +scale));
 	temp.Insert_Corn(Point3D(+scale, +scale, +scale));
 
-	temp.Insert_Face4(FaceCorner(0b000), FaceCorner(0b010), FaceCorner(0b001), FaceCorner(0b011));
-	temp.Insert_Face4(FaceCorner(0b000), FaceCorner(0b100), FaceCorner(0b010), FaceCorner(0b110));
-	temp.Insert_Face4(FaceCorner(0b000), FaceCorner(0b001), FaceCorner(0b100), FaceCorner(0b101));
+	temp.Insert_Face4(0b000, 0b010, 0b001, 0b011);
+	temp.Insert_Face4(0b000, 0b100, 0b010, 0b110);
+	temp.Insert_Face4(0b000, 0b001, 0b100, 0b101);
 
-	temp.Insert_Face4(FaceCorner(0b111), FaceCorner(0b110), FaceCorner(0b101), FaceCorner(0b100));
-	temp.Insert_Face4(FaceCorner(0b111), FaceCorner(0b101), FaceCorner(0b011), FaceCorner(0b001));
-	temp.Insert_Face4(FaceCorner(0b111), FaceCorner(0b011), FaceCorner(0b110), FaceCorner(0b010));
+	temp.Insert_Face4(0b111, 0b110, 0b101, 0b100);
+	temp.Insert_Face4(0b111, 0b101, 0b011, 0b001);
+	temp.Insert_Face4(0b111, 0b011, 0b110, 0b010);
 
 	temp.Done();
 
@@ -166,10 +166,10 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 		int idx_next = ((i + 1) % segments) + 1;
 
 		temp.Insert_Face4(
-			FaceCorner(idx_frst),
-			FaceCorner(idx_next),
-			FaceCorner(idx_curr),
-			FaceCorner(idx_last)
+			idx_frst,
+			idx_next,
+			idx_curr,
+			idx_last
 		);
 
 		skin -> Insert_Face4(
@@ -221,7 +221,7 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, -FrameSizeInn.Z));
 	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, -FrameSizeInn.Z));
 	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, -FrameSizeInn.Z));
-	temp.Insert_Face4(FaceCorner(0), FaceCorner(3), FaceCorner(1), FaceCorner(2));
+	temp.Insert_Face4(0, 3, 1, 2);
 	skin -> Insert_Face4(tex01[0], tex01[1], tex01[2], tex01[3]);
 
 	tex01[0] = Point3D(1.0f, 0.0f, 1.0f);
@@ -304,10 +304,10 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, -FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, -FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, -FrameSizeOut.Z));
-	temp.Insert_Face4(FaceCorner(off0 + 0), FaceCorner(off0 + 1), FaceCorner(off1 + 0), FaceCorner(off1 + 1));
-	temp.Insert_Face4(FaceCorner(off0 + 1), FaceCorner(off0 + 2), FaceCorner(off1 + 1), FaceCorner(off1 + 2));
-	temp.Insert_Face4(FaceCorner(off0 + 2), FaceCorner(off0 + 3), FaceCorner(off1 + 2), FaceCorner(off1 + 3));
-	temp.Insert_Face4(FaceCorner(off0 + 3), FaceCorner(off0 + 0), FaceCorner(off1 + 3), FaceCorner(off1 + 0));
+	temp.Insert_Face4(off0 + 0, off0 + 1, off1 + 0, off1 + 1);
+	temp.Insert_Face4(off0 + 1, off0 + 2, off1 + 1, off1 + 2);
+	temp.Insert_Face4(off0 + 2, off0 + 3, off1 + 2, off1 + 3);
+	temp.Insert_Face4(off0 + 3, off0 + 0, off1 + 3, off1 + 0);
 	skin -> Insert_Face4(texMiddleInnX[0], texMiddleInnX[1], texMiddleInnX[2], texMiddleInnX[3]);
 	skin -> Insert_Face4(texMiddleInnY[0], texMiddleInnY[1], texMiddleInnY[2], texMiddleInnY[3]);
 	skin -> Insert_Face4(texMiddleInnX[0], texMiddleInnX[1], texMiddleInnX[2], texMiddleInnX[3]);
@@ -327,18 +327,18 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	temp.Insert_Corn(Point3D(-scale.X - FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(-scale.X - FrameSizeOut.X, +scale.Y,                  -FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(-scale.X - FrameSizeOut.X, -scale.Y,                  -FrameSizeOut.Z));
-	temp.Insert_Face3(FaceCorner(off0 + 0), FaceCorner(off1 + 1), FaceCorner(off1 + 0));
-	temp.Insert_Face4(FaceCorner(off0 + 0), FaceCorner(off0 + 1), FaceCorner(off1 + 1), FaceCorner(off1 + 2));
-	temp.Insert_Face3(FaceCorner(off1 + 2), FaceCorner(off0 + 1), FaceCorner(off1 + 3));
-	temp.Insert_Face3(FaceCorner(off0 + 1), FaceCorner(off1 + 4), FaceCorner(off1 + 3));
-	temp.Insert_Face4(FaceCorner(off0 + 1), FaceCorner(off0 + 2), FaceCorner(off1 + 4), FaceCorner(off1 + 5));
-	temp.Insert_Face3(FaceCorner(off1 + 5), FaceCorner(off0 + 2), FaceCorner(off1 + 6));
-	temp.Insert_Face3(FaceCorner(off0 + 2), FaceCorner(off1 + 7), FaceCorner(off1 + 6));
-	temp.Insert_Face4(FaceCorner(off0 + 2), FaceCorner(off0 +  3), FaceCorner(off1 + 7), FaceCorner(off1 + 8));
-	temp.Insert_Face3(FaceCorner(off1 + 8), FaceCorner(off0 +  3), FaceCorner(off1 + 9));
-	temp.Insert_Face3(FaceCorner(off0 + 3), FaceCorner(off1 + 10), FaceCorner(off1 + 9));
-	temp.Insert_Face4(FaceCorner(off0 +  3), FaceCorner(off0 + 0), FaceCorner(off1 + 10), FaceCorner(off1 + 11));
-	temp.Insert_Face3(FaceCorner(off1 + 11), FaceCorner(off0 + 0), FaceCorner(off1 + 00));
+	temp.Insert_Face3(off0 +  0, off1 +  1, off1 +  0);
+	temp.Insert_Face4(off0 +  0, off0 +  1, off1 +  1, off1 + 2);
+	temp.Insert_Face3(off1 +  2, off0 +  1, off1 +  3);
+	temp.Insert_Face3(off0 +  1, off1 +  4, off1 +  3);
+	temp.Insert_Face4(off0 +  1, off0 +  2, off1 +  4, off1 + 5);
+	temp.Insert_Face3(off1 +  5, off0 +  2, off1 +  6);
+	temp.Insert_Face3(off0 +  2, off1 +  7, off1 +  6);
+	temp.Insert_Face4(off0 +  2, off0 +  3, off1 +  7, off1 + 8);
+	temp.Insert_Face3(off1 +  8, off0 +  3, off1 +  9);
+	temp.Insert_Face3(off0 +  3, off1 + 10, off1 +  9);
+	temp.Insert_Face4(off0 +  3, off0 +  0, off1 + 10, off1 + 11);
+	temp.Insert_Face3(off1 + 11, off0 +  0, off1 + 00);
 	skin -> Insert_Face3(texCornerMinX[1], texCornerMinX[3], texCornerMinX[2]);
 	skin -> Insert_Face4(texMiddleOutX[0], texMiddleOutX[1], texMiddleOutX[2], texMiddleOutX[3]);
 	skin -> Insert_Face3(texCornerMaxX[2], texCornerMaxX[0], texCornerMaxX[3]);
@@ -366,18 +366,18 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	temp.Insert_Corn(Point3D(-scale.X - FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(-scale.X - FrameSizeOut.X, +scale.Y,                  +FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(-scale.X - FrameSizeOut.X, -scale.Y,                  +FrameSizeOut.Z));
-	temp.Insert_Face4(FaceCorner(off0 + 0x0), FaceCorner(off0 + 0x1), FaceCorner(off1 + 0x0), FaceCorner(off1 + 0x1));
-	temp.Insert_Face4(FaceCorner(off0 + 0x1), FaceCorner(off0 + 0x2), FaceCorner(off1 + 0x1), FaceCorner(off1 + 0x2));
-	temp.Insert_Face4(FaceCorner(off0 + 0x2), FaceCorner(off0 + 0x3), FaceCorner(off1 + 0x2), FaceCorner(off1 + 0x3));
-	temp.Insert_Face4(FaceCorner(off0 + 0x3), FaceCorner(off0 + 0x4), FaceCorner(off1 + 0x3), FaceCorner(off1 + 0x4));
-	temp.Insert_Face4(FaceCorner(off0 + 0x4), FaceCorner(off0 + 0x5), FaceCorner(off1 + 0x4), FaceCorner(off1 + 0x5));
-	temp.Insert_Face4(FaceCorner(off0 + 0x5), FaceCorner(off0 + 0x6), FaceCorner(off1 + 0x5), FaceCorner(off1 + 0x6));
-	temp.Insert_Face4(FaceCorner(off0 + 0x6), FaceCorner(off0 + 0x7), FaceCorner(off1 + 0x6), FaceCorner(off1 + 0x7));
-	temp.Insert_Face4(FaceCorner(off0 + 0x7), FaceCorner(off0 + 0x8), FaceCorner(off1 + 0x7), FaceCorner(off1 + 0x8));
-	temp.Insert_Face4(FaceCorner(off0 + 0x8), FaceCorner(off0 + 0x9), FaceCorner(off1 + 0x8), FaceCorner(off1 + 0x9));
-	temp.Insert_Face4(FaceCorner(off0 + 0x9), FaceCorner(off0 + 0xA), FaceCorner(off1 + 0x9), FaceCorner(off1 + 0xA));
-	temp.Insert_Face4(FaceCorner(off0 + 0xA), FaceCorner(off0 + 0xB), FaceCorner(off1 + 0xA), FaceCorner(off1 + 0xB));
-	temp.Insert_Face4(FaceCorner(off0 + 0xB), FaceCorner(off0 + 0x0), FaceCorner(off1 + 0xB), FaceCorner(off1 + 0x0));
+	temp.Insert_Face4(off0 + 0x0, off0 + 0x1, off1 + 0x0, off1 + 0x1);
+	temp.Insert_Face4(off0 + 0x1, off0 + 0x2, off1 + 0x1, off1 + 0x2);
+	temp.Insert_Face4(off0 + 0x2, off0 + 0x3, off1 + 0x2, off1 + 0x3);
+	temp.Insert_Face4(off0 + 0x3, off0 + 0x4, off1 + 0x3, off1 + 0x4);
+	temp.Insert_Face4(off0 + 0x4, off0 + 0x5, off1 + 0x4, off1 + 0x5);
+	temp.Insert_Face4(off0 + 0x5, off0 + 0x6, off1 + 0x5, off1 + 0x6);
+	temp.Insert_Face4(off0 + 0x6, off0 + 0x7, off1 + 0x6, off1 + 0x7);
+	temp.Insert_Face4(off0 + 0x7, off0 + 0x8, off1 + 0x7, off1 + 0x8);
+	temp.Insert_Face4(off0 + 0x8, off0 + 0x9, off1 + 0x8, off1 + 0x9);
+	temp.Insert_Face4(off0 + 0x9, off0 + 0xA, off1 + 0x9, off1 + 0xA);
+	temp.Insert_Face4(off0 + 0xA, off0 + 0xB, off1 + 0xA, off1 + 0xB);
+	temp.Insert_Face4(off0 + 0xB, off0 + 0x0, off1 + 0xB, off1 + 0x0);
 	skin -> Insert_Face4(texCornerMinX[0], texCornerMinX[1], texCornerMinX[2], texCornerMinX[3]);
 	skin -> Insert_Face4(texMiddleOutX[0], texMiddleOutX[1], texMiddleOutX[2], texMiddleOutX[3]);
 	skin -> Insert_Face4(texCornerMaxX[0], texCornerMaxX[1], texCornerMaxX[2], texCornerMaxX[3]);
@@ -397,18 +397,18 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, +FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, +FrameSizeOut.Z));
 	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, +FrameSizeOut.Z));
-	temp.Insert_Face3(FaceCorner(off1 + 0), FaceCorner(off0 + 0), FaceCorner(off0 + 1));
-	temp.Insert_Face4(FaceCorner(off1 + 1), FaceCorner(off1 + 0), FaceCorner(off0 + 2), FaceCorner(off0 + 1));
-	temp.Insert_Face3(FaceCorner(off0 + 3), FaceCorner(off1 + 1), FaceCorner(off0 + 2));
-	temp.Insert_Face3(FaceCorner(off1 + 1), FaceCorner(off0 + 3), FaceCorner(off0 + 4));
-	temp.Insert_Face4(FaceCorner(off1 + 2), FaceCorner(off1 + 1), FaceCorner(off0 + 5), FaceCorner(off0 + 4));
-	temp.Insert_Face3(FaceCorner(off0 + 6), FaceCorner(off1 + 2), FaceCorner(off0 + 5));
-	temp.Insert_Face3(FaceCorner(off1 + 2), FaceCorner(off0 + 6), FaceCorner(off0 + 7));
-	temp.Insert_Face4(FaceCorner(off1 + 3), FaceCorner(off1 + 2), FaceCorner(off0 + 8), FaceCorner(off0 + 7));
-	temp.Insert_Face3(FaceCorner(off0 + 9), FaceCorner(off1 + 3), FaceCorner(off0 + 8));
-	temp.Insert_Face3(FaceCorner(off1 + 3), FaceCorner(off0 + 9), FaceCorner(off0 + 10));
-	temp.Insert_Face4(FaceCorner(off1 + 0), FaceCorner(off1 + 3), FaceCorner(off0 + 11), FaceCorner(off0 + 10));
-	temp.Insert_Face3(FaceCorner(off0 + 0), FaceCorner(off1 + 0), FaceCorner(off0 + 11));
+	temp.Insert_Face3(off1 + 0, off0 + 0, off0 + 1);
+	temp.Insert_Face4(off1 + 1, off1 + 0, off0 + 2, off0 + 1);
+	temp.Insert_Face3(off0 + 3, off1 + 1, off0 + 2);
+	temp.Insert_Face3(off1 + 1, off0 + 3, off0 + 4);
+	temp.Insert_Face4(off1 + 2, off1 + 1, off0 + 5, off0 + 4);
+	temp.Insert_Face3(off0 + 6, off1 + 2, off0 + 5);
+	temp.Insert_Face3(off1 + 2, off0 + 6, off0 + 7);
+	temp.Insert_Face4(off1 + 3, off1 + 2, off0 + 8, off0 + 7);
+	temp.Insert_Face3(off0 + 9, off1 + 3, off0 + 8);
+	temp.Insert_Face3(off1 + 3, off0 + 9, off0 + 10);
+	temp.Insert_Face4(off1 + 0, off1 + 3, off0 + 11, off0 + 10);
+	temp.Insert_Face3(off0 + 0, off1 + 0, off0 + 11);
 	skin -> Insert_Face3(texCornerMinX[3], texCornerMinX[0], texCornerMinX[1]);
 	skin -> Insert_Face4(texMiddleOutX[3], texMiddleOutX[2], texMiddleOutX[1], texMiddleOutX[0]);
 	skin -> Insert_Face3(texCornerMaxX[1], texCornerMaxX[2], texCornerMaxX[0]);
@@ -428,10 +428,10 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	temp.Insert_Corn(Point3D(+scale.X, -scale.Y, +FrameSizeInn.Z));
 	temp.Insert_Corn(Point3D(+scale.X, +scale.Y, +FrameSizeInn.Z));
 	temp.Insert_Corn(Point3D(-scale.X, +scale.Y, +FrameSizeInn.Z));
-	temp.Insert_Face4(FaceCorner(off0 + 0), FaceCorner(off0 + 1), FaceCorner(off1 + 0), FaceCorner(off1 + 1));
-	temp.Insert_Face4(FaceCorner(off0 + 1), FaceCorner(off0 + 2), FaceCorner(off1 + 1), FaceCorner(off1 + 2));
-	temp.Insert_Face4(FaceCorner(off0 + 2), FaceCorner(off0 + 3), FaceCorner(off1 + 2), FaceCorner(off1 + 3));
-	temp.Insert_Face4(FaceCorner(off0 + 3), FaceCorner(off0 + 0), FaceCorner(off1 + 3), FaceCorner(off1 + 0));
+	temp.Insert_Face4(off0 + 0, off0 + 1, off1 + 0, off1 + 1);
+	temp.Insert_Face4(off0 + 1, off0 + 2, off1 + 1, off1 + 2);
+	temp.Insert_Face4(off0 + 2, off0 + 3, off1 + 2, off1 + 3);
+	temp.Insert_Face4(off0 + 3, off0 + 0, off1 + 3, off1 + 0);
 	skin -> Insert_Face4(texMiddleInnX[0], texMiddleInnX[1], texMiddleInnX[2], texMiddleInnX[3]);
 	skin -> Insert_Face4(texMiddleInnY[0], texMiddleInnY[1], texMiddleInnY[2], texMiddleInnY[3]);
 	skin -> Insert_Face4(texMiddleInnX[0], texMiddleInnX[1], texMiddleInnX[2], texMiddleInnX[3]);

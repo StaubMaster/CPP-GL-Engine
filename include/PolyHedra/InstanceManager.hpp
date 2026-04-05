@@ -2,6 +2,8 @@
 # define POLYHEDRA_INSTANCE_MANAGER_HPP
 
 # include "PolyHedra/Graphics/Full/Buffer.hpp"
+# include "PolyHedra/Graphics/Wire/Buffer.hpp"
+
 # include "Graphics/Texture/Array2D.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
@@ -13,12 +15,17 @@ struct PolyHedraObjectData;
 struct PolyHedraInstanceManager
 {
 	::PolyHedra *				PolyHedra;
-	bool						PolyHedraChanged;
 
-	Texture::Array2D			Texture;
+	bool						UpdateFullMain;
+	bool						UpdateWireMain;
 
 	::PolyHedraFull::Buffer		BufferFull;
-	Container::Binary<Instance::Basic3D::Data>	Instances;
+	::PolyHedraWire::Buffer		BufferWire;
+	
+	Texture::Array2D			Texture;
+
+	Container::Binary<Instance::Basic3D::Data>	InstancesFull;
+	Container::Binary<Instance::Basic3D::Data>	InstancesWire;
 
 	~PolyHedraInstanceManager();
 	PolyHedraInstanceManager();
@@ -38,15 +45,19 @@ struct PolyHedraInstanceManager
 
 
 
-	void	UpdateBufferMain();
-	void	UpdateBufferInst();
+	void	UpdateBufferFullMain();
+	void	UpdateBufferFullInst();
 	void	DrawFull();
 
+	void	UpdateBufferWireMain();
+	void	UpdateBufferWireInst();
+	void	DrawWire();
 
 
-	void	Clear();
-	void	Place(const PolyHedraObjectData & obj);
-	void	Place(const Container::Member<PolyHedraObjectData> & objs);
+
+	void	ClearInstances();
+	void	PlaceInstance(const PolyHedraObjectData & obj);
+	void	PlaceInstances(const Container::Member<PolyHedraObjectData> & objs);
 };
 
 #endif

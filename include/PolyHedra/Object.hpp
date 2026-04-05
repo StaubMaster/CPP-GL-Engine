@@ -11,8 +11,19 @@ struct PolyHedraObject
 	PolyHedraObjectData * Data;
 
 	bool			Is() const;
+	::PolyHedra *	PolyHedra() const;
+
 	const Trans3D &	Trans() const;
 	Trans3D &		Trans();
+
+	bool	FullVisibility() const;
+	bool	WireVisibility() const;
+
+	void	HideFull();
+	void	HideWire();
+	
+	void	ShowFull();
+	void	ShowWire();
 
 	~PolyHedraObject();
 	PolyHedraObject();

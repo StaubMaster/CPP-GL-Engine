@@ -166,11 +166,11 @@ void PolyHedra::ParsingData::Parse_Face(const TextCommand & cmd)
 
 	if (cmd.Count() == 3)
 	{
-		Data -> Insert_Face3(FaceCorner(idx[0]), FaceCorner(idx[1]), FaceCorner(idx[2]));
+		Data -> Insert_Face3(idx[0], idx[1], idx[2]);
 	}
 	else if (cmd.Count() == 4)
 	{
-		Data -> Insert_Face4(FaceCorner(idx[0]), FaceCorner(idx[1]), FaceCorner(idx[2]), FaceCorner(idx[3]));
+		Data -> Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 	}
 }
 
