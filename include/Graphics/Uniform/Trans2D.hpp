@@ -3,7 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Point2D.hpp"
-# include "Graphics/Uniform/Angle2D.hpp"
+# include "Graphics/Uniform/Matrix2x2.hpp"
 
 struct Trans2D;
 
@@ -13,7 +13,7 @@ class Trans2D : public Uniform::GBase<::Trans2D>
 {
 	private:
 	Uniform::Point2D Pos;
-	Uniform::Angle2D Rot;
+	Uniform::Matrix2x2 Rot;
 
 	public:
 	Trans2D(::Shader::Base & shader, std::string name);

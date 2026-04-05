@@ -54,29 +54,9 @@ PolyGonObject & PolyGonObject::operator=(const PolyGonObject & other)
 PolyGonObject::PolyGonObject(unsigned int PolyGon)
 	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D()))
 { }
-PolyGonObject::PolyGonObject(unsigned int PolyGon, Trans2D trans)
-	: Data(PolyGonManager::Current().PlaceObject(PolyGon, trans))
-{ }
-PolyGonObject::PolyGonObject(unsigned int PolyGon, Point2D pos, Angle ang)
-	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D(pos, Angle2D((ang)))))
-{ }
-PolyGonObject::PolyGonObject(unsigned int PolyGon, Point2D pos)
-	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D(pos, Angle2D((Angle())))))
-{ }
-
-
 
 PolyGonObject::PolyGonObject(::PolyGon * PolyGon)
 	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D()))
-{ }
-PolyGonObject::PolyGonObject(::PolyGon * PolyGon, Trans2D trans)
-	: Data(PolyGonManager::Current().PlaceObject(PolyGon, trans))
-{ }
-PolyGonObject::PolyGonObject(::PolyGon * PolyGon, Point2D pos, Angle ang)
-	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D(pos, Angle2D(ang))))
-{ }
-PolyGonObject::PolyGonObject(::PolyGon * PolyGon, Point2D pos)
-	: Data(PolyGonManager::Current().PlaceObject(PolyGon, Trans2D(pos, Angle2D(Angle()))))
 { }
 
 

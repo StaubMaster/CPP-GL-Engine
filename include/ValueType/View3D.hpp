@@ -12,8 +12,8 @@ struct View3D
 
 
 
-	View3D();
 	~View3D();
+	View3D();
 
 	View3D(const View3D & other);
 	View3D & operator=(const View3D & other);

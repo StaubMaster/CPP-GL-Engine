@@ -2,11 +2,11 @@
 
 
 
+View2D::~View2D() { }
+
 View2D::View2D()
 	: Trans()
 	, Scale(0.0f)
-{ }
-View2D::~View2D()
 { }
 
 View2D::View2D(const View2D & other)
@@ -31,7 +31,8 @@ void View2D::Change(Trans2D change, float timeDelta)
 {
 	change.Pos *= timeDelta;
 	change.Rot *= timeDelta;
-	Trans.Pos += (Trans.Rot * change.Pos);
+
+	Trans.Pos += Trans.Rot.forward(change.Pos);
 	Trans.Rot += change.Rot;
 }
 

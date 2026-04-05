@@ -31,14 +31,7 @@ struct PolyGonObject
 	PolyGonObject & operator=(const PolyGonObject & other);
 
 	PolyGonObject(unsigned int PolyGon);
-	PolyGonObject(unsigned int PolyGon, Trans2D trans);
-	PolyGonObject(unsigned int PolyGon, Point2D pos, Angle ang);
-	PolyGonObject(unsigned int PolyGon, Point2D pos);
-
 	PolyGonObject(::PolyGon * PolyGon);
-	PolyGonObject(::PolyGon * PolyGon, Trans2D trans);
-	PolyGonObject(::PolyGon * PolyGon, Point2D pos, Angle ang);
-	PolyGonObject(::PolyGon * PolyGon, Point2D pos);
 
 	void	Delete();
 	void	Create(unsigned int PolyGon);

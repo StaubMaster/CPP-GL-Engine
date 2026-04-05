@@ -13,7 +13,7 @@ Trans2D::Trans2D(Point2D pos)
 	: Pos(pos)
 	, Rot()
 { }
-Trans2D::Trans2D(Point2D pos, Angle2D rot)
+Trans2D::Trans2D(Point2D pos, Angle rot)
 	: Pos(pos)
 	, Rot(rot)
 { }
@@ -31,20 +31,20 @@ Trans2D & Trans2D::operator=(const Trans2D & other)
 
 
 
-Point2D Trans2D::forward(Point2D p) const { return (Rot * p) + Pos; }
-Point2D Trans2D::reverse(Point2D p) const { return Rot / (p - Pos); }
+Point2D Trans2D::forward(Point2D p) const { return Rot.forward(p) + Pos; }
+Point2D Trans2D::reverse(Point2D p) const { return Rot.reverse(p - Pos); }
 
 Ray2D Trans2D::forward(Ray2D ray) const
 {
 	return Ray2D(
 		forward(ray.Pos),
-		(Rot * ray.Dir)
+		Rot.forward(ray.Dir)
 	);
 }
 Ray2D Trans2D::reverse(Ray2D ray) const
 {
 	return Ray2D(
 		reverse(ray.Pos),
-		(Rot / ray.Dir)
+		Rot.reverse(ray.Dir)
 	);
 }

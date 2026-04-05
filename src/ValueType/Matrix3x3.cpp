@@ -115,14 +115,14 @@ Matrix3x3 Matrix3x3::TransformForward(Trans2D t)
 {
 	Matrix3x3 mat = Matrix3x3::Identity();
 	mat = mat * Matrix3x3::Position(+t.Pos);
-	mat = mat * Matrix3x3::Rotation(t.Rot.Ang);
+	mat = mat * Matrix3x3::Rotation(t.Rot);
 	return mat;
 }
 Matrix3x3 Matrix3x3::TransformReverse(Trans2D t)
 {
 	Matrix3x3 mat = Matrix3x3::Identity();
 	mat = mat * Matrix3x3::Position(-t.Pos);
-	mat = mat / Matrix3x3::Rotation(t.Rot.Ang);
+	mat = mat / Matrix3x3::Rotation(t.Rot);
 	return ~mat;
 }
 

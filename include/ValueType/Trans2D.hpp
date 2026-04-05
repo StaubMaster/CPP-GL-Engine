@@ -2,7 +2,7 @@
 # define TRANS_2D_HPP
 
 # include "Point2D.hpp"
-# include "Angle2D.hpp"
+# include "Angle.hpp"
 
 struct Ray2D;
 struct Line2D;
@@ -10,7 +10,7 @@ struct Line2D;
 struct Trans2D
 {
 	Point2D		Pos; // Position
-	Angle2D		Rot; // Rotation
+	Angle		Rot; // Rotation
 
 
 
@@ -18,7 +18,7 @@ struct Trans2D
 
 	Trans2D();
 	Trans2D(Point2D pos);
-	Trans2D(Point2D pos, Angle2D rot);
+	Trans2D(Point2D pos, Angle rot);
 
 	Trans2D(const Trans2D & other);
 	Trans2D & operator=(const Trans2D & other);
