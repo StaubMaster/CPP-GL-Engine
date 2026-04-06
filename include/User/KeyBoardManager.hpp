@@ -1,5 +1,5 @@
-#ifndef  USER_KEY_MANAGER_HPP
-# define USER_KEY_MANAGER_HPP
+#ifndef  USER_KEY_BOARD_MANAGER_HPP
+# define USER_KEY_BOARD_MANAGER_HPP
 
 # include "User/KeyState.hpp"
 

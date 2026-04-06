@@ -17,7 +17,7 @@ void Shader::Code::LogInfo(bool self, bool log) const
 	}
 	//Debug::Log << Debug::Tabs << "Type " << typeid(*this).name() << '\n';
 	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Type: " << ((unsigned int)Type) << '\n';
+	Debug::Log << Debug::Tabs << "Type: " << Type << '\n';
 	Debug::Log << Debug::Tabs << "File: " << File.Path.ToString() << '\n';
 	{
 		if (ID != 0)

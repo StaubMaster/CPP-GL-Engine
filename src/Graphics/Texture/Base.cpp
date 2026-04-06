@@ -17,7 +17,7 @@ void Texture::Base::LogInfo(bool self) const
 		Debug::Log << Debug::TabInc;
 	}
 	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Target " << ((unsigned int)Target) << '\n';
+	Debug::Log << Debug::Tabs << "Target " << Target << '\n';
 	if (self)
 	{
 		Debug::Log << Debug::TabDec;
