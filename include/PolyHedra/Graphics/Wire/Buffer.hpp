@@ -10,11 +10,16 @@
 
 namespace PolyHedraWire
 {
-typedef ::BufferArray::MainElemInst<
+class Buffer : public ::BufferArray::MainElemInst<
 	PolyHedraWire::Main::Buffer,
 	PolyHedraWire::Elem::Buffer,
 	Instance::Basic3D::Buffer
-> Buffer;
+>
+{
+	public:
+	~Buffer();
+	Buffer();
+};
 };
 
 #endif

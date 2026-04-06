@@ -1,0 +1,13 @@
+
+some Examples complain abound double Bool2D, so I remove it
+then other complain aboud missing Bool2D
+
+I think its because of the second Bool2D from FileManager
+but that also has
+
+
+
+but FileManager also has Undex2D, and nothing ever complains about that
+only that Bool2D is undefined in Undex2D
+
+

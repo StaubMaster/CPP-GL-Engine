@@ -3,6 +3,7 @@
 
 
 PolyHedraFull::Buffer::~Buffer() { }
+
 PolyHedraFull::Buffer::Buffer()
 	: ::BufferArray::MainInst<
 		PolyHedraFull::Main::Buffer,

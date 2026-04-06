@@ -24,6 +24,7 @@ PolyHedraManager::~PolyHedraManager()
 { }
 PolyHedraManager::PolyHedraManager()
 	: ObjectDatas()
+	, GraphicsExist(false)
 	, ShaderFullDefault()
 	, ShaderWireDefault()
 	, ShaderFullOther(nullptr)
@@ -35,20 +36,28 @@ PolyHedraManager::PolyHedraManager()
 
 void PolyHedraManager::GraphicsCreate()
 {
-	ShaderFullDefault.Create();
-	ShaderWireDefault.Create();
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+	if (!GraphicsExist)
 	{
-		InstanceManagers[i].GraphicsCreate();
+		ShaderFullDefault.Create();
+		ShaderWireDefault.Create();
+		for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+		{
+			InstanceManagers[i].GraphicsCreate();
+		}
+		GraphicsExist = true;
 	}
 }
 void PolyHedraManager::GraphicsDelete()
 {
-	ShaderFullDefault.Delete();
-	ShaderWireDefault.Delete();
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+	if (GraphicsExist)
 	{
-		InstanceManagers[i].GraphicsDelete();
+		ShaderFullDefault.Delete();
+		ShaderWireDefault.Delete();
+		for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+		{
+			InstanceManagers[i].GraphicsDelete();
+		}
+		GraphicsExist = false;
 	}
 }
 
@@ -68,18 +77,15 @@ void PolyHedraManager::InitExternal(DirectoryInfo & media_dir)
 		});
 		ShaderWireDefault.Change(code);
 	}
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-	{
-		InstanceManagers[i].InitExternal();
-	}
+	// Buffer Bindings depend on Shaders, should be done here ?
+	// Shaders depend on outside, and should be set outside ?
+	// every InstanceManager has its own Buffer
+	// would need a Template for how to set things ?
+	// maybe just a Buffer that is never actually created
+	// this might have been easier to just hardcode with OpenGL
+	// instead of doing all of this "Wrapper" stuff that I have made
 }
-void PolyHedraManager::InitInternal()
-{
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-	{
-		InstanceManagers[i].InitInternal();
-	}
-}
+void PolyHedraManager::InitInternal() { }
 
 
 
@@ -98,6 +104,10 @@ unsigned int PolyHedraManager::PlacePolyHedra(::PolyHedra * polyhedra)
 {
 	unsigned int idx = InstanceManagers.Count();
 	InstanceManagers.Insert(PolyHedraInstanceManager(polyhedra));
+	if (GraphicsExist)
+	{
+		InstanceManagers[idx].GraphicsCreate();
+	}
 	return idx;
 }
 
@@ -138,10 +148,7 @@ void PolyHedraManager::PlaceInstance(const PolyHedraObjectData & obj)
 		InstanceManagers[i].PlaceInstance(obj);
 	}
 }
-
-
-
-void PolyHedraManager::Update()
+void PolyHedraManager::UpdateInstances()
 {
 	ClearInstances();
 	for (unsigned int i = 0; i < ObjectDatas.Count(); i++)
@@ -159,6 +166,7 @@ void PolyHedraManager::Update()
 		}
 	}
 }
+
 void PolyHedraManager::DrawFull()
 {
 	if (ShaderFullOther == nullptr)

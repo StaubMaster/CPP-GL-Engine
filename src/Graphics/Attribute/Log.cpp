@@ -74,5 +74,6 @@ void Attribute::Float4x4::LogInfo() const
 	Location0.LogInfo();
 	Location1.LogInfo();
 	Location2.LogInfo();
+	Location3.LogInfo();
 //	Debug::Log << Debug::TabDec;
 }

@@ -27,6 +27,7 @@ struct PolyHedraManager
 
 	Container::Binary<PolyHedraObjectData*>		ObjectDatas;
 
+	bool										GraphicsExist;
 	PolyHedraFull::Shader						ShaderFullDefault;
 	PolyHedraWire::Shader						ShaderWireDefault;
 	PolyHedraFull::Shader *						ShaderFullOther;
@@ -54,8 +55,8 @@ struct PolyHedraManager
 
 	void	ClearInstances();
 	void	PlaceInstance(const PolyHedraObjectData & obj);
+	void	UpdateInstances();
 
-	void	Update();
 	void	DrawFull();
 	void	DrawWire();
 };

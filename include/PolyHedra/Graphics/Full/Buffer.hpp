@@ -9,10 +9,6 @@
 
 namespace PolyHedraFull
 {
-/*typedef ::BufferArray::MainInst<
-	PolyHedraFull::Main::Buffer,
-	Instance::Basic3D::Buffer
-> Buffer;*/
 class Buffer : public ::BufferArray::MainInst<
 	PolyHedraFull::Main::Buffer,
 	Instance::Basic3D::Buffer

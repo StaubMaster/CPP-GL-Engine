@@ -19,9 +19,9 @@ struct PolyHedraInstanceManager
 	bool						UpdateFullMain;
 	bool						UpdateWireMain;
 
+	bool						GraphicsExist;
 	::PolyHedraFull::Buffer		BufferFull;
 	::PolyHedraWire::Buffer		BufferWire;
-	
 	Texture::Array2D			Texture;
 
 	Container::Binary<Instance::Basic3D::Data>	InstancesFull;
@@ -39,18 +39,16 @@ struct PolyHedraInstanceManager
 
 	void	GraphicsCreate();
 	void	GraphicsDelete();
-
-	void	InitExternal();
-	void	InitInternal();
+	void	GraphicsInit();
 
 
 
-	void	UpdateBufferFullMain();
-	void	UpdateBufferFullInst();
+	void	UpdateFullBufferMain();
+	void	UpdateFullBufferInst();
 	void	DrawFull();
 
-	void	UpdateBufferWireMain();
-	void	UpdateBufferWireInst();
+	void	UpdateWireBufferMain();
+	void	UpdateWireBufferInst();
 	void	DrawWire();
 
 
