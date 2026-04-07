@@ -21,6 +21,8 @@ PolyHedraInstanceManager::PolyHedraInstanceManager()
 	: PolyHedra(nullptr)
 	, UpdateFullMain(false)
 	, UpdateWireMain(false)
+	, UpdateFullInit(false)
+	, UpdateWireInit(false)
 	, GraphicsExist(false)
 	, BufferFull()
 	, BufferWire()
@@ -32,6 +34,8 @@ PolyHedraInstanceManager::PolyHedraInstanceManager(const PolyHedraInstanceManage
 	: PolyHedra(other.PolyHedra)
 	, UpdateFullMain(other.UpdateFullMain)
 	, UpdateWireMain(other.UpdateWireMain)
+	, UpdateFullInit(other.UpdateFullInit)
+	, UpdateWireInit(other.UpdateWireInit)
 	, GraphicsExist(other.GraphicsExist)
 	, BufferFull(other.BufferFull)
 	, BufferWire(other.BufferWire)
@@ -44,6 +48,8 @@ PolyHedraInstanceManager & PolyHedraInstanceManager::operator=(const PolyHedraIn
 	PolyHedra = other.PolyHedra;
 	UpdateFullMain = other.UpdateFullMain;
 	UpdateWireMain = other.UpdateWireMain;
+	UpdateFullInit = other.UpdateFullInit;
+	UpdateWireInit = other.UpdateWireInit;
 	GraphicsExist = other.GraphicsExist;
 	BufferFull = other.BufferFull;
 	BufferWire = other.BufferWire;
@@ -57,6 +63,8 @@ PolyHedraInstanceManager::PolyHedraInstanceManager(::PolyHedra * polyhedra)
 	: PolyHedra(polyhedra)
 	, UpdateFullMain(true)
 	, UpdateWireMain(true)
+	, UpdateFullInit(false)
+	, UpdateWireInit(false)
 	, GraphicsExist(false)
 	, BufferFull()
 	, BufferWire()
@@ -78,8 +86,9 @@ void PolyHedraInstanceManager::GraphicsCreate()
 	{
 		BufferFull.Create();
 		BufferWire.Create();
-		GraphicsInit();
 		GraphicsExist = true;
+		UpdateFullInit = true;
+		UpdateWireInit = true;
 	}
 }
 void PolyHedraInstanceManager::GraphicsDelete()
@@ -91,16 +100,18 @@ void PolyHedraInstanceManager::GraphicsDelete()
 		GraphicsExist = false;
 	}
 }
-void PolyHedraInstanceManager::GraphicsInit()
+
+
+
+void PolyHedraInstanceManager::UpdateFullBufferInit()
 {
-	BufferFull.Main.Init();
-	BufferFull.Inst.Init();
-	BufferWire.Main.Init();
-	BufferWire.Inst.Init();
+	if (UpdateFullInit && GraphicsExist)
+	{
+		BufferFull.Main.Init();
+		BufferFull.Inst.Init();
+		UpdateFullInit = false;
+	}
 }
-
-
-
 void PolyHedraInstanceManager::UpdateFullBufferMain()
 {
 	if (UpdateFullMain && PolyHedra == nullptr && GraphicsExist) { return; }
@@ -133,12 +144,22 @@ void PolyHedraInstanceManager::UpdateFullBufferInst()
 }
 void PolyHedraInstanceManager::DrawFull()
 {
+	UpdateFullBufferInit();
 	UpdateFullBufferMain();
 	UpdateFullBufferInst();
 	Texture.Bind();
 	BufferFull.Draw();
 }
 
+void PolyHedraInstanceManager::UpdateWireBufferInit()
+{
+	if (UpdateWireInit && GraphicsExist)
+	{
+		BufferWire.Main.Init();
+		BufferWire.Inst.Init();
+		UpdateWireInit = false;
+	}
+}
 void PolyHedraInstanceManager::UpdateWireBufferMain()
 {
 	if (UpdateWireMain && PolyHedra == nullptr && GraphicsExist) { return; }
@@ -174,6 +195,7 @@ void PolyHedraInstanceManager::UpdateWireBufferInst()
 }
 void PolyHedraInstanceManager::DrawWire()
 {
+	UpdateWireBufferInit();
 	UpdateWireBufferMain();
 	UpdateWireBufferInst();
 	BufferWire.Draw();

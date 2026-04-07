@@ -307,17 +307,26 @@ clean:
 	@$(call fancyNameTargetEcho,$@)
 	@$(REMOVER) $(ALL_OBJ)
 
+aclean:
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(NAME)
+
 fclean:
 	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) -s clean
-	@$(REMOVER) $(NAME)
+	@$(MAKE) -s aclean
 
 re:
 	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) -s fclean
 	@$(MAKE) -s all
 
-.PHONY: all clean fclean re
+are:
+	@$(call fancyNameTargetEcho,$@)
+	@$(MAKE) -s aclean
+	@$(MAKE) -s all
+
+.PHONY: all clean aclean fclean re are
 
 $(NAME) : $(ALL_OBJ)
 	@$(call fancyNameArchivingEcho,$@)

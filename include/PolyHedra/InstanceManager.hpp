@@ -16,8 +16,13 @@ struct PolyHedraInstanceManager
 {
 	::PolyHedra *				PolyHedra;
 
+	// Main Data needs to be put into Buffers
 	bool						UpdateFullMain;
 	bool						UpdateWireMain;
+
+	// Attributes in Buffers need to be initialized
+	bool						UpdateFullInit;
+	bool						UpdateWireInit;
 
 	bool						GraphicsExist;
 	::PolyHedraFull::Buffer		BufferFull;
@@ -39,14 +44,15 @@ struct PolyHedraInstanceManager
 
 	void	GraphicsCreate();
 	void	GraphicsDelete();
-	void	GraphicsInit();
 
 
 
+	void	UpdateFullBufferInit();
 	void	UpdateFullBufferMain();
 	void	UpdateFullBufferInst();
 	void	DrawFull();
 
+	void	UpdateWireBufferInit();
 	void	UpdateWireBufferMain();
 	void	UpdateWireBufferInst();
 	void	DrawWire();
