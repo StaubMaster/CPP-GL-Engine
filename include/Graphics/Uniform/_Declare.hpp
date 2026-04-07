@@ -1,4 +1,3 @@
-
 #ifndef  UNIFORMS_DECLARE_HPP
 # define UNIFORMS_DECLARE_HPP
 
@@ -10,8 +9,10 @@ namespace Uniform
 	class Float1;
 	class Float2;
 	class Float3;
+	class Float4;
 	class Float2x2;
 	class Float3x3;
+	class Float4x4;
 
 	class UIntN;
 	class UInt1;
@@ -26,11 +27,10 @@ namespace Uniform
 
 	class Matrix2x2;
 	class Matrix3x3;
+	class Matrix4x4;
 
 	class Angle;
-	class Angle2D;
-	class Angle3D;
-	
+
 	class Trans2D;
 	class Trans3D;
 
@@ -44,11 +44,11 @@ namespace Uniform
 	class LightSolar;
 	class LightSpot;
 
+	class AspectRatio;
 	class PixelSize;
 	class DisplaySize;
 
 	class SizeRatio2D;
-//	class WindowBufferSize2D;
 };
 
 #endif

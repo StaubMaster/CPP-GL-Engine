@@ -1,10 +1,11 @@
-
 #ifndef  MULTIFORMS_DECLARE_HPP
 # define MULTIFORMS_DECLARE_HPP
 
 namespace Multiform
 {
 	class Base;
+
+	class Float;
 
 	class ColorF4;
 
@@ -14,7 +15,10 @@ namespace Multiform
 	class LInter;
 	class Range;
 
+	class Trans2D;
 	class Trans3D;
+
+	class DisplaySize;
 
 	class SizeRatio2D;
 };

@@ -54,7 +54,7 @@ VALUE_TYPE := \
 	ValueType/View2D.cpp \
 	ValueType/View3D.cpp \
 	ValueType/Intersect.cpp \
-	ValueTypeShow.cpp
+	ValueType/_Show.cpp
 VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))
 VALUE_TYPE_OBJ := $(addprefix $(DIR_OBJ)/,$(VALUE_TYPE:.cpp=.o))
 

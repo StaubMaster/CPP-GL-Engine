@@ -21,7 +21,7 @@
 #include "ValueType/Angle.hpp"
 #include "ValueType/EulerAngle3D.hpp"
 #include "ValueType/AxisBox3D.hpp"
-#include "ValueTypeShow.hpp"
+#include "ValueType/_Show.hpp"
 
 // Debug
 #include "Debug.hpp"

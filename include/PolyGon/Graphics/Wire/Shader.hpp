@@ -2,8 +2,7 @@
 # define POLYGON_GRAPHICS_WIRE_SHADER_HPP
 
 # include "Graphics/Shader/Base.hpp"
-# include "Graphics/UniformsInclude.hpp"
-# include "Graphics/Uniform/Matrix3x3.hpp"
+# include "Graphics/Uniform/_Include.hpp"
 
 namespace PolyGonWire
 {

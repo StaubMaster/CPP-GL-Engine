@@ -1,7 +1,7 @@
 #ifndef  VALUE_TYPE_SHOW_HPP
 # define VALUE_TYPE_SHOW_HPP
 
-# include "ValueTypeDeclare.hpp"
+# include "ValueType/_Declare.hpp"
 
 # include <iosfwd>
 

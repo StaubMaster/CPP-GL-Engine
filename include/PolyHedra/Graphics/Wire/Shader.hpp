@@ -2,8 +2,7 @@
 # define POLYHEDRA_WIRE_SHADER_HPP
 
 # include "Graphics/Shader/Base.hpp"
-# include "Graphics/UniformsInclude.hpp"
-# include "Graphics/Uniform/Matrix4x4.hpp"
+# include "Graphics/Uniform/_Include.hpp"
 
 namespace PolyHedraWire
 {

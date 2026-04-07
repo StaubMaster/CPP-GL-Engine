@@ -1,6 +1,5 @@
-#include "ValueTypeShow.hpp"
-
-#include "ValueTypeInclude.hpp"
+#include "ValueType/_Show.hpp"
+#include "ValueType/_Include.hpp"
 
 #include <iostream>
 
