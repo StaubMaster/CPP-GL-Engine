@@ -105,16 +105,16 @@ void PolyHedraInstanceManager::GraphicsDelete()
 
 void PolyHedraInstanceManager::UpdateFullBufferInit()
 {
-	if (UpdateFullInit && GraphicsExist)
-	{
-		BufferFull.Main.Init();
-		BufferFull.Inst.Init();
-		UpdateFullInit = false;
-	}
+	if (!(UpdateFullInit && GraphicsExist)) { return; }
+
+	BufferFull.Main.Init();
+	BufferFull.Inst.Init();
+
+	UpdateFullInit = false;
 }
 void PolyHedraInstanceManager::UpdateFullBufferMain()
 {
-	if (UpdateFullMain && PolyHedra == nullptr && GraphicsExist) { return; }
+	if (!(UpdateFullMain && PolyHedra != nullptr && GraphicsExist)) { return; }
 
 	{
 		Container::Pointer<PolyHedraFull::Main::Data> data = PolyHedra -> ToMainData();
@@ -153,16 +153,16 @@ void PolyHedraInstanceManager::DrawFull()
 
 void PolyHedraInstanceManager::UpdateWireBufferInit()
 {
-	if (UpdateWireInit && GraphicsExist)
-	{
-		BufferWire.Main.Init();
-		BufferWire.Inst.Init();
-		UpdateWireInit = false;
-	}
+	if (!(UpdateWireInit && GraphicsExist)) { return; }
+
+	BufferWire.Main.Init();
+	BufferWire.Inst.Init();
+
+	UpdateWireInit = false;
 }
 void PolyHedraInstanceManager::UpdateWireBufferMain()
 {
-	if (UpdateWireMain && PolyHedra == nullptr && GraphicsExist) { return; }
+	if (!(UpdateWireMain && PolyHedra != nullptr && GraphicsExist)) { return; }
 
 	{
 		Container::Binary<PolyHedraWire::Main::Data> data;

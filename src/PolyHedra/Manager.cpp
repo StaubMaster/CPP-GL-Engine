@@ -36,29 +36,29 @@ PolyHedraManager::PolyHedraManager()
 
 void PolyHedraManager::GraphicsCreate()
 {
-	if (!GraphicsExist)
+	if (GraphicsExist) { return; }
+
+	ShaderFullDefault.Create();
+	ShaderWireDefault.Create();
+	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		ShaderFullDefault.Create();
-		ShaderWireDefault.Create();
-		for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-		{
-			InstanceManagers[i].GraphicsCreate();
-		}
-		GraphicsExist = true;
+		InstanceManagers[i].GraphicsCreate();
 	}
+
+	GraphicsExist = true;
 }
 void PolyHedraManager::GraphicsDelete()
 {
-	if (GraphicsExist)
+	if (!GraphicsExist) { return; }
+
+	ShaderFullDefault.Delete();
+	ShaderWireDefault.Delete();
+	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		ShaderFullDefault.Delete();
-		ShaderWireDefault.Delete();
-		for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-		{
-			InstanceManagers[i].GraphicsDelete();
-		}
-		GraphicsExist = false;
+		InstanceManagers[i].GraphicsDelete();
 	}
+
+	GraphicsExist = false;
 }
 
 void PolyHedraManager::InitExternal(DirectoryInfo & media_dir)
