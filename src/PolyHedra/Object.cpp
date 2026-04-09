@@ -79,11 +79,17 @@ void PolyHedraObject::Delete()
 		Data = nullptr;
 	}
 }
-/*void PolyHedraObject::Create(unsigned int polyhedra)
+void PolyHedraObject::Create(unsigned int polyhedra)
 {
-	(void)polyhedra;
-}*/
-/*void PolyHedraObject::Create(::PolyHedra * polyhedra)
+	if (Data == nullptr)
+	{
+		Data = PolyHedraManager::Current().PlaceObject(polyhedra, Trans3D());
+	}
+}
+void PolyHedraObject::Create(::PolyHedra * polyhedra)
 {
-	(void)polyhedra;
-}*/
+	if (Data == nullptr)
+	{
+		Data = PolyHedraManager::Current().PlaceObject(polyhedra, Trans3D());
+	}
+}
