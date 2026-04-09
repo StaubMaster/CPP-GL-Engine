@@ -1,4 +1,5 @@
 #include "ValueType/Undex2D.hpp"
+#include "ValueType/Bool2D.hpp"
 
 
 
@@ -28,75 +29,33 @@ Undex2D & Undex2D::operator=(const Undex2D & other)
 
 
 
-Undex2D Undex2D::operator+(const Undex2D & other) const
-{
-	return Undex2D(
-		X + other.X,
-		Y + other.Y
-	);
-}
-Undex2D Undex2D::operator-(const Undex2D & other) const
-{
-	return Undex2D(
-		X - other.X,
-		Y - other.Y
-	);
-}
+unsigned int Undex2D::Product() const { return X * Y; }
 
 
 
-Undex2D Undex2D::operator%(const Undex2D & other) const
-{
-	return Undex2D(
-		X % other.X,
-		Y % other.Y
-	);
-}
+Undex2D Undex2D::operator+(const Undex2D & other) const { return Undex2D(X + other.X, Y + other.Y); }
+Undex2D Undex2D::operator-(const Undex2D & other) const { return Undex2D(X - other.X, Y - other.Y); }
+Undex2D Undex2D::operator*(const Undex2D & other) const { return Undex2D(X * other.X, Y * other.Y); }
+Undex2D Undex2D::operator/(const Undex2D & other) const { return Undex2D(X / other.X, Y / other.Y); }
+Undex2D Undex2D::operator%(const Undex2D & other) const { return Undex2D(X % other.X, Y % other.Y); }
 
 
 
-Bool2D Undex2D::operator==(const Undex2D & other) const
-{
-	return Bool2D(
-		X == other.X,
-		Y == other.Y
-	);
-}
-Bool2D Undex2D::operator<=(const Undex2D & other) const
-{
-	return Bool2D(
-		X <= other.X,
-		Y <= other.Y
-	);
-}
-Bool2D Undex2D::operator>=(const Undex2D & other) const
-{
-	return Bool2D(
-		X >= other.X,
-		Y >= other.Y
-	);
-}
-Bool2D Undex2D::operator!=(const Undex2D & other) const
-{
-	return Bool2D(
-		X != other.X,
-		Y != other.Y
-	);
-}
-Bool2D Undex2D::operator<(const Undex2D & other) const
-{
-	return Bool2D(
-		X < other.X,
-		Y < other.Y
-	);
-}
-Bool2D Undex2D::operator>(const Undex2D & other) const
-{
-	return Bool2D(
-		X > other.X,
-		Y > other.Y
-	);
-}
+Undex2D Undex2D::operator~() const { return Undex2D(~X, ~Y); }
+Undex2D Undex2D::operator&(const Undex2D & other) const { return Undex2D(X & other.X, Y & other.Y); }
+Undex2D Undex2D::operator|(const Undex2D & other) const { return Undex2D(X | other.X, Y | other.Y); }
+Undex2D Undex2D::operator^(const Undex2D & other) const { return Undex2D(X ^ other.X, Y ^ other.Y); }
+Undex2D Undex2D::operator<<(const Undex2D & other) const { return Undex2D(X << other.X, Y << other.Y); }
+Undex2D Undex2D::operator>>(const Undex2D & other) const { return Undex2D(X >> other.X, Y >> other.Y); }
+
+
+
+Bool2D Undex2D::operator==(const Undex2D & other) const { return Bool2D(X == other.X, Y == other.Y); }
+Bool2D Undex2D::operator!=(const Undex2D & other) const { return Bool2D(X != other.X, Y != other.Y); }
+Bool2D Undex2D::operator<(const Undex2D & other) const { return Bool2D(X < other.X, Y < other.Y); }
+Bool2D Undex2D::operator>(const Undex2D & other) const { return Bool2D(X > other.X, Y > other.Y); }
+Bool2D Undex2D::operator<=(const Undex2D & other) const { return Bool2D(X <= other.X, Y <= other.Y); }
+Bool2D Undex2D::operator>=(const Undex2D & other) const { return Bool2D(X >= other.X, Y >= other.Y); }
 
 
 
@@ -110,8 +69,6 @@ bool	Undex2D::Box_exclusive(Undex2D idx, Undex2D min, Undex2D max)
 	return	(idx.X > min.X && idx.X < max.X) &&
 			(idx.Y > min.Y && idx.Y < max.Y);
 }
-
-
 
 bool Undex2D::loop_inclusive(Undex2D & idx, Undex2D min, Undex2D max)
 {
@@ -178,8 +135,20 @@ bool Undex2D::loop_exclusive(Undex2D & idx, unsigned int min, unsigned int max)
 
 
 
-/*std::ostream & operator <<(std::ostream & o, const Undex2D & u)
+unsigned int Undex2D::ConvertX(Undex2D udx) const
 {
-	o << "[" << u.X << ":" << u.Y << ":" << u.Z << "]";
-	return o;
-}*/
+	return (udx.X) + (udx.Y * X);
+}
+Undex2D Undex2D::ConvertX(unsigned int udx) const
+{
+	return Undex2D(udx % X, udx / X);
+}
+
+unsigned int Undex2D::Convert(unsigned int size, Undex2D udx)
+{
+	return (udx.X) + (udx.Y * size);
+}
+Undex2D Undex2D::Convert(unsigned int size, unsigned int udx)
+{
+	return Undex2D(udx % size, udx / size);
+}
