@@ -16,7 +16,8 @@
 
 struct GLFWwindow;
 
-struct Point3D;
+//struct Point3D;
+struct VectorF3; typedef VectorF3 Point3D;
 struct EulerAngle3D;
 struct Trans3D;
 

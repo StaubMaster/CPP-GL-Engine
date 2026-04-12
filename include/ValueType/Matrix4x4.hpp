@@ -2,9 +2,11 @@
 # define MATRIX_4_4_HPP
 
 struct Angle;
-struct Point4D;
+//struct Point4D;
+struct VectorF4; typedef VectorF4 Point4D;
 
-struct Point3D;
+//struct Point3D;
+struct VectorF3; typedef VectorF3 Point3D;
 struct EulerAngle3D;
 struct Trans3D;
 

@@ -1,11 +1,13 @@
 #ifndef  MATRIX_3_3_HPP
 # define MATRIX_3_3_HPP
 
-struct Point3D;
+//struct Point3D;
+struct VectorF3; typedef VectorF3 Point3D;
 
 struct Angle;
 
-struct Point2D;
+//struct Point2D;
+struct VectorF2; typedef VectorF2 Point2D;
 struct EulerAngle3D;
 struct Trans2D;
 

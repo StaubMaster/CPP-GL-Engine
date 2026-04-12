@@ -1,7 +1,11 @@
 #ifndef  BOOL_2D_HPP
 # define BOOL_2D_HPP
 
-struct Bool2D
+# include "Bool2.hpp"
+
+typedef Bool2 Bool2D;
+
+/*struct Bool2D
 {
 	private:
 	unsigned char Bits;
@@ -36,6 +40,6 @@ struct Bool2D
 
 	bool All(bool value) const;
 	bool Any(bool value) const;
-};
+};*/
 
 #endif

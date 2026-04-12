@@ -1,6 +1,7 @@
 #ifndef  UNDEX_LOOP_2D_HPP
 # define UNDEX_LOOP_2D_HPP
 
+# include "Bool2D.hpp"
 # include "Undex2D.hpp"
 # include "UndexBox2D.hpp"
 
@@ -19,6 +20,9 @@ for (Undex2D udx = loop.Max(); loop.Check(udx); loop.Prev(udx))
 }
 
 */
+
+// LoopU2
+// how should these work with float ?
 
 struct UndexLoop2D
 {

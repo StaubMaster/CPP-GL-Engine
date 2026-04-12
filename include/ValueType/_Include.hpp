@@ -1,6 +1,10 @@
 #ifndef  VALUE_TYPE_INCLUDE_HPP
 # define VALUE_TYPE_INCLUDE_HPP
 
+# include "ValueType/VectorF2.hpp"
+
+
+
 # include "ValueType/Matrix2x2.hpp"
 # include "ValueType/Matrix3x3.hpp"
 # include "ValueType/Matrix4x4.hpp"

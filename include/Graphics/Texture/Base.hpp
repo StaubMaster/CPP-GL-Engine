@@ -6,7 +6,9 @@
 
 class FileInfo;
 
-struct Undex3D;
+//struct Undex3D;
+struct VectorU3;
+typedef VectorU3 Undex3D;
 
 namespace Texture
 {

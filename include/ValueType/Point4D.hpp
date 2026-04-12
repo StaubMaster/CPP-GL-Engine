@@ -1,6 +1,11 @@
 #ifndef  POINT_4D_HPP
 # define POINT_4D_HPP
 
+# include "VectorF4.hpp"
+
+typedef VectorF4 Point4D;
+
+/*
 struct Point4D
 {
 	public:
@@ -67,5 +72,5 @@ struct Point4D
 
 	float static dot(const Point4D & p0, const Point4D & p1);
 };
-
+*/
 #endif

@@ -4,7 +4,8 @@
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float2.hpp"
 
-struct Point2D;
+//struct Point2D;
+struct VectorF2; typedef VectorF2 Point2D;
 
 namespace Uniform
 {

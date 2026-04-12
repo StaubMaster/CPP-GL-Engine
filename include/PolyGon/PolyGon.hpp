@@ -6,7 +6,9 @@
 # include "PolyGon/Graphics/Full/Main/Data.hpp"
 
 struct Ray2D;
-struct AxisBox2D;
+//struct AxisBox2D;
+struct BoxF2;
+typedef BoxF2 AxisBox2D;
 
 class PolyGon
 {

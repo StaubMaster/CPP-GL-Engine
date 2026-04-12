@@ -1,7 +1,8 @@
 #ifndef  MATRIX_2_2_HPP
 # define MATRIX_2_2_HPP
 
-struct Point2D;
+//struct Point2D;
+struct VectorF2; typedef VectorF2 Point2D;
 struct Angle;
 
 struct Matrix2x2

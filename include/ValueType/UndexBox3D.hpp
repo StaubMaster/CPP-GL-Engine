@@ -1,10 +1,14 @@
 #ifndef  UNDEX_BOX_3D_HPP
 # define UNDEX_BOX_3D_HPP
 
+# include "BoxU3.hpp"
+
+typedef BoxU3 UndexBox3D;
+
 # include "Undex3D.hpp"
 # include "Bool3D.hpp"
 
-struct UndexBox3D
+/*struct UndexBox3D
 {
 	public:
 	Undex3D	Min;
@@ -22,6 +26,6 @@ struct UndexBox3D
 	Bool3D CheckIn(Undex3D udx) const;
 	Bool3D CheckEx(Undex3D udx) const;
 	Bool3D CheckEdge(Undex3D udx) const;
-};
+};*/
 
 #endif

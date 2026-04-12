@@ -1,6 +1,11 @@
 #ifndef  POINT_3D_HPP
 # define POINT_3D_HPP
 
+# include "VectorF3.hpp"
+
+typedef VectorF3 Point3D;
+
+/*
 struct Point3D
 {
 	public:
@@ -80,5 +85,5 @@ Point3D		operator+(float f, Point3D p);
 Point3D		operator-(float f, Point3D p);
 Point3D		operator*(float f, Point3D p);
 Point3D		operator/(float f, Point3D p);
-
+*/
 #endif

@@ -1,9 +1,14 @@
 #ifndef  AXISBOX_2D_HPP
 # define AXISBOX_2D_HPP
 
-#include "Point2D.hpp"
+# include "BoxF2.hpp"
+# include "Point2D.hpp"
 
-struct AxisBox2D
+typedef BoxF2 AxisBox2D;
+
+//#include "Point2D.hpp"
+
+/*struct AxisBox2D
 {
 	public:
 	Point2D	Min;
@@ -27,6 +32,6 @@ struct AxisBox2D
 	bool Intersekt(Point2D val) const;
 	bool Intersekt(const AxisBox2D & other) const;
 	static bool Intersekt(const AxisBox2D & box0, const AxisBox2D & box1);
-};
+};*/
 
 #endif

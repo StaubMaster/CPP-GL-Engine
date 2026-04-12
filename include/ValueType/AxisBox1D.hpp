@@ -1,7 +1,11 @@
 #ifndef  AXISBOX_1D_HPP
 # define AXISBOX_1D_HPP
 
-struct AxisBox1D
+# include "BoxF1.hpp"
+
+typedef BoxF1 AxisBox1D;
+
+/*struct AxisBox1D
 {
 	public:
 	float	Min;
@@ -25,6 +29,6 @@ struct AxisBox1D
 	bool Intersekt(float val) const;
 	bool Intersekt(const AxisBox1D & other) const;
 	static bool Intersekt(const AxisBox1D & box0, const AxisBox1D & box1);
-};
+};*/
 
 #endif

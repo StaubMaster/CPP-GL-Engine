@@ -3,7 +3,8 @@
 
 # include "Angle.hpp"
 
-struct Point3D;
+//struct Point3D;
+struct VectorF3; typedef VectorF3 Point3D;
 struct Matrix3x3;
 
 struct EulerAngle3D

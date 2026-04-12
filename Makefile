@@ -17,21 +17,27 @@ DIR_OBJ := obj/
 
 
 VALUE_TYPE := \
-	ValueType/Bool2D.cpp \
-	ValueType/Bool3D.cpp \
+	ValueType/Bool2.cpp \
+	ValueType/Bool3.cpp \
+	ValueType/Bool4.cpp \
+	\
+	ValueType/VectorF2.cpp \
+	ValueType/VectorF3.cpp \
+	ValueType/VectorF4.cpp \
+	\
+	ValueType/BoxF1.cpp \
+	ValueType/BoxF2.cpp \
+	ValueType/BoxF3.cpp \
+	\
+	ValueType/VectorU2.cpp \
+	ValueType/VectorU3.cpp \
+	\
+	ValueType/BoxU2.cpp \
+	ValueType/BoxU3.cpp \
+\
 	ValueType/Undex.cpp \
-	ValueType/Undex2D.cpp \
-	ValueType/UndexBox2D.cpp \
 	ValueType/UndexLoop2D.cpp \
-	ValueType/Undex3D.cpp \
-	ValueType/UndexBox3D.cpp \
 	ValueType/UndexLoop3D.cpp \
-	ValueType/Point2D.cpp \
-	ValueType/Point3D.cpp \
-	ValueType/Point4D.cpp \
-	ValueType/AxisBox1D.cpp \
-	ValueType/AxisBox2D.cpp \
-	ValueType/AxisBox3D.cpp \
 	ValueType/Line2D.cpp \
 	ValueType/Line3D.cpp \
 	ValueType/Ray2D.cpp \

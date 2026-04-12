@@ -1,9 +1,13 @@
 #ifndef  UNDEX_2D_HPP
 # define UNDEX_2D_HPP
 
-struct Bool2D;
+# include "VectorU2.hpp"
 
-struct Undex2D
+typedef VectorU2 Undex2D;
+
+//struct Bool2D;
+
+/*struct Undex2D
 {
 	public:
 	unsigned int X;
@@ -69,6 +73,6 @@ struct Undex2D
 
 	static unsigned int		Convert(unsigned int size, Undex2D udx);
 	static Undex2D			Convert(unsigned int size, unsigned int udx);
-};
+};*/
 
 #endif

@@ -1,11 +1,31 @@
 #ifndef  BOOL_3D_HPP
 # define BOOL_3D_HPP
 
-struct Bool3D
+# include "Bool3.hpp"
+
+typedef Bool3 Bool3D;
+
+/*struct Bool3D
 {
 	private:
 	unsigned char Bits;
 	Bool3D(unsigned char bits);
+
+
+
+	public:
+	bool GetX() const;
+	bool GetY() const;
+	bool GetZ() const;
+
+	void SetX(bool value);
+	void SetY(bool value);
+	void SetZ(bool value);
+
+	bool All(bool value) const;
+	bool Any(bool value) const;
+
+
 
 	public:
 	Bool3D();
@@ -15,6 +35,8 @@ struct Bool3D
 	
 	Bool3D(const Bool3D & other);
 	Bool3D & operator=(const Bool3D & other);
+
+
 
 	public:
 	Bool3D operator&(const Bool3D & other) const;
@@ -27,17 +49,6 @@ struct Bool3D
 	bool operator&(bool value) const;
 	bool operator|(bool value) const;
 	bool operator^(bool value) const;
-
-	bool GetX() const;
-	bool GetY() const;
-	bool GetZ() const;
-
-	void SetX(bool value);
-	void SetY(bool value);
-	void SetZ(bool value);
-
-	bool All(bool value) const;
-	bool Any(bool value) const;
 };
-
+*/
 #endif

@@ -4,7 +4,8 @@
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/Float3.hpp"
 
-struct Point3D;
+//struct Point3D;
+struct VectorF3; typedef VectorF3 Point3D;
 
 namespace Uniform
 {

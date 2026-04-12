@@ -3,8 +3,6 @@
 
 # include "ValueType/Trans2D.hpp"
 
-struct Point3D;
-
 struct View2D
 {
 	Trans2D	Trans;

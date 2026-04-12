@@ -1,9 +1,14 @@
 #ifndef  AXISBOX_3D_HPP
 # define AXISBOX_3D_HPP
 
-#include "Point3D.hpp"
+# include "BoxF3.hpp"
+# include "Point3D.hpp"
 
-struct AxisBox3D
+typedef BoxF3 AxisBox3D;
+
+//#include "Point3D.hpp"
+
+/*struct AxisBox3D
 {
 	public:
 	Point3D	Min;
@@ -27,6 +32,6 @@ struct AxisBox3D
 	bool Intersekt(Point3D val) const;
 	bool Intersekt(const AxisBox3D & other) const;
 	static bool Intersekt(const AxisBox3D & box0, const AxisBox3D & box1);
-};
+};*/
 
 #endif

@@ -1,9 +1,13 @@
 #ifndef  UNDEX_3D_HPP
 # define UNDEX_3D_HPP
 
-# include "Bool3D.hpp"
+# include "VectorU3.hpp"
 
-struct Undex3D
+typedef VectorU3 Undex3D;
+
+//# include "Bool3D.hpp"
+
+/*struct Undex3D
 {
 	public:
 	unsigned int X;
@@ -49,6 +53,6 @@ struct Undex3D
 	static bool	loop_exclusive(Undex3D & idx, Undex3D min, Undex3D max);
 	static bool	loop_inclusive(Undex3D & idx, unsigned int min, unsigned int max);
 	static bool	loop_exclusive(Undex3D & idx, unsigned int min, unsigned int max);
-};
+};*/
 
 #endif

@@ -13,8 +13,10 @@ namespace PolyHedraFull { namespace Main { struct Data; }; };
 
 class SkinBase;
 
-struct Point2D;
-struct AxisBox3D;
+//struct Point2D;
+struct VectorF2; typedef VectorF2 Point2D;
+//struct AxisBox3D;
+struct BoxF3; typedef BoxF3 AxisBox3D;
 
 class Image;
 

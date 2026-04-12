@@ -1,10 +1,14 @@
 #ifndef  UNDEX_BOX_2D_HPP
 # define UNDEX_BOX_2D_HPP
 
+# include "BoxU2.hpp"
+
+typedef BoxU2 UndexBox2D;
+
 # include "Undex2D.hpp"
 # include "Bool2D.hpp"
 
-struct UndexBox2D
+/*struct UndexBox2D
 {
 	public:
 	Undex2D	Min;
@@ -22,6 +26,6 @@ struct UndexBox2D
 	Bool2D CheckIn(Undex2D udx) const;
 	Bool2D CheckEx(Undex2D udx) const;
 	Bool2D CheckEdge(Undex2D udx) const;
-};
+};*/
 
 #endif
