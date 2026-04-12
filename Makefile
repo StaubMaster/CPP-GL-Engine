@@ -38,6 +38,7 @@ VALUE_TYPE := \
 	ValueType/BoxI2.cpp \
 	ValueType/BoxI3.cpp \
 	ValueType/LoopI2.cpp \
+	ValueType/LoopI3.cpp \
 \
 	ValueType/Undex.cpp \
 	ValueType/UndexLoop2D.cpp \
