@@ -1,27 +1,23 @@
 #include "ValueType/VectorU3.hpp"
 
+#include "ValueType/VectorF3.hpp"
+#include "ValueType/VectorI3.hpp"
+
 
 
 VectorU3::~VectorU3() { }
 
-VectorU3::VectorU3()
-	: Vector_3()
-{ }
-VectorU3::VectorU3(unsigned int value)
-	: Vector_3(value)
-{ }
-VectorU3::VectorU3(unsigned int x, unsigned int y, unsigned int z)
-	: Vector_3(x, y, z)
-{ }
+VectorU3::VectorU3() : Vector_3() { }
+VectorU3::VectorU3(unsigned int value) : Vector_3(value) { }
+VectorU3::VectorU3(unsigned int x, unsigned int y, unsigned int z) : Vector_3(x, y, z) { }
 
-VectorU3::VectorU3(const VectorU3 & other)
-	: Vector_3(other)
-{ }
-VectorU3 & VectorU3::operator=(const VectorU3 & other)
-{
-	Vector_3::operator=(other);
-	return *this;
-}
+VectorU3::VectorU3(const VectorF3 & other) : Vector_3(other) { }
+VectorU3::VectorU3(const VectorU3 & other) : Vector_3(other) { }
+VectorU3::VectorU3(const VectorI3 & other) : Vector_3(other) { }
+
+VectorU3 & VectorU3::operator=(const VectorF3 & other) { Vector_3::operator=(other); return *this; }
+VectorU3 & VectorU3::operator=(const VectorU3 & other) { Vector_3::operator=(other); return *this; }
+VectorU3 & VectorU3::operator=(const VectorI3 & other) { Vector_3::operator=(other); return *this; }
 
 
 

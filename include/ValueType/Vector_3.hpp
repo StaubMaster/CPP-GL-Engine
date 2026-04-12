@@ -42,6 +42,21 @@ Vector_3 & operator=(const Vector_3 & other)
 	return *this;
 }
 
+template <typename OtherType>
+Vector_3(const OtherType & other)
+	: X(other.X)
+	, Y(other.Y)
+	, Z(other.Z)
+{ }
+template <typename OtherType>
+Vector_3 & operator=(const OtherType & other)
+{
+	X = other.X;
+	Y = other.Y;
+	Z = other.Z;
+	return *this;
+}
+
 
 
 StructType		operator+() const { return StructType(+X, +Y, +Z); }

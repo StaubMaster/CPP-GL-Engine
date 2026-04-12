@@ -3,6 +3,10 @@
 
 #include "Vector_3.hpp"
 
+struct VectorF3;
+struct VectorU3;
+struct VectorI3;
+
 struct VectorF3 : public Vector_3<float, VectorF3>
 {
 	~VectorF3();
@@ -12,7 +16,12 @@ struct VectorF3 : public Vector_3<float, VectorF3>
 	VectorF3(float x, float y, float z);
 
 	VectorF3(const VectorF3 & other);
+	VectorF3(const VectorU3 & other);
+	VectorF3(const VectorI3 & other);
+
 	VectorF3 & operator=(const VectorF3 & other);
+	VectorF3 & operator=(const VectorU3 & other);
+	VectorF3 & operator=(const VectorI3 & other);
 
 
 

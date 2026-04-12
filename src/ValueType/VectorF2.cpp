@@ -1,30 +1,25 @@
 #include "ValueType/VectorF2.hpp"
 
+#include "ValueType/VectorU2.hpp"
+#include "ValueType/VectorI2.hpp"
+
 #include <math.h>
 
 
 
 VectorF2::~VectorF2() { }
 
-VectorF2::VectorF2()
-	: Vector_2()
-{ }
-VectorF2::VectorF2(float value)
-	: Vector_2(value)
-{ }
-VectorF2::VectorF2(float x, float y)
-	: Vector_2(x, y)
-{ }
+VectorF2::VectorF2() : Vector_2() { }
+VectorF2::VectorF2(float value) : Vector_2(value) { }
+VectorF2::VectorF2(float x, float y) : Vector_2(x, y) { }
 
-VectorF2::VectorF2(const VectorF2 & other)
-	: Vector_2(other)
-{ }
-VectorF2 & VectorF2::operator=(const VectorF2 & other)
-{
-	Vector_2::operator=(other);
-	return *this;
-}
+VectorF2::VectorF2(const VectorF2 & other) : Vector_2(other) { }
+VectorF2::VectorF2(const VectorU2 & other) : Vector_2(other) { }
+VectorF2::VectorF2(const VectorI2 & other) : Vector_2(other) { }
 
+VectorF2 & VectorF2::operator=(const VectorF2 & other) { Vector_2::operator=(other); return *this; }
+VectorF2 & VectorF2::operator=(const VectorU2 & other) { Vector_2::operator=(other); return *this; }
+VectorF2 & VectorF2::operator=(const VectorI2 & other) { Vector_2::operator=(other); return *this; }
 
 
 

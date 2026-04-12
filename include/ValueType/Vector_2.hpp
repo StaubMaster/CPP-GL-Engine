@@ -45,6 +45,19 @@ Vector_2 & operator=(const Vector_2 & other)
 	return *this;
 }
 
+template <typename OtherType>
+Vector_2(const OtherType & other)
+	: X(other.X)
+	, Y(other.Y)
+{ }
+template <typename OtherType>
+Vector_2 & operator=(const OtherType & other)
+{
+	X = other.X;
+	Y = other.Y;
+	return *this;
+}
+
 
 
 StructType		operator+() const { return StructType(+X, +Y); }

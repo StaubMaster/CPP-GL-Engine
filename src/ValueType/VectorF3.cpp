@@ -1,30 +1,25 @@
 #include "ValueType/VectorF3.hpp"
 
+#include "ValueType/VectorU3.hpp"
+#include "ValueType/VectorI3.hpp"
+
 #include <math.h>
 
 
 
 VectorF3::~VectorF3() { }
 
-VectorF3::VectorF3()
-	: Vector_3()
-{ }
-VectorF3::VectorF3(float value)
-	: Vector_3(value)
-{ }
-VectorF3::VectorF3(float x, float y, float z)
-	: Vector_3(x, y, z)
-{ }
+VectorF3::VectorF3() : Vector_3() { }
+VectorF3::VectorF3(float value) : Vector_3(value) { }
+VectorF3::VectorF3(float x, float y, float z) : Vector_3(x, y, z) { }
 
-VectorF3::VectorF3(const VectorF3 & other)
-	: Vector_3(other)
-{ }
-VectorF3 & VectorF3::operator=(const VectorF3 & other)
-{
-	Vector_3::operator=(other);
-	return *this;
-}
+VectorF3::VectorF3(const VectorF3 & other) : Vector_3(other) { }
+VectorF3::VectorF3(const VectorU3 & other) : Vector_3(other) { }
+VectorF3::VectorF3(const VectorI3 & other) : Vector_3(other) { }
 
+VectorF3 & VectorF3::operator=(const VectorF3 & other) { Vector_3::operator=(other); return *this; }
+VectorF3 & VectorF3::operator=(const VectorU3 & other) { Vector_3::operator=(other); return *this; }
+VectorF3 & VectorF3::operator=(const VectorI3 & other) { Vector_3::operator=(other); return *this; }
 
 
 

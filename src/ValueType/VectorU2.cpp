@@ -1,27 +1,23 @@
 #include "ValueType/VectorU2.hpp"
 
+#include "ValueType/VectorF2.hpp"
+#include "ValueType/VectorI2.hpp"
+
 
 
 VectorU2::~VectorU2() { }
 
-VectorU2::VectorU2()
-	: Vector_2()
-{ }
-VectorU2::VectorU2(unsigned int value)
-	: Vector_2(value)
-{ }
-VectorU2::VectorU2(unsigned int x, unsigned int y)
-	: Vector_2(x, y)
-{ }
+VectorU2::VectorU2() : Vector_2() { }
+VectorU2::VectorU2(unsigned int value) : Vector_2(value) { }
+VectorU2::VectorU2(unsigned int x, unsigned int y) : Vector_2(x, y) { }
 
-VectorU2::VectorU2(const VectorU2 & other)
-	: Vector_2(other)
-{ }
-VectorU2 & VectorU2::operator=(const VectorU2 & other)
-{
-	Vector_2::operator=(other);
-	return *this;
-}
+VectorU2::VectorU2(const VectorF2 & other) : Vector_2(other) { }
+VectorU2::VectorU2(const VectorU2 & other) : Vector_2(other) { }
+VectorU2::VectorU2(const VectorI2 & other) : Vector_2(other) { }
+
+VectorU2 & VectorU2::operator=(const VectorF2 & other) { Vector_2::operator=(other); return *this; }
+VectorU2 & VectorU2::operator=(const VectorU2 & other) { Vector_2::operator=(other); return *this; }
+VectorU2 & VectorU2::operator=(const VectorI2 & other) { Vector_2::operator=(other); return *this; }
 
 
 

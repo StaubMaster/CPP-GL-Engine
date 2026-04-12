@@ -3,6 +3,9 @@
 
 #include "Vector_2.hpp"
 
+struct VectorU2;
+struct VectorI2;
+
 struct VectorF2 : public Vector_2<float, VectorF2>
 {
 	~VectorF2();
@@ -12,7 +15,12 @@ struct VectorF2 : public Vector_2<float, VectorF2>
 	VectorF2(float x, float y);
 
 	VectorF2(const VectorF2 & other);
+	VectorF2(const VectorU2 & other);
+	VectorF2(const VectorI2 & other);
+
 	VectorF2 & operator=(const VectorF2 & other);
+	VectorF2 & operator=(const VectorU2 & other);
+	VectorF2 & operator=(const VectorI2 & other);
 
 
 
