@@ -1,7 +1,26 @@
 #ifndef  VALUE_TYPE_INCLUDE_HPP
 # define VALUE_TYPE_INCLUDE_HPP
 
+# include "ValueType/Bool2.hpp"
+# include "ValueType/Bool3.hpp"
+# include "ValueType/Bool4.hpp"
+
 # include "ValueType/VectorF2.hpp"
+# include "ValueType/VectorF3.hpp"
+# include "ValueType/VectorF4.hpp"
+# include "ValueType/BoxF1.hpp"
+# include "ValueType/BoxF2.hpp"
+# include "ValueType/BoxF3.hpp"
+
+# include "ValueType/VectorU2.hpp"
+# include "ValueType/VectorU3.hpp"
+# include "ValueType/BoxU2.hpp"
+# include "ValueType/BoxU3.hpp"
+
+# include "ValueType/VectorI2.hpp"
+# include "ValueType/VectorI3.hpp"
+# include "ValueType/BoxI2.hpp"
+# include "ValueType/BoxI3.hpp"
 
 
 

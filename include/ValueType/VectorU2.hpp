@@ -48,8 +48,8 @@ struct VectorU2 : public Vector_2<unsigned int, VectorU2>
 
 	unsigned int	Product() const;
 
-	unsigned int	ConvertX(VectorU2 udx) const;
-	VectorU2		ConvertX(unsigned int udx) const;
+	unsigned int	Convert(VectorU2 udx) const;
+	VectorU2		Convert(unsigned int udx) const;
 
 	static unsigned int		Convert(unsigned int size, VectorU2 udx);
 	static VectorU2			Convert(unsigned int size, unsigned int udx);

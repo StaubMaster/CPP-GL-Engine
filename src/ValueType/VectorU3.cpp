@@ -37,3 +37,31 @@ VectorU3 VectorU3::operator>>(const VectorU3 & other) const { return VectorU3(X 
 
 
 unsigned int VectorU3::Product() const { return X * Y * Z; }
+
+unsigned int VectorU3::Convert(VectorU3 udx) const
+{
+	return (udx.X) + (udx.Y * X) + (udx.Z * X * Y);
+}
+VectorU3 VectorU3::Convert(unsigned int udx) const
+{
+	VectorU3 vec;
+	vec.X = udx % X; udx = udx / X;
+	vec.Y = udx % Y; udx = udx / Y;
+//	vec.Z = udx % Z;
+	vec.Z = udx;
+	return vec;
+}
+
+unsigned int VectorU3::Convert(unsigned int size, VectorU3 udx)
+{
+	return (udx.X) + (udx.Y * size) + (udx.Z * size * size);
+}
+VectorU3 VectorU3::Convert(unsigned int size, unsigned int udx)
+{
+	VectorU3 vec;
+	vec.X = udx % size; udx = udx / size;
+	vec.Y = udx % size; udx = udx / size;
+//	vec.Z = udx % size;
+	vec.Z = udx;
+	return vec;
+}

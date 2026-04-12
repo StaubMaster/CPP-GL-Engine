@@ -8,16 +8,19 @@ struct Bool4;
 struct VectorF2;
 struct VectorF3;
 struct VectorF4;
-
-struct VectorU2;
-struct VectorU3;
-
 struct BoxF1;
 struct BoxF2;
 struct BoxF3;
 
+struct VectorU2;
+struct VectorU3;
 struct BoxU2;
 struct BoxU3;
+
+struct VectorI2;
+struct VectorI3;
+struct BoxI2;
+struct BoxI3;
 
 
 

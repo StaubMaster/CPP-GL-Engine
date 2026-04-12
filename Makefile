@@ -24,16 +24,20 @@ VALUE_TYPE := \
 	ValueType/VectorF2.cpp \
 	ValueType/VectorF3.cpp \
 	ValueType/VectorF4.cpp \
-	\
 	ValueType/BoxF1.cpp \
 	ValueType/BoxF2.cpp \
 	ValueType/BoxF3.cpp \
 	\
 	ValueType/VectorU2.cpp \
 	ValueType/VectorU3.cpp \
-	\
 	ValueType/BoxU2.cpp \
 	ValueType/BoxU3.cpp \
+	\
+	ValueType/VectorI2.cpp \
+	ValueType/VectorI3.cpp \
+	ValueType/BoxI2.cpp \
+	ValueType/BoxI3.cpp \
+	ValueType/LoopI2.cpp \
 \
 	ValueType/Undex.cpp \
 	ValueType/UndexLoop2D.cpp \

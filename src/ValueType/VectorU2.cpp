@@ -38,13 +38,17 @@ VectorU2 VectorU2::operator>>(const VectorU2 & other) const { return VectorU2(X 
 
 unsigned int VectorU2::Product() const { return X * Y; }
 
-unsigned int VectorU2::ConvertX(VectorU2 udx) const
+unsigned int VectorU2::Convert(VectorU2 udx) const
 {
 	return (udx.X) + (udx.Y * X);
 }
-VectorU2 VectorU2::ConvertX(unsigned int udx) const
+VectorU2 VectorU2::Convert(unsigned int udx) const
 {
-	return VectorU2(udx % X, udx / X);
+	VectorU2 vec;
+	vec.X = udx % X; udx = udx / X;
+//	vec.Y = udx % Y;
+	vec.Y = udx;
+	return vec;
 }
 
 unsigned int VectorU2::Convert(unsigned int size, VectorU2 udx)
@@ -53,7 +57,11 @@ unsigned int VectorU2::Convert(unsigned int size, VectorU2 udx)
 }
 VectorU2 VectorU2::Convert(unsigned int size, unsigned int udx)
 {
-	return VectorU2(udx % size, udx / size);
+	VectorU2 vec;
+	vec.X = udx % size; udx = udx / size;
+//	vec.Y = udx % size;
+	vec.Y = udx;
+	return vec;
 }
 
 

@@ -47,6 +47,12 @@ struct VectorU3 : public Vector_3<unsigned int, VectorU3>
 
 
 	unsigned int	Product() const;
+
+	unsigned int	Convert(VectorU3 udx) const;
+	VectorU3		Convert(unsigned int udx) const;
+
+	static unsigned int		Convert(unsigned int size, VectorU3 udx);
+	static VectorU3			Convert(unsigned int size, unsigned int udx);
 };
 
 #endif

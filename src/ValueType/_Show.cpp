@@ -12,6 +12,8 @@ std::ostream & operator<<(std::ostream & o, const Bool2 & obj) { return o << "( 
 std::ostream & operator<<(std::ostream & o, const Bool3 & obj) { return o << "( " << ToString(obj.GetX()) << " : " << ToString(obj.GetY()) << ToString(obj.GetZ()) << " )"; }
 std::ostream & operator<<(std::ostream & o, const Bool4 & obj) { return o << "( " << ToString(obj.GetX()) << " : " << ToString(obj.GetY()) << ToString(obj.GetZ()) << ToString(obj.GetW()) << " )"; }
 
+
+
 std::ostream & operator<<(std::ostream & o, const VectorF2 & obj) { return o << "( " << obj.X << " | " << obj.Y << " )"; }
 std::ostream & operator<<(std::ostream & o, const VectorF3 & obj) { return o << "( " << obj.X << " | " << obj.Y << " | " << obj.Z << " )"; }
 std::ostream & operator<<(std::ostream & o, const VectorF4 & obj) { return o << "( " << obj.X << " | " << obj.Y << " | " << obj.Z << " | " << obj.W << " )"; }
@@ -20,9 +22,23 @@ std::ostream & operator<<(std::ostream & o, const BoxF1 & obj) { return o << "{ 
 std::ostream & operator<<(std::ostream & o, const BoxF2 & obj) { return o << "{ " << obj.Min << " : " << obj.Max << " }"; }
 std::ostream & operator<<(std::ostream & o, const BoxF3 & obj) { return o << "{ " << obj.Min << " : " << obj.Max << " }"; }
 
+
+
 std::ostream & operator<<(std::ostream & o, const VectorU2 & obj) { return o << "[ " << obj.X << " | " << obj.Y << " ]"; }
+std::ostream & operator<<(std::ostream & o, const VectorU3 & obj) { return o << "[ " << obj.X << " | " << obj.Y << " | " << obj.Z << " ]"; }
 
 std::ostream & operator<<(std::ostream & o, const BoxU2 & obj) { return o << "{ " << obj.Min << " : " << obj.Max << " }"; }
+std::ostream & operator<<(std::ostream & o, const BoxU3 & obj) { return o << "{ " << obj.Min << " : " << obj.Max << " }"; }
+
+
+
+std::ostream & operator<<(std::ostream & o, const VectorI2 & obj) { return o << "[ " << obj.X << " | " << obj.Y << " ]"; }
+std::ostream & operator<<(std::ostream & o, const VectorI3 & obj) { return o << "[ " << obj.X << " | " << obj.Y << " | " << obj.Z << " ]"; }
+
+std::ostream & operator<<(std::ostream & o, const BoxI2 & obj) { return o << "{ " << obj.Min << " : " << obj.Max << " }"; }
+std::ostream & operator<<(std::ostream & o, const BoxI3 & obj) { return o << "{ " << obj.Min << " : " << obj.Max << " }"; }
+
+
 
 /*std::ostream & operator<<(std::ostream & o, const Point2D & obj)
 {
@@ -140,13 +156,13 @@ std::ostream & operator<<(std::ostream & o, const Undex & obj)
 	return o;
 }*/
 
-std::ostream & operator<<(std::ostream & o, const Undex3D & obj)
+/*std::ostream & operator<<(std::ostream & o, const Undex3D & obj)
 {
 	o << "[" << obj.X << ":" << obj.Y << ":" << obj.Z << "]";
 	return o;
-}
-std::ostream & operator<<(std::ostream & o, const UndexBox3D & obj)
+}*/
+/*std::ostream & operator<<(std::ostream & o, const UndexBox3D & obj)
 {
 	o << "{ " << obj.Min << " : " << obj.Max << " }";
 	return o;
-}
+}*/
