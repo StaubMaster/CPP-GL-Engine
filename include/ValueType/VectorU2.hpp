@@ -61,16 +61,16 @@ struct VectorU2 : public Vector_2<unsigned int, VectorU2>
 
 	static unsigned int		Convert(unsigned int size, VectorU2 udx);
 	static VectorU2			Convert(unsigned int size, unsigned int udx);
-
-
-
-//	static bool		Box_inclusive(VectorU2 idx, VectorU2 min, VectorU2 max);
-//	static bool		Box_exclusive(VectorU2 idx, VectorU2 min, VectorU2 max);
-//
-//	static bool		loop_inclusive(VectorU2 & idx, VectorU2 min, VectorU2 max);
-//	static bool		loop_exclusive(VectorU2 & idx, VectorU2 min, VectorU2 max);
-//	static bool		loop_inclusive(VectorU2 & idx, unsigned int min, unsigned int max);
-//	static bool		loop_exclusive(VectorU2 & idx, unsigned int min, unsigned int max);
 };
+
+VectorU2		operator+(VectorU2 vec, unsigned int val);
+VectorU2		operator-(VectorU2 vec, unsigned int val);
+VectorU2		operator*(VectorU2 vec, unsigned int val);
+VectorU2		operator/(VectorU2 vec, unsigned int val);
+
+VectorU2		operator+(unsigned int val, VectorU2 vec);
+VectorU2		operator-(unsigned int val, VectorU2 vec);
+VectorU2		operator*(unsigned int val, VectorU2 vec);
+VectorU2		operator/(unsigned int val, VectorU2 vec);
 
 #endif

@@ -61,16 +61,16 @@ struct VectorI2 : public Vector_2<int, VectorI2>
 
 	static int			Convert(int size, VectorI2 idx);
 	static VectorI2		Convert(int size, int idx);
-
-
-
-//	static bool		Box_inclusive(VectorI2 idx, VectorI2 min, VectorI2 max);
-//	static bool		Box_exclusive(VectorI2 idx, VectorI2 min, VectorI2 max);
-//
-//	static bool		loop_inclusive(VectorI2 & idx, VectorI2 min, VectorI2 max);
-//	static bool		loop_exclusive(VectorI2 & idx, VectorI2 min, VectorI2 max);
-//	static bool		loop_inclusive(VectorI2 & idx, int min, int max);
-//	static bool		loop_exclusive(VectorI2 & idx, int min, int max);
 };
+
+VectorI2		operator+(VectorI2 vec, int val);
+VectorI2		operator-(VectorI2 vec, int val);
+VectorI2		operator*(VectorI2 vec, int val);
+VectorI2		operator/(VectorI2 vec, int val);
+
+VectorI2		operator+(int val, VectorI2 vec);
+VectorI2		operator-(int val, VectorI2 vec);
+VectorI2		operator*(int val, VectorI2 vec);
+VectorI2		operator/(int val, VectorI2 vec);
 
 #endif

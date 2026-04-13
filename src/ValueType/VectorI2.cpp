@@ -62,76 +62,14 @@ VectorI2 VectorI2::Convert(int size, int idx)
 
 
 
-/*
-bool	VectorI2::Box_inclusive(VectorI2 idx, VectorI2 min, VectorI2 max)
-{
-	return	(idx.X >= min.X && idx.X <= max.X) &&
-			(idx.Y >= min.Y && idx.Y <= max.Y);
-}
-bool	VectorI2::Box_exclusive(VectorI2 idx, VectorI2 min, VectorI2 max)
-{
-	return	(idx.X > min.X && idx.X < max.X) &&
-			(idx.Y > min.Y && idx.Y < max.Y);
-}
 
-bool VectorI2::loop_inclusive(VectorI2 & idx, VectorI2 min, VectorI2 max)
-{
-	idx.Y++;
-	if (idx.Y > max.Y)
-	{
-		idx.Y = min.Y;
-		idx.X++;
-		if (idx.X > max.X)
-		{
-			idx.X = min.X;
-			return (false);
-		}
-	}
-	return (true);
-}
-bool VectorI2::loop_exclusive(VectorI2 & idx, VectorI2 min, VectorI2 max)
-{
-	idx.Y++;
-	if (idx.Y >= max.Y)
-	{
-		idx.Y = min.Y;
-		idx.X++;
-		if (idx.X >= max.X)
-		{
-			idx.X = min.X;
-			return (false);
-		}
-	}
-	return (true);
-}
-bool VectorI2::loop_inclusive(VectorI2 & idx, int min, int max)
-{
-	idx.Y++;
-	if (idx.Y > max)
-	{
-		idx.Y = min;
-		idx.X++;
-		if (idx.X > max)
-		{
-			idx.X = min;
-			return (false);
-		}
-	}
-	return (true);
-}
-bool VectorI2::loop_exclusive(VectorI2 & idx, int min, int max)
-{
-	idx.Y++;
-	if (idx.Y >= max)
-	{
-		idx.Y = min;
-		idx.X++;
-		if (idx.X >= max)
-		{
-			idx.X = min;
-			return (false);
-		}
-	}
-	return (true);
-}
-*/
+
+VectorI2 operator+(VectorI2 vec, int val) { return VectorI2(vec.X + val, vec.Y + val); }
+VectorI2 operator-(VectorI2 vec, int val) { return VectorI2(vec.X - val, vec.Y - val); }
+VectorI2 operator*(VectorI2 vec, int val) { return VectorI2(vec.X * val, vec.Y * val); }
+VectorI2 operator/(VectorI2 vec, int val) { return VectorI2(vec.X / val, vec.Y / val); }
+
+VectorI2 operator+(int val, VectorI2 vec) { return VectorI2(val + vec.X, val + vec.Y); }
+VectorI2 operator-(int val, VectorI2 vec) { return VectorI2(val - vec.X, val - vec.Y); }
+VectorI2 operator*(int val, VectorI2 vec) { return VectorI2(val * vec.X, val * vec.Y); }
+VectorI2 operator/(int val, VectorI2 vec) { return VectorI2(val / vec.X, val / vec.Y); }

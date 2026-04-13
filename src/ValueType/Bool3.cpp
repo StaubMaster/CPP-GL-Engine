@@ -19,6 +19,15 @@ void Bool3::SetZ(bool value) { Bits = (Bits & 0b011) | (value << 2); }
 bool Bool3::All(bool value) const { return ((GetX() == value) & (GetY() == value) & (GetZ() == value)); }
 bool Bool3::Any(bool value) const { return ((GetX() == value) | (GetY() == value) | (GetZ() == value)); }
 
+unsigned char Bool3::Count(bool value) const
+{
+	unsigned char count = 0;
+	count += (GetX() == value);
+	count += (GetY() == value);
+	count += (GetZ() == value);
+	return count;
+}
+
 
 
 Bool3::~Bool3()
@@ -45,6 +54,7 @@ Bool3 & Bool3::operator=(const Bool3 & other)
 
 
 
+Bool3 Bool3::operator!() const { return Bool3((unsigned char)(~Bits)); }
 Bool3 Bool3::operator&(const Bool3 & other) const { return Bool3((unsigned char)(Bits & other.Bits)); }
 Bool3 Bool3::operator|(const Bool3 & other) const { return Bool3((unsigned char)(Bits | other.Bits)); }
 Bool3 Bool3::operator^(const Bool3 & other) const { return Bool3((unsigned char)(Bits ^ other.Bits)); }

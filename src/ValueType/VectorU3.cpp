@@ -61,3 +61,17 @@ VectorU3 VectorU3::Convert(unsigned int size, unsigned int udx)
 	vec.Z = udx;
 	return vec;
 }
+
+
+
+
+
+VectorU3 operator+(VectorU3 vec, unsigned int val) { return VectorU3(vec.X + val, vec.Y + val, vec.Z + val); }
+VectorU3 operator-(VectorU3 vec, unsigned int val) { return VectorU3(vec.X - val, vec.Y - val, vec.Z - val); }
+VectorU3 operator*(VectorU3 vec, unsigned int val) { return VectorU3(vec.X * val, vec.Y * val, vec.Z * val); }
+VectorU3 operator/(VectorU3 vec, unsigned int val) { return VectorU3(vec.X / val, vec.Y / val, vec.Z / val); }
+
+VectorU3 operator+(unsigned int val, VectorU3 vec) { return VectorU3(val + vec.X, val + vec.Y, val + vec.Z); }
+VectorU3 operator-(unsigned int val, VectorU3 vec) { return VectorU3(val - vec.X, val - vec.Y, val - vec.Z); }
+VectorU3 operator*(unsigned int val, VectorU3 vec) { return VectorU3(val * vec.X, val * vec.Y, val * vec.Z); }
+VectorU3 operator/(unsigned int val, VectorU3 vec) { return VectorU3(val / vec.X, val / vec.Y, val / vec.Z); }

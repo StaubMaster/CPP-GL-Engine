@@ -10,16 +10,18 @@ struct Bool3
 
 
 	public:
-	bool GetX() const;
-	bool GetY() const;
-	bool GetZ() const;
+	bool	GetX() const;
+	bool	GetY() const;
+	bool	GetZ() const;
 
-	void SetX(bool value);
-	void SetY(bool value);
-	void SetZ(bool value);
+	void	SetX(bool value);
+	void	SetY(bool value);
+	void	SetZ(bool value);
 
-	bool All(bool value) const;
-	bool Any(bool value) const;
+	bool	All(bool value) const;
+	bool	Any(bool value) const;
+
+	unsigned char	Count(bool value)const;
 
 
 
@@ -36,6 +38,7 @@ struct Bool3
 
 
 	public:
+	Bool3 operator!() const;
 	Bool3 operator&(const Bool3 & other) const;
 	Bool3 operator|(const Bool3 & other) const;
 	Bool3 operator^(const Bool3 & other) const;

@@ -17,6 +17,14 @@ void Bool2::SetY(bool value) { Bits = (Bits & 0b01) | (value << 1); }
 bool Bool2::All(bool value) const { return ((GetX() == value) & (GetY() == value)); }
 bool Bool2::Any(bool value) const { return ((GetX() == value) | (GetY() == value)); }
 
+unsigned char Bool2::Count(bool value) const
+{
+	unsigned char count = 0;
+	count += (GetX() == value);
+	count += (GetY() == value);
+	return count;
+}
+
 
 
 Bool2::~Bool2()
@@ -43,6 +51,7 @@ Bool2 & Bool2::operator=(const Bool2 & other)
 
 
 
+Bool2 Bool2::operator!() const { return Bool2((unsigned char)(~Bits)); }
 Bool2 Bool2::operator&(const Bool2 & other) const { return Bool2((unsigned char)(Bits & other.Bits)); }
 Bool2 Bool2::operator|(const Bool2 & other) const { return Bool2((unsigned char)(Bits | other.Bits)); }
 Bool2 Bool2::operator^(const Bool2 & other) const { return Bool2((unsigned char)(Bits ^ other.Bits)); }

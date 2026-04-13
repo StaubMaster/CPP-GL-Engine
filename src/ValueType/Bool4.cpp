@@ -21,6 +21,16 @@ void Bool4::SetW(bool value) { Bits = (Bits & 0b0111) | (value << 3); }
 bool Bool4::All(bool value) const { return ((GetX() == value) & (GetY() == value) & (GetZ() == value) & (GetW() == value)); }
 bool Bool4::Any(bool value) const { return ((GetX() == value) | (GetY() == value) | (GetZ() == value) | (GetW() == value)); }
 
+unsigned char Bool4::Count(bool value) const
+{
+	unsigned char count = 0;
+	count += (GetX() == value);
+	count += (GetY() == value);
+	count += (GetZ() == value);
+	count += (GetW() == value);
+	return count;
+}
+
 
 
 Bool4::~Bool4()
@@ -47,6 +57,7 @@ Bool4 & Bool4::operator=(const Bool4 & other)
 
 
 
+Bool4 Bool4::operator!() const { return Bool4((unsigned char)(~Bits)); }
 Bool4 Bool4::operator&(const Bool4 & other) const { return Bool4((unsigned char)(Bits & other.Bits)); }
 Bool4 Bool4::operator|(const Bool4 & other) const { return Bool4((unsigned char)(Bits | other.Bits)); }
 Bool4 Bool4::operator^(const Bool4 & other) const { return Bool4((unsigned char)(Bits ^ other.Bits)); }

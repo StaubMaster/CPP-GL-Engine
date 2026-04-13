@@ -64,4 +64,14 @@ struct VectorI3 : public Vector_3<int, VectorI3>
 	static VectorI3			Convert(unsigned int size, unsigned int idx);
 };
 
+VectorI3		operator+(VectorI3 vec, int val);
+VectorI3		operator-(VectorI3 vec, int val);
+VectorI3		operator*(VectorI3 vec, int val);
+VectorI3		operator/(VectorI3 vec, int val);
+
+VectorI3		operator+(int val, VectorI3 vev);
+VectorI3		operator-(int val, VectorI3 vev);
+VectorI3		operator*(int val, VectorI3 vev);
+VectorI3		operator/(int val, VectorI3 vev);
+
 #endif

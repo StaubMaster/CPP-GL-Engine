@@ -10,14 +10,16 @@ struct Bool2
 
 
 	public:
-	bool GetX() const;
-	bool GetY() const;
+	bool	GetX() const;
+	bool	GetY() const;
 
-	void SetX(bool value);
-	void SetY(bool value);
+	void	SetX(bool value);
+	void	SetY(bool value);
 
-	bool All(bool value) const;
-	bool Any(bool value) const;
+	bool	All(bool value) const;
+	bool	Any(bool value) const;
+
+	unsigned char	Count(bool value) const;
 
 
 
@@ -34,6 +36,7 @@ struct Bool2
 
 
 	public:
+	Bool2 operator!() const;
 	Bool2 operator&(const Bool2 & other) const;
 	Bool2 operator|(const Bool2 & other) const;
 	Bool2 operator^(const Bool2 & other) const;

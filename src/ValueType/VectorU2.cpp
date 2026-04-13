@@ -62,76 +62,14 @@ VectorU2 VectorU2::Convert(unsigned int size, unsigned int udx)
 
 
 
-/*
-bool	VectorU2::Box_inclusive(VectorU2 idx, VectorU2 min, VectorU2 max)
-{
-	return	(idx.X >= min.X && idx.X <= max.X) &&
-			(idx.Y >= min.Y && idx.Y <= max.Y);
-}
-bool	VectorU2::Box_exclusive(VectorU2 idx, VectorU2 min, VectorU2 max)
-{
-	return	(idx.X > min.X && idx.X < max.X) &&
-			(idx.Y > min.Y && idx.Y < max.Y);
-}
 
-bool VectorU2::loop_inclusive(VectorU2 & idx, VectorU2 min, VectorU2 max)
-{
-	idx.Y++;
-	if (idx.Y > max.Y)
-	{
-		idx.Y = min.Y;
-		idx.X++;
-		if (idx.X > max.X)
-		{
-			idx.X = min.X;
-			return (false);
-		}
-	}
-	return (true);
-}
-bool VectorU2::loop_exclusive(VectorU2 & idx, VectorU2 min, VectorU2 max)
-{
-	idx.Y++;
-	if (idx.Y >= max.Y)
-	{
-		idx.Y = min.Y;
-		idx.X++;
-		if (idx.X >= max.X)
-		{
-			idx.X = min.X;
-			return (false);
-		}
-	}
-	return (true);
-}
-bool VectorU2::loop_inclusive(VectorU2 & idx, unsigned int min, unsigned int max)
-{
-	idx.Y++;
-	if (idx.Y > max)
-	{
-		idx.Y = min;
-		idx.X++;
-		if (idx.X > max)
-		{
-			idx.X = min;
-			return (false);
-		}
-	}
-	return (true);
-}
-bool VectorU2::loop_exclusive(VectorU2 & idx, unsigned int min, unsigned int max)
-{
-	idx.Y++;
-	if (idx.Y >= max)
-	{
-		idx.Y = min;
-		idx.X++;
-		if (idx.X >= max)
-		{
-			idx.X = min;
-			return (false);
-		}
-	}
-	return (true);
-}
-*/
+
+VectorU2 operator+(VectorU2 vec, unsigned int val) { return VectorU2(vec.X + val, vec.Y + val); }
+VectorU2 operator-(VectorU2 vec, unsigned int val) { return VectorU2(vec.X - val, vec.Y - val); }
+VectorU2 operator*(VectorU2 vec, unsigned int val) { return VectorU2(vec.X * val, vec.Y * val); }
+VectorU2 operator/(VectorU2 vec, unsigned int val) { return VectorU2(vec.X / val, vec.Y / val); }
+
+VectorU2 operator+(unsigned int val, VectorU2 vec) { return VectorU2(val + vec.X, val + vec.Y); }
+VectorU2 operator-(unsigned int val, VectorU2 vec) { return VectorU2(val - vec.X, val - vec.Y); }
+VectorU2 operator*(unsigned int val, VectorU2 vec) { return VectorU2(val * vec.X, val * vec.Y); }
+VectorU2 operator/(unsigned int val, VectorU2 vec) { return VectorU2(val / vec.X, val / vec.Y); }

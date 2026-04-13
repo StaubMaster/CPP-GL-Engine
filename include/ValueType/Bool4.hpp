@@ -10,18 +10,20 @@ struct Bool4
 
 
 	public:
-	bool GetX() const;
-	bool GetY() const;
-	bool GetZ() const;
-	bool GetW() const;
+	bool	GetX() const;
+	bool	GetY() const;
+	bool	GetZ() const;
+	bool	GetW() const;
 
-	void SetX(bool value);
-	void SetY(bool value);
-	void SetZ(bool value);
-	void SetW(bool value);
+	void	SetX(bool value);
+	void	SetY(bool value);
+	void	SetZ(bool value);
+	void	SetW(bool value);
 
-	bool All(bool value) const;
-	bool Any(bool value) const;
+	bool	All(bool value) const;
+	bool	Any(bool value) const;
+
+	unsigned char	Count(bool value) const;
 
 
 
@@ -38,6 +40,7 @@ struct Bool4
 
 
 	public:
+	Bool4 operator!() const;
 	Bool4 operator&(const Bool4 & other) const;
 	Bool4 operator|(const Bool4 & other) const;
 	Bool4 operator^(const Bool4 & other) const;
