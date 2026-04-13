@@ -1,6 +1,5 @@
 #include "PolyHedra/Parsing.hpp"
 #include "PolyHedra/Data.hpp"
-#include "PolyHedra/Template.hpp"
 #include "PolyHedra/Generate.hpp"
 
 // Skin
@@ -49,17 +48,18 @@
 
 
 
-PolyHedra::ParsingData::ParsingData(const FileInfo & file) :
-	File(file),
-	PH(NULL),
-	Data(NULL),
-	CornerOffset(0),
-	FaceOffset(0)
+PolyHedra::ParsingData::ParsingData(const FileInfo & file, ::PolyHedra & polyhedra)
+	: File(file)
+	, PolyHedra(polyhedra)
+	, CornerOffset(0)
+	, FaceOffset(0)
 { }
 PolyHedra::ParsingData::~ParsingData()
-{
-	delete Data;
-}
+{ }
+
+
+
+
 
 void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 {
@@ -107,6 +107,7 @@ void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 		Debug::Log << "Exception on TextCommand: " << cmd << Debug::Done;
 	}
 }
+
 void PolyHedra::ParsingData::Parse_Type(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
@@ -123,15 +124,15 @@ void PolyHedra::ParsingData::Parse_Skin(const TextCommand & cmd)
 	//Debug::Log << cmd << Debug::Done;
 
 	FileInfo file((File.DirectoryString() + "/" + cmd.ToString(0)).c_str());
-	if (PH -> Skin != NULL)
+	if (PolyHedra.Skin != nullptr)
 	{
 		std::cout << cmd.Name() << ": " << "Skin already given" << "\n";
-		std::cout << "Prev: Skin: " << PH -> Skin << "\n";
-		delete PH -> Skin;
-		PH -> Skin = NULL;
+		std::cout << "Prev: Skin: " << PolyHedra.Skin << "\n";
+		delete PolyHedra.Skin;
+		PolyHedra.Skin = nullptr;
 	}
 	if (!file.Exists()) { std::cout << cmd.Name() << ": " << "Bad Skin File" << "\n"; return; }
-	PH -> Skin = SkinBase::Load(file);
+	PolyHedra.Skin = SkinBase::Load(file);
 }
 
 void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)
@@ -144,7 +145,7 @@ void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)
 	c.Y = cmd.ToFloat(1);
 	c.Z = cmd.ToFloat(2);
 	//std::cout << "c: " << c << "\n";
-	Data -> Insert_Corn(Corner(c));
+	PolyHedra.Insert_Corn(Corner(c));
 }
 void PolyHedra::ParsingData::Parse_Face(const TextCommand & cmd)
 {
@@ -165,11 +166,11 @@ void PolyHedra::ParsingData::Parse_Face(const TextCommand & cmd)
 
 	if (cmd.Count() == 3)
 	{
-		Data -> Insert_Face3(idx[0], idx[1], idx[2]);
+		PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
 	}
 	else if (cmd.Count() == 4)
 	{
-		Data -> Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
+		PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 	}
 }
 
@@ -225,14 +226,14 @@ void PolyHedra::ParsingData::Parse_Belt(const TextCommand & cmd, bool direction,
 		if (!direction)
 		{
 			//Data -> Insert_Face4(idx0[i - 1], idx0[i - 0], idx1[i - 1], idx1[i - 0]);
-			Data -> Insert_Face3(idx0[i - 1], idx0[i - 0], idx1[i - 1]);
-			Data -> Insert_Face3(idx1[i - 1], idx0[i - 0], idx1[i - 0]);
+			PolyHedra.Insert_Face3(idx0[i - 1], idx0[i - 0], idx1[i - 1]);
+			PolyHedra.Insert_Face3(idx1[i - 1], idx0[i - 0], idx1[i - 0]);
 		}
 		else
 		{
 			//Data -> Insert_Face4(idx1[i - 1], idx0[i - 0], idx1[i - 1], idx1[i - 0]);
-			Data -> Insert_Face3(idx1[i - 1], idx0[i - 0], idx0[i - 1]);
-			Data -> Insert_Face3(idx1[i - 0], idx0[i - 0], idx1[i - 1]);
+			PolyHedra.Insert_Face3(idx1[i - 1], idx0[i - 0], idx0[i - 1]);
+			PolyHedra.Insert_Face3(idx1[i - 0], idx0[i - 0], idx1[i - 1]);
 		}
 	}
 
@@ -240,13 +241,13 @@ void PolyHedra::ParsingData::Parse_Belt(const TextCommand & cmd, bool direction,
 	{
 		if (!direction)
 		{
-			Data -> Insert_Face3(idx0[len - 1], idx0[0], idx1[len - 1]);
-			Data -> Insert_Face3(idx1[len - 1], idx0[0], idx1[0]);
+			PolyHedra.Insert_Face3(idx0[len - 1], idx0[0], idx1[len - 1]);
+			PolyHedra.Insert_Face3(idx1[len - 1], idx0[0], idx1[0]);
 		}
 		else
 		{
-			Data -> Insert_Face3(idx0[0], idx0[len -1], idx1[len - 1]);
-			Data -> Insert_Face3(idx0[0], idx1[len -1], idx1[0]);
+			PolyHedra.Insert_Face3(idx0[0], idx0[len -1], idx1[len - 1]);
+			PolyHedra.Insert_Face3(idx0[0], idx1[len -1], idx1[0]);
 		}
 	}
 }
@@ -285,11 +286,11 @@ void PolyHedra::ParsingData::Parse_Fan(const TextCommand & cmd, bool direction, 
 	{
 		if (!direction)
 		{
-			Data -> Insert_Face3(middle, blade[i - 1], blade[i - 0]);
+			PolyHedra.Insert_Face3(middle, blade[i - 1], blade[i - 0]);
 		}
 		else
 		{
-			Data -> Insert_Face3(middle, blade[i - 0], blade[i - 1]);
+			PolyHedra.Insert_Face3(middle, blade[i - 0], blade[i - 1]);
 		}
 	}
 
@@ -297,11 +298,11 @@ void PolyHedra::ParsingData::Parse_Fan(const TextCommand & cmd, bool direction, 
 	{
 		if (!direction)
 		{
-			Data -> Insert_Face3(middle, blade[len - 1], blade[0]);
+			PolyHedra.Insert_Face3(middle, blade[len - 1], blade[0]);
 		}
 		else
 		{
-			Data -> Insert_Face3(middle, blade[0], blade[len - 1]);
+			PolyHedra.Insert_Face3(middle, blade[0], blade[len - 1]);
 		}
 	}
 }
@@ -344,7 +345,7 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 		Point3D p;
 		p = angle.forward(rad_p);
 		p = p + center;
-		Data -> Insert_Corn(Corner(p));
+		PolyHedra.Insert_Corn(Corner(p));
 
 		//std::cout << p << "\n";
 	}
@@ -386,18 +387,19 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 		Point3D p;
 		//p = angle.rotateBack(radius) + center;
 		p = angle.forward(radius) + center;
-		Data -> Insert_Corn(Corner(p));
+		PolyHedra.Insert_Corn(Corner(p));
 		//std::cout << p << "\n";
 	}
 }
+
+
 
 PolyHedra * PolyHedra::Load(const FileInfo & file)
 {
 	Debug::Log << "Loading PolyHedra File " << '"' << file.Name() << '"' << " ..." << Debug::Done;
 
-	ParsingData data(file);
-	data.PH = new PolyHedra();
-	data.Data = new PolyHedra::Template(*data.PH);
+	PolyHedra * polyhedra = new PolyHedra();
+	ParsingData data(file, *polyhedra);
 
 	TextCommandStream stream(file.LoadText());
 	TextCommand cmd;
@@ -405,34 +407,12 @@ PolyHedra * PolyHedra::Load(const FileInfo & file)
 	{
 		data.Parse(cmd);
 	}
-	//ParsingCommand::SplitFileIntoCommands(data);
 
-	if (data.Data != NULL)
-	{
-		if (data.PH -> Skin == NULL)
-		{
-			Skin2DA * skin = new Skin2DA();
-			skin -> W = 1;
-			skin -> H = 1;
-			skin -> Images.Insert(Texture::Generate::NoSkin());
-			data.PH -> Skin = skin;
-		}
-		data.Data -> Done();
-	}
-	else
-	{
-		data.PH = Generate::HexaHedron();
-	}
-
-	PolyHedra & polyhedra = *data.PH;
-	AxisBox3D bound = polyhedra.CalcBound();
+	polyhedra -> Done();
 
 	Debug::Log << "Loading PolyHedra File " << '"' << file.Name() << '"' << " done" << '\n';
-	Debug::Log << "PolyHedra Count Vertex: " << polyhedra.Corners.Count() << '\n';
-	Debug::Log << "PolyHedra Count Face: " << polyhedra.Faces.Count() << '\n';
-	Debug::Log << "PolyHedra Bound Limit: " << bound << '\n';
-	Debug::Log << "PolyHedra Bound Size: " << bound.Size() << '\n';
+	Debug::Log << ((*polyhedra).ToInfo());
 	Debug::Log << Debug::Done;
 
-	return data.PH;
+	return polyhedra;
 }

@@ -173,7 +173,7 @@ void PolyHedraInstanceManager::UpdateWireBufferMain()
 		BufferWire.Main.Change(data);
 	}
 	{
-		Container::Binary<PolyHedra::Edge> data;
+		/*Container::Binary<PolyHedra::Edge> data;
 		for (unsigned int i = 0; i < PolyHedra -> Faces.Count(); i++)
 		{
 			const PolyHedra::Face & face = PolyHedra -> Faces[i];
@@ -184,7 +184,8 @@ void PolyHedraInstanceManager::UpdateWireBufferMain()
 				data.Insert(PolyHedra::Edge(face.udx[2], face.udx[0]));
 			}
 		}
-		BufferWire.Elem.Change(data);
+		BufferWire.Elem.Change(data);*/
+		BufferWire.Elem.Change(PolyHedra -> Edges);
 	}
 
 	UpdateWireMain = false;

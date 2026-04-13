@@ -29,37 +29,41 @@ class PolyHedra
 
 	public:
 	Container::Binary<Corner>	Corners;
-	Container::Binary<Face>		Faces;
 	Container::Binary<Edge>		Edges;
+	Container::Binary<Face>		Faces;
 
 	public:
 	FileInfo	File;
 	SkinBase *	Skin;
 
-	private:
-	bool UseCornerNormals;
-
-	private:
-	PolyHedra();
 	public:
+	PolyHedra();
 	~PolyHedra();
 
 	PolyHedra(const PolyHedra & other) = delete;
 	PolyHedra & operator=(const PolyHedra & other) = delete;
 
-	public:
-	void Dispose();
+	void	Done();
 
 	public:
-	Container::Pointer<PolyHedraFull::Main::Data> ToMainData();
+	void	Calc_Face_Normals();
+	void	Calc_Corn_Normals();
+	bool	UseCornerNormals;
+
+	void	Insert_Corn(Corner corn);
+	void	Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned int corn2);
+	void	Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3);
+
+	void	Belt(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);
+	void	Band(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);
+	void	Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure);
 
 	public:
-	std::string ToInfo() const;
+	Container::Pointer<PolyHedraFull::Main::Data>	ToMainData();
+
+	public:
+	std::string	ToInfo() const;
 	AxisBox3D	CalcBound() const;
-
-	public:
-	struct Template;
-	Template * ToTemplate();
 
 	public:
 	struct Generate;

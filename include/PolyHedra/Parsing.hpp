@@ -13,14 +13,16 @@ class TextCommand;
 
 struct PolyHedra::ParsingData
 {
-	FileInfo				File;
-	PolyHedra *				PH;		//rename to Data
-	PolyHedra::Template *	Data;	//rename to Temp
+	FileInfo		File;
+	::PolyHedra &	PolyHedra;
+
 	unsigned int	CornerOffset;
 	unsigned int	FaceOffset;
 
-	ParsingData(const FileInfo & file);
+	ParsingData(const FileInfo & file, ::PolyHedra & polyhedra);
 	~ParsingData();
+
+
 
 	void Parse(const TextCommand & cmd);
 

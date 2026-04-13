@@ -1,6 +1,5 @@
 #include "PolyHedra/PolyHedra.hpp"
 #include "PolyHedra/Data.hpp"
-#include "PolyHedra/Template.hpp"
 
 #include "PolyHedra/Skin/Skin2DA.hpp"
 
@@ -19,35 +18,54 @@
 //#include "FileInfo.hpp"
 
 #include <sstream>
-
-//#include "DataShow.hpp"
-//#include <iostream>
-
+#include <iostream>
+#include "ValueType/_Show.hpp"
 
 
-PolyHedra::PolyHedra() :
-	Corners(), Faces(),
-	File(),
-	Skin(NULL)
-{
-	UseCornerNormals = false;
-}
+
+PolyHedra::PolyHedra()
+	: Corners()
+	, Edges()
+	, Faces()
+	, File()
+	, Skin(nullptr)
+	, UseCornerNormals(false)
+{ }
 PolyHedra::~PolyHedra()
 {
 	delete Skin;
 }
 
+void PolyHedra::Done()
+{
+	Corners.Trim();
+	Edges.Trim();
+	Faces.Trim();
 
+	if (Skin == nullptr)
+	{
+		Skin2DA * skin = new Skin2DA();
+		skin -> W = 1;
+		skin -> H = 1;
+		skin -> Images.Insert(Texture::Generate::NoSkin());
+		Skin = skin;
+	}
+}
 
 
 
 std::string PolyHedra::ToInfo() const
 {
-	std::ostringstream ss;
+	std::stringstream ss;
 
-	ss << "PolyHedra Info";
-	ss << "\n" << "Corner Count: " << Corners.Count();
-	ss << "\n" << "Face Count: " << Faces.Count();
+	ss << "Source: " << File << '\n';
+
+	ss << "PolyHedra Count Vertex: " << Corners.Count() << '\n';
+	ss << "PolyHedra Count Face: " << Faces.Count() << '\n';
+	
+	AxisBox3D bound = CalcBound();
+	ss << "PolyHedra Bound Limit: " << bound << '\n';
+	ss << "PolyHedra Bound Size: " << bound.Size() << '\n';
 
 	return ss.str();
 }
@@ -63,6 +81,120 @@ AxisBox3D	PolyHedra::CalcBound() const
 }
 
 
+
+void PolyHedra::Calc_Face_Normals()
+{
+	for (unsigned int i = 0; i < Faces.Count(); i++)
+	{
+		Face & face = Faces[i];
+		if (face.Check(Corners.Count()))
+		{
+			const Point3D & cornerX = Corners[face.udx[0]].Position;
+			const Point3D & cornerY = Corners[face.udx[1]].Position;
+			const Point3D & cornerZ = Corners[face.udx[2]].Position;
+			face.Normal = Point3D::cross(cornerY - cornerX, cornerZ - cornerX).normalize();
+		}
+		else
+		{
+			face.Normal = Point3D();
+		}
+	}
+}
+void PolyHedra::Calc_Corn_Normals()
+{
+	for (unsigned int i = 0; i < Corners.Count(); i++)
+	{
+		Point3D normal_sum(0, 0, 0);
+		for (unsigned int j = 0; j < Faces.Count(); j++)
+		{
+			const Face & face = Faces[j];
+			if (face.udx[0] == i ||
+				face.udx[1] == i ||
+				face.udx[2] == i
+			)
+			{
+				normal_sum = normal_sum + face.Normal;
+			}
+		}
+		Corners[i].Normal = normal_sum.normalize();
+	}
+}
+
+void PolyHedra::Insert_Corn(Corner corn)
+{
+	Corners.Insert(corn);
+}
+void PolyHedra::Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned int corn2)
+{
+	Faces.Insert(Face(corn0, corn1, corn2));
+
+	Edges.Insert(Edge(corn0, corn1));
+	Edges.Insert(Edge(corn1, corn2));
+	Edges.Insert(Edge(corn2, corn0));
+}
+void PolyHedra::Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3)
+{
+	Insert_Face3(corn0, corn1, corn2);
+	Insert_Face3(corn2, corn1, corn3);
+}
+
+void PolyHedra::Belt(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure)
+{
+	for (unsigned int i = 1; i < len; i++)
+	{
+		if (!direction)
+		{
+			Insert_Face3(idx0[i - 1], idx0[i - 0], idx1[i - 1]);
+			Insert_Face3(idx1[i - 1], idx0[i - 0], idx1[i - 0]);
+		}
+		else
+		{
+			Insert_Face3(idx1[i - 1], idx0[i - 0], idx0[i - 1]);
+			Insert_Face3(idx1[i - 0], idx0[i - 0], idx1[i - 1]);
+		}
+	}
+
+	if (closure)
+	{
+		if (!direction)
+		{
+			Insert_Face3(idx0[len - 1], idx0[0], idx1[len - 1]);
+			Insert_Face3(idx1[len - 1], idx0[0], idx1[0]);
+		}
+		else
+		{
+			Insert_Face3(idx0[0], idx0[len -1], idx1[len - 1]);
+			Insert_Face3(idx0[0], idx1[len -1], idx1[0]);
+		}
+	}
+}
+//void PolyHedra::Band(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure)
+void PolyHedra::Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure)
+{
+	for (unsigned int i = 1; i < len; i++)
+	{
+		if (!direction)
+		{
+			Insert_Face3(middle, blade[i - 1], blade[i - 0]);
+		}
+		else
+		{
+			Insert_Face3(middle, blade[i - 0], blade[i - 1]);
+		}
+	}
+
+	if (closure)
+	{
+		if (!direction)
+		{
+			Insert_Face3(middle, blade[len - 1], blade[0]);
+		}
+		else
+		{
+			Insert_Face3(middle, blade[0], blade[len - 1]);
+		}
+	}
+}
 
 
 

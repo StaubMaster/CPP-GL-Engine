@@ -66,12 +66,12 @@ VectorI3 VectorI3::Convert(unsigned int size, unsigned int idx)
 
 
 
-VectorI3 operator+(VectorI3 vec, unsigned int val) { return VectorI3(vec.X + val, vec.Y + val, vec.Z + val); }
-VectorI3 operator-(VectorI3 vec, unsigned int val) { return VectorI3(vec.X - val, vec.Y - val, vec.Z - val); }
-VectorI3 operator*(VectorI3 vec, unsigned int val) { return VectorI3(vec.X * val, vec.Y * val, vec.Z * val); }
-VectorI3 operator/(VectorI3 vec, unsigned int val) { return VectorI3(vec.X / val, vec.Y / val, vec.Z / val); }
+VectorI3 operator+(VectorI3 vec, int val) { return VectorI3(vec.X + val, vec.Y + val, vec.Z + val); }
+VectorI3 operator-(VectorI3 vec, int val) { return VectorI3(vec.X - val, vec.Y - val, vec.Z - val); }
+VectorI3 operator*(VectorI3 vec, int val) { return VectorI3(vec.X * val, vec.Y * val, vec.Z * val); }
+VectorI3 operator/(VectorI3 vec, int val) { return VectorI3(vec.X / val, vec.Y / val, vec.Z / val); }
 
-VectorI3 operator+(unsigned int val, VectorI3 vec) { return VectorI3(val + vec.X, val + vec.Y, val + vec.Z); }
-VectorI3 operator-(unsigned int val, VectorI3 vec) { return VectorI3(val - vec.X, val - vec.Y, val - vec.Z); }
-VectorI3 operator*(unsigned int val, VectorI3 vec) { return VectorI3(val * vec.X, val * vec.Y, val * vec.Z); }
-VectorI3 operator/(unsigned int val, VectorI3 vec) { return VectorI3(val / vec.X, val / vec.Y, val / vec.Z); }
+VectorI3 operator+(int val, VectorI3 vec) { return VectorI3(val + vec.X, val + vec.Y, val + vec.Z); }
+VectorI3 operator-(int val, VectorI3 vec) { return VectorI3(val - vec.X, val - vec.Y, val - vec.Z); }
+VectorI3 operator*(int val, VectorI3 vec) { return VectorI3(val * vec.X, val * vec.Y, val * vec.Z); }
+VectorI3 operator/(int val, VectorI3 vec) { return VectorI3(val / vec.X, val / vec.Y, val / vec.Z); }
