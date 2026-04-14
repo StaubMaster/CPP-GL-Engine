@@ -7,7 +7,11 @@ namespace Multiform
 
 	class Float;
 
+	class Matrix;
+
 	class ColorF4;
+
+	class Angle;
 
 	class Depth;
 	class DepthFactors;

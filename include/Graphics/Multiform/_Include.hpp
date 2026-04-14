@@ -5,7 +5,11 @@
 
 # include "Graphics/Multiform/Float.hpp"
 
+# include "Graphics/Multiform/Matrix4x4.hpp"
+
 # include "Graphics/Multiform/ColorF4.hpp"
+
+# include "Graphics/Multiform/Angle.hpp"
 
 # include "Graphics/Multiform/Depth.hpp"
 # include "Graphics/Multiform/DepthFactors.hpp"
