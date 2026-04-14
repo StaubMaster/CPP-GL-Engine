@@ -25,6 +25,6 @@ BoxU3 & BoxU3::operator=(const BoxU3 & other)
 
 
 
-Bool3 BoxU3::CheckIn(VectorU3 udx) const { return IntersectInclusive(udx); }
-Bool3 BoxU3::CheckEx(VectorU3 udx) const { return IntersectExclusive(udx); }
-Bool3 BoxU3::CheckEdge(VectorU3 udx) const { return IntersectEdge(udx); }
+Bool3 BoxU3::CheckIn(VectorU3 udx) const { return IntersectVecInclusive(udx); }
+Bool3 BoxU3::CheckEx(VectorU3 udx) const { return IntersectVecExclusive(udx); }
+Bool3 BoxU3::CheckEdge(VectorU3 udx) const { return IntersectVecEdge(udx); }

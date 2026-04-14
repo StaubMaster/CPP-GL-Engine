@@ -83,6 +83,33 @@ StructType &	operator+=(ValueType val) { X += val; Y += val; Z += val; return *(
 StructType &	operator-=(ValueType val) { X -= val; Y -= val; Z -= val; return *((StructType*)this); }
 StructType &	operator*=(ValueType val) { X *= val; Y *= val; Z *= val; return *((StructType*)this); }
 StructType &	operator/=(ValueType val) { X /= val; Y /= val; Z /= val; return *((StructType*)this); }
+
+StructType	Mix(const Vector_3 & other, Bool3 take) const
+{
+	StructType vec(*this);
+	if (take.GetX()) { vec.X = other.X; }
+	if (take.GetY()) { vec.Y = other.Y; }
+	if (take.GetZ()) { vec.Z = other.Z; }
+	return vec;
+}
+
+StructType	Min(const Vector_3 & other) const
+{
+	StructType vec;
+	if (vec.X > other.X) { vec.X = other.X; } else { vec.X = X; }
+	if (vec.Y > other.Y) { vec.Y = other.Y; } else { vec.Y = Y; }
+	if (vec.Z > other.Z) { vec.Z = other.Z; } else { vec.Z = Z; }
+	return vec;
+}
+StructType	Max(const Vector_3 & other) const
+{
+	StructType vec;
+	if (vec.X < other.X) { vec.X = other.X; } else { vec.X = X; }
+	if (vec.Y < other.Y) { vec.Y = other.Y; } else { vec.Y = Y; }
+	if (vec.Z < other.Z) { vec.Z = other.Z; } else { vec.Z = Z; }
+	return vec;
+}
+
 };
 
 #endif
