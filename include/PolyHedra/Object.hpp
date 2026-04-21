@@ -8,7 +8,9 @@ struct PolyHedraObjectData;
 
 struct PolyHedraObject
 {
-	PolyHedraObjectData * Data;
+	private:
+	PolyHedraObjectData *	Data;
+	public:
 
 	bool			Is() const;
 	::PolyHedra *	PolyHedra() const;

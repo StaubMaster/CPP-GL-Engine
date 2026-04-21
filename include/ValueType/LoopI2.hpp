@@ -25,6 +25,7 @@ struct LoopI2
 	public:
 	VectorI2	Min() const;
 	VectorI2	Max() const;
+	VectorI2	Size() const;
 
 	public:
 	Bool2		Check(VectorI2 idx) const;

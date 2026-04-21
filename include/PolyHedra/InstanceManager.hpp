@@ -14,15 +14,20 @@ struct PolyHedraObjectData;
 
 struct PolyHedraInstanceManager
 {
-	::PolyHedra *				PolyHedra;
+	::PolyHedra *	PolyHedra;
 
+	// Object Defaults
+	bool	DefaultFullVisibility;
+	bool	DefaultWireVisibility;
+
+	// put Flags into Buffers ?
+	// store a Container of Data in Buffer ?
 	// Main Data needs to be put into Buffers
-	bool						UpdateFullMain;
-	bool						UpdateWireMain;
-
+	bool	UpdateFullMain;
+	bool	UpdateWireMain;
 	// Attributes in Buffers need to be initialized
-	bool						UpdateFullInit;
-	bool						UpdateWireInit;
+	bool	UpdateFullInit;
+	bool	UpdateWireInit;
 
 	bool						GraphicsExist;
 	::PolyHedraFull::Buffer		BufferFull;

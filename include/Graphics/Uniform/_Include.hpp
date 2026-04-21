@@ -47,6 +47,4 @@
 # include "Graphics/Uniform/PixelSize.hpp"
 # include "Graphics/Uniform/DisplaySize.hpp"
 
-# include "Graphics/Uniform/SizeRatio2D.hpp"
-
 #endif

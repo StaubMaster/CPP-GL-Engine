@@ -33,7 +33,7 @@ void Skin2DA::ToTexture(Texture::Array2D & tex) const
 {
 	tex.Create();
 	tex.Bind();
-	tex.Assign(W, H, Images);
+	tex.Assign(VectorU2(W, H), Images);
 }
 
 

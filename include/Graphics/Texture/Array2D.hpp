@@ -2,7 +2,8 @@
 # define TEXTURE_ARRAY_2D_HPP
 
 # include "Base.hpp"
-# include "Display/SizeRatio2D.hpp"
+# include "ValueType/VectorU3.hpp"
+# include "ValueType/VectorU2.hpp"
 # include "Miscellaneous/Container/Member.hpp"
 
 /*	dont need Array2D as inherited class
@@ -22,8 +23,7 @@ namespace Texture
 {
 class Array2D : public Base
 {
-	public:
-	SizeRatio2D	SizeRatio;
+	VectorU3	Size;
 
 
 
@@ -37,10 +37,15 @@ class Array2D : public Base
 
 
 	public:
-	void Assign(const Image & img);
-	void Assign(const FileInfo & file);
-	void Assign(unsigned int w, unsigned int h, const Container::Member<Image> & imgs);
-	void Assign(unsigned int w, unsigned int h, const Container::Member<FileInfo> & files);
+	void	Assign(VectorU3 size);
+	void	Assign(unsigned int offset, const Image & img);
+	void	Assign(unsigned int offset, const FileInfo & file);
+
+	void	Assign(const Image & img);
+	void	Assign(const FileInfo & file);
+
+	void	Assign(VectorU2 size, const Container::Member<Image> & imgs);
+	void	Assign(VectorU2 size, const Container::Member<FileInfo> & files);
 };
 };
 

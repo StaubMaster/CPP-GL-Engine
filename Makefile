@@ -75,7 +75,7 @@ DISPLAY := \
 	Display/DisplaySize.cpp \
 	Display/PixelPosition.cpp \
 	Display/DisplayPosition.cpp \
-	Display/SizeRatio2D.cpp
+
 DISPLAY_SRC := $(addprefix $(DIR_SRC)/,$(DISPLAY))
 DISPLAY_OBJ := $(addprefix $(DIR_OBJ)/,$(DISPLAY:.cpp=.o))
 
@@ -125,7 +125,7 @@ UNIFORM := \
 	Graphics/Uniform/AspectRatio.cpp \
 	Graphics/Uniform/PixelSize.cpp \
 	Graphics/Uniform/DisplaySize.cpp \
-	Graphics/Uniform/SizeRatio2D.cpp
+
 UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))
 UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
 
@@ -139,7 +139,7 @@ MULTIFORM := \
 	Graphics/Multiform/Depth.cpp \
 	Graphics/Multiform/Range.cpp \
 	Graphics/Multiform/LInter.cpp \
-	Graphics/Multiform/SizeRatio2D.cpp
+
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
 MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
 
@@ -232,7 +232,8 @@ POLYHEDRA := \
 	PolyHedra/InstanceManager.cpp \
 	PolyHedra/ObjectData.cpp \
 	PolyHedra/Manager.cpp \
-	PolyHedra/Object.cpp
+	PolyHedra/Object.cpp \
+	PolyHedra/ObjectArray.cpp \
 
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
 POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))

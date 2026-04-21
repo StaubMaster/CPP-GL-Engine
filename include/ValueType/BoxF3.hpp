@@ -13,6 +13,17 @@ struct BoxF3 : public Box_3<VectorF3, BoxF3>
 
 	BoxF3(const BoxF3 & other);
 	BoxF3 & operator=(const BoxF3 & other);
+
+	// put into Box_3 ?
+	// this uses float for time. so keep here ?
+	static VectorF3		CollisionTimePerAxis(
+		const BoxF3 & box0, const VectorF3 & vel0,
+		const BoxF3 & box1
+	);
+	static VectorF3		CollisionTimePerAxisNaN(
+		const BoxF3 & box0, const VectorF3 & vel0,
+		const BoxF3 & box1
+	);
 };
 
 #endif

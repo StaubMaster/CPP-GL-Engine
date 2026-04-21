@@ -3,7 +3,7 @@
 
 # include "Bool2.hpp"
 
-template<typename ValueType, typename StructType> struct Vector_2
+template<typename ValueType, typename VectorType> struct Vector_2
 {
 ValueType X;
 ValueType Y;
@@ -60,18 +60,35 @@ Vector_2 & operator=(const OtherType & other)
 
 
 
-StructType		operator+() const { return StructType(+X, +Y); }
-StructType		operator-() const { return StructType(-X, -Y); }
+VectorType		Min(const VectorType & other) const
+{
+	VectorType vec(*this);
+	if (other.X < vec.X) { vec.X = other.X; }
+	if (other.Y < vec.Y) { vec.Y = other.Y; }
+	return vec;
+}
+VectorType		Max(const VectorType & other) const
+{
+	VectorType vec(*this);
+	if (other.X > vec.X) { vec.X = other.X; }
+	if (other.Y > vec.Y) { vec.Y = other.Y; }
+	return vec;
+}
 
-StructType		operator+(const StructType & other) const { return StructType(X + other.X, Y + other.Y); }
-StructType		operator-(const StructType & other) const { return StructType(X - other.X, Y - other.Y); }
-StructType		operator*(const StructType & other) const { return StructType(X * other.X, Y * other.Y); }
-StructType		operator/(const StructType & other) const { return StructType(X / other.X, Y / other.Y); }
 
-StructType &	operator+=(const StructType & other) { X += other.X; Y += other.X; return *((StructType*)this); }
-StructType &	operator-=(const StructType & other) { X -= other.X; Y -= other.X; return *((StructType*)this); }
-StructType &	operator*=(const StructType & other) { X *= other.X; Y *= other.X; return *((StructType*)this); }
-StructType &	operator/=(const StructType & other) { X /= other.X; Y /= other.X; return *((StructType*)this); }
+
+VectorType		operator+() const { return VectorType(+X, +Y); }
+VectorType		operator-() const { return VectorType(-X, -Y); }
+
+VectorType		operator+(const VectorType & other) const { return VectorType(X + other.X, Y + other.Y); }
+VectorType		operator-(const VectorType & other) const { return VectorType(X - other.X, Y - other.Y); }
+VectorType		operator*(const VectorType & other) const { return VectorType(X * other.X, Y * other.Y); }
+VectorType		operator/(const VectorType & other) const { return VectorType(X / other.X, Y / other.Y); }
+
+VectorType &	operator+=(const VectorType & other) { X += other.X; Y += other.X; return *((VectorType*)this); }
+VectorType &	operator-=(const VectorType & other) { X -= other.X; Y -= other.X; return *((VectorType*)this); }
+VectorType &	operator*=(const VectorType & other) { X *= other.X; Y *= other.X; return *((VectorType*)this); }
+VectorType &	operator/=(const VectorType & other) { X /= other.X; Y /= other.X; return *((VectorType*)this); }
 
 Bool2			operator==(const Vector_2 & other) const { return Bool2(X == other.X, Y == other.Y); }
 Bool2			operator!=(const Vector_2 & other) const { return Bool2(X != other.X, Y != other.Y); }
@@ -80,23 +97,10 @@ Bool2			operator> (const Vector_2 & other) const { return Bool2(X >  other.X, Y 
 Bool2			operator<=(const Vector_2 & other) const { return Bool2(X <= other.X, Y <= other.Y); }
 Bool2			operator>=(const Vector_2 & other) const { return Bool2(X >= other.X, Y >= other.Y); }
 
-StructType &	operator+=(ValueType val) { X += val; Y += val; return *((StructType*)this); }
-StructType &	operator-=(ValueType val) { X -= val; Y -= val; return *((StructType*)this); }
-StructType &	operator*=(ValueType val) { X *= val; Y *= val; return *((StructType*)this); }
-StructType &	operator/=(ValueType val) { X /= val; Y /= val; return *((StructType*)this); }
+VectorType &	operator+=(ValueType val) { X += val; Y += val; return *((VectorType*)this); }
+VectorType &	operator-=(ValueType val) { X -= val; Y -= val; return *((VectorType*)this); }
+VectorType &	operator*=(ValueType val) { X *= val; Y *= val; return *((VectorType*)this); }
+VectorType &	operator/=(ValueType val) { X /= val; Y /= val; return *((VectorType*)this); }
 };
-
-// these cannot be made templates
-// since they need to outside of the class
-
-//template<typename ValueType, typename StructType> StructType operator+(Vector_2<ValueType, StructType> p, ValueType val) { return StructType(p.X + val, p.Y + val); }
-//template<typename ValueType, typename StructType> StructType operator-(Vector_2<ValueType, StructType> p, ValueType val) { return StructType(p.X - val, p.Y - val); }
-//template<typename ValueType, typename StructType> StructType operator*(Vector_2<ValueType, StructType> p, ValueType val) { return StructType(p.X * val, p.Y * val); }
-//template<typename ValueType, typename StructType> StructType operator/(Vector_2<ValueType, StructType> p, ValueType val) { return StructType(p.X / val, p.Y / val); }
-//
-//template<typename ValueType, typename StructType> StructType operator+(ValueType val, Vector_2<ValueType, StructType> p) { return StructType(val + p.X, val + p.Y); }
-//template<typename ValueType, typename StructType> StructType operator-(ValueType val, Vector_2<ValueType, StructType> p) { return StructType(val - p.X, val - p.Y); }
-//template<typename ValueType, typename StructType> StructType operator*(ValueType val, Vector_2<ValueType, StructType> p) { return StructType(val * p.X, val * p.Y); }
-//template<typename ValueType, typename StructType> StructType operator/(ValueType val, Vector_2<ValueType, StructType> p) { return StructType(val / p.X, val / p.Y); }
 
 #endif

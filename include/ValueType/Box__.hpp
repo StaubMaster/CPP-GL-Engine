@@ -1,6 +1,7 @@
 #ifndef  BOX_HPP
 # define BOX_HPP
 
+// Convert between Types ?
 template<typename VectorType> struct Box__
 {
 VectorType Min;

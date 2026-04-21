@@ -3,10 +3,6 @@
 
 #include "Vector_3.hpp"
 
-struct VectorF3;
-struct VectorU3;
-struct VectorI3;
-
 struct VectorU3 : public Vector_3<unsigned int, VectorU3>
 {
 	~VectorU3();
@@ -15,13 +11,10 @@ struct VectorU3 : public Vector_3<unsigned int, VectorU3>
 	VectorU3(unsigned int value);
 	VectorU3(unsigned int x, unsigned int y, unsigned int z);
 
-	VectorU3(const VectorF3 & other);
 	VectorU3(const VectorU3 & other);
-	VectorU3(const VectorI3 & other);
-
-	VectorU3 & operator=(const VectorF3 & other);
 	VectorU3 & operator=(const VectorU3 & other);
-	VectorU3 & operator=(const VectorI3 & other);
+
+	template<typename OtherVectorType> VectorU3(const OtherVectorType & other) : Vector_3(other) { }
 
 
 

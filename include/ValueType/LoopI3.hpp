@@ -25,6 +25,7 @@ struct LoopI3
 	public:
 	VectorI3	Min() const;
 	VectorI3	Max() const;
+	VectorI3	Size() const;
 
 	public:
 	Bool3		Check(VectorI3 idx) const;

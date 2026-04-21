@@ -14,13 +14,7 @@ VectorF3::VectorF3(float value) : Vector_3(value) { }
 VectorF3::VectorF3(float x, float y, float z) : Vector_3(x, y, z) { }
 
 VectorF3::VectorF3(const VectorF3 & other) : Vector_3(other) { }
-VectorF3::VectorF3(const VectorU3 & other) : Vector_3(other) { }
-VectorF3::VectorF3(const VectorI3 & other) : Vector_3(other) { }
-
 VectorF3 & VectorF3::operator=(const VectorF3 & other) { Vector_3::operator=(other); return *this; }
-VectorF3 & VectorF3::operator=(const VectorU3 & other) { Vector_3::operator=(other); return *this; }
-VectorF3 & VectorF3::operator=(const VectorI3 & other) { Vector_3::operator=(other); return *this; }
-
 
 
 
@@ -65,7 +59,14 @@ VectorF3 VectorF3::round (float size) const { return VectorF3(roundf(X / size) *
 VectorF3 VectorF3::roundC(float size) const { return VectorF3( ceilf(X / size) * size,  ceilf(Y / size) * size,  ceilf(Z / size) * size); }
 VectorF3 VectorF3::roundF(float size) const { return VectorF3(floorf(X / size) * size, floorf(Y / size) * size, floorf(Z / size) * size); }
 
-
+VectorF3 VectorF3::abs() const
+{
+	VectorF3 vec(*this);
+	if (vec.X < 0) { vec.X = -vec.X; }
+	if (vec.Y < 0) { vec.Y = -vec.Y; }
+	if (vec.Z < 0) { vec.Z = -vec.Z; }
+	return vec;
+}
 
 
 
@@ -88,6 +89,37 @@ VectorF3 VectorF3::cross(const VectorF3 & other) const
 }
 
 
+
+VectorI3 VectorF3::RankDimensions() const
+{
+	VectorI3 ranks;
+
+	const float *	value_ptr = (const float*)this;
+	int *			ranks_ptr = (int*)&ranks;
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		if (value_ptr[i] != value_ptr[i])
+		{
+			ranks_ptr[i] = -1;
+		}
+		else
+		{
+			for (unsigned int j = 0; j < 3; j++)
+			{
+				if (i != j)
+				{
+					if (value_ptr[i] > value_ptr[j])
+					{
+						ranks_ptr[i]++;
+					}
+				}
+			}
+		}
+	}
+
+	return ranks;
+}
 
 
 

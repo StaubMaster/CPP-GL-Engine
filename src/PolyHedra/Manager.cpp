@@ -65,8 +65,8 @@ void PolyHedraManager::InitExternal(DirectoryInfo & media_dir)
 {
 	{
 		Container::Array<Shader::Code> code({
-			Shader::Code(media_dir.File("Shaders/PH/Simple3D.vert")),
-			Shader::Code(media_dir.File("Shaders/PH/Full.frag")),
+			Shader::Code(media_dir.File("Shaders/Basic3D/Full.vert")),
+			Shader::Code(media_dir.File("Shaders/Basic3D/Full.frag")),
 		});
 		ShaderFullDefault.Change(code);
 	}
@@ -113,7 +113,10 @@ unsigned int PolyHedraManager::PlacePolyHedra(::PolyHedra * polyhedra)
 
 PolyHedraObjectData * PolyHedraManager::PlaceObject(unsigned int polyhedra, Trans3D trans)
 {
-	PolyHedraObjectData * obj = new PolyHedraObjectData(InstanceManagers[polyhedra].PolyHedra, trans);
+	PolyHedraObjectData * obj = new PolyHedraObjectData(InstanceManagers[polyhedra].PolyHedra);
+	obj -> Trans = trans;
+	obj -> DrawFull = InstanceManagers[polyhedra].DefaultFullVisibility;
+	obj -> DrawWire = InstanceManagers[polyhedra].DefaultWireVisibility;
 	ObjectDatas.Insert(obj);
 	return obj;
 }

@@ -3,7 +3,7 @@
 
 # include "Bool3.hpp"
 
-template<typename ValueType, typename StructType> struct Vector_3
+template<typename ValueType, typename VectorType> struct Vector_3
 {
 ValueType X;
 ValueType Y;
@@ -18,7 +18,22 @@ Vector_3()
 	, Y(0)
 	, Z(0)
 { }
-Vector_3(ValueType value)
+/*Vector_3(ValueType value)
+	: X(value)
+	, Y(value)
+	, Z(value)
+{ }*/
+Vector_3(float value)
+	: X(value)
+	, Y(value)
+	, Z(value)
+{ }
+Vector_3(unsigned int value)
+	: X(value)
+	, Y(value)
+	, Z(value)
+{ }
+Vector_3(int value)
 	: X(value)
 	, Y(value)
 	, Z(value)
@@ -42,35 +57,55 @@ Vector_3 & operator=(const Vector_3 & other)
 	return *this;
 }
 
-template <typename OtherType>
-Vector_3(const OtherType & other)
+template<typename OtherVectorType>
+Vector_3(const OtherVectorType & other)
 	: X(other.X)
 	, Y(other.Y)
 	, Z(other.Z)
 { }
-template <typename OtherType>
-Vector_3 & operator=(const OtherType & other)
+template<typename OtherVectorType>
+VectorType & operator=(const OtherVectorType & other)
 {
 	X = other.X;
 	Y = other.Y;
 	Z = other.Z;
-	return *this;
+	return *((VectorType*)this);
 }
 
 
 
-StructType		operator+() const { return StructType(+X, +Y, +Z); }
-StructType		operator-() const { return StructType(-X, -Y, -Z); }
+VectorType		Min(const VectorType & other) const
+{
+	VectorType vec(*this);
+	if (other.X < vec.X) { vec.X = other.X; }
+	if (other.Y < vec.Y) { vec.Y = other.Y; }
+	if (other.Z < vec.Z) { vec.Z = other.Z; }
+	return vec;
+}
+VectorType		Max(const VectorType & other) const
+{
+	VectorType vec(*this);
+	if (other.X > vec.X) { vec.X = other.X; }
+	if (other.Y > vec.Y) { vec.Y = other.Y; }
+	if (other.Z > vec.Z) { vec.Z = other.Z; }
+	return vec;
+}
 
-StructType		operator+(const StructType & other) const { return StructType(X + other.X, Y + other.Y, Z + other.Z); }
-StructType		operator-(const StructType & other) const { return StructType(X - other.X, Y - other.Y, Z - other.Z); }
-StructType		operator*(const StructType & other) const { return StructType(X * other.X, Y * other.Y, Z * other.Z); }
-StructType		operator/(const StructType & other) const { return StructType(X / other.X, Y / other.Y, Z / other.Z); }
 
-StructType &	operator+=(const StructType & other) { X += other.X; Y += other.Y; Z += other.Z; return *((StructType*)this); }
-StructType &	operator-=(const StructType & other) { X -= other.X; Y -= other.Y; Z -= other.Z; return *((StructType*)this); }
-StructType &	operator*=(const StructType & other) { X *= other.X; Y *= other.Y; Z *= other.Z; return *((StructType*)this); }
-StructType &	operator/=(const StructType & other) { X /= other.X; Y /= other.Y; Z /= other.Z; return *((StructType*)this); }
+
+
+VectorType		operator+() const { return VectorType(+X, +Y, +Z); }
+VectorType		operator-() const { return VectorType(-X, -Y, -Z); }
+
+VectorType		operator+(const VectorType & other) const { return VectorType(X + other.X, Y + other.Y, Z + other.Z); }
+VectorType		operator-(const VectorType & other) const { return VectorType(X - other.X, Y - other.Y, Z - other.Z); }
+VectorType		operator*(const VectorType & other) const { return VectorType(X * other.X, Y * other.Y, Z * other.Z); }
+VectorType		operator/(const VectorType & other) const { return VectorType(X / other.X, Y / other.Y, Z / other.Z); }
+
+VectorType &	operator+=(const VectorType & other) { X += other.X; Y += other.Y; Z += other.Z; return *((VectorType*)this); }
+VectorType &	operator-=(const VectorType & other) { X -= other.X; Y -= other.Y; Z -= other.Z; return *((VectorType*)this); }
+VectorType &	operator*=(const VectorType & other) { X *= other.X; Y *= other.Y; Z *= other.Z; return *((VectorType*)this); }
+VectorType &	operator/=(const VectorType & other) { X /= other.X; Y /= other.Y; Z /= other.Z; return *((VectorType*)this); }
 
 Bool3			operator==(const Vector_3 & other) const { return Bool3(X == other.X, Y == other.Y, Z == other.Z); }
 Bool3			operator!=(const Vector_3 & other) const { return Bool3(X != other.X, Y != other.Y, Z != other.Z); }
@@ -79,34 +114,25 @@ Bool3			operator> (const Vector_3 & other) const { return Bool3(X >  other.X, Y 
 Bool3			operator<=(const Vector_3 & other) const { return Bool3(X <= other.X, Y <= other.Y, Z <= other.Z); }
 Bool3			operator>=(const Vector_3 & other) const { return Bool3(X >= other.X, Y >= other.Y, Z >= other.Z); }
 
-StructType &	operator+=(ValueType val) { X += val; Y += val; Z += val; return *((StructType*)this); }
-StructType &	operator-=(ValueType val) { X -= val; Y -= val; Z -= val; return *((StructType*)this); }
-StructType &	operator*=(ValueType val) { X *= val; Y *= val; Z *= val; return *((StructType*)this); }
-StructType &	operator/=(ValueType val) { X /= val; Y /= val; Z /= val; return *((StructType*)this); }
+VectorType &	operator+=(ValueType val) { X += val; Y += val; Z += val; return *((VectorType*)this); }
+VectorType &	operator-=(ValueType val) { X -= val; Y -= val; Z -= val; return *((VectorType*)this); }
+VectorType &	operator*=(ValueType val) { X *= val; Y *= val; Z *= val; return *((VectorType*)this); }
+VectorType &	operator/=(ValueType val) { X /= val; Y /= val; Z /= val; return *((VectorType*)this); }
 
-StructType	Mix(const Vector_3 & other, Bool3 take) const
+VectorType	Mix(const Vector_3 & other, Bool3 take) const
 {
-	StructType vec(*this);
+	VectorType vec(*this);
 	if (take.GetX()) { vec.X = other.X; }
 	if (take.GetY()) { vec.Y = other.Y; }
 	if (take.GetZ()) { vec.Z = other.Z; }
 	return vec;
 }
-
-StructType	Min(const Vector_3 & other) const
+static VectorType	Mix(Bool3 take, const Vector_3 & value_true, const Vector_3 & value_false)
 {
-	StructType vec;
-	if (vec.X > other.X) { vec.X = other.X; } else { vec.X = X; }
-	if (vec.Y > other.Y) { vec.Y = other.Y; } else { vec.Y = Y; }
-	if (vec.Z > other.Z) { vec.Z = other.Z; } else { vec.Z = Z; }
-	return vec;
-}
-StructType	Max(const Vector_3 & other) const
-{
-	StructType vec;
-	if (vec.X < other.X) { vec.X = other.X; } else { vec.X = X; }
-	if (vec.Y < other.Y) { vec.Y = other.Y; } else { vec.Y = Y; }
-	if (vec.Z < other.Z) { vec.Z = other.Z; } else { vec.Z = Z; }
+	VectorType vec;
+	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
+	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
+	if (take.GetZ()) { vec.Z = value_true.Z; } else { vec.Z = value_false.Z; }
 	return vec;
 }
 

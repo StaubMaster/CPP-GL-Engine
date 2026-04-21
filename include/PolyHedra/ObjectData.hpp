@@ -20,7 +20,6 @@ struct PolyHedraObjectData
 	PolyHedraObjectData & operator=(const PolyHedraObjectData & other);
 
 	PolyHedraObjectData(::PolyHedra * polyhedra);
-	PolyHedraObjectData(::PolyHedra * polyhedra, Trans3D trans);
 };
 
 #endif

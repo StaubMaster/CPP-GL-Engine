@@ -172,16 +172,15 @@ void Texture::Base::FilterMag(FilterMagType filter)
 
 
 
-void Texture::Base::Full3D(Undex3D size, const void * data)
+
+
+void Texture::Base::Full3D(Undex3D size, const ColorU4 * data)
 {
-	//Debug::Log << "Texture: Full3D: " << size << Debug::Done;
-	//std::cout << "Texture: Full3D: " << size << '\n';
+	Bind();
 	GL::TexImage3D(Target, 0, GL::InternalFormat::Rgba8, size.X, size.Y, size.Z, 0, GL::PixelDataFormat::Rgba, GL::PixelDataType::UnsignedInt8888Rev, data);
 }
-void Texture::Base::Part3D(Undex3D size, Undex3D offset, const void * data)
+void Texture::Base::Part3D(Undex3D size, Undex3D offset, const ColorU4 * data)
 {
-	//Debug::Log << "Texture: Part3D: " << size << " | " << offset << Debug::Done;
-	//std::cout << "Texture: Part3D: " << size << " | " << offset << '\n';
+	Bind();
 	GL::TexSubImage3D(Target, 0, offset.X, offset.Y, offset.Z, size.X, size.Y, size.Z, GL::PixelDataFormat::Rgba, GL::PixelDataType::UnsignedInt8888Rev, data);
 }
-

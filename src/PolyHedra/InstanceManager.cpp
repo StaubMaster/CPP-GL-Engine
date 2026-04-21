@@ -19,6 +19,8 @@ PolyHedraInstanceManager::~PolyHedraInstanceManager()
 { }
 PolyHedraInstanceManager::PolyHedraInstanceManager()
 	: PolyHedra(nullptr)
+	, DefaultFullVisibility(true)
+	, DefaultWireVisibility(false)
 	, UpdateFullMain(false)
 	, UpdateWireMain(false)
 	, UpdateFullInit(false)
@@ -32,6 +34,8 @@ PolyHedraInstanceManager::PolyHedraInstanceManager()
 { }
 PolyHedraInstanceManager::PolyHedraInstanceManager(const PolyHedraInstanceManager & other)
 	: PolyHedra(other.PolyHedra)
+	, DefaultFullVisibility(other.DefaultFullVisibility)
+	, DefaultWireVisibility(other.DefaultWireVisibility)
 	, UpdateFullMain(other.UpdateFullMain)
 	, UpdateWireMain(other.UpdateWireMain)
 	, UpdateFullInit(other.UpdateFullInit)
@@ -46,6 +50,8 @@ PolyHedraInstanceManager::PolyHedraInstanceManager(const PolyHedraInstanceManage
 PolyHedraInstanceManager & PolyHedraInstanceManager::operator=(const PolyHedraInstanceManager & other)
 {
 	PolyHedra = other.PolyHedra;
+	DefaultFullVisibility = other.DefaultFullVisibility;
+	DefaultWireVisibility = other.DefaultWireVisibility;
 	UpdateFullMain = other.UpdateFullMain;
 	UpdateWireMain = other.UpdateWireMain;
 	UpdateFullInit = other.UpdateFullInit;

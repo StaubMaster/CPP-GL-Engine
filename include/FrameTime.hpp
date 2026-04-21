@@ -3,15 +3,22 @@
 
 struct FrameTime
 {
+	float	TimeNow;
+
 	float	WantedFramesPerSecond;
 	float	WantedFrameTime;
-	float	ActualFrameTime;
+
 	float	ActualFramesPerSecond;
+	float	ActualFrameTime;
 
+	float	DeltaLimit;
 	float	Delta;
+	
+	bool				Ready; // stupid name
+	unsigned long long	Number;
 
-	FrameTime(float frames_per_second);
-	void Update(float framer_time);
+	FrameTime(float wanted_frames_per_second, float delta_limit);
+	void Update(float time_now);
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 # include "Bool4.hpp"
 
-template<typename ValueType, typename StructType> struct Vector_4
+template<typename ValueType, typename VectorType> struct Vector_4
 {
 ValueType X;
 ValueType Y;
@@ -50,18 +50,39 @@ Vector_4 & operator=(const Vector_4 & other)
 
 
 
-StructType		operator+() const { return StructType(+X, +Y, +Z, +W); }
-StructType		operator-() const { return StructType(-X, -Y, -Z, -W); }
+VectorType		Min(const VectorType & other) const
+{
+	VectorType vec(*this);
+	if (other.X < vec.X) { vec.X = other.X; }
+	if (other.Y < vec.Y) { vec.Y = other.Y; }
+	if (other.Z < vec.Z) { vec.Z = other.Z; }
+	if (other.W < vec.W) { vec.W = other.W; }
+	return vec;
+}
+VectorType		Max(const VectorType & other) const
+{
+	VectorType vec(*this);
+	if (other.X > vec.X) { vec.X = other.X; }
+	if (other.Y > vec.Y) { vec.Y = other.Y; }
+	if (other.Z > vec.Z) { vec.Z = other.Z; }
+	if (other.W > vec.W) { vec.W = other.W; }
+	return vec;
+}
 
-StructType		operator+(const StructType & other) const { return StructType(X + other.X, Y + other.Y, Z + other.Z, W + other.W); }
-StructType		operator-(const StructType & other) const { return StructType(X - other.X, Y - other.Y, Z - other.Z, W - other.W); }
-StructType		operator*(const StructType & other) const { return StructType(X * other.X, Y * other.Y, Z * other.Z, W * other.W); }
-StructType		operator/(const StructType & other) const { return StructType(X / other.X, Y / other.Y, Z / other.Z, W / other.W); }
 
-StructType &	operator+=(const StructType & other) { X += other.X; Y += other.Y; Z += other.Z; W += other.W; return *((StructType*)this); }
-StructType &	operator-=(const StructType & other) { X -= other.X; Y -= other.Y; Z -= other.Z; W -= other.W; return *((StructType*)this); }
-StructType &	operator*=(const StructType & other) { X *= other.X; Y *= other.Y; Z *= other.Z; W *= other.W; return *((StructType*)this); }
-StructType &	operator/=(const StructType & other) { X /= other.X; Y /= other.Y; Z /= other.Z; W /= other.W; return *((StructType*)this); }
+
+VectorType		operator+() const { return VectorType(+X, +Y, +Z, +W); }
+VectorType		operator-() const { return VectorType(-X, -Y, -Z, -W); }
+
+VectorType		operator+(const VectorType & other) const { return VectorType(X + other.X, Y + other.Y, Z + other.Z, W + other.W); }
+VectorType		operator-(const VectorType & other) const { return VectorType(X - other.X, Y - other.Y, Z - other.Z, W - other.W); }
+VectorType		operator*(const VectorType & other) const { return VectorType(X * other.X, Y * other.Y, Z * other.Z, W * other.W); }
+VectorType		operator/(const VectorType & other) const { return VectorType(X / other.X, Y / other.Y, Z / other.Z, W / other.W); }
+
+VectorType &	operator+=(const VectorType & other) { X += other.X; Y += other.Y; Z += other.Z; W += other.W; return *((VectorType*)this); }
+VectorType &	operator-=(const VectorType & other) { X -= other.X; Y -= other.Y; Z -= other.Z; W -= other.W; return *((VectorType*)this); }
+VectorType &	operator*=(const VectorType & other) { X *= other.X; Y *= other.Y; Z *= other.Z; W *= other.W; return *((VectorType*)this); }
+VectorType &	operator/=(const VectorType & other) { X /= other.X; Y /= other.Y; Z /= other.Z; W /= other.W; return *((VectorType*)this); }
 
 Bool4			operator==(const Vector_4 & other) const { return Bool4(X == other.X, Y == other.Y, Z == other.Z, W == other.W); }
 Bool4			operator!=(const Vector_4 & other) const { return Bool4(X != other.X, Y != other.Y, Z != other.Z, W != other.W); }
@@ -70,10 +91,10 @@ Bool4			operator> (const Vector_4 & other) const { return Bool4(X >  other.X, Y 
 Bool4			operator<=(const Vector_4 & other) const { return Bool4(X <= other.X, Y <= other.Y, Z <= other.Z, W <= other.W); }
 Bool4			operator>=(const Vector_4 & other) const { return Bool4(X >= other.X, Y >= other.Y, Z >= other.Z, W >= other.W); }
 
-StructType &	operator+=(ValueType val) { X += val; Y += val; Z += val; W += val; return *((StructType*)this); }
-StructType &	operator-=(ValueType val) { X -= val; Y -= val; Z -= val; W -= val; return *((StructType*)this); }
-StructType &	operator*=(ValueType val) { X *= val; Y *= val; Z *= val; W *= val; return *((StructType*)this); }
-StructType &	operator/=(ValueType val) { X /= val; Y /= val; Z /= val; W /= val; return *((StructType*)this); }
+VectorType &	operator+=(ValueType val) { X += val; Y += val; Z += val; W += val; return *((VectorType*)this); }
+VectorType &	operator-=(ValueType val) { X -= val; Y -= val; Z -= val; W -= val; return *((VectorType*)this); }
+VectorType &	operator*=(ValueType val) { X *= val; Y *= val; Z *= val; W *= val; return *((VectorType*)this); }
+VectorType &	operator/=(ValueType val) { X /= val; Y /= val; Z /= val; W /= val; return *((VectorType*)this); }
 };
 
 #endif

@@ -6,11 +6,16 @@
 
 static const char * ToString(bool val) { if (val) { return "true"; } else { return "false"; } }
 
-
+/*
+"( "	" )"
+"{ "	" }"
+"[ "	" ]"
+" | "	" : "
+*/
 
 std::ostream & operator<<(std::ostream & o, const Bool2 & obj) { return o << "( " << ToString(obj.GetX()) << " : " << ToString(obj.GetY()) << " )"; }
-std::ostream & operator<<(std::ostream & o, const Bool3 & obj) { return o << "( " << ToString(obj.GetX()) << " : " << ToString(obj.GetY()) << ToString(obj.GetZ()) << " )"; }
-std::ostream & operator<<(std::ostream & o, const Bool4 & obj) { return o << "( " << ToString(obj.GetX()) << " : " << ToString(obj.GetY()) << ToString(obj.GetZ()) << ToString(obj.GetW()) << " )"; }
+std::ostream & operator<<(std::ostream & o, const Bool3 & obj) { return o << "( " << ToString(obj.GetX()) << " : " << ToString(obj.GetY()) << " : " << ToString(obj.GetZ()) << " )"; }
+std::ostream & operator<<(std::ostream & o, const Bool4 & obj) { return o << "( " << ToString(obj.GetX()) << " : " << ToString(obj.GetY()) << " : " << ToString(obj.GetZ()) << " : " << ToString(obj.GetW()) << " )"; }
 
 
 

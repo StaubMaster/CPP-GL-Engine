@@ -22,6 +22,4 @@
 
 # include "Graphics/Multiform/DisplaySize.hpp"
 
-# include "Graphics/Multiform/SizeRatio2D.hpp"
-
 #endif

@@ -25,7 +25,7 @@
 GLFWwindow * Window::NormalWindow()
 {
 	Debug::Log << Debug::Tabs << "Window::NormalWindow()" << "  ....  " << Debug::Done;
-	glfwSetErrorCallback(Callback_Error);
+	glfwSetErrorCallback(Callback_GLFW_Error);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -54,13 +54,13 @@ void Window::MakeCallbacks()
 {
 	glfwSetWindowUserPointer(glfw_window, this);
 
-	glfwSetFramebufferSizeCallback(glfw_window, Callback_Resize);
-	glfwSetKeyCallback(glfw_window, Callback_Key);
-	glfwSetCharCallback(glfw_window, Callback_Text);
+	glfwSetFramebufferSizeCallback(glfw_window, Callback_GLFW_Resize);
+	glfwSetKeyCallback(glfw_window, Callback_GLFW_Key);
+	glfwSetCharCallback(glfw_window, Callback_GLFW_Text);
 
-	glfwSetMouseButtonCallback(glfw_window, Callback_CursorClick);
-	glfwSetScrollCallback(glfw_window, Callback_CursorScroll);
-	glfwSetCursorPosCallback(glfw_window, Callback_CursorMove);
+	glfwSetMouseButtonCallback(glfw_window, Callback_GLFW_CursorClick);
+	glfwSetScrollCallback(glfw_window, Callback_GLFW_CursorScroll);
+	glfwSetCursorPosCallback(glfw_window, Callback_GLFW_CursorMove);
 }
 void Window::MakeUserParemeters()
 {
@@ -88,16 +88,15 @@ void Window::MakeUserParemeters()
 
 Window::Window()
 	: glfw_window(NULL)
+	, LoopIsDone(false)
 	, FrameNumberTerminate(0xFFFFFFFFFFFFFFFF)
-	, FrameCallBack()
-	, InitCallBack()
-	, FreeCallBack()
-	, ResizeCallBack()
-	//, KeyBoardManager(*this, 7)
-	//, MouseManager(*this)
+	, DefaultColor(0.5f, 0.5f, 0.5f)
+	, CallBack_Init()
+	, CallBack_Free()
+	, CallBack_Resize()
+	, CallBack_Frame()
 	, KeyBoardManager(*this)
 	, MouseManager(*this)
-	, DefaultColor(0.5f, 0.5f, 0.5f)
 {
 	Debug::Log << Debug::Tabs << "  ++++  " << "Window" << "  ....  " << Debug::Done;
 	Debug::Log << Debug::Tabs << "Engine Dir: " << ENGINE_DIR << Debug::Done;
@@ -111,28 +110,28 @@ Window::~Window()
 
 Window::Window(const Window & other)
 	: glfw_window(other.glfw_window)
+	, LoopIsDone(other.LoopIsDone)
 	, FrameNumberTerminate(other.FrameNumberTerminate)
-	, FrameCallBack(other.FrameCallBack)
-	, InitCallBack(other.InitCallBack)
-	, FreeCallBack(other.FreeCallBack)
-	, ResizeCallBack(other.ResizeCallBack)
-	//, KeyBoardManager(*this, 7)
-	//, MouseManager(*this)
+	, DefaultColor(other.DefaultColor)
+	, CallBack_Init(other.CallBack_Init)
+	, CallBack_Free(other.CallBack_Free)
+	, CallBack_Resize(other.CallBack_Resize)
+	, CallBack_Frame(other.CallBack_Frame)
 	, KeyBoardManager(*this)
 	, MouseManager(*this)
-	, DefaultColor(other.DefaultColor)
 {
 	MakeUserParemeters();
 }
 Window & Window::operator=(const Window & other)
 {
 	glfw_window = other.glfw_window;
-	FrameNumberTerminate = 0xFFFFFFFFFFFFFFFF;
-	FrameCallBack = other.FrameCallBack;
-	InitCallBack = other.InitCallBack;
-	FreeCallBack = other.FreeCallBack;
-	ResizeCallBack = other.ResizeCallBack;
+	LoopIsDone = other.LoopIsDone;
+	FrameNumberTerminate = other.FrameNumberTerminate;
 	DefaultColor = other.DefaultColor;
+	CallBack_Init = other.CallBack_Init;
+	CallBack_Free = other.CallBack_Free;
+	CallBack_Resize = other.CallBack_Resize;
+	CallBack_Frame = other.CallBack_Frame;
 	return *this;
 }
 
@@ -173,75 +172,70 @@ void Window::UpdateSize()
 
 
 
-void Window::Callback_Error(int error, const char * description)
+void Window::Callback_GLFW_Error(int error, const char * description)
 {
 	std::cerr << "GLFW Error: " << error << ": " << description << "\n";
 }
 
 
 
-void Window::Callback_Resize(GLFWwindow * window, int w, int h)
+void Window::Callback_GLFW_Resize(GLFWwindow * window, int w, int h)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_Resize(w, h);
+	win -> Callback_GLFW_Resize(w, h);
 }
-void Window::Callback_CursorClick(GLFWwindow * window, int button, int action, int mods)
+void Window::Callback_GLFW_CursorClick(GLFWwindow * window, int button, int action, int mods)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_CursorClick(button, action, mods);
+	win -> Callback_GLFW_CursorClick(button, action, mods);
 }
-void Window::Callback_CursorScroll(GLFWwindow * window, double xOffset, double yOffset)
+void Window::Callback_GLFW_CursorScroll(GLFWwindow * window, double xOffset, double yOffset)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_CursorScroll(xOffset, yOffset);
+	win -> Callback_GLFW_CursorScroll(xOffset, yOffset);
 }
-void Window::Callback_CursorMove(GLFWwindow * window, double xPos, double yPos)
+void Window::Callback_GLFW_CursorMove(GLFWwindow * window, double xPos, double yPos)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_CursorMove(xPos, yPos);
+	win -> Callback_GLFW_CursorMove(xPos, yPos);
 }
-void Window::Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
+void Window::Callback_GLFW_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_Key(key, scancode, action, mods);
+	win -> Callback_GLFW_Key(key, scancode, action, mods);
 }
-void Window::Callback_Text(GLFWwindow * window, unsigned int codepoint)
+void Window::Callback_GLFW_Text(GLFWwindow * window, unsigned int codepoint)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_Text(codepoint);
+	win -> Callback_GLFW_Text(codepoint);
 }
 
 
 
-void Window::Callback_Resize(int w, int h)
+void Window::Callback_GLFW_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
 	UpdateSize();
-	ResizeCallBack(Size);
+	CallBack_Resize(Size);
 }
-void Window::Callback_CursorClick(int button, int action, int mods)
+void Window::Callback_GLFW_CursorClick(int button, int action, int mods)
 {
-	//MouseManager.UpdateClick(button, action, mods);
 	MouseManager.Invoke_ClickEvent(button, action, mods);
 }
-void Window::Callback_CursorScroll(double xOffset, double yOffset)
+void Window::Callback_GLFW_CursorScroll(double xOffset, double yOffset)
 {
-	//MouseManager.UpdateScroll(xOffset, yOffset);
 	MouseManager.Invoke_ScrollEvent(xOffset, yOffset);
 }
-void Window::Callback_CursorMove(double xPos, double yPos)
+void Window::Callback_GLFW_CursorMove(double xPos, double yPos)
 {
-	//MouseManager.UpdateMove(xPos, yPos);
 	MouseManager.Invoke_MoveEvent(xPos, yPos);
 }
-void Window::Callback_Key(int key, int scancode, int action, int mods)
+void Window::Callback_GLFW_Key(int key, int scancode, int action, int mods)
 {
-	//KeyBoardManager.UpdateKey(key, scancode, action, mods);
 	KeyBoardManager.Invoke_KeyEvent(key, scancode, action, mods);
 }
-void Window::Callback_Text(unsigned int codepoint)
+void Window::Callback_GLFW_Text(unsigned int codepoint)
 {
-	//KeyBoardManager.UpdateText(codepoint);
 	KeyBoardManager.Invoke_TextEvent(codepoint);
 }
 
@@ -252,12 +246,6 @@ void Window::Callback_Text(unsigned int codepoint)
 Point3D Window::MoveFromKeys() const
 {
 	Point3D move;
-	//if (KeyBoardManager.Keys[GLFW_KEY_A].IsDown())				{ move.X -= 1; }
-	//if (KeyBoardManager.Keys[GLFW_KEY_D].IsDown())				{ move.X += 1; }
-	//if (KeyBoardManager.Keys[GLFW_KEY_S].IsDown())				{ move.Z -= 1; }
-	//if (KeyBoardManager.Keys[GLFW_KEY_W].IsDown())				{ move.Z += 1; }
-	//if (KeyBoardManager.Keys[GLFW_KEY_SPACE].IsDown())			{ move.Y += 1; }
-	//if (KeyBoardManager.Keys[GLFW_KEY_LEFT_SHIFT].IsDown())		{ move.Y -= 1; }
 	if (KeyBoardManager[Keys::A].State == State::Down)				{ move.X -= 1; }
 	if (KeyBoardManager[Keys::D].State == State::Down)				{ move.X += 1; }
 	if (KeyBoardManager[Keys::S].State == State::Down)				{ move.Z -= 1; }
@@ -270,8 +258,8 @@ EulerAngle3D Window::SpinFromCursor() const
 {
 	EulerAngle3D spin;
 	DisplayPosition cursor = MouseManager.CursorPosition();
-	spin.X1 = Angle::Radians(+cursor.Window.Corner.Y);
-	spin.Y2 = Angle::Radians(+cursor.Window.Corner.X);
+	spin.X1 = Angle::Radians(cursor.Window.Corner.Y);
+	spin.Y2 = Angle::Radians(cursor.Window.Corner.X);
 	return spin;
 }
 Trans3D Window::MoveSpinFromKeysCursor() const
@@ -298,22 +286,23 @@ void Window::RunGL_Setup()
 }
 void Window::Run_Init()
 {
-	if (InitCallBack.Function != NULL)
+	if (CallBack_Init.Function != NULL)
 	{
 		Debug::Log << "Window Init() ..." << Debug::Done;
-		InitCallBack();
+		CallBack_Init();
 		Debug::Log << "Window Init() done" << Debug::Done;
 	}
 }
 void Window::Run_Free()
 {
-	if (FreeCallBack.Function != NULL)
+	if (CallBack_Free.Function != NULL)
 	{
 		Debug::Log << "Window Free() ..." << Debug::Done;
-		FreeCallBack();
+		CallBack_Free();
 		Debug::Log << "Window Free() done" << Debug::Done;
 	}
 }
+
 void Window::Run()
 {
 	try
@@ -321,29 +310,34 @@ void Window::Run()
 		RunGL_Setup();
 		Run_Init();
 		UpdateSize();
-		ResizeCallBack(Size);
+		CallBack_Resize(Size);
 		Debug::Log << "Window Loop ..." << Debug::Done;
 		std::cout << "Window Loop ..." << '\n';
-		double FrameTimeLast = glfwGetTime();
-		unsigned long long FrameNumber = 0;
+		FrameTime frame_time(64.0f, 4.0f / 64.0f);
+		frame_time.TimeNow = glfwGetTime();
 		while (!glfwWindowShouldClose(glfw_window))
 		{
-			double FrameTimeCurr = glfwGetTime();
-			double FrameTimeDelta = FrameTimeCurr - FrameTimeLast;
-			if (FrameTimeDelta >= (1.0 / 64.0))
+			frame_time.Update(glfwGetTime());
+			if (frame_time.Ready)
 			{
 				KeyBoardManager.Tick();
 				MouseManager.Tick();
 				glfwPollEvents();
 				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
 				GL::Clear(GL::ClearMask::ColorBufferBit | GL::ClearMask::DepthBufferBit);
-				FrameCallBack(FrameTimeDelta);
+				CallBack_Frame(frame_time);
 				glfwSwapBuffers(glfw_window);
-				FrameTimeLast = FrameTimeCurr;
-				FrameNumber++;
+				frame_time.Ready = false;
+				frame_time.Number++;
 			}
-			if (FrameNumber == FrameNumberTerminate)
-			{ glfwSetWindowShouldClose(glfw_window, 1); }
+			if (frame_time.Number == FrameNumberTerminate)
+			{
+				LoopIsDone = true;
+			}
+			if (LoopIsDone)
+			{
+				glfwSetWindowShouldClose(glfw_window, 1);
+			}
 		}
 		Debug::Log << "Window Loop done" << Debug::Done;
 		std::cout << "Window Loop done" << '\n';

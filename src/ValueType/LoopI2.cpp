@@ -44,6 +44,10 @@ VectorI2 LoopI2::Max() const
 	if (MaxExclude.GetY()) { idx.Y--; }
 	return idx;
 }
+VectorI2 LoopI2::Size() const
+{
+	return (Min() - Max());
+}
 
 
 

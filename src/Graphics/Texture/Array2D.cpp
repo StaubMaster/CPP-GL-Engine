@@ -1,5 +1,4 @@
 #include "Graphics/Texture/Array2D.hpp"
-#include "Display/SizeRatio2D.hpp"
 #include "ValueType/Undex3D.hpp"
 
 #include "Image.hpp"
@@ -26,10 +25,38 @@ Texture::Array2D & Texture::Array2D::operator=(const Array2D & other)
 
 
 
+void Texture::Array2D::Assign(VectorU3 size)
+{
+	Size = size;
+	Full3D(Size, nullptr);
+	DefaultParams();
+}
+void Texture::Array2D::Assign(unsigned int offset, const Image & img)
+{
+	if (img.W() == Size.X && img.H() == Size.Y)
+	{
+		Part3D(VectorU3(Size.X, Size.Y, 1), VectorU3(0, 0, offset), (ColorU4*)img.Data());
+	}
+	else
+	{
+		Image scaled = img.Scaled(VectorU2(Size.X, Size.Y));
+		Assign(offset, scaled);
+		scaled.Dispose();
+	}
+}
+void Texture::Array2D::Assign(unsigned int offset, const FileInfo & file)
+{
+	Image img = file.LoadImage();
+	Assign(offset, img);
+	img.Dispose();
+}
+
+
+
 void Texture::Array2D::Assign(const Image & img)
 {
-	SizeRatio = Point2D(img.W(), img.H());
-	Full3D(Undex3D(img.W(), img.H(), 1), img.Data());
+	Size = VectorU3(img.W(), img.H(), 1);
+	Full3D(Size, (ColorU4*)img.Data());
 	DefaultParams();
 }
 void Texture::Array2D::Assign(const FileInfo & file)
@@ -38,48 +65,44 @@ void Texture::Array2D::Assign(const FileInfo & file)
 	Assign(img);
 	img.Dispose();
 }
-void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<Image> & imgs)
+
+
+
+void Texture::Array2D::Assign(VectorU2 size, const Container::Member<Image> & imgs)
 {
-	SizeRatio = Point2D(w, h);
-	Full3D(Undex3D(w, h, imgs.Count()), NULL);
-	Image missing = Image::Missing(Undex2D(4, 4));
-	missing.Scale(Undex2D(w, h));
+	Assign(VectorU3(size.X, size.Y, imgs.Count()));
+	Image missing = Image::Missing(VectorU2(4, 4));
+	missing.Scale(size);
 	for (unsigned int i = 0; i < imgs.Count(); i++)
 	{
 		if (imgs[i].Empty())
 		{
-			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), missing.Data());
+			Assign(i, missing);
 		}
 		else
 		{
-			Image img = imgs[i].Scaled(Undex2D(w, h));
-			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), img.Data());
-			img.Dispose();
+			Assign(i, imgs[i]);
 		}
 	}
 	missing.Dispose();
-	DefaultParams();
 }
-void Texture::Array2D::Assign(unsigned int w, unsigned int h, const Container::Member<FileInfo> & files)
+void Texture::Array2D::Assign(VectorU2 size, const Container::Member<FileInfo> & files)
 {
-	SizeRatio = Point2D(w, h);
-	Full3D(Undex3D(w, h, files.Count()), NULL);
-	Image missing = Image::Missing(Undex2D(4, 4));
-	missing.Scale(Undex2D(w, h));
+	Assign(VectorU3(size.X, size.Y, files.Count()));
+	Image missing = Image::Missing(VectorU2(4, 4));
+	missing.Scale(size);
 	for (unsigned int i = 0; i < files.Count(); i++)
 	{
 		Image img = files[i].LoadImage();
 		if (img.Empty())
 		{
-			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), missing.Data());
+			Assign(i, missing);
 		}
 		else
 		{
-			img.Scale(Undex2D(w, h));
-			Part3D(Undex3D(w, h, 1), Undex3D(0, 0, i), img.Data());
+			Assign(i, img);
 			img.Dispose();
 		}
 	}
 	missing.Dispose();
-	DefaultParams();
 }

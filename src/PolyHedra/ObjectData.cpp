@@ -37,10 +37,3 @@ PolyHedraObjectData::PolyHedraObjectData(::PolyHedra * polyhedra)
 	, DrawFull(true)
 	, DrawWire(false)
 { }
-PolyHedraObjectData::PolyHedraObjectData(::PolyHedra * polyhedra, Trans3D trans)
-	: PolyHedra(polyhedra)
-	, Trans(trans)
-	, Remove(false)
-	, DrawFull(true)
-	, DrawWire(false)
-{ }

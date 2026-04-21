@@ -6,9 +6,9 @@
 
 class FileInfo;
 
-//struct Undex3D;
 struct VectorU3;
 typedef VectorU3 Undex3D;
+struct ColorU4;
 
 namespace Texture
 {
@@ -36,23 +36,23 @@ class Base
 
 
 	public:
-	bool Exists() const;
-	bool IsBound() const;
-	void Bind();
+	bool	Exists() const;
+	bool	IsBound() const;
+	void	Bind();
 
-	static GL::TextureID Bound(GL::TextureTarget target);
-	static void BindNone(GL::TextureTarget target);
-
-
-
-	public:
-	void Create();
-	void Delete();
+	static GL::TextureID	Bound(GL::TextureTarget target);
+	static void		BindNone(GL::TextureTarget target);
 
 
 
 	public:
-	void DefaultParams();
+	void	Create();
+	void	Delete();
+
+
+
+	public:
+	void	DefaultParams();
 	enum class WrapType : int
 	{
 		ClampToEdge = GL_CLAMP_TO_EDGE,
@@ -61,9 +61,9 @@ class Base
 		Repeat = GL_REPEAT,
 		MirrorClampToEdge = GL_MIRROR_CLAMP_TO_EDGE,
 	};
-	void WrapX(WrapType wrap);
-	void WrapY(WrapType wrap);
-	void WrapZ(WrapType wrap);
+	void	WrapX(WrapType wrap);
+	void	WrapY(WrapType wrap);
+	void	WrapZ(WrapType wrap);
 	enum class FilterMinType : int
 	{
 		Nearest = GL_NEAREST,
@@ -73,24 +73,19 @@ class Base
 		NearestMipmapLinear = GL_NEAREST_MIPMAP_LINEAR,
 		LinearMipmapLinear = GL_LINEAR_MIPMAP_LINEAR,
 	};
-	void FilterMin(FilterMinType filter);
+	void	FilterMin(FilterMinType filter);
 	enum class FilterMagType : int
 	{
 		Nearest = GL_NEAREST,
 		Linear = GL_LINEAR,
 	};
-	void FilterMag(FilterMagType filter);
-
-	void Full3D(Undex3D size, const void * data);
-	void Part3D(Undex3D size, Undex3D offset, const void * data);
+	void	FilterMag(FilterMagType filter);
 
 
 
 	public:
-	//static Base Tex2DArray(const Image * img);
-	//static Base Tex2DArray(const FileInfo & file);
-	//static Base Tex2DArray(unsigned int w, unsigned int h, const Container::Member<Image*> & imgs);
-	//static Base Tex2DArray(unsigned int w, unsigned int h, const Container::Member<FileInfo> & files);
+	void	Full3D(Undex3D size, const ColorU4 * data);
+	void	Part3D(Undex3D size, Undex3D offset, const ColorU4 * data);
 };
 };
 

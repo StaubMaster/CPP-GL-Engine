@@ -15,13 +15,10 @@ struct VectorI3 : public Vector_3<int, VectorI3>
 	VectorI3(int value);
 	VectorI3(int x, int y, int z);
 
-	VectorI3(const VectorF3 & other);
-	VectorI3(const VectorU3 & other);
 	VectorI3(const VectorI3 & other);
-
-	VectorI3 & operator=(const VectorF3 & other);
-	VectorI3 & operator=(const VectorU3 & other);
 	VectorI3 & operator=(const VectorI3 & other);
+
+	template<typename OtherVectorType> VectorI3(const OtherVectorType & other) : Vector_3(other) { }
 
 
 

@@ -1,16 +1,18 @@
 #ifndef  WINDOW_HPP
 # define WINDOW_HPP
 
-# include "ValueType/ColorF4.hpp"
-# include "ValueType/Point2D.hpp"
-
-# include "Miscellaneous/Function/Pointer.hpp"
+# include "FrameTime.hpp"
 
 # include "Display/DisplaySize.hpp"
 # include "Display/DisplayPosition.hpp"
 
 # include "User/KeyBoardManager.hpp"
 # include "User/MouseManager.hpp"
+
+# include "ValueType/ColorF4.hpp"
+# include "ValueType/Point2D.hpp"
+
+# include "Miscellaneous/Function/Pointer.hpp"
 
 
 
@@ -32,25 +34,38 @@ class Window
 	GLFWwindow * glfw_window;
 
 	public:
-	unsigned long long FrameNumberTerminate;
+	bool				LoopIsDone;
+	unsigned long long	FrameNumberTerminate;
+
+	// FrameTime ?
 
 	public:
-	FunctionPointer<double>	FrameCallBack;
-	FunctionPointer<>		InitCallBack;
-	FunctionPointer<>		FreeCallBack;
-	FunctionPointer<const DisplaySize &>		ResizeCallBack;
-
-	public:
-	//UserParameter::KeyBoard::EventManager		KeyBoardManager;
-	//UserParameter::Mouse::EventManager		MouseManager;
-	::KeyBoardManager	KeyBoardManager;
-	::MouseManager		MouseManager;
+	DisplaySize		Size;
 
 	public:
 	ColorF4			DefaultColor;
-	
+
 	public:
-	DisplaySize		Size;
+	FunctionPointer<>				CallBack_Init;
+	FunctionPointer<>				CallBack_Free;
+	FunctionPointer<DisplaySize>	CallBack_Resize;
+
+	//  Frame() / Draw()
+	//    just Draws
+	//    maybe minimal Updates, like Uniforms ?
+	//  UpdateBuffers()
+	//    puts Data into Buffers
+	//    puts data into Uniforms ?
+	//    Data needs to be ready
+	//  Update()
+	//    UpdateGeneral()
+	//      Updates non OpenGL stuff
+	//      make this one so it could be run on a seperate Thread
+	FunctionPointer<FrameTime>		CallBack_Frame;
+
+	public:
+	::KeyBoardManager	KeyBoardManager;
+	::MouseManager		MouseManager;
 
 	public:
 	Window();
@@ -76,23 +91,23 @@ class Window
 	void UpdateSize();
 
 	private:
-	static void Callback_Error(int error, const char * decription);
+	static void Callback_GLFW_Error(int error, const char * decription);
 
 	private:
-	static void Callback_Resize(GLFWwindow * window, int w, int h);
-	static void Callback_CursorClick(GLFWwindow * window, int button, int action, int mods);
-	static void Callback_CursorScroll(GLFWwindow * window, double xOffset, double yOffset);
-	static void Callback_CursorMove(GLFWwindow * window, double xPos, double yPos);
-	static void Callback_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
-	static void Callback_Text(GLFWwindow * window, unsigned int codepoint);
+	static void Callback_GLFW_Resize(GLFWwindow * window, int w, int h);
+	static void Callback_GLFW_CursorClick(GLFWwindow * window, int button, int action, int mods);
+	static void Callback_GLFW_CursorScroll(GLFWwindow * window, double xOffset, double yOffset);
+	static void Callback_GLFW_CursorMove(GLFWwindow * window, double xPos, double yPos);
+	static void Callback_GLFW_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
+	static void Callback_GLFW_Text(GLFWwindow * window, unsigned int codepoint);
 
 	private:
-	void Callback_Resize(int w, int h);
-	void Callback_CursorClick(int button, int action, int mods);
-	void Callback_CursorScroll(double xOffset, double yOffset);
-	void Callback_CursorMove(double xPos, double yPos);
-	void Callback_Key(int key, int scancode, int action, int mods);
-	void Callback_Text(unsigned int codepoint);
+	void Callback_GLFW_Resize(int w, int h);
+	void Callback_GLFW_CursorClick(int button, int action, int mods);
+	void Callback_GLFW_CursorScroll(double xOffset, double yOffset);
+	void Callback_GLFW_CursorMove(double xPos, double yPos);
+	void Callback_GLFW_Key(int key, int scancode, int action, int mods);
+	void Callback_GLFW_Text(unsigned int codepoint);
 
 	public:
 	Point3D MoveFromKeys() const;
@@ -106,7 +121,6 @@ class Window
 
 	public:
 	void Run();
-	void Term();
 };
 
 #endif

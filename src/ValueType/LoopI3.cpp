@@ -46,6 +46,10 @@ VectorI3 LoopI3::Max() const
 	if (MaxExclude.GetZ()) { idx.Z--; }
 	return idx;
 }
+VectorI3 LoopI3::Size() const
+{
+	return (Min() - Max());
+}
 
 
 
