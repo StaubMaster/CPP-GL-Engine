@@ -19,7 +19,6 @@ struct MouseManager
 	MouseState MouseStates[8];
 
 	public:
-	MouseState & operator[](const MouseButtons & button);
 	const MouseState & operator[](const MouseButtons & button) const;
 
 	public:

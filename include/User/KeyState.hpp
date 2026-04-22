@@ -14,6 +14,11 @@ struct KeyState
 
 	void	Tick();
 	void	Update(Action action);
+
+	bool	operator==(::Keys key) const;
+	bool	operator!=(::Keys key) const;
+	bool	operator==(::State state) const;
+	bool	operator!=(::State state) const;
 };
 
 #endif

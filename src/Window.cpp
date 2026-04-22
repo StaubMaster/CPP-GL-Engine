@@ -36,8 +36,8 @@ GLFWwindow * Window::NormalWindow()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-	GLFWwindow * win = glfwCreateWindow(640, 480, "Window", NULL, NULL);
-	if (win == NULL)
+	GLFWwindow * win = glfwCreateWindow(640, 480, "Window", nullptr, nullptr);
+	if (win == nullptr)
 	{
 		Debug::Log << "Window Making failed" << Debug::Done;
 		throw "Window Failed";
@@ -86,8 +86,12 @@ void Window::MakeUserParemeters()
 
 
 
+Window::~Window()
+{
+	Delete();
+}
 Window::Window()
-	: glfw_window(NULL)
+	: glfw_window(nullptr)
 	, LoopIsDone(false)
 	, FrameNumberTerminate(0xFFFFFFFFFFFFFFFF)
 	, DefaultColor(0.5f, 0.5f, 0.5f)
@@ -105,8 +109,6 @@ Window::Window()
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "  ++++  " << "Window" << "  done  " << Debug::Done;
 }
-Window::~Window()
-{ }
 
 Window::Window(const Window & other)
 	: glfw_window(other.glfw_window)
@@ -135,6 +137,12 @@ Window & Window::operator=(const Window & other)
 	return *this;
 }
 
+
+
+bool Window::Exists() const
+{
+	return (glfw_window != nullptr);
+}
 void Window::Create()
 {
 	Debug::Log << Debug::Tabs << "Window::Create()" << "  ....  " << Debug::Done;
@@ -147,15 +155,23 @@ void Window::Create()
 }
 void Window::Delete()
 {
+	Debug::Log << Debug::Tabs << "Window::Delete()" << "  ....  " << Debug::Done;
+	Debug::Log << Debug::TabInc;
 	glfwDestroyWindow(glfw_window);
-	glfw_window = NULL;
+	glfw_window = nullptr;
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "Window::Delete()" << "  done  " << Debug::Done;
+}
+void Window::Quit()
+{
+	glfwSetWindowShouldClose(glfw_window, 1);
 }
 
 
 
 void Window::UpdateSize()
 {
-	if (glfw_window == NULL) { return; }
+	if (glfw_window == nullptr) { return; }
 
 	int w, h;
 
@@ -286,7 +302,7 @@ void Window::RunGL_Setup()
 }
 void Window::Run_Init()
 {
-	if (CallBack_Init.Function != NULL)
+	if (CallBack_Init.Function != nullptr)
 	{
 		Debug::Log << "Window Init() ..." << Debug::Done;
 		CallBack_Init();
@@ -295,7 +311,7 @@ void Window::Run_Init()
 }
 void Window::Run_Free()
 {
-	if (CallBack_Free.Function != NULL)
+	if (CallBack_Free.Function != nullptr)
 	{
 		Debug::Log << "Window Free() ..." << Debug::Done;
 		CallBack_Free();
@@ -303,7 +319,13 @@ void Window::Run_Free()
 	}
 }
 
-void Window::Run()
+
+
+void Window::ExitLoop()
+{
+	LoopIsDone = true;
+}
+void Window::RunLoop()
 {
 	try
 	{
@@ -315,7 +337,8 @@ void Window::Run()
 		std::cout << "Window Loop ..." << '\n';
 		FrameTime frame_time(64.0f, 4.0f / 64.0f);
 		frame_time.TimeNow = glfwGetTime();
-		while (!glfwWindowShouldClose(glfw_window))
+		LoopIsDone = false;
+		while (!LoopIsDone)
 		{
 			frame_time.Update(glfwGetTime());
 			if (frame_time.Ready)
@@ -334,9 +357,9 @@ void Window::Run()
 			{
 				LoopIsDone = true;
 			}
-			if (LoopIsDone)
+			if (glfwWindowShouldClose(glfw_window))
 			{
-				glfwSetWindowShouldClose(glfw_window, 1);
+				LoopIsDone = true;
 			}
 		}
 		Debug::Log << "Window Loop done" << Debug::Done;

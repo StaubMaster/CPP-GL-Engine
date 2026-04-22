@@ -33,11 +33,10 @@ class Window
 	public:
 	GLFWwindow * glfw_window;
 
-	public:
+	private:
 	bool				LoopIsDone;
+	public:
 	unsigned long long	FrameNumberTerminate;
-
-	// FrameTime ?
 
 	public:
 	DisplaySize		Size;
@@ -67,21 +66,21 @@ class Window
 	::KeyBoardManager	KeyBoardManager;
 	::MouseManager		MouseManager;
 
+	const MouseState & operator[](const MouseButtons & button) const;
+	const KeyState & operator[](const Keys & key) const;
+
 	public:
+	~Window();
 	Window();
 	Window(const Window & other);
 	Window & operator=(const Window & other);
-	~Window();
 
+	// GLFW Window Stuff
 	public:
-//	bool Exists() const;
-	void Create();
-	void Delete();
-
-/*
-	make sure that all functions that require the window to exist
-	check that it actually exists
-*/
+	bool	Exists() const;
+	void	Create();
+	void	Delete();
+	void	Quit();
 
 	public:
 	//void ChangeSize(Point2D size);
@@ -120,7 +119,8 @@ class Window
 	void Run_Free();
 
 	public:
-	void Run();
+	void	ExitLoop();
+	void	RunLoop();
 };
 
 #endif

@@ -20,6 +20,11 @@ struct MouseState
 
 	void	Tick();
 	void	Update(DisplayPosition pos, Action action);
+
+	bool	operator==(::MouseButtons button) const;
+	bool	operator!=(::MouseButtons button) const;
+	bool	operator==(::State state) const;
+	bool	operator!=(::State state) const;
 };
 
 #endif

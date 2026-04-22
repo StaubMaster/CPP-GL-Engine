@@ -5,17 +5,6 @@
 
 
 
-MouseState & MouseManager::operator[](const MouseButtons & button)
-{
-	for (unsigned int i = 0; i < 8; i++)
-	{
-		if (MouseStates[i].Button == button)
-		{
-			return MouseStates[i];
-		}
-	}
-	throw "MouseManager[]: MouseButton not found.";
-}
 const MouseState & MouseManager::operator[](const MouseButtons & button) const
 {
 	for (unsigned int i = 0; i < 8; i++)

@@ -44,3 +44,10 @@ void MouseState::Update(DisplayPosition pos, Action action)
 		State = State::Release;
 	}
 }
+
+
+
+bool MouseState::operator==(::MouseButtons button) const { return (Button == button); }
+bool MouseState::operator!=(::MouseButtons button) const { return (Button != button); }
+bool MouseState::operator==(::State state) const { return (State == state); }
+bool MouseState::operator!=(::State state) const { return (State == state); }

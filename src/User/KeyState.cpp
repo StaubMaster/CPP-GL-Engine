@@ -36,3 +36,10 @@ void KeyState::Update(Action action)
 		State = State::Release;
 	}
 }
+
+
+
+bool KeyState::operator==(::Keys key) const { return (Key == key); }
+bool KeyState::operator!=(::Keys key) const { return (Key != key); }
+bool KeyState::operator==(::State state) const { return (State == state); }
+bool KeyState::operator!=(::State state) const { return (State != state); }
