@@ -166,6 +166,7 @@ ATTRIBUTE := \
 	Graphics/Attribute/Point2D.cpp \
 	Graphics/Attribute/Point3D.cpp \
 	Graphics/Attribute/Point4D.cpp \
+	Graphics/Attribute/AxisBox2D.cpp \
 	Graphics/Attribute/ColorF4.cpp \
 \
 	Graphics/Attribute/Log.cpp

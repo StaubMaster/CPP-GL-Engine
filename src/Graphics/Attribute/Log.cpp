@@ -12,6 +12,8 @@
 #include "Graphics/Attribute/Base/Float3x3.hpp"
 #include "Graphics/Attribute/Base/Float4x4.hpp"
 
+#include "Graphics/Attribute/AxisBox2D.hpp"
+
 
 
 void Attribute::Location::LogInfo() const
@@ -76,4 +78,12 @@ void Attribute::Float4x4::LogInfo() const
 	Location2.LogInfo();
 	Location3.LogInfo();
 //	Debug::Log << Debug::TabDec;
+}
+
+
+
+void Attribute::AxisBox2D::LogInfo() const
+{
+	Min.LogInfo();
+	Max.LogInfo();
 }
