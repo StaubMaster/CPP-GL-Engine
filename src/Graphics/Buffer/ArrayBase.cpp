@@ -10,24 +10,25 @@
 
 void BufferArray::Base::LogInfo(bool self) const
 {
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Buffer Array Info\n";
-		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Buffers[" << Buffers.Count() << "]\n";
-	Debug::Log << Debug::TabInc;
-	for (unsigned int i = 0; i < Buffers.Count(); i++)
-	{
-		Buffers[i] -> LogInfo(false);
-	}
-	Debug::Log << Debug::TabDec;
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}
+	(void)self;
+	//if (self)
+	//{
+	//	Debug::Log << Debug::Tabs << "Buffer Array Info\n";
+	//	Debug::Log << Debug::TabInc;
+	//}
+	//Debug::Log << Debug::Tabs << "ID " << ID << '\n';
+	//Debug::Log << Debug::Tabs << "Buffers[" << Buffers.Count() << "]\n";
+	//Debug::Log << Debug::TabInc;
+	//for (unsigned int i = 0; i < Buffers.Count(); i++)
+	//{
+	//	Buffers[i] -> LogInfo(false);
+	//}
+	//Debug::Log << Debug::TabDec;
+	//if (self)
+	//{
+	//	Debug::Log << Debug::TabDec;
+	//	Debug::Log << Debug::Done;
+	//}
 }
 
 

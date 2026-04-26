@@ -11,12 +11,12 @@
 void Buffer::Element::LogInfo(bool self) const
 {
 	(void)self;
-	Debug::Log << Debug::Tabs << "Buffer::Element\n";
-	Debug::Log << Debug::TabInc;
-	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
-	Debug::Log << Debug::Tabs << "IndexType: " << IndexType << '\n';
-	Debug::Log << Debug::TabDec;
+	//Debug::Log << Debug::Tabs << "Buffer::Element\n";
+	//Debug::Log << Debug::TabInc;
+	//Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
+	//Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
+	//Debug::Log << Debug::Tabs << "IndexType: " << IndexType << '\n';
+	//Debug::Log << Debug::TabDec;
 }
 
 Buffer::Element::~Element() { }

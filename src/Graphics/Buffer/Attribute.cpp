@@ -11,17 +11,17 @@
 void Buffer::Attribute::LogInfo(bool self) const
 {
 	(void)self;
-	Debug::Log << Debug::Tabs << "Buffer::Attribute\n";
-	Debug::Log << Debug::TabInc;
-	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
-	Debug::Log << Debug::Tabs << "Divisor: " << Divisor << '\n';
-	Debug::Log << Debug::Tabs << "Stride: " << Stride << '\n';
-	for (unsigned int i = 0; i < Attributes.Count(); i++)
-	{
-		Attributes[i] -> LogInfo();
-	}
-	Debug::Log << Debug::TabDec;
+	//Debug::Log << Debug::Tabs << "Buffer::Attribute\n";
+	//Debug::Log << Debug::TabInc;
+	//Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
+	//Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
+	//Debug::Log << Debug::Tabs << "Divisor: " << Divisor << '\n';
+	//Debug::Log << Debug::Tabs << "Stride: " << Stride << '\n';
+	//for (unsigned int i = 0; i < Attributes.Count(); i++)
+	//{
+	//	Attributes[i] -> LogInfo();
+	//}
+	//Debug::Log << Debug::TabDec;
 }
 
 

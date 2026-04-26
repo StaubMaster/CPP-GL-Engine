@@ -10,17 +10,18 @@
 
 void Buffer::Base::LogInfo(bool self) const
 {
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Buffer Info\n";
-		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}
+	(void)self;
+	//if (self)
+	//{
+	//	Debug::Log << Debug::Tabs << "Buffer Info\n";
+	//	Debug::Log << Debug::TabInc;
+	//}
+	//Debug::Log << Debug::Tabs << "ID " << ID << '\n';
+	//if (self)
+	//{
+	//	Debug::Log << Debug::TabDec;
+	//	Debug::Log << Debug::Done;
+	//}
 }
 
 
