@@ -15,7 +15,8 @@ FANCY_NAME := Light
 NAME := test.exe
 
 FILES_SRC := \
-	EulerMatrixStuff.cpp
+	TransformationScaling.cpp
+#	EulerMatrixStuff.cpp
 #	Container.cpp
 #	EntryContainer.cpp
 #	Angle3D.cpp
