@@ -25,6 +25,17 @@ struct DisplaySize
 
 	Point2D Convert(DisplayPosition pos) const;
 	DisplayPosition Convert(Point2D pos) const;
+
+
+
+	DisplayPosition		PosFromWindowFull(VectorF2 pos) const;
+	DisplayPosition		PosFromBufferFull(VectorF2 pos) const;
+	DisplayPosition		PosFromNormalRel(VectorF2 pos) const;
+	DisplayPosition		PosFromNormalAbs(VectorF2 pos) const;
+
+	//DisplaySize		SizeFromBufferFull(VectorF2 size) const;
+	//DisplaySize		SizeFromNormalAbs(VectorF2 size) const;
+	//DisplaySize		SizeFromNormalRel(VectorF2 size) const;
 };
 
 #endif

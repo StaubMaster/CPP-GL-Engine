@@ -75,6 +75,7 @@ DISPLAY := \
 	Display/DisplaySize.cpp \
 	Display/PixelPosition.cpp \
 	Display/DisplayPosition.cpp \
+	Display/NormalPosition.cpp \
 
 DISPLAY_SRC := $(addprefix $(DIR_SRC)/,$(DISPLAY))
 DISPLAY_OBJ := $(addprefix $(DIR_OBJ)/,$(DISPLAY:.cpp=.o))

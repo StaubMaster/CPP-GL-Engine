@@ -45,8 +45,8 @@ void DisplaySize::Change(Point2D windowSize, Point2D bufferSize)
 Point2D DisplaySize::Convert(DisplayPosition pos) const
 {
 	return Point2D(
-		+pos.NormalRel.X / Ratio.Value.X,
-		-pos.NormalRel.Y / Ratio.Value.Y
+		+pos.Normal.Rel.X / Ratio.Value.X,
+		-pos.Normal.Rel.Y / Ratio.Value.Y
 	);
 }
 DisplayPosition DisplaySize::Convert(Point2D pos) const
@@ -58,3 +58,41 @@ DisplayPosition DisplaySize::Convert(Point2D pos) const
 		), *this
 	);
 }
+
+
+
+DisplayPosition DisplaySize::PosFromWindowFull(VectorF2 pos) const
+{
+	DisplayPosition display_pos;
+	display_pos.Window = Window.PosFromFull(pos);
+	display_pos.Normal = Window.Convert(display_pos.Window);
+	display_pos.Buffer = Buffer.Convert(display_pos.Normal);
+	return display_pos;
+}
+DisplayPosition DisplaySize::PosFromBufferFull(VectorF2 pos) const
+{
+	DisplayPosition display_pos;
+	display_pos.Buffer = Buffer.PosFromFull(pos);
+	display_pos.Normal = Buffer.Convert(display_pos.Buffer);
+	display_pos.Window = Window.Convert(display_pos.Normal);
+	return display_pos;
+}
+DisplayPosition DisplaySize::PosFromNormalAbs(VectorF2 pos) const
+{
+	DisplayPosition display_pos;
+	display_pos.Normal = NormalPosition::FromAbs(pos);
+	display_pos.Window = Window.Convert(display_pos.Normal);
+	display_pos.Buffer = Buffer.Convert(display_pos.Normal);
+	return display_pos;
+}
+DisplayPosition DisplaySize::PosFromNormalRel(VectorF2 pos) const
+{
+	DisplayPosition display_pos;
+	display_pos.Normal = NormalPosition::FromRel(pos);
+	display_pos.Window = Window.Convert(display_pos.Normal);
+	display_pos.Buffer = Buffer.Convert(display_pos.Normal);
+	return display_pos;
+}
+
+
+

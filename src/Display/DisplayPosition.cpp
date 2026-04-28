@@ -6,22 +6,19 @@
 DisplayPosition::~DisplayPosition()
 { }
 DisplayPosition::DisplayPosition()
-	: NormalAbs()
-	, NormalRel()
+	: Normal()
 	, Window()
 	, Buffer()
 { }
 
 DisplayPosition::DisplayPosition(const DisplayPosition & other)
-	: NormalAbs(other.NormalAbs)
-	, NormalRel(other.NormalRel)
+	: Normal(other.Normal)
 	, Window(other.Window)
 	, Buffer(other.Buffer)
 { }
 DisplayPosition & DisplayPosition::operator=(const DisplayPosition & other)
 {
-	NormalAbs = other.NormalAbs;
-	NormalRel = other.NormalRel;
+	Normal = other.Normal;
 	Window = other.Window;
 	Buffer = other.Buffer;
 	return *this;
@@ -29,35 +26,35 @@ DisplayPosition & DisplayPosition::operator=(const DisplayPosition & other)
 
 
 
-void DisplayPosition::ChangeWindowCorner(Point2D pos, DisplaySize size)
+/*void DisplayPosition::ChangeWindowCorner(Point2D pos, DisplaySize size)
 {
 	Window.Corner = pos;
 	Window.Center = Window.Corner - size.Window.Half;
 
-	NormalAbs = Window.Corner / size.Window.Full;
-	NormalRel = Window.Center / size.Window.Half;
+	Normal.Abs = Window.Corner / size.Window.Full;
+	Normal.Rel = Window.Center / size.Window.Half;
 
-	Buffer.Corner = NormalAbs * size.Buffer.Full;
-	Buffer.Center = NormalRel * size.Buffer.Half;
-}
+	Buffer.Corner = Normal.Abs * size.Buffer.Full;
+	Buffer.Center = Normal.Rel * size.Buffer.Half;
+}*/
 void DisplayPosition::ChangeNormalRel(Point2D pos, DisplaySize size)
 {
-	NormalRel = pos;
-	NormalAbs = (pos + 1) / 2;
+	Normal.Rel = pos;
+	Normal.Abs = (pos + 1) / 2;
 
-	Window.Corner = NormalAbs * size.Window.Full;
-	Window.Center = NormalRel * size.Window.Half;
+	Window.Corner = Normal.Abs * size.Window.Full;
+	Window.Center = Normal.Rel * size.Window.Half;
 
-	Buffer.Corner = NormalAbs * size.Buffer.Full;
-	Buffer.Center = NormalRel * size.Buffer.Half;
+	Buffer.Corner = Normal.Abs * size.Buffer.Full;
+	Buffer.Center = Normal.Rel * size.Buffer.Half;
 }
 
-DisplayPosition DisplayPosition::FromWindowCorner(Point2D pos, DisplaySize size)
+/*DisplayPosition DisplayPosition::FromWindowCorner(Point2D pos, DisplaySize size)
 {
 	DisplayPosition display_pos;
 	display_pos.ChangeWindowCorner(pos, size);
 	return display_pos;
-}
+}*/
 DisplayPosition DisplayPosition::FromNormalRel(Point2D pos, DisplaySize size)
 {
 	DisplayPosition display_pos;

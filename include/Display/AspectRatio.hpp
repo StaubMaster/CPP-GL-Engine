@@ -12,7 +12,7 @@
 */
 struct AspectRatio
 {
-	Point2D Value;
+	Point2D		Value;
 
 	~AspectRatio();
 	AspectRatio();

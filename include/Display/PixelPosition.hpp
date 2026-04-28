@@ -5,8 +5,8 @@
 
 struct PixelPosition
 {
-	Point2D Corner;
-	Point2D Center;
+	Point2D		Corner;
+	Point2D		Center;
 
 	~PixelPosition();
 	PixelPosition();
