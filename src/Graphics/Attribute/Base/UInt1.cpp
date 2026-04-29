@@ -1,5 +1,5 @@
 #include "Graphics/Attribute/UInt1.hpp"
-#include "Graphics/Buffer/Attribute.hpp"
+#include "Graphics/Buffer/Array.hpp"
 #include "OpenGL/openGL.h"
 
 

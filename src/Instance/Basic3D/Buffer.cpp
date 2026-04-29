@@ -7,8 +7,8 @@
 
 Instance::Basic3D::Buffer::~Buffer() { }
 
-Instance::Basic3D::Buffer::Buffer(BufferArray::Base & buffer_array)
-	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StreamDraw, 1, sizeof(Data))
+Instance::Basic3D::Buffer::Buffer(VertexArray & vertex_array)
+	: ::Buffer::Array(vertex_array, GL::BufferDataUsage::StreamDraw, 1, sizeof(Basic3D::Data))
 	, Trans()
 	, Normal()
 {

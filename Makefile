@@ -146,9 +146,9 @@ MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
 
 BUFFER := \
 	Graphics/Buffer/Base.cpp \
+	Graphics/Buffer/Array.cpp \
 	Graphics/Buffer/Element.cpp \
-	Graphics/Buffer/Attribute.cpp \
-	Graphics/Buffer/ArrayBase.cpp
+	Graphics/Buffer/VertexArray.cpp
 BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
 BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
 

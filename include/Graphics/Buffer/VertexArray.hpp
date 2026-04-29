@@ -7,9 +7,7 @@
 
 namespace Buffer { class Base; };
 
-namespace BufferArray
-{
-class Base
+class VertexArray
 {
 	protected:
 	GL::VertexArrayID ID;
@@ -22,11 +20,11 @@ class Base
 
 
 	public:
-	virtual ~Base();
-	Base();
+	virtual ~VertexArray();
+	VertexArray();
 
-	Base(const Base & other);
-	Base & operator=(const Base & other);
+	VertexArray(const VertexArray & other);
+	VertexArray & operator=(const VertexArray & other);
 
 
 
@@ -41,14 +39,13 @@ class Base
 
 
 	public:
-	void Create();
-	void Delete();
+	void	Create();
+	void	Delete();
 
 
 
 	public:
-	virtual void Draw();
-};
+	virtual void	Draw(); // = 0; ?
 };
 
 #endif

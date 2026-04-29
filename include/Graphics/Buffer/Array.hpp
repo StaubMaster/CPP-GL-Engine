@@ -12,28 +12,27 @@
 
 namespace Buffer
 {
-class Attribute : public Base
+class Array : public Base
 {
 	public:
-	GL::BufferDataUsage		Usage;
 	GL::AttributeDivisor	Divisor;
-	unsigned int			Stride;
-	unsigned int			DrawCount;
+	GL::AttributeStride		Stride;
+	unsigned int			Count;
 	Container::Binary<::Attribute::Base*>	Attributes;
 
 	public:
 	void LogInfo(bool self = true) const override;
 
 	public:
-	virtual ~Attribute();
-	Attribute(::BufferArray::Base & buffer_array, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, GL::AttributeStride stride);
+	virtual ~Array();
+	Array(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, GL::AttributeStride stride);
 
-	Attribute(const Attribute & other);
-	Attribute & operator=(const Attribute & other);
+	Array(const Array & other);
+	Array & operator=(const Array & other);
 
 	public:
-	void Init() override;
-	void Change(const Container::Void & data);
+	void	Init() override;
+	void	Data(const Container::Void & data) override;
 };
 };
 

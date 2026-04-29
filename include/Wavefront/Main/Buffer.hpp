@@ -1,7 +1,7 @@
 #ifndef  WAVEFRONT_OBJ_MAIN_BUFFER_HPP
 # define WAVEFRONT_OBJ_MAIN_BUFFER_HPP
 
-# include "Graphics/Buffer/Attribute.hpp"
+# include "Graphics/Buffer/Array.hpp"
 
 # include "Graphics/Attribute/Point4D.hpp"
 # include "Graphics/Attribute/Point3D.hpp"
@@ -14,7 +14,7 @@ namespace Wavefront
 {
 namespace Main
 {
-class Buffer : public ::Buffer::Attribute
+class Buffer : public ::Buffer::Array
 {
 	public:
 	::Attribute::Point4D	Position;
@@ -29,7 +29,7 @@ class Buffer : public ::Buffer::Attribute
 
 	public:
 	~Buffer();
-	Buffer(BufferArray::Base & buffer_array);
+	Buffer(VertexArray & vertex_array);
 
 	Buffer(const Buffer & other) = delete;
 	Buffer & operator=(const Buffer & other) = delete;

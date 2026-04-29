@@ -5,8 +5,8 @@
 
 
 PolyGonWire::Main::Buffer::~Buffer() { }
-PolyGonWire::Main::Buffer::Buffer(BufferArray::Base & buffer_array)
-	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyGon::Corner))
+PolyGonWire::Main::Buffer::Buffer(VertexArray & vertex_array)
+	: ::Buffer::Array(vertex_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyGon::Corner))
 	, Pos()
 	, Col()
 {

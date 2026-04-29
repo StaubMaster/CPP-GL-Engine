@@ -3,39 +3,45 @@
 
 # include "OpenGLTypes.hpp"
 
-namespace BufferArray { class Base; };
+class VertexArray;
+
+namespace Container { class Void; };
 
 namespace Buffer
 {
 class Base
 {
 	protected:
-	::BufferArray::Base & BufferArray;
-	GL::BufferTarget Target;
-	GL::BufferID ID;
+	VertexArray &			BufferArray; // VertexBufferArray
+	GL::BufferTarget		Target;
+	GL::BufferDataUsage		Usage;
+	GL::BufferID			ID;
 
 	public:
 	virtual void LogInfo(bool self = true) const;
 
-
-
 	public:
 	virtual ~Base();
-	Base(::BufferArray::Base & buffer_array, GL::BufferTarget target);
+	Base(VertexArray & vertex_array, GL::BufferTarget target, GL::BufferDataUsage usage);
 
 	Base(const Base & other);
 	Base & operator=(const Base & other);
 
+	public:
+	bool	Exists() const;
+	void	Create();
+	void	Delete();
+
+	void	Bind();
+
 
 
 	public:
-	virtual void Init() = 0;
+	virtual void	Init();
 
 	public:
-	void Create();
-	void Delete();
-
-	void Bind();
+	void			Data();
+	virtual void	Data(const Container::Void & data);
 };
 };
 

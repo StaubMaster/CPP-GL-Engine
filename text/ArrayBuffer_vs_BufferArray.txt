@@ -13,8 +13,8 @@ BufferArray:
 rename	Buffer::Attribute
 to		Buffer::ArrayBuffer
 
-rename	BufferArray::Base
-to		BufferArray::Base
+rename	VertexArray
+to		VertexArray
 
 
 

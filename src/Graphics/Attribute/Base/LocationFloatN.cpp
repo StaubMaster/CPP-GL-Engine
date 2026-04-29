@@ -1,5 +1,5 @@
 #include "Graphics/Attribute/Base/LocationFloatN.hpp"
-#include "Graphics/Buffer/Attribute.hpp"
+#include "Graphics/Buffer/Array.hpp"
 #include "OpenGL.hpp"
 
 

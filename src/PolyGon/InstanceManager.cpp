@@ -17,7 +17,7 @@ PolyGonInstanceManager::PolyGonInstanceManager()
 	, UpdateFullMain(false)
 	, UpdateWireMain(false)
 	, BufferFull(GL::DrawMode::Triangles)
-	, BufferWire(GL::DrawMode::Lines, 2)
+	, BufferWire(GL::DrawMode::Lines)
 	, InstancesFull()
 	, InstancesWire()
 { }
@@ -47,7 +47,7 @@ PolyGonInstanceManager::PolyGonInstanceManager(::PolyGon * PolyGon)
 	, UpdateFullMain(true)
 	, UpdateWireMain(true)
 	, BufferFull(GL::DrawMode::Triangles)
-	, BufferWire(GL::DrawMode::Lines, 2)
+	, BufferWire(GL::DrawMode::Lines)
 	, InstancesFull()
 	, InstancesWire()
 { }
@@ -104,12 +104,12 @@ void PolyGonInstanceManager::UpdateBufferFullMain()
 	if (PolyGon == nullptr) { return; }
 
 	Container::Pointer<PolyGonFull::Main::Data> data = PolyGon -> ToFullData();
-	BufferFull.Main.Change(data);
+	BufferFull.Main.Data(data);
 	data.Delete();
 }
 void PolyGonInstanceManager::UpdateBufferFullInst()
 {
-	BufferFull.Inst.Change(InstancesFull);
+	BufferFull.Inst.Data(InstancesFull);
 }
 void PolyGonInstanceManager::DrawFull()
 {
@@ -128,12 +128,12 @@ void PolyGonInstanceManager::UpdateBufferWireMain()
 {
 	if (PolyGon == nullptr) { return; }
 
-	BufferWire.Main.Change(PolyGon -> Corners);
-	BufferWire.Elem.Change(PolyGon -> Edges);
+	BufferWire.Main.Data(PolyGon -> Corners);
+	BufferWire.Elem.Data(PolyGon -> Edges);
 }
 void PolyGonInstanceManager::UpdateBufferWireInst()
 {
-	BufferWire.Inst.Change(InstancesWire);
+	BufferWire.Inst.Data(InstancesWire);
 }
 void PolyGonInstanceManager::DrawWire()
 {

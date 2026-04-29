@@ -1,4 +1,4 @@
-#include "Graphics/Buffer/ArrayBase.hpp"
+#include "Graphics/Buffer/VertexArray.hpp"
 #include "Graphics/Buffer/Base.hpp"
 #include "OpenGL.hpp"
 
@@ -8,7 +8,7 @@
 
 
 
-void BufferArray::Base::LogInfo(bool self) const
+void VertexArray::LogInfo(bool self) const
 {
 	(void)self;
 	//if (self)
@@ -33,18 +33,19 @@ void BufferArray::Base::LogInfo(bool self) const
 
 
 
-BufferArray::Base::~Base()
+VertexArray::~VertexArray()
 { }
-BufferArray::Base::Base()
+VertexArray::VertexArray()
 	: ID(0)
 	, Buffers()
 { }
 
-BufferArray::Base::Base(const Base & other)
+VertexArray::VertexArray(const VertexArray & other)
 	: ID(other.ID)
 //	, Buffers(other.Buffers.Copy())
+	, Buffers()
 { }
-BufferArray::Base & BufferArray::Base::operator=(const Base & other)
+VertexArray & VertexArray::operator=(const VertexArray & other)
 {
 	ID = other.ID;
 	return *this;
@@ -52,9 +53,9 @@ BufferArray::Base & BufferArray::Base::operator=(const Base & other)
 
 
 
-bool BufferArray::Base::Exists() const { return (ID != 0); }
-bool BufferArray::Base::IsBound() const { return (Bound() == ID); }
-void BufferArray::Base::Bind()
+bool VertexArray::Exists() const { return (ID != 0); }
+bool VertexArray::IsBound() const { return (Bound() == ID); }
+void VertexArray::Bind()
 {
 	if (Exists() && !IsBound())
 	{
@@ -62,20 +63,18 @@ void BufferArray::Base::Bind()
 	}
 }
 
-GL::VertexArrayID BufferArray::Base::Bound()
+GL::VertexArrayID VertexArray::Bound()
 {
-	int ID;
-	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &ID);
-	return ID;
+	return GL::GetIntegerv(GL::ParameterName::VertexArrayBinding);
 }
-void BufferArray::Base::BindNone()
+void VertexArray::BindNone()
 {
 	GL::BindVertexArray(0);
 }
 
 
 
-void BufferArray::Base::Create()
+void VertexArray::Create()
 {
 	if (ID != 0) { return; }
 
@@ -91,7 +90,7 @@ void BufferArray::Base::Create()
 	Debug::Log << "Create BufferArray: " << ID << Debug::Done;
 	LogInfo();
 }
-void BufferArray::Base::Delete()
+void VertexArray::Delete()
 {
 	if (ID == 0) { return; }
 
@@ -111,4 +110,4 @@ void BufferArray::Base::Delete()
 
 
 
-void BufferArray::Base::Draw() { }
+void VertexArray::Draw() { }

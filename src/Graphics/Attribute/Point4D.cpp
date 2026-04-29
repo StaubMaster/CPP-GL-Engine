@@ -1,5 +1,5 @@
 #include "Graphics/Attribute/Point4D.hpp"
-#include "Graphics/Buffer/Attribute.hpp"
+#include "Graphics/Buffer/Array.hpp"
 
 
 

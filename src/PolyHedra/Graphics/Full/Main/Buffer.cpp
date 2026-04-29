@@ -5,8 +5,8 @@
 
 
 
-PolyHedraFull::Main::Buffer::Buffer(BufferArray::Base & buffer_array)
-	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(Data))
+PolyHedraFull::Main::Buffer::Buffer(VertexArray & vertex_array)
+	: ::Buffer::Array(vertex_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data))
 	, Position()
 	, Normal()
 	, Texture()

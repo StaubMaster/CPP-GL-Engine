@@ -9,7 +9,7 @@ PolyHedraWire::Buffer::Buffer()
 		PolyHedraWire::Main::Buffer,
 		PolyHedraWire::Elem::Buffer,
 		Instance::Basic3D::Buffer
-	>(GL::DrawMode::Lines, 2)
+	>(GL::DrawMode::Lines)
 {
 	Main.Pos.Change(0);
 	Main.Col.Change(1);

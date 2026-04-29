@@ -5,8 +5,8 @@
 
 Wavefront::Main::Buffer::~Buffer() { }
 
-Wavefront::Main::Buffer::Buffer(BufferArray::Base & buffer_array)
-	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data))
+Wavefront::Main::Buffer::Buffer(VertexArray & vertex_array)
+	: ::Buffer::Array(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(Main::Data))
 	, Position()
 	, Texture()
 	, Normal()

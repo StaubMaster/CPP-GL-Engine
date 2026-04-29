@@ -36,7 +36,7 @@ VectorType Size() const
 }
 VectorType Center() const
 {
-	return ((Max + Min) / 2);
+	return ((Max + Min) / 2.0f);
 }
 };
 

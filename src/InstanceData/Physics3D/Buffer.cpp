@@ -5,8 +5,8 @@
 
 Physics3D::Buffer::~Buffer() { }
 
-Physics3D::Buffer::Buffer(BufferArray::Base & buffer_array)
-	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StreamDraw, 1, sizeof(Physics3D::Data))
+Physics3D::Buffer::Buffer(VertexArray & vertex_array)
+	: ::Buffer::Array(buffer_array, GL::BufferDataUsage::StreamDraw, 1, sizeof(Physics3D::Data))
 	, Trans()
 	, Vel()
 {

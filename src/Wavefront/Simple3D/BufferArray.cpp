@@ -6,7 +6,7 @@
 Wavefront::Simple3D::BufferArray::~BufferArray() { }
 
 Wavefront::Simple3D::BufferArray::BufferArray()
-	: ::BufferArray::Base()
+	: ::VertexArray()
 	, Main(*this)
 	, Inst(*this)
 	, DrawMode(GL::DrawMode::Triangles)

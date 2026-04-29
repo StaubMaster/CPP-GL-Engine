@@ -6,8 +6,8 @@
 
 
 PolyHedraWire::Main::Buffer::~Buffer() { }
-PolyHedraWire::Main::Buffer::Buffer(BufferArray::Base & buffer_array)
-	: ::Buffer::Attribute(buffer_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyHedraWire::Main::Data))
+PolyHedraWire::Main::Buffer::Buffer(VertexArray & vertex_array)
+	: ::Buffer::Array(vertex_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyHedraWire::Main::Data))
 	, Pos()
 	, Col()
 {

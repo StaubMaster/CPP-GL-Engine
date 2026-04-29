@@ -1,8 +1,8 @@
 #ifndef  BUFFER_ARRAY_MAIN_INST_HPP
 # define BUFFER_ARRAY_MAIN_INST_HPP
 
-# include "Graphics/Buffer/ArrayBase.hpp"
-# include "Graphics/Buffer/Attribute.hpp"
+# include "Graphics/Buffer/VertexArray.hpp"
+# include "Graphics/Buffer/Array.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
 
@@ -13,7 +13,7 @@
 namespace BufferArray
 {
 template<typename MainBufferType, typename InstBufferType>
-class MainInst : public BufferArray::Base
+class MainInst : public VertexArray
 {
 	public:
 	GL::DrawMode	Mode;
@@ -26,7 +26,7 @@ class MainInst : public BufferArray::Base
 	public:
 	virtual ~MainInst() { }
 	MainInst(GL::DrawMode mode)
-		: BufferArray::Base()
+		: VertexArray()
 		, Mode(mode)
 		, Main(*this)
 		, Inst(*this)
@@ -44,7 +44,7 @@ class MainInst : public BufferArray::Base
 			Textures[i] -> Bind();
 		}
 		Bind();
-		GL::DrawArraysInstanced(Mode, 0, Main.DrawCount, Inst.DrawCount);
+		GL::DrawArraysInstanced(Mode, 0, Main.Count, Inst.Count);
 	}
 };
 };

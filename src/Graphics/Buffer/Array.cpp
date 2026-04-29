@@ -1,4 +1,4 @@
-#include "Graphics/Buffer/Attribute.hpp"
+#include "Graphics/Buffer/Array.hpp"
 #include "OpenGL.hpp"
 
 //#include "OpenGL/Errors.hpp"
@@ -8,10 +8,10 @@
 
 
 
-void Buffer::Attribute::LogInfo(bool self) const
+void Buffer::Array::LogInfo(bool self) const
 {
 	(void)self;
-	//Debug::Log << Debug::Tabs << "Buffer::Attribute\n";
+	//Debug::Log << Debug::Tabs << "Buffer::Array\n";
 	//Debug::Log << Debug::TabInc;
 	//Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
 	//Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
@@ -26,49 +26,44 @@ void Buffer::Attribute::LogInfo(bool self) const
 
 
 
-Buffer::Attribute::~Attribute()
+Buffer::Array::~Array()
 { }
-Buffer::Attribute::Attribute(::BufferArray::Base & buffer_array, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, GL::AttributeStride stride)
-	: Buffer::Base(buffer_array, GL::BufferTarget::ArrayBuffer)
-	, Usage(usage)
+Buffer::Array::Array(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, GL::AttributeStride stride)
+	: Buffer::Base(vertex_array, GL::BufferTarget::ArrayBuffer, usage)
 	, Divisor(divisor)
 	, Stride(stride)
-	, DrawCount(0)
+	, Count(0)
 	, Attributes()
 { }
-Buffer::Attribute::Attribute(const Attribute & other)
+Buffer::Array::Array(const Array & other)
 	: Buffer::Base(other)
-	, Usage(other.Usage)
 	, Divisor(other.Divisor)
 	, Stride(other.Stride)
-	, DrawCount(other.DrawCount)
+	, Count(other.Count)
 	, Attributes(other.Attributes)
 { }
-Buffer::Attribute & Buffer::Attribute::operator=(const Attribute & other)
+Buffer::Array & Buffer::Array::operator=(const Array & other)
 {
 	Base::operator=(other);
-	Usage = other.Usage;
 	Divisor = other.Divisor;
 	Stride = other.Stride;
-	DrawCount = other.DrawCount;
+	Count = other.Count;
 	return *this;
 }
 
 
 
-void Buffer::Attribute::Init()
+void Buffer::Array::Init()
 {
-	Bind();
-	GL::BufferData(Target, 0, nullptr, Usage);
+	Base::Data();
 	GL::AttributeOffset offset = nullptr;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)
 	{
 		Attributes[i] -> Bind(Divisor, Stride, offset);
 	}
 }
-void Buffer::Attribute::Change(const Container::Void & data)
+void Buffer::Array::Data(const Container::Void & data)
 {
-	Bind();
-	GL::BufferData(Target, data.VoidCount(), data.VoidData(), Usage);
-	DrawCount = data.Count();
+	Base::Data(data);
+	Count = data.VoidCount() / Stride;
 }

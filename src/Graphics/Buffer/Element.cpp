@@ -19,38 +19,42 @@ void Buffer::Element::LogInfo(bool self) const
 	//Debug::Log << Debug::TabDec;
 }
 
+
+
 Buffer::Element::~Element() { }
-Buffer::Element::Element(::BufferArray::Base & buffer_array, GL::BufferDataUsage usage, GL::DrawIndexType index_type, unsigned int elem_per_type)
-	: Buffer::Base(buffer_array, GL::BufferTarget::ElementArrayBuffer)
-	, Usage(usage)
+Buffer::Element::Element(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::DrawIndexType index_type)
+	: Buffer::Base(vertex_array, GL::BufferTarget::ElementArrayBuffer, usage)
 	, IndexType(index_type)
-	, ElemPerType(elem_per_type)
-	, DrawCount(0)
-{ }
+	, IndexSize(0)
+	, Count(0)
+{
+	switch (index_type)
+	{
+		case GL::DrawIndexType::UnsignedByte: IndexSize = 1; break;
+		case GL::DrawIndexType::UnsignedShort: IndexSize = 2; break;
+		case GL::DrawIndexType::UnsignedInt: IndexSize = 4; break;
+	}
+}
 
 Buffer::Element::Element(const Element & other)
 	: Buffer::Base(other)
-	, Usage(other.Usage)
 	, IndexType(other.IndexType)
-	, ElemPerType(other.ElemPerType)
-	, DrawCount(other.DrawCount)
+	, IndexSize(other.IndexSize)
+	, Count(other.Count)
 { }
 Buffer::Element & Buffer::Element::operator=(const Element & other)
 {
 	Base::operator=(other);
-	Usage = other.Usage;
 	IndexType = other.IndexType;
-	ElemPerType = other.ElemPerType;
-	DrawCount = other.DrawCount;
+	IndexSize = other.IndexSize;
+	Count = other.Count;
 	return *this;
 }
 
-void Buffer::Element::Init() { }
 
-void Buffer::Element::Change(const Container::Void & data)
+
+void Buffer::Element::Data(const Container::Void & data)
 {
-	Bind();
-	GL::BufferData(Target, data.VoidCount(), data.VoidData(), Usage);
-
-	DrawCount = data.Count() * ElemPerType;
+	Base::Data(data);
+	Count = data.VoidCount() / IndexSize;
 }
