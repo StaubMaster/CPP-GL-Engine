@@ -76,12 +76,12 @@ void PolyGonInstanceManager::InitExternal()
 	{
 		BufferFull.Main.Pos.Change(0);
 		BufferFull.Main.Col.Change(1);
-		BufferFull.Inst.Trans.Change(2, 3, 4);
+		BufferFull.Inst.Trans.Change(2);
 	}
 	{
 		BufferWire.Main.Pos.Change(0);
 		BufferWire.Main.Col.Change(1);
-		BufferWire.Inst.Trans.Change(2, 3, 4);
+		BufferWire.Inst.Trans.Change(2);
 	}
 }
 void PolyGonInstanceManager::InitInternal()

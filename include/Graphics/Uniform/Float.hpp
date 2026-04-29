@@ -1,11 +1,11 @@
 #ifndef  UNI_FLOAT_HPP
 # define UNI_FLOAT_HPP
 
-# include "Graphics/Uniform/Base/Float1.hpp"
+# include "Graphics/Uniform/Base/FloatN.hpp"
 
 namespace Uniform
 {
-class Float : public Uniform::Float1
+class Float : public Uniform::FloatN
 {
 	public:
 	Float(::Shader::Base & shader, std::string name);

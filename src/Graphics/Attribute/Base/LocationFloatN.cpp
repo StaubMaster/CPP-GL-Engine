@@ -6,8 +6,8 @@
 
 Attribute::LocationFloatN::~LocationFloatN() { }
 
-Attribute::LocationFloatN::LocationFloatN(unsigned int count)
-	: Attribute::Location(GL::AttributeType::Float, count, sizeof(float) * count)
+Attribute::LocationFloatN::LocationFloatN(Buffer::Array & buffer, unsigned int size0, unsigned int size1)
+	: Attribute::Location(buffer, GL::AttributeType::Float, size0, size1, size0 * sizeof(float))
 { }
 
 Attribute::LocationFloatN::LocationFloatN(const LocationFloatN & other)
@@ -23,8 +23,14 @@ Attribute::LocationFloatN & Attribute::LocationFloatN::operator=(const LocationF
 
 void Attribute::LocationFloatN::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
-	GL::EnableVertexAttribArray(Index);
-	GL::VertexAttribDivisor(Index, divisor);
-	GL::VertexAttribPointer(Index, Count, Type, GL_FALSE, stride, offset);
-	offset += Size;
+	for (unsigned int s = 0; s < Size1; s++)
+	{
+		if (Index != -1)
+		{
+			GL::EnableVertexAttribArray(Index + s);
+			GL::VertexAttribDivisor(Index + s, divisor);
+			GL::VertexAttribPointer(Index + s, Size0, Type, GL_FALSE, stride, offset);
+		}
+		offset += Offset;
+	}
 }

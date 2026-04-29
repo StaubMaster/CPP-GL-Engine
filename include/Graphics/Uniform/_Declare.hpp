@@ -6,13 +6,6 @@ namespace Uniform
 	class Base;
 
 	class FloatN;
-	class Float1;
-	class Float2;
-	class Float3;
-	class Float4;
-	class Float2x2;
-	class Float3x3;
-	class Float4x4;
 
 	class UIntN;
 	class UInt1;

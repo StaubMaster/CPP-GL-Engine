@@ -4,7 +4,7 @@
 
 
 Uniform::Angle::Angle(::Shader::Base & shader, std::string name)
-	: Float1(shader, name)
+	: FloatN(shader, name, 1, 1, 1)
 { }
 
 void Uniform::Angle::Put(const ::Angle & obj)

@@ -4,6 +4,7 @@
 # include "Graphics/Buffer/Base.hpp"
 
 # include "Graphics/Attribute/Base/Base.hpp"
+# include "Graphics/Attribute/Base/Location.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
 # include "Miscellaneous/Container/Void.hpp"
@@ -18,7 +19,8 @@ class Array : public Base
 	GL::AttributeDivisor	Divisor;
 	GL::AttributeStride		Stride;
 	unsigned int			Count;
-	Container::Binary<::Attribute::Base*>	Attributes;
+	//Container::Binary<::Attribute::Base*>	Attributes; // store Attribute Locations ?
+	Container::Binary<::Attribute::Location*>	Attributes; // store Attribute Locations ?
 
 	public:
 	void LogInfo(bool self = true) const override;

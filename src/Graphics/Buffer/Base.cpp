@@ -1,30 +1,8 @@
 #include "Graphics/Buffer/Base.hpp"
 #include "Graphics/Buffer/VertexArray.hpp"
+#include "OpenGL.hpp"
 
 #include "Miscellaneous/Container/Void.hpp"
-
-#include "OpenGL.hpp"
-#include "Debug.hpp"
-#include <sstream>
-#include <iostream>
-
-
-
-void Buffer::Base::LogInfo(bool self) const
-{
-	(void)self;
-	//if (self)
-	//{
-	//	Debug::Log << Debug::Tabs << "Buffer Info\n";
-	//	Debug::Log << Debug::TabInc;
-	//}
-	//Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	//if (self)
-	//{
-	//	Debug::Log << Debug::TabDec;
-	//	Debug::Log << Debug::Done;
-	//}
-}
 
 
 

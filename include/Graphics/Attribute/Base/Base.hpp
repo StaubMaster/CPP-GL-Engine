@@ -8,9 +8,6 @@ namespace Attribute
 class Base
 {
 	public:
-	virtual void LogInfo() const = 0;
-
-	public:
 	virtual ~Base();
 	Base();
 
@@ -18,7 +15,7 @@ class Base
 	Base & operator=(const Base & other);
 
 	public:
-	virtual void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const = 0;
+	virtual void	Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const = 0;
 };
 };
 

@@ -2,14 +2,14 @@
 # define UNI_POINT_3D_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Base/Float3.hpp"
+# include "Graphics/Uniform/Base/FloatN.hpp"
 
 //struct Point3D;
 struct VectorF3; typedef VectorF3 Point3D;
 
 namespace Uniform
 {
-class Point3D : public Uniform::Float3
+class Point3D : public Uniform::FloatN
 {
 	public:
 	Point3D(::Shader::Base & shader, std::string name);

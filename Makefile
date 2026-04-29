@@ -91,15 +91,10 @@ SHADER_SRC := $(addprefix $(DIR_SRC)/,$(SHADER))
 SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
 
 UNIFORM := \
+	Graphics/Uniform/Base/Location.cpp \
+	Graphics/Uniform/Base/LocationFloatN.cpp \
 	Graphics/Uniform/Base/Base.cpp \
 	Graphics/Uniform/Base/FloatN.cpp \
-	Graphics/Uniform/Base/Float1.cpp \
-	Graphics/Uniform/Base/Float2.cpp \
-	Graphics/Uniform/Base/Float3.cpp \
-	Graphics/Uniform/Base/Float4.cpp \
-	Graphics/Uniform/Base/Float2x2.cpp \
-	Graphics/Uniform/Base/Float3x3.cpp \
-	Graphics/Uniform/Base/Float4x4.cpp \
 	Graphics/Uniform/Base/UIntN.cpp \
 	Graphics/Uniform/Base/UInt1.cpp \
 \
@@ -148,7 +143,9 @@ BUFFER := \
 	Graphics/Buffer/Base.cpp \
 	Graphics/Buffer/Array.cpp \
 	Graphics/Buffer/Element.cpp \
-	Graphics/Buffer/VertexArray.cpp
+	Graphics/Buffer/VertexArray.cpp \
+	Graphics/Buffer/LogInfo.cpp \
+
 BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
 BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
 
@@ -156,18 +153,16 @@ ATTRIBUTE := \
 	Graphics/Attribute/Base/Location.cpp \
 	Graphics/Attribute/Base/LocationFloatN.cpp \
 	Graphics/Attribute/Base/Base.cpp \
-	Graphics/Attribute/Base/Float1.cpp \
-	Graphics/Attribute/Base/Float2.cpp \
-	Graphics/Attribute/Base/Float3.cpp \
-	Graphics/Attribute/Base/Float4.cpp \
-	Graphics/Attribute/Base/Float2x2.cpp \
-	Graphics/Attribute/Base/Float3x3.cpp \
-	Graphics/Attribute/Base/Float4x4.cpp \
+	Graphics/Attribute/Base/FloatN.cpp \
 \
-	Graphics/Attribute/Point2D.cpp \
-	Graphics/Attribute/Point3D.cpp \
-	Graphics/Attribute/Point4D.cpp \
-	Graphics/Attribute/AxisBox2D.cpp \
+	Graphics/Attribute/Float.cpp \
+	Graphics/Attribute/VectorF2.cpp \
+	Graphics/Attribute/VectorF3.cpp \
+	Graphics/Attribute/VectorF4.cpp \
+	Graphics/Attribute/Matrix2x2.cpp \
+	Graphics/Attribute/Matrix3x3.cpp \
+	Graphics/Attribute/Matrix4x4.cpp \
+	Graphics/Attribute/BoxF2.cpp \
 	Graphics/Attribute/ColorF4.cpp \
 \
 	Graphics/Attribute/Log.cpp

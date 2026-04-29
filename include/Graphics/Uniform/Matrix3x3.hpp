@@ -1,13 +1,13 @@
 #ifndef  UNI_MATRIX_3_3_HPP
 # define UNI_MATRIX_3_3_HPP
 
-# include "Graphics/Uniform/Base/Float3x3.hpp"
+# include "Graphics/Uniform/Base/FloatN.hpp"
 
 struct Matrix3x3;
 
 namespace Uniform
 {
-class Matrix3x3 : public Uniform::Float3x3
+class Matrix3x3 : public Uniform::FloatN
 {
 	public:
 	Matrix3x3(::Shader::Base & shader, std::string name);

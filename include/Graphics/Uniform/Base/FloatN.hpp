@@ -2,6 +2,7 @@
 # define UNI_FLOAT_N_HPP
 
 # include "Graphics/Uniform/Base/Base.hpp"
+# include "Graphics/Uniform/Base/LocationFloatN.hpp"
 
 # include "OpenGLTypes.hpp"
 
@@ -12,19 +13,21 @@ namespace Uniform
 class FloatN : public Uniform::Base
 {
 	protected:
-	GL::UniformLocation Location;
-	int Count;
+	LocationFloatN	Location;
 
 	public:
 	void LogInfo(bool self = true) const override;
 
 	public:
-	FloatN(::Shader::Base & shader, std::string name, int count);
+	FloatN(::Shader::Base & shader, std::string name,
+		unsigned int size0,
+		unsigned int size1,
+		unsigned int count
+	); // Size0 Size1 and Count with Template ?
 
 	protected:
-	virtual void ReLocate() override;
-	virtual void PutData(const float * val) = 0;
-	void PutVoid(const void * val);
+	virtual void	ReLocate() override;
+	void			PutVoid(const void * val);
 };
 };
 

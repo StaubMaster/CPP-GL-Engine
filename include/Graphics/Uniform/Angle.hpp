@@ -1,13 +1,13 @@
 #ifndef  UNI_ANGLE_HPP
 # define UNI_ANGLE_HPP
 
-# include "Graphics/Uniform/Base/Float1.hpp"
+# include "Graphics/Uniform/Base/FloatN.hpp"
 
 struct Angle;
 
 namespace Uniform
 {
-class Angle : public Uniform::Float1
+class Angle : public Uniform::FloatN
 {
 	public:
 	Angle(::Shader::Base & shader, std::string name);

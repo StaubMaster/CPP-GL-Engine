@@ -3,6 +3,8 @@
 
 # include "OpenGLTypes.hpp"
 
+namespace Buffer { class Array; };
+
 namespace Attribute
 {
 class Location
@@ -10,39 +12,35 @@ class Location
 	public:
 	void LogInfo() const;
 
-	/*
-		Offset inside Data Pointer
-		Size is not directly used by gl
-		glPointer uses offset + Offset
-		offset is increased by Size
-	*/
-	private:
-	public:
+	protected:
 	//	from Child
-	const GL::AttributeType Type;
-	const unsigned int Count;
-	const unsigned int Size;
+	const GL::AttributeType	Type;
+	const unsigned int		Size0; // AttributeCount Size1 Size2 Size3 Size4
+	const unsigned int		Size1; // AttributeCount Size1 Size2 Size3 Size4
+	const unsigned int		Offset;
 
 	//	from Buffer
-	GL::AttributeLocation Index;
+	GL::AttributeLocation	Index;
 
 	public:
 	~Location();
 	Location() = delete;
 	Location(
+		Buffer::Array & buffer,
 		GL::AttributeType type,
-		unsigned int count,
-		unsigned int size
+		unsigned int size0,
+		unsigned int size1,
+		unsigned int offset
 	);
 
 	Location(const Location & other);
 	Location & operator=(const Location & other);
 
 	public:
-	void Change(GL::AttributeLocation index);
+	void			Change(GL::AttributeLocation index);
 
 	public:
-	virtual void Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const = 0;
+	virtual void	Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const = 0;
 };
 };
 

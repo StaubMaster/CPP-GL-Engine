@@ -4,7 +4,7 @@
 
 
 Uniform::Point2D::Point2D(::Shader::Base & shader, std::string name)
-	: Float2(shader, name)
+	: FloatN(shader, name, 2, 1, 1)
 { }
 
 void Uniform::Point2D::Put(const ::Point2D & obj)

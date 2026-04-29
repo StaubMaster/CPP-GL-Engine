@@ -8,7 +8,8 @@
 
 void Uniform::FloatN::LogInfo(bool self) const
 {
-	if (self)
+	Location.LogInfo(self);
+	/*if (self)
 	{
 		Debug::Log << Debug::Tabs << "FloatN Info\n";
 		Debug::Log << Debug::TabInc;
@@ -18,22 +19,25 @@ void Uniform::FloatN::LogInfo(bool self) const
 	{
 		Debug::Log << Debug::TabDec;
 		Debug::Log << Debug::Done;
-	}
+	}*/
 }
 
 
 
-Uniform::FloatN::FloatN(::Shader::Base & shader, std::string name, int count)
+Uniform::FloatN::FloatN(::Shader::Base & shader, std::string name, unsigned int size0, unsigned int size1, int count)
 	: Base(shader, name)
-	, Location(Locate())
-	, Count(count)
-{ }
+	, Location(shader, name, size0, size1, count)
+//	, Location(Locate())
+//	, Count(count)
+{
+	Location.Change(Locate());
+}
 
 
 
 void Uniform::FloatN::ReLocate()
 {
-	Location = Locate();
+	Location.Change(Locate());
 }
 void Uniform::FloatN::PutVoid(const void * val)
 {
@@ -41,5 +45,6 @@ void Uniform::FloatN::PutVoid(const void * val)
 	{
 		Shader.Bind();
 	}
-	PutData((const float *)val);
+	//PutData((const float *)val);
+	Location.PutVoid(val);
 }

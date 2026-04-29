@@ -1,13 +1,13 @@
 #ifndef  UNI_MATRIX_4_4_HPP
 # define UNI_MATRIX_4_4_HPP
 
-# include "Graphics/Uniform/Base/Float4x4.hpp"
+# include "Graphics/Uniform/Base/FloatN.hpp"
 
 struct Matrix4x4;
 
 namespace Uniform
 {
-class Matrix4x4 : public Uniform::Float4x4
+class Matrix4x4 : public Uniform::FloatN
 {
 	public:
 	Matrix4x4(::Shader::Base & shader, std::string name);

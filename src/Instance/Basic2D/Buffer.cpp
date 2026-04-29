@@ -9,8 +9,5 @@ Instance::Basic2D::Buffer::~Buffer() { }
 
 Instance::Basic2D::Buffer::Buffer(VertexArray & vertex_array)
 	: ::Buffer::Array(vertex_array, GL::BufferDataUsage::StreamDraw, 1, sizeof(Basic2D::Data))
-	, Trans()
-{
-	Attributes.Allocate(1);
-	Attributes.Insert(&Trans);
-}
+	, Trans(*this)
+{ }

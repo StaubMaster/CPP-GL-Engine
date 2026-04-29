@@ -4,7 +4,7 @@
 
 
 Uniform::Matrix2x2::Matrix2x2(::Shader::Base & shader, std::string name)
-	: Float2x2(shader, name)
+	: FloatN(shader, name, 2, 2, 1)
 { }
 
 void Uniform::Matrix2x2::Put(const ::Matrix2x2 & obj)

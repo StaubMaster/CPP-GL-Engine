@@ -6,13 +6,6 @@
 # include "Graphics/Uniform/Base/GArray.hpp"
 
 # include "Graphics/Uniform/Base/FloatN.hpp"
-# include "Graphics/Uniform/Base/Float1.hpp"
-# include "Graphics/Uniform/Base/Float2.hpp"
-# include "Graphics/Uniform/Base/Float3.hpp"
-# include "Graphics/Uniform/Base/Float4.hpp"
-# include "Graphics/Uniform/Base/Float2x2.hpp"
-# include "Graphics/Uniform/Base/Float3x3.hpp"
-# include "Graphics/Uniform/Base/Float4x4.hpp"
 
 # include "Graphics/Uniform/Base/UIntN.hpp"
 # include "Graphics/Uniform/Base/UInt1.hpp"

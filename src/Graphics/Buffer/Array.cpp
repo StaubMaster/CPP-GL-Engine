@@ -1,28 +1,4 @@
 #include "Graphics/Buffer/Array.hpp"
-#include "OpenGL.hpp"
-
-//#include "OpenGL/Errors.hpp"
-#include "Debug.hpp"
-#include <sstream>
-//#include <iostream>
-
-
-
-void Buffer::Array::LogInfo(bool self) const
-{
-	(void)self;
-	//Debug::Log << Debug::Tabs << "Buffer::Array\n";
-	//Debug::Log << Debug::TabInc;
-	//Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
-	//Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
-	//Debug::Log << Debug::Tabs << "Divisor: " << Divisor << '\n';
-	//Debug::Log << Debug::Tabs << "Stride: " << Stride << '\n';
-	//for (unsigned int i = 0; i < Attributes.Count(); i++)
-	//{
-	//	Attributes[i] -> LogInfo();
-	//}
-	//Debug::Log << Debug::TabDec;
-}
 
 
 
