@@ -62,14 +62,16 @@ Vector_2 & operator=(const OtherType & other)
 
 VectorType		Min(const VectorType & other) const
 {
-	VectorType vec(*this);
+	//VectorType vec(*this);
+	VectorType vec(X, Y);
 	if (other.X < vec.X) { vec.X = other.X; }
 	if (other.Y < vec.Y) { vec.Y = other.Y; }
 	return vec;
 }
 VectorType		Max(const VectorType & other) const
 {
-	VectorType vec(*this);
+	//VectorType vec(*this);
+	VectorType vec(X, Y);
 	if (other.X > vec.X) { vec.X = other.X; }
 	if (other.Y > vec.Y) { vec.Y = other.Y; }
 	return vec;

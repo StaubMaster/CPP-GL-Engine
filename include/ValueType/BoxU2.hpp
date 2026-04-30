@@ -4,7 +4,7 @@
 # include "VectorU2.hpp"
 # include "Box_2.hpp"
 
-struct BoxU2 : public Box_2<VectorU2>
+struct BoxU2 : public Box_2<VectorU2, BoxU2>
 {
 	~BoxU2();
 

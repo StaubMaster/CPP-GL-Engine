@@ -4,20 +4,20 @@
 # include "Box__.hpp"
 # include "Bool3.hpp"
 
-template<typename VectorType, typename BoxType> struct Box_3 : public Box__<VectorType>
+template<typename VectorType, typename BoxType> struct Box_3 : public Box__<VectorType, BoxType>
 {
 ~Box_3() { }
 
 Box_3(VectorType min, VectorType max)
-	: Box__<VectorType>(min, max)
+	: Box__<VectorType, BoxType>(min, max)
 { }
 
 Box_3(const Box_3 & other)
-	: Box__<VectorType>(other)
+	: Box__<VectorType, BoxType>(other)
 { }
-Box_3 & operator=(const Box_3 & other)
+Box_3 & operator=(const BoxType & other)
 {
-	Box__<VectorType>::operator=(other);
+	Box__<VectorType, BoxType>::operator=(other);
 	return *this;
 }
 
@@ -80,85 +80,6 @@ bool Intersekt(Box_3 other) const
 		&& ((this -> Max.Y > other.Min.Y) && (this -> Min.Y < other.Max.Y))
 	;*/
 }
-
-
-
-template<typename OtherBoxType>
-BoxType OuterBox(const OtherBoxType & other) const
-{
-	return BoxType(this -> Min.Min(other), this -> Max.Max(other));
-}
-
-/*
-a-------a
-|       |
-|   c---c---b
-|   |   |   |
-a---c---c   |
-    |       |
-    b-------b
-Normal
-c.Min = (b.Min.X, b.Min.Y)
-c.Max = (a.Max.X, a.Max.Y)
-
-a-------a
-|       |
-|       c---c-------b
-|       |   |       |
-a-------c---c       |
-            |       |
-            b-------b
-not Normal
-c.Min = (a.Max.X, b.Min.Y)
-c.Max = (b.Min.X, a.Max.Y)
-Min and Max are what they would be if they were Normaized
-
-a-------a
-|       |
-|       |
-|       |
-a-------c-------c
-        |       |
-        c-------c-------b
-                |       |
-                |       |
-                |       |
-                b-------b
-not Normal
-c.Min = (a.Max.X, a.Max.Y)
-c.Max = (b.Min.X, b.Min.Y)
-Min and Max are what they would be if they were Normaized
-
-    a-------a
-    |       |
-b---c-------c---b
-|   |       |   |
-|   |       |   |
-|   |       |   |
-b---c-------c---b
-    |       |
-    a-------a
-Normal
-c.Min = (a.Min.X, b.Min.Y)
-c.Max = (a.Max.X, b.Max.Y)
-
-    b-------b
-    |       |
-a---c---c   |
-|   |   |   |
-|   c---c---b
-|       |
-a-------a
-Normal
-c.Min = (b.Min.X, a.Min.Y)
-c.Max = (a.Max.X, b.Max.Y)
-*/
-template<typename OtherBoxType>
-BoxType InnerBox(const OtherBoxType & other) const 
-{
-	return BoxType(this -> Min.Max(other.Min), this -> Max.Min(other.Max));
-}
-
 };
 
 #endif
