@@ -26,6 +26,7 @@ class MainElemInst : public VertexArray
 
 	public:
 	virtual ~MainElemInst() { }
+	MainElemInst() = delete;
 	MainElemInst(GL::DrawMode mode)
 		: VertexArray()
 		, Mode(mode)
@@ -37,6 +38,28 @@ class MainElemInst : public VertexArray
 		Buffers.Insert(&Main);
 		Buffers.Insert(&Elem);
 		Buffers.Insert(&Inst);
+	}
+
+	MainElemInst(const MainElemInst & other)
+		: VertexArray(other)
+		, Mode(other.Mode)
+		, Main(*this, other.Main)
+		, Elem(*this, other.Elem)
+		, Inst(*this, other.Inst)
+	{
+		Buffers.Allocate(3);
+		Buffers.Insert(&Main);
+		Buffers.Insert(&Elem);
+		Buffers.Insert(&Inst);
+	}
+	MainElemInst & operator=(const MainElemInst & other)
+	{
+		VertexArray::operator=(other);
+		Mode = other.Mode;
+		Main = other.Main;
+		Elem = other.Elem;
+		Inst = other.Inst;
+		return *this;
 	}
 
 	public:

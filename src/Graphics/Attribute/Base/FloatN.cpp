@@ -3,7 +3,7 @@
 
 
 
-Attribute::FloatN::~FloatN() { }
+/*Attribute::FloatN::~FloatN() { }
 
 Attribute::FloatN::FloatN(Buffer::Array & buffer, unsigned int size0, unsigned int size1)
 	: Attribute::Base()
@@ -33,4 +33,4 @@ void Attribute::FloatN::Change(GL::AttributeLocation index)
 void Attribute::FloatN::Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const
 {
 	Location.Bind(divisor, stride, offset);
-}
+}*/

@@ -12,6 +12,7 @@ class Buffer : public ::Buffer::Element
 	public:
 	~Buffer();
 	Buffer(VertexArray & vertex_array);
+	Buffer(VertexArray & vertex_array, const Buffer & other);
 };
 };
 };

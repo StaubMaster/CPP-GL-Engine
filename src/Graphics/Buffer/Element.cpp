@@ -17,8 +17,8 @@ Buffer::Element::Element(VertexArray & vertex_array, GL::BufferDataUsage usage, 
 	}
 }
 
-Buffer::Element::Element(const Element & other)
-	: Buffer::Base(other)
+Buffer::Element::Element(VertexArray & vertex_array, const Element & other)
+	: Buffer::Base(vertex_array, other)
 	, IndexType(other.IndexType)
 	, IndexSize(other.IndexSize)
 	, Count(other.Count)

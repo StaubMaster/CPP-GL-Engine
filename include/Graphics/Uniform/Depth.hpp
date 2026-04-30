@@ -2,9 +2,9 @@
 # define UNI_DEPTH_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/DepthFactors.hpp"
+# include "Graphics/Uniform/TypeDefs/DepthFactors.hpp"
 # include "Graphics/Uniform/Range.hpp"
-# include "Graphics/Uniform/ColorF4.hpp"
+# include "Graphics/Uniform/TypeDefs/ColorF4.hpp"
 
 struct Depth;
 

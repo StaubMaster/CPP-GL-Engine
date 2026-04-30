@@ -2,7 +2,7 @@
 # define MULTIFORM_ANGLE_HPP
 
 # include "Graphics/Multiform/Base/GBase.hpp"
-# include "Graphics/Uniform/Angle.hpp"
+# include "Graphics/Uniform/TypeDefs/Angle.hpp"
 # include "ValueType/Angle.hpp"
 
 namespace Multiform

@@ -9,7 +9,7 @@ struct VectorF2; typedef VectorF2 Point2D;
 
 namespace Uniform
 {
-typedef FloatN<2, 1, 1, ::Point2D> Point2D;
+typedef FloatN<2, 1, 1, ::VectorF2> VectorF2;
 /*class Point2D : public Uniform::FloatN<2, 1, 1>
 {
 	public:
@@ -18,6 +18,7 @@ typedef FloatN<2, 1, 1, ::Point2D> Point2D;
 	public:
 	void Put(const ::Point2D & obj);
 };*/
+typedef VectorF2 Point2D;
 };
 
 #endif

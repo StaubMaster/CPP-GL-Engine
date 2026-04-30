@@ -10,3 +10,8 @@ PolyGonWire::Main::Buffer::Buffer(VertexArray & vertex_array)
 	, Pos(*this)
 	, Col(*this)
 { }
+PolyGonWire::Main::Buffer::Buffer(VertexArray & vertex_array, const Buffer & other)
+	: ::Buffer::Array(vertex_array, GL::BufferDataUsage::StaticDraw, 0, sizeof(PolyGon::Corner))
+	, Pos(*this, other.Pos)
+	, Col(*this, other.Col)
+{ }

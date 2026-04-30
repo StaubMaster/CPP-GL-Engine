@@ -2,7 +2,7 @@
 # define UNI_PIXEL_SIZE_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Point2D.hpp"
+# include "Graphics/Uniform/TypeDefs/VectorF2.hpp"
 
 struct PixelSize;
 
@@ -11,8 +11,8 @@ namespace Uniform
 class PixelSize : public Uniform::GBase<::PixelSize>
 {
 	private:
-	Uniform::Point2D Full;
-	Uniform::Point2D Half;
+	Uniform::VectorF2 Full;
+	Uniform::VectorF2 Half;
 
 	public:
 	PixelSize(::Shader::Base & shader, std::string name);

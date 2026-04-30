@@ -2,7 +2,7 @@
 # define MULTIFORM_DEPTH_FACTORS_3D_HPP
 
 # include "Graphics/Multiform/Base/GBase.hpp"
-# include "Graphics/Uniform/DepthFactors.hpp"
+# include "Graphics/Uniform/TypeDefs/DepthFactors.hpp"
 # include "ValueType/DepthFactors.hpp"
 
 namespace Multiform

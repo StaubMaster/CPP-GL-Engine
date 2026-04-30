@@ -11,3 +11,8 @@ PolyHedraWire::Main::Buffer::Buffer(VertexArray & vertex_array)
 	, Pos(*this)
 	, Col(*this)
 { }
+PolyHedraWire::Main::Buffer::Buffer(VertexArray & vertex_array, const Buffer & other)
+	: ::Buffer::Array(vertex_array, other)
+	, Pos(*this, other.Pos)
+	, Col(*this, other.Col)
+{ }

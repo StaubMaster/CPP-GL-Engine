@@ -2,7 +2,7 @@
 # define INSTANCE_BASIC_2D_BUFFER_HPP
 
 # include "Graphics/Buffer/Array.hpp"
-# include "Graphics/Attribute/Matrix3x3.hpp"
+# include "Graphics/Attribute/TypeDefs/Matrix3x3.hpp"
 
 namespace Instance
 {
@@ -15,6 +15,7 @@ class Buffer : public ::Buffer::Array
 	public:
 	~Buffer();
 	Buffer(VertexArray & vertex_array);
+	Buffer(VertexArray & vertex_array, const Buffer & other);
 };
 };
 };

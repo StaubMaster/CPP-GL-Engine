@@ -2,7 +2,7 @@
 # define UNI_LINTER_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Float.hpp"
+# include "Graphics/Uniform/TypeDefs/Float.hpp"
 
 struct LInter;
 

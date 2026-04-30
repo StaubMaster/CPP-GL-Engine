@@ -8,3 +8,6 @@ PolyGonWire::Elem::Buffer::~Buffer() { }
 PolyGonWire::Elem::Buffer::Buffer(VertexArray & vertex_array)
 	: ::Buffer::Element(vertex_array, GL::BufferDataUsage::StaticDraw, GL::DrawIndexType::UnsignedInt)
 { }
+PolyGonWire::Elem::Buffer::Buffer(VertexArray & vertex_array, const Buffer & other)
+	: ::Buffer::Element(vertex_array, other)
+{ }

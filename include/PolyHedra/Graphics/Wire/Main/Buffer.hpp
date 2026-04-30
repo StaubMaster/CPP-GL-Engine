@@ -2,8 +2,8 @@
 # define POLYHEDRA_GRAPHICS_WIRE_MAIN_BUFFER_HPP
 
 # include "Graphics/Buffer/Array.hpp"
-# include "Graphics/Attribute/VectorF3.hpp"
-# include "Graphics/Attribute/ColorF4.hpp"
+# include "Graphics/Attribute/TypeDefs/VectorF3.hpp"
+# include "Graphics/Attribute/TypeDefs/ColorF4.hpp"
 
 namespace PolyHedraWire
 {
@@ -17,6 +17,7 @@ class Buffer : public ::Buffer::Array
 	public:
 	~Buffer();
 	Buffer(VertexArray & vertex_array);
+	Buffer(VertexArray & vertex_array, const Buffer & other);
 };
 };
 };

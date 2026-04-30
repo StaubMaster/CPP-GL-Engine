@@ -5,16 +5,18 @@
 
 namespace Attribute
 {
-class ColorF4 : public Attribute::FloatN
+typedef Attribute::FloatN<4, 1> ColorF4;
+/*class ColorF4 : public Attribute::FloatN<4, 1>
 {
 	public:
 	~ColorF4();
 	ColorF4() = delete;
 	ColorF4(Buffer::Array & buffer);
 
-	ColorF4(const ColorF4 & other);
+	ColorF4(const ColorF4 & other) = delete;
+	ColorF4(Buffer::Array & buffer, const ColorF4 & other);
 	ColorF4 & operator=(const ColorF4 & other);
-};
+};*/
 };
 
 #endif

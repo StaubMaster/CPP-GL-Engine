@@ -3,15 +3,22 @@
 
 # include "OpenGLTypes.hpp"
 
+namespace Buffer { class Array; };
+
 namespace Attribute
 {
 class Base
 {
 	public:
-	virtual ~Base();
-	Base();
+	virtual void	LogInfo() const;
 
-	Base(const Base & other);
+	public:
+	virtual ~Base();
+	Base() = delete;
+	Base(Buffer::Array & buffer);
+
+	Base(const Base & other) = delete;
+	Base(Buffer::Array & buffer, const Base & other);
 	Base & operator=(const Base & other);
 
 	public:

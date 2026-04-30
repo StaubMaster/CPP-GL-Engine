@@ -18,12 +18,14 @@ Buffer::Base::Base(
 	, ID(0)
 { }
 
-Buffer::Base::Base(const Base & other)
+Buffer::Base::Base(VertexArray & vertex_array, const Base & other)
 	: BufferArray(other.BufferArray)
 	, Target(other.Target)
 	, Usage(other.Usage)
 	, ID(other.ID)
-{ }
+{
+	(void)vertex_array; // add to VertexArray Buffers Container
+}
 Buffer::Base & Buffer::Base::operator=(const Base & other)
 {
 	Target = other.Target;

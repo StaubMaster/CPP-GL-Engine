@@ -10,24 +10,24 @@
 # include "Graphics/Uniform/Base/UIntN.hpp"
 # include "Graphics/Uniform/Base/UInt1.hpp"
 
-# include "Graphics/Uniform/Float.hpp"
+# include "Graphics/Uniform/TypeDefs/Float.hpp"
 # include "Graphics/Uniform/UInt.hpp"
 
-# include "Graphics/Uniform/ColorF4.hpp"
+# include "Graphics/Uniform/TypeDefs/ColorF4.hpp"
 
-# include "Graphics/Uniform/Point2D.hpp"
-# include "Graphics/Uniform/Point3D.hpp"
+# include "Graphics/Uniform/TypeDefs/VectorF2.hpp"
+# include "Graphics/Uniform/TypeDefs/VectorF3.hpp"
 
-# include "Graphics/Uniform/Matrix2x2.hpp"
-# include "Graphics/Uniform/Matrix3x3.hpp"
-# include "Graphics/Uniform/Matrix4x4.hpp"
+# include "Graphics/Uniform/TypeDefs/Matrix2x2.hpp"
+# include "Graphics/Uniform/TypeDefs/Matrix3x3.hpp"
+# include "Graphics/Uniform/TypeDefs/Matrix4x4.hpp"
 
-# include "Graphics/Uniform/Angle.hpp"
+# include "Graphics/Uniform/TypeDefs/Angle.hpp"
 
 # include "Graphics/Uniform/Trans2D.hpp"
 # include "Graphics/Uniform/Trans3D.hpp"
 
-# include "Graphics/Uniform/DepthFactors.hpp"
+# include "Graphics/Uniform/TypeDefs/DepthFactors.hpp"
 # include "Graphics/Uniform/Depth.hpp"
 
 # include "Graphics/Uniform/Range.hpp"

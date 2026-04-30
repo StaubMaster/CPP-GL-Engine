@@ -2,8 +2,8 @@
 # define UNI_LIGHT_BASE_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Float.hpp"
-# include "Graphics/Uniform/ColorF4.hpp"
+# include "Graphics/Uniform/TypeDefs/Float.hpp"
+# include "Graphics/Uniform/TypeDefs/ColorF4.hpp"
 
 struct LightBase;
 

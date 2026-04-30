@@ -3,7 +3,7 @@
 
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/LightBase.hpp"
-# include "Graphics/Uniform/Point3D.hpp"
+# include "Graphics/Uniform/TypeDefs/VectorF3.hpp"
 
 struct LightSolar;
 
@@ -13,7 +13,7 @@ class LightSolar : public Uniform::GBase<::LightSolar>
 {
 	private:
 	Uniform::LightBase	Base;
-	Uniform::Point3D	Dir;
+	Uniform::VectorF3	Dir;
 
 	public:
 	LightSolar(::Shader::Base & shader, std::string name);

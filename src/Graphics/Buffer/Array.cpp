@@ -11,8 +11,8 @@ Buffer::Array::Array(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::
 	, Count(0)
 	, Attributes()
 { }
-Buffer::Array::Array(const Array & other)
-	: Buffer::Base(other)
+Buffer::Array::Array(VertexArray & vertex_array, const Array & other)
+	: Buffer::Base(vertex_array, other)
 	, Divisor(other.Divisor)
 	, Stride(other.Stride)
 	, Count(other.Count)

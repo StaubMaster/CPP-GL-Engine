@@ -1,10 +1,12 @@
-#include "Graphics/Attribute/Base/Location.hpp"
+#include "Graphics/Attribute/Base/Base.hpp"
+#include "Graphics/Attribute/Base/FloatN.hpp"
 
 #include "Debug.hpp"
 #include <sstream>
 #include "OpenGL.hpp"
 
-void Attribute::Location::LogInfo() const
+/*template<unsigned int Size0, unsigned int Size1>
+void Attribute::FloatN<Size0, Size1>::LogInfo() const
 {
 	Debug::Log << Debug::Tabs << "Attribute::Location:" << " Type: " << Type << " Size0: " << Size0 << " Size1: " << Size1 << " Offset: " << Offset;
 	Debug::Log << " Index:";
@@ -13,4 +15,6 @@ void Attribute::Location::LogInfo() const
 		Debug::Log << " " << (Index + s);
 	}
 	Debug::Log << '\n';
-}
+}*/
+
+void Attribute::Base::LogInfo() const { }

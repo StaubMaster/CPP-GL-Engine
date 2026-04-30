@@ -22,9 +22,11 @@ class Base
 
 	public:
 	virtual ~Base();
+	Base() = delete;
 	Base(VertexArray & vertex_array, GL::BufferTarget target, GL::BufferDataUsage usage);
 
-	Base(const Base & other);
+	Base(const Base & other) = delete;
+	Base(VertexArray & vertex_array, const Base & other);
 	Base & operator=(const Base & other);
 
 	public:
