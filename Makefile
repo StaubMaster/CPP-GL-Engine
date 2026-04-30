@@ -91,27 +91,17 @@ SHADER_SRC := $(addprefix $(DIR_SRC)/,$(SHADER))
 SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
 
 UNIFORM := \
-	Graphics/Uniform/Base/Location.cpp \
-	Graphics/Uniform/Base/LocationFloatN.cpp \
 	Graphics/Uniform/Base/Base.cpp \
+	Graphics/Uniform/Base/FloatNBase.cpp \
 	Graphics/Uniform/Base/FloatN.cpp \
 	Graphics/Uniform/Base/UIntN.cpp \
 	Graphics/Uniform/Base/UInt1.cpp \
 \
-	Graphics/Uniform/Float.cpp \
 	Graphics/Uniform/UInt.cpp \
 \
-	Graphics/Uniform/ColorF4.cpp \
-	Graphics/Uniform/Point2D.cpp \
-	Graphics/Uniform/Point3D.cpp \
-	Graphics/Uniform/Matrix2x2.cpp \
-	Graphics/Uniform/Matrix3x3.cpp \
-	Graphics/Uniform/Matrix4x4.cpp \
-	Graphics/Uniform/Angle.cpp \
 	Graphics/Uniform/Trans2D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
 \
-	Graphics/Uniform/DepthFactors.cpp \
 	Graphics/Uniform/Depth.cpp \
 	Graphics/Uniform/Range.cpp \
 	Graphics/Uniform/LInter.cpp \

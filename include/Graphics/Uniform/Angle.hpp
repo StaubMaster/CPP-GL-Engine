@@ -7,14 +7,15 @@ struct Angle;
 
 namespace Uniform
 {
-class Angle : public Uniform::FloatN
+typedef FloatN<1, 1, 1, ::Angle> Angle;
+/*class Angle : public Uniform::FloatN<1, 1, 1>
 {
 	public:
 	Angle(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::Angle & obj);
-};
+};*/
 };
 
 #endif

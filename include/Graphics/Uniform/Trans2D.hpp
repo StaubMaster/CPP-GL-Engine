@@ -12,8 +12,8 @@ namespace Uniform
 class Trans2D : public Uniform::GBase<::Trans2D>
 {
 	private:
-	Uniform::Point2D Pos;
-	Uniform::Matrix2x2 Rot;
+	Uniform::Point2D	Pos;
+	Uniform::Matrix2x2	Rot;
 
 	public:
 	Trans2D(::Shader::Base & shader, std::string name);

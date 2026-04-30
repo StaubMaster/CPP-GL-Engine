@@ -7,14 +7,15 @@ struct ColorF4;
 
 namespace Uniform
 {
-class ColorF4 : public Uniform::FloatN
+typedef FloatN<1, 1, 1, ::ColorF4> ColorF4;
+/*class ColorF4 : public Uniform::FloatN<4, 1, 1>
 {
 	public:
 	ColorF4(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::ColorF4 & val);
-};
+};*/
 };
 
 #endif

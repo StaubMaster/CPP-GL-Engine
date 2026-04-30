@@ -5,14 +5,15 @@
 
 namespace Uniform
 {
-class Float : public Uniform::FloatN
+typedef FloatN<1, 1, 1, float> Float;
+/*class Float : public Uniform::FloatN<1, 1, 1>
 {
 	public:
 	Float(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const float & val);
-};
+};*/
 };
 
 #endif

@@ -1,34 +1,43 @@
 #ifndef  UNI_FLOAT_N_HPP
 # define UNI_FLOAT_N_HPP
 
-# include "Graphics/Uniform/Base/Base.hpp"
-# include "Graphics/Uniform/Base/LocationFloatN.hpp"
-
-# include "OpenGLTypes.hpp"
-
-namespace Shader { class Base; };
+# include "Graphics/Uniform/Base/FloatNBase.hpp"
 
 namespace Uniform
 {
-class FloatN : public Uniform::Base
+template<unsigned int Size0, unsigned int Size1> void FloatNFunc(unsigned int Index, unsigned int Count, const float * val);
+
+template <unsigned int Size0, unsigned int Size1, unsigned int Count, typename ValueType>
+class FloatN : public Uniform::FloatNBase // FloatNTypeBase
 {
-	protected:
-	LocationFloatN	Location;
-
 	public:
-	void LogInfo(bool self = true) const override;
-
-	public:
-	FloatN(::Shader::Base & shader, std::string name,
-		unsigned int size0,
-		unsigned int size1,
-		unsigned int count
-	); // Size0 Size1 and Count with Template ?
+	virtual ~FloatN() { }
+	FloatN(::Shader::Base & shader, std::string name)
+		: FloatNBase(shader, name)
+	{ }
 
 	protected:
-	virtual void	ReLocate() override;
-	void			PutVoid(const void * val);
+	void	PutData(const float * val) override
+	{
+		FloatNFunc<Size0, Size1>(Index, Count, val);
+	}
+
+	public:
+	void Put(const ValueType & obj)
+	{
+		PutVoid(&obj);
+	}
 };
+
+template<> void FloatNFunc<1, 1>(unsigned int Index, unsigned int Count, const float * val);
+template<> void FloatNFunc<2, 1>(unsigned int Index, unsigned int Count, const float * val);
+template<> void FloatNFunc<3, 1>(unsigned int Index, unsigned int Count, const float * val);
+template<> void FloatNFunc<4, 1>(unsigned int Index, unsigned int Count, const float * val);
+
+template<> void FloatNFunc<2, 2>(unsigned int Index, unsigned int Count, const float * val);
+template<> void FloatNFunc<3, 3>(unsigned int Index, unsigned int Count, const float * val);
+template<> void FloatNFunc<4, 4>(unsigned int Index, unsigned int Count, const float * val);
+
 };
 
 #endif

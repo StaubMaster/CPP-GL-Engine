@@ -1,50 +1,13 @@
 #include "Graphics/Uniform/Base/FloatN.hpp"
-#include "Graphics/Shader/Base.hpp"
-
-#include "Debug.hpp"
-#include <sstream>
+#include "OpenGL.hpp"
 
 
 
-void Uniform::FloatN::LogInfo(bool self) const
-{
-	Location.LogInfo(self);
-	/*if (self)
-	{
-		Debug::Log << Debug::Tabs << "FloatN Info\n";
-		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << '"' << (Name) << '"' << ':' << Location << '\n';
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}*/
-}
+template<> void Uniform::FloatNFunc<1, 1>(unsigned int Index, unsigned int Count, const float * val) { GL::Uniform1fv(Index, Count, val); }
+template<> void Uniform::FloatNFunc<2, 1>(unsigned int Index, unsigned int Count, const float * val) { GL::Uniform2fv(Index, Count, val); }
+template<> void Uniform::FloatNFunc<3, 1>(unsigned int Index, unsigned int Count, const float * val) { GL::Uniform3fv(Index, Count, val); }
+template<> void Uniform::FloatNFunc<4, 1>(unsigned int Index, unsigned int Count, const float * val) { GL::Uniform4fv(Index, Count, val); }
 
-
-
-Uniform::FloatN::FloatN(::Shader::Base & shader, std::string name, unsigned int size0, unsigned int size1, int count)
-	: Base(shader, name)
-	, Location(shader, name, size0, size1, count)
-//	, Location(Locate())
-//	, Count(count)
-{
-	Location.Change(Locate());
-}
-
-
-
-void Uniform::FloatN::ReLocate()
-{
-	Location.Change(Locate());
-}
-void Uniform::FloatN::PutVoid(const void * val)
-{
-	if (!Shader.IsBound())
-	{
-		Shader.Bind();
-	}
-	//PutData((const float *)val);
-	Location.PutVoid(val);
-}
+template<> void Uniform::FloatNFunc<2, 2>(unsigned int Index, unsigned int Count, const float * val) { GL::UniformMatrix2fv(Index, Count, false, val); }
+template<> void Uniform::FloatNFunc<3, 3>(unsigned int Index, unsigned int Count, const float * val) { GL::UniformMatrix3fv(Index, Count, false, val); }
+template<> void Uniform::FloatNFunc<4, 4>(unsigned int Index, unsigned int Count, const float * val) { GL::UniformMatrix4fv(Index, Count, false, val); }

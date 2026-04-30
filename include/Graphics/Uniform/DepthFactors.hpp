@@ -7,14 +7,15 @@ struct DepthFactors;
 
 namespace Uniform
 {
-class DepthFactors : public Uniform::FloatN
+typedef FloatN<1, 1, 7, ::DepthFactors> DepthFactors;
+/*class DepthFactors : public Uniform::FloatN<1, 1, 7>
 {
 	public:
 	DepthFactors(::Shader::Base & shader, std::string name);
 
 	public:
 	void Put(const ::DepthFactors & obj);
-};
+};*/
 };
 
 #endif
