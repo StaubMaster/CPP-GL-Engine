@@ -6,26 +6,15 @@
 # include "OpenGLTypes.hpp"
 # include "OpenGL.hpp"
 
-#include "Debug.hpp"
-#include <sstream>
-
 namespace Attribute
 {
 template<unsigned int Size0, unsigned int Size1>
 class FloatN : public Attribute::FloatNBase
 {
-	// Type and Offset are hardcoded
-
 	public:
 	void	LogInfo() const override
 	{
-		Debug::Log << Debug::Tabs << "Attribute::Location:" << " Type: " << GL::AttributeType::Float << " Size0: " << Size0 << " Size1: " << Size1 << " Offset: " << (Size0 * sizeof(float));
-		Debug::Log << " Index:";
-		for (unsigned int s = 0; s < Size1; s++)
-		{
-			Debug::Log << " " << (Index + s);
-		}
-		Debug::Log << '\n';
+		LogInfoBase(GL::AttributeType::Float, Size0, Size1);
 	}
 
 	public:

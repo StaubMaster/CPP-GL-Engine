@@ -8,58 +8,6 @@
 
 
 
-void Shader::Base::LogInfo(bool self, bool log) const
-{
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Shader Info\n";
-		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-
-	Debug::Log << Debug::Tabs << "Code[" << Code.Limit() << " " << Code.Count() << "]\n";
-	Debug::Log << Debug::TabInc;
-	for (unsigned int i = 0; i < Code.Count(); i++) { Code[i].LogInfo(false); }
-	Debug::Log << Debug::TabDec;
-
-	Debug::Log << Debug::Tabs << "Uniforms[" << Uniforms.Count() << "]\n";
-	Debug::Log << Debug::TabInc;
-	for (unsigned int i = 0; i < Uniforms.Count(); i++)
-	{ Uniforms[i] -> LogInfo(false); }
-	Debug::Log << Debug::TabDec;
-
-	{
-		if (ID != 0)
-		{
-			int len = GL::GetProgramiv(ID, GL::ShaderProgramParameterName::InfoLogLength);
-			Debug::Log << Debug::Tabs << "InfoLog: " << len << '\n';
-			if (log && len != 0)
-			{
-				char str[len];
-				GL::GetProgramInfoLog(ID, len, len, str);
-				Debug::Log << "####\n";
-				Debug::Log << str;
-				Debug::Log << "####\n";
-			}
-			unsigned int status = GL::GetProgramiv(ID, GL::ShaderProgramParameterName::LinkStatus);
-			Debug::Log << Debug::Tabs << "Status: " << status << '\n';
-		}
-		else
-		{
-			Debug::Log << Debug::Tabs << "InfoLog:\n";
-			Debug::Log << Debug::Tabs << "Status:\n";
-		}
-	}
-
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}
-}
-
-
-
 Shader::Base::Base() :
 	ID(0),
 	Code(),
@@ -99,20 +47,18 @@ void Shader::Base::Bind()
 
 GL::ShaderID Shader::Base::Bound()
 {
-	int ID;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &ID);
-	return ID;
+	return GL::GetIntegerv(GL::ParameterName::CurrentProgram);
 }
 void Shader::Base::BindNone()
 {
-	glUseProgram(0);
+	GL::UseProgram(0);
 }
 
 
 
 bool Shader::Base::Validate() const
 {
-	glValidateProgram(ID);
+	GL::ValidateProgram(ID);
 	return (GL::GetProgramiv(ID, GL::ShaderProgramParameterName::ValidateStatus));
 }
 bool Shader::Base::Exists() const
@@ -130,7 +76,7 @@ void Shader::Base::Delete()
 	LogInfo();
 
 	Debug::Log << "Shader::Base Deleting " << ID << " ..." << Debug::Done;
-	glDeleteProgram(ID);
+	GL::DeleteProgram(ID);
 	ID = 0;
 	Debug::Log << "Shader::Base Deleting " << ID << " done" << Debug::Done;
 
@@ -144,13 +90,13 @@ void Shader::Base::Create()
 	if (ID != 0) { return; }
 
 	Debug::Log << "Shader::Base Creating " << ID << " ..." << Debug::Done;
-	ID = glCreateProgram();
+	ID = GL::CreateProgram();
 
 	Shader::Code::Compile(Code);
 	if (Shader::Code::Valid(Code))
 	{
 		Shader::Code::Attach(Code, ID);
-		glLinkProgram(ID);
+		GL::LinkProgram(ID);
 		Shader::Code::Detach(Code, ID);
 	}
 	else
@@ -211,7 +157,7 @@ int Shader::Base::LocateUniform(const char * name)
 {
 	if (Exists())
 	{
-		return glGetUniformLocation(ID, name);
+		return GL::GetUniformLocation(ID, name);
 	}
 	else
 	{

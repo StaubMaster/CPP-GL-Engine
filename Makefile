@@ -86,7 +86,9 @@ CONTAINER_OBJ := $(addprefix $(DIR_OBJ)/,$(CONTAINER:.cpp=.o))
 
 SHADER := \
 	Graphics/Shader/Code.cpp \
-	Graphics/Shader/Base.cpp
+	Graphics/Shader/Base.cpp \
+	Graphics/Shader/_Log.cpp \
+
 SHADER_SRC := $(addprefix $(DIR_SRC)/,$(SHADER))
 SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
 
@@ -111,6 +113,7 @@ UNIFORM := \
 	Graphics/Uniform/AspectRatio.cpp \
 	Graphics/Uniform/PixelSize.cpp \
 	Graphics/Uniform/DisplaySize.cpp \
+	Graphics/Uniform/_Log.cpp \
 
 UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))
 UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
@@ -134,7 +137,7 @@ BUFFER := \
 	Graphics/Buffer/Array.cpp \
 	Graphics/Buffer/Element.cpp \
 	Graphics/Buffer/VertexArray.cpp \
-	Graphics/Buffer/LogInfo.cpp \
+	Graphics/Buffer/_Log.cpp \
 
 BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
 BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
@@ -146,7 +149,8 @@ ATTRIBUTE := \
 \
 	Graphics/Attribute/BoxF2.cpp \
 \
-	Graphics/Attribute/Log.cpp
+	Graphics/Attribute/_Log.cpp \
+
 ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
 

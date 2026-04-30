@@ -2,30 +2,9 @@
 #include "Graphics/Multiform/Base/Base.hpp"
 #include "Graphics/Shader/Base.hpp"
 
-#include "Debug.hpp"
-#include <sstream>
 
 
-
-void Uniform::Base::LogInfo(bool self) const
-{
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Uniform Info\n";
-		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << '"' << (Name) << '"' << '\n';
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}
-}
-
-
-
-Uniform::Base::~Base()
-{ }
+Uniform::Base::~Base() { }
 Uniform::Base::Base(::Shader::Base & shader, std::string name)
 	: Shader(shader)
 	, Name(name)

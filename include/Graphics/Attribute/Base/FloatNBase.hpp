@@ -9,6 +9,9 @@ namespace Attribute
 class FloatNBase : public Attribute::Base
 {
 	protected:
+	void	LogInfoBase(GL::AttributeType type, unsigned int size0, unsigned int size1) const;
+
+	protected:
 	GL::AttributeLocation	Index;
 
 	public:
