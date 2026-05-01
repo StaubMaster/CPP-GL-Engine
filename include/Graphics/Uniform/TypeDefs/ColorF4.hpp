@@ -7,7 +7,7 @@ struct ColorF4;
 
 namespace Uniform
 {
-typedef FloatN<1, 1, 1, ::ColorF4> ColorF4;
+typedef FloatN<4, 1, 1, ::ColorF4> ColorF4;
 /*class ColorF4 : public Uniform::FloatN<4, 1, 1>
 {
 	public:

@@ -254,7 +254,6 @@ USERPARAMETER_SRC := $(addprefix $(DIR_SRC)/,$(USERPARAMETER))
 USERPARAMETER_OBJ := $(addprefix $(DIR_OBJ)/,$(USERPARAMETER:.cpp=.o))
 
 OTHER := \
-	TimeMeasure.cpp \
 	FrameTime.cpp \
 	Window.cpp \
 	Debug.cpp
