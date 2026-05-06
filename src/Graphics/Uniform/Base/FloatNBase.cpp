@@ -1,26 +1,6 @@
 #include "Graphics/Uniform/Base/FloatNBase.hpp"
 #include "Graphics/Shader/Base.hpp"
 
-#include "Debug.hpp"
-#include <sstream>
-
-
-
-void Uniform::FloatNBase::LogInfo(bool self) const
-{
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Uniform Location Info\n";
-		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << '"' << (Name) << '"' << ':' << Index << '\n';
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}
-}
-
 
 
 Uniform::FloatNBase::~FloatNBase() { }
