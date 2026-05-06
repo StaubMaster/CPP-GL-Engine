@@ -94,15 +94,24 @@ void UndexLoop3D::Next(Undex3D & udx) const
 }
 void UndexLoop3D::Prev(Undex3D & udx) const
 {
-	udx.X--;
-	if (udx.X < Range.Min.X)
+	Undex3D	min = Min();
+	Undex3D	max = Max();
+
+	if (udx.X <= min.X)
 	{
-		udx.X = Range.Max.X;
-		udx.Y--;
-		if (udx.Y < Range.Min.Y)
+		udx.X = max.X;
+		if (udx.Y <= min.Y)
 		{
-			udx.Y = Range.Max.Y;
+			udx.Y = max.Y;
 			udx.Z--;
 		}
+		else
+		{
+			udx.Y--;
+		}
+	}
+	else
+	{
+		udx.X--;
 	}
 }

@@ -12,9 +12,10 @@
 class PolyHedra;
 struct PolyHedraObjectData;
 
+// rename. PalletManager ?
 struct PolyHedraInstanceManager
 {
-	::PolyHedra *	PolyHedra;
+	::PolyHedra *	PolyHedra; // Main "Key"
 
 	// Object Defaults
 	bool	DefaultFullVisibility;

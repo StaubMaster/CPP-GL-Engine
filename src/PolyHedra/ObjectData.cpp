@@ -5,35 +5,35 @@
 PolyHedraObjectData::~PolyHedraObjectData()
 { }
 PolyHedraObjectData::PolyHedraObjectData()
-	: PolyHedra(nullptr)
-	, Trans()
-	, Remove(false)
+	: Remove(false)
 	, DrawFull(true)
 	, DrawWire(false)
+	, PolyHedra(nullptr)
+	, Trans()
 { }
 PolyHedraObjectData::PolyHedraObjectData(const PolyHedraObjectData & other)
-	: PolyHedra(other.PolyHedra)
-	, Trans(other.Trans)
-	, Remove(other.Remove)
+	: Remove(other.Remove)
 	, DrawFull(other.DrawFull)
 	, DrawWire(other.DrawWire)
+	, PolyHedra(other.PolyHedra)
+	, Trans(other.Trans)
 { }
 PolyHedraObjectData & PolyHedraObjectData::operator=(const PolyHedraObjectData & other)
 {
-	PolyHedra = other.PolyHedra;
-	Trans = other.Trans;
 	Remove = other.Remove;
 	DrawFull = other.DrawFull;
 	DrawWire = other.DrawWire;
+	PolyHedra = other.PolyHedra;
+	Trans = other.Trans;
 	return *this;
 }
 
 
 
 PolyHedraObjectData::PolyHedraObjectData(::PolyHedra * polyhedra)
-	: PolyHedra(polyhedra)
-	, Trans()
-	, Remove(false)
+	: Remove(false)
 	, DrawFull(true)
 	, DrawWire(false)
+	, PolyHedra(polyhedra)
+	, Trans()
 { }

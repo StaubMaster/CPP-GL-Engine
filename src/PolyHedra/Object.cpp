@@ -34,6 +34,7 @@ PolyHedraObject::PolyHedraObject()
 	: Data(nullptr)
 { }
 
+// Copy should copy in the same Manager. not the Current
 PolyHedraObject::PolyHedraObject(const PolyHedraObject & other)
 	: Data(PolyHedraManager::Current().CopyObject(other.Data))
 { }
@@ -51,6 +52,7 @@ PolyHedraObject & PolyHedraObject::operator=(const PolyHedraObject & other)
 
 
 
+// Data should be nullptr if no Current
 PolyHedraObject::PolyHedraObject(unsigned int polyhedra)
 	: Data(PolyHedraManager::Current().PlaceObject(polyhedra, Trans3D()))
 { }
