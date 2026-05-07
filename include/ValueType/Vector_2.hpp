@@ -87,10 +87,10 @@ VectorType		operator-(const VectorType & other) const { return VectorType(X - ot
 VectorType		operator*(const VectorType & other) const { return VectorType(X * other.X, Y * other.Y); }
 VectorType		operator/(const VectorType & other) const { return VectorType(X / other.X, Y / other.Y); }
 
-VectorType &	operator+=(const VectorType & other) { X += other.X; Y += other.X; return *((VectorType*)this); }
-VectorType &	operator-=(const VectorType & other) { X -= other.X; Y -= other.X; return *((VectorType*)this); }
-VectorType &	operator*=(const VectorType & other) { X *= other.X; Y *= other.X; return *((VectorType*)this); }
-VectorType &	operator/=(const VectorType & other) { X /= other.X; Y /= other.X; return *((VectorType*)this); }
+VectorType &	operator+=(const VectorType & other) { X += other.X; Y += other.Y; return *((VectorType*)this); }
+VectorType &	operator-=(const VectorType & other) { X -= other.X; Y -= other.Y; return *((VectorType*)this); }
+VectorType &	operator*=(const VectorType & other) { X *= other.X; Y *= other.Y; return *((VectorType*)this); }
+VectorType &	operator/=(const VectorType & other) { X /= other.X; Y /= other.Y; return *((VectorType*)this); }
 
 Bool2			operator==(const Vector_2 & other) const { return Bool2(X == other.X, Y == other.Y); }
 Bool2			operator!=(const Vector_2 & other) const { return Bool2(X != other.X, Y != other.Y); }
