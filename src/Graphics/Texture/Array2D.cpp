@@ -41,7 +41,6 @@ void Texture::Array2D::Assign(unsigned int offset, const Image & img)
 	{
 		Image scaled = img.Scaled(VectorU2(Size.X, Size.Y));
 		Assign(offset, scaled);
-		scaled.Dispose();
 	}
 }
 void Texture::Array2D::Assign(unsigned int offset, const FileInfo & file)
@@ -89,8 +88,10 @@ void Texture::Array2D::Assign(VectorU2 size, const Container::Member<Image> & im
 void Texture::Array2D::Assign(VectorU2 size, const Container::Member<FileInfo> & files)
 {
 	Assign(VectorU3(size.X, size.Y, files.Count()));
+
 	Image missing = Image::Missing(VectorU2(4, 4));
 	missing.Scale(size);
+
 	for (unsigned int i = 0; i < files.Count(); i++)
 	{
 		Image img = files[i].LoadImage();
@@ -101,8 +102,6 @@ void Texture::Array2D::Assign(VectorU2 size, const Container::Member<FileInfo> &
 		else
 		{
 			Assign(i, img);
-			img.Dispose();
 		}
 	}
-	missing.Dispose();
 }

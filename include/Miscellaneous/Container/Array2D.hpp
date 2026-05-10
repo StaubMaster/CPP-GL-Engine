@@ -74,7 +74,7 @@ struct Array2D
 		{
 			if ((*_Know) == 0)
 			{
-				delete _Know;
+				delete _Know; _Know = nullptr;
 				delete[] _Data;
 			}
 		}
@@ -97,7 +97,7 @@ struct Array2D
 	}
 	void	mCopy(const Array2D & other)
 	{
-		unsigned int n = _Size.Product();;
+		unsigned int n = _Size.Product();
 		if (n < other._Size.Product()) { n = other._Size.Product(); }
 		for (unsigned int i = 0; i < n; i++)
 		{

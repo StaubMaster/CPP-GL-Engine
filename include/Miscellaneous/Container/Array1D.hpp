@@ -60,7 +60,7 @@ struct Array1D
 		{
 			if ((*_Know) == 0)
 			{
-				delete _Know;
+				delete _Know; _Know = nullptr;
 				delete[] _Data;
 			}
 		}
