@@ -4,7 +4,7 @@
 
 LightSpot::LightSpot()
 { }
-LightSpot::LightSpot(float intensity, ColorF4 color, Point3D pos, Point3D dir, ::Range range) :
+LightSpot::LightSpot(float intensity, ColorF4 color, VectorF3 pos, VectorF3 dir, ::Range range) :
 	Base(intensity, color),
 	Pos(pos),
 	Dir(dir),

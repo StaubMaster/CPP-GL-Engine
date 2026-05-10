@@ -1,21 +1,21 @@
 #ifndef  LINE_3D_HPP
 # define LINE_3D_HPP
 
-# include "ValueType/Point3D.hpp"
+# include "ValueType/Vector/F3.hpp"
 
 struct Ray3D;
 
 struct Line3D
 {
 	public:
-	Point3D Origin;
-	Point3D Target;
+	VectorF3	Origin;
+	VectorF3	Target;
 
 	public:
 	~Line3D();
 
 	Line3D();
-	Line3D(Point3D origin, Point3D target);
+	Line3D(VectorF3 origin, VectorF3 target);
 	
 	Line3D(const Line3D & other);
 	Line3D & operator=(const Line3D & other);
@@ -24,12 +24,12 @@ struct Line3D
 
 
 
-	Line3D Reverse() const;
+	Line3D	Reverse() const;
 
-	Point3D Differance() const;
-	float Length() const;
+	VectorF3	Differance() const;
+	float		Length() const;
 
-	Point3D Middle() const;
+	VectorF3	Middle() const;
 };
 
 #endif

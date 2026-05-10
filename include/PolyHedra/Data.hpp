@@ -3,19 +3,19 @@
 
 # include "PolyHedra.hpp"
 
-# include "ValueType/Point3D.hpp"
+# include "ValueType/Vector/F3.hpp"
 
 struct PolyHedra::Corner
 {
-	Point3D Position;
-	Point3D Normal;
+	VectorF3 Position;
+	VectorF3 Normal;
 	Corner();
-	Corner(Point3D pos);
+	Corner(VectorF3 pos);
 };
 struct PolyHedra::Face
 {
 	unsigned int udx[3];
-	Point3D Normal;
+	VectorF3 Normal;
 	Face();
 	Face(unsigned int u0, unsigned int u1, unsigned int u2);
 	bool Check(unsigned int count) const;

@@ -1,5 +1,5 @@
 #include "ValueType/Angle.hpp"
-#include "ValueType/Point2D.hpp"
+#include "ValueType/Vector/F2.hpp"
 
 #include <math.h>
 
@@ -31,11 +31,11 @@ Angle Angle::Radians(float val) { return Angle(val); }
 Angle Angle::Degrees(float val) { return Angle(DegreesToRadians(val)); }
 Angle Angle::Section(float val) { return Angle(TAU / val); }
 
-Angle Angle::PointToX(Point2D dir)
+Angle Angle::PointToX(VectorF2 dir)
 {
 	return +Angle::aTan2(dir.Y, dir.X);
 }
-Angle Angle::PointToY(Point2D dir)
+Angle Angle::PointToY(VectorF2 dir)
 {
 	return -Angle::aTan2(dir.X, dir.Y);
 }
@@ -92,8 +92,8 @@ void Angle::reverse(float & x, float & y) const
 	x = t;
 }
 
-Point2D Angle::forward(Point2D p) const { forward(p.X, p.Y); return p; }
-Point2D Angle::reverse(Point2D p) const { reverse(p.X, p.Y); return p; }
+VectorF2 Angle::forward(VectorF2 p) const { forward(p.X, p.Y); return p; }
+VectorF2 Angle::reverse(VectorF2 p) const { reverse(p.X, p.Y); return p; }
 
 
 

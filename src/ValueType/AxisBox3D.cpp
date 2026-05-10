@@ -1,24 +1,24 @@
-#include "ValueType/AxisBox3D.hpp"
+#include "ValueType/Box/F3.hpp"
 #include <math.h>
 
 
 
-AxisBox3D::AxisBox3D() :
+BoxF3::BoxF3() :
 	Min(+INFINITY, +INFINITY, +INFINITY),
 	Max(-INFINITY, -INFINITY, -INFINITY)
 { }
-AxisBox3D::AxisBox3D(Point3D min, Point3D max) :
+BoxF3::BoxF3(VectorF3 min, VectorF3 max) :
 	Min(min),
 	Max(max)
 { }
 
 
 
-AxisBox3D::AxisBox3D(const AxisBox3D & other) :
+BoxF3::BoxF3(const BoxF3 & other) :
 	Min(other.Min),
 	Max(other.Max)
 { }
-AxisBox3D & AxisBox3D::operator=(const AxisBox3D & other)
+BoxF3 & BoxF3::operator=(const BoxF3 & other)
 {
 	Min = other.Min;
 	Max = other.Max;
@@ -27,7 +27,7 @@ AxisBox3D & AxisBox3D::operator=(const AxisBox3D & other)
 
 
 
-void AxisBox3D::Consider(Point3D val)
+void BoxF3::Consider(VectorF3 val)
 {
 	if (val.X < Min.X) { Min.X = val.X; }
 	if (val.Y < Min.Y) { Min.Y = val.Y; }
@@ -39,25 +39,25 @@ void AxisBox3D::Consider(Point3D val)
 }
 
 
-Point3D AxisBox3D::Size() const
+VectorF3 BoxF3::Size() const
 {
 	return (Max - Min);
 }
-Point3D AxisBox3D::Center() const
+VectorF3 BoxF3::Center() const
 {
 	return ((Max * 0.5f) + (Min * 0.5f));
 }
 
 
 
-bool AxisBox3D::Intersekt(Point3D val) const
+bool BoxF3::Intersekt(VectorF3 val) const
 {
 	return (Min.X <= val.X && Max.X >= val.X)
 		&& (Min.Y <= val.Y && Max.Y >= val.Y)
 		&& (Min.Z <= val.Z && Max.Z >= val.Z)
 	;
 }
-bool AxisBox3D::Intersekt(const AxisBox3D & other) const
+bool BoxF3::Intersekt(const BoxF3 & other) const
 {
 	return ((Max.X > other.Min.X) && (Min.X < other.Max.X))
 		&& ((Max.Y > other.Min.Y) && (Min.Y < other.Max.Y))

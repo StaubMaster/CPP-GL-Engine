@@ -1,22 +1,22 @@
-#include "ValueType/Point3D.hpp"
+#include "ValueType/Vector/F3.hpp"
 
 #include <math.h>
 
 
 
-Point3D::~Point3D() { }
+VectorF3::~VectorF3() { }
 
-Point3D::Point3D() :
+VectorF3::VectorF3() :
 	X(0), Y(0), Z(0)
 { }
-Point3D::Point3D(float x, float y, float z) :
+VectorF3::VectorF3(float x, float y, float z) :
 	X(x), Y(y), Z(z)
 { }
 
-Point3D::Point3D(const Point3D & other) :
+VectorF3::VectorF3(const VectorF3 & other) :
 	X(other.X), Y(other.Y), Z(other.Z)
 { }
-Point3D & Point3D::operator=(const Point3D & other)
+VectorF3 & VectorF3::operator=(const VectorF3 & other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -28,86 +28,86 @@ Point3D & Point3D::operator=(const Point3D & other)
 
 
 
-float Point3D::length2() const
+float VectorF3::length2() const
 {
 	return ((X * X) + (Y * Y) + (Z * Z));
 }
-float Point3D::length() const
+float VectorF3::length() const
 {
 	return sqrt(length2());
 }
-Point3D Point3D::normalize() const
+VectorF3 VectorF3::normalize() const
 {
 	float len = length();
 	if (len > 0.0f)
 	{
-		return Point3D(
+		return VectorF3(
 			X / len,
 			Y / len,
 			Z / len
 		);
 	}
-	return Point3D(0, 0, 0);
+	return VectorF3(0, 0, 0);
 }
-Point3D Point3D::normalize(float & len) const
+VectorF3 VectorF3::normalize(float & len) const
 {
 	len = length();
 	if (len > 0.0f)
 	{
-		return Point3D(
+		return VectorF3(
 			X / len,
 			Y / len,
 			Z / len
 		);
 	}
 	len = 0.0f;
-	return Point3D(0, 0, 0);
+	return VectorF3(0, 0, 0);
 }
 
-Point3D Point3D::round() const
+VectorF3 VectorF3::round() const
 {
-	return Point3D(
+	return VectorF3(
 		roundf(X),
 		roundf(Y),
 		roundf(Z)
 	);
 }
-Point3D Point3D::roundC() const
+VectorF3 VectorF3::roundC() const
 {
-	return Point3D(
+	return VectorF3(
 		ceilf(X),
 		ceilf(Y),
 		ceilf(Z)
 	);
 }
-Point3D Point3D::roundF() const
+VectorF3 VectorF3::roundF() const
 {
-	return Point3D(
+	return VectorF3(
 		floorf(X),
 		floorf(Y),
 		floorf(Z)
 	);
 }
 
-Point3D Point3D::round(float size) const
+VectorF3 VectorF3::round(float size) const
 {
-	return Point3D(
+	return VectorF3(
 		roundf(X / size) * size,
 		roundf(Y / size) * size,
 		roundf(Z / size) * size
 	);
 }
-Point3D Point3D::roundC(float size) const
+VectorF3 VectorF3::roundC(float size) const
 {
-	return Point3D(
+	return VectorF3(
 		ceilf(X / size) * size,
 		ceilf(Y / size) * size,
 		ceilf(Z / size) * size
 	);
 }
-Point3D Point3D::roundF(float size) const
+VectorF3 VectorF3::roundF(float size) const
 {
-	return Point3D(
+	return VectorF3(
 		floorf(X / size) * size,
 		floorf(Y / size) * size,
 		floorf(Z / size) * size
@@ -118,42 +118,42 @@ Point3D Point3D::roundF(float size) const
 
 
 
-Point3D Point3D::operator+() const
+VectorF3 VectorF3::operator+() const
 {
-	return Point3D(
+	return VectorF3(
 		+X,
 		+Y,
 		+Z
 	);
 }
-Point3D Point3D::operator-() const
+VectorF3 VectorF3::operator-() const
 {
-	return Point3D(
+	return VectorF3(
 		-X,
 		-Y,
 		-Z
 	);
 }
-Point3D Point3D::operator!() const
+VectorF3 VectorF3::operator!() const
 {
 	return normalize();
 }
 
-Point3D Point3D::operator+(const Point3D & other) const { return Point3D(X + other.X, Y + other.Y, Z + other.Z); }
-Point3D Point3D::operator-(const Point3D & other) const { return Point3D(X - other.X, Y - other.Y, Z - other.Z); }
-Point3D Point3D::operator*(const Point3D & other) const { return Point3D(X * other.X, Y * other.Y, Z * other.Z); }
-Point3D Point3D::operator/(const Point3D & other) const { return Point3D(X / other.X, Y / other.Y, Z / other.Z); }
+VectorF3 VectorF3::operator+(const VectorF3 & other) const { return VectorF3(X + other.X, Y + other.Y, Z + other.Z); }
+VectorF3 VectorF3::operator-(const VectorF3 & other) const { return VectorF3(X - other.X, Y - other.Y, Z - other.Z); }
+VectorF3 VectorF3::operator*(const VectorF3 & other) const { return VectorF3(X * other.X, Y * other.Y, Z * other.Z); }
+VectorF3 VectorF3::operator/(const VectorF3 & other) const { return VectorF3(X / other.X, Y / other.Y, Z / other.Z); }
 
-Point3D & Point3D::operator+=(const Point3D & other) { X += other.X; Y += other.Y; Z += other.Z; return *this; }
-Point3D & Point3D::operator-=(const Point3D & other) { X -= other.X; Y -= other.Y; Z -= other.Z; return *this; }
-Point3D & Point3D::operator*=(const Point3D & other) { X *= other.X; Y *= other.Y; Z *= other.Z; return *this; }
-Point3D & Point3D::operator/=(const Point3D & other) { X /= other.X; Y /= other.Y; Z /= other.Z; return *this; }
-
-
+VectorF3 & VectorF3::operator+=(const VectorF3 & other) { X += other.X; Y += other.Y; Z += other.Z; return *this; }
+VectorF3 & VectorF3::operator-=(const VectorF3 & other) { X -= other.X; Y -= other.Y; Z -= other.Z; return *this; }
+VectorF3 & VectorF3::operator*=(const VectorF3 & other) { X *= other.X; Y *= other.Y; Z *= other.Z; return *this; }
+VectorF3 & VectorF3::operator/=(const VectorF3 & other) { X /= other.X; Y /= other.Y; Z /= other.Z; return *this; }
 
 
 
-float Point3D::dot(const Point3D & p0, const Point3D & p1)
+
+
+float VectorF3::dot(const VectorF3 & p0, const VectorF3 & p1)
 {
 	return (
 		(p0.X * p1.X) +
@@ -161,20 +161,20 @@ float Point3D::dot(const Point3D & p0, const Point3D & p1)
 		(p0.Z * p1.Z)
 	);
 }
-float Point3D::dot(const Point3D & other) const
+float VectorF3::dot(const VectorF3 & other) const
 {
 	return dot(*this, other);
 }
 
-Point3D Point3D::cross(const Point3D & p0, const Point3D & p1)
+VectorF3 VectorF3::cross(const VectorF3 & p0, const VectorF3 & p1)
 {
-	return Point3D(
+	return VectorF3(
 		(p0.Y * p1.Z) - (p0.Z * p1.Y),
 		(p0.Z * p1.X) - (p0.X * p1.Z),
 		(p0.X * p1.Y) - (p0.Y * p1.X)
 	);
 }
-Point3D Point3D::cross(const Point3D & other) const
+VectorF3 VectorF3::cross(const VectorF3 & other) const
 {
 	return cross(*this, other);
 }
@@ -183,17 +183,17 @@ Point3D Point3D::cross(const Point3D & other) const
 
 
 
-Point3D & Point3D::operator+=(float f) { X += f; Y += f; Z += f; return *this; }
-Point3D & Point3D::operator-=(float f) { X -= f; Y -= f; Z -= f; return *this; }
-Point3D & Point3D::operator*=(float f) { X *= f; Y *= f; Z *= f; return *this; }
-Point3D & Point3D::operator/=(float f) { X /= f; Y /= f; Z /= f; return *this; }
+VectorF3 & VectorF3::operator+=(float f) { X += f; Y += f; Z += f; return *this; }
+VectorF3 & VectorF3::operator-=(float f) { X -= f; Y -= f; Z -= f; return *this; }
+VectorF3 & VectorF3::operator*=(float f) { X *= f; Y *= f; Z *= f; return *this; }
+VectorF3 & VectorF3::operator/=(float f) { X /= f; Y /= f; Z /= f; return *this; }
 
-Point3D operator+(Point3D p, float f) { return Point3D(p.X + f, p.Y + f, p.Z + f); }
-Point3D operator-(Point3D p, float f) { return Point3D(p.X - f, p.Y - f, p.Z - f); }
-Point3D operator*(Point3D p, float f) { return Point3D(p.X * f, p.Y * f, p.Z * f); }
-Point3D operator/(Point3D p, float f) { return Point3D(p.X / f, p.Y / f, p.Z / f); }
+VectorF3 operator+(VectorF3 p, float f) { return VectorF3(p.X + f, p.Y + f, p.Z + f); }
+VectorF3 operator-(VectorF3 p, float f) { return VectorF3(p.X - f, p.Y - f, p.Z - f); }
+VectorF3 operator*(VectorF3 p, float f) { return VectorF3(p.X * f, p.Y * f, p.Z * f); }
+VectorF3 operator/(VectorF3 p, float f) { return VectorF3(p.X / f, p.Y / f, p.Z / f); }
 
-Point3D operator+(float f, Point3D p) { return Point3D(f + p.X, f + p.Y, f + p.Z); }
-Point3D operator-(float f, Point3D p) { return Point3D(f - p.X, f - p.Y, f - p.Z); }
-Point3D operator*(float f, Point3D p) { return Point3D(f * p.X, f * p.Y, f * p.Z); }
-Point3D operator/(float f, Point3D p) { return Point3D(f / p.X, f / p.Y, f / p.Z); }
+VectorF3 operator+(float f, VectorF3 p) { return VectorF3(f + p.X, f + p.Y, f + p.Z); }
+VectorF3 operator-(float f, VectorF3 p) { return VectorF3(f - p.X, f - p.Y, f - p.Z); }
+VectorF3 operator*(float f, VectorF3 p) { return VectorF3(f * p.X, f * p.Y, f * p.Z); }
+VectorF3 operator/(float f, VectorF3 p) { return VectorF3(f / p.X, f / p.Y, f / p.Z); }

@@ -9,7 +9,7 @@ Trans3D::Trans3D()
 	: Position()
 	, Rotation()
 { }
-Trans3D::Trans3D(Point3D pos)
+Trans3D::Trans3D(VectorF3 pos)
 	: Position(pos)
 	, Rotation()
 { }
@@ -17,7 +17,7 @@ Trans3D::Trans3D(EulerAngle3D rot)
 	: Position()
 	, Rotation(rot)
 { }
-Trans3D::Trans3D(Point3D pos, EulerAngle3D rot)
+Trans3D::Trans3D(VectorF3 pos, EulerAngle3D rot)
 	: Position(pos)
 	, Rotation(rot)
 { }
@@ -37,11 +37,11 @@ Trans3D & Trans3D::operator=(const Trans3D & other)
 
 
 
-Point3D Trans3D::forward(Point3D p) const
+VectorF3 Trans3D::forward(VectorF3 p) const
 {
 	return Rotation.forward(p) + Position;
 }
-Point3D Trans3D::reverse(Point3D p) const
+VectorF3 Trans3D::reverse(VectorF3 p) const
 {
 	return Rotation.reverse(p - Position);
 }

@@ -1,13 +1,11 @@
 #ifndef  MATRIX_3_3_HPP
 # define MATRIX_3_3_HPP
 
-//struct Point3D;
-struct VectorF3; typedef VectorF3 Point3D;
+struct VectorF3;
 
 struct Angle;
 
-//struct Point2D;
-struct VectorF2; typedef VectorF2 Point2D;
+struct VectorF2;
 struct EulerAngle3D;
 struct Trans2D;
 
@@ -32,7 +30,7 @@ struct Matrix3x3
 
 	static Matrix3x3	Identity();
 	
-	static Matrix3x3	Position(Point2D p);
+	static Matrix3x3	Position(VectorF2 p);
 	static Matrix3x3	Rotation(Angle a);
 	static Matrix3x3	TransformForward(Trans2D t);
 	static Matrix3x3	TransformReverse(Trans2D t);
@@ -47,7 +45,7 @@ struct Matrix3x3
 	Matrix3x3	operator/(const Matrix3x3 & other) const;
 };
 
-Point3D	operator*(const Point3D & p, const Matrix3x3 & mat);
-Point3D	operator/(const Point3D & p, const Matrix3x3 & mat);
+VectorF3	operator*(const VectorF3 & p, const Matrix3x3 & mat);
+VectorF3	operator/(const VectorF3 & p, const Matrix3x3 & mat);
 
 #endif

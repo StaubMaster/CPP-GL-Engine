@@ -19,8 +19,8 @@ Point_D		VectorF_
 Undex_D		VectorU_
 Index_D		VectorI_
 
-Point3D		VectorF3
-Undex3D		VectorU3
+VectorF3		VectorF3
+VectorU3		VectorU3
 Index3D		VectorI3
 
 
@@ -28,7 +28,7 @@ Index3D		VectorI3
 AxisBox_D	BoxF_
 UndexBox_D	BoxU_
 
-AxisBox3D	BoxF3
+BoxF3	BoxF3
 UndexBox3D	BoxU3
 
 

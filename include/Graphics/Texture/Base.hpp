@@ -7,7 +7,7 @@
 class FileInfo;
 
 struct VectorU3;
-typedef VectorU3 Undex3D;
+typedef VectorU3 VectorU3;
 struct ColorU4;
 
 namespace Texture
@@ -84,8 +84,8 @@ class Base
 
 
 	public:
-	void	Full3D(Undex3D size, const ColorU4 * data);
-	void	Part3D(Undex3D size, Undex3D offset, const ColorU4 * data);
+	void	Full3D(VectorU3 size, const ColorU4 * data);
+	void	Part3D(VectorU3 size, VectorU3 offset, const ColorU4 * data);
 };
 };
 

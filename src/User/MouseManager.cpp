@@ -68,7 +68,7 @@ DisplayPosition MouseManager::CursorPosition() const
 {
 	double x, y;
 	glfwGetCursorPos(window.glfw_window, &x, &y);
-	//return DisplayPosition::FromWindowCorner(Point2D(x, y), window.Size);
+	//return DisplayPosition::FromWindowCorner(VectorF2(x, y), window.Size);
 	return window.Size.PosFromWindowFull(VectorF2(x, y));
 }
 
@@ -130,7 +130,7 @@ void MouseManager::Invoke_ScrollEvent(float offset_x, float offset_y)
 }
 void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
 {
-	//DisplayPosition pos = DisplayPosition::FromWindowCorner(Point2D(x_pos, y_pos), window.Size);
+	//DisplayPosition pos = DisplayPosition::FromWindowCorner(VectorF2(x_pos, y_pos), window.Size);
 	DisplayPosition pos = window.Size.PosFromWindowFull(VectorF2(x_pos, y_pos));
 
 	Callback_MoveEvent(MoveArgs(pos));

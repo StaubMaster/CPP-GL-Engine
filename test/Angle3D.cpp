@@ -1,7 +1,7 @@
 #include <iostream>
 #include "DataShow.hpp"
 #include "ValueType/Angle3D.hpp"
-#include "ValueType/Point3D.hpp"
+#include "ValueType/Vector/F3.hpp"
 
 int main()
 {
@@ -13,11 +13,11 @@ int main()
 				Angle::Radians(23),
 				Angle::Radians(1)
 			);
-			Point3D p(13, 43, 54);
-			Point3D p00 = a.rotateFore(p);
-			Point3D p01 = a.rotateBack(p00);
-			Point3D p10 = a.rotateBack(p);
-			Point3D p11 = a.rotateFore(p10);
+			VectorF3 p(13, 43, 54);
+			VectorF3 p00 = a.rotateFore(p);
+			VectorF3 p01 = a.rotateBack(p00);
+			VectorF3 p10 = a.rotateBack(p);
+			VectorF3 p11 = a.rotateFore(p10);
 			std::cout << p << '\n';
 			std::cout << p00 << '\n';
 			std::cout << p01 << '\n';

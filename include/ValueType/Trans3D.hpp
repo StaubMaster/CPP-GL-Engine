@@ -1,14 +1,14 @@
 #ifndef  TRANS_3D_HPP
 # define TRANS_3D_HPP
 
-# include "ValueType/Point3D.hpp"
+# include "ValueType/Vector/F3.hpp"
 # include "ValueType/EulerAngle3D.hpp"
 
 struct Matrix4x4;
 
 struct Trans3D
 {
-	Point3D			Position;
+	VectorF3			Position;
 	EulerAngle3D	Rotation;
 	// Scale
 	// Shear
@@ -23,17 +23,17 @@ struct Trans3D
 	~Trans3D();
 	
 	Trans3D();
-	Trans3D(Point3D pos);
+	Trans3D(VectorF3 pos);
 	Trans3D(EulerAngle3D rot);
-	Trans3D(Point3D pos, EulerAngle3D rot);
+	Trans3D(VectorF3 pos, EulerAngle3D rot);
 
 	Trans3D(const Trans3D & other);
 	Trans3D & operator=(const Trans3D & other);
 
 
 
-	Point3D		forward(Point3D p) const;
-	Point3D		reverse(Point3D p) const;
+	VectorF3		forward(VectorF3 p) const;
+	VectorF3		reverse(VectorF3 p) const;
 };
 
 

@@ -1,9 +1,9 @@
 #include <iostream>
 #include "DataShow.hpp"
 
-#include "ValueType/Point2D.hpp"
-#include "ValueType/Point3D.hpp"
-#include "ValueType/Point4D.hpp"
+#include "ValueType/Vector/F2.hpp"
+#include "ValueType/Vector/F3.hpp"
+#include "ValueType/Vector/F4.hpp"
 
 #include "ValueType/Angle.hpp"
 #include "ValueType/Angle2D.hpp"
@@ -24,9 +24,9 @@
 void TestPointToX2D()
 {
 	Angle a0 = Angle::Degrees(65);
-	Point2D axis(12, 0);
+	VectorF2 axis(12, 0);
 
-	Point2D p1 = a0.forward(axis);
+	VectorF2 p1 = a0.forward(axis);
 
 	std::cout << a0.ToDegrees() << '\n';
 	std::cout << Angle::PointToX(p1).ToDegrees() << '\n';
@@ -35,9 +35,9 @@ void TestPointToX2D()
 void TestPointToY2D()
 {
 	Angle a0 = Angle::Degrees(65);
-	Point2D axis(0, 12);
+	VectorF2 axis(0, 12);
 
-	Point2D p1 = a0.forward(axis);
+	VectorF2 p1 = a0.forward(axis);
 
 	std::cout << a0.ToDegrees() << '\n';
 	std::cout << Angle::PointToY(p1).ToDegrees() << '\n';
@@ -47,9 +47,9 @@ void TestPointToY2D()
 void TestPointToX3D()
 {
 	EulerAngle3D a0 = EulerAngle3D::Degrees(65, 0, 81);
-	Point3D axis(1, 0, 0);
+	VectorF3 axis(1, 0, 0);
 
-	Point3D p1 = a0.forward(axis);
+	VectorF3 p1 = a0.forward(axis);
 	EulerAngle3D a1 = EulerAngle3D::PointToX(p1);
 
 	std::cout << "a1.Z0: " << a1.Z0.ToDegrees() << '\n';
@@ -65,9 +65,9 @@ void TestPointToX3D()
 void TestPointToY3D()
 {
 	EulerAngle3D a0 = EulerAngle3D::Degrees(65, 81, 0);
-	Point3D axis(0, 1, 0);
+	VectorF3 axis(0, 1, 0);
 
-	Point3D p1 = a0.forward(axis);
+	VectorF3 p1 = a0.forward(axis);
 	EulerAngle3D a1 = EulerAngle3D::PointToY(p1);
 
 	std::cout << "a1.Z0: " << a1.Z0.ToDegrees() << '\n';
@@ -83,9 +83,9 @@ void TestPointToY3D()
 void TestPointToZ3D()
 {
 	EulerAngle3D a0 = EulerAngle3D::Degrees(0, 65, 81);
-	Point3D axis(0, 0, 1);
+	VectorF3 axis(0, 0, 1);
 
-	Point3D p1 = a0.forward(axis);
+	VectorF3 p1 = a0.forward(axis);
 	EulerAngle3D a1 = EulerAngle3D::PointToZ(p1);
 
 	std::cout << "a1.Z0: " << a1.Z0.ToDegrees() << '\n';

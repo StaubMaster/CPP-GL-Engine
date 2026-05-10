@@ -1,8 +1,8 @@
 #include "Window.hpp"
 #include "TimeMeasure.hpp"
 
-#include "ValueType/Point3D.hpp"
-#include "ValueType/Point2D.hpp"
+#include "ValueType/Vector/F3.hpp"
+#include "ValueType/Vector/F2.hpp"
 #include "ValueType/EulerAngle3D.hpp"
 #include "ValueType/Trans3D.hpp"
 
@@ -175,13 +175,13 @@ void Window::UpdateSize()
 
 	int w, h;
 
-	Point2D winSize;
+	VectorF2 winSize;
 	glfwGetWindowSize(glfw_window, &w, &h);
-	winSize = Point2D(w, h);
+	winSize = VectorF2(w, h);
 
-	Point2D bufSize;
+	VectorF2 bufSize;
 	glfwGetFramebufferSize(glfw_window, &w, &h);
-	bufSize = Point2D(w, h);
+	bufSize = VectorF2(w, h);
 
 	Size.Change(winSize, bufSize);
 }
@@ -259,9 +259,9 @@ void Window::Callback_GLFW_Text(unsigned int codepoint)
 
 
 
-Point3D Window::MoveFromKeys() const
+VectorF3 Window::MoveFromKeys() const
 {
-	Point3D move;
+	VectorF3 move;
 	if (KeyBoardManager[Keys::A].State == State::Down)				{ move.X -= 1; }
 	if (KeyBoardManager[Keys::D].State == State::Down)				{ move.X += 1; }
 	if (KeyBoardManager[Keys::S].State == State::Down)				{ move.Z -= 1; }

@@ -6,20 +6,20 @@
 # include "PolyGon/Graphics/Full/Main/Data.hpp"
 
 struct Ray2D;
-//struct AxisBox2D;
+//struct BoxF2;
 struct BoxF2;
-typedef BoxF2 AxisBox2D;
+typedef BoxF2 BoxF2;
 
 class PolyGon
 {
 	public:
 	struct Corner
 	{
-		Point2D	Pos;
+		VectorF2	Pos;
 		ColorF4	Col;
 		Corner();
-		Corner(Point2D pos);
-		Corner(Point2D pos, ColorF4 col);
+		Corner(VectorF2 pos);
+		Corner(VectorF2 pos, ColorF4 col);
 	};
 	struct Face
 	{
@@ -50,15 +50,15 @@ class PolyGon
 
 	public:
 	void Clear();
-	void NewCorner(Point2D pos, ColorF4 col);
+	void NewCorner(VectorF2 pos, ColorF4 col);
 	void NewFace(unsigned int c0, unsigned int c1, unsigned int c2);
 
-	AxisBox2D ToAxisBox() const;
+	BoxF2 ToAxisBox() const;
 	Container::Pointer<PolyGonFull::Main::Data>	ToFullData() const;
 
 	public:
 	unsigned int SumIntersections(Ray2D ray) const;
-	bool IsContaining(Point2D p) const;
+	bool IsContaining(VectorF2 p) const;
 };
 
 #endif

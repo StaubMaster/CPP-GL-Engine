@@ -17,7 +17,7 @@ typedef Attribute::FloatN<4, 1> VectorF4;
 	VectorF4(Buffer::Array & buffer, const VectorF4 & other);
 	VectorF4 & operator=(const VectorF4 & other);
 };*/
-typedef VectorF4 Point4D;
+typedef VectorF4 VectorF4;
 };
 
 #endif

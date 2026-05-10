@@ -33,13 +33,13 @@ std::ostream & operator<<(std::ostream & o, const BoxI3 & obj);
 //std::ostream & operator<<(std::ostream & o, const Matrix3x3 & obj);
 //std::ostream & operator<<(std::ostream & o, const Matrix4x4 & obj);
 
-//std::ostream & operator<<(std::ostream & o, const Point2D & obj);
-//std::ostream & operator<<(std::ostream & o, const Point3D & obj);
-//std::ostream & operator<<(std::ostream & o, const Point4D & obj);
+//std::ostream & operator<<(std::ostream & o, const VectorF2 & obj);
+//std::ostream & operator<<(std::ostream & o, const VectorF3 & obj);
+//std::ostream & operator<<(std::ostream & o, const VectorF4 & obj);
 
-//std::ostream & operator<<(std::ostream & o, const AxisBox1D & obj);
-//std::ostream & operator<<(std::ostream & o, const AxisBox2D & obj);
-//std::ostream & operator<<(std::ostream & o, const AxisBox3D & obj);
+//std::ostream & operator<<(std::ostream & o, const BoxF1 & obj);
+//std::ostream & operator<<(std::ostream & o, const BoxF2 & obj);
+//std::ostream & operator<<(std::ostream & o, const BoxF3 & obj);
 
 std::ostream & operator<<(std::ostream & o, const Line2D & obj);
 std::ostream & operator<<(std::ostream & o, const Line3D & obj);
@@ -64,16 +64,16 @@ std::ostream & operator<<(std::ostream & o, const ColorF4 & obj);
 //std::ostream & operator<<(std::ostream & o, const View2D & obj);
 //std::ostream & operator<<(std::ostream & o, const View3D & obj);
 
-//std::ostream & operator<<(std::ostream & o, const Bool2D & obj);
-//std::ostream & operator<<(std::ostream & o, const Bool3D & obj);
+//std::ostream & operator<<(std::ostream & o, const Bool2 & obj);
+//std::ostream & operator<<(std::ostream & o, const Bool3 & obj);
 
 std::ostream & operator<<(std::ostream & o, const Undex & obj);
 
-//std::ostream & operator<<(std::ostream & o, const Undex2D & obj);
+//std::ostream & operator<<(std::ostream & o, const VectorU2 & obj);
 //std::ostream & operator<<(std::ostream & o, const UndexBox2D & obj);
-//std::ostream & operator<<(std::ostream & o, const UndexLoop2D & obj);
+//std::ostream & operator<<(std::ostream & o, const LoopU2 & obj);
 
-//std::ostream & operator<<(std::ostream & o, const Undex3D & obj);
+//std::ostream & operator<<(std::ostream & o, const VectorU3 & obj);
 //std::ostream & operator<<(std::ostream & o, const UndexBox3D & obj);
 //std::ostream & operator<<(std::ostream & o, const UndexLoop3D & obj);
 

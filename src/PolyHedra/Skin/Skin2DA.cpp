@@ -7,7 +7,7 @@
 #include "FileParsing/Text/TextCommand.hpp"
 #include "FileParsing/Text/Exceptions.hpp"
 
-#include "ValueType/Point2D.hpp"
+#include "ValueType/Vector/F2.hpp"
 #include "ValueType/_Show.hpp"
 #include <iostream>
 
@@ -90,7 +90,7 @@ void Skin2DA::Parse_t(const TextCommand & cmd)
 	if (!((len % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "((n / 2) % 2) == 0"); }
 	//if (!cmd.CheckCount(CountCheckModulo(2, 0)) || len < 3 || len > 4) { throw TextCommand::ExceptionInvalidCount(cmd, CountCheckModulo(2, 0)); }
  
-	Point3D t[len];
+	VectorF3 t[len];
 	for (size_t i = 0; i < len; i++)
 	{
 		t[i].X = cmd.ToFloat(i * 2 + 0);
@@ -116,7 +116,7 @@ void Skin2DA::Parse_TextureIndexFace4(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 8)) { throw InvalidCommandArgumentCount(cmd, "n == 8"); }
 
-	Point3D t[4];
+	VectorF3 t[4];
 	for (unsigned int i = 0; i < 4; i++)
 	{
 		t[i].X = cmd.ToFloat(i * 2 + 0);
@@ -130,15 +130,15 @@ void Skin2DA::Parse_TextureIndexQuad(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 4)) { throw InvalidCommandArgumentCount(cmd, "n == 4"); }
 
-	Point2D	min;
+	VectorF2	min;
 	min.X = cmd.ToFloat(0);
 	min.Y = cmd.ToFloat(1);
 
-	Point2D	max;
+	VectorF2	max;
 	max.X = cmd.ToFloat(2);
 	max.Y = cmd.ToFloat(3);
 
-	Point3D t[4];
+	VectorF3 t[4];
 
 	t[0].X = min.X;
 	t[0].Y = min.Y;

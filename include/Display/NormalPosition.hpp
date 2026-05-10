@@ -1,7 +1,7 @@
 #ifndef  DISPLAY_NORMAL_POSITION_HPP
 # define DISPLAY_NORMAL_POSITION_HPP
 
-# include "ValueType/VectorF2.hpp"
+# include "ValueType/Vector/F2.hpp"
 
 struct NormalPosition
 {

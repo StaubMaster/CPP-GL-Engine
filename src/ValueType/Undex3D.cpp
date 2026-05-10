@@ -1,28 +1,28 @@
-#include "ValueType/Undex3D.hpp"
+#include "ValueType/Vector/U3.hpp"
 
 
 
-Undex3D::Undex3D() :
+VectorU3::VectorU3() :
 	X(0),
 	Y(0),
 	Z(0)
 { }
-Undex3D::Undex3D(unsigned int x, unsigned int y, unsigned int z) :
+VectorU3::VectorU3(unsigned int x, unsigned int y, unsigned int z) :
 	X(x),
 	Y(y),
 	Z(z)
 { }
-Undex3D::~Undex3D()
+VectorU3::~VectorU3()
 { }
 
 
 
-Undex3D::Undex3D(const Undex3D & other) :
+VectorU3::VectorU3(const VectorU3 & other) :
 	X(other.X),
 	Y(other.Y),
 	Z(other.Z)
 { }
-Undex3D & Undex3D::operator=(const Undex3D & other)
+VectorU3 & VectorU3::operator=(const VectorU3 & other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -32,17 +32,17 @@ Undex3D & Undex3D::operator=(const Undex3D & other)
 
 
 
-Undex3D Undex3D::operator+(const Undex3D & other) const
+VectorU3 VectorU3::operator+(const VectorU3 & other) const
 {
-	return Undex3D(
+	return VectorU3(
 		X + other.X,
 		Y + other.Y,
 		Z + other.Z
 	);
 }
-Undex3D Undex3D::operator-(const Undex3D & other) const
+VectorU3 VectorU3::operator-(const VectorU3 & other) const
 {
-	return Undex3D(
+	return VectorU3(
 		X - other.X,
 		Y - other.Y,
 		Z - other.Z
@@ -51,9 +51,9 @@ Undex3D Undex3D::operator-(const Undex3D & other) const
 
 
 
-Undex3D Undex3D::operator%(const Undex3D & other) const
+VectorU3 VectorU3::operator%(const VectorU3 & other) const
 {
-	return Undex3D(
+	return VectorU3(
 		X % other.X,
 		Y % other.Y,
 		Z % other.Z
@@ -62,49 +62,49 @@ Undex3D Undex3D::operator%(const Undex3D & other) const
 
 
 
-Bool3D Undex3D::operator==(const Undex3D & other) const
+Bool3 VectorU3::operator==(const VectorU3 & other) const
 {
-	return Bool3D(
+	return Bool3(
 		X == other.X,
 		Y == other.Y,
 		Z == other.Z
 	);
 }
-Bool3D Undex3D::operator<=(const Undex3D & other) const
+Bool3 VectorU3::operator<=(const VectorU3 & other) const
 {
-	return Bool3D(
+	return Bool3(
 		X <= other.X,
 		Y <= other.Y,
 		Z <= other.Z
 	);
 }
-Bool3D Undex3D::operator>=(const Undex3D & other) const
+Bool3 VectorU3::operator>=(const VectorU3 & other) const
 {
-	return Bool3D(
+	return Bool3(
 		X >= other.X,
 		Y >= other.Y,
 		Z >= other.Z
 	);
 }
-Bool3D Undex3D::operator!=(const Undex3D & other) const
+Bool3 VectorU3::operator!=(const VectorU3 & other) const
 {
-	return Bool3D(
+	return Bool3(
 		X != other.X,
 		Y != other.Y,
 		Z != other.Z
 	);
 }
-Bool3D Undex3D::operator<(const Undex3D & other) const
+Bool3 VectorU3::operator<(const VectorU3 & other) const
 {
-	return Bool3D(
+	return Bool3(
 		X < other.X,
 		Y < other.Y,
 		Z < other.Z
 	);
 }
-Bool3D Undex3D::operator>(const Undex3D & other) const
+Bool3 VectorU3::operator>(const VectorU3 & other) const
 {
-	return Bool3D(
+	return Bool3(
 		X > other.X,
 		Y > other.Y,
 		Z > other.Z
@@ -113,13 +113,13 @@ Bool3D Undex3D::operator>(const Undex3D & other) const
 
 
 
-bool	Undex3D::Box_inclusive(Undex3D idx, Undex3D min, Undex3D max)
+bool	VectorU3::Box_inclusive(VectorU3 idx, VectorU3 min, VectorU3 max)
 {
 	return	(idx.X >= min.X && idx.X <= max.X) &&
 			(idx.Y >= min.Y && idx.Y <= max.Y) &&
 			(idx.Z >= min.Z && idx.Z <= max.Z);
 }
-bool	Undex3D::Box_exclusive(Undex3D idx, Undex3D min, Undex3D max)
+bool	VectorU3::Box_exclusive(VectorU3 idx, VectorU3 min, VectorU3 max)
 {
 	return	(idx.X > min.X && idx.X < max.X) &&
 			(idx.Y > min.Y && idx.Y < max.Y) &&
@@ -128,7 +128,7 @@ bool	Undex3D::Box_exclusive(Undex3D idx, Undex3D min, Undex3D max)
 
 
 
-bool Undex3D::loop_inclusive(Undex3D & idx, Undex3D min, Undex3D max)
+bool VectorU3::loop_inclusive(VectorU3 & idx, VectorU3 min, VectorU3 max)
 {
 	idx.Z++;
 	if (idx.Z > max.Z)
@@ -148,7 +148,7 @@ bool Undex3D::loop_inclusive(Undex3D & idx, Undex3D min, Undex3D max)
 	}
 	return (true);
 }
-bool Undex3D::loop_exclusive(Undex3D & idx, Undex3D min, Undex3D max)
+bool VectorU3::loop_exclusive(VectorU3 & idx, VectorU3 min, VectorU3 max)
 {
 	idx.Z++;
 	if (idx.Z >= max.Z)
@@ -168,7 +168,7 @@ bool Undex3D::loop_exclusive(Undex3D & idx, Undex3D min, Undex3D max)
 	}
 	return (true);
 }
-bool Undex3D::loop_inclusive(Undex3D & idx, unsigned int min, unsigned int max)
+bool VectorU3::loop_inclusive(VectorU3 & idx, unsigned int min, unsigned int max)
 {
 	idx.Z++;
 	if (idx.Z > max)
@@ -188,7 +188,7 @@ bool Undex3D::loop_inclusive(Undex3D & idx, unsigned int min, unsigned int max)
 	}
 	return (true);
 }
-bool Undex3D::loop_exclusive(Undex3D & idx, unsigned int min, unsigned int max)
+bool VectorU3::loop_exclusive(VectorU3 & idx, unsigned int min, unsigned int max)
 {
 	idx.Z++;
 	if (idx.Z >= max)
@@ -213,7 +213,7 @@ bool Undex3D::loop_exclusive(Undex3D & idx, unsigned int min, unsigned int max)
 
 
 
-/*std::ostream & operator <<(std::ostream & o, const Undex3D & u)
+/*std::ostream & operator <<(std::ostream & o, const VectorU3 & u)
 {
 	o << "[" << u.X << ":" << u.Y << ":" << u.Z << "]";
 	return o;

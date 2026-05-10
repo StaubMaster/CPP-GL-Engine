@@ -2,8 +2,8 @@
 # define TEXTURE_ARRAY_2D_HPP
 
 # include "Base.hpp"
-# include "ValueType/VectorU3.hpp"
-# include "ValueType/VectorU2.hpp"
+# include "ValueType/Vector/U3.hpp"
+# include "ValueType/Vector/U2.hpp"
 # include "Miscellaneous/Container/Member.hpp"
 
 /*	dont need Array2D as inherited class

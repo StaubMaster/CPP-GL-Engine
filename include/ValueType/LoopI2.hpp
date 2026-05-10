@@ -2,8 +2,8 @@
 # define LOOP_I_2_HPP
 
 # include "Bool2.hpp"
-# include "VectorI2.hpp"
-# include "BoxI2.hpp"
+# include "ValueType/Vector/I2.hpp"
+# include "ValueType/Box/I2.hpp"
 
 struct LoopI2
 {
@@ -14,10 +14,15 @@ struct LoopI2
 
 	public:
 	~LoopI2();
-
 	LoopI2();
+
+	LoopI2(VectorI2 size);
+
 	LoopI2(VectorI2 min, VectorI2 max);
 	LoopI2(VectorI2 min, Bool2 minEx, VectorI2 max, Bool2 maxEx);
+
+	LoopI2(BoxI2 box);
+	LoopI2(BoxI2 box, Bool2 minEx, Bool2 maxEx);
 
 	LoopI2(const LoopI2 & other);
 	LoopI2 & operator=(const LoopI2 & other);

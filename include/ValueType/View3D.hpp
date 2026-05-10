@@ -8,7 +8,7 @@ struct View3D
 {
 	Trans3D	Trans;
 	::Depth	Depth;
-	Angle	FOV;	//make a Point2D for different X and Y angle ?
+	Angle	FOV;	//make a VectorF2 for different X and Y angle ?
 
 
 
@@ -24,8 +24,8 @@ struct View3D
 
 
 
-	Point3D forward(Point3D p) const;
-	Point3D reverse(Point3D p) const;
+	VectorF3 forward(VectorF3 p) const;
+	VectorF3 reverse(VectorF3 p) const;
 };
 
 #endif

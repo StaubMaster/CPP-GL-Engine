@@ -49,9 +49,9 @@ class OBJ
 	private:
 	std::string Path;
 
-	Container::Binary<Point4D> Positions;
-	Container::Binary<Point3D> Textures;
-	Container::Binary<Point3D> Normals;
+	Container::Binary<VectorF4> Positions;
+	Container::Binary<VectorF3> Textures;
+	Container::Binary<VectorF3> Normals;
 	Container::Binary<Face> Faces;
 
 	MTL Materials;
@@ -62,9 +62,9 @@ class OBJ
 	~OBJ();
 
 	public:
-	Point4D Position_MainData(unsigned int idx);
-	Point3D Texture_MainData(unsigned int idx, Point4D pos, SizeRatio2D scale, char sides);
-	Point3D Normal_MainData(unsigned int idx, Point3D normal);
+	VectorF4 Position_MainData(unsigned int idx);
+	VectorF3 Texture_MainData(unsigned int idx, VectorF4 pos, SizeRatio2D scale, char sides);
+	VectorF3 Normal_MainData(unsigned int idx, VectorF3 normal);
 	Main::Data * ToMainData(int & count, SizeRatio2D texScale);
 
 	private:
@@ -87,7 +87,7 @@ class OBJ
 	static OBJ * Load(const FileInfo & file);
 
 	public:
-	AxisBox3D ToAxisBox();
+	BoxF3 ToAxisBox();
 
 	private:
 	class Exception_InvalidString : public std::exception

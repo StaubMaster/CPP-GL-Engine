@@ -26,7 +26,7 @@ DisplayPosition & DisplayPosition::operator=(const DisplayPosition & other)
 
 
 
-/*void DisplayPosition::ChangeWindowCorner(Point2D pos, DisplaySize size)
+/*void DisplayPosition::ChangeWindowCorner(VectorF2 pos, DisplaySize size)
 {
 	Window.Corner = pos;
 	Window.Center = Window.Corner - size.Window.Half;
@@ -37,7 +37,7 @@ DisplayPosition & DisplayPosition::operator=(const DisplayPosition & other)
 	Buffer.Corner = Normal.Abs * size.Buffer.Full;
 	Buffer.Center = Normal.Rel * size.Buffer.Half;
 }*/
-void DisplayPosition::ChangeNormalRel(Point2D pos, DisplaySize size)
+void DisplayPosition::ChangeNormalRel(VectorF2 pos, DisplaySize size)
 {
 	Normal.Rel = pos;
 	Normal.Abs = (pos + 1) / 2;
@@ -49,13 +49,13 @@ void DisplayPosition::ChangeNormalRel(Point2D pos, DisplaySize size)
 	Buffer.Center = Normal.Rel * size.Buffer.Half;
 }
 
-/*DisplayPosition DisplayPosition::FromWindowCorner(Point2D pos, DisplaySize size)
+/*DisplayPosition DisplayPosition::FromWindowCorner(VectorF2 pos, DisplaySize size)
 {
 	DisplayPosition display_pos;
 	display_pos.ChangeWindowCorner(pos, size);
 	return display_pos;
 }*/
-DisplayPosition DisplayPosition::FromNormalRel(Point2D pos, DisplaySize size)
+DisplayPosition DisplayPosition::FromNormalRel(VectorF2 pos, DisplaySize size)
 {
 	DisplayPosition display_pos;
 	display_pos.ChangeNormalRel(pos, size);

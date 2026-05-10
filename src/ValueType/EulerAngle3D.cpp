@@ -1,6 +1,6 @@
 #include "ValueType/EulerAngle3D.hpp"
-#include "ValueType/Point3D.hpp"
-#include "ValueType/Point2D.hpp"
+#include "ValueType/Vector/F3.hpp"
+#include "ValueType/Vector/F2.hpp"
 
 #include <math.h>
 
@@ -50,7 +50,7 @@ EulerAngle3D EulerAngle3D::Radians(float z0, float x1, float y2)
 	);
 }
 
-EulerAngle3D EulerAngle3D::PointToX(Point3D dir)
+EulerAngle3D EulerAngle3D::PointToX(VectorF3 dir)
 {
 	float len_Y = sqrt((dir.Z * dir.Z) + (dir.X * dir.X));
 	return EulerAngle3D(
@@ -59,7 +59,7 @@ EulerAngle3D EulerAngle3D::PointToX(Point3D dir)
 		-Angle::aTan2(dir.Z, dir.X)
 	);
 }
-EulerAngle3D EulerAngle3D::PointToY(Point3D dir)
+EulerAngle3D EulerAngle3D::PointToY(VectorF3 dir)
 {
 	float len_X = sqrt((dir.Y * dir.Y) + (dir.Z * dir.Z));
 	return EulerAngle3D(
@@ -68,7 +68,7 @@ EulerAngle3D EulerAngle3D::PointToY(Point3D dir)
 		Angle()
 	);
 }
-EulerAngle3D EulerAngle3D::PointToZ(Point3D dir)
+EulerAngle3D EulerAngle3D::PointToZ(VectorF3 dir)
 {
 	float len_Y = sqrt((dir.Z * dir.Z) + (dir.X * dir.X));
 	return EulerAngle3D(
@@ -90,17 +90,17 @@ EulerAngle3D EulerAngle3D::roundF(Angle size) const { return EulerAngle3D(Z0.rou
 
 
 
-Point3D EulerAngle3D::forward(Point3D p) const
+VectorF3 EulerAngle3D::forward(VectorF3 p) const
 {
-	Point2D temp;
+	VectorF2 temp;
 	Z0.forward(p.X, p.Y);
 	X1.forward(p.Y, p.Z);
 	Y2.forward(p.Z, p.X);
 	return p;
 }
-Point3D EulerAngle3D::reverse(Point3D p) const
+VectorF3 EulerAngle3D::reverse(VectorF3 p) const
 {
-	Point2D temp;
+	VectorF2 temp;
 	Y2.reverse(p.Z, p.X);
 	X1.reverse(p.Y, p.Z);
 	Z0.reverse(p.X, p.Y);

@@ -15,8 +15,8 @@ namespace Uniform
 
 	class ColorF4;
 
-	class Point2D;
-	class Point3D;
+	class VectorF2;
+	class VectorF3;
 
 	class Matrix2x2;
 	class Matrix3x3;

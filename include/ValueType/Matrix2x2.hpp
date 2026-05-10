@@ -1,8 +1,7 @@
 #ifndef  MATRIX_2_2_HPP
 # define MATRIX_2_2_HPP
 
-//struct Point2D;
-struct VectorF2; typedef VectorF2 Point2D;
+struct VectorF2;
 struct Angle;
 
 struct Matrix2x2
@@ -33,7 +32,7 @@ struct Matrix2x2
 	Matrix2x2	operator/(const Matrix2x2 & other) const;
 };
 
-Point2D	operator*(const Point2D & p, const Matrix2x2 & mat);
-Point2D	operator/(const Point2D & p, const Matrix2x2 & mat);
+VectorF2	operator*(const VectorF2 & p, const Matrix2x2 & mat);
+VectorF2	operator/(const VectorF2 & p, const Matrix2x2 & mat);
 
 #endif

@@ -10,7 +10,7 @@
 # include "User/MouseManager.hpp"
 
 # include "ValueType/ColorF4.hpp"
-# include "ValueType/Point2D.hpp"
+# include "ValueType/Vector/F2.hpp"
 
 # include "Miscellaneous/Function/Pointer.hpp"
 
@@ -18,8 +18,8 @@
 
 struct GLFWwindow;
 
-//struct Point3D;
-struct VectorF3; typedef VectorF3 Point3D;
+//struct VectorF3;
+struct VectorF3; typedef VectorF3 VectorF3;
 struct EulerAngle3D;
 struct Trans3D;
 
@@ -83,7 +83,7 @@ class Window
 	void	Quit();
 
 	public:
-	//void ChangeSize(Point2D size);
+	//void ChangeSize(VectorF2 size);
 	//void ChangeDefaultColor(ColorF4 color);
 
 	private:
@@ -109,7 +109,7 @@ class Window
 	void Callback_GLFW_Text(unsigned int codepoint);
 
 	public:
-	Point3D MoveFromKeys() const;
+	VectorF3 MoveFromKeys() const;
 	EulerAngle3D SpinFromCursor() const;
 	Trans3D MoveSpinFromKeysCursor() const;
 

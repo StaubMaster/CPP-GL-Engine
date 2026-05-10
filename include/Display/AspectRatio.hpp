@@ -1,7 +1,7 @@
 #ifndef  DISPLAY_ASPECT_RATIO_HPP
 # define DISPLAY_ASPECT_RATIO_HPP
 
-# include "ValueType/Point2D.hpp"
+# include "ValueType/Vector/F2.hpp"
 
 /*
 	AspectRatio.X = size.X / v
@@ -12,7 +12,7 @@
 */
 struct AspectRatio
 {
-	Point2D		Value;
+	VectorF2		Value;
 
 	~AspectRatio();
 	AspectRatio();
@@ -20,8 +20,8 @@ struct AspectRatio
 	AspectRatio(const AspectRatio & other);
 	AspectRatio & operator=(const AspectRatio & other);
 
-	AspectRatio(Point2D size);
-	void Change(Point2D size);
+	AspectRatio(VectorF2 size);
+	void Change(VectorF2 size);
 };
 
 #endif

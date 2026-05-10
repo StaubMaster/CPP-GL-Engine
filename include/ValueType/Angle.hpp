@@ -4,8 +4,8 @@
 # define PI 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 # define TAU 6.28318530717958647692528676655900576839433879875021164194988918461563281257241799725606965068423413
 
-//struct Point2D;
-struct VectorF2; typedef VectorF2 Point2D;
+//struct VectorF2;
+struct VectorF2; typedef VectorF2 VectorF2;
 
 struct Angle
 {
@@ -33,8 +33,8 @@ struct Angle
 	static Angle	Degrees(float val);
 	static Angle	Section(float val);
 
-	static Angle	PointToX(Point2D dir);
-	static Angle	PointToY(Point2D dir);
+	static Angle	PointToX(VectorF2 dir);
+	static Angle	PointToY(VectorF2 dir);
 
 	float	ToRadians() const;
 	float	ToDegrees() const;
@@ -65,8 +65,8 @@ struct Angle
 	void	forward(float & x, float & y) const;
 	void	reverse(float & x, float & y) const;
 
-	Point2D	forward(Point2D p) const;
-	Point2D	reverse(Point2D p) const;
+	VectorF2	forward(VectorF2 p) const;
+	VectorF2	reverse(VectorF2 p) const;
 
 
 

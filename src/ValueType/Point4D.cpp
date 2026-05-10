@@ -1,24 +1,24 @@
-#include "ValueType/Point4D.hpp"
+#include "ValueType/Vector/F4.hpp"
 
 #include <math.h>
 
 
 
-Point4D::Point4D() :
+VectorF4::VectorF4() :
 	X(0), Y(0), Z(0), W(0)
 { }
-Point4D::Point4D(float x, float y, float z, float w) :
+VectorF4::VectorF4(float x, float y, float z, float w) :
 	X(x), Y(y), Z(z), W(w)
 { }
-Point4D::~Point4D()
+VectorF4::~VectorF4()
 { }
 
 
 
-Point4D::Point4D(const Point4D & other) :
+VectorF4::VectorF4(const VectorF4 & other) :
 	X(other.X), Y(other.Y), Z(other.Z), W(other.W)
 { }
-Point4D & Point4D::operator=(const Point4D & other)
+VectorF4 & VectorF4::operator=(const VectorF4 & other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -29,34 +29,34 @@ Point4D & Point4D::operator=(const Point4D & other)
 
 
 
-float Point4D::length2() const
+float VectorF4::length2() const
 {
 	return ((X * X) + (Y * Y) + (Z * Z) + (W * W));
 }
-float Point4D::length() const
+float VectorF4::length() const
 {
 	return sqrt(length2());
 }
-Point4D Point4D::normalize() const
+VectorF4 VectorF4::normalize() const
 {
 	float len = length();
 	if (len > 0.0f)
 	{
-		return Point4D(
+		return VectorF4(
 			X / len,
 			Y / len,
 			Z / len,
 			W / len
 		);
 	}
-	return Point4D(0, 0, 0, 0);
+	return VectorF4(0, 0, 0, 0);
 }
-Point4D Point4D::normalize(float & len) const
+VectorF4 VectorF4::normalize(float & len) const
 {
 	len = length();
 	if (len > 0.0f)
 	{
-		return Point4D(
+		return VectorF4(
 			X / len,
 			Y / len,
 			Z / len,
@@ -64,30 +64,30 @@ Point4D Point4D::normalize(float & len) const
 		);
 	}
 	len = 0.0f;
-	return Point4D(0, 0, 0, 0);
+	return VectorF4(0, 0, 0, 0);
 }
 
-Point4D Point4D::round() const
+VectorF4 VectorF4::round() const
 {
-	return Point4D(
+	return VectorF4(
 		roundf(X),
 		roundf(Y),
 		roundf(Z),
 		roundf(W)
 	);
 }
-Point4D Point4D::roundC() const
+VectorF4 VectorF4::roundC() const
 {
-	return Point4D(
+	return VectorF4(
 		ceilf(X),
 		ceilf(Y),
 		ceilf(Z),
 		ceilf(W)
 	);
 }
-Point4D Point4D::roundF() const
+VectorF4 VectorF4::roundF() const
 {
-	return Point4D(
+	return VectorF4(
 		floorf(X),
 		floorf(Y),
 		floorf(Z),
@@ -95,27 +95,27 @@ Point4D Point4D::roundF() const
 	);
 }
 
-Point4D Point4D::round(float size) const
+VectorF4 VectorF4::round(float size) const
 {
-	return Point4D(
+	return VectorF4(
 		roundf(X / size) * size,
 		roundf(Y / size) * size,
 		roundf(Z / size) * size,
 		roundf(W / size) * size
 	);
 }
-Point4D Point4D::roundC(float size) const
+VectorF4 VectorF4::roundC(float size) const
 {
-	return Point4D(
+	return VectorF4(
 		ceilf(X / size) * size,
 		ceilf(Y / size) * size,
 		ceilf(Z / size) * size,
 		ceilf(W / size) * size
 	);
 }
-Point4D Point4D::roundF(float size) const
+VectorF4 VectorF4::roundF(float size) const
 {
-	return Point4D(
+	return VectorF4(
 		floorf(X / size) * size,
 		floorf(Y / size) * size,
 		floorf(Z / size) * size,
@@ -127,25 +127,25 @@ Point4D Point4D::roundF(float size) const
 
 
 
-Point4D Point4D::operator+() const
+VectorF4 VectorF4::operator+() const
 {
-	return Point4D(
+	return VectorF4(
 		+X,
 		+Y,
 		+Z,
 		+W
 	);
 }
-Point4D Point4D::operator-() const
+VectorF4 VectorF4::operator-() const
 {
-	return Point4D(
+	return VectorF4(
 		-X,
 		-Y,
 		-Z,
 		-W
 	);
 }
-Point4D Point4D::operator!() const
+VectorF4 VectorF4::operator!() const
 {
 	return normalize();
 }
@@ -154,36 +154,36 @@ Point4D Point4D::operator!() const
 
 
 
-Point4D Point4D::operator+(const float & flt) const
+VectorF4 VectorF4::operator+(const float & flt) const
 {
-	return Point4D(
+	return VectorF4(
 		X + flt,
 		Y + flt,
 		Z + flt,
 		W + flt
 	);
 }
-Point4D Point4D::operator-(const float & flt) const
+VectorF4 VectorF4::operator-(const float & flt) const
 {
-	return Point4D(
+	return VectorF4(
 		X - flt,
 		Y - flt,
 		Z - flt,
 		W - flt
 	);
 }
-Point4D Point4D::operator*(const float & flt) const
+VectorF4 VectorF4::operator*(const float & flt) const
 {
-	return Point4D(
+	return VectorF4(
 		X * flt,
 		Y * flt,
 		Z * flt,
 		W * flt
 	);
 }
-Point4D Point4D::operator/(const float & flt) const
+VectorF4 VectorF4::operator/(const float & flt) const
 {
-	return Point4D(
+	return VectorF4(
 		X / flt,
 		Y / flt,
 		Z / flt,
@@ -193,7 +193,7 @@ Point4D Point4D::operator/(const float & flt) const
 
 
 
-Point4D & Point4D::operator+=(const float & flt)
+VectorF4 & VectorF4::operator+=(const float & flt)
 {
 	X += flt;
 	Y += flt;
@@ -201,7 +201,7 @@ Point4D & Point4D::operator+=(const float & flt)
 	W += flt;
 	return *this;
 }
-Point4D & Point4D::operator-=(const float & flt)
+VectorF4 & VectorF4::operator-=(const float & flt)
 {
 	X -= flt;
 	Y -= flt;
@@ -209,7 +209,7 @@ Point4D & Point4D::operator-=(const float & flt)
 	W -= flt;
 	return *this;
 }
-Point4D & Point4D::operator*=(const float & flt)
+VectorF4 & VectorF4::operator*=(const float & flt)
 {
 	X *= flt;
 	Y *= flt;
@@ -217,7 +217,7 @@ Point4D & Point4D::operator*=(const float & flt)
 	W *= flt;
 	return *this;
 }
-Point4D & Point4D::operator/=(const float & flt)
+VectorF4 & VectorF4::operator/=(const float & flt)
 {
 	X /= flt;
 	Y /= flt;
@@ -230,36 +230,36 @@ Point4D & Point4D::operator/=(const float & flt)
 
 
 
-Point4D Point4D::operator+(const Point4D & other) const
+VectorF4 VectorF4::operator+(const VectorF4 & other) const
 {
-	return Point4D(
+	return VectorF4(
 		X + other.X,
 		Y + other.Y,
 		Z + other.Z,
 		W + other.W
 	);
 }
-Point4D Point4D::operator-(const Point4D & other) const
+VectorF4 VectorF4::operator-(const VectorF4 & other) const
 {
-	return Point4D(
+	return VectorF4(
 		X - other.X,
 		Y - other.Y,
 		Z - other.Z,
 		W - other.W
 	);
 }
-Point4D Point4D::operator*(const Point4D & other) const
+VectorF4 VectorF4::operator*(const VectorF4 & other) const
 {
-	return Point4D(
+	return VectorF4(
 		X * other.X,
 		Y * other.Y,
 		Z * other.Z,
 		W * other.W
 	);
 }
-Point4D Point4D::operator/(const Point4D & other) const
+VectorF4 VectorF4::operator/(const VectorF4 & other) const
 {
-	return Point4D(
+	return VectorF4(
 		X / other.X,
 		Y / other.Y,
 		Z / other.Z,
@@ -269,7 +269,7 @@ Point4D Point4D::operator/(const Point4D & other) const
 
 
 
-Point4D & Point4D::operator+=(const Point4D & other)
+VectorF4 & VectorF4::operator+=(const VectorF4 & other)
 {
 	X += other.X;
 	Y += other.Y;
@@ -277,7 +277,7 @@ Point4D & Point4D::operator+=(const Point4D & other)
 	W += other.W;
 	return *this;
 }
-Point4D & Point4D::operator-=(const Point4D & other)
+VectorF4 & VectorF4::operator-=(const VectorF4 & other)
 {
 	X -= other.X;
 	Y -= other.Y;
@@ -285,7 +285,7 @@ Point4D & Point4D::operator-=(const Point4D & other)
 	W -= other.W;
 	return *this;
 }
-Point4D & Point4D::operator*=(const Point4D & other)
+VectorF4 & VectorF4::operator*=(const VectorF4 & other)
 {
 	X *= other.X;
 	Y *= other.Y;
@@ -293,7 +293,7 @@ Point4D & Point4D::operator*=(const Point4D & other)
 	W *= other.W;
 	return *this;
 }
-Point4D & Point4D::operator/=(const Point4D & other)
+VectorF4 & VectorF4::operator/=(const VectorF4 & other)
 {
 	X /= other.X;
 	Y /= other.Y;
@@ -306,7 +306,7 @@ Point4D & Point4D::operator/=(const Point4D & other)
 
 
 
-float Point4D::dot(const Point4D & p0, const Point4D & p1)
+float VectorF4::dot(const VectorF4 & p0, const VectorF4 & p1)
 {
 	return (
 		(p0.X * p1.X) +

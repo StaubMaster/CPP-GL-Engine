@@ -13,10 +13,10 @@ namespace PolyHedraFull { namespace Main { struct Data; }; };
 
 class SkinBase;
 
-//struct Point2D;
-struct VectorF2; typedef VectorF2 Point2D;
-//struct AxisBox3D;
-struct BoxF3; typedef BoxF3 AxisBox3D;
+//struct VectorF2;
+struct VectorF2; typedef VectorF2 VectorF2;
+//struct BoxF3;
+struct BoxF3; typedef BoxF3 BoxF3;
 
 class Image;
 
@@ -63,7 +63,7 @@ class PolyHedra
 
 	public:
 	std::string	ToInfo() const;
-	AxisBox3D	CalcBound() const;
+	BoxF3	CalcBound() const;
 
 	public:
 	struct Generate;

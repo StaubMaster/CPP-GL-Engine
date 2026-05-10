@@ -9,7 +9,7 @@ Line2D::Line2D()
 	: Origin()
 	, Target()
 { }
-Line2D::Line2D(Point2D origin, Point2D target)
+Line2D::Line2D(VectorF2 origin, VectorF2 target)
 	: Origin(origin)
 	, Target(target)
 { }
@@ -37,7 +37,7 @@ Line2D Line2D::Reverse() const
 	return Line2D(Target, Origin);
 }
 
-Point2D Line2D::Differance() const
+VectorF2 Line2D::Differance() const
 {
 	return (Target - Origin);
 }
@@ -46,11 +46,11 @@ float Line2D::Length() const
 	return Differance().length();
 }
 
-Point2D Line2D::Middle() const
+VectorF2 Line2D::Middle() const
 {
 	return (Origin + Target) / 2;
 }
-Point2D Line2D::Normal() const
+VectorF2 Line2D::Normal() const
 {
 	return Differance().cross(1.0f).normalize();
 }

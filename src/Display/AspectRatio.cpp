@@ -16,12 +16,12 @@ AspectRatio & AspectRatio::operator=(const AspectRatio & other)
 	return *this;
 }
 
-AspectRatio::AspectRatio(Point2D size)
+AspectRatio::AspectRatio(VectorF2 size)
 {
 	Change(size);
 }
 
-void AspectRatio::Change(Point2D size)
+void AspectRatio::Change(VectorF2 size)
 {
 	// == 0.0f ?
 	if (size.X == size.Y)

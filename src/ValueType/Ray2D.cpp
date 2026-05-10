@@ -11,7 +11,7 @@ Ray2D::Ray2D()
 	: Pos()
 	, Dir()
 { }
-Ray2D::Ray2D(Point2D pos, Point2D dir)
+Ray2D::Ray2D(VectorF2 pos, VectorF2 dir)
 	: Pos(pos)
 	, Dir(dir)
 { }
@@ -36,7 +36,7 @@ Ray2D::Ray2D(const Line2D & line)
 
 
 
-Point2D Ray2D::ToPoint(float scalar) const
+VectorF2 Ray2D::ToPoint(float scalar) const
 {
 	return Pos + (Dir * scalar);
 }
@@ -49,7 +49,7 @@ Line2D Ray2D::ToLine(float scalar0, float scalar1) const
 	return Line2D(Pos + (Dir * scalar0), Pos + (Dir * scalar1));
 }
 
-Point2D Ray2D::Normal() const
+VectorF2 Ray2D::Normal() const
 {
 	return Dir.cross(1.0f).normalize();
 }
@@ -58,9 +58,9 @@ Point2D Ray2D::Normal() const
 //Ray2D::Interval::Interval(const Ray2D & ray, float inter = NAN, int index = -1) :
 //	Ray(ray), Inter(inter), Index(index) { }
 
-/*Ray2D::Interval Ray2D::Ray_Point(Point2D p)
+/*Ray2D::Interval Ray2D::Ray_Point(VectorF2 p)
 {
-	float dot = Point2D::dot(Dir, Pos - p);
+	float dot = VectorF2::dot(Dir, Pos - p);
 	float sqr = Dir.length2();
 	return Ray2D::Interval(*this, -(dot / sqr));
 }*/

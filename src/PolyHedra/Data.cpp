@@ -5,7 +5,7 @@
 PolyHedra::Corner::Corner()
 	: Position()
 { }
-PolyHedra::Corner::Corner(Point3D pos)
+PolyHedra::Corner::Corner(VectorF3 pos)
 	: Position(pos)
 { }
 

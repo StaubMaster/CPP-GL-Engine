@@ -2,11 +2,11 @@
 # define MATRIX_4_4_HPP
 
 struct Angle;
-//struct Point4D;
-struct VectorF4; typedef VectorF4 Point4D;
+//struct VectorF4;
+struct VectorF4; typedef VectorF4 VectorF4;
 
-//struct Point3D;
-struct VectorF3; typedef VectorF3 Point3D;
+//struct VectorF3;
+struct VectorF3; typedef VectorF3 VectorF3;
 struct EulerAngle3D;
 struct Trans3D;
 
@@ -33,7 +33,7 @@ struct Matrix4x4
 
 	static Matrix4x4	Identity();
 
-	static Matrix4x4	Position(Point3D p);
+	static Matrix4x4	Position(VectorF3 p);
 	static Matrix4x4	Rotation(EulerAngle3D a);
 	static Matrix4x4	TransformForward(Trans3D t);
 	static Matrix4x4	TransformReverse(Trans3D t);
@@ -43,13 +43,13 @@ struct Matrix4x4
 	Matrix4x4	operator/(const Matrix4x4 & other) const;
 };
 
-Point4D	operator*(const Point4D & p, const Matrix4x4 & mat);
-Point4D	operator/(const Point4D & p, const Matrix4x4 & mat);
+VectorF4	operator*(const VectorF4 & p, const Matrix4x4 & mat);
+VectorF4	operator/(const VectorF4 & p, const Matrix4x4 & mat);
 
-Point3D	operator*(const Point3D & p, const Matrix4x4 & mat);
-Point3D	operator/(const Point3D & p, const Matrix4x4 & mat);
+VectorF3	operator*(const VectorF3 & p, const Matrix4x4 & mat);
+VectorF3	operator/(const VectorF3 & p, const Matrix4x4 & mat);
 
-//Point4D operator*(const Matrix4x4 & mat, const Point4D & p);
-//Point4D operator/(const Matrix4x4 & mat, const Point4D & p);
+//VectorF4 operator*(const Matrix4x4 & mat, const VectorF4 & p);
+//VectorF4 operator/(const Matrix4x4 & mat, const VectorF4 & p);
 
 #endif

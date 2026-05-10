@@ -5,22 +5,26 @@
 # include "ValueType/Bool3.hpp"
 # include "ValueType/Bool4.hpp"
 
-# include "ValueType/VectorF2.hpp"
-# include "ValueType/VectorF3.hpp"
-# include "ValueType/VectorF4.hpp"
-# include "ValueType/BoxF1.hpp"
-# include "ValueType/BoxF2.hpp"
-# include "ValueType/BoxF3.hpp"
+# include "ValueType/Vector/F2.hpp"
+# include "ValueType/Vector/F3.hpp"
+# include "ValueType/Vector/F4.hpp"
+# include "ValueType/Box/F1.hpp"
+# include "ValueType/Box/F2.hpp"
+# include "ValueType/Box/F3.hpp"
 
-# include "ValueType/VectorU2.hpp"
-# include "ValueType/VectorU3.hpp"
-# include "ValueType/BoxU2.hpp"
-# include "ValueType/BoxU3.hpp"
+# include "ValueType/Vector/U2.hpp"
+# include "ValueType/Vector/U3.hpp"
+# include "ValueType/Box/U2.hpp"
+# include "ValueType/Box/U3.hpp"
+# include "ValueType/LoopU2.hpp"
+# include "ValueType/LoopU3.hpp"
 
-# include "ValueType/VectorI2.hpp"
-# include "ValueType/VectorI3.hpp"
-# include "ValueType/BoxI2.hpp"
-# include "ValueType/BoxI3.hpp"
+# include "ValueType/Vector/I2.hpp"
+# include "ValueType/Vector/I3.hpp"
+# include "ValueType/Box/I2.hpp"
+# include "ValueType/Box/I3.hpp"
+# include "ValueType/LoopI2.hpp"
+# include "ValueType/LoopI3.hpp"
 
 
 
@@ -28,15 +32,8 @@
 # include "ValueType/Matrix3x3.hpp"
 # include "ValueType/Matrix4x4.hpp"
 
-# include "ValueType/Point2D.hpp"
-# include "ValueType/Point3D.hpp"
-# include "ValueType/Point4D.hpp"
-
-# include "ValueType/AxisBox1D.hpp"
-# include "ValueType/AxisBox2D.hpp"
-# include "ValueType/AxisBox3D.hpp"
-
 # include "ValueType/Line2D.hpp"
+# include "ValueType/Line3D.hpp"
 
 # include "ValueType/Ray2D.hpp"
 # include "ValueType/Ray3D.hpp"
@@ -54,6 +51,7 @@
 # include "ValueType/LInter.hpp"
 
 # include "ValueType/ColorF4.hpp"
+# include "ValueType/ColorU4.hpp"
 
 # include "ValueType/View2D.hpp"
 # include "ValueType/View3D.hpp"
@@ -62,17 +60,6 @@
 # include "ValueType/LightSolar.hpp"
 # include "ValueType/LightSpot.hpp"
 
-# include "ValueType/Bool2D.hpp"
-# include "ValueType/Bool3D.hpp"
-
 # include "ValueType/Undex.hpp"
-
-# include "ValueType/Undex2D.hpp"
-# include "ValueType/UndexBox2D.hpp"
-# include "ValueType/UndexLoop2D.hpp"
-
-# include "ValueType/Undex3D.hpp"
-# include "ValueType/UndexBox3D.hpp"
-# include "ValueType/UndexLoop3D.hpp"
 
 #endif

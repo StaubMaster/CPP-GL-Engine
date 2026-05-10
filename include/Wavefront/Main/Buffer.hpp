@@ -3,8 +3,8 @@
 
 # include "Graphics/Buffer/Array.hpp"
 
-# include "Graphics/Attribute/Point4D.hpp"
-# include "Graphics/Attribute/Point3D.hpp"
+# include "Graphics/Attribute/VectorF4.hpp"
+# include "Graphics/Attribute/VectorF3.hpp"
 # include "Graphics/Attribute/ColorF4.hpp"
 # include "Graphics/Attribute/Base/Float1.hpp"
 
@@ -17,9 +17,9 @@ namespace Main
 class Buffer : public ::Buffer::Array
 {
 	public:
-	::Attribute::Point4D	Position;
-	::Attribute::Point3D	Texture;
-	::Attribute::Point3D	Normal;
+	::Attribute::VectorF4	Position;
+	::Attribute::VectorF3	Texture;
+	::Attribute::VectorF3	Normal;
 	::Attribute::ColorF4	Color;
 
 	::Attribute::ColorF4	AmbientColor;

@@ -38,5 +38,5 @@ void View2D::Change(Trans2D change, float timeDelta)
 
 
 
-Point2D View2D::forward(Point2D p) const { return Trans.forward(p * Scale); }
-Point2D View2D::reverse(Point2D p) const { return Trans.reverse(p) / Scale; }
+VectorF2 View2D::forward(VectorF2 p) const { return Trans.forward(p * Scale); }
+VectorF2 View2D::reverse(VectorF2 p) const { return Trans.reverse(p) / Scale; }

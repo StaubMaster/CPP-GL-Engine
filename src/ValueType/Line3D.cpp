@@ -9,7 +9,7 @@ Line3D::Line3D()
 	: Origin()
 	, Target()
 { }
-Line3D::Line3D(Point3D origin, Point3D target)
+Line3D::Line3D(VectorF3 origin, VectorF3 target)
 	: Origin(origin)
 	, Target(target)
 { }
@@ -37,7 +37,7 @@ Line3D Line3D::Reverse() const
 	return Line3D(Target, Origin);
 }
 
-Point3D Line3D::Differance() const
+VectorF3 Line3D::Differance() const
 {
 	return (Target - Origin);
 }
@@ -46,7 +46,7 @@ float Line3D::Length() const
 	return Differance().length();
 }
 
-Point3D Line3D::Middle() const
+VectorF3 Line3D::Middle() const
 {
 	return (Origin + Target) / 2;
 }

@@ -6,11 +6,11 @@ PolyGonFull::Main::Data::Data()
 	: Pos()
 	, Col()
 { }
-PolyGonFull::Main::Data::Data(Point2D pos)
+PolyGonFull::Main::Data::Data(VectorF2 pos)
 	: Pos(pos)
 	, Col(1, 1, 1, 1)
 { }
-PolyGonFull::Main::Data::Data(Point2D pos, ColorF4 col)
+PolyGonFull::Main::Data::Data(VectorF2 pos, ColorF4 col)
 	: Pos(pos)
 	, Col(col)
 { }

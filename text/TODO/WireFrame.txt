@@ -16,7 +16,7 @@ everything else like texture and Normals would also not be needed
 
 
 
-also something like AxisBox3D and Point2Point Lines would also be Wires
+also something like BoxF3 and Point2Point Lines would also be Wires
 should those have their own Shaders
 or make a WireFrame PolyHedra for them
 and then get transformed to where they are needed

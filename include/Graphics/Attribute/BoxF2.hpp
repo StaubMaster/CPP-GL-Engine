@@ -24,7 +24,7 @@ class BoxF2 : public Attribute::Base
 	public:
 	void	Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
 };
-typedef BoxF2 AxisBox2D;
+typedef BoxF2 BoxF2;
 };
 
 #endif

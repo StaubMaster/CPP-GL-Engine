@@ -24,13 +24,13 @@ PixelSize & PixelSize::operator=(const PixelSize & other)
 
 
 
-void PixelSize::ChangeFull(Point2D size)
+void PixelSize::ChangeFull(VectorF2 size)
 {
 	Full = size;
 	Half = size / 2;
 }
 
-PixelSize PixelSize::FromFull(Point2D size)
+PixelSize PixelSize::FromFull(VectorF2 size)
 {
 	PixelSize pixel_size;
 	pixel_size.ChangeFull(size);

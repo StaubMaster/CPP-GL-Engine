@@ -2,20 +2,20 @@
 # define LIGHT_SPOT_HPP
 
 # include "LightBase.hpp"
-# include "Point3D.hpp"
+# include "ValueType/Vector/F3.hpp"
 # include "Range.hpp"
 
 struct LightSpot
 {
 	public:
 	LightBase	Base;
-	Point3D		Pos;
-	Point3D		Dir;
+	VectorF3		Pos;
+	VectorF3		Dir;
 	::Range		Range;
 
 	public:
 	LightSpot();
-	LightSpot(float intensity, ColorF4 color, Point3D pos, Point3D dir, ::Range range);
+	LightSpot(float intensity, ColorF4 color, VectorF3 pos, VectorF3 dir, ::Range range);
 };
 
 #endif

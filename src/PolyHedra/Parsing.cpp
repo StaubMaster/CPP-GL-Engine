@@ -16,10 +16,10 @@
 #include "FileParsing/Text/Exceptions.hpp"
 
 // ValueType
-#include "ValueType/Point3D.hpp"
+#include "ValueType/Vector/F3.hpp"
 #include "ValueType/Angle.hpp"
 #include "ValueType/EulerAngle3D.hpp"
-#include "ValueType/AxisBox3D.hpp"
+#include "ValueType/Box/F3.hpp"
 #include "ValueType/_Show.hpp"
 
 // Debug
@@ -140,7 +140,7 @@ void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)
 	if (!(cmd.Count() == 3)) { throw InvalidCommandArgumentCount(cmd, "n == 3"); }
 	//Debug::Log << cmd << Debug::Done;
 
-	Point3D c;
+	VectorF3 c;
 	c.X = cmd.ToFloat(0);
 	c.Y = cmd.ToFloat(1);
 	c.Z = cmd.ToFloat(2);
@@ -314,19 +314,19 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 	int step_num = cmd.ToInt32(0);
 	int step_off = cmd.ToInt32(1);
 
-	Point3D center(
+	VectorF3 center(
 		cmd.ToFloat(2),
 		cmd.ToFloat(3),
 		cmd.ToFloat(4)
 	);
 	float radius = cmd.ToFloat(5);
 
-	/*Angle3D angle = Angle3D::FromPoint3D(Point3D(
+	/*Angle3D angle = Angle3D::FromVectorF3(VectorF3(
 		cmd.ToFloat(6),
 		cmd.ToFloat(7),
 		cmd.ToFloat(8)
 	));*/
-	EulerAngle3D angle = EulerAngle3D::PointToZ(Point3D(
+	EulerAngle3D angle = EulerAngle3D::PointToZ(VectorF3(
 		cmd.ToFloat(6),
 		cmd.ToFloat(7),
 		cmd.ToFloat(8)
@@ -337,12 +337,12 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 	if (step_num > 0) { step_abs = +step_num; offset += Angle::Degrees(000); }
 	if (step_num < 0) { step_abs = -step_num; offset += Angle::Degrees(180); }
 
-	Point3D rad_p(radius, 0, 0);
+	VectorF3 rad_p(radius, 0, 0);
 	for (int i = 0; i < step_abs; i++)
 	{
 		angle.Z0 = (Angle::Section(step_num) * (i + step_off)) + offset;
 
-		Point3D p;
+		VectorF3 p;
 		p = angle.forward(rad_p);
 		p = p + center;
 		PolyHedra.Insert_Corn(Corner(p));
@@ -359,14 +359,14 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 	int step_num = cmd.ToInt32(1);
 	int step_off = cmd.ToInt32(2);
 
-	Point3D center(
+	VectorF3 center(
 		cmd.ToFloat(3),
 		cmd.ToFloat(4),
 		cmd.ToFloat(5)
 	);
-	Point3D radius(cmd.ToFloat(6), 0, 0);
+	VectorF3 radius(cmd.ToFloat(6), 0, 0);
 
-	EulerAngle3D angle = EulerAngle3D::PointToZ(Point3D(
+	EulerAngle3D angle = EulerAngle3D::PointToZ(VectorF3(
 		cmd.ToFloat(7),
 		cmd.ToFloat(8),
 		cmd.ToFloat(9)
@@ -384,7 +384,7 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 			//angle.Z = ((i + step_off) * step) + offset;
 		}
 		//angle.CalcMatrix();
-		Point3D p;
+		VectorF3 p;
 		//p = angle.rotateBack(radius) + center;
 		p = angle.forward(radius) + center;
 		PolyHedra.Insert_Corn(Corner(p));

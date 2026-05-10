@@ -6,7 +6,7 @@ UndexBox3D::UndexBox3D() :
 	Min(),
 	Max()
 { }
-UndexBox3D::UndexBox3D(Undex3D min, Undex3D max) :
+UndexBox3D::UndexBox3D(VectorU3 min, VectorU3 max) :
 	Min(min),
 	Max(max)
 { }
@@ -28,15 +28,15 @@ UndexBox3D & UndexBox3D::operator=(const UndexBox3D & other)
 
 
 
-Bool3D UndexBox3D::CheckIn(Undex3D udx) const
+Bool3 UndexBox3D::CheckIn(VectorU3 udx) const
 {
 	return (udx >= Min) & (udx <= Max);
 }
-Bool3D UndexBox3D::CheckEx(Undex3D udx) const
+Bool3 UndexBox3D::CheckEx(VectorU3 udx) const
 {
 	return (udx > Min) & (udx < Max);
 }
-Bool3D UndexBox3D::CheckEdge(Undex3D udx) const
+Bool3 UndexBox3D::CheckEdge(VectorU3 udx) const
 {
 	return (udx == Min) | (udx == Max);
 }

@@ -22,8 +22,8 @@ struct View2D
 
 
 
-	Point2D forward(Point2D p) const;
-	Point2D reverse(Point2D p) const;
+	VectorF2 forward(VectorF2 p) const;
+	VectorF2 reverse(VectorF2 p) const;
 };
 
 #endif

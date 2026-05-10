@@ -1,24 +1,24 @@
-#include "ValueType/AxisBox1D.hpp"
+#include "ValueType/Box/F1.hpp"
 #include <math.h>
 
 
 
-AxisBox1D::AxisBox1D() :
+BoxF1::BoxF1() :
 	Min(+INFINITY),
 	Max(-INFINITY)
 { }
-AxisBox1D::AxisBox1D(float min, float max) :
+BoxF1::BoxF1(float min, float max) :
 	Min(min),
 	Max(max)
 { }
 
 
 
-AxisBox1D::AxisBox1D(const AxisBox1D & other) :
+BoxF1::BoxF1(const BoxF1 & other) :
 	Min(other.Min),
 	Max(other.Max)
 { }
-AxisBox1D & AxisBox1D::operator=(const AxisBox1D & other)
+BoxF1 & BoxF1::operator=(const BoxF1 & other)
 {
 	Min = other.Min;
 	Max = other.Max;
@@ -27,7 +27,7 @@ AxisBox1D & AxisBox1D::operator=(const AxisBox1D & other)
 
 
 
-void AxisBox1D::Consider(float val)
+void BoxF1::Consider(float val)
 {
 	if (val < Min) { Min = val; }
 
@@ -35,22 +35,22 @@ void AxisBox1D::Consider(float val)
 }
 
 
-float AxisBox1D::Size() const
+float BoxF1::Size() const
 {
 	return (Max - Min);
 }
-float AxisBox1D::Center() const
+float BoxF1::Center() const
 {
 	return ((Max * 0.5f) + (Min * 0.5f));
 }
 
 
 
-bool AxisBox1D::Intersekt(float val) const
+bool BoxF1::Intersekt(float val) const
 {
 	return (Min <= val && Max >= val);
 }
-bool AxisBox1D::Intersekt(const AxisBox1D & other) const
+bool BoxF1::Intersekt(const BoxF1 & other) const
 {
 /*
 : A : B : C :

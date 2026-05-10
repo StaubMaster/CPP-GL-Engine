@@ -5,8 +5,8 @@
 #include "FileInfo.hpp"
 #include "FileParsing/LineCommand.hpp"
 
-#include "ValueType/Point2D.hpp"
-#include "ValueType/AxisBox3D.hpp"
+#include "ValueType/Vector/F2.hpp"
+#include "ValueType/Box/F3.hpp"
 #include "Display/SizeRatio2D.hpp"
 
 #include "DataShow.hpp"
@@ -38,14 +38,14 @@ Wavefront::OBJ::~OBJ()
 
 
 
-static char SizeMax(Point3D val)
+static char SizeMax(VectorF3 val)
 {
 	if (val.X > val.Y && val.X > val.Z) { return 0b001; }
 	if (val.Y > val.Z && val.Y > val.X) { return 0b010; }
 	if (val.Z > val.X && val.Z > val.Y) { return 0b100; }
 	return 0;
 }
-static char SizeMid(Point3D val)
+static char SizeMid(VectorF3 val)
 {
 	if ((val.X > val.Y && val.X < val.Z) || (val.X < val.Y && val.X > val.Z)) { return 0b001; }
 	if ((val.Y > val.X && val.Y < val.Z) || (val.Y < val.X && val.Y > val.Z)) { return 0b010; }
@@ -53,11 +53,11 @@ static char SizeMid(Point3D val)
 	return 0;
 }
 
-Point4D Wavefront::OBJ::Position_MainData(unsigned int idx)
+VectorF4 Wavefront::OBJ::Position_MainData(unsigned int idx)
 {
 	return Positions[idx];
 }
-Point3D Wavefront::OBJ::Texture_MainData(unsigned int idx, Point4D pos, SizeRatio2D scale, char sides)
+VectorF3 Wavefront::OBJ::Texture_MainData(unsigned int idx, VectorF4 pos, SizeRatio2D scale, char sides)
 {
 	if (idx != 0xFFFFFFFF)
 	{
@@ -65,14 +65,14 @@ Point3D Wavefront::OBJ::Texture_MainData(unsigned int idx, Point4D pos, SizeRati
 	}
 	else
 	{
-		Point2D tex;
-		if (sides == 0b011) { tex = Point2D(pos.X, -pos.Y); }
-		if (sides == 0b101) { tex = Point2D(pos.X, -pos.Z); }
-		if (sides == 0b110) { tex = Point2D(pos.Z, -pos.Y); }
-		return Point3D(tex.X * scale.Ratio.X, tex.Y * scale.Ratio.Y, 0);
+		VectorF2 tex;
+		if (sides == 0b011) { tex = VectorF2(pos.X, -pos.Y); }
+		if (sides == 0b101) { tex = VectorF2(pos.X, -pos.Z); }
+		if (sides == 0b110) { tex = VectorF2(pos.Z, -pos.Y); }
+		return VectorF3(tex.X * scale.Ratio.X, tex.Y * scale.Ratio.Y, 0);
 	}
 }
-Point3D Wavefront::OBJ::Normal_MainData(unsigned int idx, Point3D normal)
+VectorF3 Wavefront::OBJ::Normal_MainData(unsigned int idx, VectorF3 normal)
 {
 	if (idx != 0xFFFFFFFF)
 	{
@@ -88,11 +88,11 @@ Wavefront::Main::Data * Wavefront::OBJ::ToMainData(int & count, SizeRatio2D texS
 	count = Faces.Count() * 3;
 	Main::Data * data = new Main::Data[count];
 
-	Point3D TexMin(+INFINITY, +INFINITY, +INFINITY);
-	Point3D TexMax(-INFINITY, -INFINITY, -INFINITY);
+	VectorF3 TexMin(+INFINITY, +INFINITY, +INFINITY);
+	VectorF3 TexMax(-INFINITY, -INFINITY, -INFINITY);
 	for (unsigned int i = 0; i < Positions.Count(); i++)
 	{
-		const Point4D & p = Positions[i];
+		const VectorF4 & p = Positions[i];
 		if (p.X < TexMin.X) { TexMin.X = p.X; }
 		if (p.Y < TexMin.Y) { TexMin.Y = p.Y; }
 		if (p.Z < TexMin.Z) { TexMin.Z = p.Z; }
@@ -100,7 +100,7 @@ Wavefront::Main::Data * Wavefront::OBJ::ToMainData(int & count, SizeRatio2D texS
 		if (p.Y > TexMax.Y) { TexMax.Y = p.Y; }
 		if (p.Y > TexMax.Z) { TexMax.Z = p.Z; }
 	}
-	Point3D TexLen = TexMax - TexMin;
+	VectorF3 TexLen = TexMax - TexMin;
 	char sides = SizeMax(TexLen) | SizeMid(TexLen);
 
 	ColorF4 colors [] = {
@@ -131,10 +131,10 @@ Wavefront::Main::Data * Wavefront::OBJ::ToMainData(int & count, SizeRatio2D texS
 		c1.Texture = Texture_MainData(face.Corner2.Texture, c1.Position, texScale, sides);
 		c2.Texture = Texture_MainData(face.Corner3.Texture, c2.Position, texScale, sides);
 
-		Point3D n0(c0.Position.X, c0.Position.Y, c0.Position.Z);
-		Point3D n1(c1.Position.X, c1.Position.Y, c1.Position.Z);
-		Point3D n2(c2.Position.X, c2.Position.Y, c2.Position.Z);
-		Point3D normal = Point3D::cross(n1 - n0, n2 - n0).normalize();
+		VectorF3 n0(c0.Position.X, c0.Position.Y, c0.Position.Z);
+		VectorF3 n1(c1.Position.X, c1.Position.Y, c1.Position.Z);
+		VectorF3 n2(c2.Position.X, c2.Position.Y, c2.Position.Z);
+		VectorF3 normal = VectorF3::cross(n1 - n0, n2 - n0).normalize();
 
 		c0.Normal = Normal_MainData(face.Corner1.Normal, normal);
 		c1.Normal = Normal_MainData(face.Corner2.Normal, normal);
@@ -170,7 +170,7 @@ Wavefront::Main::Data * Wavefront::OBJ::ToMainData(int & count, SizeRatio2D texS
 
 void Wavefront::OBJ::Parse_v(const LineCommand & cmd)
 {
-	Point4D p;
+	VectorF4 p;
 	if (cmd.Args.size() == 3)
 	{
 		p.X = std::stof(cmd.Args[0]);
@@ -184,7 +184,7 @@ void Wavefront::OBJ::Parse_v(const LineCommand & cmd)
 }
 void Wavefront::OBJ::Parse_vt(const LineCommand & cmd)
 {
-	Point3D p;
+	VectorF3 p;
 	if (cmd.Args.size() == 2)
 	{
 		p.X = std::stof(cmd.Args[0]);
@@ -197,7 +197,7 @@ void Wavefront::OBJ::Parse_vt(const LineCommand & cmd)
 }
 void Wavefront::OBJ::Parse_vn(const LineCommand & cmd)
 {
-	Point3D p;
+	VectorF3 p;
 	if (cmd.Args.size() == 3)
 	{
 		p.X = std::stof(cmd.Args[0]);
@@ -334,14 +334,14 @@ Wavefront::OBJ * Wavefront::OBJ::Load(const FileInfo & file)
 
 
 
-AxisBox3D Wavefront::OBJ::ToAxisBox()
+BoxF3 Wavefront::OBJ::ToAxisBox()
 {
-	AxisBox3D box;
+	BoxF3 box;
 
 	for (unsigned int i = 0; i < Positions.Count(); i++)
 	{
-		const Point4D & p = Positions[i];
-		box.Consider(Point3D(p.X, p.Y, p.Z));
+		const VectorF4 & p = Positions[i];
+		box.Consider(VectorF3(p.X, p.Y, p.Z));
 	}
 
 	return box;

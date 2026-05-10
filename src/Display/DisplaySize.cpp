@@ -1,6 +1,6 @@
 #include "Display/DisplaySize.hpp"
 #include "Display/DisplayPosition.hpp"
-#include "ValueType/Point2D.hpp"
+#include "ValueType/Vector/F2.hpp"
 
 
 
@@ -25,7 +25,7 @@ DisplaySize & DisplaySize::operator=(const DisplaySize & other)
 	return *this;
 }
 
-DisplaySize::DisplaySize(Point2D windowSize, Point2D bufferSize)
+DisplaySize::DisplaySize(VectorF2 windowSize, VectorF2 bufferSize)
 	: Ratio(windowSize)
 	, Window(PixelSize::FromFull(windowSize))
 	, Buffer(PixelSize::FromFull(bufferSize))
@@ -33,7 +33,7 @@ DisplaySize::DisplaySize(Point2D windowSize, Point2D bufferSize)
 
 
 
-void DisplaySize::Change(Point2D windowSize, Point2D bufferSize)
+void DisplaySize::Change(VectorF2 windowSize, VectorF2 bufferSize)
 {
 	Ratio.Change(windowSize);
 	Window.ChangeFull(windowSize);
@@ -42,17 +42,17 @@ void DisplaySize::Change(Point2D windowSize, Point2D bufferSize)
 
 
 
-Point2D DisplaySize::Convert(DisplayPosition pos) const
+VectorF2 DisplaySize::Convert(DisplayPosition pos) const
 {
-	return Point2D(
+	return VectorF2(
 		+pos.Normal.Rel.X / Ratio.Value.X,
 		-pos.Normal.Rel.Y / Ratio.Value.Y
 	);
 }
-DisplayPosition DisplaySize::Convert(Point2D pos) const
+DisplayPosition DisplaySize::Convert(VectorF2 pos) const
 {
 	return DisplayPosition::FromNormalRel(
-		Point2D(
+		VectorF2(
 			+pos.X * Ratio.Value.X,
 			-pos.Y * Ratio.Value.Y
 		), *this

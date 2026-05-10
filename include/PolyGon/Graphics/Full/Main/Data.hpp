@@ -1,7 +1,7 @@
 #ifndef  POLYGON_GRAPHICS_FULL_MAIN_DATA_HPP
 # define POLYGON_GRAPHICS_FULL_MAIN_DATA_HPP
 
-# include "ValueType/Point2D.hpp"
+# include "ValueType/Vector/F2.hpp"
 # include "ValueType/ColorF4.hpp"
 
 namespace PolyGonFull
@@ -10,11 +10,11 @@ namespace Main
 {
 struct Data
 {
-	Point2D		Pos;
+	VectorF2		Pos;
 	ColorF4		Col;
 	Data();
-	Data(Point2D pos);
-	Data(Point2D pos, ColorF4 col);
+	Data(VectorF2 pos);
+	Data(VectorF2 pos, ColorF4 col);
 };
 };
 };

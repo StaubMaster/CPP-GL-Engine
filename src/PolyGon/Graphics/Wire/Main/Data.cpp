@@ -6,11 +6,11 @@ PolyHedraWire::Main::Data::Data()
 	: Pos()
 	, Col()
 { }
-PolyHedraWire::Main::Data::Data(Point3D pos)
+PolyHedraWire::Main::Data::Data(VectorF3 pos)
 	: Pos(pos)
 	, Col()
 { }
-PolyHedraWire::Main::Data::Data(Point3D pos, ColorF4 col)
+PolyHedraWire::Main::Data::Data(VectorF3 pos, ColorF4 col)
 	: Pos(pos)
 	, Col(col)
 { }

@@ -1,7 +1,7 @@
 #ifndef  DISPLAY_PIXEL_SIZE_HPP
 # define DISPLAY_PIXEL_SIZE_HPP
 
-# include "ValueType/Point2D.hpp"
+# include "ValueType/Vector/F2.hpp"
 
 struct PixelPosition;
 struct NormalPosition;
@@ -17,9 +17,9 @@ struct PixelSize
 	PixelSize(const PixelSize & other);
 	PixelSize & operator=(const PixelSize & other);
 
-	void ChangeFull(Point2D size);
+	void ChangeFull(VectorF2 size);
 
-	static PixelSize FromFull(Point2D size);
+	static PixelSize FromFull(VectorF2 size);
 
 
 

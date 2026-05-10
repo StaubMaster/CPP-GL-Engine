@@ -18,7 +18,7 @@ bool IsIntersecting(
 bool Intersection(
 	const Line2D & line0,
 	const Line2D & line1,
-	Point2D & ret
+	VectorF2 & ret
 );
 
 #endif

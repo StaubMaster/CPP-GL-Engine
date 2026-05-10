@@ -1,5 +1,5 @@
 #include "Graphics/Texture/Base.hpp"
-#include "ValueType/Undex3D.hpp"
+#include "ValueType/Vector/U3.hpp"
 #include "OpenGL.hpp"
 #include <sstream>
 
@@ -174,12 +174,12 @@ void Texture::Base::FilterMag(FilterMagType filter)
 
 
 
-void Texture::Base::Full3D(Undex3D size, const ColorU4 * data)
+void Texture::Base::Full3D(VectorU3 size, const ColorU4 * data)
 {
 	Bind();
 	GL::TexImage3D(Target, 0, GL::InternalFormat::Rgba8, size.X, size.Y, size.Z, 0, GL::PixelDataFormat::Rgba, GL::PixelDataType::UnsignedInt8888Rev, data);
 }
-void Texture::Base::Part3D(Undex3D size, Undex3D offset, const ColorU4 * data)
+void Texture::Base::Part3D(VectorU3 size, VectorU3 offset, const ColorU4 * data)
 {
 	Bind();
 	GL::TexSubImage3D(Target, 0, offset.X, offset.Y, offset.Z, size.X, size.Y, size.Z, GL::PixelDataFormat::Rgba, GL::PixelDataType::UnsignedInt8888Rev, data);

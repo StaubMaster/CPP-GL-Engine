@@ -21,28 +21,28 @@ VALUE_TYPE := \
 	ValueType/Bool3.cpp \
 	ValueType/Bool4.cpp \
 	\
-	ValueType/VectorF2.cpp \
-	ValueType/VectorF3.cpp \
-	ValueType/VectorF4.cpp \
-	ValueType/BoxF1.cpp \
-	ValueType/BoxF2.cpp \
-	ValueType/BoxF3.cpp \
+	ValueType/Vector/F2.cpp \
+	ValueType/Vector/F3.cpp \
+	ValueType/Vector/F4.cpp \
+	ValueType/Box/F1.cpp \
+	ValueType/Box/F2.cpp \
+	ValueType/Box/F3.cpp \
 	\
-	ValueType/VectorU2.cpp \
-	ValueType/VectorU3.cpp \
-	ValueType/BoxU2.cpp \
-	ValueType/BoxU3.cpp \
+	ValueType/Vector/U2.cpp \
+	ValueType/Vector/U3.cpp \
+	ValueType/Box/U2.cpp \
+	ValueType/Box/U3.cpp \
+	ValueType/LoopU2.cpp \
+	ValueType/LoopU3.cpp \
 	\
-	ValueType/VectorI2.cpp \
-	ValueType/VectorI3.cpp \
-	ValueType/BoxI2.cpp \
-	ValueType/BoxI3.cpp \
+	ValueType/Vector/I2.cpp \
+	ValueType/Vector/I3.cpp \
+	ValueType/Box/I2.cpp \
+	ValueType/Box/I3.cpp \
 	ValueType/LoopI2.cpp \
 	ValueType/LoopI3.cpp \
 \
 	ValueType/Undex.cpp \
-	ValueType/UndexLoop2D.cpp \
-	ValueType/UndexLoop3D.cpp \
 	ValueType/Line2D.cpp \
 	ValueType/Line3D.cpp \
 	ValueType/Ray2D.cpp \
@@ -56,6 +56,7 @@ VALUE_TYPE := \
 	ValueType/Trans3D.cpp \
 	ValueType/DepthFactors.cpp \
 	ValueType/Depth.cpp \
+	ValueType/ColorU4.cpp \
 	ValueType/ColorF4.cpp \
 	ValueType/Range.cpp \
 	ValueType/LInter.cpp \

@@ -17,7 +17,7 @@ typedef Attribute::FloatN<2, 1> VectorF2;
 	VectorF2(Buffer::Array & buffer, const VectorF2 & other);
 	VectorF2 & operator=(const VectorF2 & other);
 };*/
-typedef VectorF2 Point2D;
+typedef VectorF2 VectorF2;
 };
 
 #endif

@@ -1,12 +1,12 @@
 #ifndef  DISPLAY_PIXEL_POSITION_HPP
 # define DISPLAY_PIXEL_POSITION_HPP
 
-# include "ValueType/Point2D.hpp"
+# include "ValueType/Vector/F2.hpp"
 
 struct PixelPosition
 {
-	Point2D		Corner;
-	Point2D		Center;
+	VectorF2		Corner;
+	VectorF2		Center;
 
 	~PixelPosition();
 	PixelPosition();

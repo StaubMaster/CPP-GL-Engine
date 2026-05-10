@@ -4,21 +4,21 @@
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/FloatN.hpp"
 
-//struct Point2D;
-struct VectorF2; typedef VectorF2 Point2D;
+//struct VectorF2;
+struct VectorF2; typedef VectorF2 VectorF2;
 
 namespace Uniform
 {
 typedef FloatN<2, 1, 1, ::VectorF2> VectorF2;
-/*class Point2D : public Uniform::FloatN<2, 1, 1>
+/*class VectorF2 : public Uniform::FloatN<2, 1, 1>
 {
 	public:
-	Point2D(::Shader::Base & shader, std::string name);
+	VectorF2(::Shader::Base & shader, std::string name);
 
 	public:
-	void Put(const ::Point2D & obj);
+	void Put(const ::VectorF2 & obj);
 };*/
-typedef VectorF2 Point2D;
+typedef VectorF2 VectorF2;
 };
 
 #endif

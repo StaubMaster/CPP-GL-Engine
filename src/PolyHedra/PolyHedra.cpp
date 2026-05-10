@@ -5,7 +5,7 @@
 
 #include "PolyHedra/Graphics/Full/Main/Data.hpp"
 
-#include "ValueType/AxisBox3D.hpp"
+#include "ValueType/Box/F3.hpp"
 
 #include "Graphics/Texture/Generate.hpp"
 #include "Image.hpp"
@@ -63,16 +63,16 @@ std::string PolyHedra::ToInfo() const
 	ss << "PolyHedra Count Vertex: " << Corners.Count() << '\n';
 	ss << "PolyHedra Count Face: " << Faces.Count() << '\n';
 	
-	AxisBox3D bound = CalcBound();
+	BoxF3 bound = CalcBound();
 	ss << "PolyHedra Bound Limit: " << bound << '\n';
 	ss << "PolyHedra Bound Size: " << bound.Size() << '\n';
 
 	return ss.str();
 }
 
-AxisBox3D	PolyHedra::CalcBound() const
+BoxF3	PolyHedra::CalcBound() const
 {
-	AxisBox3D box;
+	BoxF3 box;
 	for (unsigned int i = 0; i < Corners.Count(); i++)
 	{
 		box.Consider(Corners[i].Position);
@@ -89,14 +89,14 @@ void PolyHedra::Calc_Face_Normals()
 		Face & face = Faces[i];
 		if (face.Check(Corners.Count()))
 		{
-			const Point3D & cornerX = Corners[face.udx[0]].Position;
-			const Point3D & cornerY = Corners[face.udx[1]].Position;
-			const Point3D & cornerZ = Corners[face.udx[2]].Position;
-			face.Normal = Point3D::cross(cornerY - cornerX, cornerZ - cornerX).normalize();
+			const VectorF3 & cornerX = Corners[face.udx[0]].Position;
+			const VectorF3 & cornerY = Corners[face.udx[1]].Position;
+			const VectorF3 & cornerZ = Corners[face.udx[2]].Position;
+			face.Normal = VectorF3::cross(cornerY - cornerX, cornerZ - cornerX).normalize();
 		}
 		else
 		{
-			face.Normal = Point3D();
+			face.Normal = VectorF3();
 		}
 	}
 }
@@ -104,7 +104,7 @@ void PolyHedra::Calc_Corn_Normals()
 {
 	for (unsigned int i = 0; i < Corners.Count(); i++)
 	{
-		Point3D normal_sum(0, 0, 0);
+		VectorF3 normal_sum(0, 0, 0);
 		for (unsigned int j = 0; j < Faces.Count(); j++)
 		{
 			const Face & face = Faces[j];
@@ -239,7 +239,7 @@ Container::Pointer<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 	{
 		for (unsigned int i = 0; i < data.Count(); i++)
 		{
-			data[i].Texture = Point3D();
+			data[i].Texture = VectorF3();
 		}
 	}
 	else

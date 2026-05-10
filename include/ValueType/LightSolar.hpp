@@ -2,17 +2,17 @@
 # define LIGHT_SOLAR_HPP
 
 # include "LightBase.hpp"
-# include "Point3D.hpp"
+# include "ValueType/Vector/F3.hpp"
 
 struct LightSolar
 {
 	public:
 	LightBase	Base;
-	Point3D		Dir;
+	VectorF3		Dir;
 
 	public:
 	LightSolar();
-	LightSolar(float intensity, ColorF4 color, Point3D dir);
+	LightSolar(float intensity, ColorF4 color, VectorF3 dir);
 };
 
 #endif

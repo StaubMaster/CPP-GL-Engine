@@ -1,10 +1,10 @@
 #include "ValueType/Matrix3x3.hpp"
-#include "ValueType/Point3D.hpp"
+#include "ValueType/Vector/F3.hpp"
 
 #include "ValueType/Angle.hpp"
 #include "ValueType/Matrix2x2.hpp"
 
-#include "ValueType/Point2D.hpp"
+#include "ValueType/Vector/F2.hpp"
 #include "ValueType/EulerAngle3D.hpp"
 #include "ValueType/Trans2D.hpp"
 
@@ -94,7 +94,7 @@ Matrix3x3 Matrix3x3::Identity()
 	return mat;
 }
 
-Matrix3x3 Matrix3x3::Position(Point2D p)
+Matrix3x3 Matrix3x3::Position(VectorF2 p)
 {
 	return Matrix3x3(
 		1, 0, p.X,
@@ -198,9 +198,9 @@ Matrix3x3 Matrix3x3::operator/(const Matrix3x3 & other) const
 
 
 
-Point3D operator*(const Point3D & p, const Matrix3x3 & mat)
+VectorF3 operator*(const VectorF3 & p, const Matrix3x3 & mat)
 {
-	Point3D r;
+	VectorF3 r;
 	float * i = (float*)&p;
 	float * o = (float*)&r;
 	for (int x = 0; x < 3; x++)
@@ -212,9 +212,9 @@ Point3D operator*(const Point3D & p, const Matrix3x3 & mat)
 	}
 	return r;
 }
-Point3D operator/(const Point3D & p, const Matrix3x3 & mat)
+VectorF3 operator/(const VectorF3 & p, const Matrix3x3 & mat)
 {
-	Point3D r;
+	VectorF3 r;
 	float * i = (float*)&p;
 	float * o = (float*)&r;
 	for (int y = 0; y < 3; y++)

@@ -49,5 +49,5 @@ void View3D::ChangeFlatX(Trans3D trans, float timeDelta)
 
 
 
-//Point3D View3D::forward(Point3D p) const { }
-//Point3D View3D::reverse(Point3D p) const { }
+//VectorF3 View3D::forward(VectorF3 p) const { }
+//VectorF3 View3D::reverse(VectorF3 p) const { }

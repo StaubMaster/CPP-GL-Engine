@@ -2,7 +2,7 @@
 
 #include "ValueType/Ray2D.hpp"
 #include "ValueType/Line2D.hpp"
-#include "ValueType/AxisBox2D.hpp"
+#include "ValueType/Box/F2.hpp"
 #include "ValueType/Intersect.hpp"
 
 
@@ -11,11 +11,11 @@ PolyGon::Corner::Corner()
 	: Pos()
 	, Col()
 { }
-PolyGon::Corner::Corner(Point2D pos)
+PolyGon::Corner::Corner(VectorF2 pos)
 	: Pos(pos)
 	, Col()
 { }
-PolyGon::Corner::Corner(Point2D pos, ColorF4 col)
+PolyGon::Corner::Corner(VectorF2 pos, ColorF4 col)
 	: Pos(pos)
 	, Col(col)
 { }
@@ -78,7 +78,7 @@ void PolyGon::Clear()
 	Faces.Clear();
 	Edges.Clear();
 }
-void PolyGon::NewCorner(Point2D pos, ColorF4 col)
+void PolyGon::NewCorner(VectorF2 pos, ColorF4 col)
 {
 	unsigned int c_idx = Corners.Count();
 	Corners.Insert(Corner(pos, col));
@@ -98,9 +98,9 @@ void PolyGon::NewFace(unsigned int c0, unsigned int c1, unsigned int c2)
 
 
 
-AxisBox2D PolyGon::ToAxisBox() const
+BoxF2 PolyGon::ToAxisBox() const
 {
-	AxisBox2D box;
+	BoxF2 box;
 	for (unsigned int i = 0; i < Corners.Count(); i++)
 	{
 		box.Consider(Corners[i].Pos);
@@ -146,9 +146,9 @@ unsigned int PolyGon::SumIntersections(Ray2D ray) const
 		const Face & face = Faces[f];
 		if (face.Check(Corners.Count()))
 		{
-			Point2D corner0 = Corners[face.udx[0]].Pos;
-			Point2D corner1 = Corners[face.udx[1]].Pos;
-			Point2D corner2 = Corners[face.udx[2]].Pos;
+			VectorF2 corner0 = Corners[face.udx[0]].Pos;
+			VectorF2 corner1 = Corners[face.udx[1]].Pos;
+			VectorF2 corner2 = Corners[face.udx[2]].Pos;
 
 			if (::IsIntersecting(ray, Line2D(corner0, corner1))) { sum++; }
 			if (::IsIntersecting(ray, Line2D(corner1, corner2))) { sum++; }
@@ -157,7 +157,7 @@ unsigned int PolyGon::SumIntersections(Ray2D ray) const
 	}
 	return sum;
 }
-bool PolyGon::IsContaining(Point2D p) const
+bool PolyGon::IsContaining(VectorF2 p) const
 {
-	return ((SumIntersections(Ray2D(p, Point2D(1, 0))) % 2) != 0);
+	return ((SumIntersections(Ray2D(p, VectorF2(1, 0))) % 2) != 0);
 }

@@ -1,5 +1,5 @@
 #include "Graphics/Texture/Array2D.hpp"
-#include "ValueType/Undex3D.hpp"
+#include "ValueType/Vector/U3.hpp"
 
 #include "Image.hpp"
 #include "FileInfo.hpp"

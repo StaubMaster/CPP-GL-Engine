@@ -1,32 +1,32 @@
 #ifndef  RAY_2D_HPP
 # define RAY_2D_HPP
 
-# include "ValueType/Point2D.hpp"
+# include "ValueType/Vector/F2.hpp"
 
 struct Line2D;
 
 struct Ray2D
 {
 	public:
-	Point2D Pos;
-	Point2D Dir;
+	VectorF2	Pos;
+	VectorF2	Dir;
 
 	public:
 	~Ray2D();
 
 	Ray2D();
-	Ray2D(Point2D pos, Point2D dir);
+	Ray2D(VectorF2 pos, VectorF2 dir);
 
 	Ray2D(const Ray2D & other);
 	Ray2D & operator=(const Ray2D & other);
 
 	Ray2D(const Line2D & line);
 
-	Point2D ToPoint(float scalar) const;
-	Line2D ToLine(float scalar) const;
-	Line2D ToLine(float scalar0, float scalar1) const;
+	VectorF2	ToPoint(float scalar) const;
+	Line2D		ToLine(float scalar) const;
+	Line2D		ToLine(float scalar0, float scalar1) const;
 
-	Point2D Normal() const;
+	VectorF2	Normal() const;
 
 //	public:
 //	class Interval
@@ -38,11 +38,11 @@ struct Ray2D
 //		public:
 //		Interval(const Ray2D & ray, float inter, int index);
 //		public:
-//		Point2D ToPoint() const;
+//		VectorF2 ToPoint() const;
 //	};
 //
 //	public:
-//	Interval Ray_Point(Point2D p);
+//	Interval Ray_Point(VectorF2 p);
 };
 
 #endif

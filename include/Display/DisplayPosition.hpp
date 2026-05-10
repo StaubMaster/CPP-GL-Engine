@@ -4,7 +4,7 @@
 # include "NormalPosition.hpp"
 # include "PixelPosition.hpp"
 
-# include "ValueType/Point2D.hpp"
+# include "ValueType/Vector/F2.hpp"
 
 struct DisplaySize;
 
@@ -21,11 +21,11 @@ struct DisplayPosition
 	DisplayPosition(const DisplayPosition & other);
 	DisplayPosition & operator=(const DisplayPosition & other);
 
-//	void ChangeWindowCorner(Point2D pos, DisplaySize size);
-	void ChangeNormalRel(Point2D pos, DisplaySize size);
+//	void ChangeWindowCorner(VectorF2 pos, DisplaySize size);
+	void ChangeNormalRel(VectorF2 pos, DisplaySize size);
 
-//	static DisplayPosition FromWindowCorner(Point2D pos, DisplaySize size);
-	static DisplayPosition FromNormalRel(Point2D pos, DisplaySize size);
+//	static DisplayPosition FromWindowCorner(VectorF2 pos, DisplaySize size);
+	static DisplayPosition FromNormalRel(VectorF2 pos, DisplaySize size);
 };
 
 #endif

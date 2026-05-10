@@ -4,7 +4,7 @@
 
 LightSolar::LightSolar()
 { }
-LightSolar::LightSolar(float intensity, ColorF4 color, Point3D dir) :
+LightSolar::LightSolar(float intensity, ColorF4 color, VectorF3 dir) :
 	Base(intensity, color),
 	Dir(dir)
 { }

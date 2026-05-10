@@ -2,8 +2,8 @@
 # define LOOP_I_3_HPP
 
 # include "Bool3.hpp"
-# include "VectorI3.hpp"
-# include "BoxI3.hpp"
+# include "ValueType/Vector/I3.hpp"
+# include "ValueType/Box/I3.hpp"
 
 struct LoopI3
 {
@@ -14,10 +14,15 @@ struct LoopI3
 
 	public:
 	~LoopI3();
-
 	LoopI3();
+
+	LoopI3(VectorI3 size);
+
 	LoopI3(VectorI3 min, VectorI3 max);
 	LoopI3(VectorI3 min, Bool3 minEx, VectorI3 max, Bool3 maxEx);
+
+	LoopI3(BoxI3 box);
+	LoopI3(BoxI3 box, Bool3 minEx, Bool3 maxEx);
 
 	LoopI3(const LoopI3 & other);
 	LoopI3 & operator=(const LoopI3 & other);

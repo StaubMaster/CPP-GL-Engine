@@ -3,8 +3,8 @@
 
 # include "Angle.hpp"
 
-//struct Point3D;
-struct VectorF3; typedef VectorF3 Point3D;
+//struct VectorF3;
+struct VectorF3; typedef VectorF3 VectorF3;
 struct Matrix3x3;
 
 struct EulerAngle3D
@@ -30,9 +30,9 @@ struct EulerAngle3D
 	static EulerAngle3D		Degrees(float z0, float x1, float y2);
 	static EulerAngle3D		Radians(float z0, float x1, float y2);
 
-	static EulerAngle3D		PointToX(Point3D dir);
-	static EulerAngle3D		PointToY(Point3D dir);
-	static EulerAngle3D		PointToZ(Point3D dir);
+	static EulerAngle3D		PointToX(VectorF3 dir);
+	static EulerAngle3D		PointToY(VectorF3 dir);
+	static EulerAngle3D		PointToZ(VectorF3 dir);
 
 
 
@@ -44,8 +44,8 @@ struct EulerAngle3D
 
 
 	public:
-	Point3D		forward(Point3D p) const;
-	Point3D		reverse(Point3D p) const;
+	VectorF3		forward(VectorF3 p) const;
+	VectorF3		reverse(VectorF3 p) const;
 
 
 

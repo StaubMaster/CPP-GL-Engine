@@ -1,10 +1,10 @@
 #include "ValueType/Matrix4x4.hpp"
-#include "ValueType/Point4D.hpp"
+#include "ValueType/Vector/F4.hpp"
 
 #include "ValueType/Angle.hpp"
 #include "ValueType/Matrix3x3.hpp"
 
-#include "ValueType/Point3D.hpp"
+#include "ValueType/Vector/F3.hpp"
 #include "ValueType/EulerAngle3D.hpp"
 #include "ValueType/Trans3D.hpp"
 
@@ -105,7 +105,7 @@ Matrix4x4 Matrix4x4::Identity()
 	return mat;
 }
 
-Matrix4x4 Matrix4x4::Position(Point3D p)
+Matrix4x4 Matrix4x4::Position(VectorF3 p)
 {
 	return Matrix4x4(
 		1, 0, 0, p.X,
@@ -174,9 +174,9 @@ Matrix4x4 Matrix4x4::operator/(const Matrix4x4 & other) const
 
 
 
-Point4D operator*(const Point4D & p, const Matrix4x4 & mat)
+VectorF4 operator*(const VectorF4 & p, const Matrix4x4 & mat)
 {
-	Point4D r;
+	VectorF4 r;
 	float * i = (float*)&p;
 	float * o = (float*)&r;
 	for (int x = 0; x < 4; x++)
@@ -188,9 +188,9 @@ Point4D operator*(const Point4D & p, const Matrix4x4 & mat)
 	}
 	return r;
 }
-Point4D operator/(const Point4D & p, const Matrix4x4 & mat)
+VectorF4 operator/(const VectorF4 & p, const Matrix4x4 & mat)
 {
-	Point4D r;
+	VectorF4 r;
 	float * i = (float*)&p;
 	float * o = (float*)&r;
 	for (int y = 0; y < 4; y++)
@@ -203,13 +203,13 @@ Point4D operator/(const Point4D & p, const Matrix4x4 & mat)
 	return r;
 }
 
-Point3D operator*(const Point3D & p, const Matrix4x4 & mat)
+VectorF3 operator*(const VectorF3 & p, const Matrix4x4 & mat)
 {
-	Point4D temp = Point4D(p.X, p.Y, p.Z, 1) * mat;
-	return Point3D(temp.X, temp.Y, temp.Z);
+	VectorF4 temp = VectorF4(p.X, p.Y, p.Z, 1) * mat;
+	return VectorF3(temp.X, temp.Y, temp.Z);
 }
-Point3D operator/(const Point3D & p, const Matrix4x4 & mat)
+VectorF3 operator/(const VectorF3 & p, const Matrix4x4 & mat)
 {
-	Point4D temp = Point4D(p.X, p.Y, p.Z, 1) / mat;
-	return Point3D(temp.X, temp.Y, temp.Z);
+	VectorF4 temp = VectorF4(p.X, p.Y, p.Z, 1) / mat;
+	return VectorF3(temp.X, temp.Y, temp.Z);
 }

@@ -17,7 +17,7 @@ typedef Attribute::FloatN<3, 1> VectorF3;
 	VectorF3(Buffer::Array & buffer, const VectorF3 & other);
 	VectorF3 & operator=(const VectorF3 & other);
 };*/
-typedef VectorF3 Point3D;
+typedef VectorF3 VectorF3;
 };
 
 #endif

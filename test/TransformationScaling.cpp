@@ -1,9 +1,9 @@
 #include <iostream>
 #include "ValueType/_Show.hpp"
 
-#include "ValueType/Point2D.hpp"
-#include "ValueType/Point3D.hpp"
-#include "ValueType/Point4D.hpp"
+#include "ValueType/Vector/F2.hpp"
+#include "ValueType/Vector/F3.hpp"
+#include "ValueType/Vector/F4.hpp"
 
 #include "ValueType/Angle.hpp"
 #include "ValueType/EulerAngle3D.hpp"

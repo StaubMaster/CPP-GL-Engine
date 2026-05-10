@@ -1,5 +1,5 @@
 #include "ValueType/Matrix2x2.hpp"
-#include "ValueType/Point2D.hpp"
+#include "ValueType/Vector/F2.hpp"
 #include "ValueType/Angle.hpp"
 
 
@@ -125,9 +125,9 @@ Matrix2x2 Matrix2x2::operator/(const Matrix2x2 & other) const
 
 
 
-Point2D operator*(const Point2D & p, const Matrix2x2 & mat)
+VectorF2 operator*(const VectorF2 & p, const Matrix2x2 & mat)
 {
-	Point2D r;
+	VectorF2 r;
 	float * i = (float*)&p;
 	float * o = (float*)&r;
 	for (int x = 0; x < 2; x++)
@@ -139,9 +139,9 @@ Point2D operator*(const Point2D & p, const Matrix2x2 & mat)
 	}
 	return r;
 }
-Point2D operator/(const Point2D & p, const Matrix2x2 & mat)
+VectorF2 operator/(const VectorF2 & p, const Matrix2x2 & mat)
 {
-	Point2D r;
+	VectorF2 r;
 	float * i = (float*)&p;
 	float * o = (float*)&r;
 	for (int y = 0; y < 2; y++)
