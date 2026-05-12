@@ -4,8 +4,11 @@
 # include "Graphics/Attribute/Base/Base.hpp"
 # include "Graphics/Attribute/Base/FloatNBase.hpp"
 # include "Graphics/Attribute/Base/FloatN.hpp"
+# include "Graphics/Attribute/Base/UIntNBase.hpp"
+# include "Graphics/Attribute/Base/UIntN.hpp"
 
 # include "Graphics/Attribute/TypeDefs/Float.hpp"
+# include "Graphics/Attribute/TypeDefs/UInt.hpp"
 
 # include "Graphics/Attribute/TypeDefs/VectorF2.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF3.hpp"

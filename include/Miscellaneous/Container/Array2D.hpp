@@ -58,12 +58,8 @@ struct Array2D
 	// individual Axis
 
 	private:
-	void	mForget()
+	void	mDefault()
 	{
-		if (_Know != nullptr)
-		{
-			(*_Know)--;
-		}
 		_Data = nullptr;
 		_Know = nullptr;
 		_Size = VectorU2();
@@ -74,8 +70,12 @@ struct Array2D
 		{
 			if ((*_Know) == 0)
 			{
-				delete _Know; _Know = nullptr;
+				delete _Know;
 				delete[] _Data;
+			}
+			else
+			{
+				(*_Know)--;
 			}
 		}
 	}
@@ -161,7 +161,7 @@ struct Array2D
 	void	Clear()
 	{
 		mDelete();
-		mForget();
+		mDefault();
 	}
 	void	ChangeSize(VectorU2 size)
 	{

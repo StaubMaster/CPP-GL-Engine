@@ -146,7 +146,7 @@ BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
 ATTRIBUTE := \
 	Graphics/Attribute/Base/Base.cpp \
 	Graphics/Attribute/Base/FloatNBase.cpp \
-	Graphics/Attribute/Base/FloatN.cpp \
+	Graphics/Attribute/Base/UIntNBase.cpp \
 \
 	Graphics/Attribute/BoxF2.cpp \
 \

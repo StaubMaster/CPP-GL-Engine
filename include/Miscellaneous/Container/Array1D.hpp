@@ -44,12 +44,8 @@ struct Array1D
 	const	ItemType &	operator[](unsigned int idx) const	{ if ((idx < _Size)) { return _Data[idx]; } throw Container::Exception::InvalidIndex(); }
 
 	private:
-	void	mForget()
+	void	mDefault()
 	{
-		if (_Know != nullptr)
-		{
-			(*_Know)--;
-		}
 		_Data = nullptr;
 		_Know = nullptr;
 		_Size = 0;
@@ -60,8 +56,12 @@ struct Array1D
 		{
 			if ((*_Know) == 0)
 			{
-				delete _Know; _Know = nullptr;
+				delete _Know;
 				delete[] _Data;
+			}
+			else
+			{
+				(*_Know)--;
 			}
 		}
 	}
@@ -160,7 +160,7 @@ struct Array1D
 	void	Clear()
 	{
 		mDelete();
-		mForget();
+		mDefault();
 	}
 	void	ChangeSize(unsigned int size)
 	{

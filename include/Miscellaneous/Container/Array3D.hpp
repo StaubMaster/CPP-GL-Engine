@@ -39,12 +39,8 @@ struct Array3D
 	const	ItemType &	operator[](VectorU3 idx) const		{ if ((idx < _Size).All(true)) { return _Data[_Size.Convert(idx)]; } throw Container::Exception::InvalidIndex(); }
 
 	private:
-	void	mForget()
+	void	mDefault()
 	{
-		if (_Know != nullptr)
-		{
-			(*_Know)--;
-		}
 		_Data = nullptr;
 		_Know = nullptr;
 		_Size = VectorU3();
@@ -55,8 +51,12 @@ struct Array3D
 		{
 			if ((*_Know) == 0)
 			{
-				delete _Know; _Know = nullptr;
+				delete _Know;
 				delete[] _Data;
+			}
+			else
+			{
+				(*_Know)--;
 			}
 		}
 	}
@@ -96,6 +96,15 @@ struct Array3D
 	Array3D(VectorU3 size)
 	{
 		mNew(size);
+	}
+	Array3D(VectorU3 size, const ItemType & default_value)
+	{
+		mNew(size);
+		unsigned int n = Length();
+		for (unsigned int i = 0; i < n; i++)
+		{
+			_Data[i] = default_value;
+		}
 	}
 
 	public:
@@ -139,12 +148,22 @@ struct Array3D
 	void	Clear()
 	{
 		mDelete();
-		mForget();
+		mDefault();
 	}
 	void	ChangeSize(VectorU3 size)
 	{
 		mDelete();
 		mNew(size);
+	}
+	void	ChangeSize(VectorU3 size, const ItemType & default_value)
+	{
+		mDelete();
+		mNew(size);
+		unsigned int n = Length();
+		for (unsigned int i = 0; i < n; i++)
+		{
+			_Data[i] = default_value;
+		}
 	}
 };
 

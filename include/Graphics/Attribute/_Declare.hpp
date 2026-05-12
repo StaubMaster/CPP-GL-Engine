@@ -6,8 +6,11 @@ namespace Attribute
 	class Base;
 	class FloatNBase;
 	class FloatN;
+	class UIntNBase;
+	class UIntN;
 
 	class Float;
+	class UInt;
 
 	class VectorF2;
 	class VectorF3;
