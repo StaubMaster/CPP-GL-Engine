@@ -1,5 +1,4 @@
 #include "Window.hpp"
-#include "TimeMeasure.hpp"
 
 #include "ValueType/Vector/F3.hpp"
 #include "ValueType/Vector/F2.hpp"
@@ -94,6 +93,7 @@ Window::Window()
 	: glfw_window(nullptr)
 	, LoopIsDone(false)
 	, FrameNumberTerminate(0xFFFFFFFFFFFFFFFF)
+	, FrameTime(64.0f, 4 / 64.0f)
 	, DefaultColor(0.5f, 0.5f, 0.5f)
 	, CallBack_Init()
 	, CallBack_Free()
@@ -114,6 +114,7 @@ Window::Window(const Window & other)
 	: glfw_window(other.glfw_window)
 	, LoopIsDone(other.LoopIsDone)
 	, FrameNumberTerminate(other.FrameNumberTerminate)
+	, FrameTime(64.0f, 4 / 64.0f)
 	, DefaultColor(other.DefaultColor)
 	, CallBack_Init(other.CallBack_Init)
 	, CallBack_Free(other.CallBack_Free)
@@ -335,25 +336,24 @@ void Window::RunLoop()
 		CallBack_Resize(Size);
 		Debug::Log << "Window Loop ..." << Debug::Done;
 		std::cout << "Window Loop ..." << '\n';
-		FrameTime frame_time(64.0f, 4.0f / 64.0f);
-		frame_time.TimeNow = glfwGetTime();
+		FrameTime.TimeNow = glfwGetTime();
 		LoopIsDone = false;
 		while (!LoopIsDone)
 		{
-			frame_time.Update(glfwGetTime());
-			if (frame_time.Ready)
+			FrameTime.Update(glfwGetTime());
+			if (FrameTime.Ready)
 			{
 				KeyBoardManager.Tick();
 				MouseManager.Tick();
 				glfwPollEvents();
 				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
 				GL::Clear(GL::ClearMask::ColorBufferBit | GL::ClearMask::DepthBufferBit);
-				CallBack_Frame(frame_time);
+				CallBack_Frame(FrameTime);
 				glfwSwapBuffers(glfw_window);
-				frame_time.Ready = false;
-				frame_time.Number++;
+				FrameTime.Ready = false;
+				FrameTime.Number++;
 			}
-			if (frame_time.Number == FrameNumberTerminate)
+			if (FrameTime.Number == FrameNumberTerminate)
 			{
 				LoopIsDone = true;
 			}

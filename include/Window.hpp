@@ -40,8 +40,7 @@ class Window
 
 	public:
 	DisplaySize		Size;
-
-	public:
+	::FrameTime		FrameTime;
 	ColorF4			DefaultColor;
 
 	public:
@@ -60,7 +59,7 @@ class Window
 	//    UpdateGeneral()
 	//      Updates non OpenGL stuff
 	//      make this one so it could be run on a seperate Thread
-	FunctionPointer<FrameTime>		CallBack_Frame;
+	FunctionPointer<::FrameTime>	CallBack_Frame;
 
 	public:
 	::KeyBoardManager	KeyBoardManager;
@@ -87,36 +86,36 @@ class Window
 	//void ChangeDefaultColor(ColorF4 color);
 
 	private:
-	void UpdateSize();
+	void	UpdateSize();
 
 	private:
-	static void Callback_GLFW_Error(int error, const char * decription);
+	static void		Callback_GLFW_Error(int error, const char * decription);
 
 	private:
-	static void Callback_GLFW_Resize(GLFWwindow * window, int w, int h);
-	static void Callback_GLFW_CursorClick(GLFWwindow * window, int button, int action, int mods);
-	static void Callback_GLFW_CursorScroll(GLFWwindow * window, double xOffset, double yOffset);
-	static void Callback_GLFW_CursorMove(GLFWwindow * window, double xPos, double yPos);
-	static void Callback_GLFW_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
-	static void Callback_GLFW_Text(GLFWwindow * window, unsigned int codepoint);
+	static void		Callback_GLFW_Resize(GLFWwindow * window, int w, int h);
+	static void		Callback_GLFW_CursorClick(GLFWwindow * window, int button, int action, int mods);
+	static void		Callback_GLFW_CursorScroll(GLFWwindow * window, double xOffset, double yOffset);
+	static void		Callback_GLFW_CursorMove(GLFWwindow * window, double xPos, double yPos);
+	static void		Callback_GLFW_Key(GLFWwindow * window, int key, int scancode, int action, int mods);
+	static void		Callback_GLFW_Text(GLFWwindow * window, unsigned int codepoint);
 
 	private:
-	void Callback_GLFW_Resize(int w, int h);
-	void Callback_GLFW_CursorClick(int button, int action, int mods);
-	void Callback_GLFW_CursorScroll(double xOffset, double yOffset);
-	void Callback_GLFW_CursorMove(double xPos, double yPos);
-	void Callback_GLFW_Key(int key, int scancode, int action, int mods);
-	void Callback_GLFW_Text(unsigned int codepoint);
+	void	Callback_GLFW_Resize(int w, int h);
+	void	Callback_GLFW_CursorClick(int button, int action, int mods);
+	void	Callback_GLFW_CursorScroll(double xOffset, double yOffset);
+	void	Callback_GLFW_CursorMove(double xPos, double yPos);
+	void	Callback_GLFW_Key(int key, int scancode, int action, int mods);
+	void	Callback_GLFW_Text(unsigned int codepoint);
 
 	public:
-	VectorF3 MoveFromKeys() const;
-	EulerAngle3D SpinFromCursor() const;
-	Trans3D MoveSpinFromKeysCursor() const;
+	VectorF3		MoveFromKeys() const;
+	EulerAngle3D	SpinFromCursor() const;
+	Trans3D			MoveSpinFromKeysCursor() const;
 
 	private:
-	void RunGL_Setup();
-	void Run_Init();
-	void Run_Free();
+	void	RunGL_Setup();
+	void	Run_Init();
+	void	Run_Free();
 
 	public:
 	void	ExitLoop();

@@ -4,26 +4,8 @@
 # include "ValueType/Vector/U2.hpp"
 # include "Exception.hpp"
 
-/* individual Axis
-	LengthN are already
-	operator[]
-	Constructors
-	ChangeSize()
-	these would just convert to/from the Vector
-*/
-
-/* default Value
-	pass to a seperate mNew()
-	only needed for Items that dont have a default Constructor
-	so just base Types like int and Pointers
-*/
-
-template<typename ItemType>
-struct Array2D
+template<typename ItemType> struct Array2D
 {
-	// basically like shaderd_ptr
-	// but that one dosent have operator[] until 17 ?
-
 	private:
 	ItemType *		_Data = nullptr;
 	unsigned int *	_Know = nullptr;
@@ -36,13 +18,11 @@ struct Array2D
 
 	public:
 	VectorU2		Size() const	{ return _Size; }
-//	unsigned int	LengthX() const	{ return _Size.X; }
-//	unsigned int	LengthY() const	{ return _Size.Y; }
 	unsigned int	Length() const	{ return _Size.Product(); }
 
-	// bool IsValid(VectorU2)
-	// bool Check(VectorU2)
-	// bool CheckIndex(VectorU2)
+	public:
+	bool			Check(unsigned int idx) const	{ return (idx < Length()); }
+	bool			Check(VectorU2 idx) const		{ return (idx < _Size).All(true); }
 
 	public:
 			ItemType &	At(unsigned int idx)		{ return _Data[idx]; }
@@ -51,11 +31,10 @@ struct Array2D
 	const	ItemType &	At(VectorU2 idx) const		{ return _Data[_Size.Convert(idx)]; }
 
 	public:
-			ItemType &	operator[](unsigned int idx)		{ if ((idx < _Size.Product())) { return _Data[idx]; } throw Container::Exception::InvalidIndex(); }
-	const	ItemType &	operator[](unsigned int idx) const	{ if ((idx < _Size.Product())) { return _Data[idx]; } throw Container::Exception::InvalidIndex(); }
-			ItemType &	operator[](VectorU2 idx)			{ if ((idx < _Size).All(true)) { return _Data[_Size.Convert(idx)]; } throw Container::Exception::InvalidIndex(); }
-	const	ItemType &	operator[](VectorU2 idx) const		{ if ((idx < _Size).All(true)) { return _Data[_Size.Convert(idx)]; } throw Container::Exception::InvalidIndex(); }
-	// individual Axis
+			ItemType &	operator[](unsigned int idx)		{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+	const	ItemType &	operator[](unsigned int idx) const	{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+			ItemType &	operator[](VectorU2 idx)			{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+	const	ItemType &	operator[](VectorU2 idx) const		{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
 
 	private:
 	void	mDefault()
@@ -85,7 +64,6 @@ struct Array2D
 		_Know = new unsigned int; (*_Know) = 0;
 		_Size = size;
 	}
-	// default Value
 
 	private:
 	void	mBind(const Array2D & other)
@@ -117,8 +95,11 @@ struct Array2D
 	{
 		mNew(size);
 	}
-	// individual Axis
-	// default Value
+	Array3D(VectorU2 size, const ItemType & default_item)
+	{
+		mNew(size);
+		ChangeAll(default_item);
+	}
 
 	public:
 	Array2D(const Array2D & other)
@@ -130,6 +111,26 @@ struct Array2D
 		mDelete();
 		mBind(other);
 		return *this;
+	}
+
+	public:
+	void	Clear()
+	{
+		mDelete();
+		mDefault();
+	}
+
+	public:
+	void	Size(VectorU2 size)
+	{
+		mDelete();
+		mNew(size);
+	}
+	void	Size(VectorU2 size, const ItemType & default_item)
+	{
+		mDelete();
+		mNew(size);
+		ChangeAll(default_item);
 	}
 
 	public:
@@ -156,20 +157,6 @@ struct Array2D
 		other.Copy(*this);
 		return other;
 	}
-
-	public:
-	void	Clear()
-	{
-		mDelete();
-		mDefault();
-	}
-	void	ChangeSize(VectorU2 size)
-	{
-		mDelete();
-		mNew(size);
-	}
-	// individual Axis
-	// default Value
 };
 
 #endif

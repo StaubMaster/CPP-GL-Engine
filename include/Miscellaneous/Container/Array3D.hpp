@@ -4,11 +4,8 @@
 # include "ValueType/Vector/U3.hpp"
 # include "Exception.hpp"
 
-template<typename ItemType>
-struct Array3D
+template<typename ItemType> struct Array3D
 {
-	// basically like shaderd_ptr
-	// but that one dosent have operator[] until 17 ?
 	private:
 	ItemType *		_Data = nullptr;
 	unsigned int *	_Know = nullptr;
@@ -21,10 +18,11 @@ struct Array3D
 
 	public:
 	VectorU3		Size() const	{ return _Size; }
-//	unsigned int	LengthX() const	{ return _Size.X; }
-//	unsigned int	LengthY() const	{ return _Size.Y; }
-//	unsigned int	LengthZ() const	{ return _Size.Z; }
 	unsigned int	Length() const	{ return _Size.Product(); }
+
+	public:
+	bool			Check(unsigned int idx) const	{ return (idx < Length()); }
+	bool			Check(VectorU3 idx) const		{ return (idx < _Size).All(true); }
 
 	public:
 			ItemType &	At(unsigned int idx)		{ return _Data[idx]; }
@@ -33,10 +31,10 @@ struct Array3D
 	const	ItemType &	At(VectorU3 idx) const		{ return _Data[_Size.Convert(idx)]; }
 
 	public:
-			ItemType &	operator[](unsigned int idx)		{ if ((idx < _Size.Product())) { return _Data[idx]; } throw Container::Exception::InvalidIndex(); }
-	const	ItemType &	operator[](unsigned int idx) const	{ if ((idx < _Size.Product())) { return _Data[idx]; } throw Container::Exception::InvalidIndex(); }
-			ItemType &	operator[](VectorU3 idx)			{ if ((idx < _Size).All(true)) { return _Data[_Size.Convert(idx)]; } throw Container::Exception::InvalidIndex(); }
-	const	ItemType &	operator[](VectorU3 idx) const		{ if ((idx < _Size).All(true)) { return _Data[_Size.Convert(idx)]; } throw Container::Exception::InvalidIndex(); }
+			ItemType &	operator[](unsigned int idx)		{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+	const	ItemType &	operator[](unsigned int idx) const	{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+			ItemType &	operator[](VectorU3 idx)			{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+	const	ItemType &	operator[](VectorU3 idx) const		{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
 
 	private:
 	void	mDefault()
@@ -97,14 +95,10 @@ struct Array3D
 	{
 		mNew(size);
 	}
-	Array3D(VectorU3 size, const ItemType & default_value)
+	Array3D(VectorU3 size, const ItemType & default_item)
 	{
 		mNew(size);
-		unsigned int n = Length();
-		for (unsigned int i = 0; i < n; i++)
-		{
-			_Data[i] = default_value;
-		}
+		ChangeAll(default_item);
 	}
 
 	public:
@@ -117,6 +111,36 @@ struct Array3D
 		mDelete();
 		mBind(other);
 		return *this;
+	}
+
+	public:
+	void	Clear()
+	{
+		mDelete();
+		mDefault();
+	}
+
+	public:
+	void	ChangeAll(const ItemType & item)
+	{
+		unsigned int n = Length();
+		for (unsigned int i = 0; i < n; i++)
+		{
+			_Data[i] = item;
+		}
+	}
+
+	public:
+	void	Size(VectorU3 size)
+	{
+		mDelete();
+		mNew(size);
+	}
+	void	Size(VectorU3 size, const ItemType & default_item)
+	{
+		mDelete();
+		mNew(size);
+		ChangeAll(default_item);
 	}
 
 	public:
@@ -142,28 +166,6 @@ struct Array3D
 		Array3D other;
 		other.Copy(*this);
 		return other;
-	}
-
-	public:
-	void	Clear()
-	{
-		mDelete();
-		mDefault();
-	}
-	void	ChangeSize(VectorU3 size)
-	{
-		mDelete();
-		mNew(size);
-	}
-	void	ChangeSize(VectorU3 size, const ItemType & default_value)
-	{
-		mDelete();
-		mNew(size);
-		unsigned int n = Length();
-		for (unsigned int i = 0; i < n; i++)
-		{
-			_Data[i] = default_value;
-		}
 	}
 };
 

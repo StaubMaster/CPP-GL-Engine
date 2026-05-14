@@ -13,12 +13,14 @@ struct FrameTime
 
 	float	DeltaLimit;
 	float	Delta;
-	
+
 	bool				Ready; // stupid name
 	unsigned long long	Number;
 
 	FrameTime(float wanted_frames_per_second, float delta_limit);
-	void Update(float time_now);
+
+	void	Change(float wanted_frames_per_second);
+	void	Update(float time_now);
 };
 
 #endif

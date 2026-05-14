@@ -1,4 +1,11 @@
 
+delete all
+delete[] all
+
+
+
+
+
 Array Containers
 	fixed data
 	filly accessible
