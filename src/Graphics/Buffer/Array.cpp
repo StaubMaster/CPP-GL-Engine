@@ -41,5 +41,5 @@ void Buffer::Array::Init()
 void Buffer::Array::Data(const Container::Void & data)
 {
 	Base::Data(data);
-	Count = data.VoidCount() / Stride;
+	Count = data.Size / Stride;
 }

@@ -4,7 +4,7 @@
 # include "Base.hpp"
 # include "ValueType/Vector/U3.hpp"
 # include "ValueType/Vector/U2.hpp"
-# include "Miscellaneous/Container/Member.hpp"
+# include "Miscellaneous/Container/Array.hpp"
 
 /*	dont need Array2D as inherited class
 make it a static nested class ?
@@ -44,8 +44,8 @@ class Array2D : public Base
 	void	Assign(const Image & img);
 	void	Assign(const FileInfo & file);
 
-	void	Assign(VectorU2 size, const Container::Member<Image> & imgs);
-	void	Assign(VectorU2 size, const Container::Member<FileInfo> & files);
+	void	Assign(VectorU2 size, const Container::Array<Image> & imgs);
+	void	Assign(VectorU2 size, const Container::Array<FileInfo> & files);
 };
 };
 

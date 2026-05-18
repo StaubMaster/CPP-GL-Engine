@@ -87,38 +87,38 @@ void Shader::Code::Detach(GL::ShaderID ProgramID) const
 	//Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " done" << Debug::Done;
 }
 
-bool Shader::Code::Valid(Container::Base<Shader::Code> & code)
+bool Shader::Code::Valid(Container::Array<Shader::Code> & code)
 {
-	for (unsigned int i = 0; i < code.Count(); i++)
+	for (unsigned int i = 0; i < code.Length(); i++)
 	{
 		if (!code[i].Valid()) { return false; }
 	}
 	return true;
 }
-void Shader::Code::Dispose(Container::Base<Shader::Code> & code)
+void Shader::Code::Dispose(Container::Array<Shader::Code> & code)
 {
-	for (unsigned int i = 0; i < code.Count(); i++)
+	for (unsigned int i = 0; i < code.Length(); i++)
 	{
 		code[i].Dispose();
 	}
 }
-void Shader::Code::Compile(Container::Base<Shader::Code> & code)
+void Shader::Code::Compile(Container::Array<Shader::Code> & code)
 {
-	for (unsigned int i = 0; i < code.Count(); i++)
+	for (unsigned int i = 0; i < code.Length(); i++)
 	{
 		code[i].Compile();
 	}
 }
-void Shader::Code::Attach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID)
+void Shader::Code::Attach(Container::Array<Shader::Code> & code, GL::ShaderID ProgramID)
 {
-	for (unsigned int i = 0; i < code.Count(); i++)
+	for (unsigned int i = 0; i < code.Length(); i++)
 	{
 		code[i].Attach(ProgramID);
 	}
 }
-void Shader::Code::Detach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID)
+void Shader::Code::Detach(Container::Array<Shader::Code> & code, GL::ShaderID ProgramID)
 {
-	for (unsigned int i = 0; i < code.Count(); i++)
+	for (unsigned int i = 0; i < code.Length(); i++)
 	{
 		code[i].Detach(ProgramID);
 	}

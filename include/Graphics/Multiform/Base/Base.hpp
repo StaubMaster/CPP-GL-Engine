@@ -1,7 +1,7 @@
 #ifndef  MULTIFORM_BASE_HPP
 # define MULTIFORM_BASE_HPP
 
-#include "Miscellaneous/Container/Base.hpp"
+#include "Miscellaneous/Container/Array.hpp"
 #include <string>
 
 namespace Shader { class Base; };
@@ -23,7 +23,7 @@ class Base
 	~Base();
 
 	public:
-	virtual void FindUniforms(Container::Base<Shader::Base *> & shaders) = 0;
+	virtual void FindUniforms(Container::Array<Shader::Base *> & shaders) = 0;
 	virtual void PutUniformData(Uniform::Base * uni_base) = 0;
 };
 };

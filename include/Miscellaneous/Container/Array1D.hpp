@@ -1,5 +1,5 @@
-#ifndef  ARRAY_1D_HPP
-# define ARRAY_1D_HPP
+#ifndef  CONTAINER_ARRAY_1D_HPP
+# define CONTAINER_ARRAY_1D_HPP
 
 # include "Exception.hpp"
 

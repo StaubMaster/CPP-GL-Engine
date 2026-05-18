@@ -6,7 +6,6 @@
 # include "Graphics/Attribute/Base/Base.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
-# include "Miscellaneous/Container/Void.hpp"
 
 # include "OpenGLEnums.hpp"
 

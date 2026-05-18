@@ -2,7 +2,6 @@
 #include "PolyGon/ObjectData.hpp"
 
 #include "PolyGon/PolyGon.hpp"
-#include "Miscellaneous/Container/Pointer.hpp"
 #include "PolyGon/Graphics/Full/Main/Data.hpp"
 
 #include "Miscellaneous/Container/Array.hpp"
@@ -103,13 +102,12 @@ void PolyGonInstanceManager::UpdateBufferFullMain()
 {
 	if (PolyGon == nullptr) { return; }
 
-	Container::Pointer<PolyGonFull::Main::Data> data = PolyGon -> ToFullData();
-	BufferFull.Main.Data(data);
-	data.Delete();
+	Container::Array<PolyGonFull::Main::Data> data = PolyGon -> ToFullData();
+	BufferFull.Main.Data(data.ToVoid());
 }
 void PolyGonInstanceManager::UpdateBufferFullInst()
 {
-	BufferFull.Inst.Data(InstancesFull);
+	BufferFull.Inst.Data(InstancesFull.ToVoid());
 }
 void PolyGonInstanceManager::DrawFull()
 {
@@ -128,12 +126,12 @@ void PolyGonInstanceManager::UpdateBufferWireMain()
 {
 	if (PolyGon == nullptr) { return; }
 
-	BufferWire.Main.Data(PolyGon -> Corners);
-	BufferWire.Elem.Data(PolyGon -> Edges);
+	BufferWire.Main.Data(PolyGon -> Corners.ToVoid());
+	BufferWire.Elem.Data(PolyGon -> Edges.ToVoid());
 }
 void PolyGonInstanceManager::UpdateBufferWireInst()
 {
-	BufferWire.Inst.Data(InstancesWire);
+	BufferWire.Inst.Data(InstancesWire.ToVoid());
 }
 void PolyGonInstanceManager::DrawWire()
 {
@@ -167,9 +165,9 @@ void PolyGonInstanceManager::PlaceInstance(const PolyGonObjectData & obj)
 		}
 	}
 }
-void PolyGonInstanceManager::PlaceInstances(const Container::Member<PolyGonObjectData> & objs)
+void PolyGonInstanceManager::PlaceInstances(const Container::Array<PolyGonObjectData> & objs)
 {
-	for (unsigned int i = 0; i < objs.Count(); i++)
+	for (unsigned int i = 0; i < objs.Length(); i++)
 	{
 		PlaceInstance(objs[i]);
 	}

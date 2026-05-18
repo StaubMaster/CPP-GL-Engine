@@ -1,4 +1,5 @@
 #include "Graphics/Buffer/Element.hpp"
+#include "Miscellaneous/Container/Void.hpp"
 
 
 
@@ -37,5 +38,5 @@ Buffer::Element & Buffer::Element::operator=(const Element & other)
 void Buffer::Element::Data(const Container::Void & data)
 {
 	Base::Data(data);
-	Count = data.VoidCount() / IndexSize;
+	Count = data.Size / IndexSize;
 }

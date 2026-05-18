@@ -101,9 +101,9 @@ void Shader::Base::Create()
 	}
 	else
 	{
-		Debug::Log << Debug::Tabs << "Shader::Code[" << Code.Count() << "]\n";
+		Debug::Log << Debug::Tabs << "Shader::Code[" << Code.Length() << "]\n";
 		Debug::Log << Debug::TabInc;
-		for (unsigned int i = 0; i < Code.Count(); i++)
+		for (unsigned int i = 0; i < Code.Length(); i++)
 		{
 			Debug::Log << Debug::Tabs << "[" << i << "]\n";
 			Debug::Log << Debug::TabInc;
@@ -134,19 +134,17 @@ void Shader::Base::Create()
 	Debug::Log << "Create Shader: " << ID << Debug::Done;
 	LogInfo(true, true);
 }
-void Shader::Base::Change(Container::Member<Shader::Code> & code)
+void Shader::Base::Change(Container::Array<Shader::Code> & code)
 {
 	if (Exists())
 	{
 		Delete();
-		//Code = Container::Fixed<Shader::Code>::Copy(code);
-		Code.Copy(code);
+		Code = code;
 		Create();
 	}
 	else
 	{
-		//Code = Container::Fixed<Shader::Code>::Copy(code);
-		Code.Copy(code);
+		Code = code;
 	}
 	(void)code;
 }

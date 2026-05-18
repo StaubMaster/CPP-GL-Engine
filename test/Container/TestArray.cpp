@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Array.hpp"
+#include "Miscellaneous/Container/Array.hpp"
 
 template<typename TypeItem>
-void ArrayInfo(const char * name, const Array<TypeItem> & arr)
+void ArrayInfo(const char * name, const Container::Array<TypeItem> & arr)
 {
 	std::cout << name;
 	std::cout << ' ';
@@ -25,12 +25,12 @@ void TestArray()
 {
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Array<int>	arr;
+		Container::Array<int>	arr;
 		ArrayInfo("arr", arr);
 	}
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Array<int>	arr(12);
+		Container::Array<int>	arr(12);
 		ArrayInfo("arr", arr);
 		arr.NewLengthHere(24);
 		ArrayInfo("arr", arr);
@@ -43,10 +43,10 @@ void TestArray()
 	}
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Array<int>	arr0(12);
+		Container::Array<int>	arr0(12);
 		ArrayInfo("arr0", arr0);
 
-		Array<int>	arr1(arr0);
+		Container::Array<int>	arr1(arr0);
 		ArrayInfo("arr1", arr1);
 
 		std::cout << "arr0.Clear()\n"; arr0.Clear();
@@ -58,8 +58,8 @@ void TestArray()
 	}
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Array<int>	arr0({0, 1, 2, 3});
-		Array<int>	arr1(arr0);
+		Container::Array<int>	arr0({0, 1, 2, 3});
+		Container::Array<int>	arr1(arr0);
 
 		ArrayInfo("arr0", arr0);
 		for (unsigned int i = 0; i < arr0.Length(); i++)

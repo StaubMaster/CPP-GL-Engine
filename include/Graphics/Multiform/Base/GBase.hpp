@@ -5,8 +5,7 @@
 # include "Graphics/Multiform/Base/Base.hpp"
 # include "Graphics/Uniform/Base/Base.hpp"
 
-# include "Miscellaneous/Container/Base.hpp"
-# include "Miscellaneous/Container/Fixed.hpp"
+# include "Miscellaneous/Container/Array.hpp"
 
 # include <typeinfo>
 # include <iostream>
@@ -21,7 +20,7 @@ template <typename UniformType, typename DataType>
 class GBase : public Base
 {
 	public:
-	Container::Fixed<UniformType *> Uniforms;
+	Container::Array<UniformType *> Uniforms;
 	DataType Data;
 
 	public:
@@ -31,10 +30,11 @@ class GBase : public Base
 	{ }
 
 	public:
-	void FindUniforms(Container::Base<Shader::Base *> & shaders) override
+	void FindUniforms(Container::Array<Shader::Base *> & shaders) override
 	{
-		Uniforms.Allocate(shaders.Count());
-		for (unsigned int s = 0; s < shaders.Count(); s++)
+		unsigned int m = 0;
+		Uniforms.NewLength(shaders.Length());
+		for (unsigned int s = 0; s < shaders.Length(); s++)
 		{
 			Shader::Base * shader = shaders[s];
 			for (unsigned int u = 0; u < shader -> Uniforms.Count(); u++)
@@ -45,14 +45,15 @@ class GBase : public Base
 					if (typeid(*uni) == typeid(UniformType))
 					{
 						uni -> Multiform = this;
-						Uniforms.Insert((UniformType*)(uni));
+						Uniforms[m] = (UniformType*)uni;
+						m++;
 					}
 					else
 					{ /* Uniform has correct name but wrong Type */ }
 				}
 			}
 		}
-		Uniforms.Trim();
+		Uniforms.NewLengthHere(m);
 	}
 
 	void PutUniformData(Uniform::Base * uni_base) override
@@ -64,7 +65,7 @@ class GBase : public Base
 	void ChangeData(DataType data)
 	{
 		Data = data;
-		for (unsigned int i = 0; i < Uniforms.Count(); i++)
+		for (unsigned int i = 0; i < Uniforms.Length(); i++)
 		{
 			if (Uniforms[i] -> Shader.IsBound())
 			{ PutUniformData(Uniforms[i]); }

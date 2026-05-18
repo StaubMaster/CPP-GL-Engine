@@ -1,7 +1,6 @@
 #include "PolyHedra/InstanceManager.hpp"
 #include "PolyHedra/ObjectData.hpp"
 
-#include "Miscellaneous/Container/Pointer.hpp"
 #include "Miscellaneous/Container/Array.hpp"
 #include "Miscellaneous/Container/Binary.hpp"
 
@@ -123,9 +122,8 @@ void PolyHedraInstanceManager::UpdateFullBufferMain()
 	if (!(UpdateFullMain && PolyHedra != nullptr && GraphicsExist)) { return; }
 
 	{
-		Container::Pointer<PolyHedraFull::Main::Data> data = PolyHedra -> ToMainData();
-		BufferFull.Main.Data(data);
-		data.Delete();
+		Container::Array<PolyHedraFull::Main::Data> data = PolyHedra -> ToMainData();
+		BufferFull.Main.Data(data.ToVoid());
 	}
 
 	if (PolyHedra -> Skin != NULL)
@@ -146,7 +144,7 @@ void PolyHedraInstanceManager::UpdateFullBufferMain()
 }
 void PolyHedraInstanceManager::UpdateFullBufferInst()
 {
-	BufferFull.Inst.Data(InstancesFull);
+	BufferFull.Inst.Data(InstancesFull.ToVoid());
 }
 void PolyHedraInstanceManager::DrawFull()
 {
@@ -176,7 +174,7 @@ void PolyHedraInstanceManager::UpdateWireBufferMain()
 		{
 			data.Insert(PolyHedraWire::Main::Data(PolyHedra -> Corners[i].Position, ColorF4(1, 1, 1)));
 		}
-		BufferWire.Main.Data(data);
+		BufferWire.Main.Data(data.ToVoid());
 	}
 	{
 		/*Container::Binary<PolyHedra::Edge> data;
@@ -191,14 +189,14 @@ void PolyHedraInstanceManager::UpdateWireBufferMain()
 			}
 		}
 		BufferWire.Elem.Data(data);*/
-		BufferWire.Elem.Data(PolyHedra -> Edges);
+		BufferWire.Elem.Data(PolyHedra -> Edges.ToVoid());
 	}
 
 	UpdateWireMain = false;
 }
 void PolyHedraInstanceManager::UpdateWireBufferInst()
 {
-	BufferWire.Inst.Data(InstancesWire);
+	BufferWire.Inst.Data(InstancesWire.ToVoid());
 }
 void PolyHedraInstanceManager::DrawWire()
 {
@@ -229,9 +227,9 @@ void PolyHedraInstanceManager::PlaceInstance(const PolyHedraObjectData & obj)
 		}
 	}
 }
-void PolyHedraInstanceManager::PlaceInstances(const Container::Member<PolyHedraObjectData> & objs)
+void PolyHedraInstanceManager::PlaceInstances(const Container::Array<PolyHedraObjectData> & objs)
 {
-	for (unsigned int i = 0; i < objs.Count(); i++)
+	for (unsigned int i = 0; i < objs.Length(); i++)
 	{
 		PlaceInstance(objs[i]);
 	}

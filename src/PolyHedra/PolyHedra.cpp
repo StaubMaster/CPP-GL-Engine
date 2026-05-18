@@ -13,7 +13,7 @@
 #include "FileParsing/Text/TextCommand.hpp"
 #include "FileParsing/Text/TextCommandStream.hpp"
 
-#include "Miscellaneous/Container/Fixed.hpp"
+#include "Miscellaneous/Container/Array.hpp"
 
 //#include "FileInfo.hpp"
 
@@ -198,9 +198,9 @@ void PolyHedra::Fan(unsigned int middle, unsigned int blade[], unsigned int len,
 
 
 
-Container::Pointer<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
+Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 {
-	Container::Pointer<PolyHedraFull::Main::Data> data(Faces.Count() * 3);
+	Container::Array<PolyHedraFull::Main::Data> data(Faces.Count() * 3);
 
 	for (unsigned int f = 0; f < Faces.Count(); f++)
 	{
@@ -237,7 +237,7 @@ Container::Pointer<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 
 	if (Skin == NULL)
 	{
-		for (unsigned int i = 0; i < data.Count(); i++)
+		for (unsigned int i = 0; i < data.Length(); i++)
 		{
 			data[i].Texture = VectorF3();
 		}

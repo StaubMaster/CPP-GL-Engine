@@ -1,7 +1,7 @@
 #ifndef  SHADER_BASE_HPP
 # define SHADER_BASE_HPP
 
-# include "Miscellaneous/Container/Fixed.hpp"
+# include "Miscellaneous/Container/Array.hpp"
 # include "Miscellaneous/Container/Binary.hpp"
 # include <string>
 //# include <iosfwd>
@@ -22,7 +22,7 @@ class Base
 {
 	private:
 	GL::ShaderProgramID ID;
-	Container::Fixed<Shader::Code> Code;
+	Container::Array<Shader::Code> Code;
 	public:
 	Container::Binary<Uniform::Base*> Uniforms;
 
@@ -56,7 +56,7 @@ class Base
 	bool Exists() const;
 	void Delete();
 	void Create();
-	void Change(Container::Member<Shader::Code> & code);
+	void Change(Container::Array<Shader::Code> & code);
 
 
 

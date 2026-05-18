@@ -32,9 +32,9 @@ class MainInst : public VertexArray
 		, Main(*this)
 		, Inst(*this)
 	{
-		Buffers.Allocate(2);
 		Buffers.Insert(&Main);
 		Buffers.Insert(&Inst);
+		Buffers.Trim();
 	}
 
 	MainInst(const MainInst & other)
@@ -43,9 +43,9 @@ class MainInst : public VertexArray
 		, Main(*this, other.Main)
 		, Inst(*this, other.Inst)
 	{
-		Buffers.Allocate(2);
 		Buffers.Insert(&Main);
 		Buffers.Insert(&Inst);
+		Buffers.Trim();
 	}
 	MainInst & operator=(const MainInst & other)
 	{

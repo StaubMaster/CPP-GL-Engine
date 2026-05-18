@@ -3,20 +3,10 @@
 
 namespace Container
 {
-class Void
+struct Void
 {
-	public:
-	virtual unsigned int VoidLimit() const = 0;
-	virtual unsigned int VoidCount() const = 0;
-
-	virtual const void * VoidData() const = 0;
-	virtual void * VoidData() = 0;
-
-	public:
-	virtual unsigned int Limit() const = 0;
-	virtual unsigned int Count() const = 0;
-
-	//virtual void Delete() = 0;
+	unsigned long	Size = 0;
+	const void *	Data = nullptr;
 };
 };
 

@@ -53,7 +53,7 @@ struct PolyGonInstanceManager
 
 	void	ClearInstances();
 	void	PlaceInstance(const PolyGonObjectData & obj);
-	void	PlaceInstances(const Container::Member<PolyGonObjectData> & objs);
+	void	PlaceInstances(const Container::Array<PolyGonObjectData> & objs);
 };
 
 #endif

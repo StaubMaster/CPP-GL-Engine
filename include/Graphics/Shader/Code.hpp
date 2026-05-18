@@ -5,7 +5,7 @@
 //# include <string>
 //# include <fstream>
 //# include "OpenGL/openGL.h"
-# include "Miscellaneous/Container/Base.hpp"
+# include "Miscellaneous/Container/Array.hpp"
 # include "FileInfo.hpp"
 # include <string>
 
@@ -48,11 +48,11 @@ class Code
 	void Detach(GL::ShaderID ProgramID) const;
 
 	public:
-	static bool Valid(Container::Base<Shader::Code> & code);
-	static void Dispose(Container::Base<Shader::Code> & code);
-	static void Compile(Container::Base<Shader::Code> & code);
-	static void Attach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID);
-	static void Detach(Container::Base<Shader::Code> & code, GL::ShaderID ProgramID);
+	static bool Valid(Container::Array<Shader::Code> & code);
+	static void Dispose(Container::Array<Shader::Code> & code);
+	static void Compile(Container::Array<Shader::Code> & code);
+	static void Attach(Container::Array<Shader::Code> & code, GL::ShaderID ProgramID);
+	static void Detach(Container::Array<Shader::Code> & code, GL::ShaderID ProgramID);
 
 	private:
 	static GL::ShaderType ShaderTypeFromExtension(const FileInfo & file);

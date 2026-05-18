@@ -2,8 +2,6 @@
 #include "Graphics/Buffer/VertexArray.hpp"
 #include "OpenGL.hpp"
 
-#include "Miscellaneous/Container/Void.hpp"
-
 
 
 Buffer::Base::~Base()
@@ -77,5 +75,5 @@ void Buffer::Base::Data()
 void Buffer::Base::Data(const Container::Void & data)
 {
 	Bind();
-	GL::BufferData(Target, data.VoidCount(), data.VoidData(), Usage);
+	GL::BufferData(Target, data.Size, data.Data, Usage);
 }

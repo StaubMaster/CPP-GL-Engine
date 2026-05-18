@@ -162,7 +162,7 @@ void PolyHedraManager::UpdateInstances()
 			PlaceInstance(obj);
 			if (obj.Remove)
 			{
-				ObjectDatas.Remove(i);
+				ObjectDatas.RemoveAt(i);
 				delete &obj;
 				i--;
 			}

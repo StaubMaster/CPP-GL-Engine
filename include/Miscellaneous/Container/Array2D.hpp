@@ -1,5 +1,5 @@
-#ifndef  ARRAY_2D_HPP
-# define ARRAY_2D_HPP
+#ifndef  CONTAINER_ARRAY_2D_HPP
+# define CONTAINER_ARRAY_2D_HPP
 
 # include "ValueType/Vector/U2.hpp"
 # include "Exception.hpp"

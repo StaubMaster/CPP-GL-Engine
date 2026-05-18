@@ -87,7 +87,8 @@ void PolyGon::NewCorner(VectorF2 pos, ColorF4 col)
 	// edge from the new last to the first
 	if (c_idx != 0 && Edges.Count() != 0)
 	{
-		Edges.MaxItem().udx[1] = c_idx;
+		//Edges.MaxItem().udx[1] = c_idx;
+		Edges[Edges.Count() - 1].udx[1] = c_idx;
 	}
 	Edges.Insert(Edge(c_idx, 0));
 }
@@ -107,9 +108,9 @@ BoxF2 PolyGon::ToAxisBox() const
 	}
 	return box;
 }
-Container::Pointer<PolyGonFull::Main::Data> PolyGon::ToFullData() const
+Container::Array<PolyGonFull::Main::Data> PolyGon::ToFullData() const
 {
-	Container::Pointer<PolyGonFull::Main::Data> data(Faces.Count() * 3);
+	Container::Array<PolyGonFull::Main::Data> data(Faces.Count() * 3);
 
 	for (unsigned int f = 0; f < Faces.Count(); f++)
 	{

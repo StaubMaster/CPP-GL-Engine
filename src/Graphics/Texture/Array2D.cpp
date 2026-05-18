@@ -67,12 +67,12 @@ void Texture::Array2D::Assign(const FileInfo & file)
 
 
 
-void Texture::Array2D::Assign(VectorU2 size, const Container::Member<Image> & imgs)
+void Texture::Array2D::Assign(VectorU2 size, const Container::Array<Image> & imgs)
 {
-	Assign(VectorU3(size.X, size.Y, imgs.Count()));
+	Assign(VectorU3(size.X, size.Y, imgs.Length()));
 	Image missing = Image::Missing(VectorU2(4, 4));
 	missing.Scale(size);
-	for (unsigned int i = 0; i < imgs.Count(); i++)
+	for (unsigned int i = 0; i < imgs.Length(); i++)
 	{
 		if (imgs[i].Empty())
 		{
@@ -85,14 +85,14 @@ void Texture::Array2D::Assign(VectorU2 size, const Container::Member<Image> & im
 	}
 	missing.Dispose();
 }
-void Texture::Array2D::Assign(VectorU2 size, const Container::Member<FileInfo> & files)
+void Texture::Array2D::Assign(VectorU2 size, const Container::Array<FileInfo> & files)
 {
-	Assign(VectorU3(size.X, size.Y, files.Count()));
+	Assign(VectorU3(size.X, size.Y, files.Length()));
 
 	Image missing = Image::Missing(VectorU2(4, 4));
 	missing.Scale(size);
 
-	for (unsigned int i = 0; i < files.Count(); i++)
+	for (unsigned int i = 0; i < files.Length(); i++)
 	{
 		Image img = files[i].LoadImage();
 		if (img.Empty())

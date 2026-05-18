@@ -2,7 +2,7 @@
 # define POLYGON_HPP
 
 # include "Miscellaneous/Container/Binary.hpp"
-# include "Miscellaneous/Container/Pointer.hpp"
+# include "Miscellaneous/Container/Array.hpp"
 # include "PolyGon/Graphics/Full/Main/Data.hpp"
 
 struct Ray2D;
@@ -54,7 +54,7 @@ class PolyGon
 	void NewFace(unsigned int c0, unsigned int c1, unsigned int c2);
 
 	BoxF2 ToAxisBox() const;
-	Container::Pointer<PolyGonFull::Main::Data>	ToFullData() const;
+	Container::Array<PolyGonFull::Main::Data>	ToFullData() const;
 
 	public:
 	unsigned int SumIntersections(Ray2D ray) const;

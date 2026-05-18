@@ -67,7 +67,7 @@ struct PolyHedraInstanceManager
 
 	void	ClearInstances();
 	void	PlaceInstance(const PolyHedraObjectData & obj);
-	void	PlaceInstances(const Container::Member<PolyHedraObjectData> & objs);
+	void	PlaceInstances(const Container::Array<PolyHedraObjectData> & objs);
 };
 
 #endif

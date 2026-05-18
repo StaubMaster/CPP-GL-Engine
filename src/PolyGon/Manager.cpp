@@ -152,7 +152,7 @@ void PolyGonManager::Update()
 			PlaceInstance(obj);
 			if (obj.Remove)
 			{
-				ObjectDatas.Remove(i);
+				ObjectDatas.RemoveAt(i);
 				delete &obj;
 				i--;
 			}

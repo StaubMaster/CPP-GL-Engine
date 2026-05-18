@@ -1,114 +1,229 @@
 #ifndef  CONTAINER_ARRAY_HPP
 # define CONTAINER_ARRAY_HPP
 
-# include "Base.hpp"
+# include "Exception.hpp"
 # include <initializer_list>
-
-
+# include "Void.hpp"
 
 namespace Container
 {
-
-template<typename T>
-class Array : public Base<T>
+template<typename TypeItem> struct Array
 {
+	private:
+	TypeItem *			mMemory = nullptr;
+	unsigned long *		mShared = nullptr;
+	unsigned long		mLength = 0;
+
 	public:
-	Array() : Base<T>()
-	{ }
+	bool	IsNull() const		{ return (mMemory == nullptr); }
+	bool	IsShared() const	{ return (mShared != nullptr && (*mShared) != 0); }
+
+	public:
+	const	TypeItem *	Memory() const	{ return mMemory; }
+			TypeItem *	Memory()		{ return mMemory; }
+
+	public:
+	unsigned long	Length() const					{ return mLength; }
+	bool			Check(unsigned long idx) const	{ return (idx < mLength); }
+
+	public:
+	const	TypeItem &	At(unsigned long idx) const	{ return mMemory[idx]; }
+			TypeItem &	At(unsigned long idx)		{ return mMemory[idx]; }
+
+	public:
+	const	TypeItem &	operator[](unsigned long idx) const	{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+			TypeItem &	operator[](unsigned long idx)		{ if (Check(idx)) { return At(idx); } throw Container::Exception::InvalidIndex(); }
+
+	public:
+	Void	ToVoid() const
+	{
+		Void v;
+		v.Size = mLength * sizeof(TypeItem);
+		v.Data = mMemory;
+		return v;
+	}
+
+	private:
+	void	mDefault()
+	{
+		mMemory = nullptr;
+		mShared = nullptr;
+		mLength = 0;
+	}
+	void	mDelete()
+	{
+		if (mShared != nullptr)
+		{
+			if ((*mShared) == 0)
+			{
+				delete mShared;
+				delete[] mMemory;
+			}
+			else
+			{
+				(*mShared)--;
+			}
+		}
+	}
+	void	mNew(unsigned long len)
+	{
+		mMemory = new TypeItem[len];
+		mShared = new unsigned long; (*mShared) = 0;
+		mLength = len;
+	}
+	void	mAssign(unsigned long len, TypeItem * data)
+	{
+		mMemory = data;
+		mShared = nullptr;
+		mLength = len;
+	}
+
+	private:
+	void	mBind(const Array & other)
+	{
+		mMemory = other.mMemory;
+		mShared = other.mShared;
+		mLength = other.mLength;
+		if (mShared != nullptr) { (*mShared)++; }
+	}
+	void	mCopy(const Array & other)
+	{
+		unsigned long n = mLength;
+		if (n > other.mLength) { n = other.mLength; }
+		for (unsigned long i = 0; i < n; i++)
+		{
+			mMemory[i] = other.mMemory[i];
+		}
+	}
+
+	public:
 	~Array()
 	{
-		Clear();
+		mDelete();
 	}
-	Array(unsigned int limit) : Base<T>()
+	Array()
 	{
-		this -> mAllocate(limit, limit);
 	}
-	Array(std::initializer_list<T> list) : Base<T>()
+	Array(unsigned long len)
 	{
-		this -> mAllocate(list.size(), list.size());
-		const T * ptr = list.begin();
-		for (unsigned int i = 0; i < this -> _Limit; i++)
-		{
-			this -> _Data[i] = ptr[i];
-		}
+		mNew(len);
 	}
-
-	Array(const Array<T> & other) : Base<T>()
+	Array(unsigned long len, const TypeItem & default_item)
 	{
-		this -> mAssign(other);
-# ifdef DEBUG_MESSAGES
-		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array(other)\n";
-# endif
-	}
-	Array & operator=(const Array<T> & other)
-	{
-		this -> Assign(other);
-# ifdef DEBUG_MESSAGES
-		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array::operator=(other)\n";
-# endif
-		return *this;
-	}
-	Array(const Member<T> & other) : Base<T>()
-	{
-		this -> mAssign(other);
-# ifdef DEBUG_MESSAGES
-		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array(other)\n";
-# endif
-	}
-	Array & operator=(const Member<T> & other)
-	{
-		this -> Assign(other);
-# ifdef DEBUG_MESSAGES
-		std::cout << __FILE__ << ':' << __LINE__ << ' ' << "Container::Array::operator=(other)\n";
-# endif
-		return *this;
+		mNew(len);
+		AssignAll(default_item);
 	}
 
 	public:
-	void	List(std::initializer_list<T> list)
+	Array(unsigned long len, TypeItem * data)
 	{
-		this -> Allocate(list.size(), list.size());
-		const T * ptr = list.begin();
-		for (unsigned int i = 0; i < this -> _Limit; i++)
+		mAssign(len, data);
+	}
+	Array(unsigned long len, const TypeItem * data)
+	{
+		mAssign(len, (TypeItem*)data);
+	}
+
+	public:
+	Array(std::initializer_list<TypeItem> list)
+	{
+		mNew(list.size());
+		const TypeItem * ptr = list.begin();
+		for (unsigned int i = 0; i < mLength; i++)
 		{
-			this -> _Data[i] = ptr[i];
+			mMemory[i] = ptr[i];
 		}
 	}
 
 	public:
-	void	Clear() override
+	Array(const Array & other)
 	{
-		this -> mDelete();
+		mBind(other);
 	}
-	protected:
-	void	mAssign(const Member<T> other) override
+	Array & operator=(const Array & other)
 	{
-		this -> mCopy(other);
+		mDelete();
+		mBind(other);
+		return *this;
+	}
+
+
+
+	public:
+	void	Clear()
+	{
+		mDelete();
+		mDefault();
+	}
+	void	AssignAll(const TypeItem & default_item)
+	{
+		for (unsigned long i = 0; i < mLength; i++)
+		{
+			mMemory[i] = default_item;
+		}
 	}
 
 	public:
-	using Base<T>::Bind;
-	using Base<T>::Copy;
+	void	NewLength(unsigned long len)
+	{
+		mDelete();
+		mNew(len);
+	}
+	void	NewLength(unsigned long len, const TypeItem & default_item)
+	{
+		mDelete();
+		mNew(len);
+		AssignAll(default_item);
+	}
+	void	NewLengthHere(unsigned long len)
+	{
+		Array temp(*this);
+		mDelete();
+		mNew(len);
+		mCopy(temp);
+	}
+	void	AssignLength(unsigned long len)
+	{
+		mLength = len;
+	}
 
 	public:
-	Array<T> Bind() const
+	void	Seperate()
 	{
-		Array<T> other;
+		if (IsShared())
+		{
+			Array temp(*this);
+			mDelete();
+			mNew(temp.Length());
+			mCopy(temp);
+		}
+	}
+
+
+
+	public:
+	void		Bind(const Array & other)
+	{
+		mDelete();
+		mBind(other);
+	}
+	void		Copy(const Array & other)
+	{
+		mDelete();
+		mNew(other.mLength);
+		mCopy(other);
+	}
+	Array		Bind() const
+	{
+		Array other;
 		other.Bind(*this);
 		return other;
 	}
-	Array<T> Copy() const
+	Array		Copy() const
 	{
-		Array<T> other;
+		Array other;
 		other.Copy(*this);
 		return other;
-	}
-
-	protected:
-	unsigned int	CalcLimit(unsigned int wanted_count) override
-	{
-		(void)wanted_count;
-		return this -> _Limit;
 	}
 };
 };

@@ -1,5 +1,5 @@
-#ifndef  ARRAY_3D_HPP
-# define ARRAY_3D_HPP
+#ifndef  CONTAINER_ARRAY_3D_HPP
+# define CONTAINER_ARRAY_3D_HPP
 
 # include "ValueType/Vector/U3.hpp"
 # include "Exception.hpp"

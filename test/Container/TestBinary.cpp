@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Binary.hpp"
+#include "Miscellaneous/Container/Binary.hpp"
 
 template<typename TypeItem>
-void BinaryShowInfo(const char * name, const Binary<TypeItem> & cont)
+void BinaryShowInfo(const char * name, const Container::Binary<TypeItem> & cont)
 {
 	std::cout << name;
 	std::cout << ' ';
@@ -15,12 +15,12 @@ void BinaryShowInfo(const char * name, const Binary<TypeItem> & cont)
 	std::cout << '|';
 	std::cout << cont.Limit();
 	std::cout << ']';
-	std::cout << (const void *)(cont.Data().Memory());
+	std::cout << (const void *)(cont.ToArray().Memory());
 	std::cout << '\n';
 }
 
 template<typename TypeItem>
-void BinaryShowItems(const Binary<TypeItem> & cont)
+void BinaryShowItems(const Container::Binary<TypeItem> & cont)
 {
 	for (unsigned int i = 0; i < cont.Count(); i++)
 	{ std::cout << cont[i] << ' '; }
@@ -28,7 +28,7 @@ void BinaryShowItems(const Binary<TypeItem> & cont)
 }
 
 template<typename TypeItem>
-void BinaryShowInfoItems(const char * name, const Binary<TypeItem> & cont)
+void BinaryShowInfoItems(const char * name, const Container::Binary<TypeItem> & cont)
 {
 	std::cout << name;
 	std::cout << ' ';
@@ -41,7 +41,7 @@ void BinaryShowInfoItems(const char * name, const Binary<TypeItem> & cont)
 	std::cout << '|';
 	std::cout << cont.Limit();
 	std::cout << ']';
-	std::cout << (const void *)(cont.Data().Memory());
+	std::cout << (const void *)(cont.ToArray().Memory());
 	std::cout << ' ';
 	for (unsigned int i = 0; i < cont.Count(); i++)
 	{ std::cout << cont[i] << ' '; }
@@ -54,12 +54,12 @@ void TestBinary()
 {
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Binary<int>	cont;
+		Container::Binary<int>	cont;
 		BinaryShowInfo("cont", cont);
 	}
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Binary<int>	cont;
+		Container::Binary<int>	cont;
 		BinaryShowInfo("cont", cont);
 
 		cont.Insert(1);
@@ -80,14 +80,14 @@ void TestBinary()
 	}
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Binary<int>	cont0;
+		Container::Binary<int>	cont0;
 		cont0.Insert(0);
 		cont0.Insert(1);
 		cont0.Insert(2);
 		cont0.Insert(3);
 		BinaryShowInfoItems("cont0", cont0);
 
-		Binary<int>	cont1(cont0);
+		Container::Binary<int>	cont1(cont0);
 		BinaryShowInfoItems("cont0", cont0);
 		BinaryShowInfoItems("cont1", cont1);
 
@@ -97,15 +97,14 @@ void TestBinary()
 	}
 	std::cout << '\n' << "line:" << __LINE__ << '\n' << '\n';
 	{
-		Binary<int> cont;
+		Container::Binary<int> cont;
 		cont.Insert(1);
 		cont.Insert(2);
 		cont.Insert(3);
 		cont.Insert(4);
-		cont.Trim();
 
-		Array<int> arr = cont.Data();
-		std::cout << "cont " << (const void *)cont.Data().Memory() << '\n';
+		Container::Array<int> arr = cont.ToArray();
+		std::cout << "cont " << (const void *)cont.ToArray().Memory() << '\n';
 		std::cout << "arr " << (const void *)arr.Memory() << '\n';
 		cont.Clear();
 

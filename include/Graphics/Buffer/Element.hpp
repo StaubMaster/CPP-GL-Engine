@@ -3,8 +3,6 @@
 
 # include "Graphics/Buffer/Base.hpp"
 
-# include "Miscellaneous/Container/Void.hpp"
-
 # include "OpenGLEnums.hpp"
 
 namespace Buffer

@@ -2,7 +2,7 @@
 # define POLYHEDRA_HPP
 
 # include "Miscellaneous/Container/Binary.hpp"
-# include "Miscellaneous/Container/Pointer.hpp"
+# include "Miscellaneous/Container/Array.hpp"
 
 # include "FileInfo.hpp"
 
@@ -59,7 +59,7 @@ class PolyHedra
 	void	Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure);
 
 	public:
-	Container::Pointer<PolyHedraFull::Main::Data>	ToMainData();
+	Container::Array<PolyHedraFull::Main::Data>	ToMainData();
 
 	public:
 	std::string	ToInfo() const;

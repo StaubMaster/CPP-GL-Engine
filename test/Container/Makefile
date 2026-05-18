@@ -21,7 +21,7 @@ FILES_OBJ := $(FILES_SRC:.cpp=.o)
 ################################################################
 
 all:
-	$(MAKE) -C $(BASE_DIR) -s
+#	$(MAKE) -C $(BASE_DIR) -s
 #	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES)
 	$(COMPILER) $(FLAGS) $(INCLUDES) -o $(NAME) $(FILES_SRC) $(LIBRARYS) $(ARGUMENTS)
 

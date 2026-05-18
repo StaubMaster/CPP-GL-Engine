@@ -18,10 +18,10 @@ void Shader::Base::LogInfo(bool self, bool log) const
 	}
 	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
 
-	Debug::Log << Debug::Tabs << "Code[" << Code.Limit() << " " << Code.Count() << "]\n";
+	Debug::Log << Debug::Tabs << "Code[" << Code.Length() << "]\n";
 	Debug::Log << Debug::Tabs << '[' << '\n';
 	Debug::Log << Debug::TabInc;
-	for (unsigned int i = 0; i < Code.Count(); i++) { Code[i].LogInfo(false); }
+	for (unsigned int i = 0; i < Code.Length(); i++) { Code[i].LogInfo(false); }
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << ']' << '\n';
 

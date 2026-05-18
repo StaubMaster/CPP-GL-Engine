@@ -34,10 +34,10 @@ class MainElemInst : public VertexArray
 		, Elem(*this)
 		, Inst(*this)
 	{
-		Buffers.Allocate(3);
 		Buffers.Insert(&Main);
 		Buffers.Insert(&Elem);
 		Buffers.Insert(&Inst);
+		Buffers.Trim();
 	}
 
 	MainElemInst(const MainElemInst & other)
@@ -47,10 +47,10 @@ class MainElemInst : public VertexArray
 		, Elem(*this, other.Elem)
 		, Inst(*this, other.Inst)
 	{
-		Buffers.Allocate(3);
 		Buffers.Insert(&Main);
 		Buffers.Insert(&Elem);
 		Buffers.Insert(&Inst);
+		Buffers.Trim();
 	}
 	MainElemInst & operator=(const MainElemInst & other)
 	{
