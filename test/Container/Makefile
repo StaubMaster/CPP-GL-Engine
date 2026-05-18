@@ -3,28 +3,18 @@
 COMPILER := g++ -g -std=c++11
 FLAGS := -Wall -Wextra -Werror
 
-
 ################################################################
 
-BASE_DIR := ../
+BASE_DIR := ../../
 include $(BASE_DIR)fancy.mk
-FANCY_NAME := Test
+FANCY_NAME := ContainerTest
 
 ################################################################
 
-NAME := test.exe
+NAME := Test.exe
 
 FILES_SRC := \
-	TransformationScaling.cpp
-#	EulerMatrixStuff.cpp
-#	Container.cpp
-#	EntryContainer.cpp
-#	Angle3D.cpp
-#	CopyConstruct.cpp
-#	Graphics.cpp
-#	Undex.cpp
-#	$(DIR_SRC)/Debug.cpp \
-#	../src/Miscellaneous/Container/Behaviour.cpp
+	main.cpp
 
 FILES_OBJ := $(FILES_SRC:.cpp=.o)
 
@@ -42,17 +32,6 @@ fclean:
 
 ################################################################
 
-#LIBRARYS := ..//Engine.a ..//other//OpenGL/openGL.a ..//other//FileManager/FileManager.a
-#INCLUDES := -I..//include/ -I..//other//OpenGL/../ -I..//other//FileManager/include
-
-LIBRARYS := $(BASE_DIR)/Engine.a
+LIBRARYS :=
 INCLUDES := -I$(BASE_DIR)/include/
 ARGUMENTS :=
-
-ifeq ($(CheckOS), Windows)
-ARGUMENTS := -lglfw3 -lgdi32
-endif
-
-ifeq ($(CheckOS), Darwin)
-ARGUMENTS := -lglfw
-endif

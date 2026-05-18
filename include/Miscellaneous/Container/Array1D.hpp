@@ -96,7 +96,7 @@ template<typename ItemType> struct Array1D
 	{
 		mNew(size);
 	}
-	Array3D(unsigned int size, const ItemType & default_item)
+	Array1D(unsigned int size, const ItemType & default_item)
 	{
 		mNew(size);
 		ChangeAll(default_item);

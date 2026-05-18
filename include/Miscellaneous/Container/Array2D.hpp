@@ -95,7 +95,7 @@ template<typename ItemType> struct Array2D
 	{
 		mNew(size);
 	}
-	Array3D(VectorU2 size, const ItemType & default_item)
+	Array2D(VectorU2 size, const ItemType & default_item)
 	{
 		mNew(size);
 		ChangeAll(default_item);
