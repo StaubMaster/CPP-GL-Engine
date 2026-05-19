@@ -31,7 +31,8 @@ Buffer::Array & Buffer::Array::operator=(const Array & other)
 
 void Buffer::Array::Init()
 {
-	Base::DataNull();
+	Bind();
+	//Base::DataNull();
 	GL::AttributeOffset offset = nullptr;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)
 	{
