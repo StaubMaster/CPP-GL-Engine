@@ -123,7 +123,7 @@ void PolyHedraInstanceManager::UpdateFullBufferMain()
 
 	{
 		Container::Array<PolyHedraFull::Main::Data> data = PolyHedra -> ToMainData();
-		BufferFull.Main.Data(data.ToVoid());
+		BufferFull.Main.DataFull(data.ToVoid());
 	}
 
 	if (PolyHedra -> Skin != NULL)
@@ -144,7 +144,7 @@ void PolyHedraInstanceManager::UpdateFullBufferMain()
 }
 void PolyHedraInstanceManager::UpdateFullBufferInst()
 {
-	BufferFull.Inst.Data(InstancesFull.ToVoid());
+	BufferFull.Inst.DataFull(InstancesFull.ToVoid());
 }
 void PolyHedraInstanceManager::DrawFull()
 {
@@ -174,7 +174,7 @@ void PolyHedraInstanceManager::UpdateWireBufferMain()
 		{
 			data.Insert(PolyHedraWire::Main::Data(PolyHedra -> Corners[i].Position, ColorF4(1, 1, 1)));
 		}
-		BufferWire.Main.Data(data.ToVoid());
+		BufferWire.Main.DataFull(data.ToVoid());
 	}
 	{
 		/*Container::Binary<PolyHedra::Edge> data;
@@ -189,14 +189,14 @@ void PolyHedraInstanceManager::UpdateWireBufferMain()
 			}
 		}
 		BufferWire.Elem.Data(data);*/
-		BufferWire.Elem.Data(PolyHedra -> Edges.ToVoid());
+		BufferWire.Elem.DataFull(PolyHedra -> Edges.ToVoid());
 	}
 
 	UpdateWireMain = false;
 }
 void PolyHedraInstanceManager::UpdateWireBufferInst()
 {
-	BufferWire.Inst.Data(InstancesWire.ToVoid());
+	BufferWire.Inst.DataFull(InstancesWire.ToVoid());
 }
 void PolyHedraInstanceManager::DrawWire()
 {

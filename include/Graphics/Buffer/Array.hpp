@@ -34,7 +34,7 @@ class Array : public Base
 
 	public:
 	void	Init() override;
-	void	Data(const Container::Void & data) override;
+	void	NewSize(unsigned int size) override;
 };
 };
 

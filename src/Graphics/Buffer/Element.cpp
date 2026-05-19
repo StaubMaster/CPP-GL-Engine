@@ -35,8 +35,7 @@ Buffer::Element & Buffer::Element::operator=(const Element & other)
 
 
 
-void Buffer::Element::Data(const Container::Void & data)
+void Buffer::Element::NewSize(unsigned int size)
 {
-	Base::Data(data);
-	Count = data.Size / IndexSize;
+	Count = size / IndexSize;
 }

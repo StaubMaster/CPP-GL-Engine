@@ -40,10 +40,14 @@ class Base
 
 	public:
 	virtual void	Init();
+	virtual void	NewSize(unsigned int size);
 
 	public:
-	void			Data();
-	virtual void	Data(const Container::Void & data);
+	void	DataNull();
+	void	DataFull(unsigned int size);
+	void	DataFull(const Container::Void & data);
+	void	DataPart(unsigned int offset, const Container::Void & data);
+	void *	DataMap();
 };
 };
 

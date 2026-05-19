@@ -31,15 +31,14 @@ Buffer::Array & Buffer::Array::operator=(const Array & other)
 
 void Buffer::Array::Init()
 {
-	Base::Data();
+	Base::DataNull();
 	GL::AttributeOffset offset = nullptr;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)
 	{
 		Attributes[i] -> Bind(Divisor, Stride, offset);
 	}
 }
-void Buffer::Array::Data(const Container::Void & data)
+void Buffer::Array::NewSize(unsigned int size)
 {
-	Base::Data(data);
-	Count = data.Size / Stride;
+	Count = size / Stride;
 }

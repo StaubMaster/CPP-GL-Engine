@@ -9,10 +9,13 @@
 
 # include "Graphics/Attribute/TypeDefs/Float.hpp"
 # include "Graphics/Attribute/TypeDefs/UInt.hpp"
+# include "Graphics/Attribute/TypeDefs/Int.hpp"
 
 # include "Graphics/Attribute/TypeDefs/VectorF2.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF3.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF4.hpp"
+
+# include "Graphics/Attribute/TypeDefs/VectorI3.hpp"
 
 # include "Graphics/Attribute/TypeDefs/Matrix2x2.hpp"
 # include "Graphics/Attribute/TypeDefs/Matrix3x3.hpp"

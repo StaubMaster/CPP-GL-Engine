@@ -27,7 +27,7 @@ class Element : public Base
 	Element & operator=(const Element & other);
 
 	public:
-	void	Data(const Container::Void & data) override;
+	void	NewSize(unsigned int size) override;
 };
 };
 

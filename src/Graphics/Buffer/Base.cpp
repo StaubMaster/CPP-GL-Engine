@@ -66,14 +66,32 @@ void Buffer::Base::Bind()
 
 
 void Buffer::Base::Init() { }
+void Buffer::Base::NewSize(unsigned int size) { (void)size; }
 
-void Buffer::Base::Data()
+void Buffer::Base::DataNull()
 {
 	Bind();
 	GL::BufferData(Target, 0, nullptr, Usage);
+	NewSize(0);
 }
-void Buffer::Base::Data(const Container::Void & data)
+void Buffer::Base::DataFull(unsigned int size)
+{
+	Bind();
+	GL::BufferData(Target, size, nullptr, Usage);
+	NewSize(size);
+}
+void Buffer::Base::DataFull(const Container::Void & data)
 {
 	Bind();
 	GL::BufferData(Target, data.Size, data.Data, Usage);
+	NewSize(data.Size);
+}
+void Buffer::Base::DataPart(unsigned int offset, const Container::Void & data)
+{
+	Bind();
+	GL::BufferSubData(Target, offset, data.Size, data.Data);
+}
+void * Buffer::Base::DataMap()
+{
+	return GL::MapBuffer(Target, GL::BufferAccess::ReadWrite);
 }

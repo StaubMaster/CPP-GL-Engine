@@ -11,10 +11,13 @@ namespace Attribute
 
 	class Float;
 	class UInt;
+	class Int;
 
 	class VectorF2;
 	class VectorF3;
 	class VectorF4;
+
+	class VectorI3;
 
 	class Matrix2x2;
 	class Matrix3x3;

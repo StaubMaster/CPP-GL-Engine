@@ -147,6 +147,7 @@ ATTRIBUTE := \
 	Graphics/Attribute/Base/Base.cpp \
 	Graphics/Attribute/Base/FloatNBase.cpp \
 	Graphics/Attribute/Base/UIntNBase.cpp \
+	Graphics/Attribute/Base/IntNBase.cpp \
 \
 	Graphics/Attribute/BoxF2.cpp \
 \
