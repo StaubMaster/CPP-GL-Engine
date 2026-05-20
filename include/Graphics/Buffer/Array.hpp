@@ -18,6 +18,7 @@ class Array : public Base
 	GL::AttributeStride		Stride;
 	unsigned int			Count;
 
+	bool									AttributesBound;
 	Container::Binary<::Attribute::Base*>	Attributes;
 
 	public:
@@ -33,7 +34,7 @@ class Array : public Base
 	Array & operator=(const Array & other);
 
 	public:
-	void	Init() override;
+	void	Update() override;
 	void	NewSize(unsigned int size) override;
 };
 };

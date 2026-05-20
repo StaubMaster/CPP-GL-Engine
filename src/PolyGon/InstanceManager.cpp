@@ -86,13 +86,13 @@ void PolyGonInstanceManager::InitExternal()
 void PolyGonInstanceManager::InitInternal()
 {
 	{
-		BufferFull.Main.Init();
-		BufferFull.Inst.Init();
+		BufferFull.Main.Update();
+		BufferFull.Inst.Update();
 	}
 	{
-		BufferWire.Main.Init();
-		BufferWire.Elem.Init();
-		BufferWire.Inst.Init();
+		BufferWire.Main.Update();
+		BufferWire.Elem.Update();
+		BufferWire.Inst.Update();
 	}
 }
 

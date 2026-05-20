@@ -65,7 +65,7 @@ void Buffer::Base::Bind()
 
 
 
-void Buffer::Base::Init() { }
+void Buffer::Base::Update() { }
 void Buffer::Base::NewSize(unsigned int size) { (void)size; }
 
 void Buffer::Base::DataNull()

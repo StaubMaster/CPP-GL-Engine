@@ -22,8 +22,6 @@ PolyHedraInstanceManager::PolyHedraInstanceManager()
 	, DefaultWireVisibility(false)
 	, UpdateFullMain(false)
 	, UpdateWireMain(false)
-	, UpdateFullInit(false)
-	, UpdateWireInit(false)
 	, GraphicsExist(false)
 	, BufferFull()
 	, BufferWire()
@@ -37,8 +35,6 @@ PolyHedraInstanceManager::PolyHedraInstanceManager(const PolyHedraInstanceManage
 	, DefaultWireVisibility(other.DefaultWireVisibility)
 	, UpdateFullMain(other.UpdateFullMain)
 	, UpdateWireMain(other.UpdateWireMain)
-	, UpdateFullInit(other.UpdateFullInit)
-	, UpdateWireInit(other.UpdateWireInit)
 	, GraphicsExist(other.GraphicsExist)
 	, BufferFull(other.BufferFull)
 	, BufferWire(other.BufferWire)
@@ -53,8 +49,6 @@ PolyHedraInstanceManager & PolyHedraInstanceManager::operator=(const PolyHedraIn
 	DefaultWireVisibility = other.DefaultWireVisibility;
 	UpdateFullMain = other.UpdateFullMain;
 	UpdateWireMain = other.UpdateWireMain;
-	UpdateFullInit = other.UpdateFullInit;
-	UpdateWireInit = other.UpdateWireInit;
 	GraphicsExist = other.GraphicsExist;
 	BufferFull = other.BufferFull;
 	BufferWire = other.BufferWire;
@@ -68,8 +62,6 @@ PolyHedraInstanceManager::PolyHedraInstanceManager(::PolyHedra * polyhedra)
 	: PolyHedra(polyhedra)
 	, UpdateFullMain(true)
 	, UpdateWireMain(true)
-	, UpdateFullInit(false)
-	, UpdateWireInit(false)
 	, GraphicsExist(false)
 	, BufferFull()
 	, BufferWire()
@@ -92,8 +84,10 @@ void PolyHedraInstanceManager::GraphicsCreate()
 		BufferFull.Create();
 		BufferWire.Create();
 		GraphicsExist = true;
-		UpdateFullInit = true;
-		UpdateWireInit = true;
+		BufferFull.Main.AttributesBound = false;
+		BufferFull.Inst.AttributesBound = false;
+		BufferWire.Main.AttributesBound = false;
+		BufferWire.Inst.AttributesBound = false;
 	}
 }
 void PolyHedraInstanceManager::GraphicsDelete()
@@ -110,12 +104,10 @@ void PolyHedraInstanceManager::GraphicsDelete()
 
 void PolyHedraInstanceManager::UpdateFullBufferInit()
 {
-	if (!(UpdateFullInit && GraphicsExist)) { return; }
+	if (!GraphicsExist) { return; }
 
-	BufferFull.Main.Init();
-	BufferFull.Inst.Init();
-
-	UpdateFullInit = false;
+	BufferFull.Main.Update();
+	BufferFull.Inst.Update();
 }
 void PolyHedraInstanceManager::UpdateFullBufferMain()
 {
@@ -157,12 +149,10 @@ void PolyHedraInstanceManager::DrawFull()
 
 void PolyHedraInstanceManager::UpdateWireBufferInit()
 {
-	if (!(UpdateWireInit && GraphicsExist)) { return; }
+	if (!GraphicsExist) { return; }
 
-	BufferWire.Main.Init();
-	BufferWire.Inst.Init();
-
-	UpdateWireInit = false;
+	BufferWire.Main.Update();
+	BufferWire.Inst.Update();
 }
 void PolyHedraInstanceManager::UpdateWireBufferMain()
 {

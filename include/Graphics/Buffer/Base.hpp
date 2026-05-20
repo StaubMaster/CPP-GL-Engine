@@ -39,7 +39,7 @@ class Base
 
 
 	public:
-	virtual void	Init();
+	virtual void	Update();
 	virtual void	NewSize(unsigned int size);
 
 	public:

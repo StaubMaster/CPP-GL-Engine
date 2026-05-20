@@ -7,6 +7,14 @@ struct Void
 {
 	unsigned long	Size = 0;
 	const void *	Data = nullptr;
+
+	bool	IsNull() const;
+	void	Clear();
+
+	~Void();
+	Void();
+	Void(const Void & other);
+	Void & operator=(const Void & other);
 };
 };
 

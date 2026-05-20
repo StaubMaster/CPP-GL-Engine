@@ -81,7 +81,8 @@ DISPLAY := \
 DISPLAY_SRC := $(addprefix $(DIR_SRC)/,$(DISPLAY))
 DISPLAY_OBJ := $(addprefix $(DIR_OBJ)/,$(DISPLAY:.cpp=.o))
 
-CONTAINER :=
+CONTAINER := \
+	Miscellaneous/Container/Void.cpp
 CONTAINER_SRC := $(addprefix $(DIR_SRC)/,$(CONTAINER))
 CONTAINER_OBJ := $(addprefix $(DIR_OBJ)/,$(CONTAINER:.cpp=.o))
 

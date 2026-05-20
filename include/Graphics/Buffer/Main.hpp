@@ -12,12 +12,14 @@
 
 namespace BufferArray
 {
-template<typename MainBufferType>
+template<
+	typename TypeMainBuffer
+>
 class Main : public VertexArray
 {
 	public:
 	GL::DrawMode	Mode;
-	MainBufferType	MainBuffer;
+	TypeMainBuffer	MainBuffer;
 
 	public:
 	Container::Binary<Texture::Base *>	Textures;
