@@ -8,14 +8,9 @@ struct ColorF4;
 namespace Uniform
 {
 typedef FloatN<4, 1, 1, ::ColorF4> ColorF4;
-/*class ColorF4 : public Uniform::FloatN<4, 1, 1>
-{
-	public:
-	ColorF4(::Shader::Base & shader, std::string name);
 
-	public:
-	void Put(const ::ColorF4 & val);
-};*/
+template <unsigned int Count>
+using ColorF4Array = FloatN<4, 1, Count, ::ColorF4>;
 };
 
 #endif

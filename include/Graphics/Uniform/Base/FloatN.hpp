@@ -27,6 +27,10 @@ class FloatN : public Uniform::FloatNBase // FloatNTypeBase
 	{
 		PutVoid(&obj);
 	}
+	void Put(const ValueType * obj)
+	{
+		PutVoid(obj);
+	}
 };
 
 template<> void FloatNFunc<1, 1>(unsigned int Index, unsigned int Count, const float * val);
