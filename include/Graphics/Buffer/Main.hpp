@@ -13,24 +13,24 @@
 namespace BufferArray
 {
 template<
-	typename TypeMainBuffer
+	GL::BufferDataUsage usage_main,
+	GL::DrawMode mode
 >
 class Main : public VertexArray
 {
 	public:
-	GL::DrawMode	Mode;
-	TypeMainBuffer	MainBuffer;
+	GL::DrawMode		Mode;
+	::Buffer::Array		MainBuffer;
 
 	public:
 	Container::Binary<Texture::Base *>	Textures;
 
 	public:
 	virtual ~Main() { }
-	Main() = delete;
-	Main(GL::DrawMode mode)
+	Main()
 		: VertexArray()
 		, Mode(mode)
-		, MainBuffer(*this)
+		, MainBuffer(*this, usage_main)
 	{
 		Buffers.Insert(&MainBuffer);
 		Buffers.Trim();

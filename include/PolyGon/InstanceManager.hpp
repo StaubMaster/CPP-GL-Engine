@@ -16,7 +16,12 @@ struct PolyGonInstanceManager
 	
 	bool						UpdateFullMain;
 	bool						UpdateWireMain;
-	
+
+	::PolyGonFull::Main::Layout		LayoutMainFull;
+	::PolyGonWire::Main::Layout		LayoutMainWire;
+	::Instance::Basic2D::Layout		LayoutInstFull;
+	::Instance::Basic2D::Layout		LayoutInstWire;
+
 	::PolyGonFull::Buffer		BufferFull;
 	::PolyGonWire::Buffer		BufferWire;
 

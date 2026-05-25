@@ -28,6 +28,10 @@ struct PolyHedraInstanceManager
 	bool	UpdateWireMain;
 
 	bool						GraphicsExist;
+	::PolyHedraFull::Main::Layout	LayoutMainFull;
+	::Instance::Basic3D::Layout		LayoutInstFull;
+	::PolyHedraWire::Main::Layout	LayoutMainWire;
+	::Instance::Basic3D::Layout		LayoutInstWire;
 	::PolyHedraFull::Buffer		BufferFull;
 	::PolyHedraWire::Buffer		BufferWire;
 	Texture::Array2D			Texture;

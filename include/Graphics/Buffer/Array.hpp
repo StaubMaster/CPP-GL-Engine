@@ -7,6 +7,8 @@
 
 # include "Miscellaneous/Container/Binary.hpp"
 
+namespace Attribute { class Layout; };
+
 # include "OpenGLEnums.hpp"
 
 namespace Buffer
@@ -14,12 +16,10 @@ namespace Buffer
 class Array : public Base
 {
 	public:
-	GL::AttributeDivisor	Divisor;
-	GL::AttributeStride		Stride;
 	unsigned int			Count;
 
-	bool									AttributesBound;
-	Container::Binary<::Attribute::Base*>	Attributes;
+	bool					AttributesBound;
+	Attribute::Layout *		AttributeLayout;
 
 	public:
 	void LogInfo(bool self = true) const override;
@@ -27,7 +27,7 @@ class Array : public Base
 	public:
 	virtual ~Array();
 	Array() = delete;
-	Array(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, GL::AttributeStride stride);
+	Array(VertexArray & vertex_array, GL::BufferDataUsage usage);
 
 	Array(const Array & other) = delete;
 	Array(VertexArray & vertex_array, const Array & other);

@@ -3,13 +3,13 @@
 
 
 Attribute::IntNBase::~IntNBase() { }
-Attribute::IntNBase::IntNBase(Buffer::Array & buffer)
-	: Base(buffer)
+Attribute::IntNBase::IntNBase(Layout & layout)
+	: Base(layout)
 	, Index(-1)
 { }
 
-Attribute::IntNBase::IntNBase(Buffer::Array & buffer, const IntNBase & other)
-	: Base(buffer)
+Attribute::IntNBase::IntNBase(Layout & layout, const IntNBase & other)
+	: Base(layout)
 	, Index(other.Index)
 { }
 Attribute::IntNBase & Attribute::IntNBase::operator=(const IntNBase & other)

@@ -1,32 +1,29 @@
 #include "Graphics/Buffer/Array.hpp"
 
+#include "Graphics/Attribute/Layout.hpp"
+
 
 
 Buffer::Array::~Array()
 { }
-Buffer::Array::Array(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::AttributeDivisor divisor, GL::AttributeStride stride)
+Buffer::Array::Array(VertexArray & vertex_array, GL::BufferDataUsage usage)
 	: Buffer::Base(vertex_array, GL::BufferTarget::ArrayBuffer, usage)
-	, Divisor(divisor)
-	, Stride(stride)
 	, Count(0)
 	, AttributesBound(false)
-	, Attributes()
+	, AttributeLayout(nullptr)
 { }
 Buffer::Array::Array(VertexArray & vertex_array, const Array & other)
 	: Buffer::Base(vertex_array, other)
-	, Divisor(other.Divisor)
-	, Stride(other.Stride)
 	, Count(other.Count)
 	, AttributesBound(other.AttributesBound)
-	, Attributes(other.Attributes)
+	, AttributeLayout(other.AttributeLayout)
 { }
 Buffer::Array & Buffer::Array::operator=(const Array & other)
 {
 	Base::operator=(other);
-	Divisor = other.Divisor;
-	Stride = other.Stride;
 	Count = other.Count;
 	AttributesBound = other.AttributesBound;
+	AttributeLayout = other.AttributeLayout;
 	return *this;
 }
 
@@ -34,18 +31,20 @@ Buffer::Array & Buffer::Array::operator=(const Array & other)
 
 void Buffer::Array::Update()
 {
-	Bind();
 	if (!AttributesBound)
 	{
-		GL::AttributeOffset offset = nullptr;
-		for (unsigned int i = 0; i < Attributes.Count(); i++)
+		Bind();
+		if (AttributeLayout != nullptr)
 		{
-			Attributes[i] -> Bind(Divisor, Stride, offset);
+			AttributeLayout -> Bind();
+			AttributesBound = true;
 		}
-		AttributesBound = true;
 	}
 }
 void Buffer::Array::NewSize(unsigned int size)
 {
-	Count = size / Stride;
+	if (AttributeLayout != nullptr)
+	{
+		Count = size / (AttributeLayout -> Stride);
+	}
 }

@@ -6,6 +6,7 @@
 #include "Graphics/Attribute/Base/FloatNBase.hpp"
 #include "Graphics/Attribute/Base/UIntNBase.hpp"
 #include "Graphics/Attribute/Base/IntNBase.hpp"
+#include "Graphics/Attribute/Layout.hpp"
 
 
 
@@ -49,4 +50,24 @@ void Attribute::IntNBase::LogInfoBase(GL::AttributeIntType type, unsigned int si
 		Debug::Log << ':' << (Index + s);
 	}
 	Debug::Log << '\n';
+}
+
+void Attribute::Layout::LogInfo() const
+{
+	Debug::Log << Debug::Tabs << "Attribute::Layout\n";
+	Debug::Log << Debug::Tabs << "{\n";
+	Debug::Log << Debug::TabInc;
+	Debug::Log << Debug::Tabs << "Divisor: " << Divisor << '\n';
+	Debug::Log << Debug::Tabs << "Stride: " << Stride << '\n';
+	Debug::Log << Debug::Tabs << "Attributes[" << Attributes.Count() << "]\n";
+	Debug::Log << Debug::Tabs << "[\n";
+	Debug::Log << Debug::TabInc;
+	for (unsigned int i = 0; i < Attributes.Count(); i++)
+	{
+		Attributes[i] -> LogInfo();
+	}
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "]\n";
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "}\n";
 }

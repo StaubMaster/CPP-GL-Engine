@@ -17,10 +17,10 @@ class UIntNBase : public Attribute::Base
 	public:
 	virtual ~UIntNBase();
 	UIntNBase() = delete;
-	UIntNBase(Buffer::Array & buffer);
+	UIntNBase(Layout & layout);
 
 	UIntNBase(const UIntNBase & other) = delete;
-	UIntNBase(Buffer::Array & buffer, const UIntNBase & other);
+	UIntNBase(Layout & layout, const UIntNBase & other);
 	UIntNBase & operator=(const UIntNBase & other);
 
 	public:

@@ -15,8 +15,8 @@ PolyGonInstanceManager::PolyGonInstanceManager()
 	: PolyGon(nullptr)
 	, UpdateFullMain(false)
 	, UpdateWireMain(false)
-	, BufferFull(GL::DrawMode::Triangles)
-	, BufferWire(GL::DrawMode::Lines)
+	, BufferFull()
+	, BufferWire()
 	, InstancesFull()
 	, InstancesWire()
 { }
@@ -45,8 +45,8 @@ PolyGonInstanceManager::PolyGonInstanceManager(::PolyGon * PolyGon)
 	: PolyGon(PolyGon)
 	, UpdateFullMain(true)
 	, UpdateWireMain(true)
-	, BufferFull(GL::DrawMode::Triangles)
-	, BufferWire(GL::DrawMode::Lines)
+	, BufferFull()
+	, BufferWire()
 	, InstancesFull()
 	, InstancesWire()
 { }
@@ -61,6 +61,11 @@ void PolyGonInstanceManager::Change(::PolyGon * PolyGon)
 
 void PolyGonInstanceManager::GraphicsCreate()
 {
+	BufferFull.Main.AttributeLayout = &LayoutMainFull;
+	BufferWire.Main.AttributeLayout = &LayoutMainWire;
+	BufferFull.Inst.AttributeLayout = &LayoutInstFull;
+	BufferWire.Inst.AttributeLayout = &LayoutInstWire;
+
 	BufferFull.Create();
 	BufferWire.Create();
 }
@@ -73,14 +78,20 @@ void PolyGonInstanceManager::GraphicsDelete()
 void PolyGonInstanceManager::InitExternal()
 {
 	{
-		BufferFull.Main.Pos.Change(0);
-		BufferFull.Main.Col.Change(1);
-		BufferFull.Inst.Trans.Change(2);
+		LayoutMainFull.Pos.Change(0);
+		LayoutMainFull.Col.Change(1);
+		LayoutInstFull.Trans.Change(2);
+
+		BufferFull.Main.AttributeLayout = &LayoutMainFull;
+		BufferFull.Inst.AttributeLayout = &LayoutInstFull;
 	}
 	{
-		BufferWire.Main.Pos.Change(0);
-		BufferWire.Main.Col.Change(1);
-		BufferWire.Inst.Trans.Change(2);
+		LayoutMainWire.Pos.Change(0);
+		LayoutMainWire.Col.Change(1);
+		LayoutInstWire.Trans.Change(2);
+
+		BufferWire.Main.AttributeLayout = &LayoutMainWire;
+		BufferWire.Inst.AttributeLayout = &LayoutInstWire;
 	}
 }
 void PolyGonInstanceManager::InitInternal()

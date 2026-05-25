@@ -20,13 +20,13 @@ class IntN : public Attribute::IntNBase
 	public:
 	virtual ~IntN() { }
 	IntN() = delete;
-	IntN(Buffer::Array & buffer)
-		: IntNBase(buffer)
+	IntN(Layout & layout)
+		: IntNBase(layout)
 	{ }
 
 	IntN(const IntN & other) = delete;
-	IntN(Buffer::Array & buffer, const IntN & other)
-		: Attribute::IntNBase(buffer, other)
+	IntN(Layout & layout, const IntN & other)
+		: Attribute::IntNBase(layout, other)
 	{ }
 	IntN & operator=(const IntN & other)
 	{

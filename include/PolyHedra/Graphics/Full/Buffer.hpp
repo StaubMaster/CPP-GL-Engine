@@ -9,15 +9,21 @@
 
 namespace PolyHedraFull
 {
-class Buffer : public ::BufferArray::MainInst<
-	PolyHedraFull::Main::Buffer,
-	Instance::Basic3D::Buffer
+typedef ::BufferArray::MainInst<
+	GL::BufferDataUsage::StaticDraw,
+	GL::BufferDataUsage::StreamDraw,
+	GL::DrawMode::Triangles
+> Buffer;
+
+/*class Buffer : public ::BufferArray::MainInst<
+	GL::BufferDataUsage::StaticDraw,
+	GL::BufferDataUsage::StreamDraw
 >
 {
 	public:
 	~Buffer();
 	Buffer();
-};
+};*/
 };
 
 #endif

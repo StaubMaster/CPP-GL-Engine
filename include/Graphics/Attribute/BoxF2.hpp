@@ -15,10 +15,10 @@ class BoxF2 : public Attribute::Base
 	public:
 	~BoxF2();
 	BoxF2() = delete;
-	BoxF2(Buffer::Array & buffer);
+	BoxF2(Layout & layout);
 
 	BoxF2(const BoxF2 & other) = delete;
-	BoxF2(Buffer::Array & buffer, const BoxF2 & other);
+	BoxF2(Layout & layout, const BoxF2 & other);
 	BoxF2 & operator=(const BoxF2 & other);
 
 	public:

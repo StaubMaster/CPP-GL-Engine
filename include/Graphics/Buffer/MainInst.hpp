@@ -12,25 +12,28 @@
 
 namespace BufferArray
 {
-template<typename MainBufferType, typename InstBufferType>
+template<
+	GL::BufferDataUsage usage_main,
+	GL::BufferDataUsage usage_inst,
+	GL::DrawMode mode
+>
 class MainInst : public VertexArray
 {
 	public:
-	GL::DrawMode	Mode;
-	MainBufferType	Main;
-	InstBufferType	Inst;
+	GL::DrawMode		Mode;
+	::Buffer::Array		Main;
+	::Buffer::Array		Inst;
 
 	public:
 	Container::Binary<Texture::Base *>	Textures;
 
 	public:
 	virtual ~MainInst() { }
-	MainInst() = delete;
-	MainInst(GL::DrawMode mode)
+	MainInst()
 		: VertexArray()
 		, Mode(mode)
-		, Main(*this)
-		, Inst(*this)
+		, Main(*this, usage_main)
+		, Inst(*this, usage_inst)
 	{
 		Buffers.Insert(&Main);
 		Buffers.Insert(&Inst);

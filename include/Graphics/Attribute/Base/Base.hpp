@@ -3,10 +3,12 @@
 
 # include "OpenGLTypes.hpp"
 
-namespace Buffer { class Array; };
+//namespace Buffer { class Array; };
 
 namespace Attribute
 {
+class Layout;
+
 class Base
 {
 	public:
@@ -15,10 +17,10 @@ class Base
 	public:
 	virtual ~Base();
 	Base() = delete;
-	Base(Buffer::Array & buffer);
+	Base(Layout & layout);
 
 	Base(const Base & other) = delete;
-	Base(Buffer::Array & buffer, const Base & other);
+	Base(Layout & layout, const Base & other);
 	Base & operator=(const Base & other);
 
 	public:

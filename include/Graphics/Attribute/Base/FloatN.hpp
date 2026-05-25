@@ -20,13 +20,13 @@ class FloatN : public Attribute::FloatNBase
 	public:
 	virtual ~FloatN() { }
 	FloatN() = delete;
-	FloatN(Buffer::Array & buffer)
-		: FloatNBase(buffer)
+	FloatN(Layout & layout)
+		: FloatNBase(layout)
 	{ }
 
 	FloatN(const FloatN & other) = delete;
-	FloatN(Buffer::Array & buffer, const FloatN & other)
-		: Attribute::FloatNBase(buffer, other)
+	FloatN(Layout & layout, const FloatN & other)
+		: Attribute::FloatNBase(layout, other)
 	{ }
 	FloatN & operator=(const FloatN & other)
 	{

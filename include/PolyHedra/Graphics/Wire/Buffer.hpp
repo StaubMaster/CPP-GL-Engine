@@ -10,7 +10,14 @@
 
 namespace PolyHedraWire
 {
-class Buffer : public ::BufferArray::MainElemInst<
+typedef ::BufferArray::MainElemInst<
+	GL::BufferDataUsage::StaticDraw,
+	GL::BufferDataUsage::StaticDraw, GL::DrawIndexType::UnsignedInt,
+	GL::BufferDataUsage::StreamDraw,
+	GL::DrawMode::Lines
+> Buffer;
+
+/*class Buffer : public ::BufferArray::MainElemInst<
 	PolyHedraWire::Main::Buffer,
 	PolyHedraWire::Elem::Buffer,
 	Instance::Basic3D::Buffer
@@ -19,7 +26,7 @@ class Buffer : public ::BufferArray::MainElemInst<
 	public:
 	~Buffer();
 	Buffer();
-};
+};*/
 };
 
 #endif

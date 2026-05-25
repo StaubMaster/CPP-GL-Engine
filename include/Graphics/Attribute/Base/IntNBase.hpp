@@ -17,10 +17,10 @@ class IntNBase : public Attribute::Base
 	public:
 	virtual ~IntNBase();
 	IntNBase() = delete;
-	IntNBase(Buffer::Array & buffer);
+	IntNBase(Layout & layout);
 
 	IntNBase(const IntNBase & other) = delete;
-	IntNBase(Buffer::Array & buffer, const IntNBase & other);
+	IntNBase(Layout & layout, const IntNBase & other);
 	IntNBase & operator=(const IntNBase & other);
 
 	public:

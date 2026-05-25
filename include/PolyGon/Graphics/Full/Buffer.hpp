@@ -10,8 +10,9 @@
 namespace PolyGonFull
 {
 typedef ::BufferArray::MainInst<
-	PolyGonFull::Main::Buffer,
-	Instance::Basic2D::Buffer
+	GL::BufferDataUsage::StaticDraw,
+	GL::BufferDataUsage::StreamDraw,
+	GL::DrawMode::Triangles
 > Buffer;
 };
 

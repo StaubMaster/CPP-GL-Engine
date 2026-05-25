@@ -17,10 +17,10 @@ class FloatNBase : public Attribute::Base
 	public:
 	virtual ~FloatNBase();
 	FloatNBase() = delete;
-	FloatNBase(Buffer::Array & buffer);
+	FloatNBase(Layout & layout);
 
 	FloatNBase(const FloatNBase & other) = delete;
-	FloatNBase(Buffer::Array & buffer, const FloatNBase & other);
+	FloatNBase(Layout & layout, const FloatNBase & other);
 	FloatNBase & operator=(const FloatNBase & other);
 
 	public:

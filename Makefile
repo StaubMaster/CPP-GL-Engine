@@ -153,6 +153,7 @@ ATTRIBUTE := \
 	Graphics/Attribute/BoxF2.cpp \
 \
 	Graphics/Attribute/_Log.cpp \
+	Graphics/Attribute/Layout.cpp
 
 ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))

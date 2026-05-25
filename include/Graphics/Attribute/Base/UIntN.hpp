@@ -20,13 +20,13 @@ class UIntN : public Attribute::UIntNBase
 	public:
 	virtual ~UIntN() { }
 	UIntN() = delete;
-	UIntN(Buffer::Array & buffer)
-		: UIntNBase(buffer)
+	UIntN(Layout & layout)
+		: UIntNBase(layout)
 	{ }
 
 	UIntN(const UIntN & other) = delete;
-	UIntN(Buffer::Array & buffer, const UIntN & other)
-		: Attribute::UIntNBase(buffer, other)
+	UIntN(Layout & layout, const UIntN & other)
+		: Attribute::UIntNBase(layout, other)
 	{ }
 	UIntN & operator=(const UIntN & other)
 	{

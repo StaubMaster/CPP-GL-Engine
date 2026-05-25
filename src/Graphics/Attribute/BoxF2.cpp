@@ -4,15 +4,15 @@
 
 Attribute::BoxF2::~BoxF2() { }
 
-Attribute::BoxF2::BoxF2(Buffer::Array & buffer)
-	: Attribute::Base(buffer)
-	, Min(buffer)
-	, Max(buffer)
+Attribute::BoxF2::BoxF2(Layout & layout)
+	: Attribute::Base(layout)
+	, Min(layout)
+	, Max(layout)
 { }
-Attribute::BoxF2::BoxF2(Buffer::Array & buffer, const BoxF2 & other)
-	: Attribute::Base(buffer, other)
-	, Min(buffer, other.Min)
-	, Max(buffer, other.Max)
+Attribute::BoxF2::BoxF2(Layout & layout, const BoxF2 & other)
+	: Attribute::Base(layout, other)
+	, Min(layout, other.Min)
+	, Max(layout, other.Max)
 { }
 
 

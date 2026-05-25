@@ -2,6 +2,7 @@
 # define POLYGON_GRAPHICS_WIRE_MAIN_BUFFER_HPP
 
 # include "Graphics/Buffer/Array.hpp"
+# include "Graphics/Attribute/Layout.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF2.hpp"
 # include "Graphics/Attribute/TypeDefs/ColorF4.hpp"
 
@@ -9,15 +10,15 @@ namespace PolyGonWire
 {
 namespace Main
 {
-class Buffer : public ::Buffer::Array
+class Layout : public ::Attribute::Layout
 {
 	public:
 	::Attribute::VectorF2	Pos;
 	::Attribute::ColorF4	Col;
 	public:
-	~Buffer();
-	Buffer(VertexArray & vertex_array);
-	Buffer(VertexArray & vertex_array, const Buffer & other);
+	~Layout();
+	Layout();
+	Layout(const Layout & other);
 };
 };
 };

@@ -84,6 +84,23 @@ void PolyHedraInstanceManager::GraphicsCreate()
 		BufferFull.Create();
 		BufferWire.Create();
 		GraphicsExist = true;
+
+		LayoutMainFull.Position.Change(0);
+		LayoutMainFull.Normal.Change(1);
+		LayoutMainFull.Texture.Change(2);
+		LayoutInstFull.Trans.Change(3);
+		LayoutInstFull.Normal.Change(7);
+
+		LayoutMainWire.Pos.Change(0);
+		LayoutMainWire.Col.Change(1);
+		LayoutInstWire.Trans.Change(3);
+		LayoutInstWire.Normal.Change(-1);
+
+		BufferFull.Main.AttributeLayout = &LayoutMainFull;
+		BufferFull.Inst.AttributeLayout = &LayoutInstFull;
+		BufferWire.Main.AttributeLayout = &LayoutMainWire;
+		BufferWire.Inst.AttributeLayout = &LayoutInstWire;
+
 		BufferFull.Main.AttributesBound = false;
 		BufferFull.Inst.AttributesBound = false;
 		BufferWire.Main.AttributesBound = false;
