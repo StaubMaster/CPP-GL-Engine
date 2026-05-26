@@ -1,7 +1,6 @@
-#ifndef  POLYHEDRA_GRAPHICS_FULL_MAIN_BUFFER_HPP
-# define POLYHEDRA_GRAPHICS_FULL_MAIN_BUFFER_HPP
+#ifndef  POLYHEDRA_GRAPHICS_FULL_MAIN_LAYOUT_HPP
+# define POLYHEDRA_GRAPHICS_FULL_MAIN_LAYOUT_HPP
 
-# include "Graphics/Buffer/Array.hpp"
 # include "Graphics/Attribute/Layout.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF3.hpp"
 

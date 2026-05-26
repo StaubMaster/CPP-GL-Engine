@@ -19,8 +19,8 @@ template<
 class Main : public VertexArray
 {
 	public:
-	GL::DrawMode		Mode;
 	::Buffer::Array		MainBuffer;
+	GL::DrawMode		Mode;
 
 	public:
 	Container::Binary<Texture::Base *>	Textures;
@@ -29,8 +29,8 @@ class Main : public VertexArray
 	virtual ~Main() { }
 	Main()
 		: VertexArray()
-		, Mode(mode)
 		, MainBuffer(*this, usage_main)
+		, Mode(mode)
 	{
 		Buffers.Insert(&MainBuffer);
 		Buffers.Trim();
@@ -38,8 +38,8 @@ class Main : public VertexArray
 
 	Main(const Main & other)
 		: VertexArray(other)
-		, Mode(other.Mode)
 		, MainBuffer(*this, other.MainBuffer)
+		, Mode(other.Mode)
 	{
 		Buffers.Insert(&MainBuffer);
 		Buffers.Trim();
@@ -47,8 +47,8 @@ class Main : public VertexArray
 	Main & operator=(const Main & other)
 	{
 		VertexArray::operator=(other);
-		Mode = other.Mode;
 		MainBuffer = other.MainBuffer;
+		Mode = other.Mode;
 		return *this;
 	}
 

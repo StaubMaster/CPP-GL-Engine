@@ -3,13 +3,9 @@
 
 # include "Graphics/Buffer/Base.hpp"
 
-# include "Graphics/Attribute/Base/Base.hpp"
-
-# include "Miscellaneous/Container/Binary.hpp"
+# include "OpenGLEnums.hpp"
 
 namespace Attribute { class Layout; };
-
-# include "OpenGLEnums.hpp"
 
 namespace Buffer
 {
@@ -27,10 +23,10 @@ class Array : public Base
 	public:
 	virtual ~Array();
 	Array() = delete;
-	Array(VertexArray & vertex_array, GL::BufferDataUsage usage);
+	Array(::VertexArray & vertex_array, GL::BufferDataUsage usage);
 
 	Array(const Array & other) = delete;
-	Array(VertexArray & vertex_array, const Array & other);
+	Array(::VertexArray & vertex_array, const Array & other);
 	Array & operator=(const Array & other);
 
 	public:

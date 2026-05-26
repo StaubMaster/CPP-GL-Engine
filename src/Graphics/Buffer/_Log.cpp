@@ -65,7 +65,7 @@ void VertexArray::LogInfo(bool self) const
 	(void)self;
 	if (self)
 	{
-		Debug::Log << Debug::Tabs << "Buffer Array Info\n";
+		Debug::Log << Debug::Tabs << "VertexArray\n";
 		Debug::Log << Debug::Tabs << "{\n";
 		Debug::Log << Debug::TabInc;
 	}

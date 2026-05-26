@@ -12,7 +12,7 @@ namespace Buffer
 class Base
 {
 	protected:
-	VertexArray &			BufferArray; // VertexBufferArray
+	::VertexArray &			VertexArray;
 	GL::BufferTarget		Target;
 	GL::BufferDataUsage		Usage;
 	GL::BufferID			ID;
@@ -23,10 +23,10 @@ class Base
 	public:
 	virtual ~Base();
 	Base() = delete;
-	Base(VertexArray & vertex_array, GL::BufferTarget target, GL::BufferDataUsage usage);
+	Base(::VertexArray & vertex_array, GL::BufferTarget target, GL::BufferDataUsage usage);
 
 	Base(const Base & other) = delete;
-	Base(VertexArray & vertex_array, const Base & other);
+	Base(::VertexArray & vertex_array, const Base & other);
 	Base & operator=(const Base & other);
 
 	public:

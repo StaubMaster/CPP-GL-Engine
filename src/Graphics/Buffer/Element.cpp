@@ -4,7 +4,7 @@
 
 
 Buffer::Element::~Element() { }
-Buffer::Element::Element(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::DrawIndexType index_type)
+Buffer::Element::Element(::VertexArray & vertex_array, GL::BufferDataUsage usage, GL::DrawIndexType index_type)
 	: Buffer::Base(vertex_array, GL::BufferTarget::ElementArrayBuffer, usage)
 	, IndexType(index_type)
 	, IndexSize(0)
@@ -18,7 +18,7 @@ Buffer::Element::Element(VertexArray & vertex_array, GL::BufferDataUsage usage, 
 	}
 }
 
-Buffer::Element::Element(VertexArray & vertex_array, const Element & other)
+Buffer::Element::Element(::VertexArray & vertex_array, const Element & other)
 	: Buffer::Base(vertex_array, other)
 	, IndexType(other.IndexType)
 	, IndexSize(other.IndexSize)

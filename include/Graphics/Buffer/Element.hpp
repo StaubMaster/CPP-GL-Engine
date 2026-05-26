@@ -20,10 +20,10 @@ class Element : public Base
 	public:
 	virtual ~Element();
 	Element() = delete;
-	Element(VertexArray & vertex_array, GL::BufferDataUsage usage, GL::DrawIndexType index_type);
+	Element(::VertexArray & vertex_array, GL::BufferDataUsage usage, GL::DrawIndexType index_type);
 
 	Element(const Element & other) = delete;
-	Element(VertexArray & vertex_array, const Element & other);
+	Element(::VertexArray & vertex_array, const Element & other);
 	Element & operator=(const Element & other);
 
 	public:

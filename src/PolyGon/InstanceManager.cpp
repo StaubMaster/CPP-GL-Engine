@@ -61,10 +61,10 @@ void PolyGonInstanceManager::Change(::PolyGon * PolyGon)
 
 void PolyGonInstanceManager::GraphicsCreate()
 {
-	BufferFull.Main.AttributeLayout = &LayoutMainFull;
-	BufferWire.Main.AttributeLayout = &LayoutMainWire;
-	BufferFull.Inst.AttributeLayout = &LayoutInstFull;
-	BufferWire.Inst.AttributeLayout = &LayoutInstWire;
+	BufferFull.MainBuffer.AttributeLayout = &LayoutMainFull;
+	BufferWire.MainBuffer.AttributeLayout = &LayoutMainWire;
+	BufferFull.InstBuffer.AttributeLayout = &LayoutInstFull;
+	BufferWire.InstBuffer.AttributeLayout = &LayoutInstWire;
 
 	BufferFull.Create();
 	BufferWire.Create();
@@ -82,28 +82,28 @@ void PolyGonInstanceManager::InitExternal()
 		LayoutMainFull.Col.Change(1);
 		LayoutInstFull.Trans.Change(2);
 
-		BufferFull.Main.AttributeLayout = &LayoutMainFull;
-		BufferFull.Inst.AttributeLayout = &LayoutInstFull;
+		BufferFull.MainBuffer.AttributeLayout = &LayoutMainFull;
+		BufferFull.InstBuffer.AttributeLayout = &LayoutInstFull;
 	}
 	{
 		LayoutMainWire.Pos.Change(0);
 		LayoutMainWire.Col.Change(1);
 		LayoutInstWire.Trans.Change(2);
 
-		BufferWire.Main.AttributeLayout = &LayoutMainWire;
-		BufferWire.Inst.AttributeLayout = &LayoutInstWire;
+		BufferWire.MainBuffer.AttributeLayout = &LayoutMainWire;
+		BufferWire.InstBuffer.AttributeLayout = &LayoutInstWire;
 	}
 }
 void PolyGonInstanceManager::InitInternal()
 {
 	{
-		BufferFull.Main.Update();
-		BufferFull.Inst.Update();
+		BufferFull.MainBuffer.Update();
+		BufferFull.InstBuffer.Update();
 	}
 	{
-		BufferWire.Main.Update();
-		BufferWire.Elem.Update();
-		BufferWire.Inst.Update();
+		BufferWire.MainBuffer.Update();
+		BufferWire.ElemBuffer.Update();
+		BufferWire.InstBuffer.Update();
 	}
 }
 
@@ -114,11 +114,11 @@ void PolyGonInstanceManager::UpdateBufferFullMain()
 	if (PolyGon == nullptr) { return; }
 
 	Container::Array<PolyGonFull::Main::Data> data = PolyGon -> ToFullData();
-	BufferFull.Main.DataFull(data.ToVoid());
+	BufferFull.MainBuffer.DataFull(data.ToVoid());
 }
 void PolyGonInstanceManager::UpdateBufferFullInst()
 {
-	BufferFull.Inst.DataFull(InstancesFull.ToVoid());
+	BufferFull.InstBuffer.DataFull(InstancesFull.ToVoid());
 }
 void PolyGonInstanceManager::DrawFull()
 {
@@ -137,12 +137,12 @@ void PolyGonInstanceManager::UpdateBufferWireMain()
 {
 	if (PolyGon == nullptr) { return; }
 
-	BufferWire.Main.DataFull(PolyGon -> Corners.ToVoid());
-	BufferWire.Elem.DataFull(PolyGon -> Edges.ToVoid());
+	BufferWire.MainBuffer.DataFull(PolyGon -> Corners.ToVoid());
+	BufferWire.ElemBuffer.DataFull(PolyGon -> Edges.ToVoid());
 }
 void PolyGonInstanceManager::UpdateBufferWireInst()
 {
-	BufferWire.Inst.DataFull(InstancesWire.ToVoid());
+	BufferWire.InstBuffer.DataFull(InstancesWire.ToVoid());
 }
 void PolyGonInstanceManager::DrawWire()
 {

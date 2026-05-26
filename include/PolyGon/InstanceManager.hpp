@@ -1,10 +1,15 @@
 #ifndef  POLYGON_INSTANCE_MANAGER_HPP
 # define POLYGON_INSTANCE_MANAGER_HPP
 
+# include "PolyGon/Graphics/Full/Main/Layout.hpp"
+# include "PolyGon/Graphics/Wire/Main/Layout.hpp"
+
 # include "PolyGon/Graphics/Full/Buffer.hpp"
 # include "PolyGon/Graphics/Wire/Buffer.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
+
+# include "Instance/Basic2D/Layout.hpp"
 # include "Instance/Basic2D/Data.hpp"
 
 class PolyGon;

@@ -4,10 +4,15 @@
 # include "PolyHedra/Graphics/Full/Buffer.hpp"
 # include "PolyHedra/Graphics/Wire/Buffer.hpp"
 
+# include "PolyHedra/Graphics/Full/Main/Layout.hpp"
+# include "PolyHedra/Graphics/Wire/Main/Layout.hpp"
+
+# include "Instance/Basic3D/Data.hpp"
+# include "Instance/Basic3D/Layout.hpp"
+
 # include "Graphics/Texture/Array2D.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
-# include "Instance/Basic3D/Data.hpp"
 
 class PolyHedra;
 struct PolyHedraObjectData;

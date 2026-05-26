@@ -7,23 +7,21 @@
 Buffer::Base::~Base()
 { }
 Buffer::Base::Base(
-	VertexArray & vertex_array,
+	::VertexArray & vertex_array,
 	GL::BufferTarget target,
 	GL::BufferDataUsage usage
-)	: BufferArray(vertex_array)
+)	: VertexArray(vertex_array)
 	, Target(target)
 	, Usage(usage)
 	, ID(0)
 { }
 
-Buffer::Base::Base(VertexArray & vertex_array, const Base & other)
-	: BufferArray(other.BufferArray)
+Buffer::Base::Base(::VertexArray & vertex_array, const Base & other)
+	: VertexArray(vertex_array)
 	, Target(other.Target)
 	, Usage(other.Usage)
 	, ID(other.ID)
-{
-	(void)vertex_array; // add to VertexArray Buffers Container
-}
+{ }
 Buffer::Base & Buffer::Base::operator=(const Base & other)
 {
 	Target = other.Target;
@@ -59,7 +57,7 @@ void Buffer::Base::Delete()
 
 void Buffer::Base::Bind()
 {
-	BufferArray.Bind();
+	VertexArray.Bind();
 	GL::BindBuffer(Target, ID);
 }
 

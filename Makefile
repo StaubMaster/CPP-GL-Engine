@@ -167,11 +167,11 @@ TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))
 
 INSTANCE_DATA := \
 \
-	Instance/Basic2D/Buffer.cpp \
 	Instance/Basic2D/Data.cpp \
+	Instance/Basic2D/Layout.cpp \
 \
-	Instance/Basic3D/Buffer.cpp \
 	Instance/Basic3D/Data.cpp \
+	Instance/Basic3D/Layout.cpp \
 
 INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
 INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
@@ -180,11 +180,11 @@ POLYGON := \
 	PolyGon/PolyGon.cpp \
 \
 	PolyGon/Graphics/Full/Main/Data.cpp \
-	PolyGon/Graphics/Full/Main/Buffer.cpp \
+	PolyGon/Graphics/Full/Main/Layout.cpp \
 	PolyGon/Graphics/Full/Shader.cpp \
 \
-	PolyGon/Graphics/Wire/Main/Buffer.cpp \
-	PolyGon/Graphics/Wire/Elem/Buffer.cpp \
+	PolyGon/Graphics/Wire/Main/Data.cpp \
+	PolyGon/Graphics/Wire/Main/Layout.cpp \
 	PolyGon/Graphics/Wire/Shader.cpp \
 \
 	PolyGon/InstanceManager.cpp \
@@ -205,13 +205,13 @@ POLYHEDRA := \
 	PolyHedra/Skin/Skin2DA.cpp \
 	PolyHedra/Skin/Skin2D_Data.cpp \
 \
-	PolyHedra/Graphics/Full/Main/Buffer.cpp \
+	PolyHedra/Graphics/Full/Main/Layout.cpp \
+	PolyHedra/Graphics/Full/Main/Data.cpp \
 	PolyHedra/Graphics/Full/Buffer.cpp \
 	PolyHedra/Graphics/Full/Shader.cpp \
 \
-	PolyHedra/Graphics/Wire/Main/Buffer.cpp \
+	PolyHedra/Graphics/Wire/Main/Layout.cpp \
 	PolyHedra/Graphics/Wire/Main/Data.cpp \
-	PolyHedra/Graphics/Wire/Elem/Buffer.cpp \
 	PolyHedra/Graphics/Wire/Buffer.cpp \
 	PolyHedra/Graphics/Wire/Shader.cpp \
 \

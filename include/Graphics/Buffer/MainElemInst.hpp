@@ -21,10 +21,10 @@ template<
 class MainElemInst : public VertexArray
 {
 	public:
+	::Buffer::Array		MainBuffer;
+	::Buffer::Element	ElemBuffer;
+	::Buffer::Array		InstBuffer;
 	GL::DrawMode		Mode;
-	::Buffer::Array		Main;
-	::Buffer::Element	Elem;
-	::Buffer::Array		Inst;
 
 	public:
 	Container::Binary<Texture::Base *>	Textures;
@@ -33,36 +33,36 @@ class MainElemInst : public VertexArray
 	virtual ~MainElemInst() { }
 	MainElemInst()
 		: VertexArray()
+		, MainBuffer(*this, usage_main)
+		, ElemBuffer(*this, usage_elem, index_type)
+		, InstBuffer(*this, usage_inst)
 		, Mode(mode)
-		, Main(*this, usage_main)
-		, Elem(*this, usage_elem, index_type)
-		, Inst(*this, usage_inst)
 	{
-		Buffers.Insert(&Main);
-		Buffers.Insert(&Elem);
-		Buffers.Insert(&Inst);
+		Buffers.Insert(&MainBuffer);
+		Buffers.Insert(&ElemBuffer);
+		Buffers.Insert(&InstBuffer);
 		Buffers.Trim();
 	}
 
 	MainElemInst(const MainElemInst & other)
 		: VertexArray(other)
+		, MainBuffer(*this, other.MainBuffer)
+		, ElemBuffer(*this, other.ElemBuffer)
+		, InstBuffer(*this, other.InstBuffer)
 		, Mode(other.Mode)
-		, Main(*this, other.Main)
-		, Elem(*this, other.Elem)
-		, Inst(*this, other.Inst)
 	{
-		Buffers.Insert(&Main);
-		Buffers.Insert(&Elem);
-		Buffers.Insert(&Inst);
+		Buffers.Insert(&MainBuffer);
+		Buffers.Insert(&ElemBuffer);
+		Buffers.Insert(&InstBuffer);
 		Buffers.Trim();
 	}
 	MainElemInst & operator=(const MainElemInst & other)
 	{
 		VertexArray::operator=(other);
+		MainBuffer = other.MainBuffer;
+		ElemBuffer = other.ElemBuffer;
+		InstBuffer = other.InstBuffer;
 		Mode = other.Mode;
-		Main = other.Main;
-		Elem = other.Elem;
-		Inst = other.Inst;
 		return *this;
 	}
 
@@ -74,7 +74,7 @@ class MainElemInst : public VertexArray
 			Textures[i] -> Bind();
 		}
 		Bind();
-		GL::DrawElementsInstanced(Mode, Elem.Count, Elem.IndexType, Inst.Count);
+		GL::DrawElementsInstanced(Mode, ElemBuffer.Count, ElemBuffer.IndexType, InstBuffer.Count);
 	}
 };
 };

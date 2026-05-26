@@ -1,7 +1,6 @@
-#ifndef  POLYGON_GRAPHICS_FULL_MAIN_BUFFER_HPP
-# define POLYGON_GRAPHICS_FULL_MAIN_BUFFER_HPP
+#ifndef  POLYGON_GRAPHICS_FULL_MAIN_LAYOUT_HPP
+# define POLYGON_GRAPHICS_FULL_MAIN_LAYOUT_HPP
 
-# include "Graphics/Buffer/Array.hpp"
 # include "Graphics/Attribute/Layout.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF2.hpp"
 # include "Graphics/Attribute/TypeDefs/ColorF4.hpp"
