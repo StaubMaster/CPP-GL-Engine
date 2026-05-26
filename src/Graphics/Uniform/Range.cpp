@@ -3,11 +3,11 @@
 
 
 
-Uniform::Range::Range(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Min(shader, name + ".Min")
-	, Len(shader, name + ".Len")
-	, Max(shader, name + ".Max")
+Uniform::Range::Range(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Min(layout, name + ".Min")
+	, Len(layout, name + ".Len")
+	, Max(layout, name + ".Max")
 { }
 
 

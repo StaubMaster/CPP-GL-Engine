@@ -3,9 +3,9 @@
 
 
 
-Uniform::AspectRatio::AspectRatio(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Value(shader, name)
+Uniform::AspectRatio::AspectRatio(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Value(layout, name)
 { }
 
 

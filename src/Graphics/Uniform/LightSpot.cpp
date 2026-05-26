@@ -3,12 +3,12 @@
 
 
 
-Uniform::LightSpot::LightSpot(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Base(shader, name + ".Base")
-	, Pos(shader, name + ".Position")
-	, Dir(shader, name + ".Direction")
-	, Range(shader, name + ".Range")
+Uniform::LightSpot::LightSpot(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Base(layout, name + ".Base")
+	, Pos(layout, name + ".Position")
+	, Dir(layout, name + ".Direction")
+	, Range(layout, name + ".Range")
 { }
 
 

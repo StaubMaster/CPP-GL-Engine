@@ -11,8 +11,8 @@ class GBase : public Uniform::Base // rename to TypeBase ?
 {
 	protected:
 	virtual ~GBase() { }
-	GBase(::Shader::Base & shader, std::string name)
-		: Uniform::Base(shader, name)
+	GBase(Uniform::Layout & layout, std::string name)
+		: Uniform::Base(layout, name)
 	{ }
 
 	protected:

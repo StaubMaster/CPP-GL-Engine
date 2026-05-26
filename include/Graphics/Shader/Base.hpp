@@ -12,7 +12,7 @@
 
 //std::ostream & operator<<(std::ostream & o, const GL::ShaderID & val);
 
-namespace Uniform { class Base; };
+namespace Uniform { class Layout; };
 
 namespace Shader
 {
@@ -21,10 +21,10 @@ class Code;
 class Base
 {
 	private:
-	GL::ShaderProgramID ID;
-	Container::Array<Shader::Code> Code;
+	GL::ShaderProgramID				ID;
+	Container::Array<Shader::Code>	Code;
 	public:
-	Container::Binary<Uniform::Base*> Uniforms;
+	Uniform::Layout *				UniformLayout;
 
 	public:
 	void LogInfo(bool self = true, bool log = false) const;
@@ -33,9 +33,9 @@ class Base
 
 
 	public:
+	virtual ~Base();
 	Base();
 	//Base(Container::Base<Shader::Code> code);
-	virtual ~Base();
 
 	Base(const Shader::Base & other);
 	Base & operator=(const Shader::Base & other);

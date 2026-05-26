@@ -3,10 +3,10 @@
 
 
 
-Uniform::LightSolar::LightSolar(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Base(shader, name + ".Base")
-	, Dir(shader, name + ".Direction")
+Uniform::LightSolar::LightSolar(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Base(layout, name + ".Base")
+	, Dir(layout, name + ".Direction")
 { }
 
 

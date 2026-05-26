@@ -3,12 +3,9 @@
 
 # include "OpenGLTypes.hpp"
 
-//namespace Buffer { class Array; };
-
 namespace Attribute
 {
 class Layout;
-
 class Base
 {
 	public:

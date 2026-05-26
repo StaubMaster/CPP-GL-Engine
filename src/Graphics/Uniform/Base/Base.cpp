@@ -1,17 +1,17 @@
 #include "Graphics/Uniform/Base/Base.hpp"
+#include "Graphics/Uniform/Layout.hpp"
 #include "Graphics/Multiform/Base/Base.hpp"
-#include "Graphics/Shader/Base.hpp"
 
 
 
 Uniform::Base::~Base() { }
-Uniform::Base::Base(::Shader::Base & shader, std::string name)
-	: Shader(shader)
+Uniform::Base::Base(Uniform::Layout & layout, std::string name)
+	: Layout(layout)
 	, Name(name)
 	, Multiform(NULL)
 	, MultiformChanged(false)
 {
-	Shader.Uniforms.Insert(this);
+	Layout.Uniforms.Insert(this);
 }
 
 /*Uniform::Base::Base(const Base & other)
@@ -33,7 +33,7 @@ Uniform::Base::Base(::Shader::Base & shader, std::string name)
 
 int Uniform::Base::Locate() const
 {
-	return Shader.LocateUniform(Name.c_str());
+	return Layout.LocateUniform(Name.c_str());
 }
 void Uniform::Base::ReLocate() { }
 

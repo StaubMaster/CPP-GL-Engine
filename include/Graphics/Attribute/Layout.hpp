@@ -1,14 +1,13 @@
 #ifndef  ATTRIBUTE_LAYOUT_HPP
 # define ATTRIBUTE_LAYOUT_HPP
 
-# include "Graphics/Attribute/Base/Base.hpp"
-
 # include "Miscellaneous/Container/Binary.hpp"
 
 # include "OpenGLEnums.hpp"
 
 namespace Attribute
 {
+class Base;
 class Layout
 {
 	public:

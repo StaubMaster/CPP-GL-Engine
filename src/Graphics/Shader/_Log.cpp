@@ -6,6 +6,7 @@
 #include "Graphics/Shader/Code.hpp"
 
 #include "Graphics/Uniform/Base/Base.hpp"
+#include "Graphics/Uniform/Layout.hpp"
 
 
 
@@ -26,13 +27,14 @@ void Shader::Base::LogInfo(bool self, bool log) const
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "]\n";
 
-	Debug::Log << Debug::Tabs << "Uniforms[" << Uniforms.Count() << "]\n";
-	Debug::Log << Debug::Tabs << "[\n";
-	Debug::Log << Debug::TabInc;
-	for (unsigned int i = 0; i < Uniforms.Count(); i++)
-	{ Uniforms[i] -> LogInfo(false); }
-	Debug::Log << Debug::TabDec;
-	Debug::Log << Debug::Tabs << "]\n";
+	if (UniformLayout != nullptr)
+	{
+		UniformLayout -> LogInfo();
+	}
+	else
+	{
+		Debug::Log << Debug::Tabs << "Missing Layout\n";
+	}
 
 	{
 		if (ID != 0)

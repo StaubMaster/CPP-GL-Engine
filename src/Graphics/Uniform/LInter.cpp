@@ -3,10 +3,10 @@
 
 
 
-Uniform::LInter::LInter(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, T0(shader, name + ".T0")
-	, T1(shader, name + ".T1")
+Uniform::LInter::LInter(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, T0(layout, name + ".T0")
+	, T1(layout, name + ".T1")
 { }
 
 

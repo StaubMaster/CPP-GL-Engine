@@ -1,20 +1,20 @@
 #include "Graphics/Uniform/Base/FloatNBase.hpp"
-#include "Graphics/Shader/Base.hpp"
+#include "Graphics/Uniform/Layout.hpp"
 
 
 
 Uniform::FloatNBase::~FloatNBase() { }
-Uniform::FloatNBase::FloatNBase(::Shader::Base & shader, std::string name)
-	: Base(shader, name)
+Uniform::FloatNBase::FloatNBase(Uniform::Layout & layout, std::string name)
+	: Base(layout, name)
 { }
 
 
 
 void Uniform::FloatNBase::PutVoid(const void * val)
 {
-	if (!Shader.IsBound())
+	if (!Layout.IsBound())
 	{
-		Shader.Bind();
+		Layout.Bind();
 	}
 	PutData((const float *)val);
 }

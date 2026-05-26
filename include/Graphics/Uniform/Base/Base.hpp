@@ -3,17 +3,15 @@
 
 # include <string>
 
-namespace Shader { class Base; };
-
 namespace Multiform { class Base; };
 
 namespace Uniform
 {
-
+class Layout;
 class Base
 {
 	public:
-	::Shader::Base &	Shader;
+	Uniform::Layout &	Layout;
 	std::string			Name;
 
 	Multiform::Base *	Multiform;
@@ -24,7 +22,7 @@ class Base
 
 	protected:
 	virtual ~Base();
-	Base(::Shader::Base & shader, std::string name);
+	Base(Uniform::Layout & layout, std::string name);
 
 	Base(const Base & other) = delete;
 	Base & operator=(const Base & other) = delete;

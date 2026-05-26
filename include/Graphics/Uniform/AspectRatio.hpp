@@ -14,7 +14,7 @@ class AspectRatio : public Uniform::GBase<::AspectRatio>
 	Uniform::VectorF2 Value;
 
 	public:
-	AspectRatio(::Shader::Base & shader, std::string name);
+	AspectRatio(Uniform::Layout & layout,  std::string name);
 
 	public:
 	void Put(const ::AspectRatio & obj) override;

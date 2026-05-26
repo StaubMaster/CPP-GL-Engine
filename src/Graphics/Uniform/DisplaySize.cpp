@@ -3,11 +3,11 @@
 
 
 
-Uniform::DisplaySize::DisplaySize(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Ratio(shader, name + ".Ratio")
-	, Window(shader, name + ".Window")
-	, Buffer(shader, name + ".Buffer")
+Uniform::DisplaySize::DisplaySize(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Ratio(layout, name + ".Ratio")
+	, Window(layout, name + ".Window")
+	, Buffer(layout, name + ".Buffer")
 { }
 
 

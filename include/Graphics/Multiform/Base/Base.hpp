@@ -4,9 +4,7 @@
 #include "Miscellaneous/Container/Array.hpp"
 #include <string>
 
-namespace Shader { class Base; };
-
-namespace Uniform { class Base; };
+namespace Uniform { class Layout; class Base; };
 
 namespace Multiform
 {
@@ -19,11 +17,11 @@ class Base
 	std::string Name;
 
 	protected:
+	virtual ~Base();
 	Base(std::string name);
-	~Base();
 
 	public:
-	virtual void FindUniforms(Container::Array<Shader::Base *> & shaders) = 0;
+	virtual void FindUniforms(Container::Array<Uniform::Layout *> & layouts) = 0;
 	virtual void PutUniformData(Uniform::Base * uni_base) = 0;
 };
 };

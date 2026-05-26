@@ -4,10 +4,10 @@
 
 
 
-Uniform::Trans3D::Trans3D(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Pos(shader, name + ".Pos")
-	, Rot(shader, name + ".Rot")
+Uniform::Trans3D::Trans3D(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Pos(layout, name + ".Pos")
+	, Rot(layout, name + ".Rot")
 { }
 
 

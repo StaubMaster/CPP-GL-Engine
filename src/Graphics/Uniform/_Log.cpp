@@ -4,6 +4,8 @@
 
 #include "Graphics/Uniform/Base/Base.hpp"
 #include "Graphics/Uniform/Base/FloatNBase.hpp"
+#include "Graphics/Uniform/Base/UIntNBase.hpp"
+#include "Graphics/Uniform/Layout.hpp"
 
 
 
@@ -35,4 +37,37 @@ void Uniform::FloatNBase::LogInfo(bool self) const
 		Debug::Log << Debug::TabDec;
 		Debug::Log << Debug::Done;
 	}
+}
+
+void Uniform::UIntNBase::LogInfo(bool self) const
+{
+	if (self)
+	{
+		Debug::Log << Debug::Tabs << "Uniform Location Info\n";
+		Debug::Log << Debug::TabInc;
+	}
+	Debug::Log << Debug::Tabs << '"' << (Name) << '"' << ':' << Index << '\n';
+	if (self)
+	{
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
+}
+
+void Uniform::Layout::LogInfo() const
+{
+	Debug::Log << Debug::Tabs << "Uniform::Layout\n";
+	Debug::Log << Debug::Tabs << "{\n";
+	Debug::Log << Debug::TabInc;
+	Debug::Log << Debug::Tabs << "Uniforms[" << Uniforms.Count() << "]\n";
+	Debug::Log << Debug::Tabs << "[\n";
+	Debug::Log << Debug::TabInc;
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		Uniforms[i] -> LogInfo(false);
+	}
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "]\n";
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "}\n";
 }

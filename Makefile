@@ -97,11 +97,9 @@ SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
 UNIFORM := \
 	Graphics/Uniform/Base/Base.cpp \
 	Graphics/Uniform/Base/FloatNBase.cpp \
-	Graphics/Uniform/Base/FloatN.cpp \
-	Graphics/Uniform/Base/UIntN.cpp \
-	Graphics/Uniform/Base/UInt1.cpp \
-\
-	Graphics/Uniform/UInt.cpp \
+	Graphics/Uniform/Base/FloatNTypeBase.cpp \
+	Graphics/Uniform/Base/UIntNBase.cpp \
+	Graphics/Uniform/Base/UIntNTypeBase.cpp \
 \
 	Graphics/Uniform/Trans2D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
@@ -115,7 +113,9 @@ UNIFORM := \
 	Graphics/Uniform/AspectRatio.cpp \
 	Graphics/Uniform/PixelSize.cpp \
 	Graphics/Uniform/DisplaySize.cpp \
-	Graphics/Uniform/_Log.cpp \
+\
+	Graphics/Uniform/Layout.cpp \
+	Graphics/Uniform/_Log.cpp
 
 UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))
 UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
@@ -152,8 +152,8 @@ ATTRIBUTE := \
 \
 	Graphics/Attribute/BoxF2.cpp \
 \
-	Graphics/Attribute/_Log.cpp \
-	Graphics/Attribute/Layout.cpp
+	Graphics/Attribute/Layout.cpp \
+	Graphics/Attribute/_Log.cpp
 
 ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))

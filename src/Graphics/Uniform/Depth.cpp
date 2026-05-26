@@ -3,11 +3,11 @@
 
 
 
-Uniform::Depth::Depth(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Factors(shader, name + ".Factors")
-	, Range(shader, name + ".Range")
-	, Color(shader, name + ".Color")
+Uniform::Depth::Depth(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Factors(layout, name + ".Factors")
+	, Range(layout, name + ".Range")
+	, Color(layout, name + ".Color")
 { }
 
 

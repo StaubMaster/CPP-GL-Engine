@@ -1,9 +1,10 @@
 #ifndef  MULTIFORM_GENERIC_BASE_HPP
 # define MULTIFORM_GENERIC_BASE_HPP
 
-# include "Graphics/Shader/Base.hpp"
 # include "Graphics/Multiform/Base/Base.hpp"
+
 # include "Graphics/Uniform/Base/Base.hpp"
+# include "Graphics/Uniform/Layout.hpp"
 
 # include "Miscellaneous/Container/Array.hpp"
 
@@ -30,16 +31,16 @@ class GBase : public Base
 	{ }
 
 	public:
-	void FindUniforms(Container::Array<Shader::Base *> & shaders) override
+	void	FindUniforms(Container::Array<Uniform::Layout *> & layouts) override
 	{
 		unsigned int m = 0;
-		Uniforms.NewLength(shaders.Length());
-		for (unsigned int s = 0; s < shaders.Length(); s++)
+		Uniforms.NewLength(layouts.Length());
+		for (unsigned int s = 0; s < layouts.Length(); s++)
 		{
-			Shader::Base * shader = shaders[s];
-			for (unsigned int u = 0; u < shader -> Uniforms.Count(); u++)
+			Uniform::Layout * layout = layouts[s];
+			for (unsigned int u = 0; u < layout -> Uniforms.Count(); u++)
 			{
-				Uniform::Base * uni = shader -> Uniforms[u];
+				Uniform::Base * uni = layout -> Uniforms[u];
 				if (uni -> Name == this -> Name)
 				{
 					if (typeid(*uni) == typeid(UniformType))
@@ -56,21 +57,25 @@ class GBase : public Base
 		Uniforms.NewLengthHere(m);
 	}
 
-	void PutUniformData(Uniform::Base * uni_base) override
+	void	PutUniformData(Uniform::Base * uni_base) override
 	{
 		UniformType * uni = (UniformType*)uni_base;
 		uni -> Put(Data);
 		uni -> MultiformChanged = false;
 	}
-	void ChangeData(DataType data)
+	void	ChangeData(DataType data)
 	{
 		Data = data;
 		for (unsigned int i = 0; i < Uniforms.Length(); i++)
 		{
-			if (Uniforms[i] -> Shader.IsBound())
-			{ PutUniformData(Uniforms[i]); }
+			if (Uniforms[i] -> Layout.Shader -> IsBound())
+			{
+				PutUniformData(Uniforms[i]);
+			}
 			else
-			{ Uniforms[i] -> MultiformChanged = true; }
+			{
+				Uniforms[i] -> MultiformChanged = true;
+			}
 		}
 	}
 };

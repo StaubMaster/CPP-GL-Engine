@@ -18,7 +18,7 @@ class Trans3D : public Uniform::GBase<::Trans3D>
 	Uniform::Matrix3x3 Rot;
 
 	public:
-	Trans3D(::Shader::Base & shader, std::string name);
+	Trans3D(Uniform::Layout & layout,  std::string name);
 
 	public:
 	void Put(const ::Trans3D & obj) override;

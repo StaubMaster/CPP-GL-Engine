@@ -1,5 +1,5 @@
-#ifndef  UNI_FLOAT_N_BASE_HPP
-# define UNI_FLOAT_N_BASE_HPP
+#ifndef  UNI_UINT_N_BASE_HPP
+# define UNI_UINT_N_BASE_HPP
 
 # include "Graphics/Uniform/Base/Base.hpp"
 
@@ -7,7 +7,7 @@
 
 namespace Uniform
 {
-class FloatNBase : public Uniform::Base
+class UIntNBase : public Uniform::Base
 {
 	public:
 	void LogInfo(bool self = true) const override;
@@ -16,8 +16,8 @@ class FloatNBase : public Uniform::Base
 	GL::UniformLocation		Index;
 
 	protected:
-	virtual ~FloatNBase();
-	FloatNBase(Uniform::Layout & layout, std::string name);
+	virtual ~UIntNBase();
+	UIntNBase(Uniform::Layout & layout, std::string name);
 
 	protected:
 	void			PutVoid(const void * val);

@@ -1,6 +1,6 @@
 #include "Graphics/Shader/Base.hpp"
 #include "Graphics/Shader/Code.hpp"
-#include "Graphics/Uniform/Base/Base.hpp"
+#include "Graphics/Uniform/Layout.hpp"
 
 #include "OpenGL.hpp"
 #include "Debug.hpp"
@@ -8,25 +8,24 @@
 
 
 
-Shader::Base::Base() :
-	ID(0),
-	Code(),
-	Uniforms()
-{ }
 Shader::Base::~Base()
 { }
+Shader::Base::Base()
+	: ID(0)
+	, Code()
+	, UniformLayout(nullptr)
+{ }
 
-Shader::Base::Base(const Shader::Base & other) :
-	ID(other.ID),
-	Code(other.Code)
-	//Uniforms(other.Uniforms)
+Shader::Base::Base(const Shader::Base & other)
+	: ID(other.ID)
+	, Code(other.Code)
+	, UniformLayout(other.UniformLayout)
 { }
 Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 {
 	ID = other.ID;
-	//Code = other.Code;
-	Code.Copy(other.Code);
-	//Uniforms = other.Uniforms;
+	Code = other.Code;
+	UniformLayout = other.UniformLayout;
 	return *this;
 }
 
@@ -38,9 +37,9 @@ void Shader::Base::Bind()
 	if (Exists() && !IsBound())
 	{
 		glUseProgram(ID);
-		for (unsigned int i = 0; i < Uniforms.Count(); i++)
+		if (UniformLayout != nullptr)
 		{
-			Uniforms[i] -> PutMultiformData();
+			UniformLayout -> PutMultiformData();
 		}
 	}
 }
@@ -80,9 +79,9 @@ void Shader::Base::Delete()
 	ID = 0;
 	Debug::Log << "Shader::Base Deleting " << ID << " done" << Debug::Done;
 
-	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	if (UniformLayout != nullptr)
 	{
-		Uniforms[i] -> ReLocate();
+		UniformLayout -> Find();
 	}
 }
 void Shader::Base::Create()
@@ -126,9 +125,9 @@ void Shader::Base::Create()
 
 	//Debug::Log << "Shader::Base Creating " << ID << " done" << Debug::Done;
 
-	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	if (UniformLayout != nullptr)
 	{
-		Uniforms[i] -> ReLocate();
+		UniformLayout -> Find();
 	}
 
 	Debug::Log << "Create Shader: " << ID << Debug::Done;

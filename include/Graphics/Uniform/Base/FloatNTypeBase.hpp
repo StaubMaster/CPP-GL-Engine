@@ -1,5 +1,5 @@
-#ifndef  UNI_FLOAT_N_HPP
-# define UNI_FLOAT_N_HPP
+#ifndef  UNI_FLOAT_N_TYPE_BASE_HPP
+# define UNI_FLOAT_N_TYPE_BASE_HPP
 
 # include "Graphics/Uniform/Base/FloatNBase.hpp"
 
@@ -8,12 +8,12 @@ namespace Uniform
 template<unsigned int Size0, unsigned int Size1> void FloatNFunc(unsigned int Index, unsigned int Count, const float * val);
 
 template <unsigned int Size0, unsigned int Size1, unsigned int Count, typename ValueType>
-class FloatN : public Uniform::FloatNBase // FloatNTypeBase
+class FloatNTypeBase : public Uniform::FloatNBase
 {
 	public:
-	virtual ~FloatN() { }
-	FloatN(::Shader::Base & shader, std::string name)
-		: FloatNBase(shader, name)
+	virtual ~FloatNTypeBase() { }
+	FloatNTypeBase(Uniform::Layout & layout, std::string name)
+		: FloatNBase(layout, name)
 	{ }
 
 	protected:

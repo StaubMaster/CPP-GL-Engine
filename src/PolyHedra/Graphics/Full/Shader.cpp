@@ -6,6 +6,14 @@ PolyHedraFull::Shader::~Shader()
 { }
 PolyHedraFull::Shader::Shader()
 	: ::Shader::Base()
+{ }
+
+
+
+PolyHedraFull::Layout::~Layout()
+{ }
+PolyHedraFull::Layout::Layout()
+	: ::Uniform::Layout()
 	, DisplaySize(*this, "DisplaySize")
 	, View(*this, "View")
 	, Depth(*this, "Depth")

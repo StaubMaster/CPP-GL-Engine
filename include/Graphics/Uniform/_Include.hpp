@@ -5,13 +5,14 @@
 # include "Graphics/Uniform/Base/GBase.hpp"
 # include "Graphics/Uniform/Base/GArray.hpp"
 
-# include "Graphics/Uniform/Base/FloatN.hpp"
+# include "Graphics/Uniform/Base/FloatNBase.hpp"
+# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
 
-# include "Graphics/Uniform/Base/UIntN.hpp"
-# include "Graphics/Uniform/Base/UInt1.hpp"
+# include "Graphics/Uniform/Base/UIntNBase.hpp"
+# include "Graphics/Uniform/Base/UIntNTypeBase.hpp"
 
 # include "Graphics/Uniform/TypeDefs/Float.hpp"
-# include "Graphics/Uniform/UInt.hpp"
+# include "Graphics/Uniform/TypeDefs/UInt.hpp"
 
 # include "Graphics/Uniform/TypeDefs/ColorF4.hpp"
 

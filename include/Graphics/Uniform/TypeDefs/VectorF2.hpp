@@ -2,17 +2,16 @@
 # define UNI_POINT_2D_HPP
 
 # include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Base/FloatN.hpp"
+# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
 
-//struct VectorF2;
-struct VectorF2; typedef VectorF2 VectorF2;
+struct VectorF2;
 
 namespace Uniform
 {
-typedef FloatN<2, 1, 1, ::VectorF2> VectorF2;
+typedef FloatNTypeBase<2, 1, 1, ::VectorF2> VectorF2;
 
 template <unsigned int Count>
-using VectorF2Array = FloatN<2, 1, Count, ::VectorF2>;
+using VectorF2Array = FloatNTypeBase<2, 1, Count, ::VectorF2>;
 };
 
 #endif

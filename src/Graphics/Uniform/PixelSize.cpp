@@ -3,10 +3,10 @@
 
 
 
-Uniform::PixelSize::PixelSize(::Shader::Base & shader, std::string name)
-	: GBase(shader, name)
-	, Full(shader, name + ".Full")
-	, Half(shader, name + ".Half")
+Uniform::PixelSize::PixelSize(Uniform::Layout & layout,  std::string name)
+	: GBase(layout, name)
+	, Full(layout, name + ".Full")
+	, Half(layout, name + ".Half")
 { }
 
 
