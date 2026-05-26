@@ -26,10 +26,18 @@ PolyGonManager::PolyGonManager()
 	: ObjectDatas()
 	, ShaderFullDefault()
 	, ShaderWireDefault()
+	, ShaderLayoutFullDefault()
+	, ShaderLayoutWireDefault()
 	, ShaderFullOther(nullptr)
 	, ShaderWireOther(nullptr)
 	, InstanceManagers()
-{ }
+{
+	ShaderFullDefault.UniformLayout = &ShaderLayoutFullDefault;
+	ShaderLayoutFullDefault.Shader = &ShaderFullDefault;
+
+	ShaderWireDefault.UniformLayout = &ShaderLayoutWireDefault;
+	ShaderLayoutWireDefault.Shader = &ShaderWireDefault;
+}
 
 
 

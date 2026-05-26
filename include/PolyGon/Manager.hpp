@@ -1,8 +1,9 @@
 #ifndef  POLYGON_MANAGER_HPP
 # define POLYGON_MANAGER_HPP
 
-# include "PolyGon/Graphics/Full/Shader.hpp"
-# include "PolyGon/Graphics/Wire/Shader.hpp"
+# include "Graphics/Shader/Base.hpp"
+# include "PolyGon/Graphics/Full/ShaderLayout.hpp"
+# include "PolyGon/Graphics/Wire/ShaderLayout.hpp"
 # include "PolyGon/InstanceManager.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
@@ -26,11 +27,13 @@ struct PolyGonManager
 
 	Container::Binary<PolyGonObjectData*>		ObjectDatas;
 
-	PolyGonFull::Shader							ShaderFullDefault;
-	PolyGonWire::Shader							ShaderWireDefault;
+	::Shader::Base							ShaderFullDefault;
+	::Shader::Base							ShaderWireDefault;
+	PolyGonFull::ShaderLayout				ShaderLayoutFullDefault;
+	PolyGonWire::ShaderLayout				ShaderLayoutWireDefault;
 
-	PolyGonFull::Shader *						ShaderFullOther;
-	PolyGonWire::Shader *						ShaderWireOther;
+	::Shader::Base *						ShaderFullOther;
+	::Shader::Base *						ShaderWireOther;
 
 	Container::Binary<PolyGonInstanceManager>	InstanceManagers;
 

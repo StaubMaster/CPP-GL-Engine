@@ -3,8 +3,9 @@
 
 # include "PolyHedra/InstanceManager.hpp"
 
-# include "PolyHedra/Graphics/Full/Shader.hpp"
-# include "PolyHedra/Graphics/Wire/Shader.hpp"
+# include "Graphics/Shader/Base.hpp"
+# include "PolyHedra/Graphics/Full/ShaderLayout.hpp"
+# include "PolyHedra/Graphics/Wire/ShaderLayout.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
 
@@ -28,10 +29,12 @@ struct PolyHedraManager
 	Container::Binary<PolyHedraObjectData*>		ObjectDatas;
 
 	bool										GraphicsExist;
-	PolyHedraFull::Shader						ShaderFullDefault;
-	PolyHedraWire::Shader						ShaderWireDefault;
-	PolyHedraFull::Shader *						ShaderFullOther;
-	PolyHedraWire::Shader *						ShaderWireOther;
+	::Shader::Base								ShaderFullDefault;
+	::Shader::Base								ShaderWireDefault;
+	PolyHedraFull::ShaderLayout					ShaderLayoutFullDefault;
+	PolyHedraWire::ShaderLayout					ShaderLayoutWireDefault;
+	::Shader::Base *							ShaderFullOther;
+	::Shader::Base *							ShaderWireOther;
 
 	Container::Binary<PolyHedraInstanceManager>	InstanceManagers;
 

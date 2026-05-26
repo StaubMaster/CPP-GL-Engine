@@ -181,11 +181,11 @@ POLYGON := \
 \
 	PolyGon/Graphics/Full/Main/Data.cpp \
 	PolyGon/Graphics/Full/Main/Layout.cpp \
-	PolyGon/Graphics/Full/Shader.cpp \
+	PolyGon/Graphics/Full/ShaderLayout.cpp \
 \
 	PolyGon/Graphics/Wire/Main/Data.cpp \
 	PolyGon/Graphics/Wire/Main/Layout.cpp \
-	PolyGon/Graphics/Wire/Shader.cpp \
+	PolyGon/Graphics/Wire/ShaderLayout.cpp \
 \
 	PolyGon/InstanceManager.cpp \
 	PolyGon/ObjectData.cpp \
@@ -207,13 +207,11 @@ POLYHEDRA := \
 \
 	PolyHedra/Graphics/Full/Main/Layout.cpp \
 	PolyHedra/Graphics/Full/Main/Data.cpp \
-	PolyHedra/Graphics/Full/Buffer.cpp \
-	PolyHedra/Graphics/Full/Shader.cpp \
+	PolyHedra/Graphics/Full/ShaderLayout.cpp \
 \
 	PolyHedra/Graphics/Wire/Main/Layout.cpp \
 	PolyHedra/Graphics/Wire/Main/Data.cpp \
-	PolyHedra/Graphics/Wire/Buffer.cpp \
-	PolyHedra/Graphics/Wire/Shader.cpp \
+	PolyHedra/Graphics/Wire/ShaderLayout.cpp \
 \
 	PolyHedra/InstanceManager.cpp \
 	PolyHedra/ObjectData.cpp \
