@@ -350,6 +350,7 @@ void Window::RunLoop()
 				GL::Clear(GL::ClearMask::ColorBufferBit | GL::ClearMask::DepthBufferBit);
 				CallBack_Frame(FrameTime);
 				glfwSwapBuffers(glfw_window);
+				MouseManager.CursorPositionTick();
 				FrameTime.Ready = false;
 				FrameTime.Number++;
 			}

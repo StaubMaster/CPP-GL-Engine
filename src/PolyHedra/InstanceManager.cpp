@@ -81,10 +81,6 @@ void PolyHedraInstanceManager::GraphicsCreate()
 {
 	if (!GraphicsExist)
 	{
-		BufferFull.Create();
-		BufferWire.Create();
-		GraphicsExist = true;
-
 		LayoutMainFull.Position.Change(0);
 		LayoutMainFull.Normal.Change(1);
 		LayoutMainFull.Texture.Change(2);
@@ -105,6 +101,10 @@ void PolyHedraInstanceManager::GraphicsCreate()
 		BufferFull.InstBuffer.AttributesBound = false;
 		BufferWire.MainBuffer.AttributesBound = false;
 		BufferWire.InstBuffer.AttributesBound = false;
+
+		BufferFull.Create();
+		BufferWire.Create();
+		GraphicsExist = true;
 	}
 }
 void PolyHedraInstanceManager::GraphicsDelete()

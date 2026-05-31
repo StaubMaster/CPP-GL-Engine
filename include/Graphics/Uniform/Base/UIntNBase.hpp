@@ -21,7 +21,7 @@ class UIntNBase : public Uniform::Base
 
 	protected:
 	void			PutVoid(const void * val);
-	virtual void	PutData(const float * val) = 0;
+	virtual void	PutData(const unsigned int * val) = 0;
 
 	protected:
 	void	ReLocate();

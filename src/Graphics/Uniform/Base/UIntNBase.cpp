@@ -16,7 +16,7 @@ void Uniform::UIntNBase::PutVoid(const void * val)
 	{
 		Layout.Bind();
 	}
-	PutData((const float *)val);
+	PutData((const unsigned int *)val);
 }
 
 

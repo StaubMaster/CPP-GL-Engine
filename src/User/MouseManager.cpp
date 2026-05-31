@@ -71,6 +71,13 @@ DisplayPosition MouseManager::CursorPosition() const
 	//return DisplayPosition::FromWindowCorner(VectorF2(x, y), window.Size);
 	return window.Size.PosFromWindowFull(VectorF2(x, y));
 }
+void MouseManager::CursorPositionTick()
+{
+	if (CursorModeIsLocked())
+	{
+		glfwSetCursorPos(window.glfw_window, 0, 0);
+	}
+}
 
 
 
@@ -79,11 +86,6 @@ void MouseManager::Tick()
 	for (unsigned int i = 0; i < 8; i++)
 	{
 		MouseStates[i].Tick();
-	}
-
-	if (CursorModeIsLocked())
-	{
-		glfwSetCursorPos(window.glfw_window, 0, 0);
 	}
 }
 void MouseManager::Update(MouseButtons button, Action action)

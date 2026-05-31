@@ -38,8 +38,9 @@ struct MouseManager
 	void	CursorModeLock();
 	void	CursorModeFree();
 	void	CursorModeToggle();
-
+	
 	DisplayPosition	CursorPosition() const;
+	void			CursorPositionTick();
 
 	public:
 	void	Tick();

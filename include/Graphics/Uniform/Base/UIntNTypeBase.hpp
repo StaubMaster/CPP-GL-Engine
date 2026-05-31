@@ -17,7 +17,7 @@ class UIntNTypeBase : public Uniform::UIntNBase // UIntNTypeBase
 	{ }
 
 	protected:
-	void	PutData(const float * val) override
+	void	PutData(const unsigned int * val) override
 	{
 		UIntNFunc<Size0, Size1>(Index, Count, val);
 	}
