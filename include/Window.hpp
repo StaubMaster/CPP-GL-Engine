@@ -47,18 +47,6 @@ class Window
 	FunctionPointer<>				CallBack_Init;
 	FunctionPointer<>				CallBack_Free;
 	FunctionPointer<DisplaySize>	CallBack_Resize;
-
-	//  Frame() / Draw()
-	//    just Draws
-	//    maybe minimal Updates, like Uniforms ?
-	//  UpdateBuffers()
-	//    puts Data into Buffers
-	//    puts data into Uniforms ?
-	//    Data needs to be ready
-	//  Update()
-	//    UpdateGeneral()
-	//      Updates non OpenGL stuff
-	//      make this one so it could be run on a seperate Thread
 	FunctionPointer<::FrameTime>	CallBack_Frame;
 
 	public:

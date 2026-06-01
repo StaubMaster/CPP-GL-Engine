@@ -82,6 +82,14 @@ void Window::MakeUserParemeters()
 }
 
 
+const MouseState & Window::operator[](const MouseButtons & button) const
+{
+	return MouseManager[button];
+}
+const KeyState & Window::operator[](const Keys & key) const
+{
+	return KeyBoardManager[key];
+}
 
 
 
