@@ -7,7 +7,7 @@
 
 const KeyState & KeyBoardManager::operator[](const Keys & key) const
 {
-	for (unsigned int i = 0; i < 102; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		if (KeyStates[i].Key == key)
 		{
@@ -132,14 +132,14 @@ KeyBoardManager::KeyBoardManager(Window & win)
 
 void KeyBoardManager::Tick()
 {
-	for (unsigned int i = 0; i < 102; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		KeyStates[i].Tick();
 	}
 }
 void KeyBoardManager::Update(Keys key, Action action)
 {
-	for (unsigned int i = 0; i < 102; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		if (KeyStates[i].Key == key)
 		{

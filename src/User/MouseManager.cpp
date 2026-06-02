@@ -7,7 +7,7 @@
 
 const MouseState & MouseManager::operator[](const MouseButtons & button) const
 {
-	for (unsigned int i = 0; i < 8; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		if (MouseStates[i].Button == button)
 		{
@@ -83,14 +83,14 @@ void MouseManager::CursorPositionTick()
 
 void MouseManager::Tick()
 {
-	for (unsigned int i = 0; i < 8; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		MouseStates[i].Tick();
 	}
 }
 void MouseManager::Update(MouseButtons button, Action action)
 {
-	for (unsigned int i = 0; i < 8; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		if (MouseStates[i].Button == button)
 		{
@@ -108,7 +108,7 @@ void MouseManager::Invoke_ClickEvent(int button, int action, int mods)
 	//Callback_ClickEvent(ClickArgs((Modifier)mods, (Action)action, (MouseButtons)button, CursorPosition()));
 	Callback_ClickEvent(ClickArgs(mods, action, button, CursorPosition()));
 
-	for (unsigned int i = 0; i < 8; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		MouseState & state = MouseStates[i];
 		if (state.State == State::Release)
@@ -137,7 +137,7 @@ void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
 
 	Callback_MoveEvent(MoveArgs(pos));
 
-	for (unsigned int i = 0; i < 8; i++)
+	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		MouseState & state = MouseStates[i];
 		if (state.State == State::Down)

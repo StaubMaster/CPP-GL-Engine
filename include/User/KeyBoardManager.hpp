@@ -13,8 +13,11 @@ class Window;
 struct KeyBoardManager
 {
 	private:
+	static const unsigned int StateNum = 102;
+
+	private:
 	Window & window;
-	KeyState KeyStates[102];
+	KeyState KeyStates[StateNum];
 
 	public:
 	const KeyState & operator[](const Keys & key) const;

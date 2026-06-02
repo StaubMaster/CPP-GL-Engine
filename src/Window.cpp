@@ -315,7 +315,9 @@ void Window::Run_Init()
 	{
 		Debug::Log << "Window Init() ..." << Debug::Done;
 		CallBack_Init();
+		std::cout << "Window:Run_Init():" << __LINE__ << '\n';
 		Debug::Log << "Window Init() done" << Debug::Done;
+		std::cout << "Window:Run_Init():" << __LINE__ << '\n';
 	}
 }
 void Window::Run_Free()
@@ -338,38 +340,56 @@ void Window::RunLoop()
 {
 	try
 	{
+		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		RunGL_Setup();
+		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		Run_Init();
+		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		UpdateSize();
+		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		CallBack_Resize(Size);
-		Debug::Log << "Window Loop ..." << Debug::Done;
-		std::cout << "Window Loop ..." << '\n';
+		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		FrameTime.TimeNow = glfwGetTime();
 		LoopIsDone = false;
+		Debug::Log << "Window Loop ..." << Debug::Done;
+		std::cout << "Window Loop ..." << '\n';
 		while (!LoopIsDone)
 		{
+			//std::cout << "Window:" << __LINE__ << '\n';
 			FrameTime.Update(glfwGetTime());
+			//std::cout << "Window:" << __LINE__ << '\n';
 			if (FrameTime.Ready)
 			{
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				KeyBoardManager.Tick();
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				MouseManager.Tick();
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				glfwPollEvents();
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
 				GL::Clear(GL::ClearMask::ColorBufferBit | GL::ClearMask::DepthBufferBit);
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				CallBack_Frame(FrameTime);
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				glfwSwapBuffers(glfw_window);
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				MouseManager.CursorPositionTick();
+				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				FrameTime.Ready = false;
 				FrameTime.Number++;
 			}
+			//std::cout << "Window:" << __LINE__ << '\n';
 			if (FrameTime.Number == FrameNumberTerminate)
 			{
 				LoopIsDone = true;
 			}
+			//std::cout << "Window:" << __LINE__ << '\n';
 			if (glfwWindowShouldClose(glfw_window))
 			{
 				LoopIsDone = true;
 			}
+			//std::cout << "Window:" << __LINE__ << '\n';
 		}
 		Debug::Log << "Window Loop done" << Debug::Done;
 		std::cout << "Window Loop done" << '\n';

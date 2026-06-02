@@ -15,8 +15,11 @@ class Window;
 struct MouseManager
 {
 	private:
+	static const unsigned int StateNum = 8;
+
+	private:
 	Window & window;
-	MouseState MouseStates[8];
+	MouseState MouseStates[StateNum];
 
 	public:
 	const MouseState & operator[](const MouseButtons & button) const;
