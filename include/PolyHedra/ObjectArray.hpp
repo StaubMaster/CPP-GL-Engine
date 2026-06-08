@@ -20,12 +20,12 @@ struct PolyHedraObjectArray
 	PolyHedraObjectArray(const PolyHedraObjectArray & other);
 	PolyHedraObjectArray & operator=(const PolyHedraObjectArray & other);
 
-	PolyHedraObjectArray(unsigned int count, unsigned int polyhedra);
-	PolyHedraObjectArray(unsigned int count, ::PolyHedra * polyhedra);
+	PolyHedraObjectArray(unsigned int count, ::PolyHedraPalletManager * pallet);
+	PolyHedraObjectArray(unsigned int count, ::PolyHedra * pallet);
 
 	void	Delete();
-	void	Create(unsigned int count, unsigned int polyhedra);
-	void	Create(unsigned int count, ::PolyHedra * polyhedra);
+	void	Create(unsigned int count, ::PolyHedraPalletManager * pallet);
+	void	Create(unsigned int count, ::PolyHedra * pallet);
 };
 
 #endif

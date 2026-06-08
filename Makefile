@@ -213,7 +213,7 @@ POLYHEDRA := \
 	PolyHedra/Graphics/Wire/Main/Data.cpp \
 	PolyHedra/Graphics/Wire/ShaderLayout.cpp \
 \
-	PolyHedra/InstanceManager.cpp \
+	PolyHedra/PalletManager.cpp \
 	PolyHedra/ObjectData.cpp \
 	PolyHedra/Manager.cpp \
 	PolyHedra/Object.cpp \

@@ -5,42 +5,57 @@
 
 class PolyHedra;
 struct PolyHedraObjectData;
+struct PolyHedraPalletManager;
+
+#include <exception>
 
 struct PolyHedraObject
 {
 	private:
 	PolyHedraObjectData *	Data;
-	public:
 
+	public:
 	bool			Is() const;
-	::PolyHedra *	PolyHedra() const;
+
+	::PolyHedraPalletManager *	PalletManager() const;
+	::PolyHedra *				Pallet() const;
+
+	bool	VisFull() const;
+	bool	VisWire() const;
+
+	void	HideFull();
+	void	HideWire();
+
+	void	ShowFull();
+	void	ShowWire();
 
 	const Trans3D &	Trans() const;
 	Trans3D &		Trans();
 
-	bool	FullVisibility() const;
-	bool	WireVisibility() const;
-
-	void	HideFull();
-	void	HideWire();
-	
-	void	ShowFull();
-	void	ShowWire();
-
+	public:
 	~PolyHedraObject();
 	PolyHedraObject();
 	PolyHedraObject(const PolyHedraObject & other);
 	PolyHedraObject & operator=(const PolyHedraObject & other);
 
-	PolyHedraObject(unsigned int polyhedra);
-	PolyHedraObject(unsigned int polyhedra, Trans3D trans);
+	public:
+	PolyHedraObject(::PolyHedraPalletManager * pallet);
+	PolyHedraObject(::PolyHedraPalletManager * pallet, Trans3D trans);
 
-	PolyHedraObject(::PolyHedra * polyhedra);
-	PolyHedraObject(::PolyHedra * polyhedra, Trans3D trans);
+	public:
+	PolyHedraObject(::PolyHedra * pallet);
+	PolyHedraObject(::PolyHedra * pallet, Trans3D trans);
 
+	public:
 	void	Delete();
-	void	Create(unsigned int polyhedra);
-	void	Create(::PolyHedra * polyhedra);
+	void	Create(::PolyHedraPalletManager * pallet);
+	void	Create(::PolyHedra * pallet);
+
+	private:
+	class ExceptionNullObject : public std::exception
+	{
+		const char * what() const noexcept;
+	};
 };
 
 #endif

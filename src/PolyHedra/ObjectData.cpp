@@ -8,14 +8,14 @@ PolyHedraObjectData::PolyHedraObjectData()
 	: Remove(false)
 	, DrawFull(true)
 	, DrawWire(false)
-	, PolyHedra(nullptr)
+	, PalletManager(nullptr)
 	, Trans()
 { }
 PolyHedraObjectData::PolyHedraObjectData(const PolyHedraObjectData & other)
 	: Remove(other.Remove)
 	, DrawFull(other.DrawFull)
 	, DrawWire(other.DrawWire)
-	, PolyHedra(other.PolyHedra)
+	, PalletManager(other.PalletManager)
 	, Trans(other.Trans)
 { }
 PolyHedraObjectData & PolyHedraObjectData::operator=(const PolyHedraObjectData & other)
@@ -23,17 +23,17 @@ PolyHedraObjectData & PolyHedraObjectData::operator=(const PolyHedraObjectData &
 	Remove = other.Remove;
 	DrawFull = other.DrawFull;
 	DrawWire = other.DrawWire;
-	PolyHedra = other.PolyHedra;
+	PalletManager = other.PalletManager;
 	Trans = other.Trans;
 	return *this;
 }
 
 
 
-PolyHedraObjectData::PolyHedraObjectData(::PolyHedra * polyhedra)
+PolyHedraObjectData::PolyHedraObjectData(::PolyHedraPalletManager * manager)
 	: Remove(false)
 	, DrawFull(true)
 	, DrawWire(false)
-	, PolyHedra(polyhedra)
+	, PalletManager(manager)
 	, Trans()
 { }

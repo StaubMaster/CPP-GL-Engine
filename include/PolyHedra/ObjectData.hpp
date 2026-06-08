@@ -1,7 +1,7 @@
 #ifndef  POLYHEDRA_OBJECT_DATA_HPP
 # define POLYHEDRA_OBJECT_DATA_HPP
 
-class PolyHedra;
+class PolyHedraPalletManager;
 # include "ValueType/Trans3D.hpp"
 
 struct PolyHedraObjectData
@@ -10,18 +10,15 @@ struct PolyHedraObjectData
 	bool	DrawFull; // at least Draw allways needed
 	bool	DrawWire;
 
-	// store InstanceManager as Key ?
-	// use Key = nullptr as Remove ?
-
-	::PolyHedra *	PolyHedra; // Main "Key"
-	Trans3D			Trans; // Inst Data
+	::PolyHedraPalletManager *	PalletManager;
+	Trans3D						Trans; // Inst Data
 
 	~PolyHedraObjectData();
 	PolyHedraObjectData();
 	PolyHedraObjectData(const PolyHedraObjectData & other);
 	PolyHedraObjectData & operator=(const PolyHedraObjectData & other);
 
-	PolyHedraObjectData(::PolyHedra * polyhedra);
+	PolyHedraObjectData(::PolyHedraPalletManager * manager);
 };
 
 #endif

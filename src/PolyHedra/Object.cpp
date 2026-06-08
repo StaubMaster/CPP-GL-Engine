@@ -4,22 +4,47 @@
 
 
 
-bool				PolyHedraObject::Is() const { return (Data != nullptr); }
-::PolyHedra *		PolyHedraObject::PolyHedra() const { return (Data -> PolyHedra); }
+bool PolyHedraObject::Is() const
+{
+	if (Data != nullptr)
+	{
+		return (Data -> PalletManager != nullptr);
+	}
+	return false;
+}
 
-const Trans3D &		PolyHedraObject::Trans() const { return (Data -> Trans); }
-Trans3D &			PolyHedraObject::Trans() { return (Data -> Trans); }
+::PolyHedraPalletManager * PolyHedraObject::PalletManager() const
+{
+	if (Data != nullptr)
+	{
+		return (Data -> PalletManager);
+	}
+	throw ExceptionNullObject();
+}
+::PolyHedra * PolyHedraObject::Pallet() const
+{
+	if (Data != nullptr)
+	{
+		return (Data -> PalletManager -> Pallet);
+	}
+	throw ExceptionNullObject();
+}
 
 
 
-bool PolyHedraObject::FullVisibility() const { return (Data -> DrawFull); }
-bool PolyHedraObject::WireVisibility() const { return (Data -> DrawWire); }
+bool PolyHedraObject::VisFull() const { if (Data != nullptr) { return (Data -> DrawFull); } throw ExceptionNullObject(); }
+bool PolyHedraObject::VisWire() const { if (Data != nullptr) { return (Data -> DrawWire); } throw ExceptionNullObject(); }
 
-void PolyHedraObject::HideFull() { (Data -> DrawFull) = false; }
-void PolyHedraObject::HideWire() { (Data -> DrawWire) = false; }
+void PolyHedraObject::HideFull() { if (Data != nullptr) { (Data -> DrawFull) = false; } }
+void PolyHedraObject::HideWire() { if (Data != nullptr) { (Data -> DrawWire) = false; } }
 
-void PolyHedraObject::ShowFull() { (Data -> DrawFull) = true; }
-void PolyHedraObject::ShowWire() { (Data -> DrawWire) = true; }
+void PolyHedraObject::ShowFull() { if (Data != nullptr) { (Data -> DrawFull) = true; } }
+void PolyHedraObject::ShowWire() { if (Data != nullptr) { (Data -> DrawWire) = true; } }
+
+
+
+const Trans3D &		PolyHedraObject::Trans() const	{ if (Data != nullptr) { return (Data -> Trans); } throw ExceptionNullObject(); }
+Trans3D &			PolyHedraObject::Trans()		{ if (Data != nullptr) { return (Data -> Trans); } throw ExceptionNullObject(); }
 
 
 
@@ -27,16 +52,24 @@ PolyHedraObject::~PolyHedraObject()
 {
 	if (Data != nullptr)
 	{
-		Data -> Remove = true;
+		if (Data -> PalletManager != nullptr)
+		{
+			Data -> Remove = true;
+		}
+		else
+		{
+			delete Data;
+		}
+		Data = nullptr;
 	}
 }
 PolyHedraObject::PolyHedraObject()
 	: Data(nullptr)
 { }
 
-// Copy should copy in the same Manager. not the Current
+// dont copy in current, copy in same
 PolyHedraObject::PolyHedraObject(const PolyHedraObject & other)
-	: Data(PolyHedraManager::Current().CopyObject(other.Data))
+	: Data(PolyHedraManager::sCopyObject(other.Data))
 { }
 PolyHedraObject & PolyHedraObject::operator=(const PolyHedraObject & other)
 {
@@ -44,7 +77,7 @@ PolyHedraObject & PolyHedraObject::operator=(const PolyHedraObject & other)
 	{
 		Data -> Remove = true;
 	}
-	Data = PolyHedraManager::Current().CopyObject(other.Data);
+	Data = PolyHedraManager::sCopyObject(other.Data);
 	return *this;
 }
 
@@ -53,21 +86,31 @@ PolyHedraObject & PolyHedraObject::operator=(const PolyHedraObject & other)
 
 
 // Data should be nullptr if no Current
-PolyHedraObject::PolyHedraObject(unsigned int polyhedra)
-	: Data(PolyHedraManager::Current().PlaceObject(polyhedra, Trans3D()))
+PolyHedraObject::PolyHedraObject(::PolyHedraPalletManager * pallet)
+	: Data(PolyHedraManager::sPlaceObject(pallet))
 { }
-PolyHedraObject::PolyHedraObject(unsigned int polyhedra, Trans3D trans)
-	: Data(PolyHedraManager::Current().PlaceObject(polyhedra, trans))
-{ }
+PolyHedraObject::PolyHedraObject(::PolyHedraPalletManager * pallet, Trans3D trans)
+	: Data(PolyHedraManager::sPlaceObject(pallet))
+{
+	if (Data != nullptr)
+	{
+		Data -> Trans = trans;
+	}
+}
 
 
 
-PolyHedraObject::PolyHedraObject(::PolyHedra * polyhedra)
-	: Data(PolyHedraManager::Current().PlaceObject(polyhedra, Trans3D()))
+PolyHedraObject::PolyHedraObject(::PolyHedra * pallet)
+	: Data(PolyHedraManager::sPlaceObject(pallet))
 { }
-PolyHedraObject::PolyHedraObject(::PolyHedra * polyhedra, Trans3D trans)
-	: Data(PolyHedraManager::Current().PlaceObject(polyhedra, trans))
-{ }
+PolyHedraObject::PolyHedraObject(::PolyHedra * pallet, Trans3D trans)
+	: Data(PolyHedraManager::sPlaceObject(pallet))
+{
+	if (Data != nullptr)
+	{
+		Data -> Trans = trans;
+	}
+}
 
 
 
@@ -81,17 +124,22 @@ void PolyHedraObject::Delete()
 		Data = nullptr;
 	}
 }
-void PolyHedraObject::Create(unsigned int polyhedra)
+void PolyHedraObject::Create(::PolyHedraPalletManager * pallet)
 {
-	if (Data == nullptr)
-	{
-		Data = PolyHedraManager::Current().PlaceObject(polyhedra, Trans3D());
-	}
+	Delete();
+	Data = PolyHedraManager::sPlaceObject(pallet);
 }
-void PolyHedraObject::Create(::PolyHedra * polyhedra)
+void PolyHedraObject::Create(::PolyHedra * pallet)
 {
-	if (Data == nullptr)
-	{
-		Data = PolyHedraManager::Current().PlaceObject(polyhedra, Trans3D());
-	}
+	Delete();
+	Data = PolyHedraManager::sPlaceObject(pallet);
+}
+
+
+
+
+
+const char * PolyHedraObject::ExceptionNullObject::what() const noexcept
+{
+	return "Attampted to access Null Object.";
 }

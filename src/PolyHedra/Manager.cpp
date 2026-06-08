@@ -23,124 +23,25 @@ void PolyHedraManager::MakeCurrent() { PolyHedraManager::CurrentPointer = this; 
 PolyHedraManager::~PolyHedraManager()
 { }
 PolyHedraManager::PolyHedraManager()
-	: ObjectDatas()
+	: InstanceManagers()
+	, ObjectDatas()
 	, GraphicsExist(false)
 	, ShaderFullDefault()
 	, ShaderWireDefault()
-	, ShaderLayoutFullDefault()
-	, ShaderLayoutWireDefault()
 	, ShaderFullOther(nullptr)
 	, ShaderWireOther(nullptr)
-	, InstanceManagers()
+	, ShaderLayoutFullDefault()
+	, BufferLayoutFullMain()
+	, BufferLayoutFullInst()
+	, ShaderLayoutWireDefault()
+	, BufferLayoutWireMain()
+	, BufferLayoutWireInst()
 {
 	ShaderFullDefault.UniformLayout = &ShaderLayoutFullDefault;
 	ShaderLayoutFullDefault.Shader = &ShaderFullDefault;
 
 	ShaderWireDefault.UniformLayout = &ShaderLayoutWireDefault;
 	ShaderLayoutWireDefault.Shader = &ShaderWireDefault;
-}
-
-
-
-void PolyHedraManager::GraphicsCreate()
-{
-	if (GraphicsExist) { return; }
-
-	ShaderFullDefault.Create();
-	ShaderWireDefault.Create();
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-	{
-		InstanceManagers[i].GraphicsCreate();
-	}
-
-	GraphicsExist = true;
-}
-void PolyHedraManager::GraphicsDelete()
-{
-	if (!GraphicsExist) { return; }
-
-	ShaderFullDefault.Delete();
-	ShaderWireDefault.Delete();
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-	{
-		InstanceManagers[i].GraphicsDelete();
-	}
-
-	GraphicsExist = false;
-}
-
-void PolyHedraManager::InitExternal(DirectoryInfo & media_dir)
-{
-	{
-		Container::Array<Shader::Code> code({
-			Shader::Code(media_dir.File("Shaders/Basic3D/Full.vert")),
-			Shader::Code(media_dir.File("Shaders/Basic3D/Full.frag")),
-		});
-		ShaderFullDefault.Change(code);
-	}
-	{
-		Container::Array<Shader::Code> code({
-			Shader::Code(media_dir.File("Shaders/Basic3D/Wire.vert")),
-			Shader::Code(media_dir.File("Shaders/Basic3D/Wire.frag")),
-		});
-		ShaderWireDefault.Change(code);
-	}
-	// Buffer Bindings depend on Shaders, should be done here ?
-	// Shaders depend on outside, and should be set outside ?
-	// every InstanceManager has its own Buffer
-	// would need a Template for how to set things ?
-	// maybe just a Buffer that is never actually created
-	// this might have been easier to just hardcode with OpenGL
-	// instead of doing all of this "Wrapper" stuff that I have made
-}
-void PolyHedraManager::InitInternal() { }
-
-
-
-unsigned int PolyHedraManager::FindPolyHedra(::PolyHedra * polyhedra)
-{
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-	{
-		if (InstanceManagers[i].PolyHedra == polyhedra)
-		{
-			return i;
-		}
-	}
-	return 0xFFFFFFFF;
-}
-unsigned int PolyHedraManager::PlacePolyHedra(::PolyHedra * polyhedra)
-{
-	unsigned int idx = InstanceManagers.Count();
-	InstanceManagers.Insert(PolyHedraInstanceManager(polyhedra));
-	if (GraphicsExist)
-	{
-		InstanceManagers[idx].GraphicsCreate();
-	}
-	return idx;
-}
-
-PolyHedraObjectData * PolyHedraManager::PlaceObject(unsigned int polyhedra, Trans3D trans)
-{
-	PolyHedraObjectData * obj = new PolyHedraObjectData(InstanceManagers[polyhedra].PolyHedra);
-	obj -> Trans = trans;
-	obj -> DrawFull = InstanceManagers[polyhedra].DefaultFullVisibility;
-	obj -> DrawWire = InstanceManagers[polyhedra].DefaultWireVisibility;
-	ObjectDatas.Insert(obj);
-	return obj;
-}
-PolyHedraObjectData * PolyHedraManager::PlaceObject(::PolyHedra * polyhedra, Trans3D trans)
-{
-	unsigned int idx = FindPolyHedra(polyhedra);
-	if (idx == 0xFFFFFFFF)
-	{
-		idx = PlacePolyHedra(polyhedra);
-	}
-	return PlaceObject(idx, trans);
-}
-PolyHedraObjectData * PolyHedraManager::CopyObject(const PolyHedraObjectData * obj)
-{
-	if (obj == nullptr) { return nullptr; }
-	return PlaceObject(obj -> PolyHedra, obj -> Trans);
 }
 
 
@@ -159,7 +60,7 @@ void PolyHedraManager::PlaceInstance(const PolyHedraObjectData & obj)
 		InstanceManagers[i].PlaceInstance(obj);
 	}
 }
-void PolyHedraManager::UpdateInstances()
+void PolyHedraManager::MakeInstances()
 {
 	ClearInstances();
 	for (unsigned int i = 0; i < ObjectDatas.Count(); i++)
@@ -176,6 +77,144 @@ void PolyHedraManager::UpdateInstances()
 			}
 		}
 	}
+}
+
+::PolyHedraPalletManager * PolyHedraManager::FindPallet(::PolyHedra * pallet)
+{
+	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+	{
+		if (InstanceManagers[i].Pallet == pallet)
+		{
+			return &InstanceManagers[i];
+		}
+	}
+	return nullptr;
+}
+::PolyHedraPalletManager * PolyHedraManager::PlacePallet(::PolyHedra * pallet)
+{
+	unsigned int idx = InstanceManagers.Count();
+	InstanceManagers.Insert(PolyHedraPalletManager(pallet));
+	if (GraphicsExist)
+	{
+		InstanceManagers[idx].ChangeMedia(*this);
+		InstanceManagers[idx].GraphicsCreate();
+	}
+	return &InstanceManagers[idx];
+}
+
+
+
+PolyHedraObjectData * PolyHedraManager::PlaceObject(::PolyHedraPalletManager * pallet)
+{
+	if (pallet == nullptr) { return nullptr; }
+	PolyHedraObjectData * obj = new PolyHedraObjectData(pallet);
+	//obj -> Trans = trans;
+	obj -> DrawFull = pallet -> DefaultVisibilityWire;
+	obj -> DrawWire = pallet -> DefaultVisibilityWire;
+	ObjectDatas.Insert(obj);
+	return obj;
+}
+PolyHedraObjectData * PolyHedraManager::PlaceObject(::PolyHedra * pallet)
+{
+	::PolyHedraPalletManager * manager = FindPallet(pallet);
+	if (manager == nullptr)
+	{
+		manager = PlacePallet(pallet);
+	}
+	return PlaceObject(manager);
+}
+PolyHedraObjectData * PolyHedraManager::CopyObject(const PolyHedraObjectData * obj)
+{
+	if (obj == nullptr) { return nullptr; }
+	return PlaceObject(obj -> PalletManager);
+}
+
+
+
+PolyHedraObjectData * PolyHedraManager::sPlaceObject(::PolyHedraPalletManager * pallet)
+{
+	if (CurrentPointer != nullptr)
+	{
+		return CurrentPointer -> PlaceObject(pallet);
+	}
+	return nullptr;
+}
+PolyHedraObjectData * PolyHedraManager::sPlaceObject(::PolyHedra * pallet)
+{
+	if (CurrentPointer != nullptr)
+	{
+		return CurrentPointer -> PlaceObject(pallet);
+	}
+	return nullptr;
+}
+PolyHedraObjectData * PolyHedraManager::sCopyObject(const PolyHedraObjectData * obj)
+{
+	if (CurrentPointer != nullptr)
+	{
+		return CurrentPointer -> CopyObject(obj);
+	}
+	return nullptr;
+}
+
+
+
+void PolyHedraManager::ChangeMedia(const DirectoryInfo & dir)
+{
+	{
+		Container::Array<Shader::Code> code({
+			Shader::Code(dir.File("Shaders/Basic3D/Full.vert")),
+			Shader::Code(dir.File("Shaders/Basic3D/Full.frag")),
+		});
+		ShaderFullDefault.Change(code);
+	}
+	{
+		BufferLayoutFullMain.Position.Change(0);
+		BufferLayoutFullMain.Normal.Change(1);
+		BufferLayoutFullMain.Texture.Change(2);
+		BufferLayoutFullInst.Trans.Change(3);
+		BufferLayoutFullInst.Normal.Change(7);
+	}
+	{
+		Container::Array<Shader::Code> code({
+			Shader::Code(dir.File("Shaders/Basic3D/Wire.vert")),
+			Shader::Code(dir.File("Shaders/Basic3D/Wire.frag")),
+		});
+		ShaderWireDefault.Change(code);
+	}
+	{
+		BufferLayoutWireMain.Pos.Change(0);
+		BufferLayoutWireMain.Col.Change(1);
+		BufferLayoutWireInst.Trans.Change(3);
+		BufferLayoutWireInst.Normal.Change(-1);
+	}
+}
+
+void PolyHedraManager::GraphicsCreate()
+{
+	if (GraphicsExist) { return; }
+
+	ShaderFullDefault.Create();
+	ShaderWireDefault.Create();
+	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+	{
+		InstanceManagers[i].ChangeMedia(*this);
+		InstanceManagers[i].GraphicsCreate();
+	}
+
+	GraphicsExist = true;
+}
+void PolyHedraManager::GraphicsDelete()
+{
+	if (!GraphicsExist) { return; }
+
+	ShaderFullDefault.Delete();
+	ShaderWireDefault.Delete();
+	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
+	{
+		InstanceManagers[i].GraphicsDelete();
+	}
+
+	GraphicsExist = false;
 }
 
 void PolyHedraManager::DrawFull()

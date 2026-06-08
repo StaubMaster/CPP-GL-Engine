@@ -29,22 +29,21 @@ void PolyHedraObjectArray::Delete()
 	Data = nullptr;
 	_Count = 0;
 }
-
-void PolyHedraObjectArray::Create(unsigned int count, PolyHedra * polyhedra)
+void PolyHedraObjectArray::Create(unsigned int count, ::PolyHedraPalletManager * pallet)
 {
 	_Count = count;
 	Data = new PolyHedraObject[_Count];
 	for (unsigned int i = 0; i < _Count; i++)
 	{
-		Data[i].Create(polyhedra);
+		Data[i].Create(pallet);
 	}
 }
-void PolyHedraObjectArray::Create(unsigned int count, unsigned int polyhedra)
+void PolyHedraObjectArray::Create(unsigned int count, PolyHedra * pallet)
 {
 	_Count = count;
 	Data = new PolyHedraObject[_Count];
 	for (unsigned int i = 0; i < _Count; i++)
 	{
-		Data[i].Create(polyhedra);
+		Data[i].Create(pallet);
 	}
 }
