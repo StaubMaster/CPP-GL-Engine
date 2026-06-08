@@ -133,7 +133,8 @@ void Shader::Base::Create()
 	Debug::Log << "Create Shader: " << ID << Debug::Done;
 	LogInfo(true, true);
 }
-void Shader::Base::Change(Container::Array<Shader::Code> & code)
+
+void Shader::Base::Change(const Container::Array<Shader::Code> & code)
 {
 	if (Exists())
 	{
@@ -145,8 +146,25 @@ void Shader::Base::Change(Container::Array<Shader::Code> & code)
 	{
 		Code = code;
 	}
-	(void)code;
 }
+void Shader::Base::Change(const Container::Array<FileInfo> & files)
+{
+	Container::Array<Shader::Code> code(files.Length());
+	for (unsigned int i = 0; i < code.Length(); i++)
+	{
+		code[i] = Shader::Code(files[i]);
+	}
+	Change(code);
+}
+void Shader::Base::Change(std::initializer_list<Shader::Code> code)
+{
+	Change(Container::Array<Shader::Code>(code));
+}
+void Shader::Base::Change(std::initializer_list<FileInfo> files)
+{
+	Change(Container::Array<FileInfo>(files));
+}
+
 
 
 

@@ -12,6 +12,8 @@
 
 //std::ostream & operator<<(std::ostream & o, const GL::ShaderID & val);
 
+class FileInfo;
+
 namespace Uniform { class Layout; };
 
 namespace Shader
@@ -56,7 +58,11 @@ class Base
 	bool Exists() const;
 	void Delete();
 	void Create();
-	void Change(Container::Array<Shader::Code> & code);
+
+	void Change(const Container::Array<Shader::Code> & code);
+	void Change(const Container::Array<FileInfo> & files);
+	void Change(std::initializer_list<Shader::Code> code);
+	void Change(std::initializer_list<FileInfo> files);
 
 
 

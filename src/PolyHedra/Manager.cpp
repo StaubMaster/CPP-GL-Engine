@@ -161,11 +161,10 @@ PolyHedraObjectData * PolyHedraManager::sCopyObject(const PolyHedraObjectData * 
 void PolyHedraManager::ChangeMedia(const DirectoryInfo & dir)
 {
 	{
-		Container::Array<Shader::Code> code({
-			Shader::Code(dir.File("Shaders/Basic3D/Full.vert")),
-			Shader::Code(dir.File("Shaders/Basic3D/Full.frag")),
+		ShaderFullDefault.Change({
+			dir.File("Shaders/Basic3D/Full.vert"),
+			dir.File("Shaders/Basic3D/Full.frag"),
 		});
-		ShaderFullDefault.Change(code);
 	}
 	{
 		BufferLayoutFullMain.Position.Change(0);
@@ -175,11 +174,10 @@ void PolyHedraManager::ChangeMedia(const DirectoryInfo & dir)
 		BufferLayoutFullInst.Normal.Change(7);
 	}
 	{
-		Container::Array<Shader::Code> code({
-			Shader::Code(dir.File("Shaders/Basic3D/Wire.vert")),
-			Shader::Code(dir.File("Shaders/Basic3D/Wire.frag")),
+		ShaderWireDefault.Change({
+			dir.File("Shaders/Basic3D/Wire.vert"),
+			dir.File("Shaders/Basic3D/Wire.frag"),
 		});
-		ShaderWireDefault.Change(code);
 	}
 	{
 		BufferLayoutWireMain.Pos.Change(0);
