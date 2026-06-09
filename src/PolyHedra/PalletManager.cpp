@@ -30,26 +30,26 @@ PolyHedraPalletManager::PolyHedraPalletManager()
 	, TextureFull()
 	, GraphicsExist(false)
 { }
-PolyHedraPalletManager::PolyHedraPalletManager(const PolyHedraPalletManager & other)
+/*PolyHedraPalletManager::PolyHedraPalletManager(const PolyHedraPalletManager & other)
 	: Pallet(other.Pallet)
 	, DefaultVisibilityFull(other.DefaultVisibilityFull)
 	, DefaultVisibilityWire(other.DefaultVisibilityWire)
-	, InstancesFull()
-	, InstancesWire()
+	, InstancesFull(other.InstancesFull)
+	, InstancesWire(other.InstancesWire)
 	, BufferFullMainBound(other.BufferFullMainBound)
 	, BufferWireMainBound(other.BufferWireMainBound)
 	, BufferFull(other.BufferFull)
 	, BufferWire(other.BufferWire)
 	, TextureFull(other.TextureFull)
 	, GraphicsExist(other.GraphicsExist)
-{ }
-PolyHedraPalletManager & PolyHedraPalletManager::operator=(const PolyHedraPalletManager & other)
+{ }*/
+/*PolyHedraPalletManager & PolyHedraPalletManager::operator=(const PolyHedraPalletManager & other)
 {
 	Pallet = other.Pallet;
 	DefaultVisibilityFull = other.DefaultVisibilityFull;
 	DefaultVisibilityWire = other.DefaultVisibilityWire;
-	InstancesFull.Clear();
-	InstancesWire.Clear();
+	InstancesFull = other.InstancesFull;
+	InstancesWire = other.InstancesWire;
 	BufferFullMainBound = other.BufferFullMainBound;
 	BufferWireMainBound = other.BufferWireMainBound;
 	BufferFull = other.BufferFull;
@@ -57,7 +57,7 @@ PolyHedraPalletManager & PolyHedraPalletManager::operator=(const PolyHedraPallet
 	TextureFull = other.TextureFull;
 	GraphicsExist = other.GraphicsExist;
 	return *this;
-}
+}*/
 
 PolyHedraPalletManager::PolyHedraPalletManager(::PolyHedra * pallet)
 	: Pallet(pallet)
@@ -149,6 +149,7 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 	if (!(!BufferFullMainBound && Pallet != nullptr && GraphicsExist)) { return; }
 
 	{
+		Pallet -> Calc_Face_Normals();
 		Container::Array<PolyHedraFull::Main::Data> data = Pallet -> ToMainData();
 		BufferFull.MainBuffer.DataFull(data.ToVoid());
 	}

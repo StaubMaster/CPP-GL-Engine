@@ -42,8 +42,7 @@ struct PolyHedraManager
 
 
 	public:
-	// make these Pointers again ?
-	Container::Binary<PolyHedraPalletManager>	InstanceManagers;
+	Container::Binary<PolyHedraPalletManager*>	InstanceManagers;
 
 	public:
 	void	ClearInstances();

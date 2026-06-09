@@ -50,14 +50,20 @@ void PolyHedraManager::ClearInstances()
 {
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].ClearInstances();
+		if (InstanceManagers[i] != nullptr)
+		{
+			InstanceManagers[i] -> ClearInstances();
+		}
 	}
 }
 void PolyHedraManager::PlaceInstance(const PolyHedraObjectData & obj)
 {
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].PlaceInstance(obj);
+		if (InstanceManagers[i] != nullptr)
+		{
+			InstanceManagers[i] -> PlaceInstance(obj);
+		}
 	}
 }
 void PolyHedraManager::MakeInstances()
@@ -83,9 +89,12 @@ void PolyHedraManager::MakeInstances()
 {
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		if (InstanceManagers[i].Pallet == pallet)
+		if (InstanceManagers[i] != nullptr)
 		{
-			return &InstanceManagers[i];
+			if (InstanceManagers[i] -> Pallet == pallet)
+			{
+				return InstanceManagers[i];
+			}
 		}
 	}
 	return nullptr;
@@ -93,13 +102,16 @@ void PolyHedraManager::MakeInstances()
 ::PolyHedraPalletManager * PolyHedraManager::PlacePallet(::PolyHedra * pallet)
 {
 	unsigned int idx = InstanceManagers.Count();
-	InstanceManagers.Insert(PolyHedraPalletManager(pallet));
+	InstanceManagers.Insert(new PolyHedraPalletManager(pallet));
 	if (GraphicsExist)
 	{
-		InstanceManagers[idx].ChangeMedia(*this);
-		InstanceManagers[idx].GraphicsCreate();
+		if (InstanceManagers[idx] != nullptr)
+		{
+			InstanceManagers[idx] -> ChangeMedia(*this);
+			InstanceManagers[idx] -> GraphicsCreate();
+		}
 	}
-	return &InstanceManagers[idx];
+	return InstanceManagers[idx];
 }
 
 
@@ -199,8 +211,11 @@ void PolyHedraManager::GraphicsCreate()
 	ShaderWireDefault.Create();
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].ChangeMedia(*this);
-		InstanceManagers[i].GraphicsCreate();
+		if (InstanceManagers[i] != nullptr)
+		{
+			InstanceManagers[i] -> ChangeMedia(*this);
+			InstanceManagers[i] -> GraphicsCreate();
+		}
 	}
 
 	GraphicsExist = true;
@@ -213,7 +228,10 @@ void PolyHedraManager::GraphicsDelete()
 	ShaderWireDefault.Delete();
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].GraphicsDelete();
+		if (InstanceManagers[i] != nullptr)
+		{
+			InstanceManagers[i] -> GraphicsDelete();
+		}
 	}
 
 	GraphicsExist = false;
@@ -231,7 +249,10 @@ void PolyHedraManager::DrawFull()
 	}
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].DrawFull();
+		if (InstanceManagers[i] != nullptr)
+		{
+			InstanceManagers[i] -> DrawFull();
+		}
 	}
 }
 void PolyHedraManager::DrawWire()
@@ -246,6 +267,9 @@ void PolyHedraManager::DrawWire()
 	}
 	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		InstanceManagers[i].DrawWire();
+		if (InstanceManagers[i] != nullptr)
+		{
+			InstanceManagers[i] -> DrawWire();
+		}
 	}
 }

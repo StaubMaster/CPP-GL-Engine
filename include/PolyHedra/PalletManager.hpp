@@ -27,8 +27,8 @@ struct PolyHedraPalletManager
 	public:
 	~PolyHedraPalletManager();
 	PolyHedraPalletManager();
-	PolyHedraPalletManager(const PolyHedraPalletManager & other);
-	PolyHedraPalletManager & operator=(const PolyHedraPalletManager & other);
+	PolyHedraPalletManager(const PolyHedraPalletManager & other) = delete;
+	PolyHedraPalletManager & operator=(const PolyHedraPalletManager & other) = delete;
 
 	public:
 	PolyHedraPalletManager(::PolyHedra * pallet);
