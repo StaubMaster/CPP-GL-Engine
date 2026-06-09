@@ -108,8 +108,7 @@ PolyHedraObjectData * PolyHedraManager::PlaceObject(::PolyHedraPalletManager * p
 {
 	if (pallet == nullptr) { return nullptr; }
 	PolyHedraObjectData * obj = new PolyHedraObjectData(pallet);
-	//obj -> Trans = trans;
-	obj -> DrawFull = pallet -> DefaultVisibilityWire;
+	obj -> DrawFull = pallet -> DefaultVisibilityFull;
 	obj -> DrawWire = pallet -> DefaultVisibilityWire;
 	ObjectDatas.Insert(obj);
 	return obj;
@@ -123,10 +122,15 @@ PolyHedraObjectData * PolyHedraManager::PlaceObject(::PolyHedra * pallet)
 	}
 	return PlaceObject(manager);
 }
-PolyHedraObjectData * PolyHedraManager::CopyObject(const PolyHedraObjectData * obj)
+PolyHedraObjectData * PolyHedraManager::CopyObject(const PolyHedraObjectData * other)
 {
-	if (obj == nullptr) { return nullptr; }
-	return PlaceObject(obj -> PalletManager);
+	if (other == nullptr) { return nullptr; }
+	PolyHedraObjectData * obj = PlaceObject(other -> PalletManager);
+	if (obj != nullptr)
+	{
+		*obj = *other;
+	}
+	return obj;
 }
 
 
@@ -147,11 +151,11 @@ PolyHedraObjectData * PolyHedraManager::sPlaceObject(::PolyHedra * pallet)
 	}
 	return nullptr;
 }
-PolyHedraObjectData * PolyHedraManager::sCopyObject(const PolyHedraObjectData * obj)
+PolyHedraObjectData * PolyHedraManager::sCopyObject(const PolyHedraObjectData * other)
 {
 	if (CurrentPointer != nullptr)
 	{
-		return CurrentPointer -> CopyObject(obj);
+		return CurrentPointer -> CopyObject(other);
 	}
 	return nullptr;
 }

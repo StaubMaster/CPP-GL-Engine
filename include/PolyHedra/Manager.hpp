@@ -63,12 +63,12 @@ struct PolyHedraManager
 	public:
 	PolyHedraObjectData *	PlaceObject(::PolyHedraPalletManager * pallet);
 	PolyHedraObjectData *	PlaceObject(::PolyHedra * pallet);
-	PolyHedraObjectData *	CopyObject(const PolyHedraObjectData * obj);
+	PolyHedraObjectData *	CopyObject(const PolyHedraObjectData * other);
 
 	public:
 	static PolyHedraObjectData *	sPlaceObject(::PolyHedraPalletManager * pallet);
 	static PolyHedraObjectData *	sPlaceObject(::PolyHedra * pallet);
-	static PolyHedraObjectData *	sCopyObject(const PolyHedraObjectData * obj);
+	static PolyHedraObjectData *	sCopyObject(const PolyHedraObjectData * other);
 
 
 
