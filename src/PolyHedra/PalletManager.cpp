@@ -155,9 +155,9 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 	}
 
 	TextureFull.Delete();
-	if (Pallet -> Skin != nullptr)
+	if (Pallet -> Skins.Count() == 1)
 	{
-		TextureFull = Pallet -> Skin -> ToTexture();
+		TextureFull = Pallet -> Skins[0] -> ToTexture();
 	}
 
 	BufferFullMainBound = true;

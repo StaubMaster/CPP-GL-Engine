@@ -26,13 +26,16 @@
 
 PolyHedra::~PolyHedra()
 {
-	delete Skin;
+	for (unsigned int i = 0; i < Skins.Count(); i++)
+	{
+		delete Skins[i];
+	}
 }
 PolyHedra::PolyHedra()
 	: Corners()
 	, Edges()
 	, Faces()
-	, Skin(nullptr)
+	, Skins()
 	, File()
 	, UseCornerNormals(false)
 { }
@@ -43,11 +46,14 @@ void PolyHedra::Done()
 	Edges.Trim();
 	Faces.Trim();
 
-	if (Skin == nullptr)
+	// think of a better way to do this ?
+	// Color override in Instance Data ?
+	if (Skins.Count() == 0)
 	{
-		Skin = new ::Skin();
-		Skin -> Size = VectorU2(1, 1);
-		Skin -> Images.Insert(Texture::Generate::NoSkin());
+		Skin * skin = new ::Skin();
+		skin -> Size = VectorU2(1, 1);
+		skin -> Images.Insert(Texture::Generate::NoSkin());
+		Skins.Insert(skin);
 	}
 }
 
@@ -234,7 +240,7 @@ Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 		}
 	}
 
-	if (Skin == nullptr)
+	if (Skins.Count() == 0)
 	{
 		for (unsigned int i = 0; i < data.Length(); i++)
 		{
@@ -243,10 +249,11 @@ Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 	}
 	else
 	{
-		for (unsigned int f = 0; f < Skin -> Faces.Count(); f++)
+		const Skin * skin = Skins[0];
+		for (unsigned int f = 0; f < skin -> Faces.Count(); f++)
 		{
 			int c = f * 3;
-			const Skin::Face & face = Skin -> Faces[f];
+			const Skin::Face & face = skin -> Faces[f];
 			data[c + 0].Texture = face.Corner[0];
 			data[c + 1].Texture = face.Corner[1];
 			data[c + 2].Texture = face.Corner[2];

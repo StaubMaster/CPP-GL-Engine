@@ -8,7 +8,7 @@
 # include "ValueType/Vector/F3.hpp"
 # include "Image.hpp"
 
-class TextCommand;
+# include <string>
 
 namespace Texture { class Array2D; };
 
@@ -24,7 +24,7 @@ class Skin
 
 	public: // Information stuff
 	FileInfo	File;
-	// Name
+	std::string	Name;
 
 	public:
 	~Skin();

@@ -21,6 +21,7 @@ struct Skin::ParsingData
 	void	Parse_Type(const TextCommand & cmd);
 	void	Parse_Format(const TextCommand & cmd);
 
+	void	Parse_Name(const TextCommand & cmd);
 	void	Parse_Size(const TextCommand & cmd);
 	void	Parse_Image(const TextCommand & cmd);
 

@@ -31,11 +31,11 @@ class PolyHedra
 	Container::Binary<Face>		Faces;
 
 	public:
-	::Skin *	Skin;
+	Container::Binary<Skin*>	Skins;
 
 	public: // Information stuff
 	FileInfo	File;
-	// Name
+	std::string	Name;
 
 	public:
 	~PolyHedra();

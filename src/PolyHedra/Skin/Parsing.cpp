@@ -22,13 +22,15 @@ Skin::ParsingData::ParsingData(const FileInfo & file, ::Skin & skin)
 	: File(file)
 	, Skin(skin)
 	, TextureIndex(0)
-{ }
+{
+	Skin.File = File;
+}
 
 
 
 void Skin::ParsingData::Parse(const TextCommand & cmd)
 {
-	std::cout << "Skin::Parsing: " << cmd << '\n';
+//	std::cout << "Skin::Parsing: " << cmd << '\n';
 	try
 	{
 		std::string name = cmd.Name();
@@ -36,8 +38,10 @@ void Skin::ParsingData::Parse(const TextCommand & cmd)
 		else if (name == "Type")	{ Parse_Type(cmd); }
 		else if (name == "Format")	{ Parse_Format(cmd); }
 
+		else if (name == "Name")	{ Parse_Name(cmd); }
 		else if (name == "Size")	{ Parse_Size(cmd); }
 		else if (name == "Img")		{ Parse_Image(cmd); }
+
 		else if (name == "t")		{ Parse_t(cmd); }
 		else if (name == "TexI")	{ Parse_TextureIndex(cmd); }
 		else if (name == "TexI4")	{ Parse_TextureIndexFace4(cmd); }
@@ -66,6 +70,12 @@ void Skin::ParsingData::Parse_Format(const TextCommand & cmd)
 	if (cmd.ToString(0) != "S_2025_10_27") { throw InvalidCommandArgument(cmd, 0); }
 }
 
+void Skin::ParsingData::Parse_Name(const TextCommand & cmd)
+{
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+
+	Skin.Name = cmd.ToString(0);
+}
 void Skin::ParsingData::Parse_Size(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 2)) { throw InvalidCommandArgumentCount(cmd, "n == 2"); }
@@ -78,16 +88,7 @@ void Skin::ParsingData::Parse_Image(const TextCommand & cmd)
 	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
 
 	FileInfo file((File.DirectoryString() + "/" + cmd.ToString(0)).c_str());
-	std::string ext = file.Extension();
-	std::cout << ext << "\n";
-	if (ext == ".png" || ext == ".PNG")
-	{
-		Skin.Images.Insert(file.LoadImage());
-	}
-	else
-	{
-		std::cout << file.Path.ToString() << ": " << "Unknown Image Extension" << "\n";
-	}
+	Skin.Images.Insert(file.LoadImage());
 }
 
 void Skin::ParsingData::Parse_t(const TextCommand & cmd)
@@ -163,10 +164,10 @@ void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommand & cmd)
 	t[3].Y = max.Y;
 	t[3].Z = TextureIndex;
 
-	std::cout << "[0]" << t[0] << '\n';
-	std::cout << "[1]" << t[1] << '\n';
-	std::cout << "[2]" << t[2] << '\n';
-	std::cout << "[3]" << t[3] << '\n';
+	//std::cout << "[0]" << t[0] << '\n';
+	//std::cout << "[1]" << t[1] << '\n';
+	//std::cout << "[2]" << t[2] << '\n';
+	//std::cout << "[3]" << t[3] << '\n';
 
 	Skin.Insert_Face4(VectorF3(t[0]), VectorF3(t[1]), VectorF3(t[2]), VectorF3(t[3]));
 }
@@ -175,7 +176,7 @@ void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommand & cmd)
 
 Skin * Skin::Load(const FileInfo & file)
 {
-	std::cout << "Skin::Load: " << file.Path << "\n";
+//	std::cout << "Skin::Load: " << file.Path << "\n";
 
 	::Skin * skin = new Skin();
 	ParsingData data(file, *skin);

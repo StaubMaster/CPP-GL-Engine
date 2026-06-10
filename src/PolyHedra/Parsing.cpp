@@ -47,14 +47,16 @@
 
 
 
+PolyHedra::ParsingData::~ParsingData()
+{ }
 PolyHedra::ParsingData::ParsingData(const FileInfo & file, ::PolyHedra & polyhedra)
 	: File(file)
 	, PolyHedra(polyhedra)
 	, CornerOffset(0)
 	, FaceOffset(0)
-{ }
-PolyHedra::ParsingData::~ParsingData()
-{ }
+{
+	PolyHedra.File = File;
+}
 
 
 
@@ -69,6 +71,7 @@ void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 		else if (name == "Type")	{ Parse_Type(cmd); }
 		else if (name == "Format")	{ Parse_Format(cmd); }
 
+		else if (name == "Name")	{ Parse_Name(cmd); }
 		else if (name == "Skin")	{ Parse_Skin(cmd); }
 
 		else if (name == "c")		{ Parse_Corner(cmd); }
@@ -117,21 +120,20 @@ void PolyHedra::ParsingData::Parse_Format(const TextCommand & cmd)
 	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
 	if (cmd.ToString(0) != "PH_2025_10_27") { throw InvalidCommandArgument(cmd, 0); }
 }
+
+void PolyHedra::ParsingData::Parse_Name(const TextCommand & cmd)
+{
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+	PolyHedra.Name = cmd.ToString(0);
+}
 void PolyHedra::ParsingData::Parse_Skin(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
 	//Debug::Log << cmd << Debug::Done;
 
 	FileInfo file((File.DirectoryString() + "/" + cmd.ToString(0)).c_str());
-	if (PolyHedra.Skin != nullptr)
-	{
-		std::cout << cmd.Name() << ": " << "Skin already given" << "\n";
-		std::cout << "Prev: Skin: " << PolyHedra.Skin << "\n";
-		delete PolyHedra.Skin;
-		PolyHedra.Skin = nullptr;
-	}
 	if (!file.Exists()) { std::cout << cmd.Name() << ": " << "Bad Skin File" << "\n"; return; }
-	PolyHedra.Skin = ::Skin::Load(file);
+	PolyHedra.Skins.Insert(Skin::Load(file));
 }
 
 void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)

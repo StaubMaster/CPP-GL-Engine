@@ -20,6 +20,8 @@
 PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "DuoHedra";
+	polyhedra -> File = "::DuoHedra::"; // put () with parameters ?
 
 	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, 0));
 	polyhedra -> Insert_Corn(VectorF3(-scale, +scale, 0));
@@ -38,7 +40,7 @@ PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
 
 	skin -> Done();
 
-	polyhedra -> Skin = skin;
+	polyhedra -> Skins.Insert(skin);
 	polyhedra -> Done();
 	return polyhedra;
 }
@@ -48,6 +50,8 @@ PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
 PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "TetraHedron";
+	polyhedra -> File = "::TetraHedron::"; // put () with parameters ?
 
 	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, -scale));
 	polyhedra -> Insert_Corn(VectorF3(+scale, +scale, -scale));
@@ -73,7 +77,7 @@ PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
 	skin -> Done();
 
 
-	polyhedra -> Skin = skin;
+	polyhedra -> Skins.Insert(skin);
 	polyhedra -> Done();
 	return polyhedra;
 }
@@ -83,6 +87,8 @@ PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
 PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "HexaHedron";
+	polyhedra -> File = "::HexaHedron::"; // put () with parameters ?
 
 	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, -scale));
 	polyhedra -> Insert_Corn(VectorF3(+scale, -scale, -scale));
@@ -119,7 +125,7 @@ PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 	skin -> Done();
 
 
-	polyhedra -> Skin = skin;
+	polyhedra -> Skins.Insert(skin);
 	polyhedra -> Done();
 	return polyhedra;
 }
@@ -129,6 +135,8 @@ PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 {
 	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "ConeC";
+	polyhedra -> File = "::ConeC::"; // put () with parameters ?
 
 	::Skin * skin = new ::Skin();
 	skin -> Size = VectorU2(8, 4);
@@ -171,7 +179,7 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 	}
 
 	skin -> Done();
-	polyhedra -> Skin = skin;
+	polyhedra -> Skins.Insert(skin);
 	polyhedra -> Done();
 	return polyhedra;
 }
@@ -181,7 +189,10 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 {
 	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") ..." << Debug::Done;
+
 	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "FramedImage";
+	polyhedra -> File = "::FramedImage::"; // put () with parameters ?
 
 	::Skin * skin = new ::Skin();
 	skin -> Size = img.Size();
@@ -424,7 +435,7 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	skin -> Insert_Face4(texMiddleInnY[0], texMiddleInnY[1], texMiddleInnY[2], texMiddleInnY[3]);
 
 	skin -> Done();
-	polyhedra -> Skin = skin;
+	polyhedra -> Skins.Insert(skin);
 	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") done" << Debug::Done;
 	polyhedra -> Done();
 	return polyhedra;
