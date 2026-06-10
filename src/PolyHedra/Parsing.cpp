@@ -3,8 +3,7 @@
 #include "PolyHedra/Generate.hpp"
 
 // Skin
-#include "PolyHedra/Skin/SkinBase.hpp"
-#include "PolyHedra/Skin/Skin2DA.hpp"
+#include "PolyHedra/Skin/Skin.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
 // File
@@ -132,7 +131,7 @@ void PolyHedra::ParsingData::Parse_Skin(const TextCommand & cmd)
 		PolyHedra.Skin = nullptr;
 	}
 	if (!file.Exists()) { std::cout << cmd.Name() << ": " << "Bad Skin File" << "\n"; return; }
-	PolyHedra.Skin = SkinBase::Load(file);
+	PolyHedra.Skin = ::Skin::Load(file);
 }
 
 void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)

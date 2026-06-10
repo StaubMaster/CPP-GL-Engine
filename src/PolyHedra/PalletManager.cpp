@@ -11,7 +11,7 @@
 #include "PolyHedra/Graphics/Full/Main/Data.hpp"
 #include "PolyHedra/Graphics/Wire/Main/Data.hpp"
 
-#include "PolyHedra/Skin/Skin2DA.hpp"
+#include "PolyHedra/Skin/Skin.hpp"
 
 
 
@@ -154,14 +154,10 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 		BufferFull.MainBuffer.DataFull(data.ToVoid());
 	}
 
+	TextureFull.Delete();
 	if (Pallet -> Skin != nullptr)
 	{
-		Skin2DA * skin = (Skin2DA*)(Pallet -> Skin);
-		skin -> ToTexture(TextureFull);
-	}
-	else
-	{
-		TextureFull.Delete();
+		TextureFull = Pallet -> Skin -> ToTexture();
 	}
 
 	BufferFullMainBound = true;

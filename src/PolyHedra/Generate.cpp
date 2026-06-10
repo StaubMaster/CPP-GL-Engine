@@ -1,12 +1,12 @@
 #include "PolyHedra/Generate.hpp"
 #include "PolyHedra/Data.hpp"
 
-#include "PolyHedra/Skin/SkinBase.hpp"
-#include "PolyHedra/Skin/Skin2DA.hpp"
+#include "PolyHedra/Skin/Skin.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
 #include "ValueType/Angle.hpp"
 #include "ValueType/EulerAngle3D.hpp"
+#include "ValueType/Vector/F2.hpp"
 
 #include "Image.hpp"
 
@@ -30,15 +30,13 @@ PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
 
 
 
-	Skin2DA * skin = new Skin2DA();
-	skin -> W = img.W();
-	skin -> H = img.H();
+	::Skin * skin = new ::Skin();
+	skin -> Size = img.Size();
 	skin -> Images.Insert(img);
 
-	skin -> Insert_Face4(Skin2DFaceCorner(0.0f, 1.0f, 0.0f), Skin2DFaceCorner(0.0f, 0.0f, 0.0f), Skin2DFaceCorner(1.0f, 1.0f, 0.0f), Skin2DFaceCorner(1.0f, 0.0f, 0.0f));
+	skin -> Insert_Face4(VectorF3(0.0f, 1.0f, 0.0f), VectorF3(0.0f, 0.0f, 0.0f), VectorF3(1.0f, 1.0f, 0.0f), VectorF3(1.0f, 0.0f, 0.0f));
 
 	skin -> Done();
-
 
 	polyhedra -> Skin = skin;
 	polyhedra -> Done();
@@ -63,15 +61,14 @@ PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
 
 
 
-	Skin2DA * skin = new Skin2DA();
-	skin -> W = 8;
-	skin -> H = 4;
+	::Skin * skin = new ::Skin();
+	skin -> Size = VectorU2(8, 4);
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
-	skin -> Insert_Face3(Skin2DFaceCorner(0.00f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.25f, 0.00f, 0.0f));
-	skin -> Insert_Face3(Skin2DFaceCorner(0.25f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.50f, 0.00f, 0.0f));
-	skin -> Insert_Face3(Skin2DFaceCorner(0.50f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.75f, 0.00f, 0.0f));
-	skin -> Insert_Face3(Skin2DFaceCorner(0.75f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(1.00f, 0.00f, 0.0f));
+	skin -> Insert_Face3(VectorF3(0.00f, 0.00f, 0.0f), VectorF3(0.00f, 0.50f, 0.0f), VectorF3(0.25f, 0.00f, 0.0f));
+	skin -> Insert_Face3(VectorF3(0.25f, 0.00f, 0.0f), VectorF3(0.00f, 0.50f, 0.0f), VectorF3(0.50f, 0.00f, 0.0f));
+	skin -> Insert_Face3(VectorF3(0.50f, 0.00f, 0.0f), VectorF3(0.00f, 0.50f, 0.0f), VectorF3(0.75f, 0.00f, 0.0f));
+	skin -> Insert_Face3(VectorF3(0.75f, 0.00f, 0.0f), VectorF3(0.00f, 0.50f, 0.0f), VectorF3(1.00f, 0.00f, 0.0f));
 
 	skin -> Done();
 
@@ -107,18 +104,17 @@ PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 
 
 
-	Skin2DA * skin = new Skin2DA();
-	skin -> W = 8;
-	skin -> H = 4;
+	::Skin * skin = new ::Skin();
+	skin -> Size = VectorU2(8, 4);
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
-	skin -> Insert_Face4(Skin2DFaceCorner(0.00f, 0.00f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f), Skin2DFaceCorner(0.25f, 0.00f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f));
-	skin -> Insert_Face4(Skin2DFaceCorner(0.25f, 0.00f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f), Skin2DFaceCorner(0.50f, 0.00f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f));
-	skin -> Insert_Face4(Skin2DFaceCorner(0.50f, 0.00f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f), Skin2DFaceCorner(0.75f, 0.00f, 0.0f), Skin2DFaceCorner(0.75f, 0.50f, 0.0f));
+	skin -> Insert_Face4(VectorF3(0.00f, 0.00f, 0.0f), VectorF3(0.00f, 0.50f, 0.0f), VectorF3(0.25f, 0.00f, 0.0f), VectorF3(0.25f, 0.50f, 0.0f));
+	skin -> Insert_Face4(VectorF3(0.25f, 0.00f, 0.0f), VectorF3(0.25f, 0.50f, 0.0f), VectorF3(0.50f, 0.00f, 0.0f), VectorF3(0.50f, 0.50f, 0.0f));
+	skin -> Insert_Face4(VectorF3(0.50f, 0.00f, 0.0f), VectorF3(0.50f, 0.50f, 0.0f), VectorF3(0.75f, 0.00f, 0.0f), VectorF3(0.75f, 0.50f, 0.0f));
 
-	skin -> Insert_Face4(Skin2DFaceCorner(0.25f, 1.00f, 0.0f), Skin2DFaceCorner(0.00f, 1.00f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f), Skin2DFaceCorner(0.00f, 0.50f, 0.0f));
-	skin -> Insert_Face4(Skin2DFaceCorner(0.50f, 1.00f, 0.0f), Skin2DFaceCorner(0.25f, 1.00f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f), Skin2DFaceCorner(0.25f, 0.50f, 0.0f));
-	skin -> Insert_Face4(Skin2DFaceCorner(0.75f, 1.00f, 0.0f), Skin2DFaceCorner(0.50f, 1.00f, 0.0f), Skin2DFaceCorner(0.75f, 0.50f, 0.0f), Skin2DFaceCorner(0.50f, 0.50f, 0.0f));
+	skin -> Insert_Face4(VectorF3(0.25f, 1.00f, 0.0f), VectorF3(0.00f, 1.00f, 0.0f), VectorF3(0.25f, 0.50f, 0.0f), VectorF3(0.00f, 0.50f, 0.0f));
+	skin -> Insert_Face4(VectorF3(0.50f, 1.00f, 0.0f), VectorF3(0.25f, 1.00f, 0.0f), VectorF3(0.50f, 0.50f, 0.0f), VectorF3(0.25f, 0.50f, 0.0f));
+	skin -> Insert_Face4(VectorF3(0.75f, 1.00f, 0.0f), VectorF3(0.50f, 1.00f, 0.0f), VectorF3(0.75f, 0.50f, 0.0f), VectorF3(0.50f, 0.50f, 0.0f));
 
 	skin -> Done();
 
@@ -134,9 +130,8 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 {
 	PolyHedra * polyhedra = new PolyHedra();
 
-	Skin2DA * skin = new Skin2DA();
-	skin -> W = 8;
-	skin -> H = 4;
+	::Skin * skin = new ::Skin();
+	skin -> Size = VectorU2(8, 4);
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
 	EulerAngle3D angle;
@@ -168,10 +163,10 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 		);
 
 		skin -> Insert_Face4(
-			Skin2DFaceCorner(texM, 0.0f, 0.0f),
-			Skin2DFaceCorner(tex1, 1.0f, 0.0f),
-			Skin2DFaceCorner(tex0, 1.0f, 0.0f),
-			Skin2DFaceCorner(texM, 0.0f, 0.0f)
+			VectorF3(texM, 0.0f, 0.0f),
+			VectorF3(tex1, 1.0f, 0.0f),
+			VectorF3(tex0, 1.0f, 0.0f),
+			VectorF3(texM, 0.0f, 0.0f)
 		);
 	}
 
@@ -188,10 +183,8 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") ..." << Debug::Done;
 	PolyHedra * polyhedra = new PolyHedra();
 
-	Skin2DA * skin = new Skin2DA();
-	skin -> W = img.W();
-	skin -> H = img.H();
-
+	::Skin * skin = new ::Skin();
+	skin -> Size = img.Size();
 	skin -> Images.Insert(img);
 	skin -> Images.Insert(Texture::Generate::Wood16x16());
 	/*{
@@ -230,64 +223,64 @@ PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
 	float Frame_Mid_X = scale.X / FrameSizeOut.X;
 
 	VectorF3 texScaleMiddleInnX = VectorF3(Frame_Mid_X * 2, FrameSizeInn.Z / (FrameSizeOut.Z * 2), 1);
-	Skin2DFaceCorner texMiddleInnX[4];
-	texMiddleInnX[0] = Skin2DFaceCorner((tex01[0] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texMiddleInnX[1] = Skin2DFaceCorner((tex01[1] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texMiddleInnX[2] = Skin2DFaceCorner((tex01[2] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texMiddleInnX[3] = Skin2DFaceCorner((tex01[3] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	VectorF3 texMiddleInnX[4];
+	texMiddleInnX[0] = VectorF3((tex01[0] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texMiddleInnX[1] = VectorF3((tex01[1] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texMiddleInnX[2] = VectorF3((tex01[2] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texMiddleInnX[3] = VectorF3((tex01[3] * texScaleMiddleInnX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
 
 	VectorF3 texScaleMiddleOutX = VectorF3(Frame_Mid_X * 2, 1.0f, 1);
-	Skin2DFaceCorner texMiddleOutX[4];
-	texMiddleOutX[0] = Skin2DFaceCorner((tex01[0] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texMiddleOutX[1] = Skin2DFaceCorner((tex01[1] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texMiddleOutX[2] = Skin2DFaceCorner((tex01[2] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texMiddleOutX[3] = Skin2DFaceCorner((tex01[3] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	VectorF3 texMiddleOutX[4];
+	texMiddleOutX[0] = VectorF3((tex01[0] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texMiddleOutX[1] = VectorF3((tex01[1] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texMiddleOutX[2] = VectorF3((tex01[2] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texMiddleOutX[3] = VectorF3((tex01[3] * texScaleMiddleOutX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
 
 	VectorF3 texScaleCornerMinX = VectorF3(1.0f, 1.0f, 1);
-	Skin2DFaceCorner texCornerMinX[4];
-	texCornerMinX[0] = Skin2DFaceCorner((tex01[0] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texCornerMinX[1] = Skin2DFaceCorner((tex01[1] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texCornerMinX[2] = Skin2DFaceCorner((tex01[2] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texCornerMinX[3] = Skin2DFaceCorner((tex01[3] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	VectorF3 texCornerMinX[4];
+	texCornerMinX[0] = VectorF3((tex01[0] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texCornerMinX[1] = VectorF3((tex01[1] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texCornerMinX[2] = VectorF3((tex01[2] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texCornerMinX[3] = VectorF3((tex01[3] * texScaleCornerMinX) + VectorF3(Frame_Mid_X, 0.0f, 0.0f));
 
 	VectorF3 texScaleCornerMaxX = VectorF3(1.0f, 1.0f, 1);
-	Skin2DFaceCorner texCornerMaxX[4];
-	texCornerMaxX[0] = Skin2DFaceCorner((tex01[0] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texCornerMaxX[1] = Skin2DFaceCorner((tex01[1] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texCornerMaxX[2] = Skin2DFaceCorner((tex01[2] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
-	texCornerMaxX[3] = Skin2DFaceCorner((tex01[3] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	VectorF3 texCornerMaxX[4];
+	texCornerMaxX[0] = VectorF3((tex01[0] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texCornerMaxX[1] = VectorF3((tex01[1] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texCornerMaxX[2] = VectorF3((tex01[2] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
+	texCornerMaxX[3] = VectorF3((tex01[3] * texScaleCornerMaxX) - VectorF3(Frame_Mid_X, 0.0f, 0.0f));
 
 
 
 	float Frame_Mid_Y = scale.Y / FrameSizeOut.Y;
 
 	VectorF3 texScaleMiddleInnY = VectorF3(Frame_Mid_Y * 2, FrameSizeInn.Z / (FrameSizeOut.Z * 2), 1);
-	Skin2DFaceCorner texMiddleInnY[4];
-	texMiddleInnY[0] = Skin2DFaceCorner((tex01[0] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texMiddleInnY[1] = Skin2DFaceCorner((tex01[1] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texMiddleInnY[2] = Skin2DFaceCorner((tex01[2] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texMiddleInnY[3] = Skin2DFaceCorner((tex01[3] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	VectorF3 texMiddleInnY[4];
+	texMiddleInnY[0] = VectorF3((tex01[0] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texMiddleInnY[1] = VectorF3((tex01[1] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texMiddleInnY[2] = VectorF3((tex01[2] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texMiddleInnY[3] = VectorF3((tex01[3] * texScaleMiddleInnY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
 
 	VectorF3 texScaleMiddleOutY = VectorF3(Frame_Mid_Y * 2, 1.0f, 1);
-	Skin2DFaceCorner texMiddleOutY[4];
-	texMiddleOutY[0] = Skin2DFaceCorner((tex01[0] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texMiddleOutY[1] = Skin2DFaceCorner((tex01[1] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texMiddleOutY[2] = Skin2DFaceCorner((tex01[2] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texMiddleOutY[3] = Skin2DFaceCorner((tex01[3] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	VectorF3 texMiddleOutY[4];
+	texMiddleOutY[0] = VectorF3((tex01[0] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texMiddleOutY[1] = VectorF3((tex01[1] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texMiddleOutY[2] = VectorF3((tex01[2] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texMiddleOutY[3] = VectorF3((tex01[3] * texScaleMiddleOutY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
 
 	VectorF3 texScaleCornerMinY = VectorF3(1.0f, 1.0f, 1);
-	Skin2DFaceCorner texCornerMinY[4];
-	texCornerMinY[0] = Skin2DFaceCorner((tex01[0] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texCornerMinY[1] = Skin2DFaceCorner((tex01[1] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texCornerMinY[2] = Skin2DFaceCorner((tex01[2] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texCornerMinY[3] = Skin2DFaceCorner((tex01[3] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	VectorF3 texCornerMinY[4];
+	texCornerMinY[0] = VectorF3((tex01[0] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texCornerMinY[1] = VectorF3((tex01[1] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texCornerMinY[2] = VectorF3((tex01[2] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texCornerMinY[3] = VectorF3((tex01[3] * texScaleCornerMinY) + VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
 
 	VectorF3 texScaleCornerMaxY = VectorF3(1.0f, 1.0f, 1);
-	Skin2DFaceCorner texCornerMaxY[4];
-	texCornerMaxY[0] = Skin2DFaceCorner((tex01[0] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texCornerMaxY[1] = Skin2DFaceCorner((tex01[1] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texCornerMaxY[2] = Skin2DFaceCorner((tex01[2] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
-	texCornerMaxY[3] = Skin2DFaceCorner((tex01[3] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	VectorF3 texCornerMaxY[4];
+	texCornerMaxY[0] = VectorF3((tex01[0] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texCornerMaxY[1] = VectorF3((tex01[1] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texCornerMaxY[2] = VectorF3((tex01[2] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
+	texCornerMaxY[3] = VectorF3((tex01[3] * texScaleCornerMaxY) - VectorF3(Frame_Mid_Y, 0.0f, 0.0f));
 
 
 

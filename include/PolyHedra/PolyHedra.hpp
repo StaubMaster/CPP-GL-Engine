@@ -11,12 +11,10 @@
 
 namespace PolyHedraFull { namespace Main { struct Data; }; };
 
-class SkinBase;
+class Skin;
 
-//struct VectorF2;
-struct VectorF2; typedef VectorF2 VectorF2;
-//struct BoxF3;
-struct BoxF3; typedef BoxF3 BoxF3;
+struct VectorF2;
+struct BoxF3;
 
 class Image;
 
@@ -33,16 +31,19 @@ class PolyHedra
 	Container::Binary<Face>		Faces;
 
 	public:
+	::Skin *	Skin;
+
+	public: // Information stuff
 	FileInfo	File;
-	SkinBase *	Skin;
+	// Name
 
 	public:
-	PolyHedra();
 	~PolyHedra();
-
+	PolyHedra();
 	PolyHedra(const PolyHedra & other) = delete;
 	PolyHedra & operator=(const PolyHedra & other) = delete;
 
+	public:
 	void	Done();
 
 	public:
@@ -59,11 +60,15 @@ class PolyHedra
 	void	Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure);
 
 	public:
-	Container::Array<PolyHedraFull::Main::Data>	ToMainData();
+	// ToBuffer ?
+	Container::Array<PolyHedraFull::Main::Data>		ToMainData();
+	// seperate ToFullData and ToWireData
+	// Wire data is made of Vertexes and Element
+	// make seperatly ?
 
 	public:
-	std::string	ToInfo() const;
-	BoxF3	CalcBound() const;
+	std::string		ToInfo() const;
+	BoxF3			CalcBound() const;
 
 	public:
 	struct Generate;

@@ -1,7 +1,8 @@
 #include "PolyHedra/PolyHedra.hpp"
 #include "PolyHedra/Data.hpp"
 
-#include "PolyHedra/Skin/Skin2DA.hpp"
+#include "PolyHedra/Skin/Skin.hpp"
+#include "PolyHedra/Skin/Data.hpp"
 
 #include "PolyHedra/Graphics/Full/Main/Data.hpp"
 
@@ -23,18 +24,18 @@
 
 
 
-PolyHedra::PolyHedra()
-	: Corners()
-	, Edges()
-	, Faces()
-	, File()
-	, Skin(nullptr)
-	, UseCornerNormals(false)
-{ }
 PolyHedra::~PolyHedra()
 {
 	delete Skin;
 }
+PolyHedra::PolyHedra()
+	: Corners()
+	, Edges()
+	, Faces()
+	, Skin(nullptr)
+	, File()
+	, UseCornerNormals(false)
+{ }
 
 void PolyHedra::Done()
 {
@@ -44,11 +45,9 @@ void PolyHedra::Done()
 
 	if (Skin == nullptr)
 	{
-		Skin2DA * skin = new Skin2DA();
-		skin -> W = 1;
-		skin -> H = 1;
-		skin -> Images.Insert(Texture::Generate::NoSkin());
-		Skin = skin;
+		Skin = new ::Skin();
+		Skin -> Size = VectorU2(1, 1);
+		Skin -> Images.Insert(Texture::Generate::NoSkin());
 	}
 }
 
@@ -235,7 +234,7 @@ Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 		}
 	}
 
-	if (Skin == NULL)
+	if (Skin == nullptr)
 	{
 		for (unsigned int i = 0; i < data.Length(); i++)
 		{
@@ -244,14 +243,13 @@ Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 	}
 	else
 	{
-		const Skin2DA * skin = (const Skin2DA *)Skin;
-		for (unsigned int f = 0; f < skin -> Faces.Count(); f++)
+		for (unsigned int f = 0; f < Skin -> Faces.Count(); f++)
 		{
 			int c = f * 3;
-			const Skin2DFace & face = ((Skin2DA*)Skin) -> Faces[f];
-			data[c + 0].Texture = face.Corner0.Tex;
-			data[c + 1].Texture = face.Corner1.Tex;
-			data[c + 2].Texture = face.Corner2.Tex;
+			const Skin::Face & face = Skin -> Faces[f];
+			data[c + 0].Texture = face.Corner[0];
+			data[c + 1].Texture = face.Corner[1];
+			data[c + 2].Texture = face.Corner[2];
 		}
 	}
 

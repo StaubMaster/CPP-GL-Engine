@@ -196,14 +196,14 @@ POLYGON_SRC := $(addprefix $(DIR_SRC)/,$(POLYGON))
 POLYGON_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYGON:.cpp=.o))
 
 POLYHEDRA := \
-	PolyHedra/PolyHedra.cpp \
 	PolyHedra/Data.cpp \
+	PolyHedra/PolyHedra.cpp \
 	PolyHedra/Parsing.cpp \
 	PolyHedra/Generate.cpp \
 \
-	PolyHedra/Skin/SkinBase.cpp \
-	PolyHedra/Skin/Skin2DA.cpp \
-	PolyHedra/Skin/Skin2D_Data.cpp \
+	PolyHedra/Skin/Data.cpp \
+	PolyHedra/Skin/Skin.cpp \
+	PolyHedra/Skin/Parsing.cpp \
 \
 	PolyHedra/Graphics/Full/Main/Layout.cpp \
 	PolyHedra/Graphics/Full/Main/Data.cpp \

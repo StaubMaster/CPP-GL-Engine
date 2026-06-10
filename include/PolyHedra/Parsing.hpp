@@ -19,8 +19,8 @@ struct PolyHedra::ParsingData
 	unsigned int	CornerOffset;
 	unsigned int	FaceOffset;
 
-	ParsingData(const FileInfo & file, ::PolyHedra & polyhedra);
 	~ParsingData();
+	ParsingData(const FileInfo & file, ::PolyHedra & polyhedra);
 
 
 
