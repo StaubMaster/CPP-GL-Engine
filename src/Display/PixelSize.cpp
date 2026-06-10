@@ -60,14 +60,14 @@ PixelPosition PixelSize::Convert(NormalPosition pos) const
 {
 	PixelPosition pixel_pos;
 	pixel_pos.Corner = pos.Abs * Full;
-	pixel_pos.Corner = pos.Rel * Half;
+	pixel_pos.Center = pos.Rel * Half;
 	return pixel_pos;
 }
 NormalPosition PixelSize::Convert(PixelPosition pos) const
 {
 	NormalPosition normal_pos;
 	normal_pos.Abs = pos.Corner / Full;
-	normal_pos.Rel = pos.Corner / Half;
+	normal_pos.Rel = pos.Center / Half;
 	return normal_pos;
 }
 
