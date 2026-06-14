@@ -100,33 +100,20 @@ void PolyHedraPalletManager::PlaceInstance(const PolyHedraObjectData & obj)
 		}
 	}
 }
-void PolyHedraPalletManager::PlaceInstances(const Container::Array<PolyHedraObjectData> & objs)
-{
-	for (unsigned int i = 0; i < objs.Length(); i++)
-	{
-		PlaceInstance(objs[i]);
-	}
-}
 
 
 
 void PolyHedraPalletManager::ChangeMedia(PolyHedraManager & manager)
 {
-	BufferFull.MainBuffer.AttributeLayout = &manager.BufferLayoutFullMain;
-	BufferFull.InstBuffer.AttributeLayout = &manager.BufferLayoutFullInst;
-	BufferWire.MainBuffer.AttributeLayout = &manager.BufferLayoutWireMain;
-	BufferWire.InstBuffer.AttributeLayout = &manager.BufferLayoutWireInst;
+	BufferFull.MainBuffer.Init(manager.BufferLayoutFullMain);
+	BufferFull.InstBuffer.Init(manager.BufferLayoutFullInst);
+	BufferWire.MainBuffer.Init(manager.BufferLayoutWireMain);
+	BufferWire.InstBuffer.Init(manager.BufferLayoutWireInst);
 }
 void PolyHedraPalletManager::GraphicsCreate()
 {
 	if (!GraphicsExist)
 	{
-		// do this when Buffer.Create() ?
-		BufferFull.MainBuffer.AttributesBound = false;
-		BufferFull.InstBuffer.AttributesBound = false;
-		BufferWire.MainBuffer.AttributesBound = false;
-		BufferWire.InstBuffer.AttributesBound = false;
-
 		BufferFull.Create();
 		BufferWire.Create();
 		GraphicsExist = true;

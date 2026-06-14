@@ -9,8 +9,8 @@ struct LightSpot
 {
 	public:
 	LightBase	Base;
-	VectorF3		Pos;
-	VectorF3		Dir;
+	VectorF3	Pos;
+	VectorF3	Dir;
 	::Range		Range;
 
 	public:

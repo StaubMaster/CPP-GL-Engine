@@ -61,10 +61,10 @@ void PolyGonInstanceManager::Change(::PolyGon * PolyGon)
 
 void PolyGonInstanceManager::GraphicsCreate()
 {
-	BufferFull.MainBuffer.AttributeLayout = &LayoutMainFull;
-	BufferWire.MainBuffer.AttributeLayout = &LayoutMainWire;
-	BufferFull.InstBuffer.AttributeLayout = &LayoutInstFull;
-	BufferWire.InstBuffer.AttributeLayout = &LayoutInstWire;
+	BufferFull.MainBuffer.Init(LayoutMainFull);
+	BufferWire.MainBuffer.Init(LayoutMainWire);
+	BufferFull.InstBuffer.Init(LayoutInstFull);
+	BufferWire.InstBuffer.Init(LayoutInstWire);
 
 	BufferFull.Create();
 	BufferWire.Create();
@@ -82,16 +82,16 @@ void PolyGonInstanceManager::InitExternal()
 		LayoutMainFull.Col.Change(1);
 		LayoutInstFull.Trans.Change(2);
 
-		BufferFull.MainBuffer.AttributeLayout = &LayoutMainFull;
-		BufferFull.InstBuffer.AttributeLayout = &LayoutInstFull;
+		BufferFull.MainBuffer.Init(LayoutMainFull);
+		BufferFull.InstBuffer.Init(LayoutInstFull);
 	}
 	{
 		LayoutMainWire.Pos.Change(0);
 		LayoutMainWire.Col.Change(1);
 		LayoutInstWire.Trans.Change(2);
 
-		BufferWire.MainBuffer.AttributeLayout = &LayoutMainWire;
-		BufferWire.InstBuffer.AttributeLayout = &LayoutInstWire;
+		BufferWire.MainBuffer.Init(LayoutMainWire);
+		BufferWire.InstBuffer.Init(LayoutInstWire);
 	}
 }
 void PolyGonInstanceManager::InitInternal()

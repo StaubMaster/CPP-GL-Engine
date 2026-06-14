@@ -8,7 +8,7 @@ struct LightSolar
 {
 	public:
 	LightBase	Base;
-	VectorF3		Dir;
+	VectorF3	Dir;
 
 	public:
 	LightSolar();

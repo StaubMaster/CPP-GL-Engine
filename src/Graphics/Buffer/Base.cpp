@@ -14,6 +14,8 @@ Buffer::Base::Base(
 	, Target(target)
 	, Usage(usage)
 	, ID(0)
+	, DataWant(false)
+	, DataHave(false)
 { }
 
 Buffer::Base::Base(::VertexArray & vertex_array, const Base & other)
@@ -21,12 +23,16 @@ Buffer::Base::Base(::VertexArray & vertex_array, const Base & other)
 	, Target(other.Target)
 	, Usage(other.Usage)
 	, ID(other.ID)
+	, DataWant(other.DataWant)
+	, DataHave(other.DataHave)
 { }
 Buffer::Base & Buffer::Base::operator=(const Base & other)
 {
 	Target = other.Target;
 	Usage = other.Usage;
 	ID = other.ID;
+	DataWant = other.DataWant;
+	DataHave = other.DataHave;
 	return *this;
 }
 
@@ -44,6 +50,9 @@ void Buffer::Base::Create()
 	//Debug::Log << "Buffer::Base Creating " << ID << " ..." << Debug::Done;
 	ID = GL::CreateBuffer();
 	//Debug::Log << "Buffer::Base Creating " << ID << " done" << Debug::Done;
+
+	DataWant = false;
+	DataHave = false;
 }
 void Buffer::Base::Delete()
 {

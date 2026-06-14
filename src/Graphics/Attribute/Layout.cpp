@@ -23,7 +23,7 @@ Attribute::Layout::Layout(const Layout & other)
 
 
 
-void Attribute::Layout::Bind()
+void Attribute::Layout::Bind() const
 {
 	GL::AttributeOffset offset = nullptr;
 	for (unsigned int i = 0; i < Attributes.Count(); i++)

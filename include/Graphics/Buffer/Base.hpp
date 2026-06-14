@@ -18,6 +18,10 @@ class Base
 	GL::BufferID			ID;
 
 	public:
+	bool	DataWant;
+	bool	DataHave;
+
+	public:
 	virtual void LogInfo(bool self = true) const;
 
 	public:

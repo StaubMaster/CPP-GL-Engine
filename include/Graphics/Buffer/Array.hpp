@@ -14,6 +14,7 @@ class Array : public Base
 	public:
 	unsigned int			Count;
 
+	private:
 	bool					AttributesBound;
 	Attribute::Layout *		AttributeLayout;
 
@@ -28,6 +29,9 @@ class Array : public Base
 	Array(const Array & other) = delete;
 	Array(::VertexArray & vertex_array, const Array & other);
 	Array & operator=(const Array & other);
+
+	public:
+	void	Init(Attribute::Layout & layout);
 
 	public:
 	void	Update() override;

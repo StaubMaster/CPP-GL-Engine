@@ -27,7 +27,7 @@ class Layout
 	Layout & operator=(const Layout & other) = delete;
 
 	public:
-	void	Bind();
+	void	Bind() const;
 };
 };
 

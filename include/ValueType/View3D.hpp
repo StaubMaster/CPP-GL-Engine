@@ -20,6 +20,9 @@ struct View3D
 
 	static View3D Default();
 
+	// ChangeRelative
+	// ChangeAbsolute
+	// why FlatX ? should be FlatY
 	void ChangeFlatX(Trans3D trans, float timeDelta);
 
 

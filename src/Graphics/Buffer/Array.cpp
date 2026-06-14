@@ -29,6 +29,11 @@ Buffer::Array & Buffer::Array::operator=(const Array & other)
 
 
 
+void Buffer::Array::Init(Attribute::Layout & layout)
+{
+	AttributeLayout = &layout;
+	AttributesBound = false;
+}
 void Buffer::Array::Update()
 {
 	if (!AttributesBound)

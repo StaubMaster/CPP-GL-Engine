@@ -88,6 +88,9 @@ void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 		else if (name == "fan0")	{ Parse_Fan(cmd, false, true); }
 		else if (name == "fan1")	{ Parse_Fan(cmd, true, true); }
 
+		else if (name == "vertex")	{ Parse_Corner(cmd); }
+		else if (name == "index")	{ Parse_Offset(cmd); }
+
 		else if (name == "circle>")	{ Parse_Circle(cmd, false); }
 		else if (name == "circle<")	{ Parse_Circle(cmd, true); }
 
