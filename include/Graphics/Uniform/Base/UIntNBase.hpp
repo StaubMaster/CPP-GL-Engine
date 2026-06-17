@@ -20,7 +20,7 @@ class UIntNBase : public Uniform::Base
 	UIntNBase(Uniform::Layout & layout, std::string name);
 
 	protected:
-	void			PutVoid(const void * val);
+	void			PutVoid(const void * val) override;
 	virtual void	PutData(const unsigned int * val) = 0;
 
 	protected:

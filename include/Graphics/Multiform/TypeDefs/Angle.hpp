@@ -2,12 +2,11 @@
 # define MULTIFORM_ANGLE_HPP
 
 # include "Graphics/Multiform/Base/GBase.hpp"
-# include "Graphics/Uniform/TypeDefs/Angle.hpp"
 # include "ValueType/Angle.hpp"
 
 namespace Multiform
 {
-typedef GBase<Uniform::Angle, ::Angle> Angle;
+typedef GBase<::Angle> Angle;
 };
 
 #endif

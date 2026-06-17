@@ -11,11 +11,16 @@ class Layout;
 class Base
 {
 	public:
+	/*	does Uniform need to konw Layout / Shader ?
+		Layout needs to know Shader once (when finding Locations)
+		after that it is only used to automatically Bind shader when putting uniform
+		doing this multiple times with different shaders that have the same thing is annlying anyway
+		Mulform should be used for this
+	*/
 	Uniform::Layout &	Layout;
 	std::string			Name;
 
 	Multiform::Base *	Multiform;
-	bool				MultiformChanged;
 
 	public:
 	virtual void LogInfo(bool self = true) const;
@@ -32,7 +37,8 @@ class Base
 	virtual void ReLocate();
 
 	public:
-	void PutMultiformData();
+	virtual void	PutVoid(const void * val) = 0;
+	void	PutMultiformData();
 };
 };
 

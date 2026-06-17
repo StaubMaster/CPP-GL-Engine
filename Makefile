@@ -122,14 +122,7 @@ UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
 
 MULTIFORM := \
 	Graphics/Multiform/Base/Base.cpp \
-	Graphics/Multiform/Float.cpp \
-	Graphics/Multiform/ColorF4.cpp \
-	Graphics/Multiform/Trans2D.cpp \
-	Graphics/Multiform/Trans3D.cpp \
-	Graphics/Multiform/DepthFactors.cpp \
-	Graphics/Multiform/Depth.cpp \
-	Graphics/Multiform/Range.cpp \
-	Graphics/Multiform/LInter.cpp \
+	Graphics/Multiform/Layout.cpp \
 
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
 MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))

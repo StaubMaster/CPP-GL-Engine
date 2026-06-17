@@ -3,23 +3,23 @@
 
 # include "Graphics/Multiform/Base/Base.hpp"
 
-# include "Graphics/Multiform/Float.hpp"
+# include "Graphics/Multiform/TypeDefs/Float.hpp"
 
-# include "Graphics/Multiform/Matrix4x4.hpp"
+# include "Graphics/Multiform/TypeDefs/Matrix4x4.hpp"
 
-# include "Graphics/Multiform/ColorF4.hpp"
+# include "Graphics/Multiform/TypeDefs/ColorF4.hpp"
 
-# include "Graphics/Multiform/Angle.hpp"
+# include "Graphics/Multiform/TypeDefs/Angle.hpp"
 
-# include "Graphics/Multiform/Depth.hpp"
-# include "Graphics/Multiform/DepthFactors.hpp"
+# include "Graphics/Multiform/TypeDefs/Depth.hpp"
+# include "Graphics/Multiform/TypeDefs/DepthFactors.hpp"
 
-# include "Graphics/Multiform/LInter.hpp"
-# include "Graphics/Multiform/Range.hpp"
+# include "Graphics/Multiform/TypeDefs/LInter.hpp"
+# include "Graphics/Multiform/TypeDefs/Range.hpp"
 
-# include "Graphics/Multiform/Trans2D.hpp"
-# include "Graphics/Multiform/Trans3D.hpp"
+# include "Graphics/Multiform/TypeDefs/Trans2D.hpp"
+# include "Graphics/Multiform/TypeDefs/Trans3D.hpp"
 
-# include "Graphics/Multiform/DisplaySize.hpp"
+# include "Graphics/Multiform/TypeDefs/DisplaySize.hpp"
 
 #endif

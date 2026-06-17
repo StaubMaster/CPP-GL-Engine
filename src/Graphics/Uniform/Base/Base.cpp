@@ -8,8 +8,7 @@ Uniform::Base::~Base() { }
 Uniform::Base::Base(Uniform::Layout & layout, std::string name)
 	: Layout(layout)
 	, Name(name)
-	, Multiform(NULL)
-	, MultiformChanged(false)
+	, Multiform(nullptr)
 {
 	Layout.Uniforms.Insert(this);
 }
@@ -41,8 +40,8 @@ void Uniform::Base::ReLocate() { }
 
 void Uniform::Base::PutMultiformData()
 {
-	if (MultiformChanged)
+	if (Multiform != nullptr)
 	{
-		Multiform -> PutUniformData(this);
+		Multiform -> PutData(*this);
 	}
 }

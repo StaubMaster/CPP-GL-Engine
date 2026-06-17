@@ -6,75 +6,43 @@
 # include "Graphics/Uniform/Base/Base.hpp"
 # include "Graphics/Uniform/Layout.hpp"
 
-# include "Miscellaneous/Container/Array.hpp"
-
-# include <typeinfo>
-# include <iostream>
+# include "Graphics/Shader/Base.hpp"
 
 
-
-namespace Shader { class Base; };
 
 namespace Multiform
 {
-template <typename UniformType, typename DataType>
+template <typename DataType>
 class GBase : public Base
 {
 	public:
-	Container::Array<UniformType *> Uniforms;
-	DataType Data;
+	DataType	Data;
 
 	public:
-	virtual ~GBase() { }
+	virtual ~GBase()
+	{ }
 	GBase(std::string name)
 		: Base(name)
 	{ }
 
 	public:
-	void	FindUniforms(Container::Array<Uniform::Layout *> & layouts) override
+	void	PutData(Uniform::Base & uniform) override
 	{
-		unsigned int m = 0;
-		Uniforms.NewLength(layouts.Length());
-		for (unsigned int s = 0; s < layouts.Length(); s++)
-		{
-			Uniform::Layout * layout = layouts[s];
-			for (unsigned int u = 0; u < layout -> Uniforms.Count(); u++)
-			{
-				Uniform::Base * uni = layout -> Uniforms[u];
-				if (uni -> Name == this -> Name)
-				{
-					if (typeid(*uni) == typeid(UniformType))
-					{
-						uni -> Multiform = this;
-						Uniforms[m] = (UniformType*)uni;
-						m++;
-					}
-					else
-					{ /* Uniform has correct name but wrong Type */ }
-				}
-			}
-		}
-		Uniforms.NewLengthHere(m);
+		uniform.PutVoid(&Data);
+		uniform.Multiform = nullptr;
 	}
-
-	void	PutUniformData(Uniform::Base * uni_base) override
-	{
-		UniformType * uni = (UniformType*)uni_base;
-		uni -> Put(Data);
-		uni -> MultiformChanged = false;
-	}
-	void	ChangeData(DataType data)
+	void	ChangeData(const DataType & data)
 	{
 		Data = data;
-		for (unsigned int i = 0; i < Uniforms.Length(); i++)
+		for (unsigned int i = 0; i < Uniforms.Count(); i++)
 		{
 			if (Uniforms[i] -> Layout.Shader -> IsBound())
 			{
-				PutUniformData(Uniforms[i]);
+				PutData(*Uniforms[i]);
 			}
 			else
 			{
-				Uniforms[i] -> MultiformChanged = true;
+				Uniforms[i] -> Multiform = this;
 			}
 		}
 	}

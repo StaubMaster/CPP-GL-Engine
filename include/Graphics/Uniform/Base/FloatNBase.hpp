@@ -20,7 +20,7 @@ class FloatNBase : public Uniform::Base
 	FloatNBase(Uniform::Layout & layout, std::string name);
 
 	protected:
-	void			PutVoid(const void * val);
+	void			PutVoid(const void * val) override;
 	virtual void	PutData(const float * val) = 0;
 
 	protected:

@@ -16,6 +16,7 @@ class GBase : public Uniform::Base // rename to TypeBase ?
 	{ }
 
 	protected:
+	void			PutVoid(const void * val) { Put(*((const ValueType *)val)); };
 	virtual void	Put(const ValueType & obj) = 0;
 };
 };
