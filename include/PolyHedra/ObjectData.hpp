@@ -4,6 +4,8 @@
 class PolyHedraPalletManager;
 # include "ValueType/Trans3D.hpp"
 
+namespace Instance { namespace Basic3D { struct Data; }; };
+
 struct PolyHedraObjectData
 {
 	bool	Remove; // allways needed
@@ -19,6 +21,8 @@ struct PolyHedraObjectData
 	PolyHedraObjectData & operator=(const PolyHedraObjectData & other);
 
 	PolyHedraObjectData(::PolyHedraPalletManager * manager);
+
+	Instance::Basic3D::Data		ToData() const;
 };
 
 #endif

@@ -24,7 +24,6 @@ PolyHedraManager::~PolyHedraManager()
 { }
 PolyHedraManager::PolyHedraManager()
 	: InstanceManagers()
-	, ObjectDatas()
 	, GraphicsExist(false)
 	, ShaderFullDefault()
 	, ShaderWireDefault()
@@ -46,41 +45,13 @@ PolyHedraManager::PolyHedraManager()
 
 
 
-void PolyHedraManager::ClearInstances()
-{
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-	{
-		if (InstanceManagers[i] != nullptr)
-		{
-			InstanceManagers[i] -> ClearInstances();
-		}
-	}
-}
-void PolyHedraManager::PlaceInstance(const PolyHedraObjectData & obj)
-{
-	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
-	{
-		if (InstanceManagers[i] != nullptr)
-		{
-			InstanceManagers[i] -> PlaceInstance(obj);
-		}
-	}
-}
 void PolyHedraManager::MakeInstances()
 {
-	ClearInstances();
-	for (unsigned int i = 0; i < ObjectDatas.Count(); i++)
+	for (unsigned int i = 0; i < InstanceManagers.Count(); i++)
 	{
-		if (ObjectDatas[i] != nullptr)
+		if (InstanceManagers[i] != nullptr)
 		{
-			PolyHedraObjectData & obj = *ObjectDatas[i];
-			PlaceInstance(obj);
-			if (obj.Remove)
-			{
-				ObjectDatas.RemoveAt(i);
-				delete &obj;
-				i--;
-			}
+			InstanceManagers[i] -> MakeInstances();
 		}
 	}
 }
@@ -99,77 +70,49 @@ void PolyHedraManager::MakeInstances()
 	}
 	return nullptr;
 }
-::PolyHedraPalletManager * PolyHedraManager::PlacePallet(::PolyHedra * pallet)
+::PolyHedraPalletManager * PolyHedraManager::MakePallet(::PolyHedra * pallet)
 {
-	unsigned int idx = InstanceManagers.Count();
-	InstanceManagers.Insert(new PolyHedraPalletManager(pallet));
+	PolyHedraPalletManager * manager = FindPallet(pallet);
+	if (manager != nullptr)
+	{
+		return manager;
+	}
+	manager = new PolyHedraPalletManager(pallet);
 	if (GraphicsExist)
 	{
-		if (InstanceManagers[idx] != nullptr)
-		{
-			InstanceManagers[idx] -> ChangeMedia(*this);
-			InstanceManagers[idx] -> GraphicsCreate();
-		}
+		manager -> ChangeMedia(*this);
+		manager -> GraphicsCreate();
 	}
-	return InstanceManagers[idx];
+	InstanceManagers.Insert(manager);
+	return manager;
 }
 
 
 
-PolyHedraObjectData * PolyHedraManager::PlaceObject(::PolyHedraPalletManager * pallet)
+PolyHedraObjectData * PolyHedraManager::MakeObject(::PolyHedraPalletManager * pallet)
 {
 	if (pallet == nullptr) { return nullptr; }
-	PolyHedraObjectData * obj = new PolyHedraObjectData(pallet);
-	obj -> DrawFull = pallet -> DefaultVisibilityFull;
-	obj -> DrawWire = pallet -> DefaultVisibilityWire;
-	ObjectDatas.Insert(obj);
-	return obj;
+	return pallet -> MakeObject();
 }
-PolyHedraObjectData * PolyHedraManager::PlaceObject(::PolyHedra * pallet)
+PolyHedraObjectData * PolyHedraManager::MakeObject(::PolyHedra * pallet)
 {
-	::PolyHedraPalletManager * manager = FindPallet(pallet);
-	if (manager == nullptr)
-	{
-		manager = PlacePallet(pallet);
-	}
-	return PlaceObject(manager);
-}
-PolyHedraObjectData * PolyHedraManager::CopyObject(const PolyHedraObjectData * other)
-{
-	if (other == nullptr) { return nullptr; }
-	PolyHedraObjectData * obj = PlaceObject(other -> PalletManager);
-	if (obj != nullptr)
-	{
-		*obj = *other;
-	}
-	return obj;
+	PolyHedraPalletManager * manager = MakePallet(pallet);
+	return MakeObject(manager);
 }
 
 
 
-PolyHedraObjectData * PolyHedraManager::sPlaceObject(::PolyHedraPalletManager * pallet)
+PolyHedraObjectData * PolyHedraManager::TryMakeObject(PolyHedraManager * manager, ::PolyHedraPalletManager * pallet)
 {
-	if (CurrentPointer != nullptr)
-	{
-		return CurrentPointer -> PlaceObject(pallet);
-	}
-	return nullptr;
+	if (manager == nullptr) { manager = PolyHedraManager::CurrentPointer; }
+	if (manager == nullptr) { return nullptr; }
+	return manager -> MakeObject(pallet);
 }
-PolyHedraObjectData * PolyHedraManager::sPlaceObject(::PolyHedra * pallet)
+PolyHedraObjectData * PolyHedraManager::TryMakeObject(PolyHedraManager * manager, ::PolyHedra * pallet)
 {
-	if (CurrentPointer != nullptr)
-	{
-		return CurrentPointer -> PlaceObject(pallet);
-	}
-	return nullptr;
-}
-PolyHedraObjectData * PolyHedraManager::sCopyObject(const PolyHedraObjectData * other)
-{
-	if (CurrentPointer != nullptr)
-	{
-		return CurrentPointer -> CopyObject(other);
-	}
-	return nullptr;
+	if (manager == nullptr) { manager = PolyHedraManager::CurrentPointer; }
+	if (manager == nullptr) { return nullptr; }
+	return manager -> MakeObject(pallet);
 }
 
 

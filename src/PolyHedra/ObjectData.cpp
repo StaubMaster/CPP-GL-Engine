@@ -37,3 +37,11 @@ PolyHedraObjectData::PolyHedraObjectData(::PolyHedraPalletManager * manager)
 	, PalletManager(manager)
 	, Trans()
 { }
+
+
+
+#include "Instance/Basic3D/Data.hpp"
+Instance::Basic3D::Data PolyHedraObjectData::ToData() const
+{
+	return Instance::Basic3D::Data(Trans);
+}

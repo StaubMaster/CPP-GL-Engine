@@ -45,29 +45,22 @@ struct PolyHedraManager
 	Container::Binary<PolyHedraPalletManager*>	InstanceManagers;
 
 	public:
-	void	ClearInstances();
-	void	PlaceInstance(const PolyHedraObjectData & obj);
 	void	MakeInstances();
 
 	public:
 	::PolyHedraPalletManager *	FindPallet(::PolyHedra * pallet);
-	::PolyHedraPalletManager *	PlacePallet(::PolyHedra * pallet);
+	::PolyHedraPalletManager *	MakePallet(::PolyHedra * pallet);
+	// MakePallet() should return referance since it should never return null ?
 
 
-
-	// store in InstanceManagers ?
-	public:
-	Container::Binary<PolyHedraObjectData*>		ObjectDatas;
 
 	public:
-	PolyHedraObjectData *	PlaceObject(::PolyHedraPalletManager * pallet);
-	PolyHedraObjectData *	PlaceObject(::PolyHedra * pallet);
-	PolyHedraObjectData *	CopyObject(const PolyHedraObjectData * other);
+	PolyHedraObjectData *	MakeObject(::PolyHedraPalletManager * pallet);
+	PolyHedraObjectData *	MakeObject(::PolyHedra * pallet);
 
 	public:
-	static PolyHedraObjectData *	sPlaceObject(::PolyHedraPalletManager * pallet);
-	static PolyHedraObjectData *	sPlaceObject(::PolyHedra * pallet);
-	static PolyHedraObjectData *	sCopyObject(const PolyHedraObjectData * other);
+	static PolyHedraObjectData *	TryMakeObject(PolyHedraManager * manager, ::PolyHedraPalletManager * pallet);
+	static PolyHedraObjectData *	TryMakeObject(PolyHedraManager * manager, ::PolyHedra * pallet);
 
 
 

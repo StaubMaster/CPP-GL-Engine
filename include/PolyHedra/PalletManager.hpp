@@ -26,33 +26,39 @@ struct PolyHedraPalletManager
 
 	public:
 	~PolyHedraPalletManager();
-	PolyHedraPalletManager();
+	PolyHedraPalletManager() = delete;
 	PolyHedraPalletManager(const PolyHedraPalletManager & other) = delete;
 	PolyHedraPalletManager & operator=(const PolyHedraPalletManager & other) = delete;
 
 	public:
 	PolyHedraPalletManager(::PolyHedra * pallet);
-	void	Change(::PolyHedra * pallet);
+
+
+
+	public:
+	Container::Binary<PolyHedraObjectData*>	ObjectDatas;
+
+	void	RemoveObjects();
+
+	PolyHedraObjectData *		MakeObject();
+	PolyHedraObjectData *		CopyObject(const PolyHedraObjectData * other);
+
+	static PolyHedraObjectData *	TryMakeObject(PolyHedraPalletManager * pallet);
+	static PolyHedraObjectData *	TryCopyObject(PolyHedraPalletManager * pallet, const PolyHedraObjectData * other);
+
 
 
 	public:
 	Container::Binary<Instance::Basic3D::Data>	InstancesFull;
 	Container::Binary<Instance::Basic3D::Data>	InstancesWire;
 
-	public:
-	void	ClearInstances();
-	void	PlaceInstance(const PolyHedraObjectData & obj);
+	void	PutInstance(const PolyHedraObjectData & obj);
+	void	PutInstance(const PolyHedraObjectData * obj);
+	void	MakeInstances();
 
 
 
 	public:
-	// put Flags into Buffers ?
-	// store a Container of Data in Buffer ?
-	// Main Data needs to be put into Buffers
-
-	bool	BufferFullMainBound;
-	bool	BufferWireMainBound;
-
 	::PolyHedraFull::Buffer		BufferFull;
 	::PolyHedraWire::Buffer		BufferWire;
 
@@ -62,8 +68,6 @@ struct PolyHedraPalletManager
 	public:
 	void	ChangeMedia(PolyHedraManager & manager);
 
-
-
 	public:
 	bool	GraphicsExist;
 
@@ -71,14 +75,14 @@ struct PolyHedraPalletManager
 	void	GraphicsCreate();
 	void	GraphicsDelete();
 
-
-
-	public:
+	private:
 	void	UpdateFullBufferMain();
+	public:
 	void	DrawFull();
 
-	public:
+	private:
 	void	UpdateWireBufferMain();
+	public:
 	void	DrawWire();
 };
 

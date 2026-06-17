@@ -17,88 +17,99 @@
 
 PolyHedraPalletManager::~PolyHedraPalletManager()
 { }
-PolyHedraPalletManager::PolyHedraPalletManager()
-	: Pallet(nullptr)
-	, DefaultVisibilityFull(true)
-	, DefaultVisibilityWire(false)
-	, InstancesFull()
-	, InstancesWire()
-	, BufferFullMainBound(false)
-	, BufferWireMainBound(false)
-	, BufferFull()
-	, BufferWire()
-	, TextureFull()
-	, GraphicsExist(false)
-{ }
-/*PolyHedraPalletManager::PolyHedraPalletManager(const PolyHedraPalletManager & other)
-	: Pallet(other.Pallet)
-	, DefaultVisibilityFull(other.DefaultVisibilityFull)
-	, DefaultVisibilityWire(other.DefaultVisibilityWire)
-	, InstancesFull(other.InstancesFull)
-	, InstancesWire(other.InstancesWire)
-	, BufferFullMainBound(other.BufferFullMainBound)
-	, BufferWireMainBound(other.BufferWireMainBound)
-	, BufferFull(other.BufferFull)
-	, BufferWire(other.BufferWire)
-	, TextureFull(other.TextureFull)
-	, GraphicsExist(other.GraphicsExist)
-{ }*/
-/*PolyHedraPalletManager & PolyHedraPalletManager::operator=(const PolyHedraPalletManager & other)
-{
-	Pallet = other.Pallet;
-	DefaultVisibilityFull = other.DefaultVisibilityFull;
-	DefaultVisibilityWire = other.DefaultVisibilityWire;
-	InstancesFull = other.InstancesFull;
-	InstancesWire = other.InstancesWire;
-	BufferFullMainBound = other.BufferFullMainBound;
-	BufferWireMainBound = other.BufferWireMainBound;
-	BufferFull = other.BufferFull;
-	BufferWire = other.BufferWire;
-	TextureFull = other.TextureFull;
-	GraphicsExist = other.GraphicsExist;
-	return *this;
-}*/
 
 PolyHedraPalletManager::PolyHedraPalletManager(::PolyHedra * pallet)
 	: Pallet(pallet)
 	, DefaultVisibilityFull(true)
 	, DefaultVisibilityWire(false)
+	, ObjectDatas()
 	, InstancesFull()
 	, InstancesWire()
-	, BufferFullMainBound(false)
-	, BufferWireMainBound(false)
 	, BufferFull()
 	, BufferWire()
 	, TextureFull()
 	, GraphicsExist(false)
 { }
-void PolyHedraPalletManager::Change(::PolyHedra * pallet)
+
+
+
+void PolyHedraPalletManager::RemoveObjects()
 {
-	Pallet = pallet;
-	BufferFullMainBound = false;
-	BufferWireMainBound = false;
+	for (unsigned int i = 0; i < ObjectDatas.Count(); i++)
+	{
+		const PolyHedraObjectData * obj = ObjectDatas[i];
+		if (obj == nullptr)
+		{
+			ObjectDatas.RemoveAt(i);
+			i--;
+		}
+		else if (obj -> Remove)
+		{
+			ObjectDatas.RemoveAt(i);
+			delete obj;
+			i--;
+		}
+	}
+}
+
+PolyHedraObjectData * PolyHedraPalletManager::MakeObject()
+{
+	PolyHedraObjectData * obj = new PolyHedraObjectData(this);
+	obj -> DrawFull = DefaultVisibilityFull;
+	obj -> DrawWire = DefaultVisibilityWire;
+	ObjectDatas.Insert(obj);
+	return obj;
+}
+PolyHedraObjectData * PolyHedraPalletManager::CopyObject(const PolyHedraObjectData * other)
+{
+	PolyHedraObjectData * obj = new PolyHedraObjectData(this);
+	*obj = *other;
+	ObjectDatas.Insert(obj);
+	return obj;
+}
+
+PolyHedraObjectData * PolyHedraPalletManager::TryMakeObject(PolyHedraPalletManager * pallet)
+{
+	if (pallet == nullptr) { return nullptr; }
+	return pallet -> MakeObject();
+}
+PolyHedraObjectData * PolyHedraPalletManager::TryCopyObject(PolyHedraPalletManager * pallet, const PolyHedraObjectData * other)
+{
+	if (pallet == nullptr) { return nullptr; }
+	return pallet -> CopyObject(other);
 }
 
 
 
-void PolyHedraPalletManager::ClearInstances()
+void PolyHedraPalletManager::PutInstance(const PolyHedraObjectData & obj)
+{
+	if (obj.DrawFull)
+	{
+		InstancesFull.Insert(obj.ToData());
+	}
+	if (obj.DrawWire)
+	{
+		InstancesWire.Insert(obj.ToData());
+	}
+}
+void PolyHedraPalletManager::PutInstance(const PolyHedraObjectData * obj)
+{
+	if (obj != nullptr)
+	{
+		PutInstance(*obj);
+	}
+}
+void PolyHedraPalletManager::MakeInstances()
 {
 	InstancesFull.Clear();
 	InstancesWire.Clear();
-}
-void PolyHedraPalletManager::PlaceInstance(const PolyHedraObjectData & obj)
-{
-	if (obj.PalletManager == this)
+
+	for (unsigned int i = 0; i < ObjectDatas.Count(); i++)
 	{
-		if (obj.DrawFull)
-		{
-			InstancesFull.Insert(Instance::Basic3D::Data(obj.Trans));
-		}
-		if (obj.DrawWire)
-		{
-			InstancesWire.Insert(Instance::Basic3D::Data(obj.Trans));
-		}
+		PutInstance(ObjectDatas[i]);
 	}
+
+	RemoveObjects();
 }
 
 
@@ -117,6 +128,10 @@ void PolyHedraPalletManager::GraphicsCreate()
 		BufferFull.Create();
 		BufferWire.Create();
 		GraphicsExist = true;
+
+		BufferFull.MainBuffer.DataWant = true;
+		BufferWire.MainBuffer.DataWant = true;
+		BufferWire.ElemBuffer.DataWant = true;
 	}
 }
 void PolyHedraPalletManager::GraphicsDelete()
@@ -133,21 +148,22 @@ void PolyHedraPalletManager::GraphicsDelete()
 
 void PolyHedraPalletManager::UpdateFullBufferMain()
 {
-	if (!(!BufferFullMainBound && Pallet != nullptr && GraphicsExist)) { return; }
+	if (Pallet == nullptr) { return; }
 
+	if (BufferFull.MainBuffer.DataWant)
 	{
 		Pallet -> Calc_Face_Normals();
 		Container::Array<PolyHedraFull::Main::Data> data = Pallet -> ToMainData();
 		BufferFull.MainBuffer.DataFull(data.ToVoid());
-	}
 
-	TextureFull.Delete();
-	if (Pallet -> Skins.Count() == 1)
-	{
-		TextureFull = Pallet -> Skins[0] -> ToTexture();
-	}
+		TextureFull.Delete();
+		if (Pallet -> Skins.Count() == 1)
+		{
+			TextureFull = Pallet -> Skins[0] -> ToTexture();
+		}
 
-	BufferFullMainBound = true;
+		BufferFull.MainBuffer.DataWant = false;
+	}
 }
 void PolyHedraPalletManager::DrawFull()
 {
@@ -162,8 +178,9 @@ void PolyHedraPalletManager::DrawFull()
 
 void PolyHedraPalletManager::UpdateWireBufferMain()
 {
-	if (!(!BufferWireMainBound && Pallet != nullptr && GraphicsExist)) { return; }
+	if (Pallet == nullptr) { return; }
 
+	if (BufferWire.MainBuffer.DataWant)
 	{
 		Container::Binary<PolyHedraWire::Main::Data> data;
 		for (unsigned int i = 0; i < Pallet -> Corners.Count(); i++)
@@ -171,24 +188,14 @@ void PolyHedraPalletManager::UpdateWireBufferMain()
 			data.Insert(PolyHedraWire::Main::Data(Pallet -> Corners[i].Position, ColorF4(1, 1, 1)));
 		}
 		BufferWire.MainBuffer.DataFull(data.ToVoid());
-	}
-	{
-		/*Container::Binary<PolyHedra::Edge> data;
-		for (unsigned int i = 0; i < PolyHedra -> Faces.Count(); i++)
-		{
-			const PolyHedra::Face & face = PolyHedra -> Faces[i];
-			if (face.Check(PolyHedra -> Corners.Count()))
-			{
-				data.Insert(PolyHedra::Edge(face.udx[0], face.udx[1]));
-				data.Insert(PolyHedra::Edge(face.udx[1], face.udx[2]));
-				data.Insert(PolyHedra::Edge(face.udx[2], face.udx[0]));
-			}
-		}
-		BufferWire.Elem.Data(data);*/
-		BufferWire.ElemBuffer.DataFull(Pallet -> Edges.ToVoid());
+		BufferWire.MainBuffer.DataWant = false;
 	}
 
-	BufferWireMainBound = true;
+	if (BufferWire.ElemBuffer.DataWant)
+	{
+		BufferWire.ElemBuffer.DataFull(Pallet -> Edges.ToVoid());
+		BufferWire.ElemBuffer.DataWant = false;
+	}
 }
 void PolyHedraPalletManager::DrawWire()
 {

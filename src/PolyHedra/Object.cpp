@@ -60,24 +60,37 @@ PolyHedraObject::~PolyHedraObject()
 		{
 			delete Data;
 		}
-		Data = nullptr;
 	}
 }
 PolyHedraObject::PolyHedraObject()
 	: Data(nullptr)
 { }
 
-// dont copy in current, copy in same
 PolyHedraObject::PolyHedraObject(const PolyHedraObject & other)
-	: Data(PolyHedraManager::sCopyObject(other.Data))
-{ }
+	: Data(nullptr)
+{
+	if (other.Data != nullptr)
+	{
+		if (other.Data -> PalletManager != nullptr)
+		{
+			Data = other.Data -> PalletManager -> CopyObject(other.Data);
+		}
+	}
+}
 PolyHedraObject & PolyHedraObject::operator=(const PolyHedraObject & other)
 {
 	if (Data != nullptr)
 	{
 		Data -> Remove = true;
 	}
-	Data = PolyHedraManager::sCopyObject(other.Data);
+	Data = nullptr;
+	if (other.Data != nullptr)
+	{
+		if (other.Data -> PalletManager != nullptr)
+		{
+			Data = other.Data -> PalletManager -> CopyObject(other.Data);
+		}
+	}
 	return *this;
 }
 
@@ -85,12 +98,11 @@ PolyHedraObject & PolyHedraObject::operator=(const PolyHedraObject & other)
 
 
 
-// Data should be nullptr if no Current
 PolyHedraObject::PolyHedraObject(::PolyHedraPalletManager * pallet)
-	: Data(PolyHedraManager::sPlaceObject(pallet))
+	: Data(PolyHedraPalletManager::TryMakeObject(pallet))
 { }
 PolyHedraObject::PolyHedraObject(::PolyHedraPalletManager * pallet, Trans3D trans)
-	: Data(PolyHedraManager::sPlaceObject(pallet))
+	: Data(PolyHedraPalletManager::TryMakeObject(pallet))
 {
 	if (Data != nullptr)
 	{
@@ -101,10 +113,10 @@ PolyHedraObject::PolyHedraObject(::PolyHedraPalletManager * pallet, Trans3D tran
 
 
 PolyHedraObject::PolyHedraObject(::PolyHedra * pallet)
-	: Data(PolyHedraManager::sPlaceObject(pallet))
+	: Data(PolyHedraManager::TryMakeObject(nullptr, pallet))
 { }
 PolyHedraObject::PolyHedraObject(::PolyHedra * pallet, Trans3D trans)
-	: Data(PolyHedraManager::sPlaceObject(pallet))
+	: Data(PolyHedraManager::TryMakeObject(nullptr, pallet))
 {
 	if (Data != nullptr)
 	{
@@ -127,12 +139,12 @@ void PolyHedraObject::Delete()
 void PolyHedraObject::Create(::PolyHedraPalletManager * pallet)
 {
 	Delete();
-	Data = PolyHedraManager::sPlaceObject(pallet);
+	Data = PolyHedraManager::TryMakeObject(nullptr, pallet);
 }
 void PolyHedraObject::Create(::PolyHedra * pallet)
 {
 	Delete();
-	Data = PolyHedraManager::sPlaceObject(pallet);
+	Data = PolyHedraManager::TryMakeObject(nullptr, pallet);
 }
 
 
