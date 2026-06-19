@@ -2,6 +2,8 @@
 # define POLYHEDRA_PARSING_HPP
 
 # include "FileInfo.hpp"
+# include "FileParsing/Variables/Float.hpp"
+
 # include "PolyHedra/PolyHedra.hpp"
 //# include "FileParsing/ParsingCommand.hpp"
 //# include "FileParsing/Text/TextCommand.hpp"
@@ -18,6 +20,8 @@ struct PolyHedra::ParsingData
 
 	unsigned int	CornerOffset;
 	unsigned int	FaceOffset;
+
+	ParsingVariable::FloatMemory	VariableFloats;
 
 	~ParsingData();
 	ParsingData(const FileInfo & file, ::PolyHedra & polyhedra);

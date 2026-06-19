@@ -71,6 +71,8 @@ void PolyHedra::ParsingData::Parse(const TextCommand & cmd)
 		else if (name == "Type")	{ Parse_Type(cmd); }
 		else if (name == "Format")	{ Parse_Format(cmd); }
 
+		else if (name == "varFloat")	{ VariableFloats.Put(cmd); }
+
 		else if (name == "Name")	{ Parse_Name(cmd); }
 		else if (name == "Skin")	{ Parse_Skin(cmd); }
 
@@ -144,10 +146,11 @@ void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)
 	if (!(cmd.Count() == 3)) { throw InvalidCommandArgumentCount(cmd, "n == 3"); }
 	//Debug::Log << cmd << Debug::Done;
 
-	VectorF3 c;
-	c.X = cmd.ToFloat(0);
-	c.Y = cmd.ToFloat(1);
-	c.Z = cmd.ToFloat(2);
+	VectorF3 c(
+		VariableFloats.To(cmd, 0),
+		VariableFloats.To(cmd, 1),
+		VariableFloats.To(cmd, 2)
+	);
 	//std::cout << "c: " << c << "\n";
 	PolyHedra.Insert_Corn(Corner(c));
 }
@@ -319,11 +322,11 @@ void PolyHedra::ParsingData::Parse_CircleOLD(const TextCommand & cmd)
 	int step_off = cmd.ToInt32(1);
 
 	VectorF3 center(
-		cmd.ToFloat(2),
-		cmd.ToFloat(3),
-		cmd.ToFloat(4)
+		VariableFloats.To(cmd, 2),
+		VariableFloats.To(cmd, 3),
+		VariableFloats.To(cmd, 4)
 	);
-	float radius = cmd.ToFloat(5);
+	float radius = VariableFloats.To(cmd, 5);
 
 	/*Angle3D angle = Angle3D::FromVectorF3(VectorF3(
 		cmd.ToFloat(6),
@@ -364,11 +367,11 @@ void PolyHedra::ParsingData::Parse_Circle(const TextCommand & cmd, bool directio
 	int step_off = cmd.ToInt32(2);
 
 	VectorF3 center(
-		cmd.ToFloat(3),
-		cmd.ToFloat(4),
-		cmd.ToFloat(5)
+		VariableFloats.To(cmd, 3),
+		VariableFloats.To(cmd, 4),
+		VariableFloats.To(cmd, 5)
 	);
-	VectorF3 radius(cmd.ToFloat(6), 0, 0);
+	VectorF3 radius(VariableFloats.To(cmd, 6), 0, 0);
 
 	EulerAngle3D angle = EulerAngle3D::PointToZ(VectorF3(
 		cmd.ToFloat(7),
