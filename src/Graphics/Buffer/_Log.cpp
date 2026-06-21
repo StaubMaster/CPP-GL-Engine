@@ -8,7 +8,7 @@
 #include "Graphics/Buffer/Uniform.hpp"
 #include "Graphics/Buffer/VertexArray.hpp"
 
-#include "Graphics/Attribute/Layout.hpp"
+#include "Graphics/Attribute/General/Layout.hpp"
 
 
 

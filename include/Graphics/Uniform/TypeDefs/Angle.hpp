@@ -1,7 +1,7 @@
 #ifndef  UNI_ANGLE_HPP
 # define UNI_ANGLE_HPP
 
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
 struct Angle;
 

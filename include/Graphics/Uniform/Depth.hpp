@@ -1,7 +1,7 @@
 #ifndef  UNI_DEPTH_HPP
 # define UNI_DEPTH_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/DepthFactors.hpp"
 # include "Graphics/Uniform/Range.hpp"
 # include "Graphics/Uniform/TypeDefs/ColorF4.hpp"

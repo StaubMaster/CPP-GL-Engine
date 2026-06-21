@@ -1,7 +1,7 @@
 #ifndef  UNI_COLOR_F4_HPP
 # define UNI_COLOR_F4_HPP
 
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
 struct ColorF4;
 

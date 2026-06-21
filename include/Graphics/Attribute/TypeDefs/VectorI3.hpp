@@ -1,7 +1,7 @@
 #ifndef  ATTRIB_VECTOR_I_3_HPP
 # define ATTRIB_VECTOR_I_3_HPP
 
-# include "Graphics/Attribute/Base/IntN.hpp"
+# include "Graphics/Attribute/General/IntN.hpp"
 
 namespace Attribute
 {

@@ -2,11 +2,11 @@
 #include "Debug.hpp"
 #include <sstream>
 
-#include "Graphics/Attribute/Base/Base.hpp"
-#include "Graphics/Attribute/Base/FloatNBase.hpp"
-#include "Graphics/Attribute/Base/UIntNBase.hpp"
-#include "Graphics/Attribute/Base/IntNBase.hpp"
-#include "Graphics/Attribute/Layout.hpp"
+#include "Graphics/Attribute/General/Base.hpp"
+#include "Graphics/Attribute/General/FloatNBase.hpp"
+#include "Graphics/Attribute/General/UIntNBase.hpp"
+#include "Graphics/Attribute/General/IntNBase.hpp"
+#include "Graphics/Attribute/General/Layout.hpp"
 
 
 

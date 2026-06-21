@@ -95,13 +95,14 @@ SHADER_SRC := $(addprefix $(DIR_SRC)/,$(SHADER))
 SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
 
 UNIFORM := \
-	Graphics/Uniform/Base/Base.cpp \
-	Graphics/Uniform/Base/FloatNBase.cpp \
-	Graphics/Uniform/Base/FloatNTypeBase.cpp \
-	Graphics/Uniform/Base/UIntNBase.cpp \
-	Graphics/Uniform/Base/UIntNTypeBase.cpp \
+	Graphics/Uniform/General/Base.cpp \
+	Graphics/Uniform/General/FloatNBase.cpp \
+	Graphics/Uniform/General/FloatNTypeBase.cpp \
+	Graphics/Uniform/General/UIntNBase.cpp \
+	Graphics/Uniform/General/UIntNTypeBase.cpp \
 \
-	Graphics/Uniform/Buffer.cpp \
+	Graphics/Uniform/General/Layout.cpp \
+	Graphics/Uniform/General/Buffer.cpp \
 \
 	Graphics/Uniform/Trans2D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
@@ -116,15 +117,14 @@ UNIFORM := \
 	Graphics/Uniform/PixelSize.cpp \
 	Graphics/Uniform/DisplaySize.cpp \
 \
-	Graphics/Uniform/Layout.cpp \
 	Graphics/Uniform/_Log.cpp
 
 UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))
 UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
 
 MULTIFORM := \
-	Graphics/Multiform/Base/Base.cpp \
-	Graphics/Multiform/Layout.cpp \
+	Graphics/Multiform/General/Base.cpp \
+	Graphics/Multiform/General/Layout.cpp \
 
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
 MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
@@ -141,10 +141,10 @@ BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
 BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
 
 ATTRIBUTE := \
-	Graphics/Attribute/Base/Base.cpp \
-	Graphics/Attribute/Base/FloatNBase.cpp \
-	Graphics/Attribute/Base/UIntNBase.cpp \
-	Graphics/Attribute/Base/IntNBase.cpp \
+	Graphics/Attribute/General/Base.cpp \
+	Graphics/Attribute/General/FloatNBase.cpp \
+	Graphics/Attribute/General/UIntNBase.cpp \
+	Graphics/Attribute/General/IntNBase.cpp \
 \
 	Graphics/Attribute/BoxF2.cpp \
 \

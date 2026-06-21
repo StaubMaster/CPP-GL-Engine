@@ -1,7 +1,7 @@
 #ifndef  ATTRIB_BOX_F_2_HPP
 # define ATTRIB_BOX_F_2_HPP
 
-# include "Graphics/Attribute/Base/Base.hpp"
+# include "Graphics/Attribute/General/Base.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF2.hpp"
 
 namespace Attribute

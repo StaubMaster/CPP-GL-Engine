@@ -1,7 +1,7 @@
 #ifndef  UNI_ASPECT_RATIO_HPP
 # define UNI_ASPECT_RATIO_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/VectorF2.hpp"
 
 struct AspectRatio;

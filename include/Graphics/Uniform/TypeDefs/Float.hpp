@@ -1,7 +1,7 @@
 #ifndef  UNI_FLOAT_HPP
 # define UNI_FLOAT_HPP
 
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
 namespace Uniform
 {

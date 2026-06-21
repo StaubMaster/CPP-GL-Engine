@@ -1,6 +1,6 @@
 #include "Graphics/Shader/Base.hpp"
 #include "Graphics/Shader/Code.hpp"
-#include "Graphics/Uniform/Layout.hpp"
+#include "Graphics/Uniform/General/Layout.hpp"
 
 #include "OpenGL.hpp"
 #include "Debug.hpp"

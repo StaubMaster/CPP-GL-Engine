@@ -1,7 +1,7 @@
 #ifndef  MULTIFORMS_INCLUDE_HPP
 # define MULTIFORMS_INCLUDE_HPP
 
-# include "Graphics/Multiform/Base/Base.hpp"
+# include "Graphics/Multiform/General/Base.hpp"
 
 # include "Graphics/Multiform/TypeDefs/Float.hpp"
 

@@ -5,8 +5,8 @@
 #include "Graphics/Shader/Base.hpp"
 #include "Graphics/Shader/Code.hpp"
 
-#include "Graphics/Uniform/Base/Base.hpp"
-#include "Graphics/Uniform/Layout.hpp"
+#include "Graphics/Uniform/General/Base.hpp"
+#include "Graphics/Uniform/General/Layout.hpp"
 
 
 

@@ -1,7 +1,7 @@
 #ifndef  UNI_TRANS_2D_HPP
 # define UNI_TRANS_2D_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/VectorF2.hpp"
 # include "Graphics/Uniform/TypeDefs/Matrix2x2.hpp"
 

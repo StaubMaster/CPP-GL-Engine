@@ -1,7 +1,7 @@
 #ifndef  UNI_UINT_HPP
 # define UNI_UINT_HPP
 
-# include "Graphics/Uniform/Base/UIntNTypeBase.hpp"
+# include "Graphics/Uniform/General/UIntNTypeBase.hpp"
 
 namespace Uniform
 {

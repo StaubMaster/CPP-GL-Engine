@@ -1,7 +1,7 @@
 #ifndef  MULTIFORM_FLOAT_HPP
 # define MULTIFORM_FLOAT_HPP
 
-# include "Graphics/Multiform/Base/GBase.hpp"
+# include "Graphics/Multiform/General/GBase.hpp"
 
 namespace Multiform
 {

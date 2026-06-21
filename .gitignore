@@ -12,3 +12,7 @@ obj/
 
 #	Log Files
 logs/
+
+#	Visual Studio
+.vs/
+.vscode/

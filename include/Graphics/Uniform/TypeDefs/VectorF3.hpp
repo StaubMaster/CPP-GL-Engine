@@ -1,8 +1,8 @@
 #ifndef  UNI_POINT_3D_HPP
 # define UNI_POINT_3D_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
 struct VectorF3;
 

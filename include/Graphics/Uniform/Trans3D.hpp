@@ -1,7 +1,7 @@
 #ifndef  UNI_TRANS_3D_HPP
 # define UNI_TRANS_3D_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/VectorF3.hpp"
 //# include "Graphics/Uniform/Angle3D.hpp"
 # include "Graphics/Uniform/TypeDefs/Matrix3x3.hpp"

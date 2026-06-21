@@ -1,7 +1,7 @@
 #ifndef  POLYHEDRA_GRAPHICS_FULL_MAIN_LAYOUT_HPP
 # define POLYHEDRA_GRAPHICS_FULL_MAIN_LAYOUT_HPP
 
-# include "Graphics/Attribute/Layout.hpp"
+# include "Graphics/Attribute/General/Layout.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF3.hpp"
 
 namespace PolyHedraFull

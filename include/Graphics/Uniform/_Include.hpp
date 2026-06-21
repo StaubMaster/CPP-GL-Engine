@@ -1,15 +1,15 @@
 #ifndef  UNIFORMS_INCLUDE_HPP
 # define UNIFORMS_INCLUDE_HPP
 
-# include "Graphics/Uniform/Base/Base.hpp"
-# include "Graphics/Uniform/Base/GBase.hpp"
-# include "Graphics/Uniform/Base/GArray.hpp"
+# include "Graphics/Uniform/General/Base.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
+# include "Graphics/Uniform/General/GArray.hpp"
 
-# include "Graphics/Uniform/Base/FloatNBase.hpp"
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
-# include "Graphics/Uniform/Base/UIntNBase.hpp"
-# include "Graphics/Uniform/Base/UIntNTypeBase.hpp"
+# include "Graphics/Uniform/General/UIntNBase.hpp"
+# include "Graphics/Uniform/General/UIntNTypeBase.hpp"
 
 # include "Graphics/Uniform/TypeDefs/Float.hpp"
 # include "Graphics/Uniform/TypeDefs/UInt.hpp"

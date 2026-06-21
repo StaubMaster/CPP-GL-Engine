@@ -1,7 +1,7 @@
 #ifndef  UNI_PIXEL_SIZE_HPP
 # define UNI_PIXEL_SIZE_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/VectorF2.hpp"
 
 struct PixelSize;

@@ -1,7 +1,7 @@
 #ifndef  INSTANCE_BASIC_2D_LAYOUT_HPP
 # define INSTANCE_BASIC_2D_LAYOUT_HPP
 
-# include "Graphics/Attribute/Layout.hpp"
+# include "Graphics/Attribute/General/Layout.hpp"
 # include "Graphics/Attribute/TypeDefs/Matrix3x3.hpp"
 
 namespace Instance

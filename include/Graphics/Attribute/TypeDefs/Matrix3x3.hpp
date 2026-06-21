@@ -1,7 +1,7 @@
 #ifndef  ATTRIB_MATRIX_3_3_HPP
 # define ATTRIB_MATRIX_3_3_HPP
 
-# include "Graphics/Attribute/Base/FloatN.hpp"
+# include "Graphics/Attribute/General/FloatN.hpp"
 
 namespace Attribute
 {

@@ -1,7 +1,7 @@
 #ifndef  UNI_DISPLAY_SIZE_HPP
 # define UNI_DISPLAY_SIZE_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/AspectRatio.hpp"
 # include "Graphics/Uniform/PixelSize.hpp"
 

@@ -1,6 +1,6 @@
 #include "Graphics/Buffer/Array.hpp"
 
-#include "Graphics/Attribute/Layout.hpp"
+#include "Graphics/Attribute/General/Layout.hpp"
 
 
 

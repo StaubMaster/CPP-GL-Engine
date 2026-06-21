@@ -6,7 +6,7 @@
 # include "Graphics/Attribute/VectorF4.hpp"
 # include "Graphics/Attribute/VectorF3.hpp"
 # include "Graphics/Attribute/ColorF4.hpp"
-# include "Graphics/Attribute/Base/Float1.hpp"
+# include "Graphics/Attribute/General/Float1.hpp"
 
 namespace BufferArray { class Base; };
 

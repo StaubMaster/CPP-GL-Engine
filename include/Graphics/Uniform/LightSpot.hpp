@@ -1,7 +1,7 @@
 #ifndef  UNI_LIGHT_SPOT_HPP
 # define UNI_LIGHT_SPOT_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/LightBase.hpp"
 # include "Graphics/Uniform/TypeDefs/VectorF3.hpp"
 # include "Graphics/Uniform/Range.hpp"

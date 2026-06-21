@@ -1,7 +1,7 @@
 #ifndef  UNI_MATRIX_2_2_HPP
 # define UNI_MATRIX_2_2_HPP
 
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
 struct Matrix2x2;
 

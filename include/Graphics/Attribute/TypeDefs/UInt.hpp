@@ -1,7 +1,7 @@
 #ifndef  ATTRIB_UINT_HPP
 # define ATTRIB_UINT_HPP
 
-# include "Graphics/Attribute/Base/UIntN.hpp"
+# include "Graphics/Attribute/General/UIntN.hpp"
 
 namespace Attribute
 {

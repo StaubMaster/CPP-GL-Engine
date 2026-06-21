@@ -1,7 +1,7 @@
 #ifndef  UNI_DEPTH_FACTORS_HPP
 # define UNI_DEPTH_FACTORS_HPP
 
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
 struct DepthFactors;
 

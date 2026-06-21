@@ -1,7 +1,7 @@
 #ifndef  POLYGON_GRAPHICS_WIRE_MAIN_LAYOUT_HPP
 # define POLYGON_GRAPHICS_WIRE_MAIN_LAYOUT_HPP
 
-# include "Graphics/Attribute/Layout.hpp"
+# include "Graphics/Attribute/General/Layout.hpp"
 # include "Graphics/Attribute/TypeDefs/VectorF2.hpp"
 # include "Graphics/Attribute/TypeDefs/ColorF4.hpp"
 

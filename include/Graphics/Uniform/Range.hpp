@@ -1,7 +1,7 @@
 #ifndef  UNI_RANGE_HPP
 # define UNI_RANGE_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/Float.hpp"
 
 struct Range;

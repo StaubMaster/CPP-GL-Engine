@@ -1,11 +1,11 @@
 #ifndef  ATTRIBUTES_INCLUDE_HPP
 # define ATTRIBUTES_INCLUDE_HPP
 
-# include "Graphics/Attribute/Base/Base.hpp"
-# include "Graphics/Attribute/Base/FloatNBase.hpp"
-# include "Graphics/Attribute/Base/FloatN.hpp"
-# include "Graphics/Attribute/Base/UIntNBase.hpp"
-# include "Graphics/Attribute/Base/UIntN.hpp"
+# include "Graphics/Attribute/General/Base.hpp"
+# include "Graphics/Attribute/General/FloatNBase.hpp"
+# include "Graphics/Attribute/General/FloatN.hpp"
+# include "Graphics/Attribute/General/UIntNBase.hpp"
+# include "Graphics/Attribute/General/UIntN.hpp"
 
 # include "Graphics/Attribute/TypeDefs/Float.hpp"
 # include "Graphics/Attribute/TypeDefs/UInt.hpp"

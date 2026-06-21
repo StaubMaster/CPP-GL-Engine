@@ -1,7 +1,7 @@
 #ifndef  ATTRIB_FLOAT_HPP
 # define ATTRIB_FLOAT_HPP
 
-# include "Graphics/Attribute/Base/FloatN.hpp"
+# include "Graphics/Attribute/General/FloatN.hpp"
 
 namespace Attribute
 {

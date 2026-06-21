@@ -1,5 +1,5 @@
-#include "Graphics/Attribute/Layout.hpp"
-#include "Graphics/Attribute/Base/Base.hpp"
+#include "Graphics/Attribute/General/Layout.hpp"
+#include "Graphics/Attribute/General/Base.hpp"
 
 
 

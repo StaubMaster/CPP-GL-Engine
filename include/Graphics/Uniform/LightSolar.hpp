@@ -1,7 +1,7 @@
 #ifndef  UNI_LIGHT_SOLAR_HPP
 # define UNI_LIGHT_SOLAR_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/LightBase.hpp"
 # include "Graphics/Uniform/TypeDefs/VectorF3.hpp"
 

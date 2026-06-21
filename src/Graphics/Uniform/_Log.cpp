@@ -2,10 +2,10 @@
 #include "Debug.hpp"
 #include <sstream>
 
-#include "Graphics/Uniform/Base/Base.hpp"
-#include "Graphics/Uniform/Base/FloatNBase.hpp"
-#include "Graphics/Uniform/Base/UIntNBase.hpp"
-#include "Graphics/Uniform/Layout.hpp"
+#include "Graphics/Uniform/General/Base.hpp"
+#include "Graphics/Uniform/General/FloatNBase.hpp"
+#include "Graphics/Uniform/General/UIntNBase.hpp"
+#include "Graphics/Uniform/General/Layout.hpp"
 
 
 

@@ -1,7 +1,7 @@
 #ifndef  UNI_MATRIX_3_3_HPP
 # define UNI_MATRIX_3_3_HPP
 
-# include "Graphics/Uniform/Base/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
 
 struct Matrix3x3;
 

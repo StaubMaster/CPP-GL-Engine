@@ -1,7 +1,7 @@
 #ifndef  ATTRIB_COLOR_F4_HPP
 # define ATTRIB_COLOR_F4_HPP
 
-# include "Graphics/Attribute/Base/FloatN.hpp"
+# include "Graphics/Attribute/General/FloatN.hpp"
 
 namespace Attribute
 {

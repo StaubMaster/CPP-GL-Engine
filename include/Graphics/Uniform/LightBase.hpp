@@ -1,7 +1,7 @@
 #ifndef  UNI_LIGHT_BASE_HPP
 # define UNI_LIGHT_BASE_HPP
 
-# include "Graphics/Uniform/Base/GBase.hpp"
+# include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/Float.hpp"
 # include "Graphics/Uniform/TypeDefs/ColorF4.hpp"
 
