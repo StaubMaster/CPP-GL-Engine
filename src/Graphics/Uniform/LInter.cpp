@@ -3,10 +3,10 @@
 
 
 
-Uniform::LInter::LInter(Uniform::Layout & layout,  std::string name)
+Uniform::LInter::LInter(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
-	, T0(layout, name + ".T0")
-	, T1(layout, name + ".T1")
+	, T0(layout, Name + ".T0")
+	, T1(layout, Name + ".T1")
 { }
 
 

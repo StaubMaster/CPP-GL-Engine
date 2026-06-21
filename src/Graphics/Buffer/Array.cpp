@@ -6,26 +6,12 @@
 
 Buffer::Array::~Array()
 { }
-Buffer::Array::Array(::VertexArray & vertex_array, GL::BufferDataUsage usage)
-	: Buffer::Base(vertex_array, GL::BufferTarget::ArrayBuffer, usage)
+Buffer::Array::Array(GL::BufferDataUsage usage)
+	: Buffer::Base(GL::BufferTarget::ArrayBuffer, usage)
 	, Count(0)
 	, AttributesBound(false)
 	, AttributeLayout(nullptr)
 { }
-Buffer::Array::Array(::VertexArray & vertex_array, const Array & other)
-	: Buffer::Base(vertex_array, other)
-	, Count(other.Count)
-	, AttributesBound(other.AttributesBound)
-	, AttributeLayout(other.AttributeLayout)
-{ }
-Buffer::Array & Buffer::Array::operator=(const Array & other)
-{
-	Base::operator=(other);
-	Count = other.Count;
-	AttributesBound = other.AttributesBound;
-	AttributeLayout = other.AttributeLayout;
-	return *this;
-}
 
 
 

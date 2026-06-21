@@ -3,7 +3,7 @@
 
 
 
-Uniform::AspectRatio::AspectRatio(Uniform::Layout & layout,  std::string name)
+Uniform::AspectRatio::AspectRatio(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Value(layout, name)
 { }

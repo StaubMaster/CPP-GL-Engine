@@ -23,13 +23,13 @@ class Main : public VertexArray
 	GL::DrawMode		Mode;
 
 	public:
-	Container::Binary<Texture::Base *>	Textures;
+	//Container::Binary<Texture::Base *>	Textures;
 
 	public:
 	virtual ~Main() { }
 	Main()
 		: VertexArray()
-		, MainBuffer(*this, usage_main)
+		, MainBuffer(usage_main)
 		, Mode(mode)
 	{
 		Buffers.Insert(&MainBuffer);
@@ -38,7 +38,7 @@ class Main : public VertexArray
 
 	Main(const Main & other)
 		: VertexArray(other)
-		, MainBuffer(*this, other.MainBuffer)
+		, MainBuffer(other.MainBuffer)
 		, Mode(other.Mode)
 	{
 		Buffers.Insert(&MainBuffer);
@@ -55,10 +55,10 @@ class Main : public VertexArray
 	public:
 	void Draw()
 	{
-		for (unsigned int i = 0; i < Textures.Count(); i++)
+		/*for (unsigned int i = 0; i < Textures.Count(); i++)
 		{
 			Textures[i] -> Bind();
-		}
+		}*/
 		Bind();
 		GL::DrawArrays(Mode, 0, MainBuffer.Count);
 	}

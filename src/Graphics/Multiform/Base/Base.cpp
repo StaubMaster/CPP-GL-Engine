@@ -13,7 +13,7 @@ Multiform::Base::~Base()
 
 
 
-void Multiform::Base::FindUniforms(Uniform::Layout & layout)
+/*void Multiform::Base::FindUniforms(Uniform::Layout & layout)
 {
 	for (unsigned int u = 0; u < layout.Uniforms.Count(); u++)
 	{
@@ -24,11 +24,12 @@ void Multiform::Base::FindUniforms(Uniform::Layout & layout)
 			Uniforms.Insert(uni);
 		}
 	}
-}
+}*/
 void Multiform::Base::FindUniforms(Container::Array<Uniform::Layout *> & layouts)
 {
-	for (unsigned int s = 0; s < layouts.Length(); s++)
+	for (unsigned int i = 0; i < layouts.Length(); i++)
 	{
-		FindUniforms(*layouts[s]);
+		layouts[i] -> Find(*this);
+		//FindUniforms(*layouts[s]);
 	}
 }

@@ -16,7 +16,7 @@ class Range : public Uniform::GBase<::Range>
 	Uniform::Float Max;
 
 	public:
-	Range(Uniform::Layout & layout,  std::string name);
+	Range(Uniform::Layout & layout, std::string name);
 
 	public:
 	void Put(const ::Range & obj) override;

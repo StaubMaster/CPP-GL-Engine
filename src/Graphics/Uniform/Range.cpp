@@ -3,11 +3,11 @@
 
 
 
-Uniform::Range::Range(Uniform::Layout & layout,  std::string name)
+Uniform::Range::Range(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
-	, Min(layout, name + ".Min")
-	, Len(layout, name + ".Len")
-	, Max(layout, name + ".Max")
+	, Min(layout, Name + ".Min")
+	, Len(layout, Name + ".Len")
+	, Max(layout, Name + ".Max")
 { }
 
 

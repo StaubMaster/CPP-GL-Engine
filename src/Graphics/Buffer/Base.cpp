@@ -1,5 +1,4 @@
 #include "Graphics/Buffer/Base.hpp"
-#include "Graphics/Buffer/VertexArray.hpp"
 #include "OpenGL.hpp"
 
 
@@ -7,34 +6,15 @@
 Buffer::Base::~Base()
 { }
 Buffer::Base::Base(
-	::VertexArray & vertex_array,
 	GL::BufferTarget target,
 	GL::BufferDataUsage usage
-)	: VertexArray(vertex_array)
-	, Target(target)
+)
+	: Target(target)
 	, Usage(usage)
 	, ID(0)
 	, DataWant(false)
 	, DataHave(false)
 { }
-
-Buffer::Base::Base(::VertexArray & vertex_array, const Base & other)
-	: VertexArray(vertex_array)
-	, Target(other.Target)
-	, Usage(other.Usage)
-	, ID(other.ID)
-	, DataWant(other.DataWant)
-	, DataHave(other.DataHave)
-{ }
-Buffer::Base & Buffer::Base::operator=(const Base & other)
-{
-	Target = other.Target;
-	Usage = other.Usage;
-	ID = other.ID;
-	DataWant = other.DataWant;
-	DataHave = other.DataHave;
-	return *this;
-}
 
 
 
@@ -64,9 +44,10 @@ void Buffer::Base::Delete()
 	//Debug::Log << "Buffer::Base Deleting " << ID << " done" << Debug::Done;
 }
 
+
+
 void Buffer::Base::Bind()
 {
-	VertexArray.Bind();
 	GL::BindBuffer(Target, ID);
 }
 
@@ -74,6 +55,10 @@ void Buffer::Base::Bind()
 
 void Buffer::Base::Update() { }
 void Buffer::Base::NewSize(unsigned int size) { (void)size; }
+
+
+
+#include "Miscellaneous/Container/Void.hpp"
 
 void Buffer::Base::DataNull()
 {
@@ -98,6 +83,7 @@ void Buffer::Base::DataPart(unsigned int offset, const Container::Void & data)
 	Bind();
 	GL::BufferSubData(Target, offset, data.Size, data.Data);
 }
+
 void * Buffer::Base::DataMap()
 {
 	return GL::MapBuffer(Target, GL::BufferAccess::ReadWrite);

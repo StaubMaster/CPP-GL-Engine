@@ -3,8 +3,6 @@
 
 # include "OpenGLTypes.hpp"
 
-class VertexArray;
-
 namespace Container { class Void; };
 
 namespace Buffer
@@ -12,7 +10,6 @@ namespace Buffer
 class Base
 {
 	protected:
-	::VertexArray &			VertexArray;
 	GL::BufferTarget		Target;
 	GL::BufferDataUsage		Usage;
 	GL::BufferID			ID;
@@ -22,36 +19,36 @@ class Base
 	bool	DataHave;
 
 	public:
-	virtual void LogInfo(bool self = true) const;
-
-	public:
 	virtual ~Base();
 	Base() = delete;
-	Base(::VertexArray & vertex_array, GL::BufferTarget target, GL::BufferDataUsage usage);
+	Base(::GL::BufferTarget target, GL::BufferDataUsage usage);
 
-	Base(const Base & other) = delete;
-	Base(::VertexArray & vertex_array, const Base & other);
-	Base & operator=(const Base & other);
+	Base(const Base & other) = default;
+	Base & operator=(const Base & other) = default;
 
 	public:
 	bool	Exists() const;
 	void	Create();
 	void	Delete();
 
-	void	Bind();
-
-
-
 	public:
-	virtual void	Update();
-	virtual void	NewSize(unsigned int size);
+	void	Bind();
 
 	public:
 	void	DataNull();
 	void	DataFull(unsigned int size);
 	void	DataFull(const Container::Void & data);
 	void	DataPart(unsigned int offset, const Container::Void & data);
+
+	public:
 	void *	DataMap();
+
+	public:
+	virtual void	Update();
+	virtual void	NewSize(unsigned int size);
+
+	public:
+	virtual void	LogInfo(bool self = true) const;
 };
 };
 

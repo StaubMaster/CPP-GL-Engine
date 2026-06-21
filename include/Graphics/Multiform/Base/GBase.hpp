@@ -36,11 +36,11 @@ class GBase : public Base
 		Data = data;
 		for (unsigned int i = 0; i < Uniforms.Count(); i++)
 		{
-			if (Uniforms[i] -> Layout.Shader -> IsBound())
+			/*if (Uniforms[i] -> Layout.Shader -> IsBound())
 			{
 				PutData(*Uniforms[i]);
 			}
-			else
+			else*/
 			{
 				Uniforms[i] -> Multiform = this;
 			}

@@ -3,11 +3,11 @@
 
 
 
-Uniform::Depth::Depth(Uniform::Layout & layout,  std::string name)
+Uniform::Depth::Depth(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
-	, Factors(layout, name + ".Factors")
-	, Range(layout, name + ".Range")
-	, Color(layout, name + ".Color")
+	, Factors(layout, Name + ".Factors")
+	, Range(layout, Name + ".Range")
+	, Color(layout, Name + ".Color")
 { }
 
 

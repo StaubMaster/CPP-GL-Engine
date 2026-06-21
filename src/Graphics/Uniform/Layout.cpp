@@ -8,13 +8,13 @@
 Uniform::Layout::~Layout()
 { }
 Uniform::Layout::Layout()
-	: Uniforms()
-	, Shader(nullptr)
+//	: Uniforms()
+	: Shader(nullptr)
 { }
 
 Uniform::Layout::Layout(const Layout & other)
-	: Uniforms(other.Uniforms)
-	, Shader(other.Shader)
+//	: Uniforms(other.Uniforms)
+	: Shader(other.Shader)
 { }
 
 
@@ -37,25 +37,96 @@ void Uniform::Layout::Bind()
 
 
 
+void Uniform::Layout::UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding)
+{
+	if (Shader != nullptr)
+	{
+		Shader -> UniformBlockBinding(index, binding);
+	}
+}
+
+
+
+void Uniform::Layout::UpdateData()
+{
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		Uniforms[i] -> UpdateData();
+	}
+}
+
+
+
+
+#include "Graphics/Uniform/Base/FloatNBase.hpp"
+#include "Graphics/Uniform/Base/UIntNTypeBase.hpp"
+#include "Graphics/Uniform/Buffer.hpp"
+
+void Uniform::Layout::Find(FloatNBase * uniform) const
+{
+	if (uniform != nullptr)
+	{
+		if (Shader != nullptr)
+		{
+			uniform -> Index = Shader -> UniformLocation(uniform -> Name.c_str());
+		}
+		else
+		{
+			uniform -> Index = -1;
+		}
+	}
+}
+void Uniform::Layout::Find(UIntNBase * uniform) const
+{
+	if (uniform != nullptr)
+	{
+		if (Shader != nullptr)
+		{
+			uniform -> Index = Shader -> UniformLocation(uniform -> Name.c_str());
+		}
+		else
+		{
+			uniform -> Index = -1;
+		}
+	}
+}
+void Uniform::Layout::Find(Buffer * uniform) const
+{
+	if (uniform != nullptr)
+	{
+		if (Shader != nullptr)
+		{
+			uniform -> Index = Shader -> UniformBlockIndex(uniform -> Name.c_str());
+		}
+		else
+		{
+			uniform -> Index = -1;
+		}
+	}
+}
+
 void Uniform::Layout::Find()
 {
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
-		Uniforms[i] -> ReLocate();
+		Uniform::Base * uniform = Uniforms[i];
+		Find(dynamic_cast<Uniform::FloatNBase*>(uniform));
+		Find(dynamic_cast<Uniform::UIntNBase*>(uniform));
+		Find(dynamic_cast<Uniform::Buffer*>(uniform));
 	}
 }
-void Uniform::Layout::PutMultiformData()
+
+
+
+#include "Graphics/Multiform/Base/Base.hpp"
+void Uniform::Layout::Find(Multiform::Base & multiform)
 {
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
-		Uniforms[i] -> PutMultiformData();
+		Uniform::Base * uniform = Uniforms[i];
+		if (multiform.Name == uniform -> Name)
+		{
+			multiform.Uniforms.Insert(uniform);
+		}
 	}
-}
-int Uniform::Layout::LocateUniform(const char * name) const
-{
-	if (Shader != nullptr)
-	{
-		return Shader -> LocateUniform(name);
-	}
-	return -1;
 }

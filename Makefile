@@ -101,6 +101,8 @@ UNIFORM := \
 	Graphics/Uniform/Base/UIntNBase.cpp \
 	Graphics/Uniform/Base/UIntNTypeBase.cpp \
 \
+	Graphics/Uniform/Buffer.cpp \
+\
 	Graphics/Uniform/Trans2D.cpp \
 	Graphics/Uniform/Trans3D.cpp \
 \
@@ -131,6 +133,7 @@ BUFFER := \
 	Graphics/Buffer/Base.cpp \
 	Graphics/Buffer/Array.cpp \
 	Graphics/Buffer/Element.cpp \
+	Graphics/Buffer/Uniform.cpp \
 	Graphics/Buffer/VertexArray.cpp \
 	Graphics/Buffer/_Log.cpp \
 

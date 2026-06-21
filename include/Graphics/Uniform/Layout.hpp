@@ -6,17 +6,22 @@
 # include "OpenGLEnums.hpp"
 
 namespace Shader { class Base; };
+namespace Multiform { class Base; };
+
 namespace Uniform
 {
 class Base;
+class FloatNBase;
+class UIntNBase;
+class Buffer;
 class Layout
 {
 	public:
 	void	LogInfo() const;
 
 	public:
-	Container::Binary<::Uniform::Base*>	Uniforms;
-	::Shader::Base *					Shader;
+	Container::Binary<::Uniform::Base*>		Uniforms;
+	::Shader::Base *						Shader;
 
 	public:
 	virtual ~Layout();
@@ -30,9 +35,19 @@ class Layout
 	void	Bind();
 
 	public:
+	void	UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding);
+
+	public:
+	void	UpdateData();
+
+	private:
+	void	Find(FloatNBase * uniform) const;
+	void	Find(UIntNBase * uniform) const;
+	void	Find(Buffer * uniform) const;
+
+	public:
 	void	Find();
-	void	PutMultiformData();
-	int		LocateUniform(const char * name) const;
+	void	Find(Multiform::Base & multiform);
 };
 };
 

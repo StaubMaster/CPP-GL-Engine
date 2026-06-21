@@ -17,7 +17,7 @@ class DisplaySize : public Uniform::GBase<::DisplaySize>
 	Uniform::PixelSize		Buffer;
 
 	public:
-	DisplaySize(Uniform::Layout & layout,  std::string name);
+	DisplaySize(Uniform::Layout & layout, std::string name);
 
 	public:
 	void Put(const ::DisplaySize & obj) override;

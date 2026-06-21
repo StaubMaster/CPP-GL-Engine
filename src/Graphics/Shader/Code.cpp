@@ -59,9 +59,9 @@ void Shader::Code::Compile()
 		std::string code = File.LoadText();
 		const char * strs[1];
 		strs[0] = code.c_str();
-		glShaderSource(ID, 1, strs, NULL);
+		GL::ShaderSource(ID, 1, strs, NULL);
 	}
-	glCompileShader(ID);
+	GL::CompileShader(ID);
 
 	/*char log_arr[1024];
 	int log_len = 0;
@@ -77,13 +77,13 @@ void Shader::Code::Compile()
 void Shader::Code::Attach(GL::ShaderID ProgramID) const
 {
 	//Debug::Log << "Shader::Code Attaching " << ID << " to " << ProgramID << " ..." << Debug::Done;
-	glAttachShader(ProgramID, ID);
+	GL::AttachShader(ProgramID, ID);
 	//Debug::Log << "Shader::Code Attaching " << ID << " to " << ProgramID << " done" << Debug::Done;
 }
 void Shader::Code::Detach(GL::ShaderID ProgramID) const
 {
 	//Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " ..." << Debug::Done;
-	glDetachShader(ProgramID, ID);
+	GL::DetachShader(ProgramID, ID);
 	//Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " done" << Debug::Done;
 }
 

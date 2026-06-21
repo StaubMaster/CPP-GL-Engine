@@ -12,16 +12,9 @@ Uniform::FloatNBase::FloatNBase(Uniform::Layout & layout, std::string name)
 
 void Uniform::FloatNBase::PutVoid(const void * val)
 {
-	if (!Layout.IsBound())
+	/*if (!Layout.IsBound())
 	{
 		Layout.Bind();
-	}
+	}*/
 	PutData((const float *)val);
-}
-
-
-
-void Uniform::FloatNBase::ReLocate()
-{
-	Index = Locate();
 }

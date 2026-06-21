@@ -19,7 +19,7 @@ class LightSpot : public Uniform::GBase<::LightSpot>
 	Uniform::Range		Range;
 
 	public:
-	LightSpot(Uniform::Layout & layout,  std::string name);
+	LightSpot(Uniform::Layout & layout, std::string name);
 
 	public:
 	void Put(const ::LightSpot & obj) override;

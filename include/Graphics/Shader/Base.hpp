@@ -45,29 +45,33 @@ class Base
 
 
 	public:
-	bool IsBound() const;
-	void Bind();
+	bool	IsBound() const;
+	void	Bind();
 
-	static GL::ShaderID Bound();
-	static void BindNone();
-
-
-
-	public:
-	bool Validate() const;
-	bool Exists() const;
-	void Delete();
-	void Create();
-
-	void Change(const Container::Array<Shader::Code> & code);
-	void Change(const Container::Array<FileInfo> & files);
-	void Change(std::initializer_list<Shader::Code> code);
-	void Change(std::initializer_list<FileInfo> files);
+	static GL::ShaderID	Bound();
+	static void			BindNone();
 
 
 
 	public:
-	int LocateUniform(const char * name);
+	bool	Validate() const;
+	bool	Exists() const;
+	void	Delete();
+	void	Create();
+
+	void	Change(const Container::Array<Shader::Code> & code);
+	void	Change(const Container::Array<FileInfo> & files);
+	void	Change(std::initializer_list<Shader::Code> code);
+	void	Change(std::initializer_list<FileInfo> files);
+
+
+
+	public:
+	// return UniformLocation
+	GL::UniformLocation		UniformLocation(const char * name) const;
+	GL::BlockIndex			UniformBlockIndex(const char * name) const;
+
+	void	UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding);
 
 
 

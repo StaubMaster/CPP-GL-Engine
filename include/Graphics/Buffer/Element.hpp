@@ -15,19 +15,18 @@ class Element : public Base
 	unsigned int			Count;
 
 	public:
-	void LogInfo(bool self = true) const override;
-
-	public:
-	virtual ~Element();
+	~Element();
 	Element() = delete;
-	Element(::VertexArray & vertex_array, GL::BufferDataUsage usage, GL::DrawIndexType index_type);
+	Element(GL::BufferDataUsage usage, GL::DrawIndexType index_type);
 
-	Element(const Element & other) = delete;
-	Element(::VertexArray & vertex_array, const Element & other);
-	Element & operator=(const Element & other);
+	Element(const Element & other) = default;
+	Element & operator=(const Element & other) = default;
 
 	public:
 	void	NewSize(unsigned int size) override;
+
+	public:
+	void	LogInfo(bool self = true) const override;
 };
 };
 

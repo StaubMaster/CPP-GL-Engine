@@ -19,16 +19,12 @@ class Array : public Base
 	Attribute::Layout *		AttributeLayout;
 
 	public:
-	void LogInfo(bool self = true) const override;
-
-	public:
-	virtual ~Array();
+	~Array();
 	Array() = delete;
-	Array(::VertexArray & vertex_array, GL::BufferDataUsage usage);
+	Array(GL::BufferDataUsage usage);
 
-	Array(const Array & other) = delete;
-	Array(::VertexArray & vertex_array, const Array & other);
-	Array & operator=(const Array & other);
+	Array(const Array & other) = default;
+	Array & operator=(const Array & other) = default;
 
 	public:
 	void	Init(Attribute::Layout & layout);
@@ -36,6 +32,9 @@ class Array : public Base
 	public:
 	void	Update() override;
 	void	NewSize(unsigned int size) override;
+
+	public:
+	void	LogInfo(bool self = true) const override;
 };
 };
 

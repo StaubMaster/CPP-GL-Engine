@@ -36,10 +36,10 @@ void Shader::Base::Bind()
 {
 	if (Exists() && !IsBound())
 	{
-		glUseProgram(ID);
+		GL::UseProgram(ID);
 		if (UniformLayout != nullptr)
 		{
-			UniformLayout -> PutMultiformData();
+			UniformLayout -> UpdateData();
 		}
 	}
 }
@@ -167,8 +167,7 @@ void Shader::Base::Change(std::initializer_list<FileInfo> files)
 
 
 
-
-int Shader::Base::LocateUniform(const char * name)
+GL::UniformLocation Shader::Base::UniformLocation(const char * name) const
 {
 	if (Exists())
 	{
@@ -178,6 +177,22 @@ int Shader::Base::LocateUniform(const char * name)
 	{
 		return -1;
 	}
+}
+GL::BlockIndex Shader::Base::UniformBlockIndex(const char * name) const
+{
+	if (Exists())
+	{
+		return GL::GetUniformBlockIndex(ID, name);
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+void Shader::Base::UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding)
+{
+	GL::UniformBlockBinding(ID, index, binding);
 }
 
 

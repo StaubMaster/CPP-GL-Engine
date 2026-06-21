@@ -6,8 +6,8 @@
 
 Uniform::Trans2D::Trans2D(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
-	, Pos(layout, name + ".Pos")
-	, Rot(layout, name + ".Rot")
+	, Pos(layout, Name + ".Pos")
+	, Rot(layout, Name + ".Rot")
 { }
 
 

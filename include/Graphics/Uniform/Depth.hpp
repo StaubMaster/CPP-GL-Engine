@@ -13,12 +13,12 @@ namespace Uniform
 class Depth : public Uniform::GBase<::Depth>
 {
 	private:
-	Uniform::DepthFactors Factors;
-	Uniform::Range Range;
-	Uniform::ColorF4 Color;
+	Uniform::DepthFactors	Factors;
+	Uniform::Range			Range;
+	Uniform::ColorF4		Color;
 
 	public:
-	Depth(Uniform::Layout & layout,  std::string name);
+	Depth(Uniform::Layout & layout, std::string name);
 
 	public:
 	void Put(const ::Depth & obj) override;

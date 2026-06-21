@@ -16,7 +16,7 @@ class LightSolar : public Uniform::GBase<::LightSolar>
 	Uniform::VectorF3	Dir;
 
 	public:
-	LightSolar(Uniform::Layout & layout,  std::string name);
+	LightSolar(Uniform::Layout & layout, std::string name);
 
 	public:
 	void Put(const ::LightSolar & obj) override;

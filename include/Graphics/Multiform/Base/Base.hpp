@@ -12,10 +12,10 @@ namespace Multiform
 class Base
 {
 	public:
-	std::string Name;
+	std::string		Name;
 
 	public:
-	Container::Binary<Uniform::Base*> Uniforms;
+	Container::Binary<Uniform::Base*>	Uniforms;
 
 	protected:
 	virtual ~Base();

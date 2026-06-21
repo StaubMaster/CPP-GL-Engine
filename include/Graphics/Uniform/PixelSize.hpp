@@ -15,7 +15,7 @@ class PixelSize : public Uniform::GBase<::PixelSize>
 	Uniform::VectorF2 Half;
 
 	public:
-	PixelSize(Uniform::Layout & layout,  std::string name);
+	PixelSize(Uniform::Layout & layout, std::string name);
 
 	public:
 	void Put(const ::PixelSize & obj) override;

@@ -4,7 +4,7 @@
 # include "LightBase.hpp"
 # include "ValueType/Vector/F3.hpp"
 
-struct LightSolar
+struct LightSolar // LightDirection
 {
 	public:
 	LightBase	Base;

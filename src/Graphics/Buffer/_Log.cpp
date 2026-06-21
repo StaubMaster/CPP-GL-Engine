@@ -5,6 +5,7 @@
 #include "Graphics/Buffer/Base.hpp"
 #include "Graphics/Buffer/Array.hpp"
 #include "Graphics/Buffer/Element.hpp"
+#include "Graphics/Buffer/Uniform.hpp"
 #include "Graphics/Buffer/VertexArray.hpp"
 
 #include "Graphics/Attribute/Layout.hpp"
@@ -56,6 +57,19 @@ void Buffer::Element::LogInfo(bool self) const
 	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
 	Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
 	Debug::Log << Debug::Tabs << "IndexType: " << IndexType << '\n';
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "}\n";
+}
+
+void Buffer::Uniform::LogInfo(bool self) const
+{
+	(void)self;
+	Debug::Log << Debug::Tabs << "Buffer::Uniform\n";
+	Debug::Log << Debug::Tabs << "{\n";
+	Debug::Log << Debug::TabInc;
+	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
+	Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
+	Debug::Log << Debug::Tabs << "Binding: " << Binding << '\n';
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "}\n";
 }

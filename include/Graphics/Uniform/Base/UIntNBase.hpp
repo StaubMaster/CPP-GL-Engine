@@ -12,19 +12,16 @@ class UIntNBase : public Uniform::Base
 	public:
 	void LogInfo(bool self = true) const override;
 
-	protected:
+	public:
 	GL::UniformLocation		Index;
 
 	protected:
 	virtual ~UIntNBase();
 	UIntNBase(Uniform::Layout & layout, std::string name);
 
-	protected:
+	public:
 	void			PutVoid(const void * val) override;
 	virtual void	PutData(const unsigned int * val) = 0;
-
-	protected:
-	void	ReLocate();
 };
 };
 

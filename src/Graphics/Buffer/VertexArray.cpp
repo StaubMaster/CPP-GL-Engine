@@ -33,6 +33,10 @@ void VertexArray::Bind()
 	if (Exists() && !IsBound())
 	{
 		GL::BindVertexArray(ID);
+		for (unsigned int i = 0; i < Buffers.Count(); i++)
+		{
+			Buffers[i] -> Bind();
+		}
 	}
 }
 

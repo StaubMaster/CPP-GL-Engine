@@ -27,15 +27,15 @@ class MainElemInst : public VertexArray
 	GL::DrawMode		Mode;
 
 	public:
-	Container::Binary<Texture::Base *>	Textures;
+	//Container::Binary<Texture::Base *>	Textures;
 
 	public:
 	virtual ~MainElemInst() { }
 	MainElemInst()
 		: VertexArray()
-		, MainBuffer(*this, usage_main)
-		, ElemBuffer(*this, usage_elem, index_type)
-		, InstBuffer(*this, usage_inst)
+		, MainBuffer(usage_main)
+		, ElemBuffer(usage_elem, index_type)
+		, InstBuffer(usage_inst)
 		, Mode(mode)
 	{
 		Buffers.Insert(&MainBuffer);
@@ -46,9 +46,9 @@ class MainElemInst : public VertexArray
 
 	MainElemInst(const MainElemInst & other)
 		: VertexArray(other)
-		, MainBuffer(*this, other.MainBuffer)
-		, ElemBuffer(*this, other.ElemBuffer)
-		, InstBuffer(*this, other.InstBuffer)
+		, MainBuffer(other.MainBuffer)
+		, ElemBuffer(other.ElemBuffer)
+		, InstBuffer(other.InstBuffer)
 		, Mode(other.Mode)
 	{
 		Buffers.Insert(&MainBuffer);
@@ -69,10 +69,10 @@ class MainElemInst : public VertexArray
 	public:
 	void Draw()
 	{
-		for (unsigned int i = 0; i < Textures.Count(); i++)
+		/*for (unsigned int i = 0; i < Textures.Count(); i++)
 		{
 			Textures[i] -> Bind();
-		}
+		}*/
 		Bind();
 		GL::DrawElementsInstanced(Mode, ElemBuffer.Count, ElemBuffer.IndexType, InstBuffer.Count);
 	}

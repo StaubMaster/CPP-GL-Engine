@@ -5,7 +5,7 @@
 # include "ValueType/Vector/F3.hpp"
 # include "Range.hpp"
 
-struct LightSpot
+struct LightSpot // LightCone
 {
 	public:
 	LightBase	Base;

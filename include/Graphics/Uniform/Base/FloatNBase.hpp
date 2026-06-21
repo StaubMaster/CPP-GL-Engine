@@ -12,19 +12,16 @@ class FloatNBase : public Uniform::Base
 	public:
 	void LogInfo(bool self = true) const override;
 
-	protected:
+	public:
 	GL::UniformLocation		Index;
 
 	protected:
 	virtual ~FloatNBase();
 	FloatNBase(Uniform::Layout & layout, std::string name);
 
-	protected:
+	public:
 	void			PutVoid(const void * val) override;
 	virtual void	PutData(const float * val) = 0;
-
-	protected:
-	void	ReLocate();
 };
 };
 
