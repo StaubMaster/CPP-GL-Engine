@@ -5,6 +5,7 @@
 #include "Graphics/Uniform/General/Base.hpp"
 #include "Graphics/Uniform/General/FloatNBase.hpp"
 #include "Graphics/Uniform/General/UIntNBase.hpp"
+#include "Graphics/Uniform/General/Buffer.hpp"
 #include "Graphics/Uniform/General/Layout.hpp"
 
 
@@ -31,7 +32,17 @@ void Uniform::FloatNBase::LogInfo(bool self) const
 		Debug::Log << Debug::Tabs << "Uniform Location Info\n";
 		Debug::Log << Debug::TabInc;
 	}
-	Debug::Log << Debug::Tabs << '"' << (Name) << '"' << ':' << Index << '\n';
+	Debug::Log << Debug::Tabs << '"' << (Name) << '"';
+	Debug::Log << ':';
+	if (Index == -1)
+	{
+		Debug::Log << '!';
+	}
+	else
+	{
+		Debug::Log << Index;
+	}
+	Debug::Log << '\n';
 	if (self)
 	{
 		Debug::Log << Debug::TabDec;
@@ -46,7 +57,42 @@ void Uniform::UIntNBase::LogInfo(bool self) const
 		Debug::Log << Debug::Tabs << "Uniform Location Info\n";
 		Debug::Log << Debug::TabInc;
 	}
-	Debug::Log << Debug::Tabs << '"' << (Name) << '"' << ':' << Index << '\n';
+	Debug::Log << Debug::Tabs << '"' << (Name) << '"';
+	Debug::Log << ':';
+	if (Index == -1)
+	{
+		Debug::Log << '!';
+	}
+	else
+	{
+		Debug::Log << Index;
+	}
+	Debug::Log << '\n';
+	if (self)
+	{
+		Debug::Log << Debug::TabDec;
+		Debug::Log << Debug::Done;
+	}
+}
+
+void Uniform::Buffer::LogInfo(bool self) const
+{
+	if (self)
+	{
+		Debug::Log << Debug::Tabs << "Uniform Index Info\n";
+		Debug::Log << Debug::TabInc;
+	}
+	Debug::Log << Debug::Tabs << '"' << (Name) << '"';
+	Debug::Log << ':';
+	if (Index == GL_INVALID_INDEX)
+	{
+		Debug::Log << '!';
+	}
+	else
+	{
+		Debug::Log << Index;
+	}
+	Debug::Log << '\n';
 	if (self)
 	{
 		Debug::Log << Debug::TabDec;

@@ -23,11 +23,11 @@ class FloatNTypeBase : public Uniform::FloatNBase
 	}
 
 	public:
-	void Put(const ValueType & obj)
+	void	Put(const ValueType & obj)
 	{
 		PutVoid(&obj);
 	}
-	void Put(const ValueType * obj)
+	void	Put(const ValueType * obj)
 	{
 		PutVoid(obj);
 	}

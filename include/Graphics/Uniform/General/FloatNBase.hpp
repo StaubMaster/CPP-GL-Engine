@@ -10,7 +10,7 @@ namespace Uniform
 class FloatNBase : public Uniform::Base
 {
 	public:
-	void LogInfo(bool self = true) const override;
+	void	LogInfo(bool self = true) const override;
 
 	public:
 	GL::UniformLocation		Index;

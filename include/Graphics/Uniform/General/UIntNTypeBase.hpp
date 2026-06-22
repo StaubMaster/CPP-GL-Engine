@@ -23,11 +23,11 @@ class UIntNTypeBase : public Uniform::UIntNBase // UIntNTypeBase
 	}
 
 	public:
-	void Put(const ValueType & obj)
+	void	Put(const ValueType & obj)
 	{
 		PutVoid(&obj);
 	}
-	void Put(const ValueType * obj)
+	void	Put(const ValueType * obj)
 	{
 		PutVoid(obj);
 	}

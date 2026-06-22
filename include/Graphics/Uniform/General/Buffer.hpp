@@ -10,6 +10,9 @@ namespace Uniform
 class Buffer : public Base
 {
 	public:
+	void	LogInfo(bool self = true) const override;
+
+	public:
 	GL::BlockIndex	Index;
 
 	public:
