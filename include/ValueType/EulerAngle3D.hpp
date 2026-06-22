@@ -3,9 +3,7 @@
 
 # include "Angle.hpp"
 
-//struct VectorF3;
-struct VectorF3; typedef VectorF3 VectorF3;
-struct Matrix3x3;
+struct VectorF3;
 
 struct EulerAngle3D
 {
@@ -46,6 +44,9 @@ struct EulerAngle3D
 	public:
 	VectorF3		forward(VectorF3 p) const;
 	VectorF3		reverse(VectorF3 p) const;
+
+	EulerAngle3D	forward(const EulerAngle3D & other) const;
+	EulerAngle3D	reverse(const EulerAngle3D & other) const;
 
 
 
