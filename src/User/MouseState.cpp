@@ -51,3 +51,10 @@ bool MouseState::operator==(::MouseButtons button) const { return (Button == but
 bool MouseState::operator!=(::MouseButtons button) const { return (Button != button); }
 bool MouseState::operator==(::State state) const { return (State == state); }
 bool MouseState::operator!=(::State state) const { return (State == state); }
+
+
+
+bool MouseState::IsUp() const		{ return (State == State::Up); }
+bool MouseState::IsDown() const		{ return (State == State::Down); }
+bool MouseState::IsPress() const	{ return (State == State::Press); }
+bool MouseState::IsRelease() const	{ return (State == State::Release); }

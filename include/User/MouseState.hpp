@@ -25,6 +25,11 @@ struct MouseState
 	bool	operator!=(::MouseButtons button) const;
 	bool	operator==(::State state) const;
 	bool	operator!=(::State state) const;
+
+	bool	IsUp() const;
+	bool	IsDown() const;
+	bool	IsPress() const;
+	bool	IsRelease() const;
 };
 
 #endif
