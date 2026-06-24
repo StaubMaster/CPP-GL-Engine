@@ -15,20 +15,25 @@ struct View3D
 	~View3D();
 	View3D();
 
-	View3D(const View3D & other);
-	View3D & operator=(const View3D & other);
+	View3D(const View3D & other) = default;
+	View3D & operator=(const View3D & other) = default;
 
 	static View3D Default();
 
-	// ChangeRelative
-	// ChangeAbsolute
-	// why FlatX ? should be FlatY
-	void ChangeFlatX(Trans3D trans, float timeDelta);
+
+
+	/* decide this internally
+		maybe have a Normal Vector
+		View tries to stay flat to the Normal
+		if Normal is (0 0 0), then do Relative
+	*/
+	void ChangeRelative(const Trans3D & trans);
+	void ChangeAbsoluteFlatY(const Trans3D & trans);
 
 
 
-	VectorF3 forward(VectorF3 p) const;
-	VectorF3 reverse(VectorF3 p) const;
+	//VectorF3	forward(VectorF3 p) const;
+	//VectorF3	reverse(VectorF3 p) const;
 };
 
 #endif

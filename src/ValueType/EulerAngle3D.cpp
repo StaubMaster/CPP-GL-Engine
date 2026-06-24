@@ -112,13 +112,9 @@ EulerAngle3D EulerAngle3D::forward(const EulerAngle3D & other) const
 	VectorF3 axisZ = other.forward(forward(VectorF3(0, 0, 1)));
 
 	return EulerAngle3D(
-		Angle::aTan2(axisX.Y, axisY.Y),
-		Angle::aSin(axisY.Z),
-		Angle::aTan2(axisZ.X, axisZ.Z)
-
-		//Angle::aTan2(axisX.Z, axisZ.Z)
-		//Angle::aSin(axisZ.Y)
-		//Angle::aTan2(axisY.X, axisY.Y)
+		+Angle::aTan2(axisX.Y, axisY.Y),
+		-Angle::aSin(axisZ.Y),
+		+Angle::aTan2(axisZ.X, axisZ.Z)
 	);
 }
 EulerAngle3D EulerAngle3D::reverse(const EulerAngle3D & other) const
@@ -126,11 +122,18 @@ EulerAngle3D EulerAngle3D::reverse(const EulerAngle3D & other) const
 	VectorF3 axisX = other.reverse(reverse(VectorF3(1, 0, 0)));
 	VectorF3 axisY = other.reverse(reverse(VectorF3(0, 1, 0)));
 	VectorF3 axisZ = other.reverse(reverse(VectorF3(0, 0, 1)));
+
 	return EulerAngle3D(
+		+Angle::aTan2(axisY.X, axisY.Y),
+		-Angle::aSin(axisY.Z),
+		+Angle::aTan2(axisX.Z, axisZ.Z)
+	);
+
+	/*return EulerAngle3D(
 		Angle::aTan2(axisZ.X, axisZ.Z),
 		Angle::aSin(axisZ.Y),
 		Angle::aTan2(axisX.Y, axisY.Y)
-	);
+	);*/
 }
 
 

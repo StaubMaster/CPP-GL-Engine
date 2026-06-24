@@ -14,18 +14,7 @@ View3D::View3D()
 	, FOV(Angle::Degrees(90))
 { }
 
-View3D::View3D(const View3D & other)
-	: Trans(other.Trans)
-	, Depth(other.Depth)
-	, FOV(other.FOV)
-{ }
-View3D & View3D::operator=(const View3D & other)
-{
-	Trans = other.Trans;
-	Depth = other.Depth;
-	FOV = other.FOV;
-	return *this;
-}
+
 
 View3D View3D::Default()
 {
@@ -35,15 +24,16 @@ View3D View3D::Default()
 
 
 
-void View3D::ChangeFlatX(Trans3D trans, float timeDelta)
+void View3D::ChangeRelative(const Trans3D & trans)
 {
-	trans.Position *= timeDelta;
-	trans.Rotation *= timeDelta;
-	{
-		EulerAngle3D e(Angle(), Angle(), Trans.Rotation.Y2);
-		Trans.Position += e.forward(trans.Position);
-		Trans.Rotation += trans.Rotation;
-	}
+	Trans.Position += Trans.Rotation.forward(trans.Position);
+	Trans.Rotation = Trans.Rotation.reverse(trans.Rotation);
+}
+void View3D::ChangeAbsoluteFlatY(const Trans3D & trans)
+{
+	EulerAngle3D e(Angle(), Angle(), Trans.Rotation.Y2);
+	Trans.Position += e.forward(trans.Position);
+	Trans.Rotation += trans.Rotation;
 	Trans.Rotation.X1.clampPI();
 }
 
