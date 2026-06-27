@@ -2,7 +2,7 @@
 # define POLYHEDRA_OBJECT_DATA_HPP
 
 class PolyHedraPalletManager;
-# include "ValueType/Trans3D.hpp"
+# include "ValueType/Trans/3D.hpp"
 
 namespace Instance { namespace Basic3D { struct Data; }; };
 

@@ -1,6 +1,6 @@
 #include "Graphics/Uniform/Trans2D.hpp"
-#include "ValueType/Trans2D.hpp"
-#include "ValueType/Matrix2x2.hpp"
+#include "ValueType/Trans/2D.hpp"
+#include "ValueType/Matrix/2x2.hpp"
 
 
 

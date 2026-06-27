@@ -1,7 +1,7 @@
 #ifndef  WAVEFRONT_MTL_HPP
 # define WAVEFRONT_MTL_HPP
 
-# include "ValueType/ColorF4.hpp"
+# include "ValueType/Color/U4.hpp"
 
 # include "Miscellaneous/Container/Binary.hpp"
 

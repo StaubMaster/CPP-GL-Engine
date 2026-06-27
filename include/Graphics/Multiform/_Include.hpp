@@ -15,7 +15,7 @@
 # include "Graphics/Multiform/TypeDefs/DepthFactors.hpp"
 
 # include "Graphics/Multiform/TypeDefs/LInter.hpp"
-# include "Graphics/Multiform/TypeDefs/Range.hpp"
+# include "Graphics/Multiform/TypeDefs/RangeF.hpp"
 
 # include "Graphics/Multiform/TypeDefs/Trans2D.hpp"
 # include "Graphics/Multiform/TypeDefs/Trans3D.hpp"

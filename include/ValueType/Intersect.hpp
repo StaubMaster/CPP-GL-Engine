@@ -6,18 +6,18 @@
 namespace Intersect { };
 
 bool IsIntersecting(
-	const Ray2D & ray,
-	const Line2D & line
+	const RayF2 & ray,
+	const LineF2 & line
 );
 
 bool IsIntersecting(
-	const Line2D & line0,
-	const Line2D & line1
+	const LineF2 & line0,
+	const LineF2 & line1
 );
 
 bool Intersection(
-	const Line2D & line0,
-	const Line2D & line1,
+	const LineF2 & line0,
+	const LineF2 & line1,
 	VectorF2 & ret
 );
 

@@ -1,7 +1,7 @@
 #ifndef  POLYHEDRA_OBJECT_HPP
 # define POLYHEDRA_OBJECT_HPP
 
-# include "ValueType/Trans3D.hpp"
+# include "ValueType/Trans/3D.hpp"
 
 class PolyHedra;
 struct PolyHedraObjectData;

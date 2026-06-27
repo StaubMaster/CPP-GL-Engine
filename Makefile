@@ -17,54 +17,62 @@ DIR_OBJ := obj/
 
 
 VALUE_TYPE := \
-	ValueType/Bool2.cpp \
-	ValueType/Bool3.cpp \
-	ValueType/Bool4.cpp \
-	\
+	ValueType/Bool/2.cpp \
+	ValueType/Bool/3.cpp \
+	ValueType/Bool/4.cpp \
+\
 	ValueType/Vector/F2.cpp \
 	ValueType/Vector/F3.cpp \
 	ValueType/Vector/F4.cpp \
+	ValueType/Vector/U2.cpp \
+	ValueType/Vector/U3.cpp \
+	ValueType/Vector/I2.cpp \
+	ValueType/Vector/I3.cpp \
+\
 	ValueType/Box/F1.cpp \
 	ValueType/Box/F2.cpp \
 	ValueType/Box/F3.cpp \
-	\
-	ValueType/Vector/U2.cpp \
-	ValueType/Vector/U3.cpp \
 	ValueType/Box/U2.cpp \
 	ValueType/Box/U3.cpp \
-	ValueType/LoopU2.cpp \
-	ValueType/LoopU3.cpp \
-	\
-	ValueType/Vector/I2.cpp \
-	ValueType/Vector/I3.cpp \
 	ValueType/Box/I2.cpp \
 	ValueType/Box/I3.cpp \
-	ValueType/LoopI2.cpp \
-	ValueType/LoopI3.cpp \
+\
+	ValueType/Loop/U2.cpp \
+	ValueType/Loop/U3.cpp \
+	ValueType/Loop/I2.cpp \
+	ValueType/Loop/I3.cpp \
+\
+	ValueType/Line/F2.cpp \
+	ValueType/Line/F3.cpp \
+\
+	ValueType/Ray/F2.cpp \
+	ValueType/Ray/F3.cpp \
+\
+	ValueType/Matrix/2x2.cpp \
+	ValueType/Matrix/3x3.cpp \
+	ValueType/Matrix/4x4.cpp \
+\
+	ValueType/Trans/2D.cpp \
+	ValueType/Trans/3D.cpp \
+\
+	ValueType/Light/Base.cpp \
+	ValueType/Light/Point.cpp \
+	ValueType/Light/Direction.cpp \
+	ValueType/Light/Spot.cpp \
+\
+	ValueType/View/2D.cpp \
+	ValueType/View/3D.cpp \
+\
+	ValueType/Color/U4.cpp \
+	ValueType/Color/F4.cpp \
 \
 	ValueType/Undex.cpp \
-	ValueType/Line2D.cpp \
-	ValueType/Line3D.cpp \
-	ValueType/Ray2D.cpp \
-	ValueType/Ray3D.cpp \
-	ValueType/Matrix2x2.cpp \
-	ValueType/Matrix3x3.cpp \
-	ValueType/Matrix4x4.cpp \
 	ValueType/Angle.cpp \
 	ValueType/EulerAngle3D.cpp \
-	ValueType/Trans2D.cpp \
-	ValueType/Trans3D.cpp \
 	ValueType/DepthFactors.cpp \
 	ValueType/Depth.cpp \
-	ValueType/ColorU4.cpp \
-	ValueType/ColorF4.cpp \
-	ValueType/Range.cpp \
+	ValueType/RangeF.cpp \
 	ValueType/LInter.cpp \
-	ValueType/LightBase.cpp \
-	ValueType/LightSolar.cpp \
-	ValueType/LightSpot.cpp \
-	ValueType/View2D.cpp \
-	ValueType/View3D.cpp \
 	ValueType/Intersect.cpp \
 	ValueType/_Show.cpp
 VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))
@@ -108,11 +116,14 @@ UNIFORM := \
 	Graphics/Uniform/Trans3D.cpp \
 \
 	Graphics/Uniform/Depth.cpp \
-	Graphics/Uniform/Range.cpp \
+	Graphics/Uniform/RangeF.cpp \
 	Graphics/Uniform/LInter.cpp \
-	Graphics/Uniform/LightBase.cpp \
-	Graphics/Uniform/LightSolar.cpp \
-	Graphics/Uniform/LightSpot.cpp \
+\
+	Graphics/Uniform/Light/Base.cpp \
+	Graphics/Uniform/Light/Point.cpp \
+	Graphics/Uniform/Light/Direction.cpp \
+	Graphics/Uniform/Light/Spot.cpp \
+\
 	Graphics/Uniform/AspectRatio.cpp \
 	Graphics/Uniform/PixelSize.cpp \
 	Graphics/Uniform/DisplaySize.cpp \

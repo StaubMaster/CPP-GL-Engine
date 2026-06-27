@@ -9,7 +9,7 @@
 # include "User/KeyBoardManager.hpp"
 # include "User/MouseManager.hpp"
 
-# include "ValueType/ColorF4.hpp"
+# include "ValueType/Color/F4.hpp"
 # include "ValueType/Vector/F2.hpp"
 
 # include "Miscellaneous/Function/Pointer.hpp"
@@ -18,8 +18,7 @@
 
 struct GLFWwindow;
 
-//struct VectorF3;
-struct VectorF3; typedef VectorF3 VectorF3;
+struct VectorF3;
 struct EulerAngle3D;
 struct Trans3D;
 

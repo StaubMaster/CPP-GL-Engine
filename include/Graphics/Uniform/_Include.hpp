@@ -31,12 +31,13 @@
 # include "Graphics/Uniform/TypeDefs/DepthFactors.hpp"
 # include "Graphics/Uniform/Depth.hpp"
 
-# include "Graphics/Uniform/Range.hpp"
+# include "Graphics/Uniform/RangeF.hpp"
 # include "Graphics/Uniform/LInter.hpp"
 
-# include "Graphics/Uniform/LightBase.hpp"
-# include "Graphics/Uniform/LightSolar.hpp"
-# include "Graphics/Uniform/LightSpot.hpp"
+# include "Graphics/Uniform/Light/Base.hpp"
+# include "Graphics/Uniform/Light/Point.hpp"
+# include "Graphics/Uniform/Light/Direction.hpp"
+# include "Graphics/Uniform/Light/Spot.hpp"
 
 # include "Graphics/Uniform/PixelSize.hpp"
 # include "Graphics/Uniform/DisplaySize.hpp"

@@ -1,6 +1,6 @@
 #include "Graphics/Uniform/Trans3D.hpp"
-#include "ValueType/Trans3D.hpp"
-#include "ValueType/Matrix3x3.hpp"
+#include "ValueType/Trans/3D.hpp"
+#include "ValueType/Matrix/3x3.hpp"
 
 
 

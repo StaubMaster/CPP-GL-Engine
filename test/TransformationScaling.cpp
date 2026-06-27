@@ -8,12 +8,12 @@
 #include "ValueType/Angle.hpp"
 #include "ValueType/EulerAngle3D.hpp"
 
-#include "ValueType/Trans2D.hpp"
-#include "ValueType/Trans3D.hpp"
+#include "ValueType/Trans/2D.hpp"
+#include "ValueType/Trans/3D.hpp"
 
-#include "ValueType/Matrix2x2.hpp"
-#include "ValueType/Matrix3x3.hpp"
-#include "ValueType/Matrix4x4.hpp"
+#include "ValueType/Matrix/2x2.hpp"
+#include "ValueType/Matrix/3x3.hpp"
+#include "ValueType/Matrix/4x4.hpp"
 
 #include <math.h>
 

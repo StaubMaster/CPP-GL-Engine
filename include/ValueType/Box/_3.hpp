@@ -2,7 +2,7 @@
 # define BOX_3_HPP
 
 # include "ValueType/Box/__.hpp"
-# include "ValueType/Bool3.hpp"
+# include "ValueType/Bool/3.hpp"
 
 template<typename VectorType, typename BoxType> struct Box_3 : public Box__<VectorType, BoxType>
 {

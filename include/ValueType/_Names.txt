@@ -36,8 +36,8 @@ UndexBox3D	BoxU3
 Line_D		LineF_
 Ray_D		RayF_
 
-Line3D		LineF3
-Ray3D		RayF3
+LineF3		LineF3
+RayF3		RayF3
 
 
 

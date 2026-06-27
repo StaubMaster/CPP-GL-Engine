@@ -2,7 +2,7 @@
 # define MULTIFORM_TRANS_3D_HPP
 
 # include "Graphics/Multiform/General/GBase.hpp"
-# include "ValueType/Trans3D.hpp"
+# include "ValueType/Trans/3D.hpp"
 
 namespace Multiform
 {

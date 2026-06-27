@@ -3,7 +3,7 @@
 
 # include "ValueType/Vector/F3.hpp"
 # include "ValueType/Vector/F4.hpp"
-# include "ValueType/ColorF4.hpp"
+# include "ValueType/Color/U4.hpp"
 
 namespace Wavefront
 {

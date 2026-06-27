@@ -3,7 +3,7 @@
 
 # include "Graphics/Uniform/General/GBase.hpp"
 # include "Graphics/Uniform/TypeDefs/DepthFactors.hpp"
-# include "Graphics/Uniform/Range.hpp"
+# include "Graphics/Uniform/RangeF.hpp"
 # include "Graphics/Uniform/TypeDefs/ColorF4.hpp"
 
 struct Depth;
@@ -14,7 +14,7 @@ class Depth : public Uniform::GBase<::Depth>
 {
 	private:
 	Uniform::DepthFactors	Factors;
-	Uniform::Range			Range;
+	Uniform::RangeF			Range;
 	Uniform::ColorF4		Color;
 
 	public:

@@ -23,7 +23,7 @@ Depth & Depth::operator=(const Depth & other)
 	return *this;
 }
 
-Depth::Depth(DepthFactors factors, ::Range range, ColorF4 color) :
+Depth::Depth(DepthFactors factors, RangeF range, ColorF4 color) :
 	Factors(factors),
 	Range(range),
 	Color(color)

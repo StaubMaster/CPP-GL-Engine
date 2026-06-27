@@ -1,7 +1,7 @@
 #ifndef  POLYGON_OBJECT_DATA_HPP
 # define POLYGON_OBJECT_DATA_HPP
 
-# include "ValueType/Trans2D.hpp"
+# include "ValueType/Trans/2D.hpp"
 
 class PolyGon;
 

@@ -2,7 +2,7 @@
 # define POLYHEDRA_GRAPHICS_WIRE_MAIN_DATA_HPP
 
 # include "ValueType/Vector/F3.hpp"
-# include "ValueType/ColorF4.hpp"
+# include "ValueType/Color/F4.hpp"
 
 namespace PolyHedraWire
 {
@@ -10,7 +10,7 @@ namespace Main
 {
 struct Data
 {
-	VectorF3		Pos;
+	VectorF3	Pos;
 	ColorF4		Col;
 	Data();
 	Data(VectorF3 pos);

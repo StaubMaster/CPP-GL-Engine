@@ -32,11 +32,11 @@ struct Matrix2x2;
 struct Matrix3x3;
 struct Matrix4x4;
 
-struct Line2D;
-struct Line3D;
+struct LineF2;
+struct LineF3;
 
-struct Ray2D;
-struct Ray3D;
+struct RayF2;
+struct RayF3;
 
 struct Angle;
 struct EulerAngle3D;
@@ -47,7 +47,7 @@ struct Trans3D;
 struct DepthFactors;
 struct Depth;
 
-struct Range;
+struct RangeF;
 struct LInter;
 
 struct ColorF4;
@@ -57,7 +57,8 @@ struct View2D;
 struct View3D;
 
 struct LightBase;
-struct LightSolar;
+struct LightPoint;
+struct LightDirection;
 struct LightSpot;
 
 struct Undex; // ?

@@ -4,8 +4,8 @@
 
 
 bool IsIntersecting(
-	const Ray2D & ray,
-	const Line2D & line
+	const RayF2 & ray,
+	const LineF2 & line
 )
 {
 	VectorF2 perp(-ray.Dir.Y, +ray.Dir.X);
@@ -25,8 +25,8 @@ bool IsIntersecting(
 }
 
 bool IsIntersecting(
-	const Line2D & line0,
-	const Line2D & line1
+	const LineF2 & line0,
+	const LineF2 & line1
 )
 {
 	VectorF2 diff0 = line0.Target - line0.Origin;
@@ -47,7 +47,7 @@ bool IsIntersecting(
 	return true;
 }
 
-bool Intersection(const Line2D & line0, const Line2D & line1, VectorF2 & ret)
+bool Intersection(const LineF2 & line0, const LineF2 & line1, VectorF2 & ret)
 {
 	VectorF2 diff0 = line0.Target - line0.Origin;
 	VectorF2 perp(-diff0.Y, +diff0.X);

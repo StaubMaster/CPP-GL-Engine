@@ -1,6 +1,6 @@
 #include "DataShow.hpp"
 
-#include "ValueType/Bool3.hpp"
+#include "ValueType/Bool/3.hpp"
 #include "ValueType/Vector/U3.hpp"
 #include "ValueType/UndexBox3D.hpp"
 #include "ValueType/UndexLoop3D.hpp"

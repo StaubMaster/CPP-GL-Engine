@@ -5,7 +5,7 @@
 # include "Miscellaneous/Container/Array.hpp"
 # include "PolyGon/Graphics/Full/Main/Data.hpp"
 
-struct Ray2D;
+struct RayF2;
 //struct BoxF2;
 struct BoxF2;
 typedef BoxF2 BoxF2;
@@ -57,7 +57,7 @@ class PolyGon
 	Container::Array<PolyGonFull::Main::Data>	ToFullData() const;
 
 	public:
-	unsigned int SumIntersections(Ray2D ray) const;
+	unsigned int SumIntersections(RayF2 ray) const;
 	bool IsContaining(VectorF2 p) const;
 };
 

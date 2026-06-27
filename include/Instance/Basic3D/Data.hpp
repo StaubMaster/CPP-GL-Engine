@@ -1,8 +1,8 @@
 #ifndef  INSTANCE_BASIC_3D_DATA_HPP
 # define INSTANCE_BASIC_3D_DATA_HPP
 
-# include "ValueType/Matrix4x4.hpp"
-# include "ValueType/Trans3D.hpp"
+# include "ValueType/Matrix/4x4.hpp"
+# include "ValueType/Trans/3D.hpp"
 
 namespace Instance
 {

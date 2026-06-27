@@ -2,7 +2,7 @@
 # define MULTIFORM_COLOR_F4_HPP
 
 # include "Graphics/Multiform/General/GBase.hpp"
-# include "ValueType/ColorF4.hpp"
+# include "ValueType/Color/U4.hpp"
 
 namespace Multiform
 {

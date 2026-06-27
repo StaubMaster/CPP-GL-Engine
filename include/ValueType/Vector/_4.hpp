@@ -1,7 +1,7 @@
 #ifndef  VECTOR_4_HPP
 # define VECTOR_4_HPP
 
-# include "ValueType/Bool4.hpp"
+# include "ValueType/Bool/4.hpp"
 
 template<typename ValueType, typename VectorType> struct Vector_4
 {

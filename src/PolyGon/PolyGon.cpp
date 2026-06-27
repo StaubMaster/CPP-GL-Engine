@@ -1,7 +1,7 @@
 #include "PolyGon/PolyGon.hpp"
 
-#include "ValueType/Ray2D.hpp"
-#include "ValueType/Line2D.hpp"
+#include "ValueType/Ray/F2.hpp"
+#include "ValueType/Line/F2.hpp"
 #include "ValueType/Box/F2.hpp"
 #include "ValueType/Intersect.hpp"
 
@@ -139,7 +139,7 @@ Container::Array<PolyGonFull::Main::Data> PolyGon::ToFullData() const
 
 
 
-unsigned int PolyGon::SumIntersections(Ray2D ray) const
+unsigned int PolyGon::SumIntersections(RayF2 ray) const
 {
 	unsigned int sum = 0;
 	for (unsigned int f = 0; f < Faces.Count(); f++)
@@ -151,14 +151,14 @@ unsigned int PolyGon::SumIntersections(Ray2D ray) const
 			VectorF2 corner1 = Corners[face.udx[1]].Pos;
 			VectorF2 corner2 = Corners[face.udx[2]].Pos;
 
-			if (::IsIntersecting(ray, Line2D(corner0, corner1))) { sum++; }
-			if (::IsIntersecting(ray, Line2D(corner1, corner2))) { sum++; }
-			if (::IsIntersecting(ray, Line2D(corner2, corner0))) { sum++; }
+			if (::IsIntersecting(ray, LineF2(corner0, corner1))) { sum++; }
+			if (::IsIntersecting(ray, LineF2(corner1, corner2))) { sum++; }
+			if (::IsIntersecting(ray, LineF2(corner2, corner0))) { sum++; }
 		}
 	}
 	return sum;
 }
 bool PolyGon::IsContaining(VectorF2 p) const
 {
-	return ((SumIntersections(Ray2D(p, VectorF2(1, 0))) % 2) != 0);
+	return ((SumIntersections(RayF2(p, VectorF2(1, 0))) % 2) != 0);
 }

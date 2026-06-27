@@ -1,0 +1,26 @@
+#ifndef  UNI_LIGHT_BASE_HPP
+# define UNI_LIGHT_BASE_HPP
+
+# include "Graphics/Uniform/General/GBase.hpp"
+# include "Graphics/Uniform/TypeDefs/Float.hpp"
+# include "Graphics/Uniform/TypeDefs/ColorF4.hpp"
+
+struct LightBase;
+
+namespace Uniform
+{
+class LightBase : public Uniform::GBase<::LightBase>
+{
+	private:
+	Uniform::Float		Intensity;
+	Uniform::ColorF4	Color;
+
+	public:
+	LightBase(Uniform::Layout & layout, std::string name);
+
+	public:
+	void Put(const ::LightBase & obj) override;
+};
+};
+
+#endif
