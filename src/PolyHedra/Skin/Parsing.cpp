@@ -22,11 +22,31 @@ Skin::ParsingData::ParsingData(const FileInfo & file, ::Skin & skin)
 	: File(file)
 	, Skin(skin)
 	, TextureIndex(0)
+	, TextureVertexes()
+	, TextureVertexIndex(0)
 {
 	Skin.File = File;
 }
 
 
+
+/* Belt
+	< and > change vertex order
+	so TexIQ is bad
+	take a list of Indexes
+	how should it take Texture Coordinates ?
+	X and Y Versions
+	X versions takes a Min and Max for X
+	and Y takes a individual Texture Coordinate per Y
+*/
+
+/*
+store Texture Vectors in a List
+	seperate List per Image ?
+
+belt command takes Indexes to the List
+
+*/
 
 void Skin::ParsingData::Parse(const TextCommand & cmd)
 {
@@ -34,7 +54,7 @@ void Skin::ParsingData::Parse(const TextCommand & cmd)
 	try
 	{
 		std::string name = cmd.Name();
-		if (name== "")				{ /*std::cout << "Skin: " << "Empty\n";*/ }
+		if (name == "")				{ /*std::cout << "Skin: " << "Empty\n";*/ }
 		else if (name == "Type")	{ Parse_Type(cmd); }
 		else if (name == "Format")	{ Parse_Format(cmd); }
 
@@ -46,6 +66,11 @@ void Skin::ParsingData::Parse(const TextCommand & cmd)
 		else if (name == "TexI")	{ Parse_TextureIndex(cmd); }
 		else if (name == "TexI4")	{ Parse_TextureIndexFace4(cmd); }
 		else if (name == "TexIQ")	{ Parse_TextureIndexQuad(cmd); }
+
+		else if (name == "vertex")	{ Parse_Vertex(cmd); }
+		else if (name == "vIndex")	{ Parse_VertexIndex(cmd); }
+		else if (name == "vFace<")	{ Parse_VertexFace3(cmd, false); }
+		else if (name == "VFace>")	{ Parse_VertexFace3(cmd, true); }
 
 		else						{ std::cout << "unknown: " << cmd << "\n"; }
 	}
@@ -172,7 +197,71 @@ void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommand & cmd)
 	Skin.Insert_Face4(VectorF3(t[0]), VectorF3(t[1]), VectorF3(t[2]), VectorF3(t[3]));
 }
 
+void Skin::ParsingData::Parse_Vertex(const TextCommand & cmd)
+{
+	if (!(cmd.Count() == 2)) { throw InvalidCommandArgumentCount(cmd, "n == 2"); }
 
+	VectorF2 v;
+	v.X = cmd.ToFloat(0);
+	v.Y = cmd.ToFloat(1);
+
+	TextureVertexes.Insert(v);
+}
+void Skin::ParsingData::Parse_VertexIndex(const TextCommand & cmd)
+{
+	if (!(cmd.Count() == 1)) { throw InvalidCommandArgumentCount(cmd, "n == 1"); }
+
+	std::string str = cmd.ToString(0);
+	char c = str[0];
+
+	if (c == '+' || c == '-')
+	{ TextureVertexIndex += cmd.ToInt32(0); }
+	else
+	{ TextureVertexIndex = cmd.ToUInt32(0); }
+}
+void Skin::ParsingData::Parse_VertexFace3(const TextCommand & cmd, bool direction)
+{
+	if (!(cmd.Count() == 3)) { throw InvalidCommandArgumentCount(cmd, "n == 3"); }
+
+	VectorF3 t[3];
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		VectorF2 v = TextureVertexes[TextureVertexIndex + cmd.ToUInt32(i)];
+		t[i].X = v.X;
+		t[i].Y = v.Y;
+		t[i].Z = TextureIndex;
+	}
+
+	if (!direction)
+	{
+		Skin.Insert_Face3(t[0], t[1], t[2]);
+	}
+	else
+	{
+		Skin.Insert_Face3(t[2], t[1], t[0]);
+	}
+}
+void Skin::ParsingData::Parse_VertexBelt(const TextCommand & cmd, bool direction, bool closure)
+{
+	throw CommandNotImplemented(cmd);
+	(void)cmd;
+	(void)direction;
+	(void)closure;
+}
+void Skin::ParsingData::Parse_VertexBand(const TextCommand & cmd, bool direction, bool closure)
+{
+	throw CommandNotImplemented(cmd);
+	(void)cmd;
+	(void)direction;
+	(void)closure;
+}
+void Skin::ParsingData::Parse_VertexFan(const TextCommand & cmd, bool direction, bool closure)
+{
+	throw CommandNotImplemented(cmd);
+	(void)cmd;
+	(void)direction;
+	(void)closure;
+}
 
 Skin * Skin::Load(const FileInfo & file)
 {

@@ -10,7 +10,9 @@ struct Skin::ParsingData
 	const FileInfo &	File;
 	::Skin &			Skin;
 
-	unsigned int		TextureIndex;
+	unsigned int					TextureIndex;
+	Container::Binary<VectorF2>		TextureVertexes;
+	unsigned int					TextureVertexIndex;
 
 	~ParsingData();
 	ParsingData(const FileInfo & file, ::Skin & skin);
@@ -26,10 +28,17 @@ struct Skin::ParsingData
 	void	Parse_Image(const TextCommand & cmd);
 
 	void	Parse_t(const TextCommand & cmd);
-
+	
 	void	Parse_TextureIndex(const TextCommand & cmd);
 	void	Parse_TextureIndexFace4(const TextCommand & cmd);
 	void	Parse_TextureIndexQuad(const TextCommand & cmd);
+
+	void	Parse_Vertex(const TextCommand & cmd);
+	void	Parse_VertexIndex(const TextCommand & cmd);
+	void	Parse_VertexFace3(const TextCommand & cmd, bool direction);
+	void	Parse_VertexBelt(const TextCommand & cmd, bool direction, bool closure);
+	void	Parse_VertexBand(const TextCommand & cmd, bool direction, bool closure);
+	void	Parse_VertexFan(const TextCommand & cmd, bool direction, bool closure);
 };
 
 #endif
