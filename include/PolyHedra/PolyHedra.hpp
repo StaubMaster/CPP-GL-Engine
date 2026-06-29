@@ -47,8 +47,7 @@ class PolyHedra
 	void	Done();
 
 	public:
-	void	Calc_Face_Normals();
-	void	Calc_Corn_Normals();
+	void	CalcNormals();
 	bool	UseCornerNormals;
 
 	void	Insert_Corn(Corner corn);
@@ -69,9 +68,6 @@ class PolyHedra
 	public:
 	std::string		ToInfo() const;
 	BoxF3			CalcBound() const;
-
-	public:
-	struct Generate;
 
 	private:
 	struct ParsingData;

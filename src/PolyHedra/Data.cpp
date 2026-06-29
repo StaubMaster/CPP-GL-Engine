@@ -8,6 +8,9 @@ PolyHedra::Corner::Corner()
 PolyHedra::Corner::Corner(VectorF3 pos)
 	: Position(pos)
 { }
+PolyHedra::Corner::Corner(float x, float y, float z)
+	: Position(x, y, z)
+{ }
 
 
 

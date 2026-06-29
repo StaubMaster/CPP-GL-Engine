@@ -1,20 +1,26 @@
 #ifndef  POLYHEDRA_GENERATE_HPP
 # define POLYHEDRA_GENERATE_HPP
 
-# include "PolyHedra.hpp"
+class PolyHedra;
+class Image;
 
-struct PolyHedra::Generate
+namespace PolyHedraGenerate
 {
-	Generate() = delete;
+	PolyHedra * RegularTetraHedron(float scale = 1.0f);		// [04 04]
+	PolyHedra * RegularHexaHedron(float scale = 1.0f);		// [06 08]
+//	PolyHedra * RegularOctaHedron(float scale = 1.0f);		// [08 06]
+//	PolyHedra * RegularDodecaHedron(float scale = 1.0f);	// [12 20]
+//	PolyHedra * RegularIcosaHedron(float scale = 1.0f);		// [20 12]
 
-	static PolyHedra * DuoHedra(Image img, float scale = 1.0f);
-	static PolyHedra * TetraHedron(float scale = 1.0f);
-	static PolyHedra * HexaHedron(float scale = 1.0f);
+	/*
+		SphereCube
+	*/
+	PolyHedra * ConeZ(int segments, float height = 1.0f, float radius = 1.0f);
+	PolyHedra * SphereY(unsigned int ring, unsigned int seg, float radius = 1.0f);
+	PolyHedra * TorusY(unsigned int seg0, float radius0, unsigned int seg1, float radius1);
 
-	static PolyHedra * ConeC(int segments, float width = 1.0f, float height = 1.0f);
-
-	static PolyHedra * FramedImage(Image img, float img_scale = 1.0f);
-	//	Generate Picture Frame with Texture Inside instead of DuoHedra
+	PolyHedra * ImageQuad(Image img, float scale = 1.0f);
+	PolyHedra * ImageFramed(Image img, float img_scale = 1.0f);
 };
 
 #endif

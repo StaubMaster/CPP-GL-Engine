@@ -152,7 +152,7 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 
 	if (BufferFull.MainBuffer.DataWant)
 	{
-		Pallet -> Calc_Face_Normals();
+		Pallet -> CalcNormals();
 		Container::Array<PolyHedraFull::Main::Data> data = Pallet -> ToMainData();
 		BufferFull.MainBuffer.DataFull(data.ToVoid());
 

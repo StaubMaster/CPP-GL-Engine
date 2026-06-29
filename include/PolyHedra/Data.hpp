@@ -11,6 +11,7 @@ struct PolyHedra::Corner
 	VectorF3 Normal;
 	Corner();
 	Corner(VectorF3 pos);
+	Corner(float x, float y, float z);
 };
 struct PolyHedra::Face
 {

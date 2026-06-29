@@ -5,6 +5,9 @@
 # include "ValueType/Vector/F3.hpp"
 # include "ValueType/RangeF.hpp"
 
+struct RayF3;
+struct LineF3;
+
 struct LightSpot
 {
 	public:
@@ -22,6 +25,10 @@ struct LightSpot
 	public:
 	LightSpot(float intensity, ColorF4 color, VectorF3 pos, VectorF3 dir, RangeF range);
 	LightSpot(LightBase base, VectorF3 pos, VectorF3 dir, RangeF range);
+
+	public:
+	LightSpot(LightBase base, RayF3 ray, RangeF range);
+	LightSpot(LightBase base, LineF3 line, RangeF range);
 };
 
 #endif

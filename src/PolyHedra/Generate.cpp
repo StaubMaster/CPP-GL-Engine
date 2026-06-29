@@ -1,6 +1,6 @@
 #include "PolyHedra/Generate.hpp"
+#include "PolyHedra/PolyHedra.hpp"
 #include "PolyHedra/Data.hpp"
-
 #include "PolyHedra/Skin/Skin.hpp"
 #include "Graphics/Texture/Generate.hpp"
 
@@ -13,41 +13,16 @@
 //#include "FileInfo.hpp"
 //#include "DirectoryInfo.hpp"
 //#include "DataShow.hpp"
+
 #include "Debug.hpp"
 #include <sstream>
 #include <iostream>
 
-PolyHedra * PolyHedra::Generate::DuoHedra(Image img, float scale)
-{
-	PolyHedra * polyhedra = new PolyHedra();
-	polyhedra -> Name = "DuoHedra";
-	polyhedra -> File = "::DuoHedra::"; // put () with parameters ?
-
-	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, 0));
-	polyhedra -> Insert_Corn(VectorF3(-scale, +scale, 0));
-	polyhedra -> Insert_Corn(VectorF3(+scale, -scale, 0));
-	polyhedra -> Insert_Corn(VectorF3(+scale, +scale, 0));
-
-	polyhedra -> Insert_Face4(0, 1, 2, 3);
 
 
 
-	::Skin * skin = new ::Skin();
-	skin -> Size = img.Size();
-	skin -> Images.Insert(img);
 
-	skin -> Insert_Face4(VectorF3(0.0f, 1.0f, 0.0f), VectorF3(0.0f, 0.0f, 0.0f), VectorF3(1.0f, 1.0f, 0.0f), VectorF3(1.0f, 0.0f, 0.0f));
-
-	skin -> Done();
-
-	polyhedra -> Skins.Insert(skin);
-	polyhedra -> Done();
-	return polyhedra;
-}
-
-
-
-PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
+PolyHedra * PolyHedraGenerate::RegularTetraHedron(float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	polyhedra -> Name = "TetraHedron";
@@ -82,9 +57,7 @@ PolyHedra * PolyHedra::Generate::TetraHedron(float scale)
 	return polyhedra;
 }
 
-
-
-PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
+PolyHedra * PolyHedraGenerate::RegularHexaHedron(float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	polyhedra -> Name = "HexaHedron";
@@ -124,19 +97,19 @@ PolyHedra * PolyHedra::Generate::HexaHedron(float scale)
 
 	skin -> Done();
 
-
 	polyhedra -> Skins.Insert(skin);
 	polyhedra -> Done();
+
 	return polyhedra;
 }
 
 
 
-PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
+PolyHedra * PolyHedraGenerate::ConeZ(int segments, float height, float radius)
 {
 	PolyHedra * polyhedra = new PolyHedra();
-	polyhedra -> Name = "ConeC";
-	polyhedra -> File = "::ConeC::"; // put () with parameters ?
+	polyhedra -> Name = "ConeZ";
+	polyhedra -> File = "::ConeZ::"; // put () with parameters ?
 
 	::Skin * skin = new ::Skin();
 	skin -> Size = VectorU2(8, 4);
@@ -149,7 +122,7 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 	for (int i = 0; i < segments; i++)
 	{
 		angle.Z0 = Angle::Section(segments) * i;
-		polyhedra -> Insert_Corn(angle.reverse(VectorF3(0, +width, -height)));
+		polyhedra -> Insert_Corn(angle.reverse(VectorF3(0, +radius, -height)));
 	}
 	int idx_last = polyhedra -> Corners.Count();
 	polyhedra -> Insert_Corn(VectorF3(0, 0, -height));
@@ -184,9 +157,149 @@ PolyHedra * PolyHedra::Generate::ConeC(int segments, float width, float height)
 	return polyhedra;
 }
 
+PolyHedra * PolyHedraGenerate::SphereY(unsigned int ring, unsigned int seg, float radius)
+{
+	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "SpherePolarY";
+	polyhedra -> File = "::SpherePolarY::";
+
+	unsigned int pole_idx;
+	unsigned int ring_0_idx;
+	unsigned int ring_1_idx;
+
+	unsigned int face_count = 0;
+
+	pole_idx = 0;
+	polyhedra -> Insert_Corn(PolyHedra::Corner(0, -radius, 0));
+	ring_0_idx = 1;
+	for (unsigned int s = 0; s < seg; s++)
+	{
+		polyhedra -> Insert_Face3(pole_idx
+			, ((s + 1) % seg) + ring_0_idx
+			, ((s + 0) % seg) + ring_0_idx
+		);
+		face_count++;
+	}
+
+	EulerAngle3D	angle;
+
+	float vert;
+	float hori;
+	for (unsigned int r = 0; r < ring; r++)
+	{
+		vert = (1.0f + r) / (1.0f + ring);
+		vert = 0.5f - vert;
+		angle.X1 = Angle::Radians(vert * PI);
+
+		ring_1_idx = 1 + (r * seg);
+		ring_0_idx = ring_1_idx - seg;
+		for (unsigned int s = 0; s < seg; s++)
+		{
+			hori = ((1.0 * s) + (0.5f * r)) / seg;
+			angle.Y2 = Angle::Radians(hori * TAU);
+
+			polyhedra -> Insert_Corn(angle.forward(VectorF3(0, 0, radius)));
+
+			if (r != 0)
+			{
+				unsigned int s0 = (s + 0) % seg;
+				unsigned int s1 = (s + 1) % seg;
+
+				polyhedra -> Insert_Face3(ring_0_idx + s0, ring_0_idx + s1, ring_1_idx + s0);
+				face_count++;
+
+				polyhedra -> Insert_Face3(ring_0_idx + s1, ring_1_idx + s1, ring_1_idx + s0);
+				face_count++;
+			}
+		}
+	}
+
+	ring_1_idx = 1 + (ring * seg);
+	polyhedra -> Insert_Corn(PolyHedra::Corner(VectorF3(0, +radius, 0)));
+	pole_idx = ring_1_idx - seg;
+	for (unsigned int s = 0; s < seg; s++)
+	{
+		polyhedra -> Insert_Face3(ring_1_idx
+			, ((s + 0) % seg) + pole_idx
+			, ((s + 1) % seg) + pole_idx
+		);
+	}
+
+	polyhedra -> Done();
+	return polyhedra;
+}
+
+PolyHedra * PolyHedraGenerate::TorusY(unsigned int seg0, float radius0, unsigned int seg1, float radius1)
+{
+	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "TorusY";
+	polyhedra -> File = "::TorusY::";
+
+	EulerAngle3D angle0;
+	EulerAngle3D angle1;
+
+	VectorF3 pos;
+	for (unsigned int s0 = 0; s0 < seg0; s0++)
+	{
+		for (unsigned int s1 = 0; s1 < seg1; s1++)
+		{
+			angle0.Z0 = Angle::Section(seg0) * s0;
+			angle1.Y2 = Angle::Section(seg1) * s1;
+
+			pos = angle0.forward(VectorF3(radius0, 0, 0));
+			pos = angle1.forward(VectorF3(radius1, 0, 0) + pos);
+
+			polyhedra -> Insert_Corn(PolyHedra::Corner(pos));
+
+			unsigned int s00 = ((s0 + 0) % seg0) * seg1;
+			unsigned int s01 = ((s0 + 1) % seg0) * seg1;
+			unsigned int s10 = ((s1 + 0) % seg1);
+			unsigned int s11 = ((s1 + 1) % seg1);
+
+			polyhedra -> Insert_Face4(
+				s00 + s10,
+				s00 + s11,
+				s01 + s10,
+				s01 + s11
+			);
+		}
+	}
+
+	polyhedra -> Done();
+	return polyhedra;
+}
 
 
-PolyHedra * PolyHedra::Generate::FramedImage(Image img, float img_scale)
+
+PolyHedra * PolyHedraGenerate::ImageQuad(Image img, float scale)
+{
+	PolyHedra * polyhedra = new PolyHedra();
+	polyhedra -> Name = "DuoHedra";
+	polyhedra -> File = "::DuoHedra::"; // put () with parameters ?
+
+	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, 0));
+	polyhedra -> Insert_Corn(VectorF3(-scale, +scale, 0));
+	polyhedra -> Insert_Corn(VectorF3(+scale, -scale, 0));
+	polyhedra -> Insert_Corn(VectorF3(+scale, +scale, 0));
+
+	polyhedra -> Insert_Face4(0, 1, 2, 3);
+
+
+
+	::Skin * skin = new ::Skin();
+	skin -> Size = img.Size();
+	skin -> Images.Insert(img);
+
+	skin -> Insert_Face4(VectorF3(0.0f, 1.0f, 0.0f), VectorF3(0.0f, 0.0f, 0.0f), VectorF3(1.0f, 1.0f, 0.0f), VectorF3(1.0f, 0.0f, 0.0f));
+
+	skin -> Done();
+
+	polyhedra -> Skins.Insert(skin);
+	polyhedra -> Done();
+	return polyhedra;
+}
+
+PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 {
 	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") ..." << Debug::Done;
 

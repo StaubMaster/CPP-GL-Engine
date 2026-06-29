@@ -87,41 +87,39 @@ BoxF3	PolyHedra::CalcBound() const
 
 
 
-void PolyHedra::Calc_Face_Normals()
+void PolyHedra::CalcNormals()
 {
+	for (unsigned int i = 0; i < Corners.Count(); i++)
+	{
+		Corners[i].Normal = VectorF3();
+	}
+
 	for (unsigned int i = 0; i < Faces.Count(); i++)
 	{
 		Face & face = Faces[i];
 		if (face.Check(Corners.Count()))
 		{
-			const VectorF3 & cornerX = Corners[face.udx[0]].Position;
-			const VectorF3 & cornerY = Corners[face.udx[1]].Position;
-			const VectorF3 & cornerZ = Corners[face.udx[2]].Position;
-			face.Normal = VectorF3::cross(cornerY - cornerX, cornerZ - cornerX).normalize();
+			Corner & corner0 = Corners[face.udx[0]];
+			Corner & corner1 = Corners[face.udx[1]];
+			Corner & corner2 = Corners[face.udx[2]];
+			face.Normal = VectorF3::cross(
+				corner1.Position - corner0.Position,
+				corner2.Position - corner0.Position
+			).normalize();
+			corner0.Normal += face.Normal;
+			corner1.Normal += face.Normal;
+			corner2.Normal += face.Normal;
 		}
 		else
 		{
 			face.Normal = VectorF3();
 		}
 	}
-}
-void PolyHedra::Calc_Corn_Normals()
-{
+
 	for (unsigned int i = 0; i < Corners.Count(); i++)
 	{
-		VectorF3 normal_sum(0, 0, 0);
-		for (unsigned int j = 0; j < Faces.Count(); j++)
-		{
-			const Face & face = Faces[j];
-			if (face.udx[0] == i ||
-				face.udx[1] == i ||
-				face.udx[2] == i
-			)
-			{
-				normal_sum = normal_sum + face.Normal;
-			}
-		}
-		Corners[i].Normal = normal_sum.normalize();
+		Corner & corner = Corners[i];
+		corner.Normal = corner.Normal.normalize();
 	}
 }
 

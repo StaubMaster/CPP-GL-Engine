@@ -93,10 +93,10 @@ void Skin::ParsingData::Parse_Image(const TextCommand & cmd)
 
 void Skin::ParsingData::Parse_t(const TextCommand & cmd)
 {
-	unsigned int len = cmd.Count() / 2;
-	if (!((len % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "((n / 2) % 2) == 0"); }
+	if (!((cmd.Count() % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "(n % 2) == 0"); }
 	//if (!cmd.CheckCount(CountCheckModulo(2, 0)) || len < 3 || len > 4) { throw TextCommand::ExceptionInvalidCount(cmd, CountCheckModulo(2, 0)); }
- 
+	unsigned int len = cmd.Count() / 2;
+	
 	VectorF3 t[len];
 	for (size_t i = 0; i < len; i++)
 	{
