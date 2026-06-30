@@ -205,8 +205,7 @@ void PolyHedra::ParsingData::Parse_Offset(const TextCommand & cmd)
 void PolyHedra::ParsingData::Parse_Belt(const TextCommand & cmd, bool direction, bool closure)
 {
 	unsigned int len = cmd.Count() / 2;
-	if (!((cmd.Count() % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "(n % 2) == 2"); }
-	//Debug::Log << cmd << Debug::Done;
+	if (!((cmd.Count() % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "(n % 2) == 0"); }
 
 	unsigned int idx0[len];
 	unsigned int idx1[len];
@@ -260,15 +259,15 @@ void PolyHedra::ParsingData::Parse_Belt(const TextCommand & cmd, bool direction,
 }
 void PolyHedra::ParsingData::Parse_Band(const TextCommand & cmd, bool direction, bool closure)
 {
+	throw CommandNotImplemented(cmd);
 	(void)cmd;
 	(void)direction;
 	(void)closure;
 }
 void PolyHedra::ParsingData::Parse_Fan(const TextCommand & cmd, bool direction, bool closure)
 {
-	unsigned int len = cmd.Count() - 1;
 	if (!(cmd.Count() >= 2 && cmd.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd, "n >= 2 && n <= 255"); }
-	//Debug::Log << cmd << Debug::Done;
+	unsigned int len = cmd.Count() - 1;
 
 	unsigned int middle;
 	{
