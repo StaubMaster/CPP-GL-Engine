@@ -230,7 +230,9 @@ void Skin::ParsingData::Parse_VertexIndex(const TextCommand & cmd)
 	std::string str = cmd.ToString(0);
 	char c = str[0];
 
-	if (c == '+' || c == '-')
+	if (str == "here")
+	{ TextureVertexIndex = TextureVertexes.Count(); }
+	else if (c == '+' || c == '-')
 	{ TextureVertexIndex += cmd.ToInt32(0); }
 	else
 	{ TextureVertexIndex = cmd.ToUInt32(0); }
