@@ -10,6 +10,7 @@
 #include "FileParsing/Text/Exceptions.hpp"
 
 #include "ValueType/Vector/F2.hpp"
+#include "ValueType/Ray/F2.hpp"
 
 #include <iostream>
 #include "ValueType/_Show.hpp"
@@ -86,6 +87,9 @@ void Skin::ParsingData::Parse(const TextCommand & cmd)
 		else if (name == "fan<0")	{ Parse_VertexFan(cmd, true, false); }
 		else if (name == "fan>1")	{ Parse_VertexFan(cmd, false, true); }
 		else if (name == "fan<1")	{ Parse_VertexFan(cmd, true, true); }
+
+		else if (name == "rayT")	{ Parse_VertexRay(cmd, false); }
+		else if (name == "rayA")	{ Parse_VertexRay(cmd, true); }
 
 		else						{ std::cout << "unknown: " << cmd << "\n"; }
 	}
@@ -261,7 +265,7 @@ void Skin::ParsingData::Parse_VertexFace3(const TextCommand & cmd, bool directio
 }
 void Skin::ParsingData::Parse_VertexBelt(const TextCommand & cmd, bool direction, bool closure)
 {
-	if (!((cmd.Count() % 2) == 0)) { throw InvalidCommandArgumentCount(cmd, "(n % 2) == 0"); }
+	if (!((cmd.Count() % 2) == 0 && cmd.Count() >= 4 && cmd.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd, "(n % 2) == 0 && n >= 4 && n <= 255"); }
 
 	unsigned int len = cmd.Count() / 2;
 	VectorF2 temp;
@@ -365,6 +369,41 @@ void Skin::ParsingData::Parse_VertexFan(const TextCommand & cmd, bool direction,
 		{
 			Skin.Insert_Face3(middle, blade[0], blade[n]);
 		}
+	}
+}
+void Skin::ParsingData::Parse_VertexRay(const TextCommand & cmd, bool accumulate)
+{
+	if (!(cmd.Count() >= 4 && cmd.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd, "n >= 4 && n <= 255"); }
+
+	unsigned int len = cmd.Count() - 4;
+
+	RayF2 ray;
+	ray.Pos.X = cmd.ToFloat(0);
+	ray.Pos.Y = cmd.ToFloat(1);
+	ray.Dir.X = cmd.ToFloat(2);
+	ray.Dir.Y = cmd.ToFloat(3);
+
+	float intervals[len];
+	if (!accumulate)
+	{
+		for (unsigned int i = 0; i < len; i++)
+		{
+			intervals[i] = cmd.ToFloat(i + 4);
+		}
+	}
+	else
+	{
+		float sum = 0.0f;
+		for (unsigned int i = 0; i < len; i++)
+		{
+			sum += cmd.ToFloat(i + 4);
+			intervals[i] = sum;
+		}
+	}
+
+	for (unsigned int i = 0; i < len; i++)
+	{
+		TextureVertexes.Insert(ray.ToPoint(intervals[i]));
 	}
 }
 

@@ -39,6 +39,7 @@ struct Skin::ParsingData
 	void	Parse_VertexBelt(const TextCommand & cmd, bool direction, bool closure);
 	void	Parse_VertexBand(const TextCommand & cmd, bool direction, bool closure);
 	void	Parse_VertexFan(const TextCommand & cmd, bool direction, bool closure);
+	void	Parse_VertexRay(const TextCommand & cmd, bool accumulate);
 };
 
 #endif
