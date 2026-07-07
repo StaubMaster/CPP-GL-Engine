@@ -47,6 +47,7 @@ VALUE_TYPE := \
 \
 	ValueType/Ray/F2.cpp \
 	ValueType/Ray/F3.cpp \
+	ValueType/Ray/Hit/F3.cpp \
 \
 	ValueType/Matrix/2x2.cpp \
 	ValueType/Matrix/3x3.cpp \
@@ -73,6 +74,9 @@ VALUE_TYPE := \
 	ValueType/Depth.cpp \
 	ValueType/RangeF.cpp \
 	ValueType/LInter.cpp \
+	ValueType/TriangleF3.cpp \
+	ValueType/NormalPlaneF3.cpp \
+	ValueType/InteractF3.cpp \
 	ValueType/Intersect.cpp \
 	ValueType/_Show.cpp
 VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))

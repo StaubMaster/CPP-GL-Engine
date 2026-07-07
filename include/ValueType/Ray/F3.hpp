@@ -19,22 +19,6 @@ struct RayF3
 
 	RayF3(const VectorF3 & pos, const VectorF3 & dir);
 	RayF3(const LineF3 & line);
-
-	public:
-	class Interval
-	{
-		public:
-		const RayF3 & Ray;
-		const float Inter;
-		const int Index;
-		public:
-		Interval(const RayF3 & ray, float inter, int index);
-		public:
-		VectorF3 ToPoint() const;
-	};
-
-	public:
-	Interval Ray_Point(VectorF3 p);
 };
 
 #endif
