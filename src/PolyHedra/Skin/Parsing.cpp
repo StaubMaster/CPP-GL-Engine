@@ -290,30 +290,42 @@ void Skin::ParsingData::Parse_VertexBelt(const TextCommand & cmd, bool direction
 
 	for (unsigned int i = 1; i < len; i++)
 	{
+		VectorF3 val[4] = {
+			list0[i - 1],
+			list0[i - 0],
+			list1[i - 1],
+			list1[i - 0],
+		};
 		if (!direction)
 		{
-			Skin.Insert_Face3(list0[i - 1], list0[i - 0], list1[i - 1]);
-			Skin.Insert_Face3(list1[i - 1], list0[i - 0], list1[i - 0]);
+			Skin.Insert_Face3(val[0], val[1], val[2]);
+			Skin.Insert_Face3(val[2], val[1], val[3]);
 		}
 		else
 		{
-			Skin.Insert_Face3(list1[i - 1], list0[i - 0], list0[i - 1]);
-			Skin.Insert_Face3(list1[i - 0], list0[i - 0], list1[i - 1]);
+			Skin.Insert_Face3(val[2], val[1], val[0]);
+			Skin.Insert_Face3(val[3], val[1], val[2]);
 		}
 	}
 
 	if (closure)
 	{
 		unsigned int n = len - 1;
+		VectorF3 val[4] = {
+			list0[n],
+			list0[0],
+			list1[n],
+			list1[0],
+		};
 		if (!direction)
 		{
-			Skin.Insert_Face3(list0[n], list0[0], list1[n]);
-			Skin.Insert_Face3(list1[n], list0[0], list1[0]);
+			Skin.Insert_Face3(val[0], val[1], val[2]);
+			Skin.Insert_Face3(val[2], val[1], val[3]);
 		}
 		else
 		{
-			Skin.Insert_Face3(list0[0], list0[n], list1[n]);
-			Skin.Insert_Face3(list0[0], list1[n], list1[0]);
+			Skin.Insert_Face3(val[2], val[1], val[0]);
+			Skin.Insert_Face3(val[3], val[1], val[2]);
 		}
 	}
 }

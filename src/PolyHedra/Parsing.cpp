@@ -229,31 +229,42 @@ void PolyHedra::ParsingData::Parse_Belt(const TextCommand & cmd, bool direction,
 
 	for (unsigned int i = 1; i < len; i++)
 	{
+		unsigned int idx[4] = {
+			idx0[i - 1],
+			idx0[i - 0],
+			idx1[i - 1],
+			idx1[i - 0],
+		};
 		if (!direction)
 		{
-			//Data -> Insert_Face4(idx0[i - 1], idx0[i - 0], idx1[i - 1], idx1[i - 0]);
-			PolyHedra.Insert_Face3(idx0[i - 1], idx0[i - 0], idx1[i - 1]);
-			PolyHedra.Insert_Face3(idx1[i - 1], idx0[i - 0], idx1[i - 0]);
+			PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
+			PolyHedra.Insert_Face3(idx[2], idx[1], idx[3]);
 		}
 		else
 		{
-			//Data -> Insert_Face4(idx1[i - 1], idx0[i - 0], idx1[i - 1], idx1[i - 0]);
-			PolyHedra.Insert_Face3(idx1[i - 1], idx0[i - 0], idx0[i - 1]);
-			PolyHedra.Insert_Face3(idx1[i - 0], idx0[i - 0], idx1[i - 1]);
+			PolyHedra.Insert_Face3(idx[2], idx[1], idx[0]);
+			PolyHedra.Insert_Face3(idx[3], idx[1], idx[2]);
 		}
 	}
 
 	if (closure)
 	{
+		unsigned int n = len - 1;
+		unsigned int idx[4] = {
+			idx0[n],
+			idx0[0],
+			idx1[n],
+			idx1[0],
+		};
 		if (!direction)
 		{
-			PolyHedra.Insert_Face3(idx0[len - 1], idx0[0], idx1[len - 1]);
-			PolyHedra.Insert_Face3(idx1[len - 1], idx0[0], idx1[0]);
+			PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
+			PolyHedra.Insert_Face3(idx[2], idx[1], idx[3]);
 		}
 		else
 		{
-			PolyHedra.Insert_Face3(idx0[0], idx0[len -1], idx1[len - 1]);
-			PolyHedra.Insert_Face3(idx0[0], idx1[len -1], idx1[0]);
+			PolyHedra.Insert_Face3(idx[2], idx[1], idx[0]);
+			PolyHedra.Insert_Face3(idx[3], idx[1], idx[2]);
 		}
 	}
 }
@@ -290,25 +301,34 @@ void PolyHedra::ParsingData::Parse_Fan(const TextCommand & cmd, bool direction, 
 
 	for (unsigned int i = 1; i < len; i++)
 	{
+		unsigned int idx[2] = {
+			blade[i - 1],
+			blade[i - 0],
+		};
 		if (!direction)
 		{
-			PolyHedra.Insert_Face3(middle, blade[i - 1], blade[i - 0]);
+			PolyHedra.Insert_Face3(middle, idx[0], idx[1]);
 		}
 		else
 		{
-			PolyHedra.Insert_Face3(middle, blade[i - 0], blade[i - 1]);
+			PolyHedra.Insert_Face3(middle, idx[1], idx[0]); 
 		}
 	}
 
 	if (closure)
 	{
+		unsigned int n = len - 1;
+		unsigned int idx[2] = {
+			blade[n],
+			blade[0],
+		};
 		if (!direction)
 		{
-			PolyHedra.Insert_Face3(middle, blade[len - 1], blade[0]);
+			PolyHedra.Insert_Face3(middle, idx[0], idx[1]);
 		}
 		else
 		{
-			PolyHedra.Insert_Face3(middle, blade[0], blade[len - 1]);
+			PolyHedra.Insert_Face3(middle, idx[1], idx[0]);
 		}
 	}
 }
