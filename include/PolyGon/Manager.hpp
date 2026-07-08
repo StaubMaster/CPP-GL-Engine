@@ -6,7 +6,7 @@
 # include "PolyGon/Graphics/Wire/ShaderLayout.hpp"
 # include "PolyGon/InstanceManager.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "ValueType/Undex.hpp"
 

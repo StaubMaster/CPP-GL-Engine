@@ -2,7 +2,7 @@
 # define ENTRY_CONTAINER_BINARY_HPP
 
 # include "Base.hpp"
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 namespace EntryContainer
 {

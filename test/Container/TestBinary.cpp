@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Miscellaneous/Container/Binary.hpp"
+#include "Generics/Container/Binary.hpp"
 
 template<typename TypeItem>
 void BinaryShowInfo(const char * name, const Container::Binary<TypeItem> & cont)

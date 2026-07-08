@@ -1,10 +1,10 @@
 
 #include <iostream>
 
-#include "Miscellaneous/Container/Fixed.hpp"
-#include "Miscellaneous/Container/Tight.hpp"
-#include "Miscellaneous/Container/Binary.hpp"
-//#include "Miscellaneous/Container/Behaviour.cpp"
+#include "Generics/Container/Fixed.hpp"
+#include "Generics/Container/Tight.hpp"
+#include "Generics/Container/Binary.hpp"
+//#include "Generics/Container/Behaviour.cpp"
 
 #include "Miscellaneous/EntryContainer/Binary.hpp"
 

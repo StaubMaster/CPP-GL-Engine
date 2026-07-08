@@ -7,7 +7,7 @@
 # include "PolyGon/Graphics/Full/Buffer.hpp"
 # include "PolyGon/Graphics/Wire/Buffer.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "Instance/Basic2D/Layout.hpp"
 # include "Instance/Basic2D/Data.hpp"

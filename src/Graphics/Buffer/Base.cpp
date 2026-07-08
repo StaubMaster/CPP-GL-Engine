@@ -58,7 +58,7 @@ void Buffer::Base::NewSize(unsigned int size) { (void)size; }
 
 
 
-#include "Miscellaneous/Container/Void.hpp"
+#include "Generics/Container/Void.hpp"
 
 void Buffer::Base::DataNull()
 {

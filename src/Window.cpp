@@ -311,18 +311,16 @@ void Window::RunGL_Setup()
 }
 void Window::Run_Init()
 {
-	if (CallBack_Init.Function != nullptr)
+	if (CallBack_Init.CanInvoke())
 	{
 		Debug::Log << "Window Init() ..." << Debug::Done;
 		CallBack_Init();
-		std::cout << "Window:Run_Init():" << __LINE__ << '\n';
-		Debug::Log << "Window Init() done" << Debug::Done;
 		std::cout << "Window:Run_Init():" << __LINE__ << '\n';
 	}
 }
 void Window::Run_Free()
 {
-	if (CallBack_Free.Function != nullptr)
+	if (CallBack_Free.CanInvoke())
 	{
 		Debug::Log << "Window Free() ..." << Debug::Done;
 		CallBack_Free();

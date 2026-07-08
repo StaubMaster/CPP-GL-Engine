@@ -1,8 +1,8 @@
 #ifndef  POLYHEDRA_HPP
 # define POLYHEDRA_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
-# include "Miscellaneous/Container/Array.hpp"
+# include "Generics/Container/Binary.hpp"
+# include "Generics/Container/Array.hpp"
 
 # include "FileInfo.hpp"
 

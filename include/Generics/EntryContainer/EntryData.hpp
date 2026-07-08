@@ -1,7 +1,7 @@
 #ifndef  ENTRY_CONTAINER_ENTRY_DATA_HPP
 # define ENTRY_CONTAINER_ENTRY_DATA_HPP
 
-# include "Miscellaneous/Container/Entry.hpp"
+# include "Generics/Container/Entry.hpp"
 
 namespace EntryContainer
 {

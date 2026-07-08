@@ -1,7 +1,7 @@
 #ifndef  ATTRIBUTE_LAYOUT_HPP
 # define ATTRIBUTE_LAYOUT_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "OpenGLEnums.hpp"
 

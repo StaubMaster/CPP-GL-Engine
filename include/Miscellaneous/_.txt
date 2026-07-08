@@ -1,3 +1,0 @@
-
-Containers and Functions are Generic
-not Miscellaneous

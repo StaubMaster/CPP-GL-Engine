@@ -1,7 +1,7 @@
 #ifndef  SKIN_HPP
 # define SKIN_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "FileInfo.hpp"
 # include "ValueType/Vector/U2.hpp"

@@ -3,7 +3,7 @@
 
 # include "ValueType/Color/U4.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include <exception>
 # include <iostream>

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Miscellaneous/Container/Array.hpp"
+#include "Generics/Container/Array.hpp"
 
 template<typename TypeItem>
 void ArrayInfo(const char * name, const Container::Array<TypeItem> & arr)

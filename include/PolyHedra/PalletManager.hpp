@@ -8,7 +8,7 @@
 
 # include "Graphics/Texture/Array2D.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 class PolyHedra;
 struct PolyHedraObjectData;

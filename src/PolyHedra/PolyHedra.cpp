@@ -14,7 +14,7 @@
 #include "FileParsing/Text/TextCommand.hpp"
 #include "FileParsing/Text/TextCommandStream.hpp"
 
-#include "Miscellaneous/Container/Array.hpp"
+#include "Generics/Container/Array.hpp"
 
 //#include "FileInfo.hpp"
 

@@ -4,7 +4,7 @@
 # include "Base.hpp"
 # include "ValueType/Vector/U3.hpp"
 # include "ValueType/Vector/U2.hpp"
-# include "Miscellaneous/Container/Array.hpp"
+# include "Generics/Container/Array.hpp"
 
 /*	dont need Array2D as inherited class
 make it a static nested class ?

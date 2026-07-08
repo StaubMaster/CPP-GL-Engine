@@ -3,8 +3,8 @@
 #include "TestArray.cpp"
 #include "TestBinary.cpp"
 
-#include "Miscellaneous/Container/Array.hpp"
-#include "Miscellaneous/Container/Binary.hpp"
+#include "Generics/Container/Array.hpp"
+#include "Generics/Container/Binary.hpp"
 
 int main()
 {

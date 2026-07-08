@@ -1,7 +1,7 @@
 #ifndef  UNIFORM_LAYOUT_HPP
 # define UNIFORM_LAYOUT_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "OpenGLEnums.hpp"
 

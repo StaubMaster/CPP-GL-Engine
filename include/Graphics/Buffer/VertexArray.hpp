@@ -1,7 +1,7 @@
 #ifndef  BUFFER_ARRAYBASE_HPP
 # define BUFFER_ARRAYBASE_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "OpenGLTypes.hpp"
 

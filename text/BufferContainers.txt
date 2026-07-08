@@ -1,9 +1,0 @@
-
-the Buffers are just the OpenGL Buffers with extra stuff
-
-but in all Implementations, there is a Container (usually Binary)
-that then puts its Data into the Buffer
-
-make there Buffers store the Container internally ?
-
-

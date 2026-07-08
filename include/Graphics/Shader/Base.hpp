@@ -1,8 +1,8 @@
 #ifndef  SHADER_BASE_HPP
 # define SHADER_BASE_HPP
 
-# include "Miscellaneous/Container/Array.hpp"
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Array.hpp"
+# include "Generics/Container/Binary.hpp"
 # include <string>
 //# include <iosfwd>
 

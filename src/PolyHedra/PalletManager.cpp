@@ -2,8 +2,8 @@
 #include "PolyHedra/Manager.hpp"
 #include "PolyHedra/ObjectData.hpp"
 
-#include "Miscellaneous/Container/Array.hpp"
-#include "Miscellaneous/Container/Binary.hpp"
+#include "Generics/Container/Array.hpp"
+#include "Generics/Container/Binary.hpp"
 
 #include "PolyHedra/PolyHedra.hpp"
 #include "PolyHedra/Data.hpp"

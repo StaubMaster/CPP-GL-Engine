@@ -5,8 +5,8 @@
 #include "FileInfo.hpp"
 #include "DirectoryInfo.hpp"
 
-#include "Miscellaneous/Container/Base.hpp"
-#include "Miscellaneous/Container/Dynamic.hpp"
+#include "Generics/Container/Base.hpp"
+#include "Generics/Container/Dynamic.hpp"
 
 #include "Graphics/Shader/Base.hpp"
 #include "Graphics/Shader/Code.hpp"

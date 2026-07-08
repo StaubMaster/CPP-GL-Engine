@@ -4,7 +4,7 @@
 # include "Graphics/Buffer/VertexArray.hpp"
 # include "Graphics/Buffer/Array.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "Graphics/Texture/Base.hpp"
 

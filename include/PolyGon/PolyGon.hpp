@@ -1,8 +1,8 @@
 #ifndef  POLYGON_HPP
 # define POLYGON_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
-# include "Miscellaneous/Container/Array.hpp"
+# include "Generics/Container/Binary.hpp"
+# include "Generics/Container/Array.hpp"
 # include "PolyGon/Graphics/Full/Main/Data.hpp"
 
 struct RayF2;

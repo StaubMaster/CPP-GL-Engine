@@ -5,7 +5,7 @@
 # include "Graphics/Buffer/Array.hpp"
 # include "Graphics/Buffer/Element.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include "Graphics/Texture/Base.hpp"
 # include "OpenGL.hpp"

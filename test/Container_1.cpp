@@ -1,8 +1,8 @@
-#include "Miscellaneous/Container/Binary.hpp"
-#include "Miscellaneous/Container/Tight.hpp"
-#include "Miscellaneous/Container/Fixed.hpp"
-#include "Miscellaneous/Container/Array.hpp"
-#include "Miscellaneous/Container/Pointer.hpp"
+#include "Generics/Container/Binary.hpp"
+#include "Generics/Container/Tight.hpp"
+#include "Generics/Container/Fixed.hpp"
+#include "Generics/Container/Array.hpp"
+#include "Generics/Container/Pointer.hpp"
 
 #include <iostream>
 

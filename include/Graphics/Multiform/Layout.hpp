@@ -1,7 +1,7 @@
 #ifndef  MULTIFORM_LAYOUT_HPP
 # define MULTIFORM_LAYOUT_HPP
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 namespace Uniform { class Layout; };
 

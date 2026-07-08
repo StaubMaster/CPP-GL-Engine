@@ -12,7 +12,7 @@
 # include "ValueType/Color/F4.hpp"
 # include "ValueType/Vector/F2.hpp"
 
-# include "Miscellaneous/Function/Pointer.hpp"
+# include "Generics/Function/Pointer.hpp"
 
 
 

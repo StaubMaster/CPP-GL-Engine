@@ -6,7 +6,7 @@
 # include "DataDeclare.hpp"
 # include "Display/SizeRatio2D.hpp"
 
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Binary.hpp"
 
 # include <exception>
 

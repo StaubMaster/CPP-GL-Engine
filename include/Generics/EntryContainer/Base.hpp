@@ -2,8 +2,8 @@
 # define ENTRY_CONTAINER_BASE_HPP
 
 # include "Entry.hpp"
-# include "Miscellaneous/Container/Member.hpp"
-# include "Miscellaneous/Container/Binary.hpp"
+# include "Generics/Container/Member.hpp"
+# include "Generics/Container/Binary.hpp"
 
 namespace EntryContainer
 {
