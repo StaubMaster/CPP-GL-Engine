@@ -2,8 +2,6 @@
 
 
 
-DepthFactors::DepthFactors()
-{ }
 DepthFactors::DepthFactors(float near, float far)
 {
 	Near = near;

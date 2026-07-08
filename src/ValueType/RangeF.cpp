@@ -2,13 +2,6 @@
 
 
 
-RangeF::~RangeF()
-{ }
-RangeF::RangeF()
-	: Min(0.0f)
-	, Len(0.0f)
-	, Max(0.0f)
-{ }
 RangeF::RangeF(float min, float max)
 	: Min(min)
 	, Len(max - min)

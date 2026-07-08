@@ -4,22 +4,24 @@
 struct RangeF
 {
 	private:
-	float	Min;
-	float	Len;
-	float	Max;
+	float	Min = 0.0f;
+	float	Len = 0.0f;
+	float	Max = 0.0f;
 
 	public:
-	~RangeF();
-	RangeF();
-	RangeF(float min, float max);
-
+	~RangeF() = default;
+	RangeF() = default;
 	RangeF(const RangeF & other) = default;
 	RangeF & operator=(const RangeF & other) = default;
 
 	public:
+	RangeF(float min, float max);
+
+	public:
 	float	GetMin() const;
 	float	GetMax() const;
-	
+
+	public:
 	void	SetMin(float min);
 	void	SetMax(float max);
 

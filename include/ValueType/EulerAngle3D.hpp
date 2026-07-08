@@ -15,10 +15,10 @@ struct EulerAngle3D
 
 
 	public:
-	~EulerAngle3D();
-	EulerAngle3D();
-	EulerAngle3D(const EulerAngle3D & other);
-	const EulerAngle3D & operator=(const EulerAngle3D & other);
+	~EulerAngle3D() = default;
+	EulerAngle3D() = default;
+	EulerAngle3D(const EulerAngle3D & other) = default;
+	EulerAngle3D & operator=(const EulerAngle3D & other) = default;
 
 
 

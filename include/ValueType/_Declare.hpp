@@ -8,21 +8,21 @@ struct Bool4;
 struct VectorF2;
 struct VectorF3;
 struct VectorF4;
+struct VectorU2;
+struct VectorU3;
+struct VectorI2;
+struct VectorI3;
+
 struct BoxF1;
 struct BoxF2;
 struct BoxF3;
-
-struct VectorU2;
-struct VectorU3;
 struct BoxU2;
 struct BoxU3;
-struct LoopU2;
-struct LoopU3;
-
-struct VectorI2;
-struct VectorI3;
 struct BoxI2;
 struct BoxI3;
+
+struct LoopU2;
+struct LoopU3;
 struct LoopI2;
 struct LoopI3;
 
@@ -61,6 +61,8 @@ struct LightPoint;
 struct LightDirection;
 struct LightSpot;
 
+struct NormalPlaneF3;
+struct TriangleF3;
 struct Undex; // ?
 
 #endif

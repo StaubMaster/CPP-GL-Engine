@@ -189,14 +189,14 @@ PolyHedra * PolyHedraGenerate::SphereY(unsigned int ring, unsigned int seg, floa
 	{
 		vert = (1.0f + r) / (1.0f + ring);
 		vert = 0.5f - vert;
-		angle.X1 = Angle::Radians(vert * PI);
+		angle.X1 = Angle::Radians(vert * Angle::Half);
 
 		ring_1_idx = 1 + (r * seg);
 		ring_0_idx = ring_1_idx - seg;
 		for (unsigned int s = 0; s < seg; s++)
 		{
 			hori = ((1.0 * s) + (0.5f * r)) / seg;
-			angle.Y2 = Angle::Radians(hori * TAU);
+			angle.Y2 = Angle::Radians(hori * Angle::Full);
 
 			polyhedra -> Insert_Corn(angle.forward(VectorF3(0, 0, radius)));
 

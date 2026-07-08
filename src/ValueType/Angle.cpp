@@ -5,23 +5,8 @@
 
 
 
-Angle::~Angle() { }
-Angle::Angle() :
-	Value(0.0f)
-{ }
-Angle::Angle(const Angle & other) :
-	Value(other.Value)
-{ }
-Angle & Angle::operator=(const Angle & other)
-{
-	Value = other.Value;
-	return *this;
-}
-
-
-
-float Angle::DegreesToRadians(float val) { return val * (TAU / 360); }
-float Angle::RadiansToDegrees(float val) { return val * (360 / TAU); }
+float Angle::DegreesToRadians(float val) { return val * (Tau / 360); }
+float Angle::RadiansToDegrees(float val) { return val * (360 / Tau); }
 
 Angle::Angle(float val) :
 	Value(val)
@@ -29,7 +14,7 @@ Angle::Angle(float val) :
 
 Angle Angle::Radians(float val) { return Angle(val); }
 Angle Angle::Degrees(float val) { return Angle(DegreesToRadians(val)); }
-Angle Angle::Section(float val) { return Angle(TAU / val); }
+Angle Angle::Section(float val) { return Angle(Tau / val); }
 
 Angle Angle::PointToX(VectorF2 dir)
 {
@@ -49,8 +34,8 @@ float Angle::ToDegrees() const { return RadiansToDegrees(Value); }
 
 void Angle::clampPI()
 {
-	if (Value > +(PI / 2)) { Value = +(PI / 2); }
-	if (Value < -(PI / 2)) { Value = -(PI / 2); }
+	if (Value > +(Pi / 2)) { Value = +(Pi / 2); }
+	if (Value < -(Pi / 2)) { Value = -(Pi / 2); }
 }
 
 Angle Angle::round(Angle size) const { return Angle(roundf(Value / size.Value) * size.Value); }

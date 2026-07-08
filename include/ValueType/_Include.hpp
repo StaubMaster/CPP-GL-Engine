@@ -8,21 +8,21 @@
 # include "ValueType/Vector/F2.hpp"
 # include "ValueType/Vector/F3.hpp"
 # include "ValueType/Vector/F4.hpp"
+# include "ValueType/Vector/U2.hpp"
+# include "ValueType/Vector/U3.hpp"
+# include "ValueType/Vector/I2.hpp"
+# include "ValueType/Vector/I3.hpp"
+
 # include "ValueType/Box/F1.hpp"
 # include "ValueType/Box/F2.hpp"
 # include "ValueType/Box/F3.hpp"
-
-# include "ValueType/Vector/U2.hpp"
-# include "ValueType/Vector/U3.hpp"
 # include "ValueType/Box/U2.hpp"
 # include "ValueType/Box/U3.hpp"
-# include "ValueType/Loop/U2.hpp"
-# include "ValueType/Loop/U3.hpp"
-
-# include "ValueType/Vector/I2.hpp"
-# include "ValueType/Vector/I3.hpp"
 # include "ValueType/Box/I2.hpp"
 # include "ValueType/Box/I3.hpp"
+
+# include "ValueType/Loop/U2.hpp"
+# include "ValueType/Loop/U3.hpp"
 # include "ValueType/Loop/I2.hpp"
 # include "ValueType/Loop/I3.hpp"
 
@@ -61,6 +61,8 @@
 # include "ValueType/Light/Direction.hpp"
 # include "ValueType/Light/Spot.hpp"
 
+# include "ValueType/NormalPlaneF3.hpp"
+# include "ValueType/TriangleF3.hpp"
 # include "ValueType/Undex.hpp"
 
 #endif

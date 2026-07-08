@@ -12,12 +12,13 @@ struct Depth
 	RangeF			Range;
 	ColorF4			Color;
 
-	Depth();
-	~Depth();
+	public:
+	~Depth() = default;
+	Depth() = default;
+	Depth(const Depth & other) = default;
+	Depth & operator=(const Depth & other) = default;
 
-	Depth(const Depth & other);
-	Depth & operator=(const Depth & other);
-
+	public:
 	Depth(DepthFactors factors, RangeF range, ColorF4 color);
 };
 

@@ -6,28 +6,6 @@
 
 
 
-EulerAngle3D::~EulerAngle3D()
-{ }
-EulerAngle3D::EulerAngle3D()
-	: Z0()
-	, X1()
-	, Y2()
-{ }
-EulerAngle3D::EulerAngle3D(const EulerAngle3D & other)
-	: Z0(other.Z0)
-	, X1(other.X1)
-	, Y2(other.Y2)
-{ }
-const EulerAngle3D & EulerAngle3D::operator=(const EulerAngle3D & other)
-{
-	Z0 = other.Z0;
-	X1 = other.X1;
-	Y2 = other.Y2;
-	return *this;
-}
-
-
-
 EulerAngle3D::EulerAngle3D(Angle z0, Angle x1, Angle y2)
 	: Z0(z0)
 	, X1(x1)
@@ -128,12 +106,6 @@ EulerAngle3D EulerAngle3D::reverse(const EulerAngle3D & other) const
 		-Angle::aSin(axisY.Z),
 		+Angle::aTan2(axisX.Z, axisZ.Z)
 	);
-
-	/*return EulerAngle3D(
-		Angle::aTan2(axisZ.X, axisZ.Z),
-		Angle::aSin(axisZ.Y),
-		Angle::aTan2(axisX.Y, axisY.Y)
-	);*/
 }
 
 
