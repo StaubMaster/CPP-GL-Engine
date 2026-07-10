@@ -4,25 +4,20 @@
 # include "ValueType/Box/__.hpp"
 # include "ValueType/Bool/3.hpp"
 
-template<typename VectorType, typename BoxType> struct Box_3 : public Box__<VectorType, BoxType>
+template<typename ValueType, typename VectorType, typename BoxType> struct Box_3 : public Box__<ValueType, VectorType, BoxType>
 {
-~Box_3() { }
+~Box_3() = default;
+Box_3() = default;
+Box_3(const Box_3 & other) = default;
+Box_3 & operator=(const Box_3 & other) = default;
 
 Box_3(VectorType min, VectorType max)
-	: Box__<VectorType, BoxType>(min, max)
+	: Box__<ValueType, VectorType, BoxType>(min, max)
 { }
 
-Box_3(const Box_3 & other)
-	: Box__<VectorType, BoxType>(other)
-{ }
-Box_3 & operator=(const BoxType & other)
-{
-	Box__<VectorType, BoxType>::operator=(other);
-	return *this;
-}
 
 
-
+// rename
 Bool3 IsNormal() const { return (this -> Min) <= (this -> Max); }
 
 
@@ -40,10 +35,10 @@ void Consider(VectorType val)
 
 
 
-BoxType operator+(VectorType vec) const { return BoxType(this -> Min + vec, this -> Max + vec); }
-BoxType operator-(VectorType vec) const { return BoxType(this -> Min - vec, this -> Max - vec); }
-BoxType operator*(VectorType vec) const { return BoxType(this -> Min * vec, this -> Max * vec); }
-BoxType operator/(VectorType vec) const { return BoxType(this -> Min / vec, this -> Max / vec); }
+BoxType	operator+(const VectorType & vec) const { return BoxType(this -> Min + vec, this -> Max + vec); }
+BoxType	operator-(const VectorType & vec) const { return BoxType(this -> Min - vec, this -> Max - vec); }
+BoxType	operator*(const VectorType & vec) const { return BoxType(this -> Min * vec, this -> Max * vec); }
+BoxType	operator/(const VectorType & vec) const { return BoxType(this -> Min / vec, this -> Max / vec); }
 
 
 

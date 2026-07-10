@@ -154,6 +154,7 @@ void PolyHedra::ParsingData::Parse_Corner(const TextCommand & cmd)
 	//std::cout << "c: " << c << "\n";
 	PolyHedra.Insert_Corn(Corner(c));
 }
+// Face should have diection ?
 void PolyHedra::ParsingData::Parse_Face(const TextCommand & cmd)
 {
 	if (!(cmd.Count() >= 3 && cmd.Count() <= 4)) { throw InvalidCommandArgumentCount(cmd, "n >= 3 && n <= 4"); }
@@ -179,8 +180,11 @@ void PolyHedra::ParsingData::Parse_Face(const TextCommand & cmd)
 	{
 		PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 	}
+
 }
 
+// Index only needs 1 ?
+// the other is in Skin
 void PolyHedra::ParsingData::Parse_Offset(const TextCommand & cmd)
 {
 	if (!(cmd.Count() == 2)) { throw InvalidCommandArgumentCount(cmd, "n == 2"); }

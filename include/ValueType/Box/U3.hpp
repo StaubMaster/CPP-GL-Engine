@@ -4,7 +4,7 @@
 # include "ValueType/Vector/U3.hpp"
 # include "ValueType/Box/_3.hpp"
 
-struct BoxU3 : public Box_3<VectorU3, BoxU3>
+struct BoxU3 : public Box_3<unsigned int, VectorU3, BoxU3>
 {
 	~BoxU3();
 

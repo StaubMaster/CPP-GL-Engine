@@ -4,7 +4,7 @@
 # include "ValueType/Vector/F3.hpp"
 # include "ValueType/Box/_3.hpp"
 
-struct BoxF3 : public Box_3<VectorF3, BoxF3>
+struct BoxF3 : public Box_3<float, VectorF3, BoxF3>
 {
 	~BoxF3();
 

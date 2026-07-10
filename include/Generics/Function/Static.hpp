@@ -24,7 +24,7 @@ struct StaticFunction : public BaseFunction<ReturnType, Arguments ...>
 	}
 	ReturnType Invoke(Arguments ... args) const override
 	{
-		if (Function == nullptr) { /*throw*/; }
+		if (Function == nullptr) { throw "Function is null"; }
 		return Function(args ...);
 	}
 	ReturnType operator()(Arguments ... args) const override

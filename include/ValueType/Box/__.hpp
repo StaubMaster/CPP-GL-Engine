@@ -12,31 +12,22 @@
 
 // the point of these Templates is so I dont have to Copy and paste all the similar Code
 
-template<typename VectorType, typename BoxType> struct Box__
+template<typename ValueType, typename VectorType, typename BoxType> struct Box__
 {
-VectorType Min;
-VectorType Max;
+VectorType	Min;
+VectorType	Max;
 
 
 
-~Box__() { }
+~Box__() = default;
+Box__() = default;
+Box__(const Box__ & other) = default;
+Box__ & operator=(const Box__ & other) = default;
 
-//Box__() { }
 Box__(VectorType min, VectorType max)
 	: Min(min)
 	, Max(max)
 { }
-
-Box__(const Box__ & other)
-	: Min(other.Min)
-	, Max(other.Max)
-{ }
-Box__ & operator=(const Box__ & other)
-{
-	Min = other.Min;
-	Max = other.Max;
-	return *this;
-}
 
 
 

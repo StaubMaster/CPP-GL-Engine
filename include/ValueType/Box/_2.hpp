@@ -4,20 +4,20 @@
 # include "ValueType/Box/__.hpp"
 # include "ValueType/Bool/2.hpp"
 
-template<typename VectorType, typename BoxType> struct Box_2 : public Box__<VectorType, BoxType>
+template<typename ValueType, typename VectorType, typename BoxType> struct Box_2 : public Box__<ValueType, VectorType, BoxType>
 {
 ~Box_2() { }
 
 Box_2(VectorType min, VectorType max)
-	: Box__<VectorType, BoxType>(min, max)
+	: Box__<ValueType, VectorType, BoxType>(min, max)
 { }
 
 Box_2(const Box_2 & other)
-	: Box__<VectorType, BoxType>(other)
+	: Box__<ValueType, VectorType, BoxType>(other)
 { }
 Box_2 & operator=(const Box_2 & other)
 {
-	Box__<VectorType, BoxType>::operator=(other);
+	Box__<ValueType, VectorType, BoxType>::operator=(other);
 	return *this;
 }
 

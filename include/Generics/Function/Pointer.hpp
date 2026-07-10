@@ -39,7 +39,7 @@ struct FunctionPointer : public BaseFunction<void, Arguments ...>
 	}
 	void Invoke(Arguments ... args) const override
 	{
-		if (Function == nullptr) { /*throw*/; }
+		if (Function == nullptr) { throw "FunctionBase is null"; }
 		return Function -> Invoke(args ...);
 	}
 	void operator()(Arguments ... args) const override

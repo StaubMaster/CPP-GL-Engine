@@ -3,7 +3,7 @@
 
 # include "ValueType/Box/_1.hpp"
 
-struct BoxF1 : public Box_1<float, BoxF1>
+struct BoxF1 : public Box_1<void, float, BoxF1>
 {
 	~BoxF1();
 

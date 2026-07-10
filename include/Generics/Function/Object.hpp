@@ -25,8 +25,8 @@ struct ObjectFunction : public BaseFunction<ReturnType, Arguments ...>
 	}
 	ReturnType Invoke(Arguments ... args) const override
 	{
-		if (Object == nullptr) { /*throw*/; }
-		if (Function == nullptr) { /*throw*/; }
+		if (Object == nullptr) { throw "Object is null"; }
+		if (Function == nullptr) { throw "Function is null"; }
 		return (*Object.*Function)(args ...);
 	}
 	ReturnType operator()(Arguments ... args) const override
