@@ -10,9 +10,9 @@ struct BaseFunction
 	BaseFunction(const BaseFunction & other) = default;
 	BaseFunction & operator=(const BaseFunction & other) = default;
 
-	virtual bool CanInvoke() const = 0;
-	virtual ReturnType Invoke(Arguments ... args) const = 0;
-	virtual ReturnType operator()(Arguments ... args) const = 0;
+	virtual bool		CanInvoke() const = 0;
+	virtual ReturnType	Invoke(Arguments ... args) const = 0;
+	virtual ReturnType	operator()(Arguments ... args) const = 0;
 };
 
 #endif
