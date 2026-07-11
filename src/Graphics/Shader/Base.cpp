@@ -176,7 +176,7 @@ void Shader::Base::Change(std::initializer_list<FileInfo> files)
 
 
 
-GL::UniformLocation Shader::Base::UniformLocation(const char * name) const
+GL::UniformLocation Shader::Base::FindUniformLocation(const char * name) const
 {
 	if (Exists())
 	{
@@ -187,7 +187,7 @@ GL::UniformLocation Shader::Base::UniformLocation(const char * name) const
 		return -1;
 	}
 }
-GL::BlockIndex Shader::Base::UniformBlockIndex(const char * name) const
+GL::BlockIndex Shader::Base::FindUniformBlockIndex(const char * name) const
 {
 	if (Exists())
 	{
@@ -199,7 +199,7 @@ GL::BlockIndex Shader::Base::UniformBlockIndex(const char * name) const
 	}
 }
 
-void Shader::Base::UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding)
+void Shader::Base::BindUniformBlockIndex(GL::BlockIndex index, GL::BlockBinding binding)
 {
 	GL::UniformBlockBinding(ID, index, binding);
 }

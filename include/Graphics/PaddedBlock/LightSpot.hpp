@@ -1,7 +1,6 @@
 #ifndef  PADDED_BLOCK_LIGHT_SPOT_HPP
 # define PADDED_BLOCK_LIGHT_SPOT_HPP
 
-# include "Graphics/PaddedBlock/General/Base.hpp"
 # include "Graphics/PaddedBlock/LightBase.hpp"
 # include "Graphics/PaddedBlock/TypeDefs/VectorF3.hpp"
 # include "Graphics/PaddedBlock/TypeDefs/RangeF.hpp"

@@ -67,12 +67,10 @@ class Base
 
 
 	public:
-	// Prefix with Find
-	GL::UniformLocation		UniformLocation(const char * name) const;
-	GL::BlockIndex			UniformBlockIndex(const char * name) const;
+	GL::UniformLocation		FindUniformLocation(const char * name) const;
+	GL::BlockIndex			FindUniformBlockIndex(const char * name) const;
 
-	// prefix with Put
-	void	UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding);
+	void	BindUniformBlockIndex(GL::BlockIndex index, GL::BlockBinding binding);
 
 
 

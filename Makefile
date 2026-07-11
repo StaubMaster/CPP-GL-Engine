@@ -170,8 +170,6 @@ ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
 
 PADDED_BLOCK := \
-	Graphics/PaddedBlock/General/Base.cpp \
-\
 	Graphics/PaddedBlock/LightBase.cpp \
 	Graphics/PaddedBlock/LightDirection.cpp \
 	Graphics/PaddedBlock/LightPoint.cpp \

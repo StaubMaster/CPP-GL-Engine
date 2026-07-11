@@ -1,7 +1,6 @@
 #ifndef  PADDED_BLOCK_LIGHT_BASE_HPP
 # define PADDED_BLOCK_LIGHT_BASE_HPP
 
-# include "Graphics/PaddedBlock/General/Base.hpp"
 # include "Graphics/PaddedBlock/TypeDefs/Float.hpp"
 # include "Graphics/PaddedBlock/TypeDefs/ColorF4.hpp"
 # include "ValueType/Light/Base.hpp"

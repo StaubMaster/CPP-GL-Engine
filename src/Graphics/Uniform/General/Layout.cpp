@@ -37,27 +37,6 @@ void Uniform::Layout::Bind()
 
 
 
-void Uniform::Layout::UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding)
-{
-	if (Shader != nullptr)
-	{
-		Shader -> UniformBlockBinding(index, binding);
-	}
-}
-
-
-
-void Uniform::Layout::UpdateData()
-{
-	for (unsigned int i = 0; i < Uniforms.Count(); i++)
-	{
-		Uniforms[i] -> UpdateData();
-	}
-}
-
-
-
-
 #include "Graphics/Uniform/General/FloatNBase.hpp"
 #include "Graphics/Uniform/General/UIntNTypeBase.hpp"
 #include "Graphics/Uniform/General/Buffer.hpp"
@@ -68,7 +47,7 @@ void Uniform::Layout::Find(FloatNBase * uniform) const
 	{
 		if (Shader != nullptr)
 		{
-			uniform -> Index = Shader -> UniformLocation(uniform -> Name.c_str());
+			uniform -> Index = Shader -> FindUniformLocation(uniform -> Name.c_str());
 		}
 		else
 		{
@@ -82,7 +61,7 @@ void Uniform::Layout::Find(UIntNBase * uniform) const
 	{
 		if (Shader != nullptr)
 		{
-			uniform -> Index = Shader -> UniformLocation(uniform -> Name.c_str());
+			uniform -> Index = Shader -> FindUniformLocation(uniform -> Name.c_str());
 		}
 		else
 		{
@@ -96,7 +75,7 @@ void Uniform::Layout::Find(Buffer * uniform) const
 	{
 		if (Shader != nullptr)
 		{
-			uniform -> Index = Shader -> UniformBlockIndex(uniform -> Name.c_str());
+			uniform -> Index = Shader -> FindUniformBlockIndex(uniform -> Name.c_str());
 		}
 		else
 		{
@@ -128,5 +107,25 @@ void Uniform::Layout::Find(Multiform::Base & multiform)
 		{
 			multiform.Uniforms.Insert(uniform);
 		}
+	}
+}
+
+
+
+
+
+void Uniform::Layout::UpdateData()
+{
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		Uniforms[i] -> UpdateData();
+	}
+}
+
+void Uniform::Layout::Bind(Buffer & uniform, GL::BlockBinding binding)
+{
+	if (Shader != nullptr)
+	{
+		Shader -> BindUniformBlockIndex(uniform.Index, binding);
 	}
 }

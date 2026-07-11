@@ -11,10 +11,32 @@ struct Void
 	bool	IsNull() const;
 	void	Clear();
 
-	~Void();
-	Void();
-	Void(const Void & other);
-	Void & operator=(const Void & other);
+	~Void() = default;
+	Void() = default;
+	Void(const Void & other) = default;
+	Void & operator=(const Void & other) = default;
+
+	template<typename Type> Void(const Type * data)
+		: Size(sizeof(Type))
+		, Data(data)
+	{ }
+	template<typename Type> Void(const Type & data)
+		: Size(sizeof(Type))
+		, Data(&data)
+	{ }
+
+	template<typename Type> Void & operator=(const Type * data)
+	{
+		Size = sizeof(Type);
+		Data = data;
+		return *this;
+	}
+	template<typename Type> Void & operator=(const Type & data)
+	{
+		Size = sizeof(Type);
+		Data = &data;
+		return *this;
+	}
 };
 };
 

@@ -34,12 +34,6 @@ class Layout
 	bool	IsBound() const;
 	void	Bind();
 
-	public:
-	void	UniformBlockBinding(GL::BlockIndex index, GL::BlockBinding binding);
-
-	public:
-	void	UpdateData();
-
 	private:
 	void	Find(FloatNBase * uniform) const;
 	void	Find(UIntNBase * uniform) const;
@@ -48,6 +42,12 @@ class Layout
 	public:
 	void	Find();
 	void	Find(Multiform::Base & multiform);
+
+	public:
+	void	UpdateData();
+
+	public:
+	void	Bind(Buffer & uniform, GL::BlockBinding binding);
 };
 };
 

@@ -1,7 +1,6 @@
 #ifndef  PADDED_BLOCK_LIGHT_DIRECTION_HPP
 # define PADDED_BLOCK_LIGHT_DIRECTION_HPP
 
-# include "Graphics/PaddedBlock/General/Base.hpp"
 # include "Graphics/PaddedBlock/LightBase.hpp"
 # include "Graphics/PaddedBlock/TypeDefs/VectorF3.hpp"
 # include "ValueType/Light/Direction.hpp"
