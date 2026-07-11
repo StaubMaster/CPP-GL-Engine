@@ -169,6 +169,17 @@ ATTRIBUTE := \
 ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
 ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
 
+PADDED_BLOCK := \
+	Graphics/PaddedBlock/General/Base.cpp \
+\
+	Graphics/PaddedBlock/LightBase.cpp \
+	Graphics/PaddedBlock/LightDirection.cpp \
+	Graphics/PaddedBlock/LightPoint.cpp \
+	Graphics/PaddedBlock/LightSpot.cpp \
+
+PADDED_BLOCK_SRC := $(addprefix $(DIR_SRC)/,$(PADDED_BLOCK))
+PADDED_BLOCK_OBJ := $(addprefix $(DIR_OBJ)/,$(PADDED_BLOCK:.cpp=.o))
+
 TEXTURE := \
 	Graphics/Texture/Base.cpp \
 	Graphics/Texture/Array2D.cpp \
@@ -280,6 +291,7 @@ ALL_SRC := \
 	$(CONTAINER_SRC) \
 	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC) \
 	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC) \
+	$(PADDED_BLOCK_SRC) \
 	$(INSTANCE_DATA_SRC) \
 	$(POLYGON_SRC) $(POLYHEDRA_SRC) \
 	$(USERPARAMETER_SRC) \
@@ -290,6 +302,7 @@ ALL_OBJ := \
 	$(CONTAINER_OBJ) \
 	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ) \
 	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ) \
+	$(PADDED_BLOCK_OBJ) \
 	$(INSTANCE_DATA_OBJ) \
 	$(POLYHEDRA_MAIN_OBJ) \
 	$(POLYGON_OBJ) $(POLYHEDRA_OBJ) \

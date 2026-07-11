@@ -4,14 +4,13 @@
 
 
 Buffer::Uniform::~Uniform() { }
-Buffer::Uniform::Uniform(GL::BufferDataUsage usage, unsigned int binding)
+Buffer::Uniform::Uniform(GL::BufferDataUsage usage)
 	: Buffer::Base(GL::BufferTarget::UniformBuffer, usage)
-	, Binding(binding)
 { }
 
 
 
-void Buffer::Uniform::BindBase()
+void Buffer::Uniform::BindBase(GL::BlockBinding binding)
 {
-	GL::BindBufferBase(Target, Binding, ID);
+	GL::BindBufferBase(Target, binding, ID);
 }

@@ -6,7 +6,7 @@
 
 Uniform::Buffer::Buffer(Uniform::Layout & layout, std::string name)
 	: Uniform::Base(layout, name)
-	, Index(0)
+	, Index(-1)
 { }
 
 

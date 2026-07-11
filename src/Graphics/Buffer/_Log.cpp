@@ -69,7 +69,6 @@ void Buffer::Uniform::LogInfo(bool self) const
 	Debug::Log << Debug::TabInc;
 	Debug::Log << Debug::Tabs << "ID: " << ID << '\n';
 	Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
-	Debug::Log << Debug::Tabs << "Binding: " << Binding << '\n';
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "}\n";
 }

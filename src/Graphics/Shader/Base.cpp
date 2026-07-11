@@ -62,9 +62,18 @@ bool Shader::Base::Validate() const
 }
 bool Shader::Base::Exists() const
 {
-	if (ID == 0) { return false; }
-	if (GL::GetProgramiv(ID, GL::ShaderProgramParameterName::InfoLogLength) != 0) { return false; }
-	if (GL::GetProgramiv(ID, GL::ShaderProgramParameterName::LinkStatus) == 0) { return false; }
+	if (ID == 0)
+	{
+		return false;
+	}
+	if (GL::GetProgramiv(ID, GL::ShaderProgramParameterName::InfoLogLength) != 0)
+	{
+		return false;
+	}
+	if (GL::GetProgramiv(ID, GL::ShaderProgramParameterName::LinkStatus) == 0)
+	{
+		return false;
+	}
 	return true;
 }
 void Shader::Base::Delete()

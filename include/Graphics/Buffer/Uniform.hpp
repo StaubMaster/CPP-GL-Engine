@@ -10,18 +10,15 @@ namespace Buffer
 class Uniform : public Base
 {
 	public:
-	GL::BlockBinding	Binding;
-
-	public:
 	~Uniform();
 	Uniform() = delete;
-	Uniform(GL::BufferDataUsage usage, unsigned int binding);
+	Uniform(GL::BufferDataUsage usage);
 
 	Uniform(const Uniform & other) = default;
 	Uniform & operator=(const Uniform & other) = default;
 
 	public:
-	void	BindBase();
+	void	BindBase(GL::BlockBinding binding);
 
 	public:
 	void	LogInfo(bool self = true) const override;
