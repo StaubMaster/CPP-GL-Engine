@@ -15,11 +15,12 @@ namespace Texture
 class Base
 {
 	private:
-	static GL::TextureID None;
+	static GL::TextureID	None; // put this in GL:
 
 	protected:
-	GL::TextureTarget Target;
-	GL::TextureID ID;
+	public:
+	GL::TextureTarget	Target;
+	GL::TextureID		ID;
 
 	public:
 	virtual void LogInfo(bool self = true) const;
@@ -27,9 +28,9 @@ class Base
 
 
 	public:
-	Base(GL::TextureTarget target);
 	virtual ~Base();
-
+	Base() = delete;
+	Base(GL::TextureTarget target);
 	Base(const Base & other);
 	Base & operator=(const Base & other);
 
@@ -41,7 +42,7 @@ class Base
 	void	Bind();
 
 	static GL::TextureID	Bound(GL::TextureTarget target);
-	static void		BindNone(GL::TextureTarget target);
+	static void				BindNone(GL::TextureTarget target);
 
 
 
@@ -53,6 +54,7 @@ class Base
 
 	public:
 	void	DefaultParams();
+
 	enum class WrapType : int
 	{
 		ClampToEdge = GL_CLAMP_TO_EDGE,
@@ -64,6 +66,7 @@ class Base
 	void	WrapX(WrapType wrap);
 	void	WrapY(WrapType wrap);
 	void	WrapZ(WrapType wrap);
+
 	enum class FilterMinType : int
 	{
 		Nearest = GL_NEAREST,
@@ -74,12 +77,16 @@ class Base
 		LinearMipmapLinear = GL_LINEAR_MIPMAP_LINEAR,
 	};
 	void	FilterMin(FilterMinType filter);
+
 	enum class FilterMagType : int
 	{
 		Nearest = GL_NEAREST,
 		Linear = GL_LINEAR,
 	};
 	void	FilterMag(FilterMagType filter);
+
+	// operator<< for enums
+	// return functions
 
 
 

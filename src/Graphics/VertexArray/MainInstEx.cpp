@@ -18,6 +18,53 @@ VertexArray::MainInstEx::MainInstEx()
 
 
 
+void VertexArray::MainInstEx::MainChange(::Buffer::Array & buffer, Attribute::Layout & layout, unsigned int size_of)
+{
+	MainBuffer = &buffer;
+	MainLayout = &layout;
+	MainBuffer -> SizeOf = size_of;
+}
+void VertexArray::MainInstEx::InstChange(::Buffer::Array & buffer, Attribute::Layout & layout, unsigned int size_of)
+{
+	InstBuffer = &buffer;
+	InstLayout = &layout;
+	InstBuffer -> SizeOf = size_of;
+}
+
+void VertexArray::MainInstEx::MainChange(::Buffer::Array * buffer, Attribute::Layout * layout, unsigned int size_of)
+{
+	if (buffer != nullptr && layout != nullptr)
+	{
+		MainChange(*buffer, *layout, size_of);
+	}
+}
+void VertexArray::MainInstEx::InstChange(::Buffer::Array * buffer, Attribute::Layout * layout, unsigned int size_of)
+{
+	if (buffer != nullptr && layout != nullptr)
+	{
+		InstChange(*buffer, *layout, size_of);
+	}
+}
+
+
+
+void VertexArray::MainInstEx::MainData(const Container::Void & data)
+{
+	if (MainBuffer != nullptr)
+	{
+		MainBuffer -> DataFull(data);
+	}
+}
+void VertexArray::MainInstEx::InstData(const Container::Void & data)
+{
+	if (InstBuffer != nullptr)
+	{
+		InstBuffer -> DataFull(data);
+	}
+}
+
+
+
 /*void VertexArray::MainInstEx::Create()
 {
 	Base::Create();
@@ -56,7 +103,6 @@ void VertexArray::MainInstEx::Init()
 
 void VertexArray::MainInstEx::Draw()
 {
-	Bind();
 	if (MainBuffer != nullptr && InstBuffer != nullptr)
 	{
 		GL::DrawArraysInstanced(Mode, 0, MainBuffer -> Count, InstBuffer -> Count);
