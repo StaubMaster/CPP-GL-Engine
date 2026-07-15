@@ -15,13 +15,36 @@ class Base
 	GL::BufferID			ID;
 
 	public:
+	/* DataWant
+		new Data should be generated for this Buffer
+	*/
 	bool	DataWant;
+	/* DataHave
+		new Data has been generated for this Buffer
+		this Buffer should take the Data
+	*/
 	bool	DataHave;
+
+
+
+	// store and automatically put Data in Buffer when needed
+	// store Container::Void ?
+	// might become invalid
+
+	// store Count here ?
+	// Size: full Size of Data
+	// Stride: Size of Vertex
+	// Count: number of Vertexes
+	//
+	// VertexSize
+	// VertexCount
+
+
 
 	public:
 	virtual ~Base();
 	Base() = delete;
-	Base(::GL::BufferTarget target, GL::BufferDataUsage usage);
+	Base(::GL::BufferTarget target, GL::BufferDataUsage usage); // take sizeof Vertex
 
 	Base(const Base & other) = default;
 	Base & operator=(const Base & other) = default;
@@ -44,7 +67,6 @@ class Base
 	void *	DataMap();
 
 	public:
-	virtual void	Update();
 	virtual void	NewSize(unsigned int size);
 
 	public:

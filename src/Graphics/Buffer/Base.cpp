@@ -5,10 +5,7 @@
 
 Buffer::Base::~Base()
 { }
-Buffer::Base::Base(
-	GL::BufferTarget target,
-	GL::BufferDataUsage usage
-)
+Buffer::Base::Base(GL::BufferTarget target, GL::BufferDataUsage usage)
 	: Target(target)
 	, Usage(usage)
 	, ID(0)
@@ -53,7 +50,6 @@ void Buffer::Base::Bind()
 
 
 
-void Buffer::Base::Update() { }
 void Buffer::Base::NewSize(unsigned int size) { (void)size; }
 
 

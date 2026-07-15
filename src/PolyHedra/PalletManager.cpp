@@ -116,10 +116,15 @@ void PolyHedraPalletManager::MakeInstances()
 
 void PolyHedraPalletManager::ChangeMedia(PolyHedraManager & manager)
 {
-	BufferFull.MainBuffer.Init(manager.BufferLayoutFullMain);
-	BufferFull.InstBuffer.Init(manager.BufferLayoutFullInst);
-	BufferWire.MainBuffer.Init(manager.BufferLayoutWireMain);
-	BufferWire.InstBuffer.Init(manager.BufferLayoutWireInst);
+	(void)manager;
+	//BufferFull.MainBuffer.Init(manager.BufferLayoutFullMain);
+	//BufferFull.InstBuffer.Init(manager.BufferLayoutFullInst);
+	//BufferWire.MainBuffer.Init(manager.BufferLayoutWireMain);
+	//BufferWire.InstBuffer.Init(manager.BufferLayoutWireInst);
+	//BufferFull.ChangeAttributeLayoutMain(manager.BufferLayoutFullMain);
+	//BufferFull.ChangeAttributeLayoutInst(manager.BufferLayoutFullInst);
+	//BufferWire.ChangeAttributeLayoutMain(manager.BufferLayoutWireMain);
+	//BufferWire.ChangeAttributeLayoutInst(manager.BufferLayoutWireInst);
 }
 void PolyHedraPalletManager::GraphicsCreate()
 {
@@ -169,8 +174,10 @@ void PolyHedraPalletManager::DrawFull()
 {
 	if (!GraphicsExist) { return; }
 	BufferFull.Bind();
-	BufferFull.MainBuffer.Update();
-	BufferFull.InstBuffer.Update();
+	//BufferFull.MainBuffer.Update();
+	//BufferFull.InstBuffer.Update();
+	//BufferFull.InitAttributeLayoutMain(BufferFull.MainBuffer);
+	//BufferFull.InitAttributeLayoutInst(BufferFull.InstBuffer);
 	UpdateFullBufferMain();
 	BufferFull.InstBuffer.DataFull(InstancesFull.ToVoid());
 	TextureFull.Bind();
@@ -202,8 +209,10 @@ void PolyHedraPalletManager::DrawWire()
 {
 	if (!GraphicsExist) { return; }
 	BufferWire.Bind();
-	BufferWire.MainBuffer.Update();
-	BufferWire.InstBuffer.Update();
+	//BufferWire.MainBuffer.Update();
+	//BufferWire.InstBuffer.Update();
+	//BufferWire.InitAttributeLayoutMain(BufferWire.MainBuffer);
+	//BufferWire.InitAttributeLayoutInst(BufferWire.InstBuffer);
 	UpdateWireBufferMain();
 	BufferWire.InstBuffer.DataFull(InstancesWire.ToVoid());
 	BufferWire.Draw();

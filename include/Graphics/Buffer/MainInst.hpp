@@ -1,7 +1,7 @@
 #ifndef  BUFFER_ARRAY_MAIN_INST_HPP
 # define BUFFER_ARRAY_MAIN_INST_HPP
 
-# include "Graphics/Buffer/VertexArray.hpp"
+# include "Graphics/VertexArray/Base.hpp"
 # include "Graphics/Buffer/Array.hpp"
 
 # include "Generics/Container/Binary.hpp"
@@ -10,14 +10,14 @@
 
 # include "OpenGL.hpp"
 
-namespace BufferArray
+namespace VertexArray
 {
 template<
 	GL::BufferDataUsage usage_main,
 	GL::BufferDataUsage usage_inst,
 	GL::DrawMode mode
 >
-class MainInst : public VertexArray
+class MainInst : public Base
 {
 	public:
 	::Buffer::Array		MainBuffer;
@@ -25,34 +25,23 @@ class MainInst : public VertexArray
 	GL::DrawMode		Mode;
 
 	public:
-	//Container::Binary<Texture::Base *>	Textures;
-
-	public:
 	virtual ~MainInst() { }
 	MainInst()
-		: VertexArray()
+		: Base()
 		, MainBuffer(usage_main)
 		, InstBuffer(usage_inst)
 		, Mode(mode)
-	{
-		Buffers.Insert(&MainBuffer);
-		Buffers.Insert(&InstBuffer);
-		Buffers.Trim();
-	}
+	{ }
 
 	MainInst(const MainInst & other)
-		: VertexArray(other)
+		: Base(other)
 		, MainBuffer(other.MainBuffer)
 		, InstBuffer(other.InstBuffer)
 		, Mode(other.Mode)
-	{
-		Buffers.Insert(&MainBuffer);
-		Buffers.Insert(&InstBuffer);
-		Buffers.Trim();
-	}
+	{ }
 	MainInst & operator=(const MainInst & other)
 	{
-		VertexArray::operator=(other);
+		Base::operator=(other);
 		MainBuffer = other.MainBuffer;
 		InstBuffer = other.InstBuffer;
 		Mode = other.Mode;
@@ -60,12 +49,29 @@ class MainInst : public VertexArray
 	}
 
 	public:
-	void Draw()
+	void	Create() override
 	{
-		/*for (unsigned int i = 0; i < Textures.Count(); i++)
-		{
-			Textures[i] -> Bind();
-		}*/
+		Base::Create();
+		MainBuffer.Create();
+		InstBuffer.Create();
+	}
+	void	Delete() override
+	{
+		Base::Delete();
+		MainBuffer.Delete();
+		InstBuffer.Delete();
+	}
+
+	public:
+	void	Init() override
+	{
+		Bind();
+		MainBuffer.Bind();
+		InstBuffer.Bind();
+	}
+	void	Draw() override
+	{
+		Init();
 		Bind();
 		GL::DrawArraysInstanced(Mode, 0, MainBuffer.Count, InstBuffer.Count);
 	}

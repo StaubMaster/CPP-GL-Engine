@@ -1,7 +1,7 @@
 #ifndef  BUFFER_ARRAY_MAIN_ELEM_INST_HPP
 # define BUFFER_ARRAY_MAIN_ELEM_INST_HPP
 
-# include "Graphics/Buffer/VertexArray.hpp"
+# include "Graphics/VertexArray/Base.hpp"
 # include "Graphics/Buffer/Array.hpp"
 # include "Graphics/Buffer/Element.hpp"
 
@@ -10,7 +10,7 @@
 # include "Graphics/Texture/Base.hpp"
 # include "OpenGL.hpp"
 
-namespace BufferArray
+namespace VertexArray
 {
 template<
 	GL::BufferDataUsage usage_main,
@@ -18,7 +18,7 @@ template<
 	GL::BufferDataUsage usage_inst,
 	GL::DrawMode mode
 >
-class MainElemInst : public VertexArray
+class MainElemInst : public Base
 {
 	public:
 	::Buffer::Array		MainBuffer;
@@ -27,38 +27,25 @@ class MainElemInst : public VertexArray
 	GL::DrawMode		Mode;
 
 	public:
-	//Container::Binary<Texture::Base *>	Textures;
-
-	public:
 	virtual ~MainElemInst() { }
 	MainElemInst()
-		: VertexArray()
+		: Base()
 		, MainBuffer(usage_main)
 		, ElemBuffer(usage_elem, index_type)
 		, InstBuffer(usage_inst)
 		, Mode(mode)
-	{
-		Buffers.Insert(&MainBuffer);
-		Buffers.Insert(&ElemBuffer);
-		Buffers.Insert(&InstBuffer);
-		Buffers.Trim();
-	}
+	{ }
 
 	MainElemInst(const MainElemInst & other)
-		: VertexArray(other)
+		: Base(other)
 		, MainBuffer(other.MainBuffer)
 		, ElemBuffer(other.ElemBuffer)
 		, InstBuffer(other.InstBuffer)
 		, Mode(other.Mode)
-	{
-		Buffers.Insert(&MainBuffer);
-		Buffers.Insert(&ElemBuffer);
-		Buffers.Insert(&InstBuffer);
-		Buffers.Trim();
-	}
+	{ }
 	MainElemInst & operator=(const MainElemInst & other)
 	{
-		VertexArray::operator=(other);
+		Base::operator=(other);
 		MainBuffer = other.MainBuffer;
 		ElemBuffer = other.ElemBuffer;
 		InstBuffer = other.InstBuffer;
@@ -67,12 +54,32 @@ class MainElemInst : public VertexArray
 	}
 
 	public:
-	void Draw()
+	void	Create() override
 	{
-		/*for (unsigned int i = 0; i < Textures.Count(); i++)
-		{
-			Textures[i] -> Bind();
-		}*/
+		Base::Create();
+		MainBuffer.Create();
+		ElemBuffer.Create();
+		InstBuffer.Create();
+	}
+	void	Delete() override
+	{
+		Base::Delete();
+		MainBuffer.Delete();
+		ElemBuffer.Delete();
+		InstBuffer.Delete();
+	}
+
+	public:
+	void	Init() override
+	{
+		Bind();
+		MainBuffer.Bind();
+		ElemBuffer.Bind();
+		InstBuffer.Bind();
+	}
+	void Draw() override
+	{
+		Init();
 		Bind();
 		GL::DrawElementsInstanced(Mode, ElemBuffer.Count, ElemBuffer.IndexType, InstBuffer.Count);
 	}

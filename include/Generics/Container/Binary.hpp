@@ -5,6 +5,7 @@
 
 namespace Container
 {
+// calling this a Binary sounds like this is an executable file
 template<typename TypeItem> struct Binary
 {
 	private:

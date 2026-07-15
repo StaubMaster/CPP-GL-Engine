@@ -61,10 +61,14 @@ void PolyGonInstanceManager::Change(::PolyGon * PolyGon)
 
 void PolyGonInstanceManager::GraphicsCreate()
 {
-	BufferFull.MainBuffer.Init(LayoutMainFull);
-	BufferWire.MainBuffer.Init(LayoutMainWire);
-	BufferFull.InstBuffer.Init(LayoutInstFull);
-	BufferWire.InstBuffer.Init(LayoutInstWire);
+	//BufferFull.MainBuffer.Init(LayoutMainFull);
+	//BufferWire.MainBuffer.Init(LayoutMainWire);
+	//BufferFull.InstBuffer.Init(LayoutInstFull);
+	//BufferWire.InstBuffer.Init(LayoutInstWire);
+	//BufferFull.ChangeAttributeLayoutMain(LayoutMainFull);
+	//BufferFull.ChangeAttributeLayoutInst(LayoutInstFull);
+	//BufferWire.ChangeAttributeLayoutMain(LayoutMainWire);
+	//BufferWire.ChangeAttributeLayoutInst(LayoutInstWire);
 
 	BufferFull.Create();
 	BufferWire.Create();
@@ -82,28 +86,36 @@ void PolyGonInstanceManager::InitExternal()
 		LayoutMainFull.Col.Change(1);
 		LayoutInstFull.Trans.Change(2);
 
-		BufferFull.MainBuffer.Init(LayoutMainFull);
-		BufferFull.InstBuffer.Init(LayoutInstFull);
+		//BufferFull.MainBuffer.Init(LayoutMainFull);
+		//BufferFull.InstBuffer.Init(LayoutInstFull);
+		//BufferFull.ChangeAttributeLayoutMain(LayoutMainFull);
+		//BufferFull.ChangeAttributeLayoutInst(LayoutInstFull);
 	}
 	{
 		LayoutMainWire.Pos.Change(0);
 		LayoutMainWire.Col.Change(1);
 		LayoutInstWire.Trans.Change(2);
 
-		BufferWire.MainBuffer.Init(LayoutMainWire);
-		BufferWire.InstBuffer.Init(LayoutInstWire);
+		//BufferWire.MainBuffer.Init(LayoutMainWire);
+		//BufferWire.InstBuffer.Init(LayoutInstWire);
+		//BufferWire.ChangeAttributeLayoutMain(LayoutMainWire);
+		//BufferWire.ChangeAttributeLayoutInst(LayoutInstWire);
 	}
 }
 void PolyGonInstanceManager::InitInternal()
 {
 	{
-		BufferFull.MainBuffer.Update();
-		BufferFull.InstBuffer.Update();
+		//BufferFull.MainBuffer.Update();
+		//BufferFull.InstBuffer.Update();
+		//BufferFull.InitAttributeLayoutMain(BufferFull.MainBuffer);
+		//BufferFull.InitAttributeLayoutInst(BufferFull.InstBuffer);
 	}
 	{
-		BufferWire.MainBuffer.Update();
-		BufferWire.ElemBuffer.Update();
-		BufferWire.InstBuffer.Update();
+		//BufferWire.MainBuffer.Update();
+		//BufferWire.ElemBuffer.Update();
+		//BufferWire.InstBuffer.Update();
+		//BufferWire.InitAttributeLayoutMain(BufferWire.MainBuffer);
+		//BufferWire.InitAttributeLayoutInst(BufferWire.InstBuffer);
 	}
 }
 

@@ -1,6 +1,6 @@
 #include "Graphics/Buffer/Array.hpp"
 
-#include "Graphics/Attribute/General/Layout.hpp"
+//#include "Graphics/Attribute/General/Layout.hpp"
 
 
 
@@ -8,19 +8,20 @@ Buffer::Array::~Array()
 { }
 Buffer::Array::Array(GL::BufferDataUsage usage)
 	: Buffer::Base(GL::BufferTarget::ArrayBuffer, usage)
+	, SizeOf(0)
 	, Count(0)
-	, AttributesBound(false)
-	, AttributeLayout(nullptr)
+//	, AttributesBound(false)
+//	, AttributeLayout(nullptr)
 { }
 
 
 
-void Buffer::Array::Init(Attribute::Layout & layout)
+/*void Buffer::Array::Init(Attribute::Layout & layout)
 {
 	AttributeLayout = &layout;
 	AttributesBound = false;
-}
-void Buffer::Array::Update()
+}*/
+/*void Buffer::Array::Update()
 {
 	if (!AttributesBound)
 	{
@@ -31,11 +32,12 @@ void Buffer::Array::Update()
 			AttributesBound = true;
 		}
 	}
-}
+}*/
 void Buffer::Array::NewSize(unsigned int size)
 {
-	if (AttributeLayout != nullptr)
+	/*if (AttributeLayout != nullptr)
 	{
 		Count = size / (AttributeLayout -> Stride);
-	}
+	}*/
+	Count = size / SizeOf;
 }

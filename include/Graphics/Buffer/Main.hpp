@@ -1,7 +1,7 @@
 #ifndef  BUFFER_ARRAY_MAIN_HPP
 # define BUFFER_ARRAY_MAIN_HPP
 
-# include "Graphics/Buffer/VertexArray.hpp"
+# include "Graphics/VertexArray/Base.hpp"
 # include "Graphics/Buffer/Array.hpp"
 
 # include "Generics/Container/Binary.hpp"
@@ -10,55 +10,60 @@
 
 # include "OpenGL.hpp"
 
-namespace BufferArray
+namespace VertexArray
 {
 template<
 	GL::BufferDataUsage usage_main,
 	GL::DrawMode mode
 >
-class Main : public VertexArray
+class Main : public Base
 {
 	public:
 	::Buffer::Array		MainBuffer;
 	GL::DrawMode		Mode;
 
 	public:
-	//Container::Binary<Texture::Base *>	Textures;
-
-	public:
 	virtual ~Main() { }
 	Main()
-		: VertexArray()
+		: Base()
 		, MainBuffer(usage_main)
 		, Mode(mode)
-	{
-		Buffers.Insert(&MainBuffer);
-		Buffers.Trim();
-	}
+	{ }
 
 	Main(const Main & other)
-		: VertexArray(other)
+		: Base(other)
 		, MainBuffer(other.MainBuffer)
 		, Mode(other.Mode)
-	{
-		Buffers.Insert(&MainBuffer);
-		Buffers.Trim();
-	}
+	{ }
 	Main & operator=(const Main & other)
 	{
-		VertexArray::operator=(other);
+		Base::operator=(other);
 		MainBuffer = other.MainBuffer;
 		Mode = other.Mode;
 		return *this;
 	}
 
 	public:
-	void Draw()
+	void	Create() override
 	{
-		/*for (unsigned int i = 0; i < Textures.Count(); i++)
-		{
-			Textures[i] -> Bind();
-		}*/
+		Base::Create();
+		MainBuffer.Create();
+	}
+	void	Delete() override
+	{
+		Base::Delete();
+		MainBuffer.Delete();
+	}
+
+	public:
+	void	Init() override
+	{
+		Bind();
+		MainBuffer.Bind();
+	}
+	void Draw() override
+	{
+		Init();
 		Bind();
 		GL::DrawArrays(Mode, 0, MainBuffer.Count);
 	}

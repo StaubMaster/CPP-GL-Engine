@@ -5,7 +5,7 @@
 
 namespace PolyGonWire
 {
-typedef ::BufferArray::MainElemInst<
+typedef ::VertexArray::MainElemInst<
 	GL::BufferDataUsage::StaticDraw,
 	GL::BufferDataUsage::StaticDraw, GL::DrawIndexType::UnsignedInt,
 	GL::BufferDataUsage::StaticDraw,
