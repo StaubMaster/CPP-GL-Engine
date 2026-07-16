@@ -11,7 +11,7 @@ class Element : public Base
 {
 	public:
 	GL::DrawIndexType		IndexType;
-	unsigned int			IndexSize;
+	unsigned int			IndexSize; // this depends on IndedType. make this a function or make a change function to autoset this.
 	unsigned int			Count;
 
 	public:

@@ -152,8 +152,9 @@ BUFFER := \
 	Graphics/Buffer/_Log.cpp \
 \
 	Graphics/VertexArray/Base.cpp \
-	Graphics/VertexArray/MainInstEx.cpp \
-	Graphics/VertexArray/MainInstIn.cpp \
+	Graphics/VertexArray/Main.cpp \
+	Graphics/VertexArray/MainInst.cpp \
+	Graphics/VertexArray/MainElemInst.cpp \
 
 BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
 BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))

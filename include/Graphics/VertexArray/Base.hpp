@@ -9,7 +9,7 @@ namespace VertexArray
 {
 class Base
 {
-	protected:
+	public:
 	GL::VertexArrayID	ID = 0;
 
 
@@ -36,12 +36,6 @@ class Base
 	public:
 	virtual void	Create();
 	virtual void	Delete();
-
-	public:
-	virtual void	Init() = 0;
-
-	public:
-	virtual void	Draw() = 0;
 
 
 

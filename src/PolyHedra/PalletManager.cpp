@@ -134,9 +134,9 @@ void PolyHedraPalletManager::GraphicsCreate()
 		BufferWire.Create();
 		GraphicsExist = true;
 
-		BufferFull.MainBuffer.DataWant = true;
-		BufferWire.MainBuffer.DataWant = true;
-		BufferWire.ElemBuffer.DataWant = true;
+		//BufferFull.MainBuffer.DataWant = true;
+		//BufferWire.MainBuffer.DataWant = true;
+		//BufferWire.ElemBuffer.DataWant = true;
 	}
 }
 void PolyHedraPalletManager::GraphicsDelete()
@@ -155,7 +155,7 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 {
 	if (Pallet == nullptr) { return; }
 
-	if (BufferFull.MainBuffer.DataWant)
+	if (BufferFull.MainDataWant)
 	{
 		Pallet -> CalcNormals();
 		Container::Array<PolyHedraFull::Main::Data> data = Pallet -> ToMainData();
@@ -167,7 +167,7 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 			TextureFull = Pallet -> Skins[0] -> ToTexture();
 		}
 
-		BufferFull.MainBuffer.DataWant = false;
+		BufferFull.MainDataWant = false;
 	}
 }
 void PolyHedraPalletManager::DrawFull()
@@ -188,7 +188,7 @@ void PolyHedraPalletManager::UpdateWireBufferMain()
 {
 	if (Pallet == nullptr) { return; }
 
-	if (BufferWire.MainBuffer.DataWant)
+	if (BufferWire.MainDataWant)
 	{
 		Container::Binary<PolyHedraWire::Main::Data> data;
 		for (unsigned int i = 0; i < Pallet -> Corners.Count(); i++)
@@ -196,13 +196,13 @@ void PolyHedraPalletManager::UpdateWireBufferMain()
 			data.Insert(PolyHedraWire::Main::Data(Pallet -> Corners[i].Position, ColorF4(1, 1, 1)));
 		}
 		BufferWire.MainBuffer.DataFull(data.ToVoid());
-		BufferWire.MainBuffer.DataWant = false;
+		BufferWire.MainDataWant = false;
 	}
 
-	if (BufferWire.ElemBuffer.DataWant)
+	if (BufferWire.ElemDataWant)
 	{
 		BufferWire.ElemBuffer.DataFull(Pallet -> Edges.ToVoid());
-		BufferWire.ElemBuffer.DataWant = false;
+		BufferWire.ElemDataWant = false;
 	}
 }
 void PolyHedraPalletManager::DrawWire()

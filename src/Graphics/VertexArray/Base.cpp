@@ -101,7 +101,3 @@ void VertexArray::Base::InitAttributeLayoutInst(Buffer::Array & buffer)
 		}
 	}
 }*/
-
-
-
-//void VertexArray::Base::Draw() { }
