@@ -17,8 +17,12 @@ class Uniform : public Base
 	Uniform(const Uniform & other) = default;
 	Uniform & operator=(const Uniform & other) = default;
 
+
+
 	public:
 	void	BindBase(GL::BlockBinding binding);
+
+
 
 	public:
 	void	LogInfo(bool self = true) const override;

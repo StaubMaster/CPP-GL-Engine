@@ -13,8 +13,6 @@ VertexArray::MainElemInst::MainElemInst()
 	, MainBuffer(GL::BufferDataUsage::StaticDraw)
 	, ElemBuffer(GL::BufferDataUsage::StaticDraw, GL::DrawIndexType::UnsignedInt)
 	, InstBuffer(GL::BufferDataUsage::DynamicDraw)
-	, MainLayout(nullptr)
-	, InstLayout(nullptr)
 { }
 
 
@@ -38,19 +36,11 @@ void VertexArray::MainElemInst::Init()
 {
 	Bind();
 
-	MainBuffer.Bind();
-	if (MainLayout != nullptr)
-	{
-		MainLayout -> Bind();
-	}
+	MainBuffer.Init();
 
 	ElemBuffer.Bind();
 
-	InstBuffer.Bind();
-	if (InstLayout != nullptr)
-	{
-		InstLayout -> Bind();
-	}
+	InstBuffer.Init();
 }
 
 void VertexArray::MainElemInst::Draw()

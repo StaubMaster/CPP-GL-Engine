@@ -19,20 +19,6 @@ class MainInst : public Base
 	::Buffer::Array		InstBuffer;
 
 	public:
-	Attribute::Layout *		MainLayout = nullptr;
-	Attribute::Layout *		InstLayout = nullptr;
-
-	public:
-	bool	MainDataWant;
-	bool	InstDataWant;
-
-	public:
-	bool	MainDataHave;
-	bool	InstDataHave;
-
-	// have Draw Counts seperate ?
-
-	public:
 	~MainInst();
 	MainInst();
 

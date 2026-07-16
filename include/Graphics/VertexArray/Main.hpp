@@ -18,15 +18,6 @@ class Main : public Base
 	::Buffer::Array		MainBuffer;
 
 	public:
-	Attribute::Layout *		MainLayout = nullptr;
-
-	public:
-	bool	MainDataWant;
-
-	public:
-	bool	MainDataHave;
-	
-	public:
 	~Main();
 	Main();
 

@@ -155,11 +155,12 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 {
 	if (Pallet == nullptr) { return; }
 
-	if (BufferFull.MainDataWant)
+	if (BufferFull.MainBuffer.DataWant)
 	{
 		Pallet -> CalcNormals();
 		Container::Array<PolyHedraFull::Main::Data> data = Pallet -> ToMainData();
 		BufferFull.MainBuffer.DataFull(data.ToVoid());
+		BufferFull.MainBuffer.Count = data.Length();
 
 		TextureFull.Delete();
 		if (Pallet -> Skins.Count() == 1)
@@ -167,7 +168,7 @@ void PolyHedraPalletManager::UpdateFullBufferMain()
 			TextureFull = Pallet -> Skins[0] -> ToTexture();
 		}
 
-		BufferFull.MainDataWant = false;
+		BufferFull.MainBuffer.DataWant = false;
 	}
 }
 void PolyHedraPalletManager::DrawFull()
@@ -180,6 +181,7 @@ void PolyHedraPalletManager::DrawFull()
 	//BufferFull.InitAttributeLayoutInst(BufferFull.InstBuffer);
 	UpdateFullBufferMain();
 	BufferFull.InstBuffer.DataFull(InstancesFull.ToVoid());
+	BufferFull.InstBuffer.Count = InstancesFull.Count();
 	TextureFull.Bind();
 	BufferFull.Draw();
 }
@@ -188,7 +190,7 @@ void PolyHedraPalletManager::UpdateWireBufferMain()
 {
 	if (Pallet == nullptr) { return; }
 
-	if (BufferWire.MainDataWant)
+	if (BufferWire.MainBuffer.DataWant)
 	{
 		Container::Binary<PolyHedraWire::Main::Data> data;
 		for (unsigned int i = 0; i < Pallet -> Corners.Count(); i++)
@@ -196,13 +198,15 @@ void PolyHedraPalletManager::UpdateWireBufferMain()
 			data.Insert(PolyHedraWire::Main::Data(Pallet -> Corners[i].Position, ColorF4(1, 1, 1)));
 		}
 		BufferWire.MainBuffer.DataFull(data.ToVoid());
-		BufferWire.MainDataWant = false;
+		BufferWire.MainBuffer.Count = data.Count();
+		BufferWire.MainBuffer.DataWant = false;
 	}
 
-	if (BufferWire.ElemDataWant)
+	if (BufferWire.ElemBuffer.DataWant)
 	{
 		BufferWire.ElemBuffer.DataFull(Pallet -> Edges.ToVoid());
-		BufferWire.ElemDataWant = false;
+		BufferWire.ElemBuffer.Count = Pallet -> Edges.Count();
+		BufferWire.ElemBuffer.DataWant = false;
 	}
 }
 void PolyHedraPalletManager::DrawWire()
@@ -215,5 +219,6 @@ void PolyHedraPalletManager::DrawWire()
 	//BufferWire.InitAttributeLayoutInst(BufferWire.InstBuffer);
 	UpdateWireBufferMain();
 	BufferWire.InstBuffer.DataFull(InstancesWire.ToVoid());
+	BufferWire.InstBuffer.Count = InstancesWire.Count();
 	BufferWire.Draw();
 }

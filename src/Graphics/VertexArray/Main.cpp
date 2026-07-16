@@ -11,7 +11,6 @@ VertexArray::Main::Main()
 	: Base()
 	, Mode(GL::DrawMode::Triangles)
 	, MainBuffer(GL::BufferDataUsage::StaticDraw)
-	, MainLayout(nullptr)
 { }
 
 
@@ -31,11 +30,7 @@ void VertexArray::Main::Init()
 {
 	Bind();
 
-	MainBuffer.Bind();
-	if (MainLayout != nullptr)
-	{
-		MainLayout -> Bind();
-	}
+	MainBuffer.Init();
 }
 
 void VertexArray::Main::Draw()

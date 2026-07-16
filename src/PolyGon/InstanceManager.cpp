@@ -127,10 +127,12 @@ void PolyGonInstanceManager::UpdateBufferFullMain()
 
 	Container::Array<PolyGonFull::Main::Data> data = PolyGon -> ToFullData();
 	BufferFull.MainBuffer.DataFull(data.ToVoid());
+	BufferFull.MainBuffer.Count = data.Length();
 }
 void PolyGonInstanceManager::UpdateBufferFullInst()
 {
 	BufferFull.InstBuffer.DataFull(InstancesFull.ToVoid());
+	BufferFull.InstBuffer.Count = InstancesFull.Count();
 }
 void PolyGonInstanceManager::DrawFull()
 {
@@ -151,10 +153,13 @@ void PolyGonInstanceManager::UpdateBufferWireMain()
 
 	BufferWire.MainBuffer.DataFull(PolyGon -> Corners.ToVoid());
 	BufferWire.ElemBuffer.DataFull(PolyGon -> Edges.ToVoid());
+	BufferWire.MainBuffer.Count = PolyGon -> Corners.Count();
+	BufferWire.ElemBuffer.Count = PolyGon -> Edges.Count();
 }
 void PolyGonInstanceManager::UpdateBufferWireInst()
 {
 	BufferWire.InstBuffer.DataFull(InstancesWire.ToVoid());
+	BufferWire.InstBuffer.Count = InstancesWire.Count();
 }
 void PolyGonInstanceManager::DrawWire()
 {

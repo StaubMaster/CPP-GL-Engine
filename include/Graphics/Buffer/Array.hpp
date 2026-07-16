@@ -1,25 +1,21 @@
-#ifndef  BUFFER_ATTRIBUTE_HPP
-# define BUFFER_ATTRIBUTE_HPP
+#ifndef  BUFFER_ARRAY_HPP
+# define BUFFER_ARRAY_HPP
 
 # include "Graphics/Buffer/Base.hpp"
 
-# include "OpenGLEnums.hpp"
-
-//namespace Attribute { class Layout; };
+namespace Attribute { class Layout; };
 
 namespace Buffer
 {
 class Array : public Base
 {
 	public:
-	unsigned int	SizeOf;
-	unsigned int	Count;
+	Attribute::Layout *		Layout = nullptr;
 
-	private:
-	// Attributes are per VertexArrayBuffer
-	// same ArrayBuffer can have different Attributes
-	//bool					AttributesBound;
-	//Attribute::Layout *		AttributeLayout;
+	public:
+	unsigned int	Count = 0;
+
+
 
 	public:
 	~Array();
@@ -29,11 +25,12 @@ class Array : public Base
 	Array(const Array & other) = default;
 	Array & operator=(const Array & other) = default;
 
-	//public:
-	//void	Init(Attribute::Layout & layout);
+
 
 	public:
-	void	NewSize(unsigned int size) override;
+	void	Init();
+
+
 
 	public:
 	void	LogInfo(bool self = true) const override;

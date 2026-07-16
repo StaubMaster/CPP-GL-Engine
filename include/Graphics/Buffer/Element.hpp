@@ -3,16 +3,17 @@
 
 # include "Graphics/Buffer/Base.hpp"
 
-# include "OpenGLEnums.hpp"
-
 namespace Buffer
 {
 class Element : public Base
 {
 	public:
-	GL::DrawIndexType		IndexType;
-	unsigned int			IndexSize; // this depends on IndedType. make this a function or make a change function to autoset this.
-	unsigned int			Count;
+	GL::DrawIndexType	IndexType;
+
+	public:
+	unsigned int	Count = 0;
+
+
 
 	public:
 	~Element();
@@ -22,8 +23,7 @@ class Element : public Base
 	Element(const Element & other) = default;
 	Element & operator=(const Element & other) = default;
 
-	public:
-	void	NewSize(unsigned int size) override;
+
 
 	public:
 	void	LogInfo(bool self = true) const override;

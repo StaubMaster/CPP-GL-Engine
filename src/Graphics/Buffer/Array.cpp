@@ -1,6 +1,7 @@
 #include "Graphics/Buffer/Array.hpp"
+#include "OpenGLEnums.hpp"
 
-//#include "Graphics/Attribute/General/Layout.hpp"
+#include "Graphics/Attribute/General/Layout.hpp"
 
 
 
@@ -8,36 +9,15 @@ Buffer::Array::~Array()
 { }
 Buffer::Array::Array(GL::BufferDataUsage usage)
 	: Buffer::Base(GL::BufferTarget::ArrayBuffer, usage)
-	, SizeOf(0)
-	, Count(0)
-//	, AttributesBound(false)
-//	, AttributeLayout(nullptr)
 { }
 
 
 
-/*void Buffer::Array::Init(Attribute::Layout & layout)
+void Buffer::Array::Init()
 {
-	AttributeLayout = &layout;
-	AttributesBound = false;
-}*/
-/*void Buffer::Array::Update()
-{
-	if (!AttributesBound)
+	Bind();
+	if (Layout != nullptr)
 	{
-		Bind();
-		if (AttributeLayout != nullptr)
-		{
-			AttributeLayout -> Bind();
-			AttributesBound = true;
-		}
+		Layout -> Bind();
 	}
-}*/
-void Buffer::Array::NewSize(unsigned int size)
-{
-	/*if (AttributeLayout != nullptr)
-	{
-		Count = size / (AttributeLayout -> Stride);
-	}*/
-	Count = size / SizeOf;
 }

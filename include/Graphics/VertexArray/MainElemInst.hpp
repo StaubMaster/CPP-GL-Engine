@@ -21,20 +21,6 @@ class MainElemInst : public Base
 	::Buffer::Array		InstBuffer;
 
 	public:
-	Attribute::Layout *		MainLayout = nullptr;
-	Attribute::Layout *		InstLayout = nullptr;
-
-	public:
-	bool	MainDataWant;
-	bool	ElemDataWant;
-	bool	InstDataWant;
-
-	public:
-	bool	MainDataHave;
-	bool	ElemDataHave;
-	bool	InstDataHave;
-	
-	public:
 	~MainElemInst();
 	MainElemInst();
 

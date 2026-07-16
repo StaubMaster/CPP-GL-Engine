@@ -12,8 +12,6 @@ VertexArray::MainInst::MainInst()
 	, Mode(GL::DrawMode::Triangles)
 	, MainBuffer(GL::BufferDataUsage::StaticDraw)
 	, InstBuffer(GL::BufferDataUsage::DynamicDraw)
-	, MainLayout(nullptr)
-	, InstLayout(nullptr)
 { }
 
 
@@ -35,17 +33,9 @@ void VertexArray::MainInst::Init()
 {
 	Bind();
 
-	MainBuffer.Bind();
-	if (MainLayout != nullptr)
-	{
-		MainLayout -> Bind();
-	}
+	MainBuffer.Init();
 
-	InstBuffer.Bind();
-	if (InstLayout != nullptr)
-	{
-		InstLayout -> Bind();
-	}
+	InstBuffer.Init();
 }
 
 void VertexArray::MainInst::Draw()

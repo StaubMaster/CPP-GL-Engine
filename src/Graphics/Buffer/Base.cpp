@@ -50,29 +50,22 @@ void Buffer::Base::Bind()
 
 
 
-void Buffer::Base::NewSize(unsigned int size) { (void)size; }
-
-
-
 #include "Generics/Container/Void.hpp"
 
 void Buffer::Base::DataNull()
 {
 	Bind();
 	GL::BufferData(Target, 0, nullptr, Usage);
-	NewSize(0);
 }
 void Buffer::Base::DataFull(unsigned int size)
 {
 	Bind();
 	GL::BufferData(Target, size, nullptr, Usage);
-	NewSize(size);
 }
 void Buffer::Base::DataFull(const Container::Void & data)
 {
 	Bind();
 	GL::BufferData(Target, data.Size, data.Data, Usage);
-	NewSize(data.Size);
 }
 void Buffer::Base::DataPart(unsigned int offset, const Container::Void & data)
 {
