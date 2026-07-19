@@ -1,6 +1,4 @@
 #include "Graphics/VertexArray/MainInst.hpp"
-#include "Graphics/Buffer/Array.hpp"
-#include "Graphics/Attribute/General/Layout.hpp"
 #include "OpenGL.hpp"
 
 

@@ -4,11 +4,8 @@
 # include "Graphics/VertexArray/Base.hpp"
 # include "Graphics/Buffer/Array.hpp"
 
-namespace Attribute { class Layout; };
-
 namespace VertexArray
 {
-
 class MainInst : public Base
 {
 	public:
