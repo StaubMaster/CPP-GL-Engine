@@ -108,6 +108,19 @@ EulerAngle3D EulerAngle3D::reverse(const EulerAngle3D & other) const
 	);
 }
 
+EulerAngle3D EulerAngle3D::reverse() const
+{
+	VectorF3 axisX = reverse(VectorF3(1, 0, 0));
+	VectorF3 axisY = reverse(VectorF3(0, 1, 0));
+	VectorF3 axisZ = reverse(VectorF3(0, 0, 1));
+
+	return EulerAngle3D(
+		+Angle::aTan2(axisX.Y, axisY.Y),
+		-Angle::aSin(axisZ.Y),
+		+Angle::aTan2(axisZ.X, axisZ.Z)
+	);
+}
+
 
 
 EulerAngle3D	EulerAngle3D::operator+(const EulerAngle3D & other) const { return EulerAngle3D(Z0 + other.Z0, X1 + other.X1, Y2 + other.Y2); }

@@ -48,6 +48,8 @@ struct EulerAngle3D
 	EulerAngle3D	forward(const EulerAngle3D & other) const;
 	EulerAngle3D	reverse(const EulerAngle3D & other) const;
 
+	EulerAngle3D	reverse() const;
+
 
 
 	public:
