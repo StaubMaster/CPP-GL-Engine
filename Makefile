@@ -208,7 +208,6 @@ POLYGON := \
 	PolyGon/Graphics/Full/Main/Layout.cpp \
 	PolyGon/Graphics/Full/ShaderLayout.cpp \
 \
-	PolyGon/Graphics/Wire/Main/Data.cpp \
 	PolyGon/Graphics/Wire/Main/Layout.cpp \
 	PolyGon/Graphics/Wire/ShaderLayout.cpp \
 \
@@ -230,19 +229,6 @@ POLYHEDRA := \
 	PolyHedra/Skin/Skin.cpp \
 	PolyHedra/Skin/Parsing.cpp \
 \
-	PolyHedra/Graphics/Full/Main/Layout.cpp \
-	PolyHedra/Graphics/Full/Main/Data.cpp \
-	PolyHedra/Graphics/Full/ShaderLayout.cpp \
-\
-	PolyHedra/Graphics/Wire/Main/Layout.cpp \
-	PolyHedra/Graphics/Wire/Main/Data.cpp \
-	PolyHedra/Graphics/Wire/ShaderLayout.cpp \
-\
-	PolyHedra/PalletManager.cpp \
-	PolyHedra/ObjectData.cpp \
-	PolyHedra/Manager.cpp \
-	PolyHedra/Object.cpp \
-	PolyHedra/ObjectArray.cpp \
 
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
 POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))

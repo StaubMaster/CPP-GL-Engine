@@ -9,7 +9,7 @@
 # include <string>
 # include <exception>
 
-namespace PolyHedraFull { namespace Main { struct Data; }; };
+//namespace PolyHedraFull { namespace Main { struct Data; }; };
 
 class Skin;
 
@@ -60,7 +60,7 @@ class PolyHedra
 
 	public:
 	// ToBuffer ?
-	Container::Array<PolyHedraFull::Main::Data>		ToMainData();
+	//Container::Array<PolyHedraFull::Main::Data>		ToMainData();
 	// seperate ToFullData and ToWireData
 	// Wire data is made of Vertexes and Element
 	// make seperatly ?

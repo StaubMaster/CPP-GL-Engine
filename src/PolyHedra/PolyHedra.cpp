@@ -4,8 +4,6 @@
 #include "PolyHedra/Skin/Skin.hpp"
 #include "PolyHedra/Skin/Data.hpp"
 
-#include "PolyHedra/Graphics/Full/Main/Data.hpp"
-
 #include "ValueType/Box/F3.hpp"
 
 #include "Graphics/Texture/Generate.hpp"
@@ -201,7 +199,7 @@ void PolyHedra::Fan(unsigned int middle, unsigned int blade[], unsigned int len,
 
 
 
-Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
+/*Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 {
 	Container::Array<PolyHedraFull::Main::Data> data(Faces.Count() * 3);
 
@@ -259,4 +257,4 @@ Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
 	}
 
 	return data;
-}
+}*/
