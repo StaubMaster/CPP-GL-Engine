@@ -8,27 +8,61 @@ template<typename ... Arguments>
 struct FunctionPointer : public BaseFunction<void, Arguments ...>
 {
 	private:
-	bool	ShouldDelete; // IsDynamic IsNew
-	BaseFunction<void, Arguments ...> *	Function = nullptr;
+	unsigned int *							Count = nullptr;
+	BaseFunction<void, Arguments ...> *		Function = nullptr;
 
 	public:
 	~FunctionPointer()
 	{
-		if (ShouldDelete) { delete Function; }
+		if (Count != nullptr)
+		{
+			if ((*Count) == 0)
+			{
+				delete Count;
+				delete Function;
+			}
+			else
+			{
+				(*Count)--;
+			}
+		}
 	}
 	FunctionPointer()
-		: ShouldDelete(false)
+		: Count(nullptr)
 		, Function(nullptr)
 	{ }
 	FunctionPointer(const FunctionPointer & other)
-		: ShouldDelete(other.ShouldDelete)
+		: Count(other.Count)
 		, Function(other.Function)
-	{ }
+	{
+		if (Count != nullptr)
+		{
+			(*Count)++;
+		}
+	}
 	FunctionPointer & operator=(const FunctionPointer & other)
 	{
-		if (ShouldDelete) { delete Function; }
+		if (Count != nullptr)
+		{
+			if ((*Count) == 0)
+			{
+				delete Count;
+				delete Function;
+			}
+			else
+			{
+				(*Count)--;
+			}
+		}
+
+		Count = other.Count;
 		Function = other.Function;
-		ShouldDelete = other.ShouldDelete;
+
+		if (Count != nullptr)
+		{
+			(*Count)++;
+		}
+
 		return *this;
 	}
 
@@ -54,13 +88,25 @@ struct FunctionPointer : public BaseFunction<void, Arguments ...>
 
 	public:
 	FunctionPointer(BaseFunction<void, Arguments ...> * func)
-		: ShouldDelete(false)
+		: Count(nullptr)
 		, Function(func)
 	{ }
 	void Assign(BaseFunction<void, Arguments ...> * func)
 	{
-		if (ShouldDelete) { delete Function; }
-		ShouldDelete = false;
+		if (Count != nullptr)
+		{
+			if ((*Count) == 0)
+			{
+				delete Count;
+				delete Function;
+			}
+			else
+			{
+				(*Count)--;
+			}
+		}
+	
+		Count = nullptr;
 		Function = func;
 	}
 	void operator=(BaseFunction<void, Arguments ...> * func)
@@ -71,14 +117,29 @@ struct FunctionPointer : public BaseFunction<void, Arguments ...>
 	public:
 	template<typename ObjectType>
 	FunctionPointer(ObjectType * obj, void (ObjectType::*func)(Arguments ...))
-		: ShouldDelete(true)
+		: Count(new unsigned int)
 		, Function(new ObjectFunction<ObjectType, void, Arguments ...>(obj, func))
-	{ }
+	{
+		(*Count) = 0;
+	}
 	template<typename ObjectType>
 	void Assign(ObjectType * obj, void (ObjectType::*func)(Arguments ...))
 	{
-		if (ShouldDelete) { delete Function; }
-		ShouldDelete = true;
+		if (Count != nullptr)
+		{
+			if ((*Count) == 0)
+			{
+				delete Count;
+				delete Function;
+			}
+			else
+			{
+				(*Count)--;
+			}
+		}
+
+		Count = new unsigned int;
+		(*Count) = 0;
 		Function = new ObjectFunction<ObjectType, void, Arguments ...>(obj, func);
 	}
 	// typedef these function pointers

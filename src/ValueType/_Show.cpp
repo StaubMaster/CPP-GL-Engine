@@ -72,7 +72,8 @@ std::ostream & operator<<(std::ostream & os, const ColorF4 & obj)
 }
 std::ostream & operator<<(std::ostream & os, const ColorU4 & obj)
 {
-	os << "(" << " R:" << obj.R << " G:" << obj.G << " B:" << obj.B << " A:" << obj.A << " )";
+	os << "(" << " R:" << (unsigned int)obj.R << " G:" << (unsigned int)obj.G << " B:" << (unsigned int)obj.B << " A:" << (unsigned int)obj.A << " )";
+	// maybe do Hex ?
 	return os;
 }
 

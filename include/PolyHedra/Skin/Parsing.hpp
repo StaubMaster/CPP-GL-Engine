@@ -4,6 +4,7 @@
 # include "Skin.hpp"
 
 class TextCommand;
+typedef TextCommand TextCommandArgs;
 
 struct Skin::ParsingData
 {
@@ -14,32 +15,35 @@ struct Skin::ParsingData
 	Container::Binary<VectorF2>		TextureVertexes;
 	unsigned int					TextureVertexIndex;
 
+	unsigned int	ToVertexIndex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const;
+	VectorF3		ToVertex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const;
+
 	~ParsingData();
 	ParsingData(const FileInfo & file, ::Skin & skin);
 
 
 
-	void	Parse(const TextCommand & cmd);
-	void	Parse_Type(const TextCommand & cmd);
-	void	Parse_Format(const TextCommand & cmd);
+	void	Parse(const TextCommandArgs & cmd_args);
+	void	Parse_Type(const TextCommandArgs & cmd_args);
+	void	Parse_Format(const TextCommandArgs & cmd_args);
 
-	void	Parse_Name(const TextCommand & cmd);
-	void	Parse_Size(const TextCommand & cmd);
-	void	Parse_Image(const TextCommand & cmd);
+	void	Parse_Name(const TextCommandArgs & cmd_args);
+	void	Parse_Size(const TextCommandArgs & cmd_args);
+	void	Parse_Image(const TextCommandArgs & cmd_args);
 
-	void	Parse_t(const TextCommand & cmd);
+	void	Parse_t(const TextCommandArgs & cmd_args);
 	
-	void	Parse_TextureIndex(const TextCommand & cmd);
-	void	Parse_TextureIndexFace4(const TextCommand & cmd);
-	void	Parse_TextureIndexQuad(const TextCommand & cmd);
+	void	Parse_TextureIndex(const TextCommandArgs & cmd_args);
+	void	Parse_TextureIndexFace4(const TextCommandArgs & cmd_args);
+	void	Parse_TextureIndexQuad(const TextCommandArgs & cmd_args);
 
-	void	Parse_Vertex(const TextCommand & cmd);
-	void	Parse_VertexIndex(const TextCommand & cmd);
-	void	Parse_VertexFace3(const TextCommand & cmd, bool direction);
-	void	Parse_VertexBelt(const TextCommand & cmd, bool direction, bool closure);
-	void	Parse_VertexBand(const TextCommand & cmd, bool direction, bool closure);
-	void	Parse_VertexFan(const TextCommand & cmd, bool direction, bool closure);
-	void	Parse_VertexRay(const TextCommand & cmd, bool accumulate);
+	void	Parse_Vertex(const TextCommandArgs & cmd_args);
+	void	Parse_VertexIndex(const TextCommandArgs & cmd_args);
+	void	Parse_VertexFace3(const TextCommandArgs & cmd_args, bool f_direction);
+	void	Parse_VertexBelt(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure);
+	void	Parse_VertexBand(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure);
+	void	Parse_VertexFan(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure, bool f_middle);
+	void	Parse_VertexRay(const TextCommandArgs & cmd_args, bool f_accumulate);
 };
 
 #endif

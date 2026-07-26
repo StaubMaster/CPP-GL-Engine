@@ -61,7 +61,7 @@ std::string PolyHedra::ToInfo() const
 {
 	std::stringstream ss;
 
-	ss << "Source: " << File << '\n';
+	ss << "Source: " << File.Name() << '\n';
 
 	ss << "PolyHedra Count Vertex: " << Corners.Count() << '\n';
 	ss << "PolyHedra Count Face: " << Faces.Count() << '\n';
