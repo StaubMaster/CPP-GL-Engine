@@ -15,11 +15,15 @@ namespace Texture { class Array2D; };
 class Skin
 {
 	public:
+	struct Corner;
 	struct Face;
 
 	public:
 	VectorU2	Size;
+
+	public:
 	Container::Binary<Image>	Images;
+	Container::Binary<Corner>	Corners;
 	Container::Binary<Face>		Faces;
 
 	public: // Information stuff
@@ -39,8 +43,8 @@ class Skin
 
 
 	public:
-	void	Insert_Face3(VectorF3 corn0, VectorF3 corn1, VectorF3 corn2);
-	void	Insert_Face4(VectorF3 corn0, VectorF3 corn1, VectorF3 corn2, VectorF3 corn3);
+	void	Insert_Face3(unsigned int idx0, unsigned int idx1, unsigned int idx2);
+	void	Insert_Face4(unsigned int idx0, unsigned int idx1, unsigned int idx2, unsigned int idx3);
 
 
 

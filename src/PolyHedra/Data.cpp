@@ -2,9 +2,6 @@
 
 
 
-PolyHedra::Corner::Corner()
-	: Position()
-{ }
 PolyHedra::Corner::Corner(VectorF3 pos)
 	: Position(pos)
 { }
@@ -14,31 +11,24 @@ PolyHedra::Corner::Corner(float x, float y, float z)
 
 
 
-PolyHedra::Face::Face()
-	: udx{ 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF }
-	, Normal()
-{ }
-PolyHedra::Face::Face(unsigned int u0, unsigned int u1, unsigned int u2)
-	: udx{ u0, u1, u2 }
-	, Normal()
-{ }
 bool PolyHedra::Face::Check(unsigned int count) const
 {
-	return (udx[0] < count &&
-			udx[1] < count &&
-			udx[2] < count);
+	return (idx[0] < count &&
+			idx[1] < count &&
+			idx[2] < count);
 }
+PolyHedra::Face::Face(unsigned int idx0, unsigned int idx1, unsigned int idx2)
+	: idx{ idx0, idx1, idx2 }
+	, Normal()
+{ }
 
 
 
 bool PolyHedra::Edge::Check(unsigned int count) const
 {
-	return (udx[0] < count &&
-			udx[1] < count);
+	return (idx[0] < count &&
+			idx[1] < count);
 }
-PolyHedra::Edge::Edge()
-	: udx{ 0xFFFFFFFF, 0xFFFFFFFF }
-{ }
-PolyHedra::Edge::Edge(unsigned int u0, unsigned int u1)
-	: udx{ u0, u1 }
+PolyHedra::Edge::Edge(unsigned int idx0, unsigned int idx1)
+	: idx{ idx0, idx1 }
 { }

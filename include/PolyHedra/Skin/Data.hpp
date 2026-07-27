@@ -3,21 +3,34 @@
 
 # include "Skin.hpp"
 
-# include "ValueType/Vector/F3.hpp"
+# include "ValueType/Vector/F2.hpp"
+# include "ValueType/Color/F4.hpp"
 
+struct Skin::Corner
+{
+	VectorF2		Coord;
+	unsigned int	Index = 0xFFFFFFFF;
+	ColorF4			Color;
+
+	~Corner() = default;
+	Corner() = default;
+	Corner(const Corner & other) = default;
+	Corner & operator=(const Corner & other) = default;
+
+	Corner(VectorF2 coord, unsigned int index);
+	Corner(float coord_x, float coord_y, unsigned int index);
+};
 struct Skin::Face
 {
-	// Use Vec2 for Texture Coord
-	// use unsigned int for Index
+	unsigned int	idx[3] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+	// Texture Index here ?
 
-	// init Index as 0xFFFFFFFF
-	// if there are any 0xFFFFFFFF Indexes
-	//   generate an Empty Skin
-	//   use that for undefined Vertexes
+	~Face() = default;
+	Face() = default;
+	Face(const Face & other) = default;
+	Face & operator=(const Face & other) = default;
 
-	VectorF3	Corner[3];
-	Face();
-	Face(VectorF3 corn0, VectorF3 corn1, VectorF3 corn2);
+	Face(unsigned int idx0, unsigned int idx1, unsigned int idx2);
 };
 
 #endif

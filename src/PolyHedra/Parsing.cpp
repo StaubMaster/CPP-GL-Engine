@@ -229,10 +229,12 @@ void PolyHedra::ParsingData::New_Skin(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
 	//Debug::Log << cmd << Debug::Done;
+	
+	if (PolyHedra.Skin != nullptr) { throw CommandInvalidState(cmd_args, "PolyHedra already has Skin"); }
 
 	FileInfo file((File.DirectoryString() + "/" + cmd_args.ToString(0)).c_str());
 	if (!file.Exists()) { std::cout << cmd_args.Name() << ": " << "Bad Skin File" << "\n"; return; }
-	PolyHedra.Skins.Insert(Skin::Load(file));
+	PolyHedra.Skin = Skin::Load(file);
 }
 
 void PolyHedra::ParsingData::Change_Default(const TextCommandArgs & cmd_args)

@@ -7,26 +7,43 @@
 
 struct PolyHedra::Corner
 {
-	VectorF3 Position;
-	VectorF3 Normal;
-	Corner();
+	VectorF3	Position;
+	VectorF3	Normal;
+
+	~Corner() = default;
+	Corner() = default;
+	Corner(const Corner & other) = default;
+	Corner & operator=(const Corner & other) = default;
+
 	Corner(VectorF3 pos);
 	Corner(float x, float y, float z);
 };
 struct PolyHedra::Face
 {
-	unsigned int udx[3];
-	VectorF3 Normal;
-	Face();
-	Face(unsigned int u0, unsigned int u1, unsigned int u2);
-	bool Check(unsigned int count) const;
+	unsigned int	idx[3] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+	VectorF3	Normal;
+
+	bool	Check(unsigned int count) const;
+
+	~Face() = default;
+	Face() = default;
+	Face(const Face & other) = default;
+	Face & operator=(const Face & other) = default;
+
+	Face(unsigned int idx0, unsigned int idx1, unsigned int idx2);
 };
 struct PolyHedra::Edge
 {
-	unsigned int udx[2];
-	Edge();
-	Edge(unsigned int u0, unsigned int u1);
-	bool Check(unsigned int count) const;
+	unsigned int	idx[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
+
+	bool	Check(unsigned int count) const;
+
+	~Edge() = default;
+	Edge() = default;
+	Edge(const Edge & other) = default;
+	Edge & operator=(const Edge & other) = default;
+
+	Edge(unsigned int idx0, unsigned int idx1);
 };
 
 #endif

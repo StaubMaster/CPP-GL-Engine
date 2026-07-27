@@ -11,12 +11,10 @@ struct Skin::ParsingData
 	const FileInfo &	File;
 	::Skin &			Skin;
 
-	unsigned int					TextureIndex;
-	Container::Binary<VectorF2>		TextureVertexes;
-	unsigned int					TextureVertexIndex;
+	unsigned int	TextureIndex;
+	unsigned int	TextureVertexIndex;
 
 	unsigned int	ToVertexIndex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const;
-	VectorF3		ToVertex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const;
 
 	~ParsingData();
 	ParsingData(const FileInfo & file, ::Skin & skin);

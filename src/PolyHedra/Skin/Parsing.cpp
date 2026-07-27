@@ -17,7 +17,6 @@
 
 
 
-
 unsigned int Skin::ParsingData::ToVertexIndex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const
 {
 	std::string str = cmd_args.ToString(arg_idx);
@@ -30,16 +29,6 @@ unsigned int Skin::ParsingData::ToVertexIndex(const TextCommandArgs & cmd_args, 
 		return cmd_args.ToUInt32(arg_idx);
 	}
 }
-VectorF3 Skin::ParsingData::ToVertex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const
-{
-	VectorF2 temp;
-	temp = TextureVertexes[cmd_args.ToUInt32(arg_idx) + TextureVertexIndex];
-	return VectorF3(
-		temp.X,
-		temp.Y,
-		TextureIndex
-	);
-}
 
 
 
@@ -49,7 +38,6 @@ Skin::ParsingData::ParsingData(const FileInfo & file, ::Skin & skin)
 	: File(file)
 	, Skin(skin)
 	, TextureIndex(0)
-	, TextureVertexes()
 	, TextureVertexIndex(0)
 {
 	Skin.File = File;
@@ -144,27 +132,9 @@ void Skin::ParsingData::Parse_Size(const TextCommandArgs & cmd_args)
 void Skin::ParsingData::Parse_Image(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
-	std::cout << cmd_args << '\n';
 
 	FileInfo file((File.DirectoryString() + "/" + cmd_args.ToString(0)).c_str());
-	std::cout << "Path: " << file.Path << '\n';
-	std::cout << "Exists: " << file.Exists() << '\n';
-
-	//Skin.Images.Insert(file.LoadImage());
-
-	// Stick.png is Empty(). why ?
-	Image img = file.LoadImage(true);
-	std::cout << "Size: " << img.Size() << '\n';
-	std::cout << "Empty: " << img.Empty() << '\n';
-	/*if (img.W() == 16 && img.H() == 16)
-	{
-		for (unsigned int i = 0; i < img.Size().Product(); i++)
-		{
-			std::cout << img.Pixel(i) << '\n';
-		}
-		std::cout << '\n';
-	}*/
-	Skin.Images.Insert(img);
+	Skin.Images.Insert(file.LoadImage());
 }
 
 void Skin::ParsingData::Parse_t(const TextCommandArgs & cmd_args)
@@ -173,21 +143,26 @@ void Skin::ParsingData::Parse_t(const TextCommandArgs & cmd_args)
 
 	unsigned int len = cmd_args.Count() / 2;
 	
-	VectorF3 t[len];
+	Skin::Corner t[len];
+	unsigned int idx = Skin.Corners.Count();
+
 	for (size_t i = 0; i < len; i++)
 	{
-		t[i].X = cmd_args.ToFloat(i * 2 + 0);
-		t[i].Y = cmd_args.ToFloat(i * 2 + 1);
-		t[i].Z = TextureIndex;
+		t[i].Coord.X = cmd_args.ToFloat(i * 2 + 0);
+		t[i].Coord.Y = cmd_args.ToFloat(i * 2 + 1);
+		t[i].Index = TextureIndex;
+		Skin.Corners.Insert(t[i]);
 	}
 
 	if (len == 3)
 	{
-		Skin.Insert_Face3(t[0], t[1], t[2]);
+		//Skin.Insert_Face3(t[0], t[1], t[2]);
+		Skin.Insert_Face3(idx + 0, idx + 1, idx + 2);
 	}
 	else if (len == 4)
 	{
-		Skin.Insert_Face4(t[0], t[1], t[2], t[3]);
+		//Skin.Insert_Face4(t[0], t[1], t[2], t[3]);
+		Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
 	}
 }
 
@@ -200,15 +175,18 @@ void Skin::ParsingData::Parse_TextureIndexFace4(const TextCommandArgs & cmd_args
 {
 	if (!(cmd_args.Count() == 8)) { throw InvalidCommandArgumentCount(cmd_args, "n == 8"); }
 
-	VectorF3 t[4];
+	Skin::Corner t[4];
+	unsigned int idx = Skin.Corners.Count();
+
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		t[i].X = cmd_args.ToFloat(i * 2 + 0);
-		t[i].Y = cmd_args.ToFloat(i * 2 + 1);
-		t[i].Z = TextureIndex;
+		t[i].Coord.X = cmd_args.ToFloat(i * 2 + 0);
+		t[i].Coord.Y = cmd_args.ToFloat(i * 2 + 1);
+		t[i].Index = TextureIndex;
+		Skin.Corners.Insert(t[i]);
 	}
 
-	Skin.Insert_Face4(VectorF3(t[0]), VectorF3(t[1]), VectorF3(t[2]), VectorF3(t[3]));
+	Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
 }
 void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommandArgs & cmd_args)
 {
@@ -222,30 +200,30 @@ void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommandArgs & cmd_args)
 	max.X = cmd_args.ToFloat(2);
 	max.Y = cmd_args.ToFloat(3);
 
-	VectorF3 t[4];
+	Skin::Corner t[4];
+	unsigned int idx = Skin.Corners.Count();
 
-	t[0].X = min.X;
-	t[0].Y = min.Y;
-	t[0].Z = TextureIndex;
+	t[0].Coord.X = min.X;
+	t[0].Coord.Y = min.Y;
+	t[0].Index = TextureIndex;
+	Skin.Corners.Insert(t[0]);
 
-	t[1].X = min.X;
-	t[1].Y = max.Y;
-	t[1].Z = TextureIndex;
+	t[1].Coord.X = min.X;
+	t[1].Coord.Y = max.Y;
+	t[1].Index = TextureIndex;
+	Skin.Corners.Insert(t[1]);
 
-	t[2].X = max.X;
-	t[2].Y = min.Y;
-	t[2].Z = TextureIndex;
+	t[2].Coord.X = max.X;
+	t[2].Coord.Y = min.Y;
+	t[2].Index = TextureIndex;
+	Skin.Corners.Insert(t[2]);
 
-	t[3].X = max.X;
-	t[3].Y = max.Y;
-	t[3].Z = TextureIndex;
+	t[3].Coord.X = max.X;
+	t[3].Coord.Y = max.Y;
+	t[3].Index = TextureIndex;
+	Skin.Corners.Insert(t[3]);
 
-	//std::cout << "[0]" << t[0] << '\n';
-	//std::cout << "[1]" << t[1] << '\n';
-	//std::cout << "[2]" << t[2] << '\n';
-	//std::cout << "[3]" << t[3] << '\n';
-
-	Skin.Insert_Face4(VectorF3(t[0]), VectorF3(t[1]), VectorF3(t[2]), VectorF3(t[3]));
+	Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
 }
 
 void Skin::ParsingData::Parse_Vertex(const TextCommandArgs & cmd_args)
@@ -256,7 +234,7 @@ void Skin::ParsingData::Parse_Vertex(const TextCommandArgs & cmd_args)
 	v.X = cmd_args.ToFloat(0);
 	v.Y = cmd_args.ToFloat(1);
 
-	TextureVertexes.Insert(v);
+	Skin.Corners.Insert(Skin::Corner(v, TextureIndex));
 }
 void Skin::ParsingData::Parse_VertexIndex(const TextCommandArgs & cmd_args)
 {
@@ -265,7 +243,7 @@ void Skin::ParsingData::Parse_VertexIndex(const TextCommandArgs & cmd_args)
 	std::string str = cmd_args.ToString(0);
 	if (str == "here")
 	{
-		TextureVertexIndex = TextureVertexes.Count();
+		TextureVertexIndex = Skin.Corners.Count();
 	}
 	else
 	{
@@ -276,13 +254,10 @@ void Skin::ParsingData::Parse_VertexFace3(const TextCommandArgs & cmd_args, bool
 {
 	if (!(cmd_args.Count() == 3)) { throw InvalidCommandArgumentCount(cmd_args, "n == 3"); }
 
-	VectorF3 t[3];
+	unsigned int t[3];
 	for (unsigned int i = 0; i < 3; i++)
 	{
-		VectorF2 v = TextureVertexes[cmd_args.ToUInt32(i) + TextureVertexIndex];
-		t[i].X = v.X;
-		t[i].Y = v.Y;
-		t[i].Z = TextureIndex;
+		t[i] = ToVertexIndex(cmd_args, i);
 	}
 
 	if (!f_direction)
@@ -295,7 +270,7 @@ void Skin::ParsingData::Parse_VertexFace3(const TextCommandArgs & cmd_args, bool
 	}
 }
 
-static void Belt_Face(Skin & skin, VectorF3 temp[4], bool dir)
+static void Belt_Face(Skin & skin, unsigned int temp[4], bool dir)
 {
 	if (!dir)
 	{
@@ -314,23 +289,23 @@ void Skin::ParsingData::Parse_VertexBelt(const TextCommandArgs & cmd_args, bool 
 
 	unsigned int len = cmd_args.Count() / 2;
 
-	VectorF3 list0[len];
-	VectorF3 list1[len];
+	unsigned int list0[len];
+	unsigned int list1[len];
 
 	for (unsigned int i = 0; i < len; i++)
 	{
 		unsigned int i0 = i;
 		unsigned int i1 = i + len;
 
-		list0[i] = ToVertex(cmd_args, i0);
-		list1[i] = ToVertex(cmd_args, i1);
+		list0[i] = ToVertexIndex(cmd_args, i0);
+		list1[i] = ToVertexIndex(cmd_args, i1);
 	}
 
 	unsigned int n = len - 1;
 
 	for (unsigned int i = 0; i < n; i++)
 	{
-		VectorF3 temp[4] = {
+		unsigned int temp[4] = {
 			list0[i + 0],
 			list0[i + 1],
 			list1[i + 0],
@@ -341,7 +316,7 @@ void Skin::ParsingData::Parse_VertexBelt(const TextCommandArgs & cmd_args, bool 
 
 	if (f_closure)
 	{
-		VectorF3 temp[4] = {
+		unsigned int temp[4] = {
 			list0[n],
 			list0[0],
 			list1[n],
@@ -359,7 +334,7 @@ void Skin::ParsingData::Parse_VertexBand(const TextCommandArgs & cmd_args, bool 
 	(void)f_closure;
 }
 
-static void Fan_Face(Skin & skin, VectorF3 middle, VectorF3 blade[2], bool dir, bool mid)
+static void Fan_Face(Skin & skin, unsigned int middle, unsigned int blade[2], bool dir, bool mid)
 {
 	if (!dir)
 	{
@@ -390,31 +365,31 @@ void Skin::ParsingData::Parse_VertexFan(const TextCommandArgs & cmd_args, bool f
 
 	unsigned int len = cmd_args.Count() - 1;
 
-	VectorF3 middle;
-	VectorF3 blade[len];
+	unsigned int middle;
+	unsigned int blade[len];
 
 	if (!f_middle)
 	{
-		middle = ToVertex(cmd_args, 0);
+		middle = ToVertexIndex(cmd_args, 0);
 		for (unsigned int i = 0; i < len; i++)
 		{
-			blade[i] = ToVertex(cmd_args, i + 1);
+			blade[i] = ToVertexIndex(cmd_args, i + 1);
 		}
 	}
 	else
 	{
 		for (unsigned int i = 0; i < len; i++)
 		{
-			blade[i] = ToVertex(cmd_args, i);
+			blade[i] = ToVertexIndex(cmd_args, i);
 		}
-		middle = ToVertex(cmd_args, len);
+		middle = ToVertexIndex(cmd_args, len);
 	}
 
 	unsigned int n = len - 1;
 
 	for (unsigned int i = 0; i < n; i++)
 	{
-		VectorF3 temp[2] = {
+		unsigned int temp[2] = {
 			blade[i + 0],
 			blade[i + 1],
 		};
@@ -423,7 +398,7 @@ void Skin::ParsingData::Parse_VertexFan(const TextCommandArgs & cmd_args, bool f
 
 	if (f_closure)
 	{
-		VectorF3 temp[2] = {
+		unsigned int temp[2] = {
 			blade[n],
 			blade[0],
 		};
@@ -462,7 +437,8 @@ void Skin::ParsingData::Parse_VertexRay(const TextCommandArgs & cmd_args, bool f
 
 	for (unsigned int i = 0; i < len; i++)
 	{
-		TextureVertexes.Insert(ray.ToPoint(intervals[i]));
+		//TextureVertexes.Insert(ray.ToPoint(intervals[i]));
+		Skin.Corners.Insert(Skin::Corner(ray.ToPoint(intervals[i]), TextureIndex));
 	}
 }
 

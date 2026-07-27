@@ -40,12 +40,12 @@ Texture::Array2D Skin::ToTexture() const
 
 
 
-void Skin::Insert_Face3(VectorF3 corn0, VectorF3 corn1, VectorF3 corn2)
+void Skin::Insert_Face3(unsigned int idx0, unsigned int idx1, unsigned int idx2)
 {
-	Faces.Insert(Face(corn0, corn1, corn2));
+	Faces.Insert(Face(idx0, idx1, idx2));
 }
-void Skin::Insert_Face4(VectorF3 corn0, VectorF3 corn1, VectorF3 corn2, VectorF3 corn3)
+void Skin::Insert_Face4(unsigned int idx0, unsigned int idx1, unsigned int idx2, unsigned int idx3)
 {
-	Insert_Face3(corn0, corn1, corn2);
-	Insert_Face3(corn2, corn1, corn3);
+	Faces.Insert(Face(idx0, idx1, idx2));
+	Faces.Insert(Face(idx2, idx1, idx3));
 }

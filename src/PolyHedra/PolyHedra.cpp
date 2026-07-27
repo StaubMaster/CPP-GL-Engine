@@ -24,16 +24,13 @@
 
 PolyHedra::~PolyHedra()
 {
-	for (unsigned int i = 0; i < Skins.Count(); i++)
-	{
-		delete Skins[i];
-	}
+	delete Skin;
 }
 PolyHedra::PolyHedra()
 	: Corners()
 	, Edges()
 	, Faces()
-	, Skins()
+	, Skin(nullptr)
 	, File()
 	, UseCornerNormals(false)
 { }
@@ -43,16 +40,6 @@ void PolyHedra::Done()
 	Corners.Trim();
 	Edges.Trim();
 	Faces.Trim();
-
-	// think of a better way to do this ?
-	// Color override in Instance Data ?
-	if (Skins.Count() == 0)
-	{
-		Skin * skin = new ::Skin();
-		skin -> Size = VectorU2(1, 1);
-		skin -> Images.Insert(Texture::Generate::NoSkin());
-		Skins.Insert(skin);
-	}
 }
 
 
@@ -61,7 +48,7 @@ std::string PolyHedra::ToInfo() const
 {
 	std::stringstream ss;
 
-	ss << "Source: " << File.Name() << '\n';
+	ss << "Source: " << File.Path << '\n';
 
 	ss << "PolyHedra Count Vertex: " << Corners.Count() << '\n';
 	ss << "PolyHedra Count Face: " << Faces.Count() << '\n';
@@ -97,9 +84,9 @@ void PolyHedra::CalcNormals()
 		Face & face = Faces[i];
 		if (face.Check(Corners.Count()))
 		{
-			Corner & corner0 = Corners[face.udx[0]];
-			Corner & corner1 = Corners[face.udx[1]];
-			Corner & corner2 = Corners[face.udx[2]];
+			Corner & corner0 = Corners[face.idx[0]];
+			Corner & corner1 = Corners[face.idx[1]];
+			Corner & corner2 = Corners[face.idx[2]];
 			face.Normal = VectorF3::cross(
 				corner1.Position - corner0.Position,
 				corner2.Position - corner0.Position
