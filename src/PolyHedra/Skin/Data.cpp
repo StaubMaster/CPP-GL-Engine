@@ -10,6 +10,9 @@ Skin::Corner::Corner(float coord_x, float coord_y, unsigned int index)
 	: Coord(coord_x, coord_y)
 	, Index(index)
 { }
+Skin::Corner::Corner(ColorF4 color)
+	: Color(color)
+{ }
 
 
 

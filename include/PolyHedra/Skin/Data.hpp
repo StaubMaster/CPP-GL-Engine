@@ -19,6 +19,7 @@ struct Skin::Corner
 
 	Corner(VectorF2 coord, unsigned int index);
 	Corner(float coord_x, float coord_y, unsigned int index);
+	Corner(ColorF4 color);
 };
 struct Skin::Face
 {

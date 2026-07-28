@@ -23,6 +23,8 @@ struct TextCommandFunc
 	std::string		Name;
 	FunctionPointer<const TextCommandArgs &>	Func;
 
+
+
 	~TextCommandFunc()
 	{ }
 	TextCommandFunc(std::string name)
@@ -45,12 +47,26 @@ struct PolyHedra::ParsingData
 	FileInfo		File;
 	::PolyHedra &	PolyHedra;
 
-	bool	DefaultDirection; // IsNormalToClockWise
-	bool	DefaultClosed; // open : closed // default should be closed // IsClosed
-	bool	DefaultMiddle; // first : last // IsMiddleLast
-
 	unsigned int	VertexOffset;
 	unsigned int	ToVertexIndex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const;
+
+	struct CommandFlags
+	{
+		bool	Direction = false;
+		bool	Closed = true;
+		bool	Middle = false;
+		void	MakeDefault();
+
+		~CommandFlags() = default;
+		CommandFlags() = default;
+		CommandFlags(const CommandFlags & other) = default;
+		CommandFlags & operator=(const CommandFlags & other) = default;
+
+		bool			Parse(char c);
+		unsigned int	Parse(const std::string & name);
+	};
+	CommandFlags	DefaultFlags;
+	// each Command takes different Flags
 
 	ParsingVariable::FloatMemory	VariableFloats;
 
@@ -83,62 +99,22 @@ struct PolyHedra::ParsingData
  
 	void	Place_Vertex(const TextCommandArgs & cmd_args);
 
-	void	Place_Circle(const TextCommandArgs & cmd_args, bool direction);
+	void	Place_Circle(const TextCommandArgs & cmd_args, const CommandFlags & flags);
 	void	Place_Circle(const TextCommandArgs & cmd_args);
 
-	void	Place_Face(const TextCommandArgs & cmd_args, bool direction);
+	void	Place_Face(const TextCommandArgs & cmd_args, const CommandFlags & flags);
 	void	Place_Face(const TextCommandArgs & cmd_args);
 
-	/* belt
-		'0'		open
-		'1'		closed
-	*/
-	void	Place_Belt(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure);
+	void	Place_Belt_Face(const CommandFlags & flags, unsigned int temp[4]);
+	void	Place_Belt(const TextCommandArgs & cmd_args, const CommandFlags & flags);
 	void	Place_Belt(const TextCommandArgs & cmd_args);
 
-	void	Place_Band(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure);
+	void	Place_Band(const TextCommandArgs & cmd_args, const CommandFlags & flags);
 	void	Place_Band(const TextCommandArgs & cmd_args);
 
-	/* fan
-		'<'		Middle is first
-		'>'		Middle is last
-		'0'		open
-		'1'		closed
-	*/
-	void	Place_Fan(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure, bool f_middle);
+	void	Place_Fan_Face(const CommandFlags & flags, unsigned int middle, unsigned int blade[2]);
+	void	Place_Fan(const TextCommandArgs & cmd_args, const CommandFlags & flags);
 	void	Place_Fan(const TextCommandArgs & cmd_args);
-
-/*
-[0]		[			0			]
-		[	       /|\       	]
-		[	     // | \\     	]
-		[	   / /  |  \ \   	]
-		[	 /  /   |   \  \ 	]
-[1]		[	0---1---2---3---4	]
-		[	|	|	|	|	|	]
-		[	|	|	|	|	|	]
-		[	|	|	|	|	|	]
-[2]		[	0---1---2---3---4	]
-		[	 \  \   |   /  / 	]
-		[	   \ \  |  / /   	]
-		[	     \\ | //     	]
-		[	       \|/       	]
-[3]		[			0			]
-
-fanF   [0][0]           [1][0;1;2;3;4]
-belt   [1][0;1;2;3;4]   [2][0;1;2;3;4]
-fanR   [2][0;1;2;3;4]   [3][0]
-
-Counter Clockwise
-
-fanF
-        [1][1]   [0][0]   [1][0]
-belt
-        [1][0]   [2][0]   [1][1]
-        [2][1]   [1][1]   [2][0]
-fanR
-        [2][0]   [3][0]   [2][1]
-*/
 };
 
 #endif

@@ -30,18 +30,25 @@ struct Skin::ParsingData
 	void	Parse_Image(const TextCommandArgs & cmd_args);
 
 	void	Parse_t(const TextCommandArgs & cmd_args);
-	
+
 	void	Parse_TextureIndex(const TextCommandArgs & cmd_args);
 	void	Parse_TextureIndexFace4(const TextCommandArgs & cmd_args);
 	void	Parse_TextureIndexQuad(const TextCommandArgs & cmd_args);
 
-	void	Parse_Vertex(const TextCommandArgs & cmd_args);
-	void	Parse_VertexIndex(const TextCommandArgs & cmd_args);
+	void	Parse_Vertex(const TextCommandArgs & cmd_args);			// VertexCoord()
+	void	Parse_VertexIndex(const TextCommandArgs & cmd_args);	// VertexOffset()
+
 	void	Parse_VertexFace3(const TextCommandArgs & cmd_args, bool f_direction);
 	void	Parse_VertexBelt(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure);
 	void	Parse_VertexBand(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure);
 	void	Parse_VertexFan(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure, bool f_middle);
+
 	void	Parse_VertexRay(const TextCommandArgs & cmd_args, bool f_accumulate);
+
+	void	Parse_ColorF(const TextCommandArgs & cmd_args);		// VertexColor()
+	void	Parse_ColorD(const TextCommandArgs & cmd_args);		// VertexColor()
+//	void	Parse_ColorH(const TextCommandArgs & cmd_args);		// VertexColor()
+//	void	Parse_f(const TextCommandArgs & cmd_args);	// like the old one		f [idx0 idx1] {colR colG colB}
 };
 
 #endif

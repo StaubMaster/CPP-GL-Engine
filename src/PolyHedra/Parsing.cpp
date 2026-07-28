@@ -63,6 +63,56 @@ unsigned int PolyHedra::ParsingData::ToVertexIndex(const TextCommandArgs & cmd_a
 
 
 
+void PolyHedra::ParsingData::CommandFlags::MakeDefault()
+{
+	Direction = false;
+	Closed = true;
+	Middle = false;
+}
+bool PolyHedra::ParsingData::CommandFlags::Parse(char c)
+{
+	switch (c)
+	{
+		case '{': Direction = false; break;
+		case '}': Direction = true; break;
+		case '0': Closed = false; break;
+		case '1': Closed = true; break;
+		case '<': Middle = false; break;
+		case '>': Middle = true; break;
+		default: return false;
+	}
+	return true;
+}
+unsigned int PolyHedra::ParsingData::CommandFlags::Parse(const std::string & name)
+{
+	if (Parse(name[0]))
+	{
+		throw "Name cannot start with Flag Character.";
+	}
+
+	unsigned int len = name.size();
+	for (unsigned int i = 0; i < name.size(); i++)
+	{
+		if (Parse(name[i]))
+		{
+			len = i;
+			break;
+		}
+	}
+
+	for (unsigned int i = len + 1; i < name.size(); i++)
+	{
+		if (!Parse(name[i]))
+		{
+			std::cerr << "Non Flag Character '" << name[i] << "' in '" << name << "' at [" << i << "] of [" << name.size() << "]\n";
+			throw "Error";
+		}
+	}
+	return len;
+}
+
+
+
 void PolyHedra::ParsingData::CommandsClear()
 {
 	for (unsigned int i = 0; i < Commands.Count(); i++)
@@ -114,10 +164,8 @@ PolyHedra::ParsingData::~ParsingData()
 PolyHedra::ParsingData::ParsingData(const FileInfo & file, ::PolyHedra & polyhedra)
 	: File(file)
 	, PolyHedra(polyhedra)
-	, DefaultDirection(false)
-	, DefaultClosed(true)
-	, DefaultMiddle(false)
 	, VertexOffset(0)
+	, DefaultFlags()
 {
 	PolyHedra.File = File;
 	CommandsDefault();
@@ -148,24 +196,9 @@ void PolyHedra::ParsingData::Parse(const TextCommandArgs & cmd_args)
 			}
 			else
 			{
-				unsigned int len;
-				bool found = false;
-				for (len = 0; len < name_args.size(); len++)
-				{
-					switch (name_args[len])
-					{
-						case '{': found = true; break;
-						case '}': found = true; break;
-						case '0': found = true; break;
-						case '1': found = true; break;
-						case '<': found = true; break;
-						case '>': found = true; break;
-						default: break;
-					}
-					if (found) { break; }
-				}
-
-				if (found && len == name_func.size())
+				CommandFlags flags = DefaultFlags;
+				unsigned int len = flags.Parse(name_args);
+				if (len == name_func.size())
 				{
 					name_args = name_args.substr(0, len);
 					if (name_args == name_func)
@@ -176,7 +209,7 @@ void PolyHedra::ParsingData::Parse(const TextCommandArgs & cmd_args)
 				}
 			}
 		}
-		std::cout << "unknown: " << cmd_args << '\n';
+		throw UnknownCommandName(cmd_args);
 	}
 	catch (std::exception & ex)
 	{
@@ -243,9 +276,7 @@ void PolyHedra::ParsingData::Change_Default(const TextCommandArgs & cmd_args)
 
 	if (cmd_args.Count() == 0)
 	{
-		DefaultDirection = false;
-		DefaultClosed = true;
-		DefaultMiddle = false;
+		DefaultFlags.MakeDefault();
 		return;
 	}
 
@@ -256,31 +287,9 @@ void PolyHedra::ParsingData::Change_Default(const TextCommandArgs & cmd_args)
 	}
 
 	// loop
-	char c = str[0];
-	switch (c)
+	if (!DefaultFlags.Parse(str[0]))
 	{
-		case '{': DefaultDirection = false; break;
-		case '}': DefaultDirection = true; break;
-		case '0': DefaultClosed = false; break;
-		case '1': DefaultClosed = true; break;
-		case '<': DefaultMiddle = false; break;
-		case '>': DefaultMiddle = true; break;
-		default: break;
-
-		// turn these into a struct that perses automatically
-		// belt does not need middle, different struct or just ignore
-		// '<' '>' would make more sense for indicating middle
-		// '<' has the middle on the left
-		// '>' has the middle on the right
-		// what to use for direction instead ?
-		// this would require changing a lot of files
-		// '<' '>' direction has been chagned, so they will all need to be changed anyway
-		// default dir>
-		// default dir<
-		// should direction be specified in the command at all ?
-		// '<' '>' for middle makes sense
-		// '0' '1' makes sense
-		// face direciton should be the same
+		// not Flag Character
 	}
 }
 void PolyHedra::ParsingData::Change_Offset(const TextCommandArgs & cmd_args)
@@ -304,7 +313,7 @@ void PolyHedra::ParsingData::Legacy_Face3(const TextCommandArgs & cmd_args)
 		{ idx[i] = cmd_args.ToUInt32(i); }
 	}
 
-	if (DefaultDirection)
+	if (DefaultFlags.Direction)
 	{
 		PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
 	}
@@ -327,7 +336,7 @@ void PolyHedra::ParsingData::Legacy_Face4(const TextCommandArgs & cmd_args)
 		{ idx[i] = cmd_args.ToUInt32(i); }
 	}
 
-	if (DefaultDirection)
+	if (DefaultFlags.Direction)
 	{
 		PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 	}
@@ -353,7 +362,7 @@ void PolyHedra::ParsingData::Legacy_Face34(const TextCommandArgs & cmd_args)
 
 	if (len == 3)
 	{
-		if (DefaultDirection)
+		if (DefaultFlags.Direction)
 		{
 			PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
 		}
@@ -364,7 +373,7 @@ void PolyHedra::ParsingData::Legacy_Face34(const TextCommandArgs & cmd_args)
 	}
 	else if (len == 4)
 	{
-		if (DefaultDirection)
+		if (DefaultFlags.Direction)
 		{
 			PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 		}
@@ -403,7 +412,7 @@ void PolyHedra::ParsingData::Place_Vertex(const TextCommandArgs & cmd_args)
 	PolyHedra.Insert_Corn(Corner(c));
 }
 
-void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args, bool direction)
+void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
 	if (!(cmd_args.Count() == 11)) { throw InvalidCommandArgumentCount(cmd_args, "n == 11"); }
 
@@ -416,54 +425,50 @@ void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args, bool
 		VariableFloats.To(cmd_args, 4),
 		VariableFloats.To(cmd_args, 5)
 	);
-	VectorF3 radius(VariableFloats.To(cmd_args, 6), 0, 0);
+	VectorF3 radius(
+		VariableFloats.To(cmd_args, 6),
+		0,
+		0
+	);
 
-	EulerAngle3D angle = EulerAngle3D::PointToZ(VectorF3(
+	VectorF3 normal(
 		cmd_args.ToFloat(7),
 		cmd_args.ToFloat(8),
 		cmd_args.ToFloat(9)
-	));
+	);
+	//std::cout << "Circle: Direction: " << flags.Direction << '\n';
+	/*if (flags.Direction)
+	{
+		normal = -normal;
+	}*/
+
+	EulerAngle3D angle = EulerAngle3D::PointToZ(normal);
 	Angle offset = Angle::Degrees(cmd_args.ToFloat(10));
 
 	for (int i = 0; i < step_num; i++)
 	{
-		if (!direction)
+		if (!flags.Direction)
 		{
-			angle.Z0 = (step * (i + step_off)) + offset;
+			angle.Z0 = (step * (step_off + i)) + offset;
 		}
 		else
 		{
-			//angle.Z = ((i + step_off) * step) + offset;
+			angle.Z0 = (step * (step_off - i)) + offset;
 		}
-		//angle.CalcMatrix();
-		VectorF3 p;
-		//p = angle.rotateBack(radius) + center;
-		p = angle.forward(radius) + center;
-		PolyHedra.Insert_Corn(Corner(p));
-		//std::cout << p << "\n";
+		PolyHedra.Insert_Corn(Corner(angle.forward(radius) + center));
 	}
 }
 void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 11)) { throw InvalidCommandArgumentCount(cmd_args, "n == 11"); }
 
-	bool direction = DefaultDirection;
+	CommandFlags flags = DefaultFlags;
+	flags.Parse(cmd_args.Name());
 
-	std::string name = cmd_args.Name();
-	for (unsigned int i = 3; i < name.size(); i++)
-	{
-		char c = name[i];
-		switch (c)
-		{
-			case '>': direction = false; break;
-			case '<': direction = true; break;
-		}
-	}
-
-	Place_Circle(cmd_args, direction);
+	Place_Circle(cmd_args, flags);
 }
 
-void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args, bool direction)
+void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
 	if (!(cmd_args.Count() == 3 || cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 3 || n == 4"); }
 
@@ -478,7 +483,7 @@ void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args, bool d
 
 	if (len == 3)
 	{
-		if (!direction)
+		if (!flags.Direction)
 		{
 			std::cout << "Face123: " << idx[0] << ' ' << idx[1] << ' ' << idx[2] << '\n';
 			PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
@@ -490,7 +495,7 @@ void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args, bool d
 	}
 	else if (len == 4)
 	{
-		if (!direction)
+		if (!flags.Direction)
 		{
 			PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 		}
@@ -504,36 +509,26 @@ void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 3 || cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 3 || n == 4"); }
 
-	bool direction = DefaultDirection;
+	CommandFlags flags = DefaultFlags;
+	flags.Parse(cmd_args.Name());
 
-	std::string name = cmd_args.Name();
-	for (unsigned int i = 3; i < name.size(); i++)
-	{
-		char c = name[i];
-		switch (c)
-		{
-			case '>': direction = false; break;
-			case '<': direction = true; break;
-		}
-	}
-
-	Place_Face(cmd_args, direction);
+	Place_Face(cmd_args, flags);
 }
 
-static void Belt_Face(PolyHedra & polyhedra, unsigned int temp[4], bool dir)
+void PolyHedra::ParsingData::Place_Belt_Face(const CommandFlags & flags, unsigned int temp[4])
 {
-	if (!dir)
+	if (!flags.Direction)
 	{
-		polyhedra.Insert_Face3(temp[0], temp[2], temp[1]);
-		polyhedra.Insert_Face3(temp[3], temp[1], temp[2]);
+		PolyHedra.Insert_Face3(temp[0], temp[2], temp[1]);
+		PolyHedra.Insert_Face3(temp[3], temp[1], temp[2]);
 	}
 	else
 	{
-		polyhedra.Insert_Face3(temp[1], temp[2], temp[0]);
-		polyhedra.Insert_Face3(temp[2], temp[1], temp[3]);
+		PolyHedra.Insert_Face3(temp[1], temp[2], temp[0]);
+		PolyHedra.Insert_Face3(temp[2], temp[1], temp[3]);
 	}
 }
-void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure)
+void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
 	unsigned int len = cmd_args.Count() / 2;
 
@@ -559,10 +554,10 @@ void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args, bool f
 			list1[i + 0],
 			list1[i + 1],
 		};
-		Belt_Face(PolyHedra, temp, f_direction);
+		Place_Belt_Face(flags, temp);
 	}
 
-	if (f_closure)
+	if (flags.Closed)
 	{
 		unsigned int temp[4] = {
 			list0[n],
@@ -570,38 +565,24 @@ void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args, bool f
 			list1[n],
 			list1[0],
 		};
-		Belt_Face(PolyHedra, temp, f_direction);
+		Place_Belt_Face(flags, temp);
 	}
 }
 void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args)
 {
 	if (!((cmd_args.Count() % 2) == 0 && cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd_args, "(n % 2) == 0 && n >= 4 && n <= 255"); }
 
-	bool direction = DefaultDirection;
-	bool closure = DefaultClosed;
+	CommandFlags flags = DefaultFlags;
+	flags.Parse(cmd_args.Name());
 
-	std::string name = cmd_args.Name();
-	for (unsigned int i = 3; i < name.size(); i++)
-	{
-		char c = name[i];
-		switch (c)
-		{
-			case '{': direction = false; break;
-			case '}': direction = true; break;
-			case '0': closure = false; break;
-			case '1': closure = true; break;
-		}
-	}
-
-	Place_Belt(cmd_args, direction, closure);
+	Place_Belt(cmd_args, flags);
 }
 
-void PolyHedra::ParsingData::Place_Band(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure)
+void PolyHedra::ParsingData::Place_Band(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
 	throw CommandNotImplemented(cmd_args);
 	(void)cmd_args;
-	(void)f_direction;
-	(void)f_closure;
+	(void)flags;
 }
 void PolyHedra::ParsingData::Place_Band(const TextCommandArgs & cmd_args)
 {
@@ -609,40 +590,39 @@ void PolyHedra::ParsingData::Place_Band(const TextCommandArgs & cmd_args)
 	(void)cmd_args;
 }
 
-static void Fan_Face(PolyHedra & polyhedra, unsigned int middle, unsigned int blade[2], bool dir, bool mid)
+void PolyHedra::ParsingData::Place_Fan_Face(const CommandFlags & flags, unsigned int middle, unsigned int blade[2])
 {
-	if (!dir)
+	if (!flags.Direction)
 	{
-		if (!mid)
+		if (!flags.Middle)
 		{
-			polyhedra.Insert_Face3(blade[1], middle, blade[0]);
+			PolyHedra.Insert_Face3(blade[1], middle, blade[0]);
 		}
 		else
 		{
-			polyhedra.Insert_Face3(blade[0], middle, blade[1]);
+			PolyHedra.Insert_Face3(blade[0], middle, blade[1]);
 		}
 	}
 	else
 	{
-		if (!mid)
+		if (!flags.Middle)
 		{
-			polyhedra.Insert_Face3(blade[0], middle, blade[1]);
+			PolyHedra.Insert_Face3(blade[0], middle, blade[1]);
 		}
 		else
 		{
-			polyhedra.Insert_Face3(blade[1], middle, blade[0]);
+			PolyHedra.Insert_Face3(blade[1], middle, blade[0]);
 		}
 	}
 }
-/*static void Fan_Faces(PolyHedra & polyhedra, unsigned int middle, unsigned int blade[], unsigned int len, bool close, bool dir, bool mid) { }*/
-void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure, bool f_middle)
+void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
 	unsigned int len = cmd_args.Count() - 1;
 
 	unsigned int middle;
 	unsigned int blade[len];
 
-	if (!f_middle)
+	if (!flags.Middle)
 	{
 		middle = ToVertexIndex(cmd_args, 0);
 		for (unsigned int i = 0; i < len; i++)
@@ -667,42 +647,26 @@ void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args, bool f_
 			blade[i + 0],
 			blade[i + 1],
 		};
-		Fan_Face(PolyHedra, middle, temp, f_direction, f_middle);
+		Place_Fan_Face(flags, middle, temp);
 	}
 
-	if (f_closure)
+	if (flags.Closed)
 	{
 		unsigned int temp[2] = {
 			blade[n],
 			blade[0],
 		};
-		Fan_Face(PolyHedra, middle, temp, f_direction, f_middle);
+		Place_Fan_Face(flags, middle, temp);
 	}
 }
 void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() >= 3 && cmd_args.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd_args, "n >= 3 && n <= 255"); }
 
-	bool direction = DefaultDirection;
-	bool closure = DefaultClosed;
-	bool middle = DefaultMiddle;
+	CommandFlags flags = DefaultFlags;
+	flags.Parse(cmd_args.Name());
 
-	std::string name = cmd_args.Name();
-	for (unsigned int i = 3; i < name.size(); i++)
-	{
-		char c = name[i];
-		switch (c)
-		{
-			case '{': direction = false; break;
-			case '}': direction = true; break;
-			case '0': closure = false; break;
-			case '1': closure = true; break;
-			case '<': middle = false; break;
-			case '>': middle = true; break;
-		}
-	}
-
-	Place_Fan(cmd_args, direction, closure, middle);
+	Place_Fan(cmd_args, flags);
 }
 
 
