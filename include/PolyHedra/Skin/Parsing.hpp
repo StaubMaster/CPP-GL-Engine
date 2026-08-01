@@ -45,10 +45,13 @@ struct Skin::ParsingData
 
 	void	Parse_VertexRay(const TextCommandArgs & cmd_args, bool f_accumulate);
 
-	void	Parse_ColorF(const TextCommandArgs & cmd_args);		// VertexColor()
-	void	Parse_ColorD(const TextCommandArgs & cmd_args);		// VertexColor()
-//	void	Parse_ColorH(const TextCommandArgs & cmd_args);		// VertexColor()
-//	void	Parse_f(const TextCommandArgs & cmd_args);	// like the old one		f [idx0 idx1] {colR colG colB}
+	void	Parse_ColorF_Default(const TextCommandArgs & cmd_args);
+	void	Parse_ColorF(const TextCommandArgs & cmd_args);
+
+	void	Parse_ColorD_Default(const TextCommandArgs & cmd_args);
+	void	Parse_ColorD(const TextCommandArgs & cmd_args);
+
+	void	Parse_Multi(const TextCommandArgs & cmd_args);
 };
 
 #endif

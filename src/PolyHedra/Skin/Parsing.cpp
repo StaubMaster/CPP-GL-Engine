@@ -91,8 +91,13 @@ void Skin::ParsingData::Parse(const TextCommandArgs & cmd_args)
 		else if (name == "rayT")	{ Parse_VertexRay(cmd_args, false); }
 		else if (name == "rayA")	{ Parse_VertexRay(cmd_args, true); }
 
-		else if (name == "colF")	{ Parse_ColorF(cmd_args); }
-		else if (name == "colD")	{ Parse_ColorD(cmd_args); }
+		else if (name == "colFdefault")		{ Parse_ColorF_Default(cmd_args); }
+		else if (name == "colF")			{ Parse_ColorF(cmd_args); }
+
+		else if (name == "colDdefault")		{ Parse_ColorD_Default(cmd_args); }
+		else if (name == "colD")			{ Parse_ColorD(cmd_args); }
+
+		else if (name == "multi")			{ Parse_Multi(cmd_args); }
 
 		else						{ std::cout << "unknown: " << cmd_args << "\n"; }
 	}
@@ -444,6 +449,18 @@ void Skin::ParsingData::Parse_VertexRay(const TextCommandArgs & cmd_args, bool f
 	}
 }
 
+void Skin::ParsingData::Parse_ColorF_Default(const TextCommandArgs & cmd_args)
+{
+	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
+
+	ColorF4 col;
+	col.R = cmd_args.ToFloat(0);
+	col.G = cmd_args.ToFloat(1);
+	col.B = cmd_args.ToFloat(2);
+	col.A = cmd_args.ToFloat(3);
+
+	Skin.Color = col;
+}
 void Skin::ParsingData::Parse_ColorF(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
@@ -456,7 +473,20 @@ void Skin::ParsingData::Parse_ColorF(const TextCommandArgs & cmd_args)
 
 	Skin.Corners.Insert(Skin::Corner(col));
 }
+
 #include "ValueType/Color/U4.hpp"
+void Skin::ParsingData::Parse_ColorD_Default(const TextCommandArgs & cmd_args)
+{
+	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
+
+	ColorU4 col;
+	col.R = cmd_args.ToUInt32(0);
+	col.G = cmd_args.ToUInt32(1);
+	col.B = cmd_args.ToUInt32(2);
+	col.A = cmd_args.ToUInt32(3);
+
+	Skin.Color = col.ToColorF4();
+}
 void Skin::ParsingData::Parse_ColorD(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
@@ -469,7 +499,18 @@ void Skin::ParsingData::Parse_ColorD(const TextCommandArgs & cmd_args)
 
 	Skin.Corners.Insert(Skin::Corner(col.ToColorF4()));
 }
-//void Skin::ParsingData::Parse_f(const TextCommandArgs & cmd_args) { }
+
+void Skin::ParsingData::Parse_Multi(const TextCommandArgs & cmd_args)
+{
+	if (!(cmd_args.Count() == 2)) { throw InvalidCommandArgumentCount(cmd_args, "n == 2"); }
+
+	unsigned int idx = ToVertexIndex(cmd_args, 0);
+	unsigned int n = cmd_args.ToUInt32(1);
+	for (unsigned int i = 0; i < n; i++)
+	{
+		Skin.Faces.Insert(Skin::Face(idx, idx, idx));
+	}
+}
 
 
 

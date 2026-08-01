@@ -17,9 +17,11 @@
 
 Skin::Skin()
 	: Size()
+	, Color(1.0f, 1.0f, 1.0f, 1.0f)
 	, Images()
 	, Faces()
 	, File()
+	, Name()
 { }
 Skin::~Skin()
 { }

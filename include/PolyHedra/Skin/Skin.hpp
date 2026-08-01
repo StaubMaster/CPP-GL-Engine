@@ -6,6 +6,7 @@
 # include "FileInfo.hpp"
 # include "ValueType/Vector/U2.hpp"
 # include "ValueType/Vector/F3.hpp"
+# include "ValueType/Color/F4.hpp"
 # include "Image.hpp"
 
 # include <string>
@@ -20,6 +21,7 @@ class Skin
 
 	public:
 	VectorU2	Size;
+	ColorF4		Color;
 
 	public:
 	Container::Binary<Image>	Images;
