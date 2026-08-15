@@ -9,22 +9,26 @@ namespace Attribute
 class FloatNBase : public Attribute::Base
 {
 	protected:
-	void	LogInfoBase(GL::AttributeType type, unsigned int size0, unsigned int size1) const;
-
-	protected:
-	GL::AttributeLocation	Index;
+	GL::AttributeLocation	Index = -1;
 
 	public:
 	virtual ~FloatNBase();
-	FloatNBase() = delete;
-	FloatNBase(Layout & layout);
 
+	public:
+	FloatNBase() = delete;
 	FloatNBase(const FloatNBase & other) = delete;
+	FloatNBase & operator=(const FloatNBase & other); // = default;
+
+	public:
+	FloatNBase(Layout & layout);
+	FloatNBase(Layout & layout, GL::AttributeLocation index);
 	FloatNBase(Layout & layout, const FloatNBase & other);
-	FloatNBase & operator=(const FloatNBase & other);
 
 	public:
 	void	Change(GL::AttributeLocation index);
+
+	protected:
+	void	LogInfoBase(GL::AttributeType type, unsigned int size0, unsigned int size1) const;
 };
 };
 

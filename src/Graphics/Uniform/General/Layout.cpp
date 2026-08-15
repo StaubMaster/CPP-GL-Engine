@@ -5,15 +5,34 @@
 
 
 
+void Uniform::Layout::Clear()
+{
+	Uniforms.Clear();
+}
+void Uniform::Layout::Put(Uniform::Base & uniform)
+{
+	Uniforms.Insert(&uniform);
+}
+void Uniform::Layout::Put(Uniform::Base * uniform)
+{
+	if (uniform != nullptr)
+	{
+		Uniforms.Insert(uniform);
+	}
+}
+
+
+
 Uniform::Layout::~Layout()
 { }
 Uniform::Layout::Layout()
-//	: Uniforms()
 	: Shader(nullptr)
+{ }
+Uniform::Layout::Layout(Shader::Base & shader)
+	: Shader(&shader)
 { }
 
 Uniform::Layout::Layout(const Layout & other)
-//	: Uniforms(other.Uniforms)
 	: Shader(other.Shader)
 { }
 

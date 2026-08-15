@@ -10,7 +10,10 @@ template <typename ValueType>
 class GBase : public Uniform::Base // rename to TypeBase ?
 {
 	protected:
-	virtual ~GBase() { }
+	virtual ~GBase()
+	{ }
+
+	protected:
 	GBase(Uniform::Layout & layout, std::string name)
 		: Uniform::Base(layout, name)
 	{ }

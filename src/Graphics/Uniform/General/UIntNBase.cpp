@@ -3,7 +3,9 @@
 
 
 
-Uniform::UIntNBase::~UIntNBase() { }
+Uniform::UIntNBase::~UIntNBase()
+{ }
+
 Uniform::UIntNBase::UIntNBase(Uniform::Layout & layout, std::string name)
 	: Base(layout, name)
 { }

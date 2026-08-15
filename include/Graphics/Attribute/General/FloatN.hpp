@@ -12,16 +12,13 @@ template<unsigned int Size0, unsigned int Size1>
 class FloatN : public Attribute::FloatNBase
 {
 	public:
-	void	LogInfo() const override
-	{
-		LogInfoBase(GL::AttributeType::Float, Size0, Size1);
-	}
-
-	public:
 	virtual ~FloatN() { }
 	FloatN() = delete;
 	FloatN(Layout & layout)
 		: FloatNBase(layout)
+	{ }
+	FloatN(Layout & layout, GL::AttributeLocation index)
+		: FloatNBase(layout, index)
 	{ }
 
 	FloatN(const FloatN & other) = delete;
@@ -32,12 +29,6 @@ class FloatN : public Attribute::FloatNBase
 	{
 		Attribute::Base::operator=(other);
 		return *this;
-	}
-
-	public:
-	void	Change(GL::AttributeLocation index)
-	{
-		Index = index;
 	}
 
 	public:
@@ -53,6 +44,18 @@ class FloatN : public Attribute::FloatNBase
 			}
 			offset += Size0 * sizeof(float);
 		}
+	}
+
+	public:
+	unsigned int	CalcSize() const override
+	{
+		return Size0 * Size1 * sizeof(float);
+	}
+
+	public:
+	void	LogInfo() const override
+	{
+		LogInfoBase(GL::AttributeType::Float, Size0, Size1);
 	}
 };
 };

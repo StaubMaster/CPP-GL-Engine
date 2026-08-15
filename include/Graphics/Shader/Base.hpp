@@ -1,16 +1,14 @@
 #ifndef  SHADER_BASE_HPP
 # define SHADER_BASE_HPP
 
-# include "Generics/Container/Array.hpp"
-# include "Generics/Container/Binary.hpp"
-# include <string>
-//# include <iosfwd>
-
 # include "OpenGLTypes.hpp"
 
+# include "Generics/Container/Array.hpp"
+# include "Generics/Container/Binary.hpp"
+
+# include <string>
 
 
-//std::ostream & operator<<(std::ostream & o, const GL::ShaderID & val);
 
 class FileInfo;
 
@@ -19,37 +17,36 @@ namespace Uniform { class Layout; };
 namespace Shader
 {
 class Code;
-
 class Base
 {
 	private:
-	GL::ShaderProgramID				ID;
-	Container::Array<Shader::Code>	Code;
-	public:
-	Uniform::Layout *				UniformLayout;
+	GL::ShaderProgramID		ID = 0;
 
+	private:
+	Container::Array<Shader::Code>	Code;
+
+	private:
 	public:
-	void LogInfo(bool self = true, bool log = false) const;
-	//void LogInfo(bool dent, bool code, bool uniforms, bool log) const;
+	Uniform::Layout *	Layout = nullptr;
+	// public access is only needed for Multiforms
 
 
 
 	public:
 	virtual ~Base();
 	Base();
-	//Base(Container::Base<Shader::Code> code);
-
 	Base(const Shader::Base & other);
 	Base & operator=(const Shader::Base & other);
 
 
 
 	public:
+	static GL::ShaderID		Bound();
+	static void				BindNone();
+
+	public:
 	bool	IsBound() const;
 	void	Bind();
-
-	static GL::ShaderID	Bound();
-	static void			BindNone();
 
 
 
@@ -59,6 +56,7 @@ class Base
 	void	Delete();
 	void	Create();
 
+	public:
 	void	Change(const Container::Array<Shader::Code> & code);
 	void	Change(const Container::Array<FileInfo> & files);
 	void	Change(std::initializer_list<Shader::Code> code);
@@ -67,18 +65,31 @@ class Base
 
 
 	public:
+	void	AssignLayout(Uniform::Layout & layout);
+	void	AssignLayout(Uniform::Layout * layout);
+
+
+
+	public:
 	GL::UniformLocation		FindUniformLocation(const char * name) const;
 	GL::BlockIndex			FindUniformBlockIndex(const char * name) const;
 
+	public:
 	void	BindUniformBlockIndex(GL::BlockIndex index, GL::BlockBinding binding);
 
 
 
-	class ECompileLog : std::exception
+	public:
+	void	LogInfo(bool self = true, bool log = false) const;
+
+
+
+	public:
+	class ECompileLog : public std::exception
 	{
 		private:
-		std::string Log;
-		std::string Text;
+		std::string		Log;
+		std::string		Text;
 
 		public:
 		ECompileLog(const std::string log);

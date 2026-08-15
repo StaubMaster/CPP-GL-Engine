@@ -25,3 +25,9 @@ void Attribute::BoxF2::Bind(GL::AttributeDivisor divisor, GL::AttributeStride st
 	//Min.Bind(divisor, stride, offset);
 	//Max.Bind(divisor, stride, offset);
 }
+
+unsigned int Attribute::BoxF2::CalcSize() const
+{
+	//return Min.CalcSize() + Max.CalcSize();
+	return 0;
+}

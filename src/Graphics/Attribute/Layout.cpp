@@ -3,12 +3,35 @@
 
 
 
+void Attribute::Layout::Clear()
+{
+	Attributes.Clear();
+}
+void Attribute::Layout::Put(Attribute::Base & attribute)
+{
+	Attributes.Insert(&attribute);
+}
+void Attribute::Layout::Put(Attribute::Base * attribute)
+{
+	if (attribute != nullptr)
+	{
+		Attributes.Insert(attribute);
+	}
+}
+
+
+
 Attribute::Layout::~Layout()
 { }
 Attribute::Layout::Layout(GL::AttributeDivisor divisor, GL::AttributeStride stride)
 	: Attributes()
 	, Divisor(divisor)
 	, Stride(stride)
+{ }
+Attribute::Layout::Layout(GL::AttributeDivisor divisor)
+	: Attributes()
+	, Divisor(divisor)
+	, Stride(0)
 { }
 
 Attribute::Layout::Layout(const Layout & other)
@@ -29,5 +52,16 @@ void Attribute::Layout::Bind() const
 	for (unsigned int i = 0; i < Attributes.Count(); i++)
 	{
 		Attributes[i] -> Bind(Divisor, Stride, offset);
+	}
+}
+
+
+
+void Attribute::Layout::CalcStride()
+{
+	Stride = 0;
+	for (unsigned int i = 0; i < Attributes.Count(); i++)
+	{
+		Stride += Attributes[i] -> CalcSize();
 	}
 }

@@ -15,16 +15,18 @@ class Layout;
 class Base
 {
 	public:
-	//Uniform::Layout &		Layout;
-	std::string				Name;
-	Multiform::Base *		Multiform;
+	std::string			Name;
+	Multiform::Base *	Multiform;
 
-	protected:
+	public:
 	virtual ~Base();
-	Base(Uniform::Layout & layout, std::string name);
 
+	public:
 	Base(const Base & other) = delete;
 	Base & operator=(const Base & other) = delete;
+
+	public:
+	Base(Uniform::Layout & layout, std::string name);
 
 	public:
 	virtual void	PutVoid(const void * val) = 0;

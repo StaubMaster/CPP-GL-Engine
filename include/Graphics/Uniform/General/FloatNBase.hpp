@@ -10,19 +10,20 @@ namespace Uniform
 class FloatNBase : public Uniform::Base
 {
 	public:
-	void	LogInfo(bool self = true) const override;
-
-	public:
 	GL::UniformLocation		Index;
 
 	protected:
 	virtual ~FloatNBase();
+
+	protected:
 	FloatNBase(Uniform::Layout & layout, std::string name);
 
 	public:
 	void			PutVoid(const void * val) override;
 	virtual void	PutData(const float * val) = 0;
-};
+
+	public:
+	void	LogInfo(bool self = true) const override;};
 };
 
 #endif

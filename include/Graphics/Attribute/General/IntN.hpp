@@ -12,12 +12,6 @@ template<unsigned int Size0, unsigned int Size1>
 class IntN : public Attribute::IntNBase
 {
 	public:
-	void	LogInfo() const override
-	{
-		LogInfoBase(GL::AttributeIntType::Int, Size0, Size1);
-	}
-
-	public:
 	virtual ~IntN() { }
 	IntN() = delete;
 	IntN(Layout & layout)
@@ -53,6 +47,18 @@ class IntN : public Attribute::IntNBase
 			}
 			offset += Size0 * sizeof(int);
 		}
+	}
+
+	public:
+	unsigned int	CalcSize() const override
+	{
+		return Size0 * Size1 * sizeof(int);
+	}
+
+	public:
+	void	LogInfo() const override
+	{
+		LogInfoBase(GL::AttributeIntType::Int, Size0, Size1);
 	}
 };
 };

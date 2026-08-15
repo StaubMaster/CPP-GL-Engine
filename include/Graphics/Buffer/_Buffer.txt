@@ -1,6 +1,0 @@
-
-Buffers are not bound to a single VertexBufferArray
-
-mainly Uniform Buffer
-
-

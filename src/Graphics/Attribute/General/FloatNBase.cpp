@@ -2,16 +2,9 @@
 
 
 
-Attribute::FloatNBase::~FloatNBase() { }
-Attribute::FloatNBase::FloatNBase(Layout & layout)
-	: Base(layout)
-	, Index(-1)
+Attribute::FloatNBase::~FloatNBase()
 { }
 
-Attribute::FloatNBase::FloatNBase(Layout & layout, const FloatNBase & other)
-	: Base(layout)
-	, Index(other.Index)
-{ }
 Attribute::FloatNBase & Attribute::FloatNBase::operator=(const FloatNBase & other)
 {
 	Index = other.Index;
@@ -19,6 +12,19 @@ Attribute::FloatNBase & Attribute::FloatNBase::operator=(const FloatNBase & othe
 }
 
 
+
+Attribute::FloatNBase::FloatNBase(Layout & layout)
+	: Base(layout)
+	, Index(-1)
+{ }
+Attribute::FloatNBase::FloatNBase(Layout & layout, GL::AttributeLocation index)
+	: Base(layout)
+	, Index(index)
+{ }
+Attribute::FloatNBase::FloatNBase(Layout & layout, const FloatNBase & other)
+	: Base(layout)
+	, Index(other.Index)
+{ }
 
 void Attribute::FloatNBase::Change(GL::AttributeLocation index)
 {

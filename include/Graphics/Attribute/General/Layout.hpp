@@ -13,8 +13,14 @@ class Layout
 	public:
 	void	LogInfo() const;
 
+	private:
+	Container::Binary<Attribute::Base*>		Attributes;
 	public:
-	Container::Binary<::Attribute::Base*>	Attributes;
+	void	Clear();
+	void	Put(Attribute::Base & attribute);
+	void	Put(Attribute::Base * attribute);
+
+	public:
 	GL::AttributeDivisor					Divisor;
 	GL::AttributeStride						Stride;
 
@@ -22,12 +28,16 @@ class Layout
 	virtual ~Layout();
 	Layout() = delete;
 	Layout(GL::AttributeDivisor divisor, GL::AttributeStride stride);
+	Layout(GL::AttributeDivisor divisor);
 
 	Layout(const Layout & other);
 	Layout & operator=(const Layout & other) = delete;
 
 	public:
 	void	Bind() const;
+
+	public:
+	void	CalcStride();
 };
 };
 

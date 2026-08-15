@@ -9,22 +9,25 @@ namespace Attribute
 class IntNBase : public Attribute::Base
 {
 	protected:
-	void	LogInfoBase(GL::AttributeIntType type, unsigned int size0, unsigned int size1) const;
-
-	protected:
-	GL::AttributeLocation	Index;
+	GL::AttributeLocation	Index = -1;
 
 	public:
 	virtual ~IntNBase();
-	IntNBase() = delete;
-	IntNBase(Layout & layout);
 
+	public:
+	IntNBase() = delete;
 	IntNBase(const IntNBase & other) = delete;
-	IntNBase(Layout & layout, const IntNBase & other);
 	IntNBase & operator=(const IntNBase & other);
 
 	public:
+	IntNBase(Layout & layout);
+	IntNBase(Layout & layout, const IntNBase & other);
+
+	public:
 	void	Change(GL::AttributeLocation index);
+
+	protected:
+	void	LogInfoBase(GL::AttributeIntType type, unsigned int size0, unsigned int size1) const;
 };
 };
 

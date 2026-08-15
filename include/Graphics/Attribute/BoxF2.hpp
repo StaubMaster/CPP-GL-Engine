@@ -23,6 +23,9 @@ class BoxF2 : public Attribute::Base
 
 	public:
 	void	Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override;
+
+	public:
+	unsigned int	CalcSize() const override;
 };
 typedef BoxF2 BoxF2;
 };

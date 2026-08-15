@@ -21,3 +21,14 @@ void Buffer::Array::Init()
 		Layout -> Bind();
 	}
 }
+
+
+
+void Buffer::Array::AssignLayout(Attribute::Layout & layout)
+{
+	Layout = &layout;
+}
+void Buffer::Array::AssignLayout(Attribute::Layout * layout)
+{
+	Layout = layout;
+}

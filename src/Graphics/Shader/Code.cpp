@@ -5,23 +5,24 @@
 
 
 
-Shader::Code::Code() :
-	ID(0),
-	Type((GL::ShaderType)0),
-	File()
-{ }
-Shader::Code::Code(const FileInfo & file) :
-	ID(0),
-	Type(ShaderTypeFromExtension(file)),
-	File(file)
-{ }
 Shader::Code::~Code()
 { }
 
-Shader::Code::Code(const Shader::Code & other) :
-	ID(other.ID),
-	Type(other.Type),
-	File(other.File)
+Shader::Code::Code()
+	: ID(0)
+	, Type((GL::ShaderType)0)
+	, File()
+{ }
+Shader::Code::Code(const FileInfo & file)
+	: ID(0)
+	, Type(ShaderTypeFromExtension(file))
+	, File(file)
+{ }
+
+Shader::Code::Code(const Shader::Code & other)
+	: ID(other.ID)
+	, Type(other.Type)
+	, File(other.File)
 { }
 Shader::Code & Shader::Code::operator=(const Shader::Code & other)
 {
@@ -86,6 +87,8 @@ void Shader::Code::Detach(GL::ShaderID ProgramID) const
 	GL::DetachShader(ProgramID, ID);
 	//Debug::Log << "Shader::Code Detaching " << ID << " from " << ProgramID << " done" << Debug::Done;
 }
+
+
 
 bool Shader::Code::Valid(Container::Array<Shader::Code> & code)
 {

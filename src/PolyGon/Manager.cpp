@@ -32,11 +32,8 @@ PolyGonManager::PolyGonManager()
 	, ShaderWireOther(nullptr)
 	, InstanceManagers()
 {
-	ShaderFullDefault.UniformLayout = &ShaderLayoutFullDefault;
-	ShaderLayoutFullDefault.Shader = &ShaderFullDefault;
-
-	ShaderWireDefault.UniformLayout = &ShaderLayoutWireDefault;
-	ShaderLayoutWireDefault.Shader = &ShaderWireDefault;
+	ShaderFullDefault.AssignLayout(ShaderLayoutFullDefault);
+	ShaderWireDefault.AssignLayout(ShaderLayoutWireDefault);
 }
 
 

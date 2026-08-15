@@ -3,20 +3,23 @@
 
 
 
-Attribute::Base::~Base() { }
+Attribute::Base::~Base()
+{ }
 
-Attribute::Base::Base(Layout & layout)
-{
-	layout.Attributes.Insert(this);
-}
-
-Attribute::Base::Base(Layout & layout, const Base & other)
-{
-	(void)other;
-	layout.Attributes.Insert(this);
-}
 Attribute::Base & Attribute::Base::operator=(const Base & other)
 {
 	(void)other;
 	return *this;
+}
+
+
+
+Attribute::Base::Base(Layout & layout)
+{
+	layout.Put(this);
+}
+Attribute::Base::Base(Layout & layout, const Base & other)
+{
+	(void)other;
+	layout.Put(this);
 }

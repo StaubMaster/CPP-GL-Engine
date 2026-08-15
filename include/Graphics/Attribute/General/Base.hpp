@@ -9,19 +9,25 @@ class Layout;
 class Base
 {
 	public:
-	virtual void	LogInfo() const;
+	virtual ~Base();
 
 	public:
-	virtual ~Base();
 	Base() = delete;
-	Base(Layout & layout);
-
 	Base(const Base & other) = delete;
-	Base(Layout & layout, const Base & other);
 	Base & operator=(const Base & other);
 
 	public:
+	Base(Layout & layout);
+	Base(Layout & layout, const Base & other);
+
+	public:
 	virtual void	Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const = 0;
+
+	public:
+	virtual unsigned int	CalcSize() const = 0;
+
+	public:
+	virtual void	LogInfo() const;
 };
 };
 

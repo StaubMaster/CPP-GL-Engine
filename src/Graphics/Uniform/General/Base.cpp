@@ -6,11 +6,10 @@
 
 Uniform::Base::~Base() { }
 Uniform::Base::Base(Uniform::Layout & layout, std::string name)
-	//: Layout(layout)
 	: Name(name)
 	, Multiform(nullptr)
 {
-	layout.Uniforms.Insert(this);
+	layout.Put(this);
 }
 
 

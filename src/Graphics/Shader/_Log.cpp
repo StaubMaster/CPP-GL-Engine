@@ -27,9 +27,9 @@ void Shader::Base::LogInfo(bool self, bool log) const
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "]\n";
 
-	if (UniformLayout != nullptr)
+	if (Layout != nullptr)
 	{
-		UniformLayout -> LogInfo();
+		Layout -> LogInfo();
 	}
 	else
 	{

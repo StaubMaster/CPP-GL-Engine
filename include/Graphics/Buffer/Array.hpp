@@ -10,10 +10,10 @@ namespace Buffer
 class Array : public Base
 {
 	public:
-	Attribute::Layout *		Layout = nullptr;
-
-	public:
 	unsigned int	Count = 0;
+
+	private:
+	Attribute::Layout *		Layout = nullptr;
 
 
 
@@ -29,6 +29,12 @@ class Array : public Base
 
 	public:
 	void	Init();
+
+
+
+	public:
+	void	AssignLayout(Attribute::Layout & layout);
+	void	AssignLayout(Attribute::Layout * layout);
 
 
 

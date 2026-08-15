@@ -19,13 +19,21 @@ class Layout
 	public:
 	void	LogInfo() const;
 
+	private:
+	Container::Binary<Uniform::Base*>	Uniforms;
 	public:
-	Container::Binary<::Uniform::Base*>		Uniforms;
-	::Shader::Base *						Shader;
+	void	Clear();
+	void	Put(Uniform::Base & uniform);
+	void	Put(Uniform::Base * uniform);
+
+	public:
+	::Shader::Base *	Shader;
+	// AssignShader() ?
 
 	public:
 	virtual ~Layout();
 	Layout();
+	Layout(Shader::Base & shader);
 
 	Layout(const Layout & other);
 	Layout & operator=(const Layout & other) = delete;

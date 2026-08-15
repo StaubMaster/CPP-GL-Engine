@@ -10,9 +10,6 @@ namespace Uniform
 class Buffer : public Base
 {
 	public:
-	void	LogInfo(bool self = true) const override;
-
-	public:
 	GL::BlockIndex	Index;
 
 	public:
@@ -20,6 +17,9 @@ class Buffer : public Base
 
 	protected:
 	void	PutVoid(const void * val) override;
+
+	public:
+	void	LogInfo(bool self = true) const override;
 };
 };
 

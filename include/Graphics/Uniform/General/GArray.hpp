@@ -15,6 +15,7 @@ class GArray
 	//	Use Containers
 	public:
 	const unsigned int	Limit;
+
 	private:
 	UniformType **	Uniforms;
 

@@ -1,5 +1,6 @@
 #include "Graphics/Shader/Base.hpp"
 #include "Graphics/Shader/Code.hpp"
+
 #include "Graphics/Uniform/General/Layout.hpp"
 
 #include "OpenGL.hpp"
@@ -8,41 +9,28 @@
 
 
 
+
 Shader::Base::~Base()
 { }
 Shader::Base::Base()
 	: ID(0)
 	, Code()
-	, UniformLayout(nullptr)
+	, Layout(nullptr)
 { }
-
 Shader::Base::Base(const Shader::Base & other)
 	: ID(other.ID)
 	, Code(other.Code)
-	, UniformLayout(other.UniformLayout)
+	, Layout(other.Layout)
 { }
 Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 {
 	ID = other.ID;
 	Code = other.Code;
-	UniformLayout = other.UniformLayout;
+	Layout = other.Layout;
 	return *this;
 }
 
 
-
-bool Shader::Base::IsBound() const { return (Bound() == ID); }
-void Shader::Base::Bind()
-{
-	if (Exists() && !IsBound())
-	{
-		GL::UseProgram(ID);
-		if (UniformLayout != nullptr)
-		{
-			UniformLayout -> UpdateData();
-		}
-	}
-}
 
 GL::ShaderID Shader::Base::Bound()
 {
@@ -51,6 +39,22 @@ GL::ShaderID Shader::Base::Bound()
 void Shader::Base::BindNone()
 {
 	GL::UseProgram(0);
+}
+
+bool Shader::Base::IsBound() const
+{
+	return (Bound() == ID);
+}
+void Shader::Base::Bind()
+{
+	if (Exists() && !IsBound())
+	{
+		GL::UseProgram(ID);
+		if (Layout != nullptr)
+		{
+			Layout -> UpdateData();
+		}
+	}
 }
 
 
@@ -88,9 +92,9 @@ void Shader::Base::Delete()
 	ID = 0;
 	Debug::Log << "Shader::Base Deleting " << ID << " done" << Debug::Done;
 
-	if (UniformLayout != nullptr)
+	if (Layout != nullptr)
 	{
-		UniformLayout -> Find();
+		Layout -> Find();
 	}
 }
 void Shader::Base::Create()
@@ -134,9 +138,9 @@ void Shader::Base::Create()
 
 	//Debug::Log << "Shader::Base Creating " << ID << " done" << Debug::Done;
 
-	if (UniformLayout != nullptr)
+	if (Layout != nullptr)
 	{
-		UniformLayout -> Find();
+		Layout -> Find();
 	}
 
 	Debug::Log << "Create Shader: " << ID << Debug::Done;
@@ -172,6 +176,22 @@ void Shader::Base::Change(std::initializer_list<Shader::Code> code)
 void Shader::Base::Change(std::initializer_list<FileInfo> files)
 {
 	Change(Container::Array<FileInfo>(files));
+}
+
+
+
+void Shader::Base::AssignLayout(Uniform::Layout & layout)
+{
+	Layout = &layout;
+	layout.Shader = this;
+}
+void Shader::Base::AssignLayout(Uniform::Layout * layout)
+{
+	Layout = layout;
+	if (layout != nullptr)
+	{
+		layout -> Shader = this;
+	}
 }
 
 

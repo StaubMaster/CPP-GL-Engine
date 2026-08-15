@@ -3,7 +3,9 @@
 
 
 
-Uniform::FloatNBase::~FloatNBase() { }
+Uniform::FloatNBase::~FloatNBase()
+{ }
+
 Uniform::FloatNBase::FloatNBase(Uniform::Layout & layout, std::string name)
 	: Base(layout, name)
 { }

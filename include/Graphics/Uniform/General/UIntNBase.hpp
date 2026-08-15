@@ -10,18 +10,20 @@ namespace Uniform
 class UIntNBase : public Uniform::Base
 {
 	public:
-	void	LogInfo(bool self = true) const override;
-
-	public:
 	GL::UniformLocation		Index;
 
 	protected:
 	virtual ~UIntNBase();
+
+	protected:
 	UIntNBase(Uniform::Layout & layout, std::string name);
 
 	public:
 	void			PutVoid(const void * val) override;
 	virtual void	PutData(const unsigned int * val) = 0;
+
+	public:
+	void	LogInfo(bool self = true) const override;
 };
 };
 
