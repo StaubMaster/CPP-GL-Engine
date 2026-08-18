@@ -7,18 +7,19 @@
 # include "PolyHedra/PolyHedra.hpp"
 //# include "FileParsing/ParsingCommand.hpp"
 //# include "FileParsing/Text/TextCommand.hpp"
+# include "FileParsing/Text/TextCommandFunc.hpp"
 
 # include "Generics/Container/Binary.hpp"
 # include "Generics/Function/Pointer.hpp"
 # include "Generics/Function/Object.hpp"
 
 # include <string>
-# include <exception>
+//# include <exception>
 
-class TextCommand;
-typedef TextCommand TextCommandArgs;
+class TextCommandArgs;
+//typedef TextCommand TextCommandArgs;
 
-struct TextCommandFunc
+/*struct TextCommandFunc
 {
 	std::string		Name;
 	FunctionPointer<const TextCommandArgs &>	Func;
@@ -40,7 +41,7 @@ struct TextCommandFunc
 		: Name(name)
 		, Func(obj, func)
 	{ }
-};
+};*/
 
 struct PolyHedra::ParsingData
 {

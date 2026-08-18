@@ -4,9 +4,6 @@
 #include "Image.hpp"
 
 #include "FileInfo.hpp"
-#include "FileParsing/Text/TextCommand.hpp"
-#include "FileParsing/Text/TextCommandStream.hpp"
-#include "FileParsing/Text/Exceptions.hpp"
 
 #include "ValueType/Vector/F2.hpp"
 

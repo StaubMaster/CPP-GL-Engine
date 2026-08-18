@@ -3,8 +3,7 @@
 
 # include "Skin.hpp"
 
-class TextCommand;
-typedef TextCommand TextCommandArgs;
+class TextCommandArgs;
 
 struct Skin::ParsingData
 {

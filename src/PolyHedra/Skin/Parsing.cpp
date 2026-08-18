@@ -5,7 +5,7 @@
 #include "Image.hpp"
 
 #include "FileInfo.hpp"
-#include "FileParsing/Text/TextCommand.hpp"
+#include "FileParsing/Text/TextCommandArgs.hpp"
 #include "FileParsing/Text/TextCommandStream.hpp"
 #include "FileParsing/Text/Exceptions.hpp"
 
@@ -110,36 +110,36 @@ void Skin::ParsingData::Parse(const TextCommandArgs & cmd_args)
 
 void Skin::ParsingData::Parse_Type(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
 	if (cmd_args.ToString(0) == "Skin")
 	{
 		return;
 	}
-	throw InvalidCommandArgument(cmd_args, 0);
+	throw TextCommand::InvalidArgument(cmd_args, 0);
 }
 void Skin::ParsingData::Parse_Format(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
 
-	if (cmd_args.ToString(0) != "S_2025_10_27") { throw InvalidCommandArgument(cmd_args, 0); }
+	if (cmd_args.ToString(0) != "S_2025_10_27") { throw TextCommand::InvalidArgument(cmd_args, 0); }
 }
 
 void Skin::ParsingData::Parse_Name(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
 
 	Skin.Name = cmd_args.ToString(0);
 }
 void Skin::ParsingData::Parse_Size(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 2)) { throw InvalidCommandArgumentCount(cmd_args, "n == 2"); }
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 2"); }
 
 	Skin.Size.X = cmd_args.ToUInt32(0);
 	Skin.Size.Y = cmd_args.ToUInt32(1);
 }
 void Skin::ParsingData::Parse_Image(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
 
 	FileInfo file((File.DirectoryString() + "/" + cmd_args.ToString(0)).c_str());
 	Skin.Images.Insert(file.LoadImage());
@@ -147,7 +147,7 @@ void Skin::ParsingData::Parse_Image(const TextCommandArgs & cmd_args)
 
 void Skin::ParsingData::Parse_t(const TextCommandArgs & cmd_args)
 {
-	if (!((cmd_args.Count() % 2) == 0)) { throw InvalidCommandArgumentCount(cmd_args, "(n % 2) == 0"); }
+	if (!((cmd_args.Count() % 2) == 0)) { throw TextCommand::InvalidArgumentCount(cmd_args, "(n % 2) == 0"); }
 
 	unsigned int len = cmd_args.Count() / 2;
 	
@@ -176,12 +176,12 @@ void Skin::ParsingData::Parse_t(const TextCommandArgs & cmd_args)
 
 void Skin::ParsingData::Parse_TextureIndex(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
 	TextureIndex = cmd_args.ToUInt32(0);
 }
 void Skin::ParsingData::Parse_TextureIndexFace4(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 8)) { throw InvalidCommandArgumentCount(cmd_args, "n == 8"); }
+	if (!(cmd_args.Count() == 8)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 8"); }
 
 	Skin::Corner t[4];
 	unsigned int idx = Skin.Corners.Count();
@@ -198,7 +198,7 @@ void Skin::ParsingData::Parse_TextureIndexFace4(const TextCommandArgs & cmd_args
 }
 void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 4"); }
 
 	VectorF2	min;
 	min.X = cmd_args.ToFloat(0);
@@ -236,7 +236,7 @@ void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommandArgs & cmd_args)
 
 void Skin::ParsingData::Parse_Vertex(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 2)) { throw InvalidCommandArgumentCount(cmd_args, "n == 2"); }
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 2"); }
 
 	VectorF2 v;
 	v.X = cmd_args.ToFloat(0);
@@ -246,7 +246,7 @@ void Skin::ParsingData::Parse_Vertex(const TextCommandArgs & cmd_args)
 }
 void Skin::ParsingData::Parse_VertexIndex(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw InvalidCommandArgumentCount(cmd_args, "n == 1"); }
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
 
 	std::string str = cmd_args.ToString(0);
 	if (str == "here")
@@ -260,7 +260,7 @@ void Skin::ParsingData::Parse_VertexIndex(const TextCommandArgs & cmd_args)
 }
 void Skin::ParsingData::Parse_VertexFace3(const TextCommandArgs & cmd_args, bool f_direction)
 {
-	if (!(cmd_args.Count() == 3)) { throw InvalidCommandArgumentCount(cmd_args, "n == 3"); }
+	if (!(cmd_args.Count() == 3)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 3"); }
 
 	unsigned int t[3];
 	for (unsigned int i = 0; i < 3; i++)
@@ -293,7 +293,7 @@ static void Belt_Face(Skin & skin, unsigned int temp[4], bool dir)
 }
 void Skin::ParsingData::Parse_VertexBelt(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure)
 {
-	if (!((cmd_args.Count() % 2) == 0 && cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd_args, "(n % 2) == 0 && n >= 4 && n <= 255"); }
+	if (!((cmd_args.Count() % 2) == 0 && cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw TextCommand::InvalidArgumentCount(cmd_args, "(n % 2) == 0 && n >= 4 && n <= 255"); }
 
 	unsigned int len = cmd_args.Count() / 2;
 
@@ -336,7 +336,7 @@ void Skin::ParsingData::Parse_VertexBelt(const TextCommandArgs & cmd_args, bool 
 
 void Skin::ParsingData::Parse_VertexBand(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure)
 {
-	throw CommandNotImplemented(cmd_args);
+	throw TextCommand::NotImplemented(cmd_args);
 	(void)cmd_args;
 	(void)f_direction;
 	(void)f_closure;
@@ -369,7 +369,7 @@ static void Fan_Face(Skin & skin, unsigned int middle, unsigned int blade[2], bo
 }
 void Skin::ParsingData::Parse_VertexFan(const TextCommandArgs & cmd_args, bool f_direction, bool f_closure, bool f_middle)
 {
-	if (!(cmd_args.Count() >= 3 && cmd_args.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd_args, "n >= 3 && n <= 255"); }
+	if (!(cmd_args.Count() >= 3 && cmd_args.Count() <= 255)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n >= 3 && n <= 255"); }
 
 	unsigned int len = cmd_args.Count() - 1;
 
@@ -415,7 +415,7 @@ void Skin::ParsingData::Parse_VertexFan(const TextCommandArgs & cmd_args, bool f
 }
 void Skin::ParsingData::Parse_VertexRay(const TextCommandArgs & cmd_args, bool f_accumulate)
 {
-	if (!(cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw InvalidCommandArgumentCount(cmd_args, "n >= 4 && n <= 255"); }
+	if (!(cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n >= 4 && n <= 255"); }
 
 	unsigned int len = cmd_args.Count() - 4;
 
@@ -451,7 +451,7 @@ void Skin::ParsingData::Parse_VertexRay(const TextCommandArgs & cmd_args, bool f
 
 void Skin::ParsingData::Parse_ColorF_Default(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 4"); }
 
 	ColorF4 col;
 	col.R = cmd_args.ToFloat(0);
@@ -463,7 +463,7 @@ void Skin::ParsingData::Parse_ColorF_Default(const TextCommandArgs & cmd_args)
 }
 void Skin::ParsingData::Parse_ColorF(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 4"); }
 
 	ColorF4 col;
 	col.R = cmd_args.ToFloat(0);
@@ -477,7 +477,7 @@ void Skin::ParsingData::Parse_ColorF(const TextCommandArgs & cmd_args)
 #include "ValueType/Color/U4.hpp"
 void Skin::ParsingData::Parse_ColorD_Default(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 4"); }
 
 	ColorU4 col;
 	col.R = cmd_args.ToUInt32(0);
@@ -489,7 +489,7 @@ void Skin::ParsingData::Parse_ColorD_Default(const TextCommandArgs & cmd_args)
 }
 void Skin::ParsingData::Parse_ColorD(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 4)) { throw InvalidCommandArgumentCount(cmd_args, "n == 4"); }
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 4"); }
 
 	ColorU4 col;
 	col.R = cmd_args.ToUInt32(0);
@@ -502,7 +502,7 @@ void Skin::ParsingData::Parse_ColorD(const TextCommandArgs & cmd_args)
 
 void Skin::ParsingData::Parse_Multi(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 2)) { throw InvalidCommandArgumentCount(cmd_args, "n == 2"); }
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 2"); }
 
 	unsigned int idx = ToVertexIndex(cmd_args, 0);
 	unsigned int n = cmd_args.ToUInt32(1);
@@ -522,10 +522,10 @@ Skin * Skin::Load(const FileInfo & file)
 	ParsingData data(file, *skin);
 
 	TextCommandStream stream(file.LoadText());
-	TextCommand cmd;
-	while (stream.Continue(cmd))
+	TextCommandArgs cmd_args;
+	while (stream.Continue(cmd_args))
 	{
-		data.Parse(cmd);
+		data.Parse(cmd_args);
 	}
 
 	skin -> Done();
