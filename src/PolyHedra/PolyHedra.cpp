@@ -11,11 +11,57 @@
 
 #include "Generics/Container/Array.hpp"
 
+#include "FileParsing/Variables/Float.hpp"
+
 //#include "FileInfo.hpp"
 
 #include <sstream>
 #include <iostream>
 #include "ValueType/_Show.hpp"
+
+
+
+BoxF3 PolyHedra::CalcBound() const
+{
+	BoxF3 box;
+	for (unsigned int i = 0; i < Corners.Count(); i++)
+	{
+		box.Consider(Corners[i].Position);
+	}
+	return box;
+}
+
+
+
+std::string PolyHedra::ToInfo() const
+{
+	std::stringstream ss;
+
+	ss << "File: " << File.Path << '\n';
+	ss << "IsAutomatic: " << IsAutomatic << '\n';
+
+	ss << "PolyHedra Count Vertex: " << Corners.Count() << '\n';
+	ss << "PolyHedra Count Face: " << Faces.Count() << '\n';
+	
+	BoxF3 bound = CalcBound();
+	ss << "PolyHedra Bound Limit: " << bound << '\n';
+	ss << "PolyHedra Bound Size: " << bound.Size() << '\n';
+
+	if (Parameters != nullptr)
+	{
+		const Container::Binary<ParsingVariable::Float> & vars = Parameters -> Variables;
+		ss << "Parameters[" << vars.Count() << "]\n";
+		ss << "[\n";
+		for (unsigned int i = 0; i < vars.Count(); i++)
+		{
+			const ParsingVariable::Float & var = vars[i];
+			ss << "  " << var.Name << ": " << var.Value << '\n';
+		}
+		ss << "]\n";
+	}
+
+	return ss.str();
+}
 
 
 
@@ -32,39 +78,14 @@ PolyHedra::PolyHedra()
 	, UseCornerNormals(false)
 { }
 
+
+
 void PolyHedra::Done()
 {
 	Corners.Trim();
 	Edges.Trim();
 	Faces.Trim();
-}
-
-
-
-std::string PolyHedra::ToInfo() const
-{
-	std::stringstream ss;
-
-	ss << "Source: " << File.Path << '\n';
-
-	ss << "PolyHedra Count Vertex: " << Corners.Count() << '\n';
-	ss << "PolyHedra Count Face: " << Faces.Count() << '\n';
-	
-	BoxF3 bound = CalcBound();
-	ss << "PolyHedra Bound Limit: " << bound << '\n';
-	ss << "PolyHedra Bound Size: " << bound.Size() << '\n';
-
-	return ss.str();
-}
-
-BoxF3	PolyHedra::CalcBound() const
-{
-	BoxF3 box;
-	for (unsigned int i = 0; i < Corners.Count(); i++)
-	{
-		box.Consider(Corners[i].Position);
-	}
-	return box;
+	//CalcNormals(); ?
 }
 
 
@@ -109,6 +130,7 @@ void PolyHedra::Insert_Corn(Corner corn)
 {
 	Corners.Insert(corn);
 }
+
 void PolyHedra::Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned int corn2)
 {
 	Faces.Insert(Face(corn0, corn1, corn2));
@@ -119,126 +141,100 @@ void PolyHedra::Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned in
 }
 void PolyHedra::Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3)
 {
-	Insert_Face3(corn0, corn1, corn2);
-	Insert_Face3(corn2, corn1, corn3);
+	Faces.Insert(Face(corn0, corn1, corn2));
+	Faces.Insert(Face(corn2, corn1, corn3));
+
+	Edges.Insert(Edge(corn0, corn1));
+	Edges.Insert(Edge(corn1, corn3));
+	Edges.Insert(Edge(corn3, corn2));
+	Edges.Insert(Edge(corn2, corn0));
 }
 
-void PolyHedra::Belt(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure)
+void PolyHedra::Belt_Face(unsigned int temp[4], bool f_direction)
 {
-	for (unsigned int i = 1; i < len; i++)
+	if (!f_direction)
 	{
-		if (!direction)
-		{
-			Insert_Face3(idx0[i - 1], idx0[i - 0], idx1[i - 1]);
-			Insert_Face3(idx1[i - 1], idx0[i - 0], idx1[i - 0]);
-		}
-		else
-		{
-			Insert_Face3(idx1[i - 1], idx0[i - 0], idx0[i - 1]);
-			Insert_Face3(idx1[i - 0], idx0[i - 0], idx1[i - 1]);
-		}
+		Insert_Face3(temp[0], temp[2], temp[1]);
+		Insert_Face3(temp[3], temp[1], temp[2]);
 	}
-
-	if (closure)
+	else
 	{
-		if (!direction)
-		{
-			Insert_Face3(idx0[len - 1], idx0[0], idx1[len - 1]);
-			Insert_Face3(idx1[len - 1], idx0[0], idx1[0]);
-		}
-		else
-		{
-			Insert_Face3(idx0[0], idx0[len -1], idx1[len - 1]);
-			Insert_Face3(idx0[0], idx1[len -1], idx1[0]);
-		}
+		Insert_Face3(temp[1], temp[2], temp[0]);
+		Insert_Face3(temp[2], temp[1], temp[3]);
 	}
 }
-//void PolyHedra::Band(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure)
-void PolyHedra::Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure)
+void PolyHedra::Belt(unsigned int len, unsigned int list0[], unsigned int list1[], bool f_direction, bool f_closed)
 {
-	for (unsigned int i = 1; i < len; i++)
+	unsigned int n = len - 1;
+
+	for (unsigned int i = 0; i < n; i++)
 	{
-		if (!direction)
-		{
-			Insert_Face3(middle, blade[i - 1], blade[i - 0]);
-		}
-		else
-		{
-			Insert_Face3(middle, blade[i - 0], blade[i - 1]);
-		}
+		unsigned int temp[4] = {
+			list0[i + 0],
+			list0[i + 1],
+			list1[i + 0],
+			list1[i + 1],
+		};
+		Belt_Face(temp, f_direction);
 	}
 
-	if (closure)
+	if (f_closed)
 	{
-		if (!direction)
-		{
-			Insert_Face3(middle, blade[len - 1], blade[0]);
-		}
-		else
-		{
-			Insert_Face3(middle, blade[0], blade[len - 1]);
-		}
+		unsigned int temp[4] = {
+			list0[n],
+			list0[0],
+			list1[n],
+			list1[0],
+		};
+		Belt_Face(temp, f_direction);
 	}
 }
 
-
-
-/*Container::Array<PolyHedraFull::Main::Data> PolyHedra::ToMainData()
+void PolyHedra::Fan_Face(unsigned int middle, unsigned int blade[2], bool f_direction, bool f_middle)
 {
-	Container::Array<PolyHedraFull::Main::Data> data(Faces.Count() * 3);
-
-	for (unsigned int f = 0; f < Faces.Count(); f++)
+	if (!f_direction)
 	{
-		int c = f * 3;
-		const Face & face = Faces[f];
-		if (face.Check(Corners.Count()))
+		if (!f_middle)
 		{
-			const Corner & cornerX = Corners[face.udx[0]];
-			const Corner & cornerY = Corners[face.udx[1]];
-			const Corner & cornerZ = Corners[face.udx[2]];
-
-			data[c + 0].Position = cornerX.Position;
-			data[c + 1].Position = cornerY.Position;
-			data[c + 2].Position = cornerZ.Position;
-
-			if (!UseCornerNormals)
-			{
-				data[c + 0].Normal = face.Normal;
-				data[c + 1].Normal = face.Normal;
-				data[c + 2].Normal = face.Normal;
-			}
-			else
-			{
-				data[c + 0].Normal = cornerX.Normal;
-				data[c + 1].Normal = cornerY.Normal;
-				data[c + 2].Normal = cornerZ.Normal;
-			}
+			Insert_Face3(blade[1], middle, blade[0]);
 		}
 		else
 		{
-			//std::cout << "Invalid Face\n";
-		}
-	}
-
-	if (Skins.Count() == 0)
-	{
-		for (unsigned int i = 0; i < data.Length(); i++)
-		{
-			data[i].Texture = VectorF3();
+			Insert_Face3(blade[0], middle, blade[1]);
 		}
 	}
 	else
 	{
-		const Skin * skin = Skins[0];
-		for (unsigned int f = 0; f < skin -> Faces.Count(); f++)
+		if (!f_middle)
 		{
-			int c = f * 3;
-			const Skin::Face & face = skin -> Faces[f];
-			data[c + 0].Texture = face.Corner[0];
-			data[c + 1].Texture = face.Corner[1];
-			data[c + 2].Texture = face.Corner[2];
+			Insert_Face3(blade[0], middle, blade[1]);
+		}
+		else
+		{
+			Insert_Face3(blade[1], middle, blade[0]);
 		}
 	}
+}
+void PolyHedra::Fan(unsigned int len, unsigned int middle, unsigned int blade[], bool f_direction, bool f_middle, bool f_closed)
+{
+	unsigned int n = len - 1;
 
-	return data;
-}*/
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int temp[2] = {
+			blade[i + 0],
+			blade[i + 1],
+		};
+		Fan_Face(middle, temp, f_direction, f_middle);
+	}
+
+	if (f_closed)
+	{
+		unsigned int temp[2] = {
+			blade[n],
+			blade[0],
+		};
+		Fan_Face(middle, temp, f_direction, f_middle);
+	}
+
+}

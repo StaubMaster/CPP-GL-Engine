@@ -2,21 +2,16 @@
 # define POLYHEDRA_HPP
 
 # include "Generics/Container/Binary.hpp"
-# include "Generics/Container/Array.hpp"
 
 # include "FileInfo.hpp"
 
 # include <string>
-# include <exception>
-
-//namespace PolyHedraFull { namespace Main { struct Data; }; };
 
 class Skin;
 
-struct VectorF2;
 struct BoxF3;
 
-class Image;
+namespace ParsingVariable { struct FloatMemory; }
 
 class PolyHedra
 {
@@ -31,15 +26,27 @@ class PolyHedra
 	Container::Binary<Face>		Faces;
 
 	public:
-	::Skin *		Skin;
+	BoxF3	CalcBound() const;
+
+	public:
+	::Skin *	Skin = nullptr;
 
 	public: // Information stuff
 	FileInfo		File;
-	std::string		Name;
+//	std::string		Name;
+	bool			IsAutomatic = false;
+
+	public:
+	ParsingVariable::FloatMemory *	Parameters = nullptr;
+
+	public:
+	std::string		ToInfo() const;
 
 	public:
 	~PolyHedra();
 	PolyHedra();
+
+	public:
 	PolyHedra(const PolyHedra & other) = delete;
 	PolyHedra & operator=(const PolyHedra & other) = delete;
 
@@ -54,20 +61,11 @@ class PolyHedra
 	void	Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned int corn2);
 	void	Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3);
 
-	void	Belt(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);
-	void	Band(unsigned int idx0[], unsigned int idx1[], unsigned int len, bool direction, bool closure);
-	void	Fan(unsigned int middle, unsigned int blade[], unsigned int len, bool direction, bool closure);
+	void	Belt_Face(unsigned int temp[4], bool f_direction);
+	void	Belt(unsigned int len, unsigned int list0[], unsigned int list1[], bool f_direction, bool f_closed);
 
-	public:
-	// ToBuffer ?
-	//Container::Array<PolyHedraFull::Main::Data>		ToMainData();
-	// seperate ToFullData and ToWireData
-	// Wire data is made of Vertexes and Element
-	// make seperatly ?
-
-	public:
-	std::string		ToInfo() const;
-	BoxF3			CalcBound() const;
+	void	Fan_Face(unsigned int middle, unsigned int blade[2], bool f_direction, bool f_middle);
+	void	Fan(unsigned int len, unsigned int middle, unsigned int blade[], bool f_direction, bool f_middle, bool f_closed);
 
 	private:
 	struct ParsingData;

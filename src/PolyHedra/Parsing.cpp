@@ -8,8 +8,7 @@
 
 // File
 #include "FileInfo.hpp"
-//#include "FilePath.hpp"
-//#include "FileParsing/LineCommand.hpp"
+#include "DirectoryInfo.hpp"
 #include "FileParsing/Text/TextCommandArgs.hpp"
 #include "FileParsing/Text/TextCommandStream.hpp"
 #include "FileParsing/Text/Exceptions.hpp"
@@ -126,10 +125,8 @@ void PolyHedra::ParsingData::CommandsDefault()
 	Commands.Insert(new TextCommandFunc("Type",		this, &ParsingData::Check_Type));
 	Commands.Insert(new TextCommandFunc("Format",	this, &ParsingData::Change_Format));
 
-	Commands.Insert(new TextCommandFunc("Name",		this, &ParsingData::Change_Name));
+//	Commands.Insert(new TextCommandFunc("Name",		this, &ParsingData::Change_Name));
 	Commands.Insert(new TextCommandFunc("Skin",		this, &ParsingData::New_Skin));
-
-	Commands.Insert(new TextCommandFunc("varFloat",		&VariableFloats, &ParsingVariable::FloatMemory::Put));
 }
 void PolyHedra::ParsingData::CommandsLegacy()
 {
@@ -153,6 +150,16 @@ void PolyHedra::ParsingData::CommandsNormal()
 	Commands.Insert(new TextCommandFunc("face",			this, &ParsingData::Place_Face));
 	Commands.Insert(new TextCommandFunc("belt",			this, &ParsingData::Place_Belt));
 	Commands.Insert(new TextCommandFunc("fan",			this, &ParsingData::Place_Fan));
+
+	Commands.Insert(new TextCommandFunc("param",		this, &ParsingData::Check_Parameter));
+	Commands.Insert(new TextCommandFunc("varFloat",		&VariableFloats, &ParsingVariable::FloatMemory::Put));
+
+	Commands.Insert(new TextCommandFunc("TransZero",		this, &ParsingData::Trans_Zero));
+	Commands.Insert(new TextCommandFunc("TransPos",			this, &ParsingData::Trans_ChangePos));
+	Commands.Insert(new TextCommandFunc("TransRot",			this, &ParsingData::Trans_ChangeRot));
+
+	Commands.Insert(new TextCommandFunc("OtherFile",		this, &ParsingData::Other_File));
+	Commands.Insert(new TextCommandFunc("OtherStatic",		this, &ParsingData::Other_Static));
 }
 
 
@@ -161,13 +168,13 @@ PolyHedra::ParsingData::~ParsingData()
 {
 	CommandsClear();
 }
-PolyHedra::ParsingData::ParsingData(const FileInfo & file, ::PolyHedra & polyhedra)
+PolyHedra::ParsingData::ParsingData(const FileInfo & file, PolyHedra & object)
 	: File(file)
-	, PolyHedra(polyhedra)
+	, Object(object)
 	, VertexOffset(0)
 	, DefaultFlags()
 {
-	PolyHedra.File = File;
+	Object.File = File;
 	CommandsDefault();
 	CommandsLegacy();
 }
@@ -220,11 +227,38 @@ void PolyHedra::ParsingData::Parse(const TextCommandArgs & cmd_args)
 
 void PolyHedra::ParsingData::Check_Type(const TextCommandArgs & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
+	unsigned int n = cmd_args.Count();
+	if (!(n == 1 || n == 2)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1 || n == 2"); } // fatal
+
 	if (cmd_args.ToString(0) != "PolyHedra")
 	{
-		throw TextCommand::InvalidArgument(cmd_args, 0);
+		throw TextCommand::InvalidArgument(cmd_args, 0, "Invalid Type"); // fatal
 	}
+
+	if (n == 1)
+	{
+		Object.IsAutomatic = false;
+	}
+	else if (n == 2)
+	{
+		std::string type = cmd_args.ToString(1);
+		if (type == "Manual")
+		{
+			Object.IsAutomatic = false;
+		}
+		else if (type == "Automatic")
+		{
+			Object.IsAutomatic = true;
+		}
+		else
+		{
+			throw TextCommand::InvalidArgument(cmd_args, 0, "Invalid Type"); // fatal ? or default to Manual ?
+		}
+	}
+	/*else
+	{
+		throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1 || n == 2");
+	}*/
 }
 void PolyHedra::ParsingData::Change_Format(const TextCommandArgs & cmd_args)
 {
@@ -253,21 +287,66 @@ void PolyHedra::ParsingData::Change_Format(const TextCommandArgs & cmd_args)
 	}
 }
 
-void PolyHedra::ParsingData::Change_Name(const TextCommandArgs & cmd_args)
+void PolyHedra::ParsingData::Check_Parameter(const TextCommandArgs & cmd_args)
+{
+	unsigned int n = cmd_args.Count();
+	if (!(n == 1 || n == 2)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1 || n == 2"); }
+
+	if (Object.Parameters == nullptr)
+	{
+		Object.Parameters = new ParsingVariable::FloatMemory();
+	}
+
+	std::string name = cmd_args.ToString(0);
+
+	if (n == 1)
+	{
+		if (Parent == nullptr)
+		{
+			throw TextCommand::InvalidState(cmd_args, "Missing Parent for Parameters"); // fatal
+		}
+		const ParsingVariable::Float * var = Parent -> VariableFloats.Find(name);
+		if (var == nullptr)
+		{
+			throw TextCommand::InvalidState(cmd_args, "Missing Parameter"); // fatal
+		}
+		VariableFloats.Put(var -> Name, var -> Value);
+		Object.Parameters -> Put(var -> Name, var -> Value);
+	}
+	else if (n == 2)
+	{
+		const ParsingVariable::Float * var = Parent -> VariableFloats.Find(name);
+		if (var != nullptr)
+		{
+			VariableFloats.Put(var -> Name, var -> Value);
+			Object.Parameters -> Put(var -> Name, var -> Value);
+		}
+		else
+		{
+			VariableFloats.Put(name, cmd_args.ToFloat(1));
+		}
+	}
+	/*else
+	{
+		throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1 || n == 2");
+	}*/
+}
+
+/*void PolyHedra::ParsingData::Change_Name(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
-	PolyHedra.Name = cmd_args.ToString(0);
-}
+	Object.Name = cmd_args.ToString(0);
+}*/
 void PolyHedra::ParsingData::New_Skin(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
 	//Debug::Log << cmd << Debug::Done;
 	
-	if (PolyHedra.Skin != nullptr) { throw TextCommand::InvalidState(cmd_args, "PolyHedra already has Skin"); }
+	if (Object.Skin != nullptr) { throw TextCommand::InvalidState(cmd_args, "PolyHedra already has Skin"); }
 
 	FileInfo file((File.DirectoryString() + "/" + cmd_args.ToString(0)).c_str());
-	if (!file.Exists()) { std::cout << cmd_args.Name() << ": " << "Bad Skin File" << "\n"; return; }
-	PolyHedra.Skin = Skin::Load(file);
+	if (!file.Exists()) { throw TextCommand::InvalidArgument(cmd_args, 0, "Bad Skin File"); } // this is not InvalidArgument. this is generic error
+	Object.Skin = Skin::Load(file);
 }
 
 void PolyHedra::ParsingData::Change_Default(const TextCommandArgs & cmd_args)
@@ -299,6 +378,8 @@ void PolyHedra::ParsingData::Change_Offset(const TextCommandArgs & cmd_args)
 	VertexOffset = ToVertexIndex(cmd_args, 0);
 }
 
+
+
 void PolyHedra::ParsingData::Legacy_Face3(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 3)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 3"); }
@@ -315,11 +396,11 @@ void PolyHedra::ParsingData::Legacy_Face3(const TextCommandArgs & cmd_args)
 
 	if (DefaultFlags.Direction)
 	{
-		PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
+		Object.Insert_Face3(idx[0], idx[1], idx[2]);
 	}
 	else
 	{
-		PolyHedra.Insert_Face3(idx[2], idx[1], idx[0]);
+		Object.Insert_Face3(idx[2], idx[1], idx[0]);
 	}
 }
 void PolyHedra::ParsingData::Legacy_Face4(const TextCommandArgs & cmd_args)
@@ -338,11 +419,11 @@ void PolyHedra::ParsingData::Legacy_Face4(const TextCommandArgs & cmd_args)
 
 	if (DefaultFlags.Direction)
 	{
-		PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
+		Object.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 	}
 	else
 	{
-		PolyHedra.Insert_Face4(idx[0], idx[2], idx[1], idx[3]);
+		Object.Insert_Face4(idx[0], idx[2], idx[1], idx[3]);
 	}
 }
 void PolyHedra::ParsingData::Legacy_Face34(const TextCommandArgs & cmd_args)
@@ -364,22 +445,22 @@ void PolyHedra::ParsingData::Legacy_Face34(const TextCommandArgs & cmd_args)
 	{
 		if (DefaultFlags.Direction)
 		{
-			PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
+			Object.Insert_Face3(idx[0], idx[1], idx[2]);
 		}
 		else
 		{
-			PolyHedra.Insert_Face3(idx[2], idx[1], idx[0]);
+			Object.Insert_Face3(idx[2], idx[1], idx[0]);
 		}
 	}
 	else if (len == 4)
 	{
 		if (DefaultFlags.Direction)
 		{
-			PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
+			Object.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 		}
 		else
 		{
-			PolyHedra.Insert_Face4(idx[0], idx[2], idx[1], idx[3]);
+			Object.Insert_Face4(idx[0], idx[2], idx[1], idx[3]);
 		}
 	}
 }
@@ -398,6 +479,8 @@ void PolyHedra::ParsingData::Legacy_Offset2(const TextCommandArgs & cmd_args)
 	}
 }
 
+
+
 void PolyHedra::ParsingData::Place_Vertex(const TextCommandArgs & cmd_args)
 {
 	if (!(cmd_args.Count() == 3)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 3"); }
@@ -409,7 +492,7 @@ void PolyHedra::ParsingData::Place_Vertex(const TextCommandArgs & cmd_args)
 		VariableFloats.To(cmd_args, 2)
 	);
 	//std::cout << "c: " << c << "\n";
-	PolyHedra.Insert_Corn(Corner(c));
+	Object.Insert_Corn(Corner(c));
 }
 
 void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args, const CommandFlags & flags)
@@ -455,7 +538,7 @@ void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args, cons
 		{
 			angle.Z0 = (step * (step_off - i)) + offset;
 		}
-		PolyHedra.Insert_Corn(Corner(angle.forward(radius) + center));
+		Object.Insert_Corn(Corner(angle.forward(radius) + center));
 	}
 }
 void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args)
@@ -467,6 +550,8 @@ void PolyHedra::ParsingData::Place_Circle(const TextCommandArgs & cmd_args)
 
 	Place_Circle(cmd_args, flags);
 }
+
+
 
 void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
@@ -486,22 +571,22 @@ void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args, const 
 		if (!flags.Direction)
 		{
 			std::cout << "Face123: " << idx[0] << ' ' << idx[1] << ' ' << idx[2] << '\n';
-			PolyHedra.Insert_Face3(idx[0], idx[1], idx[2]);
+			Object.Insert_Face3(idx[0], idx[1], idx[2]);
 		}
 		else
 		{
-			PolyHedra.Insert_Face3(idx[2], idx[1], idx[0]);
+			Object.Insert_Face3(idx[2], idx[1], idx[0]);
 		}
 	}
 	else if (len == 4)
 	{
 		if (!flags.Direction)
 		{
-			PolyHedra.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
+			Object.Insert_Face4(idx[0], idx[1], idx[2], idx[3]);
 		}
 		else
 		{
-			PolyHedra.Insert_Face4(idx[0], idx[2], idx[1], idx[3]);
+			Object.Insert_Face4(idx[0], idx[2], idx[1], idx[3]);
 		}
 	}
 }
@@ -515,19 +600,6 @@ void PolyHedra::ParsingData::Place_Face(const TextCommandArgs & cmd_args)
 	Place_Face(cmd_args, flags);
 }
 
-void PolyHedra::ParsingData::Place_Belt_Face(const CommandFlags & flags, unsigned int temp[4])
-{
-	if (!flags.Direction)
-	{
-		PolyHedra.Insert_Face3(temp[0], temp[2], temp[1]);
-		PolyHedra.Insert_Face3(temp[3], temp[1], temp[2]);
-	}
-	else
-	{
-		PolyHedra.Insert_Face3(temp[1], temp[2], temp[0]);
-		PolyHedra.Insert_Face3(temp[2], temp[1], temp[3]);
-	}
-}
 void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
 	unsigned int len = cmd_args.Count() / 2;
@@ -544,7 +616,9 @@ void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args, const 
 		list1[i] = ToVertexIndex(cmd_args, i1);
 	}
 
-	unsigned int n = len - 1;
+	Object.Belt(len, list0, list1, flags.Direction, flags.Closed);
+
+	/*unsigned int n = len - 1;
 
 	for (unsigned int i = 0; i < n; i++)
 	{
@@ -566,7 +640,7 @@ void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args, const 
 			list1[0],
 		};
 		Place_Belt_Face(flags, temp);
-	}
+	}*/
 }
 void PolyHedra::ParsingData::Place_Belt(const TextCommandArgs & cmd_args)
 {
@@ -590,31 +664,6 @@ void PolyHedra::ParsingData::Place_Band(const TextCommandArgs & cmd_args)
 	(void)cmd_args;
 }
 
-void PolyHedra::ParsingData::Place_Fan_Face(const CommandFlags & flags, unsigned int middle, unsigned int blade[2])
-{
-	if (!flags.Direction)
-	{
-		if (!flags.Middle)
-		{
-			PolyHedra.Insert_Face3(blade[1], middle, blade[0]);
-		}
-		else
-		{
-			PolyHedra.Insert_Face3(blade[0], middle, blade[1]);
-		}
-	}
-	else
-	{
-		if (!flags.Middle)
-		{
-			PolyHedra.Insert_Face3(blade[0], middle, blade[1]);
-		}
-		else
-		{
-			PolyHedra.Insert_Face3(blade[1], middle, blade[0]);
-		}
-	}
-}
 void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args, const CommandFlags & flags)
 {
 	unsigned int len = cmd_args.Count() - 1;
@@ -639,25 +688,7 @@ void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args, const C
 		middle = ToVertexIndex(cmd_args, len);
 	}
 
-	unsigned int n = len - 1;
-
-	for (unsigned int i = 0; i < n; i++)
-	{
-		unsigned int temp[2] = {
-			blade[i + 0],
-			blade[i + 1],
-		};
-		Place_Fan_Face(flags, middle, temp);
-	}
-
-	if (flags.Closed)
-	{
-		unsigned int temp[2] = {
-			blade[n],
-			blade[0],
-		};
-		Place_Fan_Face(flags, middle, temp);
-	}
+	Object.Fan(len, middle, blade, flags.Direction, flags.Middle, flags.Closed);
 }
 void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args)
 {
@@ -671,13 +702,90 @@ void PolyHedra::ParsingData::Place_Fan(const TextCommandArgs & cmd_args)
 
 
 
-PolyHedra * PolyHedra::Load(const FileInfo & file)
+void PolyHedra::ParsingData::Trans_Zero(const TextCommandArgs & cmd_args)
 {
-	//Debug::Log << "Loading PolyHedra File " << '"' << file.Name() << '"' << " ..." << Debug::Done;
+	if (!(cmd_args.Count() == 0)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 0"); }
+
+	Trans = Trans3D();
+}
+void PolyHedra::ParsingData::Trans_ChangePos(const TextCommandArgs & cmd_args)
+{
+	if (!(cmd_args.Count() == 3)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 3"); }
+
+	Trans.Position.X = cmd_args.ToFloat(0);
+	Trans.Position.Y = cmd_args.ToFloat(1);
+	Trans.Position.Z = cmd_args.ToFloat(2);
+}
+void PolyHedra::ParsingData::Trans_ChangeRot(const TextCommandArgs & cmd_args)
+{
+	if (!(cmd_args.Count() == 3)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 3"); }
+
+	Trans.Rotation.Z0 = Angle::Degrees(cmd_args.ToFloat(0));
+	Trans.Rotation.X1 = Angle::Degrees(cmd_args.ToFloat(1));
+	Trans.Rotation.Y2 = Angle::Degrees(cmd_args.ToFloat(2));
+}
+
+void PolyHedra::ParsingData::Other_File(const TextCommandArgs & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 1"); }
+
+	if (Other != nullptr)
+	{
+		delete Other;
+		Other = nullptr;
+	}
+
+	FileInfo file = File.Directory().File(cmd_args.ToString(0).c_str());
+	if (!file.Exists()) { throw TextCommand::InvalidArgument(cmd_args, 0, "Bad PolyHedra File"); } // this is not InvalidArgument. this is generic error
+
+	Other = ParsingData::Load(file, this);
+}
+void PolyHedra::ParsingData::Other_Static(const TextCommandArgs & cmd_args)
+{
+	if (!(cmd_args.Count() == 0)) { throw TextCommand::InvalidArgumentCount(cmd_args, "n == 0"); }
+
+	if (Other == nullptr) { throw TextCommand::InvalidState(cmd_args, "Other Missing"); }
+
+	unsigned int corner_offset = Object.Corners.Count();
+	for (unsigned int i = 0; i < Other -> Corners.Count(); i++)
+	{
+		PolyHedra::Corner corner = Other -> Corners[i];
+		corner.Position = Trans.forward(corner.Position);
+		corner.Normal = Trans.Rotation.forward(corner.Normal);
+		Object.Corners.Insert(corner);
+	}
+
+	for (unsigned int i = 0; i < Other -> Edges.Count(); i++)
+	{
+		PolyHedra::Edge edge = Other -> Edges[i];
+		edge.idx[0] += corner_offset;
+		edge.idx[1] += corner_offset;
+		Object.Edges.Insert(edge);
+	}
+
+	unsigned int face_offset = Object.Faces.Count();
+	for (unsigned int i = 0; i < Other -> Faces.Count(); i++)
+	{
+		PolyHedra::Face face = Other -> Faces[i];
+		face.idx[0] += corner_offset;
+		face.idx[1] += corner_offset;
+		face.idx[2] += corner_offset;
+		Object.Faces.Insert(face);
+	}
+
+	(void)face_offset;
+	// Skin
+}
+
+
+
+PolyHedra * PolyHedra::ParsingData::Load(const FileInfo & file, const ParsingData * parent)
+{
 	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
 
-	PolyHedra * polyhedra = new PolyHedra();
-	ParsingData data(file, *polyhedra);
+	PolyHedra * object = new PolyHedra();
+	ParsingData data(file, *object);
+	data.Parent = parent;
 
 	TextCommandStream stream(file.LoadText());
 	TextCommandArgs cmd_args;
@@ -686,12 +794,18 @@ PolyHedra * PolyHedra::Load(const FileInfo & file)
 		data.Parse(cmd_args);
 	}
 
-	polyhedra -> Done();
+	object -> Done();
 
-	//Debug::Log << "Loading PolyHedra File " << '"' << file.Name() << '"' << " done" << '\n';
-	//Debug::Log << ((*polyhedra).ToInfo());
-	//Debug::Log << Debug::Done;
 	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " done" << '\n';
 
-	return polyhedra;
+	std::cout << "Info:\n";
+	std::cout << object -> ToInfo();
+	std::cout << "\n";
+
+	return object;
+}
+
+PolyHedra * PolyHedra::Load(const FileInfo & file)
+{
+	return ParsingData::Load(file, nullptr);
 }
