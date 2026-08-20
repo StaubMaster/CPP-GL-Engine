@@ -24,6 +24,8 @@ struct PolyHedra::ParsingData
 	PolyHedra &				Object;
 	const ParsingData *		Parent = nullptr;
 
+	PolyHedraFileCollection *	FileCollection = nullptr;
+
 	Trans3D					Trans;
 	const PolyHedra *		Other = nullptr;
 
@@ -103,8 +105,9 @@ struct PolyHedra::ParsingData
 	void	Other_File(const TextCommandArgs & cmd_args);
 	void	Other_Static(const TextCommandArgs & cmd_args);
 
-	public:
-	static PolyHedra * Load(const FileInfo & file, const ParsingData * parent);
+
+
+	static PolyHedra * Load(const FileInfo & file, const ParsingData * parent, PolyHedraFileCollection * file_collection);
 };
 
 #endif

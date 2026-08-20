@@ -238,3 +238,70 @@ void PolyHedra::Fan(unsigned int len, unsigned int middle, unsigned int blade[],
 	}
 
 }
+
+
+
+#include "ValueType/Trans/3D.hpp"
+
+void PolyHedra::Combine(const PolyHedra & other)
+{
+	unsigned int corner_offset = Corners.Count();
+	for (unsigned int i = 0; i < other.Corners.Count(); i++)
+	{
+		PolyHedra::Corner corner = other.Corners[i];
+		Corners.Insert(corner);
+	}
+
+	for (unsigned int i = 0; i < other.Edges.Count(); i++)
+	{
+		PolyHedra::Edge edge = other.Edges[i];
+		edge.idx[0] += corner_offset;
+		edge.idx[1] += corner_offset;
+		Edges.Insert(edge);
+	}
+
+	unsigned int face_offset = Faces.Count();
+	for (unsigned int i = 0; i < other.Faces.Count(); i++)
+	{
+		PolyHedra::Face face = other.Faces[i];
+		face.idx[0] += corner_offset;
+		face.idx[1] += corner_offset;
+		face.idx[2] += corner_offset;
+		Faces.Insert(face);
+	}
+
+	(void)face_offset;
+	// Skin
+}
+void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
+{
+	unsigned int corner_offset = Corners.Count();
+	for (unsigned int i = 0; i < other.Corners.Count(); i++)
+	{
+		PolyHedra::Corner corner = other.Corners[i];
+		corner.Position = trans.forward(corner.Position);
+		corner.Normal = trans.Rotation.forward(corner.Normal);
+		Corners.Insert(corner);
+	}
+
+	for (unsigned int i = 0; i < other.Edges.Count(); i++)
+	{
+		PolyHedra::Edge edge = other.Edges[i];
+		edge.idx[0] += corner_offset;
+		edge.idx[1] += corner_offset;
+		Edges.Insert(edge);
+	}
+
+	unsigned int face_offset = Faces.Count();
+	for (unsigned int i = 0; i < other.Faces.Count(); i++)
+	{
+		PolyHedra::Face face = other.Faces[i];
+		face.idx[0] += corner_offset;
+		face.idx[1] += corner_offset;
+		face.idx[2] += corner_offset;
+		Faces.Insert(face);
+	}
+
+	(void)face_offset;
+	// Skin
+}

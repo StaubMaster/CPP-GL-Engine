@@ -1,6 +1,7 @@
 #include "PolyHedra/Parsing.hpp"
 #include "PolyHedra/Data.hpp"
 #include "PolyHedra/Generate.hpp"
+#include "PolyHedra/FileCollection.hpp"
 
 // Skin
 #include "PolyHedra/Skin/Skin.hpp"
@@ -738,7 +739,14 @@ void PolyHedra::ParsingData::Other_File(const TextCommandArgs & cmd_args)
 	FileInfo file = File.Directory().File(cmd_args.ToString(0).c_str());
 	if (!file.Exists()) { throw TextCommand::InvalidArgument(cmd_args, 0, "Bad PolyHedra File"); } // this is not InvalidArgument. this is generic error
 
-	Other = ParsingData::Load(file, this);
+	if (FileCollection == nullptr)
+	{
+		Other = ParsingData::Load(file, this, nullptr);
+	}
+	else
+	{
+		Other = FileCollection -> FindMake(file);
+	}
 }
 void PolyHedra::ParsingData::Other_Static(const TextCommandArgs & cmd_args)
 {
@@ -746,46 +754,19 @@ void PolyHedra::ParsingData::Other_Static(const TextCommandArgs & cmd_args)
 
 	if (Other == nullptr) { throw TextCommand::InvalidState(cmd_args, "Other Missing"); }
 
-	unsigned int corner_offset = Object.Corners.Count();
-	for (unsigned int i = 0; i < Other -> Corners.Count(); i++)
-	{
-		PolyHedra::Corner corner = Other -> Corners[i];
-		corner.Position = Trans.forward(corner.Position);
-		corner.Normal = Trans.Rotation.forward(corner.Normal);
-		Object.Corners.Insert(corner);
-	}
-
-	for (unsigned int i = 0; i < Other -> Edges.Count(); i++)
-	{
-		PolyHedra::Edge edge = Other -> Edges[i];
-		edge.idx[0] += corner_offset;
-		edge.idx[1] += corner_offset;
-		Object.Edges.Insert(edge);
-	}
-
-	unsigned int face_offset = Object.Faces.Count();
-	for (unsigned int i = 0; i < Other -> Faces.Count(); i++)
-	{
-		PolyHedra::Face face = Other -> Faces[i];
-		face.idx[0] += corner_offset;
-		face.idx[1] += corner_offset;
-		face.idx[2] += corner_offset;
-		Object.Faces.Insert(face);
-	}
-
-	(void)face_offset;
-	// Skin
+	Object.Combine(*Other, Trans);
 }
 
 
 
-PolyHedra * PolyHedra::ParsingData::Load(const FileInfo & file, const ParsingData * parent)
+PolyHedra * PolyHedra::ParsingData::Load(const FileInfo & file, const ParsingData * parent, PolyHedraFileCollection * file_collection)
 {
-	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
+//	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
 
 	PolyHedra * object = new PolyHedra();
 	ParsingData data(file, *object);
 	data.Parent = parent;
+	data.FileCollection = file_collection;
 
 	TextCommandStream stream(file.LoadText());
 	TextCommandArgs cmd_args;
@@ -796,16 +777,22 @@ PolyHedra * PolyHedra::ParsingData::Load(const FileInfo & file, const ParsingDat
 
 	object -> Done();
 
-	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " done" << '\n';
+//	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " done" << '\n';
 
-	std::cout << "Info:\n";
-	std::cout << object -> ToInfo();
-	std::cout << "\n";
+//	std::cout << "Info:\n";
+//	std::cout << object -> ToInfo();
+//	std::cout << "\n";
 
 	return object;
 }
 
 PolyHedra * PolyHedra::Load(const FileInfo & file)
 {
-	return ParsingData::Load(file, nullptr);
+	return ParsingData::Load(file, nullptr, nullptr);
+}
+
+// do this in PolyHedraFileCollection ?
+PolyHedra * PolyHedra::Load(const FileInfo & file, PolyHedraFileCollection & file_collection)
+{
+	return ParsingData::Load(file, nullptr, &file_collection);
 }

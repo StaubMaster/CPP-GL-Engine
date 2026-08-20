@@ -222,6 +222,7 @@ POLYGON_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYGON:.cpp=.o))
 POLYHEDRA := \
 	PolyHedra/Data.cpp \
 	PolyHedra/PolyHedra.cpp \
+	PolyHedra/FileCollection.cpp \
 	PolyHedra/Parsing.cpp \
 	PolyHedra/Generate.cpp \
 \
