@@ -6,7 +6,8 @@
 # include "FileInfo.hpp"
 # include "FileParsing/Variables/Float.hpp"
 
-# include "FileParsing/Text/TextCommandFunc.hpp"
+# include "FileParsing/TextCommand/Func.hpp"
+# include "FileParsing/TextCommand/Loop.hpp"
 
 # include "Generics/Container/Binary.hpp"
 # include "Generics/Function/Pointer.hpp"
@@ -16,22 +17,10 @@
 
 # include <string>
 
-class TextCommandArgs;
+namespace TextCommand { class Args; };
 
-struct PolyHedra::ParsingData
+struct PolyHedra::ParsingData : public TextCommand::Loop
 {
-	FileInfo				File;
-	PolyHedra &				Object;
-	const ParsingData *		Parent = nullptr;
-
-	PolyHedraFileCollection *	FileCollection = nullptr;
-
-	Trans3D					Trans;
-	const PolyHedra *		Other = nullptr;
-
-	unsigned int	VertexOffset;
-	unsigned int	ToVertexIndex(const TextCommandArgs & cmd_args, unsigned int arg_idx) const;
-
 	struct CommandFlags
 	{
 		bool	Direction = false;
@@ -48,62 +37,85 @@ struct PolyHedra::ParsingData
 		unsigned int	Parse(const std::string & name);
 	};
 	CommandFlags	DefaultFlags;
+	struct CommandFlagsFunc : public TextCommand::Func
+	{
+		FunctionPointer<const TextCommand::Args &, const CommandFlags &>		Function;
+
+		~CommandFlagsFunc();
+		template<typename ObjectType> CommandFlagsFunc(
+			std::string name,
+			ObjectType * obj,
+			void (ObjectType::*func)(const TextCommand::Args &, const CommandFlags &)
+		)
+			: Func(name)
+			, Function(obj, func)
+		{ }
+	
+		bool	TryInvoke(const TextCommand::Args & cmd_args) const override;
+	};
 	// each Command takes different Flags
 
-	ParsingVariable::FloatMemory	VariableFloats;
-
-	Container::Binary<TextCommandFunc*>		Commands;
-	void	CommandsClear();
 	void	CommandsDefault();
 	void	CommandsNormal();
 	void	CommandsLegacy();
 
+
+
+	ParsingVariable::FloatMemory	VariableFloats;
+	void	PutVariable(const TextCommand::Args & cmd_args);
+	void	PutFloat(const TextCommand::Args & cmd_args);
+	float	ToFloat(std::string str) const;
+	float	ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const;
+
+
+
+	PolyHedra &				Object;
+	const ParsingData *		Parent = nullptr;
+
+	PolyHedraFileCollection *	FileCollection = nullptr;
+
+	Trans3D					Trans;
+	const PolyHedra *		Other = nullptr;
+
+	unsigned int	VertexOffset;
+	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const;
+
+
+
 	~ParsingData();
-	ParsingData(const FileInfo & file, PolyHedra & object);
+	ParsingData(PolyHedra & object);
 
 
 
-	void	Parse(const TextCommandArgs & cmd_args);
+	void	Check_Type(const TextCommand::Args & cmd_args);
+	void	Change_Format(const TextCommand::Args & cmd_args);
 
-	void	Check_Type(const TextCommandArgs & cmd_args);
-	void	Change_Format(const TextCommandArgs & cmd_args);
+	void	Check_Parameter(const TextCommand::Args & cmd_args);
 
-	void	Check_Parameter(const TextCommandArgs & cmd_args);
+	void	New_Skin(const TextCommand::Args & cmd_args);
 
-//	void	Change_Name(const TextCommandArgs & cmd_args);
-	void	New_Skin(const TextCommandArgs & cmd_args);
+	void	Change_Default(const TextCommand::Args & cmd_args);
+	void	Change_Offset(const TextCommand::Args & cmd_args);
 
-	void	Change_Default(const TextCommandArgs & cmd_args);
-	void	Change_Offset(const TextCommandArgs & cmd_args);
-
-	void	Legacy_Face3(const TextCommandArgs & cmd_args);
-	void	Legacy_Face4(const TextCommandArgs & cmd_args);
-	void	Legacy_Face34(const TextCommandArgs & cmd_args);
-	void	Legacy_Offset2(const TextCommandArgs & cmd_args);
+	void	Legacy_Face3(const TextCommand::Args & cmd_args);
+	void	Legacy_Face4(const TextCommand::Args & cmd_args);
+	void	Legacy_Face34(const TextCommand::Args & cmd_args);
+	void	Legacy_Offset2(const TextCommand::Args & cmd_args);
  
-	void	Place_Vertex(const TextCommandArgs & cmd_args);
+	void	Place_Vertex(const TextCommand::Args & cmd_args);
+	void	Place_Circle(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 
-	void	Place_Circle(const TextCommandArgs & cmd_args, const CommandFlags & flags);
-	void	Place_Circle(const TextCommandArgs & cmd_args);
+	void	Place_Face(const TextCommand::Args & cmd_args, const CommandFlags & flags);
+	void	Place_Belt(const TextCommand::Args & cmd_args, const CommandFlags & flags);
+	void	Place_Band(const TextCommand::Args & cmd_args, const CommandFlags & flags);
+	void	Place_Fan(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 
-	void	Place_Face(const TextCommandArgs & cmd_args, const CommandFlags & flags);
-	void	Place_Face(const TextCommandArgs & cmd_args);
+	void	Trans_Zero(const TextCommand::Args & cmd_args);
+	void	Trans_ChangePos(const TextCommand::Args & cmd_args);
+	void	Trans_ChangeRot(const TextCommand::Args & cmd_args);
 
-	void	Place_Belt(const TextCommandArgs & cmd_args, const CommandFlags & flags);
-	void	Place_Belt(const TextCommandArgs & cmd_args);
-
-	void	Place_Band(const TextCommandArgs & cmd_args, const CommandFlags & flags);
-	void	Place_Band(const TextCommandArgs & cmd_args);
-
-	void	Place_Fan(const TextCommandArgs & cmd_args, const CommandFlags & flags);
-	void	Place_Fan(const TextCommandArgs & cmd_args);
-
-	void	Trans_Zero(const TextCommandArgs & cmd_args);
-	void	Trans_ChangePos(const TextCommandArgs & cmd_args);
-	void	Trans_ChangeRot(const TextCommandArgs & cmd_args);
-
-	void	Other_File(const TextCommandArgs & cmd_args);
-	void	Other_Static(const TextCommandArgs & cmd_args);
+	void	Other_File(const TextCommand::Args & cmd_args);
+	void	Other_Static(const TextCommand::Args & cmd_args);
 
 
 

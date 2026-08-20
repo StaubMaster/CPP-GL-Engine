@@ -5,7 +5,10 @@
 
 # include "Generics/Container/Binary.hpp"
 
-class PolyHedra;
+//class PolyHedra;
+//class PolyHedra::ParsingData;
+
+# include "PolyHedra/PolyHedra.hpp"
 
 class PolyHedraFileCollection
 {
@@ -23,8 +26,10 @@ class PolyHedraFileCollection
 	PolyHedra *		Find(const FileInfo & file) const;
 	private:
 	PolyHedra *		Make(const FileInfo & file);
+	PolyHedra *		Make(const FileInfo & file, const PolyHedra::ParsingData & parent);
 	public:
 	PolyHedra *		FindMake(const FileInfo & file);
+	PolyHedra *		FindMake(const FileInfo & file, const PolyHedra::ParsingData & parent);
 };
 
 #endif

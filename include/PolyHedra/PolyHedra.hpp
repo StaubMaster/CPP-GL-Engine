@@ -90,11 +90,10 @@ class PolyHedra
 	void	Combine(const PolyHedra & other);
 	void	Combine(const PolyHedra & other, const Trans3D & trans);
 
-	private:
+	public:
 	struct ParsingData;
 	public:
 	static PolyHedra *	Load(const FileInfo & file);
-	static PolyHedra *	Load(const FileInfo & file, PolyHedraFileCollection & file_collection);
 };
 
 #endif
