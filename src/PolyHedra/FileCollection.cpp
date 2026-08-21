@@ -1,6 +1,6 @@
 #include "PolyHedra/FileCollection.hpp"
 #include "PolyHedra/PolyHedra.hpp"
-#include "PolyHedra/Parsing.hpp"
+#include "PolyHedra/Parser.hpp"
 
 
 
@@ -19,7 +19,7 @@ PolyHedra * PolyHedraFileCollection::Find(const FileInfo & file) const
 #include <iostream>
 PolyHedra * PolyHedraFileCollection::Make(const FileInfo & file)
 {
-	PolyHedra * object = PolyHedra::ParsingData::Load(file, nullptr, this);
+	PolyHedra * object = PolyHedraParser::Load(file, nullptr, this);
 	if (object -> Parameters == nullptr)
 	{
 		FileObject file_obj;
@@ -29,9 +29,9 @@ PolyHedra * PolyHedraFileCollection::Make(const FileInfo & file)
 	}
 	return object;
 }
-PolyHedra * PolyHedraFileCollection::Make(const FileInfo & file, const PolyHedra::ParsingData & parent)
+PolyHedra * PolyHedraFileCollection::Make(const FileInfo & file, const PolyHedraParser & parser)
 {
-	PolyHedra * object = PolyHedra::ParsingData::Load(file, &parent, this);
+	PolyHedra * object = PolyHedraParser::Load(file, &parser, this);
 	if (object -> Parameters == nullptr)
 	{
 		FileObject file_obj;
@@ -50,12 +50,12 @@ PolyHedra * PolyHedraFileCollection::FindMake(const FileInfo & file)
 	}
 	return object;
 }
-PolyHedra * PolyHedraFileCollection::FindMake(const FileInfo & file, const PolyHedra::ParsingData & parent)
+PolyHedra * PolyHedraFileCollection::FindMake(const FileInfo & file, const PolyHedraParser & parser)
 {
 	PolyHedra * object = Find(file);
 	if (object == nullptr)
 	{
-		object = Make(file, parent);
+		object = Make(file, parser);
 	}
 	return object;
 }

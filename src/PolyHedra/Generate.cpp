@@ -31,10 +31,10 @@ PolyHedra * PolyHedraGenerate::RegularTetraHedron(float scale)
 	//polyhedra -> Name = "TetraHedron";
 	polyhedra -> File = "::TetraHedron::"; // put () with parameters ?
 
-	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, -scale));
-	polyhedra -> Insert_Corn(VectorF3(+scale, +scale, -scale));
-	polyhedra -> Insert_Corn(VectorF3(+scale, -scale, +scale));
-	polyhedra -> Insert_Corn(VectorF3(-scale, +scale, +scale));
+	polyhedra -> Insert_Corn(-scale, -scale, -scale);
+	polyhedra -> Insert_Corn(+scale, +scale, -scale);
+	polyhedra -> Insert_Corn(+scale, -scale, +scale);
+	polyhedra -> Insert_Corn(-scale, +scale, +scale);
 
 	polyhedra -> Insert_Face3(0b00, 0b01, 0b10);
 	polyhedra -> Insert_Face3(0b00, 0b10, 0b11);
@@ -92,14 +92,14 @@ PolyHedra * PolyHedraGenerate::RegularHexaHedron(float scale)
 	//polyhedra -> Name = "HexaHedron";
 	polyhedra -> File = "::HexaHedron::"; // put () with parameters ?
 
-	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, -scale));
-	polyhedra -> Insert_Corn(VectorF3(+scale, -scale, -scale));
-	polyhedra -> Insert_Corn(VectorF3(-scale, +scale, -scale));
-	polyhedra -> Insert_Corn(VectorF3(+scale, +scale, -scale));
-	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, +scale));
-	polyhedra -> Insert_Corn(VectorF3(+scale, -scale, +scale));
-	polyhedra -> Insert_Corn(VectorF3(-scale, +scale, +scale));
-	polyhedra -> Insert_Corn(VectorF3(+scale, +scale, +scale));
+	polyhedra -> Insert_Corn(-scale, -scale, -scale);
+	polyhedra -> Insert_Corn(+scale, -scale, -scale);
+	polyhedra -> Insert_Corn(-scale, +scale, -scale);
+	polyhedra -> Insert_Corn(+scale, +scale, -scale);
+	polyhedra -> Insert_Corn(-scale, -scale, +scale);
+	polyhedra -> Insert_Corn(+scale, -scale, +scale);
+	polyhedra -> Insert_Corn(-scale, +scale, +scale);
+	polyhedra -> Insert_Corn(+scale, +scale, +scale);
 
 	polyhedra -> Insert_Face4(0b000, 0b010, 0b001, 0b011);
 	polyhedra -> Insert_Face4(0b000, 0b100, 0b010, 0b110);
@@ -217,14 +217,14 @@ PolyHedra * PolyHedraGenerate::ConeZ(int segments, float height, float radius)
 	EulerAngle3D angle;
 
 	int idx_frst = polyhedra -> Corners.Count();
-	polyhedra -> Insert_Corn(VectorF3(0, 0, +height));
+	polyhedra -> Insert_Corn(0, 0, +height);
 	for (int i = 0; i < segments; i++)
 	{
 		angle.Z0 = Angle::Section(segments) * i;
 		polyhedra -> Insert_Corn(angle.reverse(VectorF3(0, +radius, -height)));
 	}
 	int idx_last = polyhedra -> Corners.Count();
-	polyhedra -> Insert_Corn(VectorF3(0, 0, -height));
+	polyhedra -> Insert_Corn(0, 0, -height);
 
 	for (int i = 0; i < segments; i++)
 	{
@@ -274,7 +274,7 @@ PolyHedra * PolyHedraGenerate::SphereY(unsigned int ring, unsigned int seg, floa
 	unsigned int face_count = 0;
 
 	pole_idx = 0;
-	polyhedra -> Insert_Corn(PolyHedra::Corner(0, -radius, 0));
+	polyhedra -> Insert_Corn(0, -radius, 0);
 	ring_0_idx = 1;
 	for (unsigned int s = 0; s < seg; s++)
 	{
@@ -319,7 +319,7 @@ PolyHedra * PolyHedraGenerate::SphereY(unsigned int ring, unsigned int seg, floa
 	}
 
 	ring_1_idx = 1 + (ring * seg);
-	polyhedra -> Insert_Corn(PolyHedra::Corner(VectorF3(0, +radius, 0)));
+	polyhedra -> Insert_Corn(0, +radius, 0);
 	pole_idx = ring_1_idx - seg;
 	for (unsigned int s = 0; s < seg; s++)
 	{
@@ -353,7 +353,7 @@ PolyHedra * PolyHedraGenerate::TorusY(unsigned int seg0, float radius0, unsigned
 			pos = angle0.forward(VectorF3(radius0, 0, 0));
 			pos = angle1.forward(VectorF3(radius1, 0, 0) + pos);
 
-			polyhedra -> Insert_Corn(PolyHedra::Corner(pos));
+			polyhedra -> Insert_Corn(pos);
 
 			unsigned int s00 = ((s0 + 0) % seg0) * seg1;
 			unsigned int s01 = ((s0 + 1) % seg0) * seg1;
@@ -381,10 +381,10 @@ PolyHedra * PolyHedraGenerate::ImageQuad(Image img, float scale)
 	//polyhedra -> Name = "DuoHedra";
 	polyhedra -> File = "::DuoHedra::"; // put () with parameters ?
 
-	polyhedra -> Insert_Corn(VectorF3(-scale, -scale, 0));
-	polyhedra -> Insert_Corn(VectorF3(-scale, +scale, 0));
-	polyhedra -> Insert_Corn(VectorF3(+scale, -scale, 0));
-	polyhedra -> Insert_Corn(VectorF3(+scale, +scale, 0));
+	polyhedra -> Insert_Corn(-scale, -scale, 0);
+	polyhedra -> Insert_Corn(-scale, +scale, 0);
+	polyhedra -> Insert_Corn(+scale, -scale, 0);
+	polyhedra -> Insert_Corn(+scale, +scale, 0);
 
 	polyhedra -> Insert_Face4(0, 1, 2, 3);
 
@@ -441,10 +441,10 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 
 	VectorF2 scale(img.W() * img_scale * 0.01f * 0.5f, img.H() * img_scale * 0.01f * 0.5f);
 
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, -scale.Y, -FrameSizeInn.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, -scale.Y, -FrameSizeInn.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, +scale.Y, -FrameSizeInn.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, +scale.Y, -FrameSizeInn.Z));
+	polyhedra -> Insert_Corn(-scale.X, -scale.Y, -FrameSizeInn.Z);
+	polyhedra -> Insert_Corn(+scale.X, -scale.Y, -FrameSizeInn.Z);
+	polyhedra -> Insert_Corn(+scale.X, +scale.Y, -FrameSizeInn.Z);
+	polyhedra -> Insert_Corn(-scale.X, +scale.Y, -FrameSizeInn.Z);
 	polyhedra -> Insert_Face4(0, 3, 1, 2);
 
 	unsigned int idx = skin -> Corners.Count();
@@ -582,10 +582,10 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 
 	off0 += 0;
 	off1 += 4;
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, -scale.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, -scale.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, +scale.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, +scale.Y, -FrameSizeOut.Z));
+	polyhedra -> Insert_Corn(-scale.X, -scale.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X, -scale.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X, +scale.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X, +scale.Y, -FrameSizeOut.Z);
 	polyhedra -> Insert_Face4(off0 + 0, off0 + 1, off1 + 0, off1 + 1);
 	polyhedra -> Insert_Face4(off0 + 1, off0 + 2, off1 + 1, off1 + 2);
 	polyhedra -> Insert_Face4(off0 + 2, off0 + 3, off1 + 2, off1 + 3);
@@ -597,18 +597,18 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 
 	off0 += 4;
 	off1 += 4;
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X,                  -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X,                  -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, -scale.Y,                  -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, +scale.Y,                  -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X,                  +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X,                  +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, +scale.Y,                  -FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, -scale.Y,                  -FrameSizeOut.Z));
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X,                  -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X,                  -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, -scale.Y,                  -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, +scale.Y,                  -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X,                  +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X,                  +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, +scale.Y,                  -FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, -scale.Y,                  -FrameSizeOut.Z);
 	polyhedra -> Insert_Face3(off0 +  0, off1 +  1, off1 +  0);
 	polyhedra -> Insert_Face4(off0 +  0, off0 +  1, off1 +  1, off1 + 2);
 	polyhedra -> Insert_Face3(off1 +  2, off0 +  1, off1 +  3);
@@ -636,18 +636,18 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 
 	off0 += 4;
 	off1 += 12;
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X,                  -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X,                  -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, -scale.Y,                  +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, +scale.Y,                  +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X + FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X,                  +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X,                  +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, +scale.Y,                  +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X - FrameSizeOut.X, -scale.Y,                  +FrameSizeOut.Z));
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X,                  -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X,                  -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, -scale.Y - FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, -scale.Y,                  +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, +scale.Y,                  +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X + FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X,                  +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X,                  +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, +scale.Y + FrameSizeOut.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, +scale.Y,                  +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X - FrameSizeOut.X, -scale.Y,                  +FrameSizeOut.Z);
 	polyhedra -> Insert_Face4(off0 + 0x0, off0 + 0x1, off1 + 0x0, off1 + 0x1);
 	polyhedra -> Insert_Face4(off0 + 0x1, off0 + 0x2, off1 + 0x1, off1 + 0x2);
 	polyhedra -> Insert_Face4(off0 + 0x2, off0 + 0x3, off1 + 0x2, off1 + 0x3);
@@ -675,10 +675,10 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 
 	off0 += 12;
 	off1 += 12;
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, -scale.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, -scale.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, +scale.Y, +FrameSizeOut.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, +scale.Y, +FrameSizeOut.Z));
+	polyhedra -> Insert_Corn(-scale.X, -scale.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X, -scale.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(+scale.X, +scale.Y, +FrameSizeOut.Z);
+	polyhedra -> Insert_Corn(-scale.X, +scale.Y, +FrameSizeOut.Z);
 	polyhedra -> Insert_Face3(off1 + 0, off0 + 0, off0 + 1);
 	polyhedra -> Insert_Face4(off1 + 1, off1 + 0, off0 + 2, off0 + 1);
 	polyhedra -> Insert_Face3(off0 + 3, off1 + 1, off0 + 2);
@@ -706,10 +706,10 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 
 	off0 += 12;
 	off1 += 4;
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, -scale.Y, +FrameSizeInn.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, -scale.Y, +FrameSizeInn.Z));
-	polyhedra -> Insert_Corn(VectorF3(+scale.X, +scale.Y, +FrameSizeInn.Z));
-	polyhedra -> Insert_Corn(VectorF3(-scale.X, +scale.Y, +FrameSizeInn.Z));
+	polyhedra -> Insert_Corn(-scale.X, -scale.Y, +FrameSizeInn.Z);
+	polyhedra -> Insert_Corn(+scale.X, -scale.Y, +FrameSizeInn.Z);
+	polyhedra -> Insert_Corn(+scale.X, +scale.Y, +FrameSizeInn.Z);
+	polyhedra -> Insert_Corn(-scale.X, +scale.Y, +FrameSizeInn.Z);
 	polyhedra -> Insert_Face4(off0 + 0, off0 + 1, off1 + 0, off1 + 1);
 	polyhedra -> Insert_Face4(off0 + 1, off0 + 2, off1 + 1, off1 + 2);
 	polyhedra -> Insert_Face4(off0 + 2, off0 + 3, off1 + 2, off1 + 3);

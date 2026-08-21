@@ -21,6 +21,11 @@ PolyHedra::Face::Face(unsigned int idx0, unsigned int idx1, unsigned int idx2)
 	: idx{ idx0, idx1, idx2 }
 	, Normal()
 { }
+PolyHedra::Face::Face(unsigned int idx0, unsigned int idx1, unsigned int idx2, unsigned int normal_group)
+	: idx{ idx0, idx1, idx2 }
+	, NormalGroup(normal_group)
+	, Normal()
+{ }
 
 
 

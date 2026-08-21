@@ -8,7 +8,6 @@
 struct PolyHedra::Corner
 {
 	VectorF3	Position;
-	VectorF3	Normal;
 
 	~Corner() = default;
 	Corner() = default;
@@ -21,7 +20,8 @@ struct PolyHedra::Corner
 struct PolyHedra::Face
 {
 	unsigned int	idx[3] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-	VectorF3	Normal;
+	unsigned int	NormalGroup = 0xFFFFFFFF;
+	VectorF3		Normal; // Calculate when Buffer is made ?
 
 	bool	Check(unsigned int count) const;
 
@@ -31,6 +31,7 @@ struct PolyHedra::Face
 	Face & operator=(const Face & other) = default;
 
 	Face(unsigned int idx0, unsigned int idx1, unsigned int idx2);
+	Face(unsigned int idx0, unsigned int idx1, unsigned int idx2, unsigned int normal_group);
 };
 struct PolyHedra::Edge
 {

@@ -223,7 +223,7 @@ POLYHEDRA := \
 	PolyHedra/Data.cpp \
 	PolyHedra/PolyHedra.cpp \
 	PolyHedra/FileCollection.cpp \
-	PolyHedra/Parsing.cpp \
+	PolyHedra/Parser.cpp \
 	PolyHedra/Generate.cpp \
 \
 	PolyHedra/Skin/Data.cpp \

@@ -19,7 +19,7 @@
 
 namespace TextCommand { class Args; };
 
-struct PolyHedra::ParsingData : public TextCommand::Loop
+struct PolyHedraParser : public TextCommand::Loop
 {
 	struct CommandFlags
 	{
@@ -69,21 +69,26 @@ struct PolyHedra::ParsingData : public TextCommand::Loop
 
 
 
-	PolyHedra &				Object;
-	const ParsingData *		Parent = nullptr;
+	public:
+	PolyHedra *		Object = nullptr;
+
+	unsigned int	NormalGroup = 0xFFFFFFFF;
+
+	const PolyHedraParser *		Parser = nullptr;
 
 	PolyHedraFileCollection *	FileCollection = nullptr;
 
-	Trans3D					Trans;
-	const PolyHedra *		Other = nullptr;
+	Trans3D		Trans;
+
+	const PolyHedra *	Other = nullptr;
 
 	unsigned int	VertexOffset;
 	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const;
 
 
 
-	~ParsingData();
-	ParsingData(PolyHedra & object);
+	~PolyHedraParser();
+	PolyHedraParser(const PolyHedraParser * parser, PolyHedraFileCollection * file_collection);
 
 
 
@@ -101,7 +106,7 @@ struct PolyHedra::ParsingData : public TextCommand::Loop
 	void	Legacy_Face4(const TextCommand::Args & cmd_args);
 	void	Legacy_Face34(const TextCommand::Args & cmd_args);
 	void	Legacy_Offset2(const TextCommand::Args & cmd_args);
- 
+
 	void	Place_Vertex(const TextCommand::Args & cmd_args);
 	void	Place_Circle(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 
@@ -110,16 +115,19 @@ struct PolyHedra::ParsingData : public TextCommand::Loop
 	void	Place_Band(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 	void	Place_Fan(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 
+	void	Normal_Change(const TextCommand::Args & cmd_args);
+
 	void	Trans_Zero(const TextCommand::Args & cmd_args);
 	void	Trans_ChangePos(const TextCommand::Args & cmd_args);
 	void	Trans_ChangeRot(const TextCommand::Args & cmd_args);
 
 	void	Other_File(const TextCommand::Args & cmd_args);
 	void	Other_Static(const TextCommand::Args & cmd_args);
+	void	Other_Dynamic(const TextCommand::Args & cmd_args);
 
 
 
-	static PolyHedra * Load(const FileInfo & file, const ParsingData * parent, PolyHedraFileCollection * file_collection);
+	static PolyHedra * Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraFileCollection * file_collection);
 };
 
 #endif
