@@ -1,8 +1,7 @@
 #include "ValueType/Box/U2.hpp"
+#include "ValueType/Bool/2.hpp"
 
 
-
-BoxU2::~BoxU2() { }
 
 BoxU2::BoxU2()
 	: Box_2(
@@ -14,17 +13,15 @@ BoxU2::BoxU2(VectorU2 min, VectorU2 max)
 	: Box_2(min, max)
 { }
 
-BoxU2::BoxU2(const BoxU2 & other)
-	: Box_2(other)
-{ }
-BoxU2 & BoxU2::operator=(const BoxU2 & other)
-{
-	Box_2::operator=(other);
-	return *this;
-}
-
 
 
 Bool2 BoxU2::CheckIn(VectorU2 udx) const { return IntersectInclusive(udx); }
 Bool2 BoxU2::CheckEx(VectorU2 udx) const { return IntersectExclusive(udx); }
 Bool2 BoxU2::CheckEdge(VectorU2 udx) const { return IntersectEdge(udx); }
+
+
+
+#include "../src/ValueType/Box/__.cpp"
+#include "../src/ValueType/Box/_2.cpp"
+template struct Box__<unsigned int, VectorU2, BoxU2>;
+template struct Box_2<unsigned int, VectorU2, BoxU2>;

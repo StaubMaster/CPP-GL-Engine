@@ -6,13 +6,12 @@
 
 struct BoxF2 : public Box_2<float, VectorF2, BoxF2>
 {
-	~BoxF2();
+	~BoxF2() = default;
+	BoxF2(const BoxF2 & other) = default;
+	BoxF2 & operator=(const BoxF2 & other) = default;
 
 	BoxF2();
 	BoxF2(VectorF2 min, VectorF2 max);
-
-	BoxF2(const BoxF2 & other);
-	BoxF2 & operator=(const BoxF2 & other);
 };
 
 #endif

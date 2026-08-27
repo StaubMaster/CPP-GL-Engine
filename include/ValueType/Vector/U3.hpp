@@ -24,11 +24,13 @@ struct VectorU3
 
 
 
-	VectorU3		Min(const VectorU3 & other) const;
-	VectorU3		Max(const VectorU3 & other) const;
+	VectorU3	Min(const VectorU3 & other) const;
+	VectorU3	Max(const VectorU3 & other) const;
+	VectorU3	Mix(const VectorU3 & other, const Bool3 & condition) const;
 
-			VectorU3	Mix(const Bool3 & take, const VectorU3 & other) const;
-	static	VectorU3	Mix(const Bool3 & take, const VectorU3 & value_true, const VectorU3 & value_false);
+	static VectorU3		Min(const VectorU3 & vec0, const VectorU3 & vec1);
+	static VectorU3		Max(const VectorU3 & vec0, const VectorU3 & vec1);
+	static VectorU3		Mix(const VectorU3 & vec0, const VectorU3 & vec1, const Bool3 & condition);
 
 
 

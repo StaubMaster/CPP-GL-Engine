@@ -35,19 +35,33 @@ VectorI2 VectorI2::Max(const VectorI2 & other) const
 	if (other.Y > vec.Y) { vec.Y = other.Y; }
 	return vec;
 }
-
-VectorI2 VectorI2::Mix(const Bool2 & take, const VectorI2 & other) const
+VectorI2 VectorI2::Mix(const VectorI2 & other, const Bool2 & condition) const
 {
 	VectorI2 vec(*this);
-	if (take.GetX()) { vec.X = other.X; }
-	if (take.GetY()) { vec.Y = other.Y; }
+	if (condition.GetX()) { vec.X = other.X; }
+	if (condition.GetY()) { vec.Y = other.Y; }
 	return vec;
 }
-VectorI2 VectorI2::Mix(const Bool2 & take, const VectorI2 & value_true, const VectorI2 & value_false)
+
+VectorI2 VectorI2::Min(const VectorI2 & vec0, const VectorI2 & vec1)
 {
 	VectorI2 vec;
-	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
-	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
+	if (vec0.X < vec1.X) { vec.X = vec0.X; } else { vec.X = vec1.X; }
+	if (vec0.Y < vec1.Y) { vec.Y = vec0.Y; } else { vec.Y = vec1.Y; }
+	return vec;
+}
+VectorI2 VectorI2::Max(const VectorI2 & vec0, const VectorI2 & vec1)
+{
+	VectorI2 vec;
+	if (vec0.X > vec1.X) { vec.X = vec0.X; } else { vec.X = vec1.X; }
+	if (vec0.Y > vec1.Y) { vec.Y = vec0.Y; } else { vec.Y = vec1.Y; }
+	return vec;
+}
+VectorI2 VectorI2::Mix(const VectorI2 & vec0, const VectorI2 & vec1, const Bool2 & condition)
+{
+	VectorI2 vec;
+	if (condition.GetX()) { vec.X = vec1.X; } else { vec.X = vec0.X; }
+	if (condition.GetY()) { vec.Y = vec1.Y; } else { vec.Y = vec0.Y; }
 	return vec;
 }
 

@@ -6,13 +6,12 @@
 
 struct BoxU2 : public Box_2<unsigned int, VectorU2, BoxU2>
 {
-	~BoxU2();
+	~BoxU2() = default;
+	BoxU2(const BoxU2 & other) = default;
+	BoxU2 & operator=(const BoxU2 & other) = default;
 
 	BoxU2();
 	BoxU2(VectorU2 min, VectorU2 max);
-
-	BoxU2(const BoxU2 & other);
-	BoxU2 & operator=(const BoxU2 & other);
 
 
 

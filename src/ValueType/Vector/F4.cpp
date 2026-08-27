@@ -42,23 +42,41 @@ VectorF4 VectorF4::Max(const VectorF4 & other) const
 	if (other.W > vec.W) { vec.W = other.W; }
 	return vec;
 }
-
-VectorF4 VectorF4::Mix(const Bool4 & take, const VectorF4 & other) const
+VectorF4 VectorF4::Mix(const VectorF4 & other, const Bool4 & condition) const
 {
 	VectorF4 vec(*this);
-	if (take.GetX()) { vec.X = other.X; }
-	if (take.GetY()) { vec.Y = other.Y; }
-	if (take.GetZ()) { vec.Z = other.Z; }
-	if (take.GetW()) { vec.W = other.W; }
+	if (condition.GetX()) { vec.X = other.X; }
+	if (condition.GetY()) { vec.Y = other.Y; }
+	if (condition.GetZ()) { vec.Z = other.Z; }
+	if (condition.GetW()) { vec.W = other.W; }
 	return vec;
 }
-VectorF4 VectorF4::Mix(const Bool4 & take, const VectorF4 & value_true, const VectorF4 & value_false)
+
+VectorF4 VectorF4::Min(const VectorF4 & vec0, const VectorF4 & vec1)
 {
 	VectorF4 vec;
-	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
-	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
-	if (take.GetZ()) { vec.Z = value_true.Z; } else { vec.Z = value_false.Z; }
-	if (take.GetW()) { vec.W = value_true.W; } else { vec.W = value_false.W; }
+	if (vec0.X < vec1.X) { vec.X = vec0.X; } else { vec.X = vec1.X; }
+	if (vec0.Y < vec1.Y) { vec.Y = vec0.Y; } else { vec.Y = vec1.Y; }
+	if (vec0.Z < vec1.Z) { vec.Z = vec0.Z; } else { vec.Z = vec1.Z; }
+	if (vec0.W < vec1.W) { vec.W = vec0.W; } else { vec.W = vec1.W; }
+	return vec;
+}
+VectorF4 VectorF4::Max(const VectorF4 & vec0, const VectorF4 & vec1)
+{
+	VectorF4 vec;
+	if (vec0.X > vec1.X) { vec.X = vec0.X; } else { vec.X = vec1.X; }
+	if (vec0.Y > vec1.Y) { vec.Y = vec0.Y; } else { vec.Y = vec1.Y; }
+	if (vec0.Z > vec1.Z) { vec.Z = vec0.Z; } else { vec.Z = vec1.Z; }
+	if (vec0.W > vec1.W) { vec.W = vec0.W; } else { vec.W = vec1.W; }
+	return vec;
+}
+VectorF4 VectorF4::Mix(const VectorF4 & vec0, const VectorF4 & vec1, const Bool4 & condition)
+{
+	VectorF4 vec;
+	if (condition.GetX()) { vec.X = vec1.X; } else { vec.X = vec0.X; }
+	if (condition.GetY()) { vec.Y = vec1.Y; } else { vec.Y = vec0.Y; }
+	if (condition.GetZ()) { vec.Z = vec1.Z; } else { vec.Z = vec0.Z; }
+	if (condition.GetW()) { vec.W = vec1.W; } else { vec.W = vec0.W; }
 	return vec;
 }
 

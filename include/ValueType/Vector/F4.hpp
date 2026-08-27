@@ -23,11 +23,13 @@ struct VectorF4
 
 
 
-	VectorF4		Min(const VectorF4 & other) const;
-	VectorF4		Max(const VectorF4 & other) const;
+	VectorF4	Min(const VectorF4 & other) const;
+	VectorF4	Max(const VectorF4 & other) const;
+	VectorF4	Mix(const VectorF4 & other, const Bool4 & condition) const;
 
-			VectorF4	Mix(const Bool4 & take, const VectorF4 & other) const;
-	static	VectorF4	Mix(const Bool4 & take, const VectorF4 & value_true, const VectorF4 & value_false);
+	static VectorF4		Min(const VectorF4 & vec0, const VectorF4 & vec1);
+	static VectorF4		Max(const VectorF4 & vec0, const VectorF4 & vec1);
+	static VectorF4		Mix(const VectorF4 & vec0, const VectorF4 & vec1, const Bool4 & condition);
 
 
 

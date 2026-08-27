@@ -24,11 +24,13 @@ struct VectorF3
 
 
 
-	VectorF3		Min(const VectorF3 & other) const;
-	VectorF3		Max(const VectorF3 & other) const;
+	VectorF3	Min(const VectorF3 & other) const;
+	VectorF3	Max(const VectorF3 & other) const;
+	VectorF3	Mix(const VectorF3 & other, const Bool3 & condition) const;
 
-			VectorF3	Mix(const Bool3 & take, const VectorF3 & other) const;
-	static	VectorF3	Mix(const Bool3 & take, const VectorF3 & value_true, const VectorF3 & value_false);
+	static VectorF3		Min(const VectorF3 & vec0, const VectorF3 & vec1);
+	static VectorF3		Max(const VectorF3 & vec0, const VectorF3 & vec1);
+	static VectorF3		Mix(const VectorF3 & vec0, const VectorF3 & vec1, const Bool3 & condition);
 
 
 

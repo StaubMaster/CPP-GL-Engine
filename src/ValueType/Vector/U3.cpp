@@ -39,21 +39,37 @@ VectorU3 VectorU3::Max(const VectorU3 & other) const
 	if (other.Z > vec.Z) { vec.Z = other.Z; }
 	return vec;
 }
-
-VectorU3 VectorU3::Mix(const Bool3 & take, const VectorU3 & other) const
+VectorU3 VectorU3::Mix(const VectorU3 & other, const Bool3 & condition) const
 {
 	VectorU3 vec(*this);
-	if (take.GetX()) { vec.X = other.X; }
-	if (take.GetY()) { vec.Y = other.Y; }
-	if (take.GetZ()) { vec.Z = other.Z; }
+	if (condition.GetX()) { vec.X = other.X; }
+	if (condition.GetY()) { vec.Y = other.Y; }
+	if (condition.GetZ()) { vec.Z = other.Z; }
 	return vec;
 }
-VectorU3 VectorU3::Mix(const Bool3 & take, const VectorU3 & value_true, const VectorU3 & value_false)
+
+VectorU3 VectorU3::Min(const VectorU3 & vec0, const VectorU3 & vec1)
 {
 	VectorU3 vec;
-	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
-	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
-	if (take.GetZ()) { vec.Z = value_true.Z; } else { vec.Z = value_false.Z; }
+	if (vec0.X < vec1.X) { vec.X = vec0.X; } else { vec.X = vec1.X; }
+	if (vec0.Y < vec1.Y) { vec.Y = vec0.Y; } else { vec.Y = vec1.Y; }
+	if (vec0.Z < vec1.Z) { vec.Z = vec0.Z; } else { vec.Z = vec1.Z; }
+	return vec;
+}
+VectorU3 VectorU3::Max(const VectorU3 & vec0, const VectorU3 & vec1)
+{
+	VectorU3 vec;
+	if (vec0.X > vec1.X) { vec.X = vec0.X; } else { vec.X = vec1.X; }
+	if (vec0.Y > vec1.Y) { vec.Y = vec0.Y; } else { vec.Y = vec1.Y; }
+	if (vec0.Z > vec1.Z) { vec.Z = vec0.Z; } else { vec.Z = vec1.Z; }
+	return vec;
+}
+VectorU3 VectorU3::Mix(const VectorU3 & vec0, const VectorU3 & vec1, const Bool3 & condition)
+{
+	VectorU3 vec;
+	if (condition.GetX()) { vec.X = vec1.X; } else { vec.X = vec0.X; }
+	if (condition.GetY()) { vec.Y = vec1.Y; } else { vec.Y = vec0.Y; }
+	if (condition.GetZ()) { vec.Z = vec1.Z; } else { vec.Z = vec0.Z; }
 	return vec;
 }
 

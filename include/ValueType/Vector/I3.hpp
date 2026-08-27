@@ -24,11 +24,13 @@ struct VectorI3
 
 
 
-	VectorI3		Min(const VectorI3 & other) const;
-	VectorI3		Max(const VectorI3 & other) const;
+	VectorI3	Min(const VectorI3 & other) const;
+	VectorI3	Max(const VectorI3 & other) const;
+	VectorI3	Mix(const VectorI3 & other, const Bool3 & condition) const;
 
-			VectorI3	Mix(const Bool3 & take, const VectorI3 & other) const;
-	static	VectorI3	Mix(const Bool3 & take, const VectorI3 & value_true, const VectorI3 & value_false);
+	static VectorI3		Min(const VectorI3 & vec0, const VectorI3 & vec1);
+	static VectorI3		Max(const VectorI3 & vec0, const VectorI3 & vec1);
+	static VectorI3		Mix(const VectorI3 & vec0, const VectorI3 & vec1, const Bool3 & condition);
 
 
 

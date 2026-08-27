@@ -5,29 +5,19 @@
 
 template<typename ValueType, typename VectorType, typename BoxType> struct Box_1 : public Box__<ValueType, VectorType, BoxType>
 {
-~Box_1() { }
+~Box_1() = default;
+Box_1() = default;
+Box_1(const Box_1 & other) = default;
+Box_1 & operator=(const Box_1 & other) = default;
 
-Box_1(VectorType min, VectorType max)
-	: Box__<ValueType, VectorType, BoxType>(min, max)
-{ }
-
-Box_1(const Box_1 & other)
-	: Box__<ValueType, VectorType, BoxType>(other)
-{ }
-Box_1 & operator=(const Box_1 & other)
-{
-	Box__<ValueType, VectorType, BoxType>::operator=(other);
-	return *this;
-}
+Box_1(VectorType min, VectorType max);
 
 
 
-void Consider(VectorType val)
-{
-	if (val < this -> Min) { this -> Min = val; }
+bool		IsNormal() const;
+BoxType		Normalize() const;
 
-	if (val > this -> Max) { this -> Max = val; }
-}
+void	Consider(const VectorType & vec);
 
 
 
@@ -36,29 +26,20 @@ void Consider(VectorType val)
 // pass parameter by Value vs Referance ?
 // these ValueTypes are relatively small so Value should be fine
 
-bool IntersectInclusive(VectorType vec) const { return (vec >= this -> Min) & (vec <= this -> Max); }
-bool IntersectExclusive(VectorType vec) const { return (vec > this -> Min) & (vec < this -> Max); }
-bool IntersectEdge(VectorType vec) const { return (vec == this -> Min) | (vec == this -> Max); }
+// Contains1
+bool	IntersectEdge(const VectorType & vec) const;
+bool	IntersectInclusive(const VectorType & vec) const;
+bool	IntersectExclusive(const VectorType & vec) const;
 
-bool IntersectInclusive(Box_1 box) const { return (this -> Max >= box.Min) & (this -> Min <= box.Max); }
-bool IntersectExclusive(Box_1 box) const { return (this -> Max > box.Min) & (this -> Min < box.Max); }
+// Intersects1
+bool	IntersectInclusive(const BoxType & box) const;
+bool	IntersectExclusive(const BoxType & box) const;
 
+// Contains
+bool	Intersekt(const VectorType & vec) const;
 
-
-bool Intersekt(VectorType val) const
-{
-	return IntersectInclusive(val);
-	/*return (this -> Min.X <= val.X && this -> Max.X >= val.X)
-		&& (this -> Min.Y <= val.Y && this -> Max.Y >= val.Y)
-	;*/
-}
-bool Intersekt(Box_1 other) const
-{
-	return IntersectExclusive(other);
-	/*return ((this -> Max.X > other.Min.X) && (this -> Min.X < other.Max.X))
-		&& ((this -> Max.Y > other.Min.Y) && (this -> Min.Y < other.Max.Y))
-	;*/
-}
+// Intersects
+bool	Intersekt(const BoxType & box) const;
 };
 
 #endif

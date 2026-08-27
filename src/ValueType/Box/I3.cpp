@@ -2,8 +2,6 @@
 
 
 
-BoxI3::~BoxI3() { }
-
 BoxI3::BoxI3()
 	: Box_3(
 		VectorI3(0x7FFFFFFF),
@@ -14,11 +12,9 @@ BoxI3::BoxI3(VectorI3 min, VectorI3 max)
 	: Box_3(min, max)
 { }
 
-BoxI3::BoxI3(const BoxI3 & other)
-	: Box_3(other)
-{ }
-BoxI3 & BoxI3::operator=(const BoxI3 & other)
-{
-	Box_3::operator=(other);
-	return *this;
-}
+
+
+#include "../src/ValueType/Box/__.cpp"
+#include "../src/ValueType/Box/_3.cpp"
+template struct Box__<int, VectorI3, BoxI3>;
+template struct Box_3<int, VectorI3, BoxI3>;

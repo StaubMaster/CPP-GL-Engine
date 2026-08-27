@@ -17,47 +17,25 @@ template<typename ValueType, typename VectorType, typename BoxType> struct Box__
 VectorType	Min;
 VectorType	Max;
 
-
-
 ~Box__() = default;
 Box__() = default;
 Box__(const Box__ & other) = default;
 Box__ & operator=(const Box__ & other) = default;
 
-Box__(VectorType min, VectorType max)
-	: Min(min)
-	, Max(max)
-{ }
+Box__(VectorType min, VectorType max);
 
 
 
-bool IsNormal() const
-{
-	return (Min <= Max).All(true);
-}
-BoxType Normalize() const
-{
-	return BoxType(
-		this -> Min.Min(this -> Max),
-		this -> Max.Max(this -> Min)
-	);
-}
-
-VectorType Size() const
-{
-	return (Max - Min);
-}
-VectorType Center() const
-{
-	return ((Max + Min) / 2.0f);
-}
+VectorType	Size() const;
+VectorType	Center() const;
 
 
 
 template<typename OtherBoxType>
 BoxType OuterBox(const OtherBoxType & other) const
 {
-	return BoxType(this -> Min.Min(other.Min), this -> Max.Max(other.Max));
+	//return BoxType(this -> Min.Min(other.Min), this -> Max.Max(other.Max));
+	return BoxType(VectorType::Min(Min, other.Min), VectorType::Max(Max, other.Max));
 }
 
 /*
@@ -127,7 +105,8 @@ c.Max = (a.Max.X, b.Max.Y)
 template<typename OtherBoxType>
 BoxType InnerBox(const OtherBoxType & other) const 
 {
-	return BoxType(this -> Min.Max(other.Min), this -> Max.Min(other.Max));
+	//return BoxType(this -> Min.Max(other.Min), this -> Max.Min(other.Max));
+	return BoxType(VectorType::Max(Min, other.Min), VectorType::Min(Max, other.Max));
 }
 };
 

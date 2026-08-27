@@ -23,11 +23,14 @@ struct VectorF2
 
 
 
-	VectorF2		Min(const VectorF2 & other) const;
-	VectorF2		Max(const VectorF2 & other) const;
+	VectorF2	Min(const VectorF2 & other) const;
+	VectorF2	Max(const VectorF2 & other) const;
+	VectorF2	Mix(const VectorF2 & other, const Bool2 & condition) const;
 
-			VectorF2	Mix(const Bool2 & take, const VectorF2 & other) const;
-	static	VectorF2	Mix(const Bool2 & take, const VectorF2 & value_true, const VectorF2 & value_false);
+	static VectorF2		Min(const VectorF2 & vec0, const VectorF2 & vec1);
+	static VectorF2		Max(const VectorF2 & vec0, const VectorF2 & vec1);
+	static VectorF2		Mix(const VectorF2 & vec0, const VectorF2 & vec1, const Bool2 & condition);
+
 
 
 

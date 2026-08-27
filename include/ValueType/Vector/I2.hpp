@@ -23,11 +23,13 @@ struct VectorI2
 
 
 
-	VectorI2		Min(const VectorI2 & other) const;
-	VectorI2		Max(const VectorI2 & other) const;
+	VectorI2	Min(const VectorI2 & other) const;
+	VectorI2	Max(const VectorI2 & other) const;
+	VectorI2	Mix(const VectorI2 & other, const Bool2 & condition) const;
 
-			VectorI2	Mix(const Bool2 & take, const VectorI2 & other) const;
-	static	VectorI2	Mix(const Bool2 & take, const VectorI2 & value_true, const VectorI2 & value_false);
+	static VectorI2		Min(const VectorI2 & vec0, const VectorI2 & vec1);
+	static VectorI2		Max(const VectorI2 & vec0, const VectorI2 & vec1);
+	static VectorI2		Mix(const VectorI2 & vec0, const VectorI2 & vec1, const Bool2 & condition);
 
 
 

@@ -1,8 +1,7 @@
 #include "ValueType/Box/F3.hpp"
+#include "ValueType/Bool/3.hpp"
 
 
-
-BoxF3::~BoxF3() { }
 
 BoxF3::BoxF3()
 	: Box_3(
@@ -13,15 +12,6 @@ BoxF3::BoxF3()
 BoxF3::BoxF3(VectorF3 min, VectorF3 max)
 	: Box_3(min, max)
 { }
-
-BoxF3::BoxF3(const BoxF3 & other)
-	: Box_3(other)
-{ }
-BoxF3 & BoxF3::operator=(const BoxF3 & other)
-{
-	Box_3::operator=(other);
-	return *this;
-}
 
 
 
@@ -36,13 +26,13 @@ VectorF3 BoxF3::CollisionTimePerAxis(
 	//if (vel0.X > 0.0f) { pos0.X = box0.Max.X; } else { pos0.X = box0.Min.X; }
 	//if (vel0.Y > 0.0f) { pos0.Y = box0.Max.Y; } else { pos0.Y = box0.Min.Y; }
 	//if (vel0.Z > 0.0f) { pos0.Z = box0.Max.Z; } else { pos0.Z = box0.Min.Z; }
-	VectorF3 pos0 = VectorF3::Mix(comp, box0.Max, box0.Min);
+	VectorF3 pos0 = VectorF3::Mix(box0.Min, box0.Max, comp);
 
 	//VectorF3 pos1;
 	//if (vel0.X > 0.0f) { pos1.X = box1.Min.X; } else { pos1.X = box1.Max.X; }
 	//if (vel0.Y > 0.0f) { pos1.Y = box1.Min.Y; } else { pos1.Y = box1.Max.Y; }
 	//if (vel0.Z > 0.0f) { pos1.Z = box1.Min.Z; } else { pos1.Z = box1.Max.Z; }
-	VectorF3 pos1 = VectorF3::Mix(comp, box1.Min, box1.Max);
+	VectorF3 pos1 = VectorF3::Mix(box1.Max, box1.Min, comp);
 
 	return (pos1 - pos0) / vel0;
 }
@@ -91,3 +81,10 @@ VectorF3 BoxF3::CollisionTimePerAxisNaN(
 
 	return t;
 }
+
+
+
+#include "../src/ValueType/Box/__.cpp"
+#include "../src/ValueType/Box/_3.cpp"
+template struct Box__<float, VectorF3, BoxF3>;
+template struct Box_3<float, VectorF3, BoxF3>;

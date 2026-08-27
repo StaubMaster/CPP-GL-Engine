@@ -6,13 +6,12 @@
 
 struct BoxF3 : public Box_3<float, VectorF3, BoxF3>
 {
-	~BoxF3();
+	~BoxF3() = default;
+	BoxF3(const BoxF3 & other) = default;
+	BoxF3 & operator=(const BoxF3 & other) = default;
 
 	BoxF3();
 	BoxF3(VectorF3 min, VectorF3 max);
-
-	BoxF3(const BoxF3 & other);
-	BoxF3 & operator=(const BoxF3 & other);
 
 	// put into Box_3 ?
 	// this uses float for time. so keep here ?
