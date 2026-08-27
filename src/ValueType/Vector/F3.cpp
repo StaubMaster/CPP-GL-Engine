@@ -1,20 +1,63 @@
 #include "ValueType/Vector/F3.hpp"
 
-#include "ValueType/Vector/U3.hpp"
 #include "ValueType/Vector/I3.hpp"
+#include "ValueType/Vector/U3.hpp"
+
+#include "ValueType/Bool/3.hpp"
 
 #include <math.h>
 
 
 
-VectorF3::~VectorF3() { }
+VectorF3::VectorF3(float x, float y, float z)
+	: X(x)
+	, Y(y)
+	, Z(z)
+{ }
+VectorF3::VectorF3(float value)
+	: X(value)
+	, Y(value)
+	, Z(value)
+{ }
 
-VectorF3::VectorF3() : Vector_3() { }
-VectorF3::VectorF3(float value) : Vector_3(value) { }
-VectorF3::VectorF3(float x, float y, float z) : Vector_3(x, y, z) { }
+VectorI3 VectorF3::ToI() const { return VectorI3(X, Y, Z); }
+VectorU3 VectorF3::ToU() const { return VectorU3(X, Y, Z); }
 
-VectorF3::VectorF3(const VectorF3 & other) : Vector_3(other) { }
-VectorF3 & VectorF3::operator=(const VectorF3 & other) { Vector_3::operator=(other); return *this; }
+
+
+VectorF3 VectorF3::Min(const VectorF3 & other) const
+{
+	VectorF3 vec(*this);
+	if (other.X < vec.X) { vec.X = other.X; }
+	if (other.Y < vec.Y) { vec.Y = other.Y; }
+	if (other.Z < vec.Z) { vec.Z = other.Z; }
+	return vec;
+}
+VectorF3 VectorF3::Max(const VectorF3 & other) const
+{
+	VectorF3 vec(*this);
+	if (other.X > vec.X) { vec.X = other.X; }
+	if (other.Y > vec.Y) { vec.Y = other.Y; }
+	if (other.Z > vec.Z) { vec.Z = other.Z; }
+	return vec;
+}
+
+VectorF3 VectorF3::Mix(const Bool3 & take, const VectorF3 & other) const
+{
+	VectorF3 vec(*this);
+	if (take.GetX()) { vec.X = other.X; }
+	if (take.GetY()) { vec.Y = other.Y; }
+	if (take.GetZ()) { vec.Z = other.Z; }
+	return vec;
+}
+VectorF3 VectorF3::Mix(const Bool3 & take, const VectorF3 & value_true, const VectorF3 & value_false)
+{
+	VectorF3 vec;
+	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
+	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
+	if (take.GetZ()) { vec.Z = value_true.Z; } else { vec.Z = value_false.Z; }
+	return vec;
+}
 
 
 
@@ -123,12 +166,39 @@ VectorI3 VectorF3::RankDimensions() const
 
 
 
-VectorF3 operator+(VectorF3 v, float f) { return VectorF3(v.X + f, v.Y + f, v.Z + f); }
-VectorF3 operator-(VectorF3 v, float f) { return VectorF3(v.X - f, v.Y - f, v.Z - f); }
-VectorF3 operator*(VectorF3 v, float f) { return VectorF3(v.X * f, v.Y * f, v.Z * f); }
-VectorF3 operator/(VectorF3 v, float f) { return VectorF3(v.X / f, v.Y / f, v.Z / f); }
+Bool3			VectorF3::operator==(const VectorF3 & other) const	{ return Bool3(X == other.X, Y == other.Y, Z == other.Z); }
+Bool3			VectorF3::operator!=(const VectorF3 & other) const	{ return Bool3(X != other.X, Y != other.Y, Z != other.Z); }
+Bool3			VectorF3::operator< (const VectorF3 & other) const	{ return Bool3(X <  other.X, Y <  other.Y, Z <  other.Z); }
+Bool3			VectorF3::operator> (const VectorF3 & other) const	{ return Bool3(X >  other.X, Y >  other.Y, Z >  other.Z); }
+Bool3			VectorF3::operator<=(const VectorF3 & other) const	{ return Bool3(X <= other.X, Y <= other.Y, Z <= other.Z); }
+Bool3			VectorF3::operator>=(const VectorF3 & other) const	{ return Bool3(X >= other.X, Y >= other.Y, Z >= other.Z); }
 
-VectorF3 operator+(float f, VectorF3 v) { return VectorF3(f + v.X, f + v.Y, f + v.Z); }
-VectorF3 operator-(float f, VectorF3 v) { return VectorF3(f - v.X, f - v.Y, f - v.Z); }
-VectorF3 operator*(float f, VectorF3 v) { return VectorF3(f * v.X, f * v.Y, f * v.Z); }
-VectorF3 operator/(float f, VectorF3 v) { return VectorF3(f / v.X, f / v.Y, f / v.Z); }
+VectorF3		VectorF3::operator+() const							{ return VectorF3(+X, +Y, +Z); }
+VectorF3		VectorF3::operator-() const							{ return VectorF3(-X, -Y, -Z); }
+
+VectorF3		VectorF3::operator+(const VectorF3 & other) const	{ return VectorF3(X + other.X, Y + other.Y, Z + other.Z); }
+VectorF3		VectorF3::operator-(const VectorF3 & other) const	{ return VectorF3(X - other.X, Y - other.Y, Z - other.Z); }
+VectorF3		VectorF3::operator*(const VectorF3 & other) const	{ return VectorF3(X * other.X, Y * other.Y, Z * other.Z); }
+VectorF3		VectorF3::operator/(const VectorF3 & other) const	{ return VectorF3(X / other.X, Y / other.Y, Z / other.Z); }
+
+VectorF3 &		VectorF3::operator+=(const VectorF3 & other)		{ X += other.X; Y += other.Y; Z += other.Z; return *this; }
+VectorF3 &		VectorF3::operator-=(const VectorF3 & other)		{ X -= other.X; Y -= other.Y; Z -= other.Z; return *this; }
+VectorF3 &		VectorF3::operator*=(const VectorF3 & other)		{ X *= other.X; Y *= other.Y; Z *= other.Z; return *this; }
+VectorF3 &		VectorF3::operator/=(const VectorF3 & other)		{ X /= other.X; Y /= other.Y; Z /= other.Z; return *this; }
+
+VectorF3 &		VectorF3::operator+=(const float & val)				{ X += val; Y += val; Z += val; return *this; }
+VectorF3 &		VectorF3::operator-=(const float & val)				{ X -= val; Y -= val; Z -= val; return *this; }
+VectorF3 &		VectorF3::operator*=(const float & val)				{ X *= val; Y *= val; Z *= val; return *this; }
+VectorF3 &		VectorF3::operator/=(const float & val)				{ X /= val; Y /= val; Z /= val; return *this; }
+
+
+
+VectorF3 	operator+(const VectorF3 & vec, const float & val) { return VectorF3(vec.X + val, vec.Y + val, vec.Z + val); }
+VectorF3 	operator-(const VectorF3 & vec, const float & val) { return VectorF3(vec.X - val, vec.Y - val, vec.Z - val); }
+VectorF3 	operator*(const VectorF3 & vec, const float & val) { return VectorF3(vec.X * val, vec.Y * val, vec.Z * val); }
+VectorF3 	operator/(const VectorF3 & vec, const float & val) { return VectorF3(vec.X / val, vec.Y / val, vec.Z / val); }
+
+VectorF3 	operator+(const float & val, const VectorF3 & vec) { return VectorF3(val + vec.X, val + vec.Y, val + vec.Z); }
+VectorF3 	operator-(const float & val, const VectorF3 & vec) { return VectorF3(val - vec.X, val - vec.Y, val - vec.Z); }
+VectorF3 	operator*(const float & val, const VectorF3 & vec) { return VectorF3(val * vec.X, val * vec.Y, val * vec.Z); }
+VectorF3 	operator/(const float & val, const VectorF3 & vec) { return VectorF3(val / vec.X, val / vec.Y, val / vec.Z); }

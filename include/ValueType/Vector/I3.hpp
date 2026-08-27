@@ -1,74 +1,92 @@
 #ifndef  VECTOR_I_3_HPP
 # define VECTOR_I_3_HPP
 
-# include "ValueType/Vector/_3.hpp"
-
-struct VectorF3;
+struct Bool3;
 struct VectorU3;
-struct VectorI3;
+struct VectorF3;
 
-struct VectorI3 : public Vector_3<int, VectorI3>
+struct VectorI3
 {
-	~VectorI3();
+	int	X = 0;
+	int	Y = 0;
+	int	Z = 0;
 
-	VectorI3();
-	VectorI3(int value);
+	~VectorI3() = default;
+	VectorI3() = default;
+	VectorI3(const VectorI3 & other) = default;
+	VectorI3 & operator=(const VectorI3 & other) = default;
+
 	VectorI3(int x, int y, int z);
+	VectorI3(int value);
 
-	VectorI3(const VectorI3 & other);
-	VectorI3 & operator=(const VectorI3 & other);
-
-	template<typename OtherVectorType> VectorI3(const OtherVectorType & other) : Vector_3(other) { }
-
+	VectorU3	ToU() const;
+	VectorF3	ToF() const;
 
 
-	using	Vector_3::operator+;
-	using	Vector_3::operator-;
-	using	Vector_3::operator*;
-	using	Vector_3::operator/;
 
-	using	Vector_3::operator+=;
-	using	Vector_3::operator-=;
-	using	Vector_3::operator*=;
-	using	Vector_3::operator/=;
+	VectorI3		Min(const VectorI3 & other) const;
+	VectorI3		Max(const VectorI3 & other) const;
 
-	using	Vector_3::operator==;
-	using	Vector_3::operator!=;
-	using	Vector_3::operator<;
-	using	Vector_3::operator>;
-	using	Vector_3::operator<=;
-	using	Vector_3::operator>=;
+			VectorI3	Mix(const Bool3 & take, const VectorI3 & other) const;
+	static	VectorI3	Mix(const Bool3 & take, const VectorI3 & value_true, const VectorI3 & value_false);
 
 
+
+	int		Product() const;
+
+	int			Convert(VectorI3 idx) const;
+	VectorI3	Convert(int idx) const;
+
+	static int			Convert(int size, VectorI3 idx);
+	static VectorI3		Convert(int size, int idx);
+
+
+
+	Bool3			operator==(const VectorI3 & other) const;
+	Bool3			operator!=(const VectorI3 & other) const;
+	Bool3			operator< (const VectorI3 & other) const;
+	Bool3			operator> (const VectorI3 & other) const;
+	Bool3			operator<=(const VectorI3 & other) const;
+	Bool3			operator>=(const VectorI3 & other) const;
+
+	VectorI3		operator+() const;
+	VectorI3		operator-() const;
+
+	VectorI3		operator+(const VectorI3 & other) const;
+	VectorI3		operator-(const VectorI3 & other) const;
+	VectorI3		operator*(const VectorI3 & other) const;
+	VectorI3		operator/(const VectorI3 & other) const;
 
 	VectorI3		operator%(const VectorI3 & other) const;
 
 	VectorI3		operator~() const;
+
 	VectorI3		operator&(const VectorI3 & other) const;
 	VectorI3		operator|(const VectorI3 & other) const;
 	VectorI3		operator^(const VectorI3 & other) const;
+
 	VectorI3		operator<<(const VectorI3 & other) const;
 	VectorI3		operator>>(const VectorI3 & other) const;
 
+	VectorI3 &		operator+=(const VectorI3 & other);
+	VectorI3 &		operator-=(const VectorI3 & other);
+	VectorI3 &		operator*=(const VectorI3 & other);
+	VectorI3 &		operator/=(const VectorI3 & other);
 
-
-	int	Product() const;
-
-	unsigned int	Convert(VectorI3 idx) const;
-	VectorI3		Convert(unsigned int idx) const;
-
-	static unsigned int		Convert(unsigned int size, VectorI3 idx);
-	static VectorI3			Convert(unsigned int size, unsigned int idx);
+	VectorI3 &		operator+=(const int & val);
+	VectorI3 &		operator-=(const int & val);
+	VectorI3 &		operator*=(const int & val);
+	VectorI3 &		operator/=(const int & val);
 };
 
-VectorI3		operator+(VectorI3 vec, int val);
-VectorI3		operator-(VectorI3 vec, int val);
-VectorI3		operator*(VectorI3 vec, int val);
-VectorI3		operator/(VectorI3 vec, int val);
+VectorI3		operator+(const VectorI3 & vec, const int & val);
+VectorI3		operator-(const VectorI3 & vec, const int & val);
+VectorI3		operator*(const VectorI3 & vec, const int & val);
+VectorI3		operator/(const VectorI3 & vec, const int & val);
 
-VectorI3		operator+(int val, VectorI3 vev);
-VectorI3		operator-(int val, VectorI3 vev);
-VectorI3		operator*(int val, VectorI3 vev);
-VectorI3		operator/(int val, VectorI3 vev);
+VectorI3		operator+(const int & val, const VectorI3 & vec);
+VectorI3		operator-(const int & val, const VectorI3 & vec);
+VectorI3		operator*(const int & val, const VectorI3 & vec);
+VectorI3		operator/(const int & val, const VectorI3 & vec);
 
 #endif

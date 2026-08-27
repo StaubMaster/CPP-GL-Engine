@@ -1,45 +1,33 @@
 #ifndef  VECTOR_F_2_HPP
 # define VECTOR_F_2_HPP
 
-# include "ValueType/Vector/_2.hpp"
-
-struct VectorU2;
+struct Bool2;
 struct VectorI2;
+struct VectorU2;
 
-struct VectorF2 : public Vector_2<float, VectorF2>
+struct VectorF2
 {
-	~VectorF2();
+	float	X = 0.0f;
+	float	Y = 0.0f;
 
-	VectorF2();
-	VectorF2(float value);
+	~VectorF2() = default;
+	VectorF2() = default;
+	VectorF2(const VectorF2 & other) = default;
+	VectorF2 & operator=(const VectorF2 & other) = default;
+
 	VectorF2(float x, float y);
+	VectorF2(float value);
 
-	VectorF2(const VectorF2 & other);
-	VectorF2(const VectorU2 & other);
-	VectorF2(const VectorI2 & other);
-
-	VectorF2 & operator=(const VectorF2 & other);
-	VectorF2 & operator=(const VectorU2 & other);
-	VectorF2 & operator=(const VectorI2 & other);
+	VectorI2	ToI() const;
+	VectorU2	ToU() const;
 
 
 
-	using	Vector_2::operator+;
-	using	Vector_2::operator-;
-	using	Vector_2::operator*;
-	using	Vector_2::operator/;
+	VectorF2		Min(const VectorF2 & other) const;
+	VectorF2		Max(const VectorF2 & other) const;
 
-	using	Vector_2::operator+=;
-	using	Vector_2::operator-=;
-	using	Vector_2::operator*=;
-	using	Vector_2::operator/=;
-
-	using	Vector_2::operator==;
-	using	Vector_2::operator!=;
-	using	Vector_2::operator<;
-	using	Vector_2::operator>;
-	using	Vector_2::operator<=;
-	using	Vector_2::operator>=;
+			VectorF2	Mix(const Bool2 & take, const VectorF2 & other) const;
+	static	VectorF2	Mix(const Bool2 & take, const VectorF2 & value_true, const VectorF2 & value_false);
 
 
 
@@ -58,10 +46,12 @@ struct VectorF2 : public Vector_2<float, VectorF2>
 	VectorF2		roundC(float size) const;
 	VectorF2		roundF(float size) const;
 
+	VectorF2		abs() const;
+
 
 
 			float	dot(const VectorF2 & other) const;
-	static	float	dot(const VectorF2 & vec0, const VectorF2 & vec1);
+	static	float	dot(const VectorF2 & v0, const VectorF2 & v1);
 
 
 
@@ -71,16 +61,43 @@ struct VectorF2 : public Vector_2<float, VectorF2>
 			VectorF2	cross(float f) const;
 	static	VectorF2	cross(float f, const VectorF2 & v);
 	static	VectorF2	cross(const VectorF2 & v, float f);
+
+
+
+	Bool2			operator==(const VectorF2 & other) const;
+	Bool2			operator!=(const VectorF2 & other) const;
+	Bool2			operator< (const VectorF2 & other) const;
+	Bool2			operator> (const VectorF2 & other) const;
+	Bool2			operator<=(const VectorF2 & other) const;
+	Bool2			operator>=(const VectorF2 & other) const;
+
+	VectorF2		operator+() const;
+	VectorF2		operator-() const;
+
+	VectorF2		operator+(const VectorF2 & other) const;
+	VectorF2		operator-(const VectorF2 & other) const;
+	VectorF2		operator*(const VectorF2 & other) const;
+	VectorF2		operator/(const VectorF2 & other) const;
+
+	VectorF2 &		operator+=(const VectorF2 & other);
+	VectorF2 &		operator-=(const VectorF2 & other);
+	VectorF2 &		operator*=(const VectorF2 & other);
+	VectorF2 &		operator/=(const VectorF2 & other);
+
+	VectorF2 &		operator+=(const float & val);
+	VectorF2 &		operator-=(const float & val);
+	VectorF2 &		operator*=(const float & val);
+	VectorF2 &		operator/=(const float & val);
 };
 
-VectorF2		operator+(VectorF2 v, float f);
-VectorF2		operator-(VectorF2 v, float f);
-VectorF2		operator*(VectorF2 v, float f);
-VectorF2		operator/(VectorF2 v, float f);
+VectorF2		operator+(const VectorF2 & vec, const float & val);
+VectorF2		operator-(const VectorF2 & vec, const float & val);
+VectorF2		operator*(const VectorF2 & vec, const float & val);
+VectorF2		operator/(const VectorF2 & vec, const float & val);
 
-VectorF2		operator+(float f, VectorF2 v);
-VectorF2		operator-(float f, VectorF2 v);
-VectorF2		operator*(float f, VectorF2 v);
-VectorF2		operator/(float f, VectorF2 v);
+VectorF2		operator+(const float & val, const VectorF2 & vec);
+VectorF2		operator-(const float & val, const VectorF2 & vec);
+VectorF2		operator*(const float & val, const VectorF2 & vec);
+VectorF2		operator/(const float & val, const VectorF2 & vec);
 
 #endif

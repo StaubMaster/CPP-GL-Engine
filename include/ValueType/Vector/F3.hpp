@@ -1,41 +1,34 @@
 #ifndef  VECTOR_F_3_HPP
 # define VECTOR_F_3_HPP
 
-# include "ValueType/Vector/_3.hpp"
-
+struct Bool3;
 struct VectorI3;
+struct VectorU3;
 
-struct VectorF3 : public Vector_3<float, VectorF3>
+struct VectorF3
 {
-	~VectorF3();
+	float	X = 0.0f;
+	float	Y = 0.0f;
+	float	Z = 0.0f;
 
-	VectorF3();
-	VectorF3(float value);
+	~VectorF3() = default;
+	VectorF3() = default;
+	VectorF3(const VectorF3 & other) = default;
+	VectorF3 & operator=(const VectorF3 & other) = default;
+
 	VectorF3(float x, float y, float z);
+	VectorF3(float value);
 
-	VectorF3(const VectorF3 & other);
-	VectorF3 & operator=(const VectorF3 & other);
-
-	template<typename OtherVectorType> VectorF3(const OtherVectorType & other) : Vector_3(other) { }
-
+	VectorI3	ToI() const;
+	VectorU3	ToU() const;
 
 
-	using	Vector_3::operator+;
-	using	Vector_3::operator-;
-	using	Vector_3::operator*;
-	using	Vector_3::operator/;
 
-	using	Vector_3::operator+=;
-	using	Vector_3::operator-=;
-	using	Vector_3::operator*=;
-	using	Vector_3::operator/=;
+	VectorF3		Min(const VectorF3 & other) const;
+	VectorF3		Max(const VectorF3 & other) const;
 
-	using	Vector_3::operator==;
-	using	Vector_3::operator!=;
-	using	Vector_3::operator<;
-	using	Vector_3::operator>;
-	using	Vector_3::operator<=;
-	using	Vector_3::operator>=;
+			VectorF3	Mix(const Bool3 & take, const VectorF3 & other) const;
+	static	VectorF3	Mix(const Bool3 & take, const VectorF3 & value_true, const VectorF3 & value_false);
 
 
 
@@ -75,16 +68,43 @@ struct VectorF3 : public Vector_3<float, VectorF3>
 		Dimension being the same is currently undefined bacause I dont feel like defining it
 	*/
 	VectorI3		RankDimensions() const;
+
+
+
+	Bool3			operator==(const VectorF3 & other) const;
+	Bool3			operator!=(const VectorF3 & other) const;
+	Bool3			operator< (const VectorF3 & other) const;
+	Bool3			operator> (const VectorF3 & other) const;
+	Bool3			operator<=(const VectorF3 & other) const;
+	Bool3			operator>=(const VectorF3 & other) const;
+
+	VectorF3		operator+() const;
+	VectorF3		operator-() const;
+
+	VectorF3		operator+(const VectorF3 & other) const;
+	VectorF3		operator-(const VectorF3 & other) const;
+	VectorF3		operator*(const VectorF3 & other) const;
+	VectorF3		operator/(const VectorF3 & other) const;
+
+	VectorF3 &		operator+=(const VectorF3 & other);
+	VectorF3 &		operator-=(const VectorF3 & other);
+	VectorF3 &		operator*=(const VectorF3 & other);
+	VectorF3 &		operator/=(const VectorF3 & other);
+
+	VectorF3 &		operator+=(const float & val);
+	VectorF3 &		operator-=(const float & val);
+	VectorF3 &		operator*=(const float & val);
+	VectorF3 &		operator/=(const float & val);
 };
 
-VectorF3		operator+(VectorF3 v, float f);
-VectorF3		operator-(VectorF3 v, float f);
-VectorF3		operator*(VectorF3 v, float f);
-VectorF3		operator/(VectorF3 v, float f);
+VectorF3		operator+(const VectorF3 & vec, const float & val);
+VectorF3		operator-(const VectorF3 & vec, const float & val);
+VectorF3		operator*(const VectorF3 & vec, const float & val);
+VectorF3		operator/(const VectorF3 & vec, const float & val);
 
-VectorF3		operator+(float f, VectorF3 v);
-VectorF3		operator-(float f, VectorF3 v);
-VectorF3		operator*(float f, VectorF3 v);
-VectorF3		operator/(float f, VectorF3 v);
+VectorF3		operator+(const float & val, const VectorF3 & vec);
+VectorF3		operator-(const float & val, const VectorF3 & vec);
+VectorF3		operator*(const float & val, const VectorF3 & vec);
+VectorF3		operator/(const float & val, const VectorF3 & vec);
 
 #endif

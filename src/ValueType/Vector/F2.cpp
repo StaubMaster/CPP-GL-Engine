@@ -1,26 +1,57 @@
 #include "ValueType/Vector/F2.hpp"
 
-#include "ValueType/Vector/U2.hpp"
 #include "ValueType/Vector/I2.hpp"
+#include "ValueType/Vector/U2.hpp"
+
+#include "ValueType/Bool/2.hpp"
 
 #include <math.h>
 
 
 
-VectorF2::~VectorF2() { }
+VectorF2::VectorF2(float x, float y)
+	: X(x)
+	, Y(y)
+{ }
+VectorF2::VectorF2(float value)
+	: X(value)
+	, Y(value)
+{ }
 
-VectorF2::VectorF2() : Vector_2() { }
-VectorF2::VectorF2(float value) : Vector_2(value) { }
-VectorF2::VectorF2(float x, float y) : Vector_2(x, y) { }
+VectorI2 VectorF2::ToI() const { return VectorI2(X, Y); }
+VectorU2 VectorF2::ToU() const { return VectorU2(X, Y); }
 
-VectorF2::VectorF2(const VectorF2 & other) : Vector_2(other) { }
-VectorF2::VectorF2(const VectorU2 & other) : Vector_2(other) { }
-VectorF2::VectorF2(const VectorI2 & other) : Vector_2(other) { }
 
-VectorF2 & VectorF2::operator=(const VectorF2 & other) { Vector_2::operator=(other); return *this; }
-VectorF2 & VectorF2::operator=(const VectorU2 & other) { Vector_2::operator=(other); return *this; }
-VectorF2 & VectorF2::operator=(const VectorI2 & other) { Vector_2::operator=(other); return *this; }
 
+VectorF2 VectorF2::Min(const VectorF2 & other) const
+{
+	VectorF2 vec(*this);
+	if (other.X < vec.X) { vec.X = other.X; }
+	if (other.Y < vec.Y) { vec.Y = other.Y; }
+		return vec;
+}
+VectorF2 VectorF2::Max(const VectorF2 & other) const
+{
+	VectorF2 vec(*this);
+	if (other.X > vec.X) { vec.X = other.X; }
+	if (other.Y > vec.Y) { vec.Y = other.Y; }
+	return vec;
+}
+
+VectorF2 VectorF2::Mix(const Bool2 & take, const VectorF2 & other) const
+{
+	VectorF2 vec(*this);
+	if (take.GetX()) { vec.X = other.X; }
+	if (take.GetY()) { vec.Y = other.Y; }
+	return vec;
+}
+VectorF2 VectorF2::Mix(const Bool2 & take, const VectorF2 & value_true, const VectorF2 & value_false)
+{
+	VectorF2 vec;
+	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
+	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
+	return vec;
+}
 
 
 
@@ -63,11 +94,17 @@ VectorF2 VectorF2::round (float size) const { return VectorF2(roundf(X / size) *
 VectorF2 VectorF2::roundC(float size) const { return VectorF2( ceilf(X / size) * size,  ceilf(Y / size) * size); }
 VectorF2 VectorF2::roundF(float size) const { return VectorF2(floorf(X / size) * size, floorf(Y / size) * size); }
 
+VectorF2 VectorF2::abs() const
+{
+	VectorF2 vec(*this);
+	if (vec.X < 0) { vec.X = -vec.X; }
+	if (vec.Y < 0) { vec.Y = -vec.Y; }
+	return vec;
+}
 
 
 
-
-float VectorF2::dot(const VectorF2 & v0, const VectorF2 & v1) { return v0.dot(v1); }
+float VectorF2::dot(const VectorF2 & p0, const VectorF2 & p1) { return p0.dot(p1); }
 float VectorF2::dot(const VectorF2 & other) const { return ((X * other.X) + (Y * other.Y)); }
 
 
@@ -121,14 +158,39 @@ VectorF2 VectorF2::cross(const VectorF2 & v, float f)
 
 
 
+Bool2			VectorF2::operator==(const VectorF2 & other) const	{ return Bool2(X == other.X, Y == other.Y); }
+Bool2			VectorF2::operator!=(const VectorF2 & other) const	{ return Bool2(X != other.X, Y != other.Y); }
+Bool2			VectorF2::operator< (const VectorF2 & other) const	{ return Bool2(X <  other.X, Y <  other.Y); }
+Bool2			VectorF2::operator> (const VectorF2 & other) const	{ return Bool2(X >  other.X, Y >  other.Y); }
+Bool2			VectorF2::operator<=(const VectorF2 & other) const	{ return Bool2(X <= other.X, Y <= other.Y); }
+Bool2			VectorF2::operator>=(const VectorF2 & other) const	{ return Bool2(X >= other.X, Y >= other.Y); }
+
+VectorF2		VectorF2::operator+() const							{ return VectorF2(+X, +Y); }
+VectorF2		VectorF2::operator-() const							{ return VectorF2(-X, -Y); }
+
+VectorF2		VectorF2::operator+(const VectorF2 & other) const	{ return VectorF2(X + other.X, Y + other.Y); }
+VectorF2		VectorF2::operator-(const VectorF2 & other) const	{ return VectorF2(X - other.X, Y - other.Y); }
+VectorF2		VectorF2::operator*(const VectorF2 & other) const	{ return VectorF2(X * other.X, Y * other.Y); }
+VectorF2		VectorF2::operator/(const VectorF2 & other) const	{ return VectorF2(X / other.X, Y / other.Y); }
+
+VectorF2 &		VectorF2::operator+=(const VectorF2 & other)		{ X += other.X; Y += other.Y; return *this; }
+VectorF2 &		VectorF2::operator-=(const VectorF2 & other)		{ X -= other.X; Y -= other.Y; return *this; }
+VectorF2 &		VectorF2::operator*=(const VectorF2 & other)		{ X *= other.X; Y *= other.Y; return *this; }
+VectorF2 &		VectorF2::operator/=(const VectorF2 & other)		{ X /= other.X; Y /= other.Y; return *this; }
+
+VectorF2 &		VectorF2::operator+=(const float & val)				{ X += val; Y += val; return *this; }
+VectorF2 &		VectorF2::operator-=(const float & val)				{ X -= val; Y -= val; return *this; }
+VectorF2 &		VectorF2::operator*=(const float & val)				{ X *= val; Y *= val; return *this; }
+VectorF2 &		VectorF2::operator/=(const float & val)				{ X /= val; Y /= val; return *this; }
 
 
-VectorF2 operator+(VectorF2 v, float f) { return VectorF2(v.X + f, v.Y + f); }
-VectorF2 operator-(VectorF2 v, float f) { return VectorF2(v.X - f, v.Y - f); }
-VectorF2 operator*(VectorF2 v, float f) { return VectorF2(v.X * f, v.Y * f); }
-VectorF2 operator/(VectorF2 v, float f) { return VectorF2(v.X / f, v.Y / f); }
 
-VectorF2 operator+(float f, VectorF2 v) { return VectorF2(f + v.X, f + v.Y); }
-VectorF2 operator-(float f, VectorF2 v) { return VectorF2(f - v.X, f - v.Y); }
-VectorF2 operator*(float f, VectorF2 v) { return VectorF2(f * v.X, f * v.Y); }
-VectorF2 operator/(float f, VectorF2 v) { return VectorF2(f / v.X, f / v.Y); }
+VectorF2 	operator+(const VectorF2 & vec, const float & val) { return VectorF2(vec.X + val, vec.Y + val); }
+VectorF2 	operator-(const VectorF2 & vec, const float & val) { return VectorF2(vec.X - val, vec.Y - val); }
+VectorF2 	operator*(const VectorF2 & vec, const float & val) { return VectorF2(vec.X * val, vec.Y * val); }
+VectorF2 	operator/(const VectorF2 & vec, const float & val) { return VectorF2(vec.X / val, vec.Y / val); }
+
+VectorF2 	operator+(const float & val, const VectorF2 & vec) { return VectorF2(val + vec.X, val + vec.Y); }
+VectorF2 	operator-(const float & val, const VectorF2 & vec) { return VectorF2(val - vec.X, val - vec.Y); }
+VectorF2 	operator*(const float & val, const VectorF2 & vec) { return VectorF2(val * vec.X, val * vec.Y); }
+VectorF2 	operator/(const float & val, const VectorF2 & vec) { return VectorF2(val / vec.X, val / vec.Y); }

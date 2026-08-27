@@ -1,37 +1,33 @@
 #ifndef  VECTOR_F_4_HPP
 # define VECTOR_F_4_HPP
 
-# include "ValueType/Vector/_4.hpp"
+struct Bool4;
 
-struct VectorF4 : public Vector_4<float, VectorF4>
+struct VectorF4
 {
-	~VectorF4();
+	float	X = 0.0f;
+	float	Y = 0.0f;
+	float	Z = 0.0f;
+	float	W = 0.0f;
 
-	VectorF4();
-	VectorF4(float value);
+	~VectorF4() = default;
+	VectorF4() = default;
+	VectorF4(const VectorF4 & other) = default;
+	VectorF4 & operator=(const VectorF4 & other) = default;
+
 	VectorF4(float x, float y, float z, float w);
+	VectorF4(float value);
 
-	VectorF4(const VectorF4 & other);
-	VectorF4 & operator=(const VectorF4 & other);
+//	VectorI4	ToI() const;
+//	VectorU4	ToU() const;
 
 
 
-	using	Vector_4::operator+;
-	using	Vector_4::operator-;
-	using	Vector_4::operator*;
-	using	Vector_4::operator/;
+	VectorF4		Min(const VectorF4 & other) const;
+	VectorF4		Max(const VectorF4 & other) const;
 
-	using	Vector_4::operator+=;
-	using	Vector_4::operator-=;
-	using	Vector_4::operator*=;
-	using	Vector_4::operator/=;
-
-	using	Vector_4::operator==;
-	using	Vector_4::operator!=;
-	using	Vector_4::operator<;
-	using	Vector_4::operator>;
-	using	Vector_4::operator<=;
-	using	Vector_4::operator>=;
+			VectorF4	Mix(const Bool4 & take, const VectorF4 & other) const;
+	static	VectorF4	Mix(const Bool4 & take, const VectorF4 & value_true, const VectorF4 & value_false);
 
 
 
@@ -50,20 +46,49 @@ struct VectorF4 : public Vector_4<float, VectorF4>
 	VectorF4		roundC(float size) const;
 	VectorF4		roundF(float size) const;
 
+	VectorF4		abs() const;
+
 
 
 			float	dot(const VectorF4 & other) const;
 	static	float	dot(const VectorF4 & v0, const VectorF4 & v1);
+
+
+
+	Bool4			operator==(const VectorF4 & other) const;
+	Bool4			operator!=(const VectorF4 & other) const;
+	Bool4			operator< (const VectorF4 & other) const;
+	Bool4			operator> (const VectorF4 & other) const;
+	Bool4			operator<=(const VectorF4 & other) const;
+	Bool4			operator>=(const VectorF4 & other) const;
+
+	VectorF4		operator+() const;
+	VectorF4		operator-() const;
+
+	VectorF4		operator+(const VectorF4 & other) const;
+	VectorF4		operator-(const VectorF4 & other) const;
+	VectorF4		operator*(const VectorF4 & other) const;
+	VectorF4		operator/(const VectorF4 & other) const;
+
+	VectorF4 &		operator+=(const VectorF4 & other);
+	VectorF4 &		operator-=(const VectorF4 & other);
+	VectorF4 &		operator*=(const VectorF4 & other);
+	VectorF4 &		operator/=(const VectorF4 & other);
+
+	VectorF4 &		operator+=(const float & val);
+	VectorF4 &		operator-=(const float & val);
+	VectorF4 &		operator*=(const float & val);
+	VectorF4 &		operator/=(const float & val);
 };
 
-VectorF4		operator+(VectorF4 p, float f);
-VectorF4		operator-(VectorF4 p, float f);
-VectorF4		operator*(VectorF4 p, float f);
-VectorF4		operator/(VectorF4 p, float f);
+VectorF4		operator+(const VectorF4 & vec, const float & val);
+VectorF4		operator-(const VectorF4 & vec, const float & val);
+VectorF4		operator*(const VectorF4 & vec, const float & val);
+VectorF4		operator/(const VectorF4 & vec, const float & val);
 
-VectorF4		operator+(float f, VectorF4 p);
-VectorF4		operator-(float f, VectorF4 p);
-VectorF4		operator*(float f, VectorF4 p);
-VectorF4		operator/(float f, VectorF4 p);
+VectorF4		operator+(const float & val, const VectorF4 & vec);
+VectorF4		operator-(const float & val, const VectorF4 & vec);
+VectorF4		operator*(const float & val, const VectorF4 & vec);
+VectorF4		operator/(const float & val, const VectorF4 & vec);
 
 #endif

@@ -2,6 +2,7 @@
 # define CONTAINER_ARRAY_3D_HPP
 
 # include "ValueType/Vector/U3.hpp"
+# include "ValueType/Bool/3.hpp"
 # include "Exception.hpp"
 
 template<typename ItemType> struct Array3D

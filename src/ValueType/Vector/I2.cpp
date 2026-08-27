@@ -1,34 +1,55 @@
 #include "ValueType/Vector/I2.hpp"
 
-#include "ValueType/Vector/F2.hpp"
 #include "ValueType/Vector/U2.hpp"
+#include "ValueType/Vector/F2.hpp"
+
+#include "ValueType/Bool/2.hpp"
 
 
 
-VectorI2::~VectorI2() { }
+VectorI2::VectorI2(int x, int y)
+	: X(x)
+	, Y(y)
+{ }
+VectorI2::VectorI2(int value)
+	: X(value)
+	, Y(value)
+{ }
 
-VectorI2::VectorI2() : Vector_2() { }
-VectorI2::VectorI2(int value) : Vector_2(value) { }
-VectorI2::VectorI2(int x, int y) : Vector_2(x, y) { }
-
-VectorI2::VectorI2(const VectorF2 & other) : Vector_2(other) { }
-VectorI2::VectorI2(const VectorU2 & other) : Vector_2(other) { }
-VectorI2::VectorI2(const VectorI2 & other) : Vector_2(other) { }
-
-VectorI2 & VectorI2::operator=(const VectorF2 & other) { Vector_2::operator=(other); return *this; }
-VectorI2 & VectorI2::operator=(const VectorU2 & other) { Vector_2::operator=(other); return *this; }
-VectorI2 & VectorI2::operator=(const VectorI2 & other) { Vector_2::operator=(other); return *this; }
+VectorU2 VectorI2::ToU() const { return VectorU2(X, Y); }
+VectorF2 VectorI2::ToF() const { return VectorF2(X, Y); }
 
 
 
-VectorI2 VectorI2::operator%(const VectorI2 & other) const { return VectorI2(X % other.X, Y % other.Y); }
+VectorI2 VectorI2::Min(const VectorI2 & other) const
+{
+	VectorI2 vec(*this);
+	if (other.X < vec.X) { vec.X = other.X; }
+	if (other.Y < vec.Y) { vec.Y = other.Y; }
+	return vec;
+}
+VectorI2 VectorI2::Max(const VectorI2 & other) const
+{
+	VectorI2 vec(*this);
+	if (other.X > vec.X) { vec.X = other.X; }
+	if (other.Y > vec.Y) { vec.Y = other.Y; }
+	return vec;
+}
 
-VectorI2 VectorI2::operator~() const { return VectorI2(~X, ~Y); }
-VectorI2 VectorI2::operator&(const VectorI2 & other) const { return VectorI2(X & other.X, Y & other.Y); }
-VectorI2 VectorI2::operator|(const VectorI2 & other) const { return VectorI2(X | other.X, Y | other.Y); }
-VectorI2 VectorI2::operator^(const VectorI2 & other) const { return VectorI2(X ^ other.X, Y ^ other.Y); }
-VectorI2 VectorI2::operator<<(const VectorI2 & other) const { return VectorI2(X << other.X, Y << other.Y); }
-VectorI2 VectorI2::operator>>(const VectorI2 & other) const { return VectorI2(X >> other.X, Y >> other.Y); }
+VectorI2 VectorI2::Mix(const Bool2 & take, const VectorI2 & other) const
+{
+	VectorI2 vec(*this);
+	if (take.GetX()) { vec.X = other.X; }
+	if (take.GetY()) { vec.Y = other.Y; }
+	return vec;
+}
+VectorI2 VectorI2::Mix(const Bool2 & take, const VectorI2 & value_true, const VectorI2 & value_false)
+{
+	VectorI2 vec;
+	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
+	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
+	return vec;
+}
 
 
 
@@ -62,14 +83,50 @@ VectorI2 VectorI2::Convert(int size, int idx)
 
 
 
+Bool2			VectorI2::operator==(const VectorI2 & other) const	{ return Bool2(X == other.X, Y == other.Y); }
+Bool2			VectorI2::operator!=(const VectorI2 & other) const	{ return Bool2(X != other.X, Y != other.Y); }
+Bool2			VectorI2::operator< (const VectorI2 & other) const	{ return Bool2(X <  other.X, Y <  other.Y); }
+Bool2			VectorI2::operator> (const VectorI2 & other) const	{ return Bool2(X >  other.X, Y >  other.Y); }
+Bool2			VectorI2::operator<=(const VectorI2 & other) const	{ return Bool2(X <= other.X, Y <= other.Y); }
+Bool2			VectorI2::operator>=(const VectorI2 & other) const	{ return Bool2(X >= other.X, Y >= other.Y); }
+
+VectorI2		VectorI2::operator+() const							{ return VectorI2(+X, +Y); }
+VectorI2		VectorI2::operator-() const							{ return VectorI2(-X, -Y); }
+
+VectorI2		VectorI2::operator+(const VectorI2 & other) const	{ return VectorI2(X + other.X, Y + other.Y); }
+VectorI2		VectorI2::operator-(const VectorI2 & other) const	{ return VectorI2(X - other.X, Y - other.Y); }
+VectorI2		VectorI2::operator*(const VectorI2 & other) const	{ return VectorI2(X * other.X, Y * other.Y); }
+VectorI2		VectorI2::operator/(const VectorI2 & other) const	{ return VectorI2(X / other.X, Y / other.Y); }
+
+VectorI2		VectorI2::operator%(const VectorI2 & other) const	{ return VectorI2(X % other.X, Y % other.Y); }
+
+VectorI2		VectorI2::operator~() const							{ return VectorI2(~X, ~Y); }
+
+VectorI2		VectorI2::operator&(const VectorI2 & other) const	{ return VectorI2(X & other.X, Y & other.Y); }
+VectorI2		VectorI2::operator|(const VectorI2 & other) const	{ return VectorI2(X | other.X, Y | other.Y); }
+VectorI2		VectorI2::operator^(const VectorI2 & other) const	{ return VectorI2(X ^ other.X, Y ^ other.Y); }
+
+VectorI2		VectorI2::operator<<(const VectorI2 & other) const	{ return VectorI2(X << other.X, Y << other.Y); }
+VectorI2		VectorI2::operator>>(const VectorI2 & other) const	{ return VectorI2(X >> other.X, Y >> other.Y); }
+
+VectorI2 &		VectorI2::operator+=(const VectorI2 & other)		{ X += other.X; Y += other.Y; return *this; }
+VectorI2 &		VectorI2::operator-=(const VectorI2 & other)		{ X -= other.X; Y -= other.Y; return *this; }
+VectorI2 &		VectorI2::operator*=(const VectorI2 & other)		{ X *= other.X; Y *= other.Y; return *this; }
+VectorI2 &		VectorI2::operator/=(const VectorI2 & other)		{ X /= other.X; Y /= other.Y; return *this; }
+
+VectorI2 &		VectorI2::operator+=(const int & val)				{ X += val; Y += val; return *this; }
+VectorI2 &		VectorI2::operator-=(const int & val)				{ X -= val; Y -= val; return *this; }
+VectorI2 &		VectorI2::operator*=(const int & val)				{ X *= val; Y *= val; return *this; }
+VectorI2 &		VectorI2::operator/=(const int & val)				{ X /= val; Y /= val; return *this; }
 
 
-VectorI2 operator+(VectorI2 vec, int val) { return VectorI2(vec.X + val, vec.Y + val); }
-VectorI2 operator-(VectorI2 vec, int val) { return VectorI2(vec.X - val, vec.Y - val); }
-VectorI2 operator*(VectorI2 vec, int val) { return VectorI2(vec.X * val, vec.Y * val); }
-VectorI2 operator/(VectorI2 vec, int val) { return VectorI2(vec.X / val, vec.Y / val); }
 
-VectorI2 operator+(int val, VectorI2 vec) { return VectorI2(val + vec.X, val + vec.Y); }
-VectorI2 operator-(int val, VectorI2 vec) { return VectorI2(val - vec.X, val - vec.Y); }
-VectorI2 operator*(int val, VectorI2 vec) { return VectorI2(val * vec.X, val * vec.Y); }
-VectorI2 operator/(int val, VectorI2 vec) { return VectorI2(val / vec.X, val / vec.Y); }
+VectorI2 	operator+(const VectorI2 & vec, const int & val) { return VectorI2(vec.X + val, vec.Y + val); }
+VectorI2 	operator-(const VectorI2 & vec, const int & val) { return VectorI2(vec.X - val, vec.Y - val); }
+VectorI2 	operator*(const VectorI2 & vec, const int & val) { return VectorI2(vec.X * val, vec.Y * val); }
+VectorI2 	operator/(const VectorI2 & vec, const int & val) { return VectorI2(vec.X / val, vec.Y / val); }
+
+VectorI2 	operator+(const int & val, const VectorI2 & vec) { return VectorI2(val + vec.X, val + vec.Y); }
+VectorI2 	operator-(const int & val, const VectorI2 & vec) { return VectorI2(val - vec.X, val - vec.Y); }
+VectorI2 	operator*(const int & val, const VectorI2 & vec) { return VectorI2(val * vec.X, val * vec.Y); }
+VectorI2 	operator/(const int & val, const VectorI2 & vec) { return VectorI2(val / vec.X, val / vec.Y); }

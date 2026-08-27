@@ -2,6 +2,7 @@
 # define CONTAINER_ARRAY_2D_HPP
 
 # include "ValueType/Vector/U2.hpp"
+# include "ValueType/Bool/2.hpp"
 # include "Exception.hpp"
 
 template<typename ItemType> struct Array2D

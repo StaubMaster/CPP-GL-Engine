@@ -1,29 +1,61 @@
 #include "ValueType/Vector/U3.hpp"
 
-#include "ValueType/Vector/F3.hpp"
 #include "ValueType/Vector/I3.hpp"
+#include "ValueType/Vector/F3.hpp"
+
+#include "ValueType/Bool/3.hpp"
 
 
 
-VectorU3::~VectorU3() { }
+VectorU3::VectorU3(unsigned int x, unsigned int y, unsigned int z)
+	: X(x)
+	, Y(y)
+	, Z(z)
+{ }
+VectorU3::VectorU3(unsigned int value)
+	: X(value)
+	, Y(value)
+	, Z(value)
+{ }
 
-VectorU3::VectorU3() : Vector_3() { }
-VectorU3::VectorU3(unsigned int value) : Vector_3(value) { }
-VectorU3::VectorU3(unsigned int x, unsigned int y, unsigned int z) : Vector_3(x, y, z) { }
-
-VectorU3::VectorU3(const VectorU3 & other) : Vector_3(other) { }
-VectorU3 & VectorU3::operator=(const VectorU3 & other) { Vector_3::operator=(other); return *this; }
+VectorI3 VectorU3::ToI() const { return VectorI3(X, Y, Z); }
+VectorF3 VectorU3::ToF() const { return VectorF3(X, Y, Z); }
 
 
 
-VectorU3 VectorU3::operator%(const VectorU3 & other) const { return VectorU3(X % other.X, Y % other.Y, Z % other.Z); }
+VectorU3 VectorU3::Min(const VectorU3 & other) const
+{
+	VectorU3 vec(*this);
+	if (other.X < vec.X) { vec.X = other.X; }
+	if (other.Y < vec.Y) { vec.Y = other.Y; }
+	if (other.Z < vec.Z) { vec.Z = other.Z; }
+	return vec;
+}
+VectorU3 VectorU3::Max(const VectorU3 & other) const
+{
+	VectorU3 vec(*this);
+	if (other.X > vec.X) { vec.X = other.X; }
+	if (other.Y > vec.Y) { vec.Y = other.Y; }
+	if (other.Z > vec.Z) { vec.Z = other.Z; }
+	return vec;
+}
 
-VectorU3 VectorU3::operator~() const { return VectorU3(~X, ~Y, ~Z); }
-VectorU3 VectorU3::operator&(const VectorU3 & other) const { return VectorU3(X & other.X, Y & other.Y, Z & other.Z); }
-VectorU3 VectorU3::operator|(const VectorU3 & other) const { return VectorU3(X | other.X, Y | other.Y, Z | other.Z); }
-VectorU3 VectorU3::operator^(const VectorU3 & other) const { return VectorU3(X ^ other.X, Y ^ other.Y, Z ^ other.Z); }
-VectorU3 VectorU3::operator<<(const VectorU3 & other) const { return VectorU3(X << other.X, Y << other.Y, Z << other.Z); }
-VectorU3 VectorU3::operator>>(const VectorU3 & other) const { return VectorU3(X >> other.X, Y >> other.Y, Z >> other.Z); }
+VectorU3 VectorU3::Mix(const Bool3 & take, const VectorU3 & other) const
+{
+	VectorU3 vec(*this);
+	if (take.GetX()) { vec.X = other.X; }
+	if (take.GetY()) { vec.Y = other.Y; }
+	if (take.GetZ()) { vec.Z = other.Z; }
+	return vec;
+}
+VectorU3 VectorU3::Mix(const Bool3 & take, const VectorU3 & value_true, const VectorU3 & value_false)
+{
+	VectorU3 vec;
+	if (take.GetX()) { vec.X = value_true.X; } else { vec.X = value_false.X; }
+	if (take.GetY()) { vec.Y = value_true.Y; } else { vec.Y = value_false.Y; }
+	if (take.GetZ()) { vec.Z = value_true.Z; } else { vec.Z = value_false.Z; }
+	return vec;
+}
 
 
 
@@ -59,14 +91,50 @@ VectorU3 VectorU3::Convert(unsigned int size, unsigned int udx)
 
 
 
+Bool3			VectorU3::operator==(const VectorU3 & other) const	{ return Bool3(X == other.X, Y == other.Y, Z == other.Z); }
+Bool3			VectorU3::operator!=(const VectorU3 & other) const	{ return Bool3(X != other.X, Y != other.Y, Z != other.Z); }
+Bool3			VectorU3::operator< (const VectorU3 & other) const	{ return Bool3(X <  other.X, Y <  other.Y, Z <  other.Z); }
+Bool3			VectorU3::operator> (const VectorU3 & other) const	{ return Bool3(X >  other.X, Y >  other.Y, Z >  other.Z); }
+Bool3			VectorU3::operator<=(const VectorU3 & other) const	{ return Bool3(X <= other.X, Y <= other.Y, Z <= other.Z); }
+Bool3			VectorU3::operator>=(const VectorU3 & other) const	{ return Bool3(X >= other.X, Y >= other.Y, Z >= other.Z); }
+
+VectorU3		VectorU3::operator+() const							{ return VectorU3(+X, +Y, +Z); }
+VectorU3		VectorU3::operator-() const							{ return VectorU3(-X, -Y, -Z); }
+
+VectorU3		VectorU3::operator+(const VectorU3 & other) const	{ return VectorU3(X + other.X, Y + other.Y, Z + other.Z); }
+VectorU3		VectorU3::operator-(const VectorU3 & other) const	{ return VectorU3(X - other.X, Y - other.Y, Z - other.Z); }
+VectorU3		VectorU3::operator*(const VectorU3 & other) const	{ return VectorU3(X * other.X, Y * other.Y, Z * other.Z); }
+VectorU3		VectorU3::operator/(const VectorU3 & other) const	{ return VectorU3(X / other.X, Y / other.Y, Z / other.Z); }
+
+VectorU3		VectorU3::operator%(const VectorU3 & other) const	{ return VectorU3(X % other.X, Y % other.Y, Z % other.Z); }
+
+VectorU3		VectorU3::operator~() const							{ return VectorU3(~X, ~Y, ~Z); }
+
+VectorU3		VectorU3::operator&(const VectorU3 & other) const	{ return VectorU3(X & other.X, Y & other.Y, Z & other.Z); }
+VectorU3		VectorU3::operator|(const VectorU3 & other) const	{ return VectorU3(X | other.X, Y | other.Y, Z | other.Z); }
+VectorU3		VectorU3::operator^(const VectorU3 & other) const	{ return VectorU3(X ^ other.X, Y ^ other.Y, Z ^ other.Z); }
+
+VectorU3		VectorU3::operator<<(const VectorU3 & other) const	{ return VectorU3(X << other.X, Y << other.Y, Z << other.Z); }
+VectorU3		VectorU3::operator>>(const VectorU3 & other) const	{ return VectorU3(X >> other.X, Y >> other.Y, Z >> other.Z); }
+
+VectorU3 &		VectorU3::operator+=(const VectorU3 & other)		{ X += other.X; Y += other.Y; Z += other.Z; return *this; }
+VectorU3 &		VectorU3::operator-=(const VectorU3 & other)		{ X -= other.X; Y -= other.Y; Z -= other.Z; return *this; }
+VectorU3 &		VectorU3::operator*=(const VectorU3 & other)		{ X *= other.X; Y *= other.Y; Z *= other.Z; return *this; }
+VectorU3 &		VectorU3::operator/=(const VectorU3 & other)		{ X /= other.X; Y /= other.Y; Z /= other.Z; return *this; }
+
+VectorU3 &		VectorU3::operator+=(const unsigned int & val)				{ X += val; Y += val; Z += val; return *this; }
+VectorU3 &		VectorU3::operator-=(const unsigned int & val)				{ X -= val; Y -= val; Z -= val; return *this; }
+VectorU3 &		VectorU3::operator*=(const unsigned int & val)				{ X *= val; Y *= val; Z *= val; return *this; }
+VectorU3 &		VectorU3::operator/=(const unsigned int & val)				{ X /= val; Y /= val; Z /= val; return *this; }
 
 
-VectorU3 operator+(VectorU3 vec, unsigned int val) { return VectorU3(vec.X + val, vec.Y + val, vec.Z + val); }
-VectorU3 operator-(VectorU3 vec, unsigned int val) { return VectorU3(vec.X - val, vec.Y - val, vec.Z - val); }
-VectorU3 operator*(VectorU3 vec, unsigned int val) { return VectorU3(vec.X * val, vec.Y * val, vec.Z * val); }
-VectorU3 operator/(VectorU3 vec, unsigned int val) { return VectorU3(vec.X / val, vec.Y / val, vec.Z / val); }
 
-VectorU3 operator+(unsigned int val, VectorU3 vec) { return VectorU3(val + vec.X, val + vec.Y, val + vec.Z); }
-VectorU3 operator-(unsigned int val, VectorU3 vec) { return VectorU3(val - vec.X, val - vec.Y, val - vec.Z); }
-VectorU3 operator*(unsigned int val, VectorU3 vec) { return VectorU3(val * vec.X, val * vec.Y, val * vec.Z); }
-VectorU3 operator/(unsigned int val, VectorU3 vec) { return VectorU3(val / vec.X, val / vec.Y, val / vec.Z); }
+VectorU3 	operator+(const VectorU3 & vec, const unsigned int & val) { return VectorU3(vec.X + val, vec.Y + val, vec.Z + val); }
+VectorU3 	operator-(const VectorU3 & vec, const unsigned int & val) { return VectorU3(vec.X - val, vec.Y - val, vec.Z - val); }
+VectorU3 	operator*(const VectorU3 & vec, const unsigned int & val) { return VectorU3(vec.X * val, vec.Y * val, vec.Z * val); }
+VectorU3 	operator/(const VectorU3 & vec, const unsigned int & val) { return VectorU3(vec.X / val, vec.Y / val, vec.Z / val); }
+
+VectorU3 	operator+(const unsigned int & val, const VectorU3 & vec) { return VectorU3(val + vec.X, val + vec.Y, val + vec.Z); }
+VectorU3 	operator-(const unsigned int & val, const VectorU3 & vec) { return VectorU3(val - vec.X, val - vec.Y, val - vec.Z); }
+VectorU3 	operator*(const unsigned int & val, const VectorU3 & vec) { return VectorU3(val * vec.X, val * vec.Y, val * vec.Z); }
+VectorU3 	operator/(const unsigned int & val, const VectorU3 & vec) { return VectorU3(val / vec.X, val / vec.Y, val / vec.Z); }
