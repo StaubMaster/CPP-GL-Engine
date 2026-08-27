@@ -15,12 +15,6 @@ BoxU3::BoxU3(VectorU3 min, VectorU3 max)
 
 
 
-Bool3 BoxU3::CheckIn(VectorU3 udx) const { return IntersectVecInclusive(udx); }
-Bool3 BoxU3::CheckEx(VectorU3 udx) const { return IntersectVecExclusive(udx); }
-Bool3 BoxU3::CheckEdge(VectorU3 udx) const { return IntersectVecEdge(udx); }
-
-
-
 #include "../src/ValueType/Box/__.cpp"
 #include "../src/ValueType/Box/_3.cpp"
 template struct Box__<unsigned int, VectorU3, BoxU3>;

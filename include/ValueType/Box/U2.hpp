@@ -12,12 +12,6 @@ struct BoxU2 : public Box_2<unsigned int, VectorU2, BoxU2>
 
 	BoxU2();
 	BoxU2(VectorU2 min, VectorU2 max);
-
-
-
-	Bool2 CheckIn(VectorU2 udx) const;
-	Bool2 CheckEx(VectorU2 udx) const;
-	Bool2 CheckEdge(VectorU2 udx) const;
 };
 
 #endif

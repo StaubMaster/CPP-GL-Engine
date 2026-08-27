@@ -48,7 +48,7 @@ VectorF3 BoxF3::CollisionTimePerAxisNaN(
 		BoxF3 box = box0 + (vel0 * t.X);
 		box.Min.X = -1.0f/0.0f; // -Infinity
 		box.Max.X = +1.0f/0.0f; // +Infinity
-		if (!box.IntersectBoxInclusive(box1).All(true))
+		if (!box.IntersectsInclusive(box1).All(true))
 		{
 			t.X = 0.0f / 0.0f; // no Collision
 		}
@@ -60,7 +60,7 @@ VectorF3 BoxF3::CollisionTimePerAxisNaN(
 		BoxF3 box = box0 + (vel0 * t.Y);
 		box.Min.Y = -1.0f/0.0f; // -Infinity
 		box.Max.Y = +1.0f/0.0f; // +Infinity
-		if (!box.IntersectBoxInclusive(box1).All(true))
+		if (!box.IntersectsInclusive(box1).All(true))
 		{
 			t.Y = 0.0f / 0.0f; // no Collision
 		}
@@ -72,7 +72,7 @@ VectorF3 BoxF3::CollisionTimePerAxisNaN(
 		BoxF3 box = box0 + (vel0 * t.Z);
 		box.Min.Z = -1.0f/0.0f; // -Infinity
 		box.Max.Z = +1.0f/0.0f; // +Infinity
-		if (!box.IntersectBoxInclusive(box1).All(true))
+		if (!box.IntersectsInclusive(box1).All(true))
 		{
 			t.Z = 0.0f / 0.0f; // no Collision
 		}

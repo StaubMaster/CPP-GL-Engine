@@ -12,12 +12,6 @@ struct BoxU3 : public Box_3<unsigned int, VectorU3, BoxU3>
 
 	BoxU3();
 	BoxU3(VectorU3 min, VectorU3 max);
-
-
-
-	Bool3 CheckIn(VectorU3 udx) const;
-	Bool3 CheckEx(VectorU3 udx) const;
-	Bool3 CheckEdge(VectorU3 udx) const;
 };
 
 #endif

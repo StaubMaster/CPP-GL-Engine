@@ -23,25 +23,12 @@ void	Consider(const VectorType & vec);
 
 
 
-// put these in Box__ with BoolType ?
+Bool2	ContainsEdge(const VectorType & vec) const;
+Bool2	ContainsInclusive(const VectorType & vec) const;
+Bool2	ContainsExclusive(const VectorType & vec) const;
 
-// pass parameter by Value vs Referance ?
-// these ValueTypes are relatively small so Value should be fine
-
-// Contains2
-Bool2	IntersectEdge(const VectorType & vec) const;
-Bool2	IntersectInclusive(const VectorType & vec) const;
-Bool2	IntersectExclusive(const VectorType & vec) const;
-
-// Intersects2
-Bool2	IntersectInclusive(const BoxType & box) const;
-Bool2	IntersectExclusive(const BoxType & box) const;
-
-// Contains2
-bool Intersekt(const VectorType & val) const;
-
-// Intersects2
-bool Intersekt(const BoxType & box) const;
+Bool2	IntersectsInclusive(const BoxType & box) const;
+Bool2	IntersectsExclusive(const BoxType & box) const;
 };
 
 #endif

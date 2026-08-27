@@ -23,32 +23,19 @@ void	Consider(const VectorType & vec);
 
 
 
+Bool3	ContainsEdge(const VectorType & vec) const;
+Bool3	ContainsInclusive(const VectorType & vec) const;
+Bool3	ContainsExclusive(const VectorType & vec) const;
+
+Bool3	IntersectsInclusive(const BoxType & box) const;
+Bool3	IntersectsExclusive(const BoxType & box) const;
+
+
+
 BoxType		operator+(const VectorType & vec) const;
 BoxType		operator-(const VectorType & vec) const;
 BoxType		operator*(const VectorType & vec) const;
 BoxType		operator/(const VectorType & vec) const;
-
-
-
-// put these in Box__ with BoolType ?
-
-// pass parameter by Value vs Referance ?
-// these ValueTypes are relatively small so Value should be fine
-
-// Contains3
-Bool3	IntersectVecEdge(const VectorType & vec) const;
-Bool3	IntersectVecInclusive(const VectorType & vec) const;
-Bool3	IntersectVecExclusive(const VectorType & vec) const;
-
-// Intersects3
-Bool3	IntersectBoxInclusive(const BoxType & box) const;
-Bool3	IntersectBoxExclusive(const BoxType & box) const;
-
-// Contains
-bool	Intersekt(const VectorType & vec) const;
-
-// Intersects
-bool	Intersekt(const BoxType & box) const;
 };
 
 #endif
