@@ -102,6 +102,7 @@ SHADER := \
 	Graphics/Shader/Code.cpp \
 	Graphics/Shader/Base.cpp \
 	Graphics/Shader/_Log.cpp \
+	Graphics/ShaderBlockBinding.cpp \
 
 SHADER_SRC := $(addprefix $(DIR_SRC)/,$(SHADER))
 SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
@@ -140,6 +141,7 @@ UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
 MULTIFORM := \
 	Graphics/Multiform/General/Base.cpp \
 	Graphics/Multiform/General/Layout.cpp \
+	Graphics/Multiform/General/Buffer.cpp \
 
 MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
 MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))

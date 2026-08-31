@@ -5,6 +5,8 @@
 
 # include "Generics/Container/Binary.hpp"
 
+namespace Shader { class Base; };
+
 namespace Uniform { class Layout; class Base; };
 
 namespace Multiform
@@ -22,10 +24,19 @@ class Base
 	Base(std::string name);
 
 	public:
-	void	FindUniforms(Uniform::Layout & layout);
-	void	FindUniforms(Container::Array<Uniform::Layout *> & layouts);
+	void	Clear();
 
+	public:
+	void	FindUniforms(Uniform::Layout & layout);
+	void	FindUniforms(Uniform::Layout * layout);
+	void	FindUniforms(Container::Array<Uniform::Layout*> & layouts);
+
+	public:
 	virtual void	PutData(Uniform::Base & uniform) = 0;
+	virtual void	PutData(Uniform::Base & uniform, Shader::Base & shader) = 0;
+
+	public:
+	void	PutUniformThis();
 };
 };
 

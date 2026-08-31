@@ -11,7 +11,8 @@ template <unsigned int Size0, unsigned int Size1, unsigned int Count, typename V
 class UIntNTypeBase : public Uniform::UIntNBase // UIntNTypeBase
 {
 	public:
-	virtual ~UIntNTypeBase() { }
+	virtual ~UIntNTypeBase()
+	{ }
 	UIntNTypeBase(Uniform::Layout & layout, std::string name)
 		: UIntNBase(layout, name)
 	{ }

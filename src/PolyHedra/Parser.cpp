@@ -720,7 +720,10 @@ void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
 
 	if (Other != nullptr)
 	{
-		delete Other;
+		if (FileCollection == nullptr)
+		{
+			delete Other;
+		}
 		Other = nullptr;
 	}
 

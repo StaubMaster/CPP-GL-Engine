@@ -25,11 +25,31 @@ Multiform::Base::~Base()
 		}
 	}
 }*/
-void Multiform::Base::FindUniforms(Container::Array<Uniform::Layout *> & layouts)
+void Multiform::Base::FindUniforms(Uniform::Layout & layout)
+{
+	layout.Find(*this);
+}
+void Multiform::Base::FindUniforms(Uniform::Layout * layout)
+{
+	if (layout != nullptr)
+	{
+		FindUniforms(*layout);
+	}
+}
+void Multiform::Base::FindUniforms(Container::Array<Uniform::Layout*> & layouts)
 {
 	for (unsigned int i = 0; i < layouts.Length(); i++)
 	{
-		layouts[i] -> Find(*this);
-		//FindUniforms(*layouts[s]);
+		FindUniforms(layouts[i]);
+	}
+}
+
+
+
+void Multiform::Base::PutUniformThis()
+{
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		Uniforms[i] -> Multiform = this;
 	}
 }

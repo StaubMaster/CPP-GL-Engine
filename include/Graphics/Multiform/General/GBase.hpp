@@ -8,8 +8,6 @@
 
 # include "Graphics/Shader/Base.hpp"
 
-
-
 namespace Multiform
 {
 template <typename DataType>
@@ -31,20 +29,17 @@ class GBase : public Base
 		uniform.PutVoid(&Data);
 		uniform.Multiform = nullptr;
 	}
+	void	PutData(Uniform::Base & uniform, Shader::Base & shader) override
+	{
+		(void)uniform;
+		(void)shader;
+	}
+
+	public:
 	void	ChangeData(const DataType & data)
 	{
 		Data = data;
-		for (unsigned int i = 0; i < Uniforms.Count(); i++)
-		{
-			/*if (Uniforms[i] -> Layout.Shader -> IsBound())
-			{
-				PutData(*Uniforms[i]);
-			}
-			else*/
-			{
-				Uniforms[i] -> Multiform = this;
-			}
-		}
+		PutUniformThis();
 	}
 };
 };

@@ -4,7 +4,8 @@
 
 
 
-Uniform::Base::~Base() { }
+Uniform::Base::~Base()
+{ }
 Uniform::Base::Base(Uniform::Layout & layout, std::string name)
 	: Name(name)
 	, Multiform(nullptr)
@@ -19,5 +20,12 @@ void Uniform::Base::UpdateData()
 	if (Multiform != nullptr)
 	{
 		Multiform -> PutData(*this);
+	}
+}
+void Uniform::Base::UpdateData(Shader::Base & shader)
+{
+	if (Multiform != nullptr)
+	{
+		Multiform -> PutData(*this, shader);
 	}
 }

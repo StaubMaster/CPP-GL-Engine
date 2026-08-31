@@ -139,6 +139,13 @@ void Uniform::Layout::UpdateData()
 	{
 		Uniforms[i] -> UpdateData();
 	}
+	if (Shader != nullptr)
+	{
+		for (unsigned int i = 0; i < Uniforms.Count(); i++)
+		{
+			Uniforms[i] -> UpdateData(*Shader);
+		}
+	}
 }
 
 void Uniform::Layout::Bind(Buffer & uniform, GL::BlockBinding binding)

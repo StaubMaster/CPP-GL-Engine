@@ -20,8 +20,7 @@ class Base
 
 	public:
 	virtual ~Base();
-
-	public:
+	Base() = delete;
 	Base(const Base & other) = delete;
 	Base & operator=(const Base & other) = delete;
 
@@ -33,6 +32,7 @@ class Base
 
 	public:
 	void	UpdateData();
+	void	UpdateData(Shader::Base & shader);
 
 	public:
 	virtual void LogInfo(bool self = true) const;

@@ -26,9 +26,7 @@ class Base
 	Container::Array<Shader::Code>	Code;
 
 	private:
-	public:
 	Uniform::Layout *	Layout = nullptr;
-	// public access is only needed for Multiforms
 
 
 

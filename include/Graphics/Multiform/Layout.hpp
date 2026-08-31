@@ -25,7 +25,8 @@ class Layout
 
 	public:
 	void	Find(Uniform::Layout & layout);
-	void	Find(Container::Array<Uniform::Layout *> & layouts);
+	void	Find(Uniform::Layout * layout);
+	void	Find(Container::Array<Uniform::Layout*> & layouts);
 };
 };
 	

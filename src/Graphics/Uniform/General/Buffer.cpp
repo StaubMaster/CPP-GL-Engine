@@ -2,6 +2,8 @@
 #include "Graphics/Uniform/General/Layout.hpp"
 #include "Graphics/Shader/Base.hpp"
 
+#include "Graphics/ShaderBlockBinding.hpp"
+
 
 
 Uniform::Buffer::Buffer(Uniform::Layout & layout, std::string name)
@@ -13,5 +15,6 @@ Uniform::Buffer::Buffer(Uniform::Layout & layout, std::string name)
 
 void Uniform::Buffer::PutVoid(const void * val)
 {
-	(void)val;
+	ShaderBlockBinding * shader_block_binding = (ShaderBlockBinding *)val;
+	shader_block_binding -> Bind(Index);
 }

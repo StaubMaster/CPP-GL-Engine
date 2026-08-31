@@ -7,15 +7,16 @@
 namespace Uniform
 {
 template <typename ValueType>
-class GBase : public Uniform::Base // rename to TypeBase ?
+class GBase : public Base // rename to TypeBase ?
 {
 	protected:
 	virtual ~GBase()
 	{ }
+	GBase() = delete;
 
 	protected:
-	GBase(Uniform::Layout & layout, std::string name)
-		: Uniform::Base(layout, name)
+	GBase(Layout & layout, std::string name)
+		: Base(layout, name)
 	{ }
 
 	public:

@@ -11,7 +11,8 @@ template <unsigned int Size0, unsigned int Size1, unsigned int Count, typename V
 class FloatNTypeBase : public Uniform::FloatNBase
 {
 	public:
-	virtual ~FloatNTypeBase() { }
+	virtual ~FloatNTypeBase()
+	{ }
 	FloatNTypeBase(Uniform::Layout & layout, std::string name)
 		: FloatNBase(layout, name)
 	{ }
