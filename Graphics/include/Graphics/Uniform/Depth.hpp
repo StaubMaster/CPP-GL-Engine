@@ -18,6 +18,7 @@ class Depth : public Uniform::GBase<::Depth>
 	Uniform::ColorF4		Color;
 
 	public:
+	Depth(std::string name);
 	Depth(Uniform::Layout & layout, std::string name);
 
 	public:

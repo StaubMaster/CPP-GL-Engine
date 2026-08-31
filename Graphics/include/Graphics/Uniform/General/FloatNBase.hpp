@@ -16,7 +16,11 @@ class FloatNBase : public Uniform::Base
 	virtual ~FloatNBase();
 
 	protected:
+	FloatNBase(std::string name);
 	FloatNBase(Uniform::Layout & layout, std::string name);
+
+	public:
+	void	Find(Shader::Base & shader) override;
 
 	public:
 	void			PutVoid(const void * val) override;

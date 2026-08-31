@@ -3,6 +3,12 @@
 
 
 
+Uniform::DisplaySize::DisplaySize(std::string name)
+	: GBase(name)
+	, Ratio(Name + ".Ratio")
+	, Window(Name + ".Window")
+	, Buffer(Name + ".Buffer")
+{ }
 Uniform::DisplaySize::DisplaySize(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Ratio(layout, Name + ".Ratio")

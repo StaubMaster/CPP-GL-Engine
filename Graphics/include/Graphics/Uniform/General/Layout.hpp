@@ -42,11 +42,6 @@ class Layout
 	bool	IsBound() const;
 	void	Bind();
 
-	private:
-	void	Find(FloatNBase * uniform) const;
-	void	Find(UIntNBase * uniform) const;
-	void	Find(Buffer * uniform) const;
-
 	public:
 	void	Find();
 	void	Find(Multiform::Base & multiform);

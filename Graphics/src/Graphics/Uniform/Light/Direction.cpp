@@ -3,6 +3,11 @@
 
 
 
+Uniform::LightDirection::LightDirection(std::string name)
+	: GBase(name)
+	, Base(Name + ".Base")
+	, Dir(Name + ".Direction")
+{ }
 Uniform::LightDirection::LightDirection(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Base(layout, Name + ".Base")

@@ -13,7 +13,11 @@ class Buffer : public Base
 	GL::BlockIndex	Index;
 
 	public:
+	Buffer(std::string name);
 	Buffer(Uniform::Layout & layout, std::string name);
+
+	public:
+	void	Find(Shader::Base & shader) override;
 
 	protected:
 	void	PutVoid(const void * val) override;

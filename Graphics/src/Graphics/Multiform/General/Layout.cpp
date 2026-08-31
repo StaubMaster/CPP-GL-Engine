@@ -1,4 +1,4 @@
-#include "Graphics/Multiform/Layout.hpp"
+#include "Graphics/Multiform/General/Layout.hpp"
 #include "Graphics/Multiform/General/Base.hpp"
 #include "Graphics/Uniform/General/Layout.hpp"
 
@@ -13,10 +13,6 @@ Multiform::Layout::Layout()
 
 void Multiform::Layout::Find(Uniform::Layout & layout)
 {
-	/*for (unsigned int i = 0; i < Multiforms.Count(); i++)
-	{
-		layout.Find(*Multiforms[i]);
-	}*/
 	for (unsigned int i = 0; i < Multiforms.Count(); i++)
 	{
 		Multiforms[i] -> FindUniforms(layout);

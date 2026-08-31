@@ -4,6 +4,11 @@
 
 
 
+Uniform::Trans3D::Trans3D(std::string name)
+	: GBase(name)
+	, Pos(Name + ".Pos")
+	, Rot(Name + ".Rot")
+{ }
 Uniform::Trans3D::Trans3D(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Pos(layout, Name + ".Pos")

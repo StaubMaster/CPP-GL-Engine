@@ -56,61 +56,12 @@ void Uniform::Layout::Bind()
 
 
 
-#include "Graphics/Uniform/General/FloatNBase.hpp"
-#include "Graphics/Uniform/General/UIntNTypeBase.hpp"
-#include "Graphics/Uniform/General/Buffer.hpp"
-
-void Uniform::Layout::Find(FloatNBase * uniform) const
-{
-	if (uniform != nullptr)
-	{
-		if (Shader != nullptr)
-		{
-			uniform -> Index = Shader -> FindUniformLocation(uniform -> Name.c_str());
-		}
-		else
-		{
-			uniform -> Index = -1;
-		}
-	}
-}
-void Uniform::Layout::Find(UIntNBase * uniform) const
-{
-	if (uniform != nullptr)
-	{
-		if (Shader != nullptr)
-		{
-			uniform -> Index = Shader -> FindUniformLocation(uniform -> Name.c_str());
-		}
-		else
-		{
-			uniform -> Index = -1;
-		}
-	}
-}
-void Uniform::Layout::Find(Buffer * uniform) const
-{
-	if (uniform != nullptr)
-	{
-		if (Shader != nullptr)
-		{
-			uniform -> Index = Shader -> FindUniformBlockIndex(uniform -> Name.c_str());
-		}
-		else
-		{
-			uniform -> Index = -1;
-		}
-	}
-}
-
 void Uniform::Layout::Find()
 {
+	if (Shader == nullptr) { return; }
 	for (unsigned int i = 0; i < Uniforms.Count(); i++)
 	{
-		Uniform::Base * uniform = Uniforms[i];
-		Find(dynamic_cast<Uniform::FloatNBase*>(uniform));
-		Find(dynamic_cast<Uniform::UIntNBase*>(uniform));
-		Find(dynamic_cast<Uniform::Buffer*>(uniform));
+		Uniforms[i] -> Find(*Shader);
 	}
 }
 
@@ -148,6 +99,7 @@ void Uniform::Layout::UpdateData()
 	}
 }
 
+#include "Graphics/Uniform/General/Buffer.hpp"
 void Uniform::Layout::Bind(Buffer & uniform, GL::BlockBinding binding)
 {
 	if (Shader != nullptr)

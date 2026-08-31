@@ -16,6 +16,7 @@ class LightPoint : public Uniform::GBase<::LightPoint>
 	Uniform::VectorF3	Pos;
 
 	public:
+	LightPoint(std::string name);
 	LightPoint(Uniform::Layout & layout, std::string name);
 
 	public:

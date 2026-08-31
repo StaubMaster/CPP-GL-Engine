@@ -3,6 +3,13 @@
 
 
 
+Uniform::LightSpot::LightSpot(std::string name)
+	: GBase(name)
+	, Base(Name + ".Base")
+	, Pos(Name + ".Position")
+	, Dir(Name + ".Direction")
+	, Range(Name + ".Range")
+{ }
 Uniform::LightSpot::LightSpot(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Base(layout, Name + ".Base")

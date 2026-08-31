@@ -16,10 +16,11 @@ class Trans2D : public Uniform::GBase<::Trans2D>
 	Uniform::Matrix2x2	Rot;
 
 	public:
+	Trans2D(std::string name);
 	Trans2D(Uniform::Layout & layout, std::string name);
 
 	public:
-	void Put(const ::Trans2D & obj) override;
+	void	Put(const ::Trans2D & obj) override;
 };
 };
 

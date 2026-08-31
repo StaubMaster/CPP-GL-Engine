@@ -16,6 +16,7 @@ class LightBase : public Uniform::GBase<::LightBase>
 	Uniform::ColorF4	Color;
 
 	public:
+	LightBase(std::string name);
 	LightBase(Uniform::Layout & layout, std::string name);
 
 	public:

@@ -19,6 +19,7 @@ class LightSpot : public Uniform::GBase<::LightSpot>
 	Uniform::RangeF		Range;
 
 	public:
+	LightSpot(std::string name);
 	LightSpot(Uniform::Layout & layout, std::string name);
 
 	public:

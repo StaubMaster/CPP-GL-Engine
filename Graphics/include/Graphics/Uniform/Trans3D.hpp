@@ -13,15 +13,15 @@ namespace Uniform
 class Trans3D : public Uniform::GBase<::Trans3D>
 {
 	private:
-	Uniform::VectorF3 Pos;
-	//Uniform::Angle3D Rot;
-	Uniform::Matrix3x3 Rot;
+	Uniform::VectorF3	Pos;
+	Uniform::Matrix3x3	Rot;
 
 	public:
+	Trans3D(std::string name);
 	Trans3D(Uniform::Layout & layout, std::string name);
 
 	public:
-	void Put(const ::Trans3D & obj) override;
+	void	Put(const ::Trans3D & obj) override;
 };
 };
 

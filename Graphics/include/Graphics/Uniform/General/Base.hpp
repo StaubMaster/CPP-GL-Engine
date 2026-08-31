@@ -6,7 +6,6 @@
 # include "OpenGLTypes.hpp"
 
 namespace Shader { class Base; };
-
 namespace Multiform { class Base; };
 
 namespace Uniform
@@ -25,7 +24,11 @@ class Base
 	Base & operator=(const Base & other) = delete;
 
 	public:
+	Base(std::string name);
 	Base(Uniform::Layout & layout, std::string name);
+
+	public:
+	virtual void	Find(Shader::Base & shader) = 0;
 
 	public:
 	virtual void	PutVoid(const void * val) = 0;

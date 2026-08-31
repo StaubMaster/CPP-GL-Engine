@@ -6,6 +6,10 @@
 
 Uniform::Base::~Base()
 { }
+Uniform::Base::Base(std::string name)
+	: Name(name)
+	, Multiform(nullptr)
+{ }
 Uniform::Base::Base(Uniform::Layout & layout, std::string name)
 	: Name(name)
 	, Multiform(nullptr)

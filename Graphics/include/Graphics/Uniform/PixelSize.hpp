@@ -11,14 +11,15 @@ namespace Uniform
 class PixelSize : public Uniform::GBase<::PixelSize>
 {
 	private:
-	Uniform::VectorF2 Full;
-	Uniform::VectorF2 Half;
+	Uniform::VectorF2	Full;
+	Uniform::VectorF2	Half;
 
 	public:
+	PixelSize(std::string name);
 	PixelSize(Uniform::Layout & layout, std::string name);
 
 	public:
-	void Put(const ::PixelSize & obj) override;
+	void	Put(const ::PixelSize & obj) override;
 };
 };
 

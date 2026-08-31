@@ -13,6 +13,9 @@ class UIntNTypeBase : public Uniform::UIntNBase // UIntNTypeBase
 	public:
 	virtual ~UIntNTypeBase()
 	{ }
+	UIntNTypeBase(std::string name)
+		: UIntNBase(name)
+	{ }
 	UIntNTypeBase(Uniform::Layout & layout, std::string name)
 		: UIntNBase(layout, name)
 	{ }

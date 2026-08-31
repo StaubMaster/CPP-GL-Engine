@@ -3,6 +3,12 @@
 
 
 
+Uniform::Depth::Depth(std::string name)
+	: GBase(name)
+	, Factors(Name + ".Factors")
+	, Range(Name + ".Range")
+	, Color(Name + ".Color")
+{ }
 Uniform::Depth::Depth(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Factors(layout, Name + ".Factors")

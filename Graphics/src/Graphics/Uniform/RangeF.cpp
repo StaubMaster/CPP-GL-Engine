@@ -3,6 +3,12 @@
 
 
 
+Uniform::RangeF::RangeF(std::string name)
+	: GBase(name)
+	, Min(Name + ".Min")
+	, Len(Name + ".Len")
+	, Max(Name + ".Max")
+{ }
 Uniform::RangeF::RangeF(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Min(layout, Name + ".Min")

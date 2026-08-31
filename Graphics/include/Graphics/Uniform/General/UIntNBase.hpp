@@ -16,7 +16,11 @@ class UIntNBase : public Uniform::Base
 	virtual ~UIntNBase();
 
 	protected:
+	UIntNBase(std::string name);
 	UIntNBase(Uniform::Layout & layout, std::string name);
+
+	public:
+	void	Find(Shader::Base & shader) override;
 
 	public:
 	void			PutVoid(const void * val) override;

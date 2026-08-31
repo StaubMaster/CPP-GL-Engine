@@ -6,10 +6,21 @@
 
 
 
+Uniform::Buffer::Buffer(std::string name)
+	: Uniform::Base(name)
+	, Index(-1)
+{ }
 Uniform::Buffer::Buffer(Uniform::Layout & layout, std::string name)
 	: Uniform::Base(layout, name)
 	, Index(-1)
 { }
+
+
+
+void Uniform::Buffer::Find(Shader::Base & shader)
+{
+	Index = shader.FindUniformBlockIndex(Name.c_str());
+}
 
 
 

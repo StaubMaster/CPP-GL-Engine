@@ -11,14 +11,15 @@ namespace Uniform
 class LInter : public Uniform::GBase<::LInter>
 {
 	private:
-	Uniform::Float T0;
-	Uniform::Float T1;
+	Uniform::Float	T0;
+	Uniform::Float	T1;
 
 	public:
+	LInter(std::string name);
 	LInter(Uniform::Layout & layout, std::string name);
 
 	public:
-	void Put(const ::LInter & obj) override;
+	void	Put(const ::LInter & obj) override;
 };
 };
 

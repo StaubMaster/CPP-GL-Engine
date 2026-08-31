@@ -16,6 +16,7 @@ class LightDirection : public Uniform::GBase<::LightDirection>
 	Uniform::VectorF3	Dir;
 
 	public:
+	LightDirection(std::string name);
 	LightDirection(Uniform::Layout & layout, std::string name);
 
 	public:

@@ -3,6 +3,11 @@
 
 
 
+Uniform::LInter::LInter(std::string name)
+	: GBase(name)
+	, T0(Name + ".T0")
+	, T1(Name + ".T1")
+{ }
 Uniform::LInter::LInter(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, T0(layout, Name + ".T0")

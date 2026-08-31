@@ -3,6 +3,11 @@
 
 
 
+Uniform::LightBase::LightBase(std::string name)
+	: GBase(name)
+	, Intensity(Name + ".Intensity")
+	, Color(Name + ".Color")
+{ }
 Uniform::LightBase::LightBase(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Intensity(layout, Name + ".Intensity")

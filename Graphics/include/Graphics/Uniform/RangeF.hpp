@@ -11,15 +11,16 @@ namespace Uniform
 class RangeF : public Uniform::GBase<::RangeF>
 {
 	private:
-	Uniform::Float Min;
-	Uniform::Float Len;
-	Uniform::Float Max;
+	Uniform::Float	Min;
+	Uniform::Float	Len;
+	Uniform::Float	Max;
 
 	public:
+	RangeF(std::string name);
 	RangeF(Uniform::Layout & layout, std::string name);
 
 	public:
-	void Put(const ::RangeF & obj) override;
+	void	Put(const ::RangeF & obj) override;
 };
 };
 

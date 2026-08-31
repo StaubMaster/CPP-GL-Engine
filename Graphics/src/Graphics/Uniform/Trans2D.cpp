@@ -4,6 +4,11 @@
 
 
 
+Uniform::Trans2D::Trans2D(std::string name)
+	: GBase(name)
+	, Pos(Name + ".Pos")
+	, Rot(Name + ".Rot")
+{ }
 Uniform::Trans2D::Trans2D(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Pos(layout, Name + ".Pos")

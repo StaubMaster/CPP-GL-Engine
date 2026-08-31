@@ -11,13 +11,14 @@ namespace Uniform
 class AspectRatio : public Uniform::GBase<::AspectRatio>
 {
 	private:
-	Uniform::VectorF2 Value;
+	Uniform::VectorF2	Value;
 
 	public:
+	AspectRatio(std::string name);
 	AspectRatio(Uniform::Layout & layout, std::string name);
 
 	public:
-	void Put(const ::AspectRatio & obj) override;
+	void	Put(const ::AspectRatio & obj) override;
 };
 };
 

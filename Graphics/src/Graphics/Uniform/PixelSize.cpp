@@ -3,6 +3,11 @@
 
 
 
+Uniform::PixelSize::PixelSize(std::string name)
+	: GBase(name)
+	, Full(Name + ".Full")
+	, Half(Name + ".Half")
+{ }
 Uniform::PixelSize::PixelSize(Uniform::Layout & layout, std::string name)
 	: GBase(layout, name)
 	, Full(layout, Name + ".Full")

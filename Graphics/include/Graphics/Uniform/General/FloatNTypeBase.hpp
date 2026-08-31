@@ -13,6 +13,9 @@ class FloatNTypeBase : public Uniform::FloatNBase
 	public:
 	virtual ~FloatNTypeBase()
 	{ }
+	FloatNTypeBase(std::string name)
+		: FloatNBase(name)
+	{ }
 	FloatNTypeBase(Uniform::Layout & layout, std::string name)
 		: FloatNBase(layout, name)
 	{ }

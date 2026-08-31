@@ -15,9 +15,18 @@ class GBase : public Base // rename to TypeBase ?
 	GBase() = delete;
 
 	protected:
+	GBase(std::string name)
+		: Base(name)
+	{ }
 	GBase(Layout & layout, std::string name)
 		: Base(layout, name)
 	{ }
+
+	public:
+	void	Find(Shader::Base & shader) override
+	{
+		(void)shader;
+	}
 
 	public:
 	void	PutVoid(const void * val) override
