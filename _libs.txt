@@ -1,0 +1,13 @@
+
+FileManager and Engine depend on eachother
+
+make FileManager part of Engine ?
+keep it as its own Library ?
+at least keep it organized
+so it has its own Makefile
+but the files get put into Engine.and
+
+organize other things like this
+put all ValueType stuff into its own Engine/ValueType/src and Engine/ValueType/include dirs
+do same with Graphics and User stuff
+and PolyHedra and PolyGon

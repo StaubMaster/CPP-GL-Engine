@@ -11,76 +11,14 @@ include fancy.mk
 
 
 
+
+
+################################################################
+
 DIR_SRC := src/
 DIR_OBJ := obj/
 
-
-
-VALUE_TYPE := \
-	ValueType/Bool/2.cpp \
-	ValueType/Bool/3.cpp \
-	ValueType/Bool/4.cpp \
-\
-	ValueType/Vector/F2.cpp \
-	ValueType/Vector/F3.cpp \
-	ValueType/Vector/F4.cpp \
-	ValueType/Vector/U2.cpp \
-	ValueType/Vector/U3.cpp \
-	ValueType/Vector/I2.cpp \
-	ValueType/Vector/I3.cpp \
-\
-	ValueType/Box/F1.cpp \
-	ValueType/Box/F2.cpp \
-	ValueType/Box/F3.cpp \
-	ValueType/Box/U2.cpp \
-	ValueType/Box/U3.cpp \
-	ValueType/Box/I2.cpp \
-	ValueType/Box/I3.cpp \
-\
-	ValueType/Loop/U2.cpp \
-	ValueType/Loop/U3.cpp \
-	ValueType/Loop/I2.cpp \
-	ValueType/Loop/I3.cpp \
-\
-	ValueType/Line/F2.cpp \
-	ValueType/Line/F3.cpp \
-\
-	ValueType/Ray/F2.cpp \
-	ValueType/Ray/F3.cpp \
-	ValueType/Ray/Hit/F3.cpp \
-\
-	ValueType/Matrix/2x2.cpp \
-	ValueType/Matrix/3x3.cpp \
-	ValueType/Matrix/4x4.cpp \
-\
-	ValueType/Trans/2D.cpp \
-	ValueType/Trans/3D.cpp \
-\
-	ValueType/Light/Base.cpp \
-	ValueType/Light/Point.cpp \
-	ValueType/Light/Direction.cpp \
-	ValueType/Light/Spot.cpp \
-\
-	ValueType/View/2D.cpp \
-	ValueType/View/3D.cpp \
-\
-	ValueType/Color/U4.cpp \
-	ValueType/Color/F4.cpp \
-\
-	ValueType/Undex.cpp \
-	ValueType/Angle.cpp \
-	ValueType/EulerAngle3D.cpp \
-	ValueType/DepthFactors.cpp \
-	ValueType/Depth.cpp \
-	ValueType/RangeF.cpp \
-	ValueType/LInter.cpp \
-	ValueType/TriangleF3.cpp \
-	ValueType/NormalPlaneF3.cpp \
-	ValueType/InteractF3.cpp \
-	ValueType/Intersect.cpp \
-	ValueType/_Show.cpp
-VALUE_TYPE_SRC := $(addprefix $(DIR_SRC)/,$(VALUE_TYPE))
-VALUE_TYPE_OBJ := $(addprefix $(DIR_OBJ)/,$(VALUE_TYPE:.cpp=.o))
+################################################################
 
 DISPLAY := \
 	Display/AspectRatio.cpp \
@@ -93,104 +31,7 @@ DISPLAY := \
 DISPLAY_SRC := $(addprefix $(DIR_SRC)/,$(DISPLAY))
 DISPLAY_OBJ := $(addprefix $(DIR_OBJ)/,$(DISPLAY:.cpp=.o))
 
-CONTAINER := \
-	Generics/Container/Void.cpp
-CONTAINER_SRC := $(addprefix $(DIR_SRC)/,$(CONTAINER))
-CONTAINER_OBJ := $(addprefix $(DIR_OBJ)/,$(CONTAINER:.cpp=.o))
-
-SHADER := \
-	Graphics/Shader/Code.cpp \
-	Graphics/Shader/Base.cpp \
-	Graphics/Shader/_Log.cpp \
-	Graphics/ShaderBlockBinding.cpp \
-
-SHADER_SRC := $(addprefix $(DIR_SRC)/,$(SHADER))
-SHADER_OBJ := $(addprefix $(DIR_OBJ)/,$(SHADER:.cpp=.o))
-
-UNIFORM := \
-	Graphics/Uniform/General/Base.cpp \
-	Graphics/Uniform/General/FloatNBase.cpp \
-	Graphics/Uniform/General/FloatNTypeBase.cpp \
-	Graphics/Uniform/General/UIntNBase.cpp \
-	Graphics/Uniform/General/UIntNTypeBase.cpp \
-\
-	Graphics/Uniform/General/Layout.cpp \
-	Graphics/Uniform/General/Buffer.cpp \
-\
-	Graphics/Uniform/Trans2D.cpp \
-	Graphics/Uniform/Trans3D.cpp \
-\
-	Graphics/Uniform/Depth.cpp \
-	Graphics/Uniform/RangeF.cpp \
-	Graphics/Uniform/LInter.cpp \
-\
-	Graphics/Uniform/Light/Base.cpp \
-	Graphics/Uniform/Light/Point.cpp \
-	Graphics/Uniform/Light/Direction.cpp \
-	Graphics/Uniform/Light/Spot.cpp \
-\
-	Graphics/Uniform/AspectRatio.cpp \
-	Graphics/Uniform/PixelSize.cpp \
-	Graphics/Uniform/DisplaySize.cpp \
-\
-	Graphics/Uniform/_Log.cpp
-
-UNIFORM_SRC := $(addprefix $(DIR_SRC)/,$(UNIFORM))
-UNIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(UNIFORM:.cpp=.o))
-
-MULTIFORM := \
-	Graphics/Multiform/General/Base.cpp \
-	Graphics/Multiform/General/Layout.cpp \
-	Graphics/Multiform/General/Buffer.cpp \
-
-MULTIFORM_SRC := $(addprefix $(DIR_SRC)/,$(MULTIFORM))
-MULTIFORM_OBJ := $(addprefix $(DIR_OBJ)/,$(MULTIFORM:.cpp=.o))
-
-BUFFER := \
-	Graphics/Buffer/Base.cpp \
-	Graphics/Buffer/Array.cpp \
-	Graphics/Buffer/Element.cpp \
-	Graphics/Buffer/Uniform.cpp \
-	Graphics/Buffer/_Log.cpp \
-\
-	Graphics/VertexArray/Base.cpp \
-	Graphics/VertexArray/Main.cpp \
-	Graphics/VertexArray/MainInst.cpp \
-	Graphics/VertexArray/MainElemInst.cpp \
-	Graphics/VertexArray/Multi.cpp \
-
-BUFFER_SRC := $(addprefix $(DIR_SRC)/,$(BUFFER))
-BUFFER_OBJ := $(addprefix $(DIR_OBJ)/,$(BUFFER:.cpp=.o))
-
-ATTRIBUTE := \
-	Graphics/Attribute/General/Base.cpp \
-	Graphics/Attribute/General/FloatNBase.cpp \
-	Graphics/Attribute/General/UIntNBase.cpp \
-	Graphics/Attribute/General/IntNBase.cpp \
-\
-	Graphics/Attribute/BoxF2.cpp \
-\
-	Graphics/Attribute/Layout.cpp \
-	Graphics/Attribute/_Log.cpp
-
-ATTRIBUTE_SRC := $(addprefix $(DIR_SRC)/,$(ATTRIBUTE))
-ATTRIBUTE_OBJ := $(addprefix $(DIR_OBJ)/,$(ATTRIBUTE:.cpp=.o))
-
-PADDED_BLOCK := \
-	Graphics/PaddedBlock/LightBase.cpp \
-	Graphics/PaddedBlock/LightDirection.cpp \
-	Graphics/PaddedBlock/LightPoint.cpp \
-	Graphics/PaddedBlock/LightSpot.cpp \
-
-PADDED_BLOCK_SRC := $(addprefix $(DIR_SRC)/,$(PADDED_BLOCK))
-PADDED_BLOCK_OBJ := $(addprefix $(DIR_OBJ)/,$(PADDED_BLOCK:.cpp=.o))
-
-TEXTURE := \
-	Graphics/Texture/Base.cpp \
-	Graphics/Texture/Array2D.cpp \
-	Graphics/Texture/Generate.cpp
-TEXTURE_SRC := $(addprefix $(DIR_SRC)/,$(TEXTURE))
-TEXTURE_OBJ := $(addprefix $(DIR_OBJ)/,$(TEXTURE:.cpp=.o))
+################################################################
 
 INSTANCE_DATA := \
 \
@@ -202,6 +43,8 @@ INSTANCE_DATA := \
 
 INSTANCE_DATA_SRC := $(addprefix $(DIR_SRC)/,$(INSTANCE_DATA))
 INSTANCE_DATA_OBJ := $(addprefix $(DIR_OBJ)/,$(INSTANCE_DATA:.cpp=.o))
+
+################################################################
 
 POLYGON := \
 	PolyGon/PolyGon.cpp \
@@ -221,6 +64,8 @@ POLYGON := \
 POLYGON_SRC := $(addprefix $(DIR_SRC)/,$(POLYGON))
 POLYGON_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYGON:.cpp=.o))
 
+################################################################
+
 POLYHEDRA := \
 	PolyHedra/Data.cpp \
 	PolyHedra/PolyHedra.cpp \
@@ -236,6 +81,8 @@ POLYHEDRA := \
 POLYHEDRA_SRC := $(addprefix $(DIR_SRC)/,$(POLYHEDRA))
 POLYHEDRA_OBJ := $(addprefix $(DIR_OBJ)/,$(POLYHEDRA:.cpp=.o))
 
+################################################################
+
 WAVEFRONT := \
 	Wavefront/OBJ.cpp \
 	Wavefront/Main/Data.cpp \
@@ -245,6 +92,8 @@ WAVEFRONT := \
 	Wavefront/MTL.cpp
 WAVEFRONT_SRC := $(addprefix $(DIR_SRC)/,$(WAVEFRONT))
 WAVEFRONT_OBJ := $(addprefix $(DIR_OBJ)/,$(WAVEFRONT:.cpp=.o))
+
+################################################################
 
 USERPARAMETER := \
 \
@@ -269,6 +118,8 @@ USERPARAMETER := \
 USERPARAMETER_SRC := $(addprefix $(DIR_SRC)/,$(USERPARAMETER))
 USERPARAMETER_OBJ := $(addprefix $(DIR_OBJ)/,$(USERPARAMETER:.cpp=.o))
 
+################################################################
+
 OTHER := \
 	FrameTime.cpp \
 	Window.cpp \
@@ -276,30 +127,24 @@ OTHER := \
 OTHER_SRC := $(addprefix $(DIR_SRC)/,$(OTHER))
 OTHER_OBJ := $(addprefix $(DIR_OBJ)/,$(OTHER:.cpp=.o))
 
-
+################################################################
 
 ALL_SRC := \
-	$(VALUE_TYPE_SRC) $(DISPLAY_SRC) \
-	$(CONTAINER_SRC) \
-	$(SHADER_SRC) $(UNIFORM_SRC) $(MULTIFORM_SRC) \
-	$(BUFFER_SRC) $(ATTRIBUTE_SRC) $(TEXTURE_SRC) \
-	$(PADDED_BLOCK_SRC) \
+	$(DISPLAY_SRC) \
 	$(INSTANCE_DATA_SRC) \
 	$(POLYGON_SRC) $(POLYHEDRA_SRC) \
 	$(USERPARAMETER_SRC) \
 	$(OTHER_SRC)
 
 ALL_OBJ := \
-	$(VALUE_TYPE_OBJ) $(DISPLAY_OBJ) \
-	$(CONTAINER_OBJ) \
-	$(SHADER_OBJ) $(UNIFORM_OBJ) $(MULTIFORM_OBJ) \
-	$(BUFFER_OBJ) $(ATTRIBUTE_OBJ) $(TEXTURE_OBJ) \
-	$(PADDED_BLOCK_OBJ) \
+	$(DISPLAY_OBJ) \
 	$(INSTANCE_DATA_OBJ) \
 	$(POLYHEDRA_MAIN_OBJ) \
 	$(POLYGON_OBJ) $(POLYHEDRA_OBJ) \
 	$(USERPARAMETER_OBJ) \
 	$(OTHER_OBJ)
+
+################################################################
 
 
 
@@ -312,29 +157,47 @@ ALL_OBJ := \
 all:
 	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) $(NAME) -s
+	@$(MAKE) -C ValueType/ -s all
+	@$(MAKE) -C Generics/ -s all
+	@$(MAKE) -C Graphics/ -s all
 
 clean:
 	@$(call fancyNameTargetEcho,$@)
 	@$(REMOVER) $(ALL_OBJ)
+	@$(MAKE) -C ValueType/ -s clean
+	@$(MAKE) -C Generics/ -s clean
+	@$(MAKE) -C Graphics/ -s clean
 
 aclean:
 	@$(call fancyNameTargetEcho,$@)
 	@$(REMOVER) $(NAME)
+	@$(MAKE) -C ValueType/ -s aclean
+	@$(MAKE) -C Generics/ -s aclean
+	@$(MAKE) -C Graphics/ -s aclean
 
 fclean:
 	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) -s clean
 	@$(MAKE) -s aclean
+	@$(MAKE) -C ValueType/ -s fclean
+	@$(MAKE) -C Generics/ -s fclean
+	@$(MAKE) -C Graphics/ -s fclean
 
 re:
 	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) -s fclean
 	@$(MAKE) -s all
+	@$(MAKE) -C ValueType/ -s re
+	@$(MAKE) -C Generics/ -s re
+	@$(MAKE) -C Graphics/ -s re
 
 are:
 	@$(call fancyNameTargetEcho,$@)
 	@$(MAKE) -s aclean
 	@$(MAKE) -s all
+	@$(MAKE) -C ValueType/ -s are
+	@$(MAKE) -C Generics/ -s are
+	@$(MAKE) -C Graphics/ -s are
 
 .PHONY: all clean aclean fclean re are
 
@@ -360,12 +223,6 @@ $(DIR_OBJ)/%.o : $(DIR_SRC)/%.cpp
 
 ################################################################
 
-remake_VALUE_TYPE:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(VALUE_TYPE_OBJ)
-	@$(REMOVER) $(NAME)
-	@$(MAKE) -s all
-
 remake_Display:
 	@$(call fancyNameTargetEcho,$@)
 	@$(REMOVER) $(DISPLAY_OBJ)
@@ -375,42 +232,6 @@ remake_Display:
 remake_Container:
 	@$(call fancyNameTargetEcho,$@)
 	@$(REMOVER) $(CONTAINER_OBJ)
-	@$(REMOVER) $(NAME)
-	@$(MAKE) -s all
-
-remake_Shader:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(SHADER_OBJ)
-	@$(REMOVER) $(NAME)
-	@$(MAKE) -s all
-
-remake_Uniform:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(UNIFORM_OBJ)
-	@$(REMOVER) $(NAME)
-	@$(MAKE) -s all
-
-remake_Multiform:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(MULTIFORM_OBJ)
-	@$(REMOVER) $(NAME)
-	@$(MAKE) -s all
-
-remake_Buffer:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(BUFFER_OBJ)
-	@$(REMOVER) $(NAME)
-	@$(MAKE) -s all
-
-remake_Attribute:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(ATTRIBUTE_OBJ)
-	@$(REMOVER) $(NAME)
-	@$(MAKE) -s all
-
-remake_Texture:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(TEXTURE_OBJ)
 	@$(REMOVER) $(NAME)
 	@$(MAKE) -s all
 
@@ -466,6 +287,10 @@ LIBRARYS = $(NAME)
 INCLUDES = include/
 ARGUMENTS =
 
+include ValueType.mk
+include Generics.mk
+include Graphics.mk
+
 ARGS_LIBRARYS = $(foreach library,$(LIBRARYS),$(library))
 ARGS_INCLUDES = $(foreach include,$(INCLUDES),-I$(include))
 
@@ -488,63 +313,13 @@ arguments:
 
 
 
+################################################################
+#                            repos                             #
+################################################################
+
 REPOS_DIR := ../
 
-
-
-################################################################
-#                            OpenGL                            #
-################################################################
-
-OPENGL_REPO := $(REPOS_DIR)/OpenGL
-
-#OPENGL_LIBRARYS = $(call repoLibrarys,$(OPENGL_REPO))
-#OPENGL_INCLUDES = $(call repoIncludes,$(OPENGL_REPO))
-#OPENGL_ARGUMENTS = $(call repoArguments,$(OPENGL_REPO))
-
-OPENGL_LIBRARYS = $(OPENGL_REPO)/openGL.a
-OPENGL_INCLUDES = $(OPENGL_REPO)/include
-
-#ifeq ($(CheckOS), Windows)
-#OPENGL_ARGUMENTS = -lglfw3 -lgdi32
-#endif
-#
-#ifeq ($(CheckOS), Darwin)
-#OPENGL_ARGUMENTS = -lglfw
-#endif
-#
-#ifeq ($(CheckOS), Linux)
-#OPENGL_ARGUMENTS = -lglfw
-#endif
-
-LIBRARYS += $(OPENGL_LIBRARYS)
-INCLUDES += $(OPENGL_INCLUDES)
-ARGUMENTS += $(OPENGL_ARGUMENTS)
+include OpenGL.mk
+include FileManager.mk
 
 ################################################################
-
-
-
-
-
-################################################################
-#                         File Manager                         #
-################################################################
-
-FM_REPO := $(REPOS_DIR)/FileManager
-
-#FM_LIBRARYS = $(call repoLibrarys,$(FM_REPO))
-#FM_INCLUDES = $(call repoIncludes,$(FM_REPO))
-#FM_ARGUMENTS = $(call repoArguments,$(FM_REPO))
-
-FM_LIBRARYS = $(FM_REPO)/FileManager.a
-FM_INCLUDES = $(FM_REPO)/include
-FM_ARGUMENTS = 
-
-LIBRARYS += $(FM_LIBRARYS)
-INCLUDES += $(FM_INCLUDES)
-ARGUMENTS += $(FM_ARGUMENTS)
-
-################################################################
-
-
