@@ -8,6 +8,7 @@
 #include "FileParsing/TextCommand/Args.hpp"
 #include "FileParsing/TextCommand/ArgsStream.hpp"
 #include "FileParsing/TextCommand/Exceptions.hpp"
+#include "DirectoryInfo.hpp"
 
 #include "ValueType/Vector/F2.hpp"
 #include "ValueType/Ray/F2.hpp"
@@ -141,7 +142,7 @@ void Skin::ParsingData::Parse_Image(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
 
-	FileInfo file((File.DirectoryString() + "/" + cmd_args.ToString(0)).c_str());
+	FileInfo file(File.Directory().File(cmd_args.ToString(0)));
 	Skin.Images.Insert(file.LoadImage());
 }
 

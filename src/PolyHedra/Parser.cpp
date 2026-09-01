@@ -390,7 +390,7 @@ void PolyHedraParser::New_Skin(const TextCommand::Args & cmd_args)
 	
 	if (Object -> Skin != nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "PolyHedra already has Skin"); }
 
-	FileInfo file((File.DirectoryString() + "/" + cmd_args.ToString(0)).c_str());
+	FileInfo file(File.Directory().File(cmd_args.ToString(0)));
 	if (!file.Exists()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Bad Skin File"); } // this is not InvalidArgument. this is generic error
 	Object -> Skin = Skin::Load(file);
 }
