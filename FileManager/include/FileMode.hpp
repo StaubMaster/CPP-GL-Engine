@@ -7,13 +7,14 @@
 class FileMode
 {
 	public:
-	unsigned short Data;
+	unsigned short Data = 0;
 
+	// = default
 	public:
-	FileMode();
-	~FileMode();
-	FileMode(const FileMode & other);
-	FileMode & operator=(const FileMode & other);
+	~FileMode() = default;
+	FileMode() = default;
+	FileMode(const FileMode & other) = default;
+	FileMode & operator=(const FileMode & other) = default;
 
 	public:
 	FileMode(unsigned short data);

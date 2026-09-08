@@ -4,68 +4,7 @@
 
 
 
-FileSystemStat::FileSystemStat() :
-	Valid(false),
-	Mode(),
-	Idone(0),
-	UserID(0),
-	GroupID(0),
-	DeviceID(0),
-	SpecialID(0),
-	LinkCount(0),
-	CreateTime(0),
-	ModifyTime(0),
-	AccessTime(0),
-	Size(0)
-{ }
-FileSystemStat::~FileSystemStat()
-{ }
-FileSystemStat::FileSystemStat(const FileSystemStat & other) :
-	Valid(other.Valid),
-	Mode(other.Mode),
-	Idone(other.Idone),
-	UserID(other.UserID),
-	GroupID(other.GroupID),
-	DeviceID(other.DeviceID),
-	SpecialID(other.SpecialID),
-	LinkCount(other.LinkCount),
-	CreateTime(other.CreateTime),
-	ModifyTime(other.ModifyTime),
-	AccessTime(other.AccessTime),
-	Size(other.Size)
-{ }
-FileSystemStat & FileSystemStat::operator=(const FileSystemStat & other)
-{
-	Valid = other.Valid;
-	Mode = other.Mode;
-	Idone = other.Idone;
-	UserID = other.UserID;
-	GroupID = other.GroupID;
-	DeviceID = other.DeviceID;
-	SpecialID = other.SpecialID;
-	LinkCount = other.LinkCount;
-	CreateTime = other.CreateTime;
-	ModifyTime = other.ModifyTime;
-	AccessTime = other.AccessTime;
-	Size = other.Size;
-	return *this;
-}
-
-
-
-FileSystemStat::FileSystemStat(const char * path) :
-	Valid(false),
-	Mode(),
-	Idone(0),
-	UserID(0),
-	GroupID(0),
-	DeviceID(0),
-	SpecialID(0),
-	LinkCount(0),
-	CreateTime(0),
-	ModifyTime(0),
-	AccessTime(0),
-	Size(0)
+FileSystemStat::FileSystemStat(const char * path)
 {
 	if (access(path, 0) == 0)
 	{
@@ -86,18 +25,6 @@ FileSystemStat::FileSystemStat(const char * path) :
 }
 void FileSystemStat::Refresh(const char * path)
 {
-	Valid = false;
-	Mode = FileMode(0);
-	Idone = 0;
-	UserID = 0;
-	GroupID = 0;
-	DeviceID = 0;
-	SpecialID = 0;
-	LinkCount = 0;
-	CreateTime = 0;
-	ModifyTime = 0;
-	AccessTime = 0;
-	Size = 0;
 	if (access(path, 0) == 0)
 	{
 		struct stat sys_stat;
@@ -113,6 +40,21 @@ void FileSystemStat::Refresh(const char * path)
 		ModifyTime = sys_stat.st_mtime;
 		AccessTime = sys_stat.st_atime;
 		Size = sys_stat.st_size;;
+	}
+	else
+	{
+		Valid = false;
+		Mode = FileMode();
+		Idone = 0;
+		UserID = 0;
+		GroupID = 0;
+		DeviceID = 0;
+		SpecialID = 0;
+		LinkCount = 0;
+		CreateTime = 0;
+		ModifyTime = 0;
+		AccessTime = 0;
+		Size = 0;
 	}
 }
 

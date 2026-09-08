@@ -14,22 +14,8 @@ static void ChangeBit(unsigned short & data, unsigned short bits, bool val)
 
 
 
-FileMode::FileMode() :
-	Data(0)
-{ }
-FileMode::~FileMode()
-{ }
-FileMode::FileMode(const FileMode & other) :
-	Data(other.Data)
-{ }
-FileMode & FileMode::operator=(const FileMode & other)
-{
-	Data = other.Data;
-	return *this;
-}
-
-FileMode::FileMode(unsigned short data) :
-	Data(data)
+FileMode::FileMode(unsigned short data)
+	: Data(data)
 { }
 
 

@@ -77,6 +77,6 @@ std::ostream & operator<<(std::ostream & o, const FileSystemInfo & obj)
 	{
 		o << "/"; // use Slash from FilePath ?
 	}
-	o << '\n';
+	//o << '\n';
 	return o;
 }

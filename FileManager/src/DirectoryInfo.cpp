@@ -231,7 +231,7 @@ Container::Array<FileSystemInfo> DirectoryInfo::Children() const
 	ent = readdir(dir);
 	while (ent != NULL)
 	{
-		children.Insert(FileSystemInfo(ent -> d_name));
+		children.Insert(FileSystemInfo(Path.Child(ent -> d_name)));
 		ent = readdir(dir);
 	}
 
@@ -256,11 +256,10 @@ Container::Array<FileInfo> DirectoryInfo::Files() const
 	while (ent != NULL)
 	{
 		//if (ent -> d_type == DT_REG)
-		FileSystemInfo info(ent -> d_name);
+		FileSystemInfo info(Path.Child(ent -> d_name));
 		if (info.IsFile())
 		{
 			children.Insert(info.ToFile());
-			//children.Insert(FilePath(ent -> d_name));
 		}
 		ent = readdir(dir);
 	}
@@ -286,7 +285,7 @@ Container::Array<DirectoryInfo> DirectoryInfo::Directorys() const
 	while (ent != NULL)
 	{
 		//if (ent -> d_type == DT_DIR)
-		FileSystemInfo info(ent -> d_name);
+		FileSystemInfo info(Path.Child(ent -> d_name));
 		if (info.IsDirectory())
 		{
 			children.Insert(info.ToDirectory());

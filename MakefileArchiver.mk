@@ -75,12 +75,12 @@ $(NAME) : $(FILES_OBJ)
 
 $(DIR_OBJ)/%.o : $(DIR_SRC)/%.c
 	@$(call fancyNameCompilingEcho,$@)
-#	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	@$(COMPILER_C) $(FLAGS) $(addprefix -I,$(INCLUDES)) $(ARGUMENTS) -c $^ -o $@
 
 $(DIR_OBJ)/%.o : $(DIR_SRC)/%.cpp
 	@$(call fancyNameCompilingEcho,$@)
-#	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	@$(COMPILER_CPP) $(FLAGS) $(addprefix -I,$(INCLUDES)) $(ARGUMENTS) -o $@ -c $<
 
 ################################################################
