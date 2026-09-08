@@ -1,157 +1,89 @@
 
 NAME := ValueType.a
-
-COMPILER := g++ -g -std=c++11
-FLAGS := -Wall -Wextra -Werror
-ARCHIVER := ar -rcs
-REMOVER := rm -f
-
 FANCY_NAME := Engine/ValueType
-include ../fancy.mk
 
 ################################################################
 
-
-
-
-
-################################################################
-
-DIR_SRC := src/
-DIR_OBJ := obj/
+DIR_SRC := src/ValueType/
+DIR_OBJ := obj/ValueType/
 
 ################################################################
 
 FILES := \
-	ValueType/Bool/2.cpp \
-	ValueType/Bool/3.cpp \
-	ValueType/Bool/4.cpp \
+	Bool/2.cpp \
+	Bool/3.cpp \
+	Bool/4.cpp \
 \
-	ValueType/Vector/F2.cpp \
-	ValueType/Vector/F3.cpp \
-	ValueType/Vector/F4.cpp \
-	ValueType/Vector/U2.cpp \
-	ValueType/Vector/U3.cpp \
-	ValueType/Vector/I2.cpp \
-	ValueType/Vector/I3.cpp \
+	Vector/F2.cpp \
+	Vector/F3.cpp \
+	Vector/F4.cpp \
+	Vector/U2.cpp \
+	Vector/U3.cpp \
+	Vector/I2.cpp \
+	Vector/I3.cpp \
 \
-	ValueType/Box/F1.cpp \
-	ValueType/Box/F2.cpp \
-	ValueType/Box/F3.cpp \
-	ValueType/Box/U2.cpp \
-	ValueType/Box/U3.cpp \
-	ValueType/Box/I2.cpp \
-	ValueType/Box/I3.cpp \
+	Box/F1.cpp \
+	Box/F2.cpp \
+	Box/F3.cpp \
+	Box/U2.cpp \
+	Box/U3.cpp \
+	Box/I2.cpp \
+	Box/I3.cpp \
 \
-	ValueType/Loop/U2.cpp \
-	ValueType/Loop/U3.cpp \
-	ValueType/Loop/I2.cpp \
-	ValueType/Loop/I3.cpp \
+	Loop/U2.cpp \
+	Loop/U3.cpp \
+	Loop/I2.cpp \
+	Loop/I3.cpp \
 \
-	ValueType/Line/F2.cpp \
-	ValueType/Line/F3.cpp \
+	Line/F2.cpp \
+	Line/F3.cpp \
 \
-	ValueType/Ray/F2.cpp \
-	ValueType/Ray/F3.cpp \
-	ValueType/Ray/Hit/F3.cpp \
+	Ray/F2.cpp \
+	Ray/F3.cpp \
+	Ray/Hit/F3.cpp \
 \
-	ValueType/Matrix/2x2.cpp \
-	ValueType/Matrix/3x3.cpp \
-	ValueType/Matrix/4x4.cpp \
+	Matrix/2x2.cpp \
+	Matrix/3x3.cpp \
+	Matrix/4x4.cpp \
 \
-	ValueType/Trans/2D.cpp \
-	ValueType/Trans/3D.cpp \
+	Trans/2D.cpp \
+	Trans/3D.cpp \
 \
-	ValueType/Light/Base.cpp \
-	ValueType/Light/Point.cpp \
-	ValueType/Light/Direction.cpp \
-	ValueType/Light/Spot.cpp \
+	Light/Base.cpp \
+	Light/Point.cpp \
+	Light/Direction.cpp \
+	Light/Spot.cpp \
 \
-	ValueType/View/2D.cpp \
-	ValueType/View/3D.cpp \
+	View/2D.cpp \
+	View/3D.cpp \
 \
-	ValueType/Color/U4.cpp \
-	ValueType/Color/F4.cpp \
+	Color/U4.cpp \
+	Color/F4.cpp \
 \
-	ValueType/Undex.cpp \
-	ValueType/Angle.cpp \
-	ValueType/EulerAngle3D.cpp \
-	ValueType/DepthFactors.cpp \
-	ValueType/Depth.cpp \
-	ValueType/RangeF.cpp \
-	ValueType/LInter.cpp \
-	ValueType/TriangleF3.cpp \
-	ValueType/NormalPlaneF3.cpp \
-	ValueType/InteractF3.cpp \
-	ValueType/Intersect.cpp \
-	ValueType/_Show.cpp
-
-FILES_SRC := $(addprefix $(DIR_SRC)/,$(FILES))
-FILES_OBJ := $(addprefix $(DIR_OBJ)/,$(FILES:.cpp=.o))
+	Undex.cpp \
+	Angle.cpp \
+	EulerAngle3D.cpp \
+	DepthFactors.cpp \
+	Depth.cpp \
+	RangeF.cpp \
+	LInter.cpp \
+	TriangleF3.cpp \
+	NormalPlaneF3.cpp \
+	InteractF3.cpp \
+	Intersect.cpp \
+\
+	_Show.cpp
 
 ################################################################
 
-
-
-
-
-################################################################
-#                  Standard Makefile Commands                  #
-################################################################
-
-all:
-	@$(call fancyNameTargetEcho,$@)
-	@$(MAKE) $(NAME) -s
-
-clean:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(FILES_OBJ)
-
-aclean:
-	@$(call fancyNameTargetEcho,$@)
-	@$(REMOVER) $(NAME)
-
-fclean:
-	@$(call fancyNameTargetEcho,$@)
-	@$(MAKE) -s clean
-	@$(MAKE) -s aclean
-
-re:
-	@$(call fancyNameTargetEcho,$@)
-	@$(MAKE) -s fclean
-	@$(MAKE) -s all
-
-are:
-	@$(call fancyNameTargetEcho,$@)
-	@$(MAKE) -s aclean
-	@$(MAKE) -s all
-
-.PHONY: all clean aclean fclean re are
-
-$(NAME) : $(FILES_OBJ)
-	@$(call fancyNameArchivingEcho,$@)
-	@$(ARCHIVER) $(NAME) $(FILES_OBJ)
+LIBRARYS  := $(NAME)
+INCLUDES  := include/
+ARGUMENTS := 
 
 ################################################################
 
-$(DIR_OBJ)/%.o : $(DIR_SRC)/%.cpp
-	@$(call fancyNameCompilingEcho,$@)
-	@mkdir -p $(dir $@)
-	@$(COMPILER) $(FLAGS) $(ARGS_INCLUDES) -c $< -o $@
+BASE_DIR := ../
 
-################################################################
-
-
-
-
-
-################################################################
-
-LIBRARYS = $(NAME)
-INCLUDES = include/
-ARGUMENTS =
-
-ARGS_LIBRARYS = $(foreach library,$(LIBRARYS),$(library))
-ARGS_INCLUDES = $(foreach include,$(INCLUDES),-I$(include))
+include $(BASE_DIR)/MakefileArchiver.mk
 
 ################################################################

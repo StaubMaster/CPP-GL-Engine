@@ -17,15 +17,17 @@ class Base
 	std::string			Name;
 	Multiform::Base *	Multiform;
 
-	public:
+	protected:
 	virtual ~Base();
+
+	private:
 	Base() = delete;
 	Base(const Base & other) = delete;
 	Base & operator=(const Base & other) = delete;
 
-	public:
+	protected:
 	Base(std::string name);
-	Base(Uniform::Layout & layout, std::string name);
+	Base(Layout & layout, std::string name);
 
 	public:
 	virtual void	Find(Shader::Base & shader) = 0;

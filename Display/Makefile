@@ -1,21 +1,26 @@
 
-NAME := Generics.a
-FANCY_NAME := Engine/Generics
+NAME := Display.a
+FANCY_NAME := Engine/Display
 
 ################################################################
 
-DIR_SRC := src/Generics/
-DIR_OBJ := obj/Generics/
+DIR_SRC := src/Display/
+DIR_OBJ := obj/Display/
 
 ################################################################
 
 FILES := \
-	Container/Void.cpp \
+	AspectRatio.cpp \
+	PixelSize.cpp \
+	DisplaySize.cpp \
+	PixelPosition.cpp \
+	DisplayPosition.cpp \
+	NormalPosition.cpp \
 
 ################################################################
 
 LIBRARYS  := $(NAME)
-INCLUDES  := include/
+INCLUDES  := include/ ../include/ ../ValueType/include/
 ARGUMENTS := 
 
 ################################################################

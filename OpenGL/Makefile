@@ -1,16 +1,18 @@
 
-NAME := Generics.a
-FANCY_NAME := Engine/Generics
+NAME := OpenGL.a
+FANCY_NAME := Engine/OpenGL
 
 ################################################################
 
-DIR_SRC := src/Generics/
-DIR_OBJ := obj/Generics/
+DIR_SRC := src/
+DIR_OBJ := obj/
 
 ################################################################
 
 FILES := \
-	Container/Void.cpp \
+	OpenGLEnums.cpp \
+	OpenGL.cpp \
+	../glad/glad.c \
 
 ################################################################
 

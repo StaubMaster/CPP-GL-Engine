@@ -6,22 +6,28 @@
 # include "Generics/Container/Binary.hpp"
 
 namespace Shader { class Base; };
-
 namespace Uniform { class Layout; class Base; };
 
 namespace Multiform
 {
+class Layout;
 class Base
 {
 	public:
-	std::string		Name;
-
-	public:
+	std::string							Name;
 	Container::Binary<Uniform::Base*>	Uniforms;
 
 	protected:
 	virtual ~Base();
+
+	private:
+	Base() = delete;
+	Base(const Base & other) = delete;
+	Base & operator=(const Base & other) = delete;
+
+	protected:
 	Base(std::string name);
+	Base(Layout & layout, std::string name);
 
 	public:
 	void	Clear();
