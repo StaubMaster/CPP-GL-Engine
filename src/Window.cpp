@@ -241,7 +241,7 @@ void Window::Callback_GLFW_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
 	UpdateSize();
-	CallBack_Resize(Size);
+	CallBack_Resize.TryInvoke(Size);
 }
 void Window::Callback_GLFW_CursorClick(int button, int action, int mods)
 {
@@ -345,7 +345,7 @@ void Window::RunLoop()
 		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		UpdateSize();
 		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
-		CallBack_Resize(Size);
+		CallBack_Resize.TryInvoke(Size);
 		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		FrameTime.TimeNow = glfwGetTime();
 		LoopIsDone = false;

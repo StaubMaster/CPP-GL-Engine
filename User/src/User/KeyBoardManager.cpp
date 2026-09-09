@@ -154,9 +154,9 @@ void KeyBoardManager::Invoke_KeyEvent(int key, int scancode, int action, int mod
 {
 	Update((Keys)key, (Action)action);
 
-	CallBack_KeyEvent(KeyArgs(key, scancode, action, mods));
+	CallBack_KeyEvent.TryInvoke(KeyArgs(key, scancode, action, mods));
 }
 void KeyBoardManager::Invoke_TextEvent(unsigned int codepoint)
 {
-	CallBack_TextEvent(TextArgs(codepoint));
+	CallBack_TextEvent.TryInvoke(TextArgs(codepoint));
 }
