@@ -769,6 +769,9 @@ PolyHedra * PolyHedraParser::Load(const FileInfo & file, const PolyHedraParser *
 //	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
 	data.ParseFile();
 //	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " done" << '\n';
-	data.Object -> Done();
+	if (data.Object != nullptr)
+	{
+		data.Object -> Done();
+	}
 	return data.Object;
 }

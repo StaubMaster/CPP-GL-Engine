@@ -16,10 +16,10 @@ PolyHedra * PolyHedraFileCollection::Find(const FileInfo & file) const
 	}
 	return nullptr;
 }
-#include <iostream>
 PolyHedra * PolyHedraFileCollection::Make(const FileInfo & file)
 {
 	PolyHedra * object = PolyHedraParser::Load(file, nullptr, this);
+	if (object == nullptr) { return nullptr; }
 	if (object -> Parameters == nullptr)
 	{
 		FileObject file_obj;
@@ -32,6 +32,7 @@ PolyHedra * PolyHedraFileCollection::Make(const FileInfo & file)
 PolyHedra * PolyHedraFileCollection::Make(const FileInfo & file, const PolyHedraParser & parser)
 {
 	PolyHedra * object = PolyHedraParser::Load(file, &parser, this);
+	if (object == nullptr) { return nullptr; }
 	if (object -> Parameters == nullptr)
 	{
 		FileObject file_obj;
