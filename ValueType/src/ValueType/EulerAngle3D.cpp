@@ -123,12 +123,17 @@ EulerAngle3D EulerAngle3D::reverse() const
 
 
 
+EulerAngle3D	EulerAngle3D::operator+() const { return EulerAngle3D(+Z0, +X1, +Y2); }
+EulerAngle3D	EulerAngle3D::operator-() const { return EulerAngle3D(-Z0, -X1, -Y2); }
+
 EulerAngle3D	EulerAngle3D::operator+(const EulerAngle3D & other) const { return EulerAngle3D(Z0 + other.Z0, X1 + other.X1, Y2 + other.Y2); }
 EulerAngle3D	EulerAngle3D::operator-(const EulerAngle3D & other) const { return EulerAngle3D(Z0 - other.Z0, X1 - other.X1, Y2 - other.Y2); }
+
 EulerAngle3D &	EulerAngle3D::operator+=(const EulerAngle3D & other) { Z0 += other.Z0; X1 += other.X1; Y2 += other.Y2; return *this; }
 EulerAngle3D &	EulerAngle3D::operator-=(const EulerAngle3D & other) { Z0 += other.Z0; X1 -= other.X1; Y2 -= other.Y2; return *this; }
 
 EulerAngle3D	EulerAngle3D::operator*(const float & flt) const { return EulerAngle3D(Z0 * flt, X1 * flt, Y2 * flt); }
 EulerAngle3D	EulerAngle3D::operator/(const float & flt) const { return EulerAngle3D(Z0 / flt, X1 / flt, Y2 / flt); }
+
 EulerAngle3D &	EulerAngle3D::operator*=(const float & flt) { Z0 *= flt; X1 *= flt; Y2 *= flt; return *this; }
 EulerAngle3D &	EulerAngle3D::operator/=(const float & flt) { Z0 /= flt; X1 /= flt; Y2 /= flt; return *this; }
