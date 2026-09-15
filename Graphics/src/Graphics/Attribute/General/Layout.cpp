@@ -5,6 +5,13 @@
 
 void Attribute::Layout::Clear()
 {
+	for (unsigned int i = 0; i < Attributes.Count(); i++)
+	{
+		if (Attributes[i] -> IsDynamic)
+		{
+			delete Attributes[i];
+		}
+	}
 	Attributes.Clear();
 }
 void Attribute::Layout::Put(Attribute::Base & attribute)
@@ -22,7 +29,15 @@ void Attribute::Layout::Put(Attribute::Base * attribute)
 
 
 Attribute::Layout::~Layout()
-{ }
+{
+	for (unsigned int i = 0; i < Attributes.Count(); i++)
+	{
+		if (Attributes[i] -> IsDynamic)
+		{
+			delete Attributes[i];
+		}
+	}
+}
 Attribute::Layout::Layout(GL::AttributeDivisor divisor, GL::AttributeStride stride)
 	: Attributes()
 	, Divisor(divisor)

@@ -6,12 +6,12 @@
 
 
 
-Uniform::Buffer::Buffer(std::string name)
-	: Uniform::Base(name)
+Uniform::Buffer::Buffer(std::string name, bool is_dynamic)
+	: Uniform::Base(name, is_dynamic)
 	, Index(-1)
 { }
-Uniform::Buffer::Buffer(Uniform::Layout & layout, std::string name)
-	: Uniform::Base(layout, name)
+Uniform::Buffer::Buffer(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: Uniform::Base(layout, name, is_dynamic)
 	, Index(-1)
 { }
 

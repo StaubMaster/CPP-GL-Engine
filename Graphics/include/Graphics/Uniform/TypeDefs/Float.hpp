@@ -1,11 +1,11 @@
-#ifndef  UNI_FLOAT_HPP
-# define UNI_FLOAT_HPP
+#ifndef  UNIFORM_FLOAT_HPP
+# define UNIFORM_FLOAT_HPP
 
-# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNType.hpp"
 
 namespace Uniform
 {
-typedef FloatNTypeBase<1, 1, 1, float> Float;
+typedef FloatNType<1, 1, 1, float> Float;
 };
 
 #endif

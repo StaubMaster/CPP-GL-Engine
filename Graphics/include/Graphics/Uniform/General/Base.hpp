@@ -15,9 +15,10 @@ class Base
 {
 	public:
 	std::string			Name;
-	Multiform::Base *	Multiform;
+	Multiform::Base *	Multiform = nullptr;
+	bool				IsDynamic = false; // delete with Layout
 
-	protected:
+	protected: public:
 	virtual ~Base();
 
 	private:
@@ -26,8 +27,8 @@ class Base
 	Base & operator=(const Base & other) = delete;
 
 	protected:
-	Base(std::string name);
-	Base(Layout & layout, std::string name);
+	Base(std::string name, bool is_dynamic);
+	Base(Layout & layout, std::string name, bool is_dynamic);
 
 	public:
 	virtual void	Find(Shader::Base & shader) = 0;

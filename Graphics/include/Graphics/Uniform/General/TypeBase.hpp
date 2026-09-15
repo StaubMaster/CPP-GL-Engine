@@ -1,25 +1,25 @@
 
-#ifndef  GENERIC_UNIFORM_BASE_HPP
-# define GENERIC_UNIFORM_BASE_HPP
+#ifndef  UNIFORM_TYPE_BASE_HPP
+# define UNIFORM_TYPE_BASE_HPP
 
 # include "Graphics/Uniform/General/Base.hpp"
 
 namespace Uniform
 {
 template <typename ValueType>
-class GBase : public Base // rename to TypeBase ?
+class TypeBase : public Base // rename to TypeBase ?
 {
 	protected:
-	virtual ~GBase()
+	virtual ~TypeBase()
 	{ }
-	GBase() = delete;
+	TypeBase() = delete;
 
 	protected:
-	GBase(std::string name)
-		: Base(name)
+	TypeBase(std::string name, bool is_dynamic)
+		: Base(name, is_dynamic)
 	{ }
-	GBase(Layout & layout, std::string name)
-		: Base(layout, name)
+	TypeBase(Layout & layout, std::string name, bool is_dynamic)
+		: Base(layout, name, is_dynamic)
 	{ }
 
 	public:

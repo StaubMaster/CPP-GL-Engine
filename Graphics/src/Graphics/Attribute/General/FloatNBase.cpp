@@ -13,18 +13,20 @@ Attribute::FloatNBase & Attribute::FloatNBase::operator=(const FloatNBase & othe
 
 
 
-Attribute::FloatNBase::FloatNBase(Layout & layout)
-	: Base(layout)
+Attribute::FloatNBase::FloatNBase(Layout & layout, bool is_dynamic)
+	: Base(layout, is_dynamic)
 	, Index(-1)
 { }
-Attribute::FloatNBase::FloatNBase(Layout & layout, GL::AttributeLocation index)
-	: Base(layout)
+Attribute::FloatNBase::FloatNBase(Layout & layout, GL::AttributeLocation index, bool is_dynamic)
+	: Base(layout, is_dynamic)
 	, Index(index)
 { }
-Attribute::FloatNBase::FloatNBase(Layout & layout, const FloatNBase & other)
-	: Base(layout)
+Attribute::FloatNBase::FloatNBase(Layout & layout, const FloatNBase & other, bool is_dynamic)
+	: Base(layout, is_dynamic)
 	, Index(other.Index)
 { }
+
+
 
 void Attribute::FloatNBase::Change(GL::AttributeLocation index)
 {

@@ -3,13 +3,13 @@
 
 
 
-Uniform::LightDirection::LightDirection(std::string name)
-	: GBase(name)
+Uniform::LightDirection::LightDirection(std::string name, bool is_dynamic)
+	: TypeBase(name, is_dynamic)
 	, Base(Name + ".Base")
 	, Dir(Name + ".Direction")
 { }
-Uniform::LightDirection::LightDirection(Uniform::Layout & layout, std::string name)
-	: GBase(layout, name)
+Uniform::LightDirection::LightDirection(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: TypeBase(layout, name, is_dynamic)
 	, Base(layout, Name + ".Base")
 	, Dir(layout, Name + ".Direction")
 { }

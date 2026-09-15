@@ -22,6 +22,8 @@ class Layout
 	private:
 	Container::Binary<Uniform::Base*>	Uniforms;
 	public:
+	bool	IsDynamic = false; // delete with Shader
+	public:
 	void	Clear();
 	void	Put(Uniform::Base & uniform);
 	void	Put(Uniform::Base * uniform);

@@ -1,5 +1,5 @@
-#ifndef  ATTRIBUTE_FLOAT_N_HPP
-# define ATTRIBUTE_FLOAT_N_HPP
+#ifndef  ATTRIBUTE_FLOAT_N_TYPE_HPP
+# define ATTRIBUTE_FLOAT_N_TYPE_HPP
 
 # include "Graphics/Attribute/General/FloatNBase.hpp"
 
@@ -9,27 +9,31 @@
 namespace Attribute
 {
 template<unsigned int Size0, unsigned int Size1>
-class FloatN : public Attribute::FloatNBase
+class FloatNType : public Attribute::FloatNBase
 {
 	public:
-	virtual ~FloatN() { }
-	FloatN() = delete;
-	FloatN(Layout & layout)
-		: FloatNBase(layout)
-	{ }
-	FloatN(Layout & layout, GL::AttributeLocation index)
-		: FloatNBase(layout, index)
+	virtual ~FloatNType()
 	{ }
 
-	FloatN(const FloatN & other) = delete;
-	FloatN(Layout & layout, const FloatN & other)
-		: Attribute::FloatNBase(layout, other)
-	{ }
-	FloatN & operator=(const FloatN & other)
+	FloatNType() = delete;
+	FloatNType(const FloatNType & other) = delete;
+
+	FloatNType & operator=(const FloatNType & other) // = default;
 	{
 		Attribute::Base::operator=(other);
 		return *this;
 	}
+
+	FloatNType(Layout & layout, bool is_dynamic = false)
+		: FloatNBase(layout, is_dynamic)
+	{ }
+	FloatNType(Layout & layout, GL::AttributeLocation index, bool is_dynamic = false)
+		: FloatNBase(layout, index, is_dynamic)
+	{ }
+
+	FloatNType(Layout & layout, const FloatNType & other, bool is_dynamic = false)
+		: Attribute::FloatNBase(layout, other, is_dynamic)
+	{ }
 
 	public:
 	void	Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const override

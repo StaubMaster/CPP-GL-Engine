@@ -16,6 +16,8 @@ class Layout
 	private:
 	Container::Binary<Attribute::Base*>		Attributes;
 	public:
+	bool	IsDynamic = false; // delete with Buffer
+	public:
 	void	Clear();
 	void	Put(Attribute::Base & attribute);
 	void	Put(Attribute::Base * attribute);

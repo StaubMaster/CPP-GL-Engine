@@ -1,13 +1,13 @@
-#ifndef  UNI_MATRIX_3_3_HPP
-# define UNI_MATRIX_3_3_HPP
+#ifndef  UNIFORM_MATRIX_3_3_HPP
+# define UNIFORM_MATRIX_3_3_HPP
 
-# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNType.hpp"
 
 struct Matrix3x3;
 
 namespace Uniform
 {
-typedef FloatNTypeBase<3, 3, 1, ::Matrix3x3> Matrix3x3;
+typedef FloatNType<3, 3, 1, ::Matrix3x3> Matrix3x3;
 };
 
 #endif

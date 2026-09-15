@@ -3,13 +3,13 @@
 
 
 
-Uniform::LightBase::LightBase(std::string name)
-	: GBase(name)
+Uniform::LightBase::LightBase(std::string name, bool is_dynamic)
+	: TypeBase(name, is_dynamic)
 	, Intensity(Name + ".Intensity")
 	, Color(Name + ".Color")
 { }
-Uniform::LightBase::LightBase(Uniform::Layout & layout, std::string name)
-	: GBase(layout, name)
+Uniform::LightBase::LightBase(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: TypeBase(layout, name, is_dynamic)
 	, Intensity(layout, Name + ".Intensity")
 	, Color(layout, Name + ".Color")
 { }

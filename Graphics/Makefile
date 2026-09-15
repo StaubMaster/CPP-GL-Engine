@@ -24,9 +24,9 @@ FILES += \
 FILES += \
 	Uniform/General/Base.cpp \
 	Uniform/General/FloatNBase.cpp \
-	Uniform/General/FloatNTypeBase.cpp \
+	Uniform/General/FloatNType.cpp \
 	Uniform/General/UIntNBase.cpp \
-	Uniform/General/UIntNTypeBase.cpp \
+	Uniform/General/UIntNType.cpp \
 \
 	Uniform/General/Layout.cpp \
 	Uniform/General/Buffer.cpp \
@@ -78,11 +78,11 @@ FILES += \
 	Attribute/General/FloatNBase.cpp \
 	Attribute/General/UIntNBase.cpp \
 	Attribute/General/IntNBase.cpp \
+	\
+	Attribute/General/Layout.cpp \
+	Attribute/General/_Log.cpp \
 \
 	Attribute/BoxF2.cpp \
-\
-	Attribute/Layout.cpp \
-	Attribute/_Log.cpp \
 
 ################################################################
 

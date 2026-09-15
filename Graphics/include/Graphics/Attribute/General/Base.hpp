@@ -9,6 +9,9 @@ class Layout;
 class Base
 {
 	public:
+	bool	IsDynamic = false; // delete with Layout
+
+	public:
 	virtual ~Base();
 
 	public:
@@ -17,8 +20,8 @@ class Base
 	Base & operator=(const Base & other);
 
 	public:
-	Base(Layout & layout);
-	Base(Layout & layout, const Base & other);
+	Base(Layout & layout, bool is_dynamic);
+	Base(Layout & layout, const Base & other, bool is_dynamic);
 
 	public:
 	virtual void	Bind(GL::AttributeDivisor divisor, GL::AttributeStride stride, GL::AttributeOffset & offset) const = 0;

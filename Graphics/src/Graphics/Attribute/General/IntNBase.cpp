@@ -13,12 +13,12 @@ Attribute::IntNBase & Attribute::IntNBase::operator=(const IntNBase & other)
 
 
 
-Attribute::IntNBase::IntNBase(Layout & layout)
-	: Base(layout)
+Attribute::IntNBase::IntNBase(Layout & layout, bool is_dynamic)
+	: Base(layout, is_dynamic)
 	, Index(-1)
 { }
-Attribute::IntNBase::IntNBase(Layout & layout, const IntNBase & other)
-	: Base(layout)
+Attribute::IntNBase::IntNBase(Layout & layout, const IntNBase & other, bool is_dynamic)
+	: Base(layout, is_dynamic)
 	, Index(other.Index)
 { }
 

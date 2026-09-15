@@ -7,6 +7,13 @@
 
 void Uniform::Layout::Clear()
 {
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		if (Uniforms[i] -> IsDynamic)
+		{
+			delete Uniforms[i];
+		}
+	}
 	Uniforms.Clear();
 }
 void Uniform::Layout::Put(Uniform::Base & uniform)
@@ -23,8 +30,53 @@ void Uniform::Layout::Put(Uniform::Base * uniform)
 
 
 
+/*
+[0]		DisplaySize
+[1]		DisplaySize.Ratio
+[2]		DisplaySize.Window
+[3]		DisplaySize.Buffer
+
+[0].IsDynamic
+	delete[0]
+[1].IsDynamic	segfault
+*/
 Uniform::Layout::~Layout()
-{ }
+{
+	unsigned int prev = 0xFFFFFFFF;
+	unsigned int next = 0xFFFFFFFF;
+
+	for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		if (Uniforms[i] -> IsDynamic)
+		{
+			next = i;
+			break;
+		}
+	}
+
+	while (next != 0xFFFFFFFF)
+	{
+		prev = next;
+		next = 0xFFFFFFFF;
+		for (unsigned int i = prev + 1; i < Uniforms.Count(); i++)
+		{
+			if (Uniforms[i] -> IsDynamic)
+			{
+				next = i;
+				break;
+			}
+		}
+		delete Uniforms[prev];
+	}
+
+	/*for (unsigned int i = 0; i < Uniforms.Count(); i++)
+	{
+		if (Uniforms[i] -> IsDynamic)
+		{
+			delete Uniforms[i];
+		}
+	}*/
+}
 Uniform::Layout::Layout()
 	: Shader(nullptr)
 { }

@@ -1,5 +1,5 @@
-#ifndef  UNI_BUFFER_HPP
-# define UNI_BUFFER_HPP
+#ifndef  UNIFORM_BUFFER_HPP
+# define UNIFORM_BUFFER_HPP
 
 # include "Graphics/Uniform/General/Base.hpp"
 
@@ -13,8 +13,8 @@ class Buffer : public Base
 	GL::BlockIndex	Index;
 
 	public:
-	Buffer(std::string name);
-	Buffer(Uniform::Layout & layout, std::string name);
+	Buffer(std::string name, bool is_dynamic = false);
+	Buffer(Uniform::Layout & layout, std::string name, bool is_dynamic = false);
 
 	public:
 	void	Find(Shader::Base & shader) override;

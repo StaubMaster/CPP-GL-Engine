@@ -3,9 +3,11 @@
 
 # include "Graphics/Attribute/General/Base.hpp"
 # include "Graphics/Attribute/General/FloatNBase.hpp"
-# include "Graphics/Attribute/General/FloatN.hpp"
+# include "Graphics/Attribute/General/FloatNType.hpp"
 # include "Graphics/Attribute/General/UIntNBase.hpp"
-# include "Graphics/Attribute/General/UIntN.hpp"
+# include "Graphics/Attribute/General/UIntNType.hpp"
+# include "Graphics/Attribute/General/IntNBase.hpp"
+# include "Graphics/Attribute/General/IntNType.hpp"
 
 # include "Graphics/Attribute/TypeDefs/Float.hpp"
 # include "Graphics/Attribute/TypeDefs/UInt.hpp"

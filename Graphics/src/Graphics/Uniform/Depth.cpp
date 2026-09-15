@@ -3,14 +3,14 @@
 
 
 
-Uniform::Depth::Depth(std::string name)
-	: GBase(name)
+Uniform::Depth::Depth(std::string name, bool is_dynamic)
+	: TypeBase(name, is_dynamic)
 	, Factors(Name + ".Factors")
 	, Range(Name + ".Range")
 	, Color(Name + ".Color")
 { }
-Uniform::Depth::Depth(Uniform::Layout & layout, std::string name)
-	: GBase(layout, name)
+Uniform::Depth::Depth(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: TypeBase(layout, name, is_dynamic)
 	, Factors(layout, Name + ".Factors")
 	, Range(layout, Name + ".Range")
 	, Color(layout, Name + ".Color")

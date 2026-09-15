@@ -1,11 +1,11 @@
-#ifndef  UNI_UINT_HPP
-# define UNI_UINT_HPP
+#ifndef  UNIFORM_UINT_HPP
+# define UNIFORM_UINT_HPP
 
-# include "Graphics/Uniform/General/UIntNTypeBase.hpp"
+# include "Graphics/Uniform/General/UIntNType.hpp"
 
 namespace Uniform
 {
-typedef UIntNTypeBase<1, 1, 1, unsigned int> UInt;
+typedef UIntNType<1, 1, 1, unsigned int> UInt;
 };
 
 #endif

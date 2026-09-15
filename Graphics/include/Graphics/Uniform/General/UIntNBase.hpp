@@ -1,5 +1,5 @@
-#ifndef  UNI_UINT_N_BASE_HPP
-# define UNI_UINT_N_BASE_HPP
+#ifndef  UNIFORM_UINT_N_BASE_HPP
+# define UNIFORM_UINT_N_BASE_HPP
 
 # include "Graphics/Uniform/General/Base.hpp"
 
@@ -16,8 +16,8 @@ class UIntNBase : public Uniform::Base
 	virtual ~UIntNBase();
 
 	protected:
-	UIntNBase(std::string name);
-	UIntNBase(Uniform::Layout & layout, std::string name);
+	UIntNBase(std::string name, bool is_dynamic);
+	UIntNBase(Uniform::Layout & layout, std::string name, bool is_dynamic);
 
 	public:
 	void	Find(Shader::Base & shader) override;

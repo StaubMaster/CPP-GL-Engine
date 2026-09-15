@@ -20,8 +20,8 @@ class UIntNBase : public Attribute::Base
 	UIntNBase & operator=(const UIntNBase & other);
 
 	public:
-	UIntNBase(Layout & layout);
-	UIntNBase(Layout & layout, const UIntNBase & other);
+	UIntNBase(Layout & layout, bool is_dynamic);
+	UIntNBase(Layout & layout, const UIntNBase & other, bool is_dynamic);
 
 	public:
 	void	Change(GL::AttributeLocation index);

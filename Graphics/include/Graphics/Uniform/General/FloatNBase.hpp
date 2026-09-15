@@ -1,5 +1,5 @@
-#ifndef  UNI_FLOAT_N_BASE_HPP
-# define UNI_FLOAT_N_BASE_HPP
+#ifndef  UNIFORM_FLOAT_N_BASE_HPP
+# define UNIFORM_FLOAT_N_BASE_HPP
 
 # include "Graphics/Uniform/General/Base.hpp"
 
@@ -16,8 +16,8 @@ class FloatNBase : public Uniform::Base
 	virtual ~FloatNBase();
 
 	protected:
-	FloatNBase(std::string name);
-	FloatNBase(Uniform::Layout & layout, std::string name);
+	FloatNBase(std::string name, bool is_dynamic);
+	FloatNBase(Uniform::Layout & layout, std::string name, bool is_dynamic);
 
 	public:
 	void	Find(Shader::Base & shader) override;

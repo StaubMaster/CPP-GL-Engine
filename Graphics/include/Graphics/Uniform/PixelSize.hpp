@@ -1,22 +1,22 @@
-#ifndef  UNI_PIXEL_SIZE_HPP
-# define UNI_PIXEL_SIZE_HPP
+#ifndef  UNIFORM_PIXEL_SIZE_HPP
+# define UNIFORM_PIXEL_SIZE_HPP
 
-# include "Graphics/Uniform/General/GBase.hpp"
+# include "Graphics/Uniform/General/TypeBase.hpp"
 # include "Graphics/Uniform/TypeDefs/VectorF2.hpp"
 
 struct PixelSize;
 
 namespace Uniform
 {
-class PixelSize : public Uniform::GBase<::PixelSize>
+class PixelSize : public Uniform::TypeBase<::PixelSize>
 {
 	private:
 	Uniform::VectorF2	Full;
 	Uniform::VectorF2	Half;
 
 	public:
-	PixelSize(std::string name);
-	PixelSize(Uniform::Layout & layout, std::string name);
+	PixelSize(std::string name, bool is_dynamic = false);
+	PixelSize(Uniform::Layout & layout, std::string name, bool is_dynamic = false);
 
 	public:
 	void	Put(const ::PixelSize & obj) override;

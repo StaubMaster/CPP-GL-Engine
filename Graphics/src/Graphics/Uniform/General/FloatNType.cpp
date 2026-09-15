@@ -1,4 +1,4 @@
-#include "Graphics/Uniform/General/FloatNTypeBase.hpp"
+#include "Graphics/Uniform/General/FloatNType.hpp"
 #include "OpenGL.hpp"
 
 
