@@ -15,16 +15,33 @@ void VertexArray::Multi::Entry::MakeEmpty()
 	Length = 0;
 }
 
+unsigned int VertexArray::Multi::Entry::Limit() const
+{
+	return (Offset + Length);
+}
+bool VertexArray::Multi::Entry::Check(const Entry & other) const
+{
+	return ((Offset + Length) > (other.Offset)) && ((Offset) < (other.Offset + other.Length));
+}
+
 VertexArray::Multi::Entry::~Entry()
 {
-	//std::cout << "delete BufferUEntry of Length: " << Length << " at " << Offset << '\n';
 	Buffer.Remove(*this);
 }
 VertexArray::Multi::Entry::Entry(VertexArray::Multi & buffer)
 	: Buffer(buffer)
-	, Offset(0)
-	, Length(0)
 { }
+
+void VertexArray::Multi::Entry::Put(const Container::Void & data)
+{
+	Buffer.Remove(*this);
+	Length = data.Size / Buffer.SizeOf;
+	Buffer.Insert(*this);
+	if (!IsEmpty())
+	{
+		Buffer.Buffer.DataPart(Offset * Buffer.SizeOf, data);
+	}
+}
 
 
 
@@ -38,23 +55,18 @@ VertexArray::Multi::Multi()
 	, Buffer(GL::BufferDataUsage::DynamicDraw)
 { }
 
-
-
 static void FailedPutFunc(unsigned int len);
 
 bool VertexArray::Multi::CheckEntry(VertexArray::Multi::Entry & entry)
 {
-	if ((entry.Offset + entry.Length) >= Buffer.Count)
+	if (entry.Limit() >= Buffer.Count)
 	{
 		return false;
 	}
 	for (unsigned int i = 0; i < Entrys.Count(); i++)
 	{
-		VertexArray::Multi::Entry & other = *(Entrys[i]);
-		if (
-			(entry.Offset + entry.Length) > (other.Offset) &&
-			(entry.Offset) < (other.Offset + other.Length)
-		)
+		const VertexArray::Multi::Entry & other = *(Entrys[i]);
+		if (entry.Check(other))
 		{
 			return false;
 		}
@@ -113,20 +125,31 @@ void VertexArray::Multi::Remove(VertexArray::Multi::Entry & entry)
 	entry.MakeEmpty();
 }
 
-void VertexArray::Multi::NewSize(unsigned int size, unsigned int count)
+
+
+void VertexArray::Multi::NewSizeMemory(unsigned int memory)
 {
-	Buffer.DataFull(count * size);
-	Buffer.Count = count;
+	Buffer.Count = memory / SizeOf;
+	Buffer.DataFull(memory);
 }
-void VertexArray::Multi::Put(VertexArray::Multi::Entry & entry, unsigned int size, const Container::Void & data, unsigned int count)
+
+
+
+unsigned int VertexArray::Multi::Count() const
 {
-	Remove(entry);
-	entry.Length = count;
-	Insert(entry);
-	if (!entry.IsEmpty())
+	return Entrys.Count();
+}
+unsigned int VertexArray::Multi::LengthSum() const
+{
+	unsigned int sum = 0;
+	for (unsigned int i = 0; i < Entrys.Count(); i++)
 	{
-		Buffer.DataPart(entry.Offset * size, data);
+		if (!Entrys[i] -> IsEmpty())
+		{
+			sum += Entrys[i] -> Length;
+		}
 	}
+	return sum;
 }
 
 
