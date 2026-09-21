@@ -4,13 +4,13 @@
 
 
 
-Uniform::Trans2D::Trans2D(std::string name)
-	: GBase(name)
+Uniform::Trans2D::Trans2D(std::string name, bool is_dynamic)
+	: TypeBase(name, is_dynamic)
 	, Pos(Name + ".Pos")
 	, Rot(Name + ".Rot")
 { }
-Uniform::Trans2D::Trans2D(Uniform::Layout & layout, std::string name)
-	: GBase(layout, name)
+Uniform::Trans2D::Trans2D(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: TypeBase(layout, name, is_dynamic)
 	, Pos(layout, Name + ".Pos")
 	, Rot(layout, Name + ".Rot")
 { }

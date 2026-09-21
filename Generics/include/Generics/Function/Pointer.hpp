@@ -2,6 +2,7 @@
 # define GENERIC_FUNCTION_FUNCTION_POINTER_HPP
 
 # include "Base.hpp"
+# include "Static.hpp"
 # include "Object.hpp"
 
 template<typename ... Arguments>
@@ -112,6 +113,33 @@ struct FunctionPointer : public BaseFunction<void, Arguments ...>
 	void operator=(BaseFunction<void, Arguments ...> * func)
 	{
 		Assign(func);
+	}
+
+	public:
+	FunctionPointer(void (*func)(Arguments ...))
+		: Count(new unsigned int)
+		, Function(new StaticFunction<void, Arguments ...>(func))
+	{
+		(*Count) = 0;
+	}
+	void Assign(void (*func)(Arguments ...))
+	{
+		if (Count != nullptr)
+		{
+			if ((*Count) == 0)
+			{
+				delete Count;
+				delete Function;
+			}
+			else
+			{
+				(*Count)--;
+			}
+		}
+
+		Count = new unsigned int;
+		(*Count) = 0;
+		Function = new StaticFunction<void, Arguments ...>(func);
 	}
 
 	public:

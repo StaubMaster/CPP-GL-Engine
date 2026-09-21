@@ -7,11 +7,11 @@
 Uniform::FloatNBase::~FloatNBase()
 { }
 
-Uniform::FloatNBase::FloatNBase(std::string name)
-	: Base(name)
+Uniform::FloatNBase::FloatNBase(std::string name, bool is_dynamic)
+	: Base(name, is_dynamic)
 { }
-Uniform::FloatNBase::FloatNBase(Uniform::Layout & layout, std::string name)
-	: Base(layout, name)
+Uniform::FloatNBase::FloatNBase(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: Base(layout, name, is_dynamic)
 { }
 
 

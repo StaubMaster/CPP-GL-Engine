@@ -20,9 +20,9 @@ class FloatNBase : public Attribute::Base
 	FloatNBase & operator=(const FloatNBase & other); // = default;
 
 	public:
-	FloatNBase(Layout & layout);
-	FloatNBase(Layout & layout, GL::AttributeLocation index);
-	FloatNBase(Layout & layout, const FloatNBase & other);
+	FloatNBase(Layout & layout, bool is_dynamic);
+	FloatNBase(Layout & layout, GL::AttributeLocation index, bool is_dynamic);
+	FloatNBase(Layout & layout, const FloatNBase & other, bool is_dynamic);
 
 	public:
 	void	Change(GL::AttributeLocation index);

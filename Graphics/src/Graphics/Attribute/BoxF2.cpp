@@ -4,13 +4,13 @@
 
 Attribute::BoxF2::~BoxF2() { }
 
-Attribute::BoxF2::BoxF2(Layout & layout)
-	: Attribute::Base(layout)
+Attribute::BoxF2::BoxF2(Layout & layout, bool is_dynamic)
+	: Attribute::Base(layout, is_dynamic)
 	, Min(layout)
 	, Max(layout)
 { }
-Attribute::BoxF2::BoxF2(Layout & layout, const BoxF2 & other)
-	: Attribute::Base(layout, other)
+Attribute::BoxF2::BoxF2(Layout & layout, const BoxF2 & other, bool is_dynamic)
+	: Attribute::Base(layout, other, is_dynamic)
 	, Min(layout, other.Min)
 	, Max(layout, other.Max)
 { }

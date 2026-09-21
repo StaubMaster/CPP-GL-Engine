@@ -42,6 +42,7 @@ struct EulerAngle3D
 
 
 	public:
+
 	VectorF3		forward(VectorF3 p) const;
 	VectorF3		reverse(VectorF3 p) const;
 
@@ -53,13 +54,19 @@ struct EulerAngle3D
 
 
 	public:
+
+	EulerAngle3D	operator+() const;
+	EulerAngle3D	operator-() const;
+
 	EulerAngle3D	operator+(const EulerAngle3D & other) const;
 	EulerAngle3D	operator-(const EulerAngle3D & other) const;
+
 	EulerAngle3D &	operator+=(const EulerAngle3D & other);
 	EulerAngle3D &	operator-=(const EulerAngle3D & other);
 
 	EulerAngle3D	operator*(const float & flt) const;
 	EulerAngle3D	operator/(const float & flt) const;
+
 	EulerAngle3D &	operator*=(const float & flt);
 	EulerAngle3D &	operator/=(const float & flt);
 };

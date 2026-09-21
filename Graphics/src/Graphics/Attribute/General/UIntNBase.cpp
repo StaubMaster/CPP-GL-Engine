@@ -13,14 +13,16 @@ Attribute::UIntNBase & Attribute::UIntNBase::operator=(const UIntNBase & other)
 
 
 
-Attribute::UIntNBase::UIntNBase(Layout & layout)
-	: Base(layout)
+Attribute::UIntNBase::UIntNBase(Layout & layout, bool is_dynamic)
+	: Base(layout, is_dynamic)
 	, Index(-1)
 { }
-Attribute::UIntNBase::UIntNBase(Layout & layout, const UIntNBase & other)
-	: Base(layout)
+Attribute::UIntNBase::UIntNBase(Layout & layout, const UIntNBase & other, bool is_dynamic)
+	: Base(layout, is_dynamic)
 	, Index(other.Index)
 { }
+
+
 
 void Attribute::UIntNBase::Change(GL::AttributeLocation index)
 {

@@ -25,7 +25,7 @@ class Base
 	private:
 	Container::Array<Shader::Code>	Code;
 
-	private:
+	private: public:
 	Uniform::Layout *	Layout = nullptr;
 
 

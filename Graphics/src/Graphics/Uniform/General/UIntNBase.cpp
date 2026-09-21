@@ -7,11 +7,11 @@
 Uniform::UIntNBase::~UIntNBase()
 { }
 
-Uniform::UIntNBase::UIntNBase(std::string name)
-	: Base(name)
+Uniform::UIntNBase::UIntNBase(std::string name, bool is_dynamic)
+	: Base(name, is_dynamic)
 { }
-Uniform::UIntNBase::UIntNBase(Uniform::Layout & layout, std::string name)
-	: Base(layout, name)
+Uniform::UIntNBase::UIntNBase(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: Base(layout, name, is_dynamic)
 { }
 
 

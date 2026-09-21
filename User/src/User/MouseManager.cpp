@@ -106,7 +106,7 @@ void MouseManager::Invoke_ClickEvent(int button, int action, int mods)
 	Update((MouseButtons)button, (Action)action);
 
 	//Callback_ClickEvent(ClickArgs((Modifier)mods, (Action)action, (MouseButtons)button, CursorPosition()));
-	Callback_ClickEvent(ClickArgs(mods, action, button, CursorPosition()));
+	Callback_ClickEvent.TryInvoke(ClickArgs(mods, action, button, CursorPosition()));
 
 	for (unsigned int i = 0; i < StateNum; i++)
 	{
@@ -121,21 +121,21 @@ void MouseManager::Invoke_ClickEvent(int button, int action, int mods)
 				//args.Action = Action::Release;
 				//args.Position = MouseStates[i].LastReleasePosition;
 				//Callback_DragEvent(args);
-				Callback_DragEvent(DragArgs(Modifier::None, Action::Release, state.Button, state.LastReleasePosition));
+				Callback_DragEvent.TryInvoke(DragArgs(Modifier::None, Action::Release, state.Button, state.LastReleasePosition));
 			}
 		}
 	}
 }
 void MouseManager::Invoke_ScrollEvent(float offset_x, float offset_y)
 {
-	Callback_ScrollEvent(ScrollArgs(Modifier::None, offset_x, offset_y, CursorPosition()));
+	Callback_ScrollEvent.TryInvoke(ScrollArgs(Modifier::None, offset_x, offset_y, CursorPosition()));
 }
 void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
 {
 	//DisplayPosition pos = DisplayPosition::FromWindowCorner(VectorF2(x_pos, y_pos), window.Size);
 	DisplayPosition pos = window.Size.PosFromWindowFull(VectorF2(x_pos, y_pos));
 
-	Callback_MoveEvent(MoveArgs(pos));
+	Callback_MoveEvent.TryInvoke(MoveArgs(pos));
 
 	for (unsigned int i = 0; i < StateNum; i++)
 	{
@@ -145,11 +145,11 @@ void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
 			if (!state.IsDragging)
 			{
 				state.IsDragging = true;
-				Callback_DragEvent(DragArgs(Modifier::None, Action::Press, state.Button, state.LastPressPosition));
+				Callback_DragEvent.TryInvoke(DragArgs(Modifier::None, Action::Press, state.Button, state.LastPressPosition));
 			}
 			if (state.IsDragging)
 			{
-				Callback_DragEvent(DragArgs(Modifier::None, Action::Repeat, state.Button, pos));
+				Callback_DragEvent.TryInvoke(DragArgs(Modifier::None, Action::Repeat, state.Button, pos));
 			}
 		}
 	}

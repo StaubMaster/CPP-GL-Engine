@@ -1,4 +1,4 @@
-#include "Graphics/Uniform/General/UIntNTypeBase.hpp"
+#include "Graphics/Uniform/General/UIntNType.hpp"
 #include "OpenGL.hpp"
 
 

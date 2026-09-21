@@ -1,5 +1,5 @@
-#ifndef  ATTRIBUTE_INT_N_HPP
-# define ATTRIBUTE_INT_N_HPP
+#ifndef  ATTRIBUTE_INT_N_TYPE_HPP
+# define ATTRIBUTE_INT_N_TYPE_HPP
 
 # include "Graphics/Attribute/General/IntNBase.hpp"
 
@@ -9,24 +9,27 @@
 namespace Attribute
 {
 template<unsigned int Size0, unsigned int Size1>
-class IntN : public Attribute::IntNBase
+class IntNType : public Attribute::IntNBase
 {
 	public:
-	virtual ~IntN() { }
-	IntN() = delete;
-	IntN(Layout & layout)
-		: IntNBase(layout)
+	virtual ~IntNType()
 	{ }
 
-	IntN(const IntN & other) = delete;
-	IntN(Layout & layout, const IntN & other)
-		: Attribute::IntNBase(layout, other)
-	{ }
-	IntN & operator=(const IntN & other)
+	IntNType() = delete;
+	IntNType(const IntNType & other) = delete;
+
+	IntNType & operator=(const IntNType & other)
 	{
 		Attribute::Base::operator=(other);
 		return *this;
 	}
+
+	IntNType(Layout & layout, bool is_dynamic = false)
+		: IntNBase(layout, is_dynamic)
+	{ }
+	IntNType(Layout & layout, const IntNType & other, bool is_dynamic = false)
+		: Attribute::IntNBase(layout, other, is_dynamic)
+	{ }
 
 	public:
 	void	Change(GL::AttributeLocation index)

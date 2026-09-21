@@ -1,11 +1,11 @@
 #ifndef  ATTRIB_COLOR_F4_HPP
 # define ATTRIB_COLOR_F4_HPP
 
-# include "Graphics/Attribute/General/FloatN.hpp"
+# include "Graphics/Attribute/General/FloatNType.hpp"
 
 namespace Attribute
 {
-typedef Attribute::FloatN<4, 1> ColorF4;
+typedef Attribute::FloatNType<4, 1> ColorF4;
 };
 
 #endif

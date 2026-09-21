@@ -3,7 +3,7 @@
 # define GENERIC_UNIFORM_ARRAY_HPP
 
 # include "Graphics/Uniform/General/Base.hpp"
-# include "Graphics/Uniform/General/GBase.hpp"
+# include "Graphics/Uniform/General/TypeBase.hpp"
 
 # include <sstream>
 

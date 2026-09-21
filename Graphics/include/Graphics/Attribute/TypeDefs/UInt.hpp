@@ -1,11 +1,11 @@
 #ifndef  ATTRIB_UINT_HPP
 # define ATTRIB_UINT_HPP
 
-# include "Graphics/Attribute/General/UIntN.hpp"
+# include "Graphics/Attribute/General/UIntNType.hpp"
 
 namespace Attribute
 {
-typedef Attribute::UIntN<1, 1> UInt;
+typedef Attribute::UIntNType<1, 1> UInt;
 };
 
 #endif

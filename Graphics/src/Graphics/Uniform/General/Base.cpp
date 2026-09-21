@@ -6,13 +6,15 @@
 
 Uniform::Base::~Base()
 { }
-Uniform::Base::Base(std::string name)
+Uniform::Base::Base(std::string name, bool is_dynamic)
 	: Name(name)
 	, Multiform(nullptr)
+	, IsDynamic(is_dynamic)
 { }
-Uniform::Base::Base(Uniform::Layout & layout, std::string name)
+Uniform::Base::Base(Uniform::Layout & layout, std::string name, bool is_dynamic)
 	: Name(name)
 	, Multiform(nullptr)
+	, IsDynamic(is_dynamic)
 {
 	layout.Put(this);
 }

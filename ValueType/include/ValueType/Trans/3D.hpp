@@ -6,32 +6,31 @@
 
 struct Trans3D
 {
-	VectorF3			Position;
+	VectorF3		Position;
 	EulerAngle3D	Rotation;
 	// Scale
 	// Shear
 	// Distort
+	/*
+		there are different combinations of how to Transform
+		this is "regular"
+	*/
 
-	// is Scaling done before or after everything else ?
-	// what about the others
-	// does it depend on the order of making the Matrixes ?
+	~Trans3D() = default;
+	Trans3D() = default;
+	Trans3D(const Trans3D & other) = default;
+	Trans3D & operator=(const Trans3D & other) = default;
 
-
-
-	~Trans3D();
-	
-	Trans3D();
-	Trans3D(VectorF3 pos);
-	Trans3D(EulerAngle3D rot);
-	Trans3D(VectorF3 pos, EulerAngle3D rot);
-
-	Trans3D(const Trans3D & other);
-	Trans3D & operator=(const Trans3D & other);
+	Trans3D(const VectorF3 & pos);
+	Trans3D(const EulerAngle3D & rot);
+	Trans3D(const VectorF3 & pos, const EulerAngle3D & rot);
 
 
 
-	VectorF3		forward(VectorF3 p) const;
-	VectorF3		reverse(VectorF3 p) const;
+	VectorF3	forward(const VectorF3 & vec) const;
+	VectorF3	reverse(const VectorF3 & vec) const;
+
+	Trans3D		forward(const Trans3D & other) const;
 };
 
 

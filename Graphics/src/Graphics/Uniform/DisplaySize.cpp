@@ -3,14 +3,14 @@
 
 
 
-Uniform::DisplaySize::DisplaySize(std::string name)
-	: GBase(name)
+Uniform::DisplaySize::DisplaySize(std::string name, bool is_dynamic)
+	: TypeBase(name, is_dynamic)
 	, Ratio(Name + ".Ratio")
 	, Window(Name + ".Window")
 	, Buffer(Name + ".Buffer")
 { }
-Uniform::DisplaySize::DisplaySize(Uniform::Layout & layout, std::string name)
-	: GBase(layout, name)
+Uniform::DisplaySize::DisplaySize(Uniform::Layout & layout, std::string name, bool is_dynamic)
+	: TypeBase(layout, name, is_dynamic)
 	, Ratio(layout, Name + ".Ratio")
 	, Window(layout, Name + ".Window")
 	, Buffer(layout, Name + ".Buffer")

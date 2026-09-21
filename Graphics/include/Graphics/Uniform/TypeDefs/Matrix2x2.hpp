@@ -1,13 +1,13 @@
-#ifndef  UNI_MATRIX_2_2_HPP
-# define UNI_MATRIX_2_2_HPP
+#ifndef  UNIFORM_MATRIX_2_2_HPP
+# define UNIFORM_MATRIX_2_2_HPP
 
-# include "Graphics/Uniform/General/FloatNTypeBase.hpp"
+# include "Graphics/Uniform/General/FloatNType.hpp"
 
 struct Matrix2x2;
 
 namespace Uniform
 {
-typedef FloatNTypeBase<2, 2, 1, ::Matrix2x2> Matrix2x2;
+typedef FloatNType<2, 2, 1, ::Matrix2x2> Matrix2x2;
 };
 
 #endif
