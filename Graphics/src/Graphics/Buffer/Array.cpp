@@ -6,7 +6,15 @@
 
 
 Buffer::Array::~Array()
-{ }
+{
+	if (Layout != nullptr)
+	{
+		if (Layout -> IsDynamic)
+		{
+			delete Layout;
+		}
+	}
+}
 Buffer::Array::Array(GL::BufferDataUsage usage)
 	: Buffer::Base(GL::BufferTarget::ArrayBuffer, usage)
 { }

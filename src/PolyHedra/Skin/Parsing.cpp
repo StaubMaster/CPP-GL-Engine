@@ -501,6 +501,8 @@ void Skin::ParsingData::Parse_ColorD(const TextCommand::Args & cmd_args)
 	Skin.Corners.Insert(Skin::Corner(col.ToColorF4()));
 }
 
+/* this is a terrible name
+*/
 void Skin::ParsingData::Parse_Multi(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }

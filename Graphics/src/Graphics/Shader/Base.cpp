@@ -9,26 +9,40 @@
 
 
 
-
 Shader::Base::~Base()
-{ }
-Shader::Base::Base()
+{
+	// this will segfault if Shader Copies
+	// eighter = delete Shader Copying
+	// or make this another Counting thing
+	// maybe make a generic Counting thing
+	// that is just std::shared_ptr
+	// but I dont like some of the functionality of those
+	// also some basic functions they only get in c++23 or something
+	if (Layout != nullptr)
+	{
+		if (Layout -> IsDynamic)
+		{
+			delete Layout;
+		}
+	}
+}
+/*Shader::Base::Base()
 	: ID(0)
 	, Code()
 	, Layout(nullptr)
-{ }
-Shader::Base::Base(const Shader::Base & other)
+{ }*/
+/*Shader::Base::Base(const Shader::Base & other)
 	: ID(other.ID)
 	, Code(other.Code)
 	, Layout(other.Layout)
-{ }
-Shader::Base & Shader::Base::operator=(const Shader::Base & other)
+{ }*/
+/*Shader::Base & Shader::Base::operator=(const Shader::Base & other)
 {
 	ID = other.ID;
 	Code = other.Code;
 	Layout = other.Layout;
 	return *this;
-}
+}*/
 
 
 

@@ -3,12 +3,12 @@
 
 # include "OpenGLTypes.hpp"
 
+# include "Graphics/Shader/Code.hpp"
+
 # include "Generics/Container/Array.hpp"
 # include "Generics/Container/Binary.hpp"
 
 # include <string>
-
-
 
 class FileInfo;
 
@@ -16,7 +16,6 @@ namespace Uniform { class Layout; };
 
 namespace Shader
 {
-class Code;
 class Base
 {
 	private:
@@ -32,9 +31,9 @@ class Base
 
 	public:
 	virtual ~Base();
-	Base();
-	Base(const Shader::Base & other);
-	Base & operator=(const Shader::Base & other);
+	Base() = default;
+	Base(const Shader::Base & other) = default;
+	Base & operator=(const Shader::Base & other) = default;
 
 
 
