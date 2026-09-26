@@ -2,9 +2,9 @@
 # define VECTOR_U_3_HPP
 
 struct Bool3;
+
 struct VectorI3;
 struct VectorF3;
-
 struct VectorU3
 {
 	unsigned int	X = 0;

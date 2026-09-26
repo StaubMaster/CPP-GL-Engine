@@ -2,9 +2,9 @@
 # define VECTOR_I_2_HPP
 
 struct Bool2;
+
 struct VectorU2;
 struct VectorF2;
-
 struct VectorI2
 {
 	int	X = 0;

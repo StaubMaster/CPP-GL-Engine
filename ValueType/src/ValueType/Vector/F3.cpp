@@ -149,39 +149,6 @@ VectorF3 VectorF3::cross(const VectorF3 & other) const
 
 
 
-VectorI3 VectorF3::RankDimensions() const
-{
-	VectorI3 ranks;
-
-	const float *	value_ptr = (const float*)this;
-	int *			ranks_ptr = (int*)&ranks;
-
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		if (value_ptr[i] != value_ptr[i])
-		{
-			ranks_ptr[i] = -1;
-		}
-		else
-		{
-			for (unsigned int j = 0; j < 3; j++)
-			{
-				if (i != j)
-				{
-					if (value_ptr[i] > value_ptr[j])
-					{
-						ranks_ptr[i]++;
-					}
-				}
-			}
-		}
-	}
-
-	return ranks;
-}
-
-
-
 Bool3			VectorF3::operator==(const VectorF3 & other) const	{ return Bool3(X == other.X, Y == other.Y, Z == other.Z); }
 Bool3			VectorF3::operator!=(const VectorF3 & other) const	{ return Bool3(X != other.X, Y != other.Y, Z != other.Z); }
 Bool3			VectorF3::operator< (const VectorF3 & other) const	{ return Bool3(X <  other.X, Y <  other.Y, Z <  other.Z); }

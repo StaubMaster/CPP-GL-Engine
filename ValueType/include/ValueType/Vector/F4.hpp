@@ -3,6 +3,8 @@
 
 struct Bool4;
 
+//struct VectorI4;
+//struct VectorU4;
 struct VectorF4
 {
 	float	X = 0.0f;

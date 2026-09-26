@@ -2,9 +2,9 @@
 # define VECTOR_I_3_HPP
 
 struct Bool3;
+
 struct VectorU3;
 struct VectorF3;
-
 struct VectorI3
 {
 	int	X = 0;

@@ -1,5 +1,10 @@
 #include "ValueType/Box/F1.hpp"
 
+//#include "ValueType/Box/I1.hpp"
+//#include "ValueType/Box/U1.hpp"
+
+//#include "ValueType/Bool/1.hpp"
+
 
 
 float BoxF1::Size() const
@@ -17,6 +22,9 @@ BoxF1::BoxF1(const float & min, const float & max)
 	: Min(min)
 	, Max(max)
 { }
+
+//BoxI1 BoxF1::ToI() const { return BoxI1(Min.ToI(), Max.ToI()); }
+//BoxU1 BoxF1::ToU() const { return BoxU1(Min.ToU(), Max.ToU()); }
 
 
 

@@ -1,8 +1,12 @@
 #ifndef  BOX_F_2_HPP
 # define BOX_F_2_HPP
 
-# include "ValueType/Bool/2.hpp"
 # include "ValueType/Vector/F2.hpp"
+
+struct Bool2;
+
+struct BoxI2;
+struct BoxU2;
 
 struct BoxF2
 {
@@ -18,6 +22,9 @@ struct BoxF2
 	BoxF2 & operator=(const BoxF2 & other) = default;
 
 	BoxF2(const VectorF2 & min, const VectorF2 & max);
+
+	BoxI2	ToI() const;
+	BoxU2	ToU() const;
 
 	static BoxF2	InverseLimit();
 

@@ -1,5 +1,10 @@
 #include "ValueType/Box/F2.hpp"
 
+#include "ValueType/Box/I2.hpp"
+#include "ValueType/Box/U2.hpp"
+
+#include "ValueType/Bool/2.hpp"
+
 
 
 VectorF2 BoxF2::Size() const
@@ -17,6 +22,9 @@ BoxF2::BoxF2(const VectorF2 & min, const VectorF2 & max)
 	: Min(min)
 	, Max(max)
 { }
+
+BoxI2 BoxF2::ToI() const { return BoxI2(Min.ToI(), Max.ToI()); }
+BoxU2 BoxF2::ToU() const { return BoxU2(Min.ToU(), Max.ToU()); }
 
 
 

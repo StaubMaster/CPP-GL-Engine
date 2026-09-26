@@ -1,5 +1,10 @@
 #include "ValueType/Box/I3.hpp"
 
+#include "ValueType/Box/U3.hpp"
+#include "ValueType/Box/F3.hpp"
+
+#include "ValueType/Bool/3.hpp"
+
 
 
 VectorI3 BoxI3::Size() const
@@ -17,6 +22,9 @@ BoxI3::BoxI3(const VectorI3 & min, const VectorI3 & max)
 	: Min(min)
 	, Max(max)
 { }
+
+BoxU3 BoxI3::ToU() const { return BoxU3(Min.ToU(), Max.ToU()); }
+BoxF3 BoxI3::ToF() const { return BoxF3(Min.ToF(), Max.ToF()); }
 
 
 

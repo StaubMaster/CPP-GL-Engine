@@ -2,9 +2,9 @@
 # define VECTOR_F_3_HPP
 
 struct Bool3;
+
 struct VectorI3;
 struct VectorU3;
-
 struct VectorF3
 {
 	float	X = 0.0f;
@@ -60,16 +60,6 @@ struct VectorF3
 
 	static	VectorF3	cross(const VectorF3 & v0, const VectorF3 & v1);
 			VectorF3	cross(const VectorF3 & other) const;
-
-
-
-	/* RankDimensions()
-		returns a VectorI3 with values n = [-1;D-1] (D=3)
-		n == [0:2] means that Dimension is larger then n other Dimensions
-		n == -1 means that that Dimension is NaN
-		Dimension being the same is currently undefined bacause I dont feel like defining it
-	*/
-	VectorI3		RankDimensions() const;
 
 
 
