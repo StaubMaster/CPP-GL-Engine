@@ -2,15 +2,6 @@
 
 
 
-ColorU4::~ColorU4()
-{ }
-ColorU4::ColorU4()
-	: R(0)
-	, G(0)
-	, B(0)
-	, A(0)
-{ }
-
 ColorU4::ColorU4(unsigned char r, unsigned char g, unsigned char b)
 	: R(r)
 	, G(g)

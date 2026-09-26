@@ -1,6 +1,19 @@
-#include "ValueType/InteractF3.hpp"
+#include "ValueType/Interact/3D.hpp"
 
-void InteractF3::Skew(const RayF3 & ray0, RayHitF3 & hit0, const RayF3 & ray1, RayHitF3 & hit1)
+#include "ValueType/Vector/F3.hpp"
+
+#include "ValueType/Ray/F3.hpp"
+#include "ValueType/Ray/Hit/F3.hpp"
+
+#include "ValueType/NormalPlaneF3.hpp"
+#include "ValueType/TriangleF3.hpp"
+
+
+
+void Interact3D::Skew(
+	const RayF3 & ray0, RayHitF3 & hit0,
+	const RayF3 & ray1, RayHitF3 & hit1
+)
 {
 	VectorF3 diff = ray1.Pos - ray0.Pos;
 	VectorF3 norm = VectorF3::cross(ray0.Dir, ray1.Dir);
@@ -19,7 +32,10 @@ void InteractF3::Skew(const RayF3 & ray0, RayHitF3 & hit0, const RayF3 & ray1, R
 	}
 }
 
-RayHitF3 InteractF3::Plane(const RayF3 & ray, const NormalPlaneF3 & plane)
+RayHitF3 Interact3D::Plane(
+	const RayF3 & ray,
+	const NormalPlaneF3 & plane
+)
 {
 	VectorF3 diff = plane.Origin - ray.Pos;
 
@@ -33,7 +49,10 @@ RayHitF3 InteractF3::Plane(const RayF3 & ray, const NormalPlaneF3 & plane)
 		return RayHitF3();
 	}
 }
-RayHitF3 InteractF3::Triangle(const RayF3 & ray, const TriangleF3 & triangle)
+RayHitF3 Interact3D::Triangle(
+	const RayF3 & ray,
+	const TriangleF3 & triangle
+)
 {
 	VectorF3 plane_vec_0 = triangle.B - triangle.A;
 	VectorF3 plane_vec_1 = triangle.C - triangle.A;

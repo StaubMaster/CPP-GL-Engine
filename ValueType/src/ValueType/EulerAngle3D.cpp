@@ -6,11 +6,12 @@
 
 
 
-EulerAngle3D::EulerAngle3D(Angle z0, Angle x1, Angle y2)
+EulerAngle3D::EulerAngle3D(const Angle & z0, const Angle & x1, const Angle & y2)
 	: Z0(z0)
 	, X1(x1)
 	, Y2(y2)
 { }
+
 EulerAngle3D EulerAngle3D::Degrees(float z0, float x1, float y2)
 {
 	return EulerAngle3D(
@@ -28,7 +29,7 @@ EulerAngle3D EulerAngle3D::Radians(float z0, float x1, float y2)
 	);
 }
 
-EulerAngle3D EulerAngle3D::PointToX(VectorF3 dir)
+EulerAngle3D EulerAngle3D::PointToX(const VectorF3 & dir)
 {
 	float len_Y = sqrt((dir.Z * dir.Z) + (dir.X * dir.X));
 	return EulerAngle3D(
@@ -37,7 +38,7 @@ EulerAngle3D EulerAngle3D::PointToX(VectorF3 dir)
 		-Angle::aTan2(dir.Z, dir.X)
 	);
 }
-EulerAngle3D EulerAngle3D::PointToY(VectorF3 dir)
+EulerAngle3D EulerAngle3D::PointToY(const VectorF3 & dir)
 {
 	float len_X = sqrt((dir.Y * dir.Y) + (dir.Z * dir.Z));
 	return EulerAngle3D(
@@ -46,7 +47,7 @@ EulerAngle3D EulerAngle3D::PointToY(VectorF3 dir)
 		Angle()
 	);
 }
-EulerAngle3D EulerAngle3D::PointToZ(VectorF3 dir)
+EulerAngle3D EulerAngle3D::PointToZ(const VectorF3 & dir)
 {
 	float len_Y = sqrt((dir.Z * dir.Z) + (dir.X * dir.X));
 	return EulerAngle3D(
@@ -60,13 +61,26 @@ EulerAngle3D EulerAngle3D::PointToZ(VectorF3 dir)
 
 
 
-EulerAngle3D EulerAngle3D::round(Angle size) const { return EulerAngle3D(Z0.round(size), X1.round(size), Y2.round(size) ); }
-EulerAngle3D EulerAngle3D::roundC(Angle size) const { return EulerAngle3D(Z0.roundC(size), X1.roundC(size), Y2.roundC(size) ); }
-EulerAngle3D EulerAngle3D::roundF(Angle size) const { return EulerAngle3D(Z0.roundF(size), X1.roundF(size), Y2.roundF(size) ); }
+EulerAngle3D EulerAngle3D::round( const Angle & size) const { return EulerAngle3D(Z0.round(size), X1.round(size), Y2.round(size) ); }
+EulerAngle3D EulerAngle3D::roundC(const Angle & size) const { return EulerAngle3D(Z0.roundC(size), X1.roundC(size), Y2.roundC(size) ); }
+EulerAngle3D EulerAngle3D::roundF(const Angle & size) const { return EulerAngle3D(Z0.roundF(size), X1.roundF(size), Y2.roundF(size) ); }
 
 
 
 
+
+EulerAngle3D EulerAngle3D::reverse() const
+{
+	VectorF3 axisX = reverse(VectorF3(1, 0, 0));
+	VectorF3 axisY = reverse(VectorF3(0, 1, 0));
+	VectorF3 axisZ = reverse(VectorF3(0, 0, 1));
+
+	return EulerAngle3D(
+		+Angle::aTan2(axisX.Y, axisY.Y),
+		-Angle::aSin(axisZ.Y),
+		+Angle::aTan2(axisZ.X, axisZ.Z)
+	);
+}
 
 VectorF3 EulerAngle3D::forward(VectorF3 p) const
 {
@@ -108,18 +122,7 @@ EulerAngle3D EulerAngle3D::reverse(const EulerAngle3D & other) const
 	);
 }
 
-EulerAngle3D EulerAngle3D::reverse() const
-{
-	VectorF3 axisX = reverse(VectorF3(1, 0, 0));
-	VectorF3 axisY = reverse(VectorF3(0, 1, 0));
-	VectorF3 axisZ = reverse(VectorF3(0, 0, 1));
 
-	return EulerAngle3D(
-		+Angle::aTan2(axisX.Y, axisY.Y),
-		-Angle::aSin(axisZ.Y),
-		+Angle::aTan2(axisZ.X, axisZ.Z)
-	);
-}
 
 
 

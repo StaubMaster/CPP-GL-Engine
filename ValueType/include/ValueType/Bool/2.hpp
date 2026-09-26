@@ -4,38 +4,34 @@
 struct Bool2
 {
 	private:
-	unsigned char Bits;
+	unsigned char Bits = 0;
+
 	Bool2(unsigned char bits);
-
-
-
 	public:
+
 	bool	GetX() const;
 	bool	GetY() const;
 
 	void	SetX(bool value);
 	void	SetY(bool value);
 
+	~Bool2() = default;
+	Bool2() = default;
+	Bool2(const Bool2 & other) = default;
+	Bool2 & operator=(const Bool2 & other) = default;
+
+	Bool2(bool value);
+	Bool2(bool x, bool y);
+
 	bool	All(bool value) const;
 	bool	Any(bool value) const;
 
 	unsigned char	Count(bool value) const;
 
-
-
-	public:
-	~Bool2();
-
-	Bool2();
-	Bool2(bool value);
-	Bool2(bool x, bool y);
-	
-	Bool2(const Bool2 & other);
-	Bool2 & operator=(const Bool2 & other);
+	// Convert to bool   .All(true)
 
 
 
-	public:
 	Bool2 operator!() const;
 	Bool2 operator&(const Bool2 & other) const;
 	Bool2 operator|(const Bool2 & other) const;

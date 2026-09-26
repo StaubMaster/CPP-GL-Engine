@@ -1,21 +1,55 @@
 #include "ValueType/Box/U3.hpp"
-#include "ValueType/Bool/3.hpp"
 
 
 
-BoxU3::BoxU3()
-	: Box_3(
+VectorU3 BoxU3::Size() const
+{
+	return (Max - Min);
+}
+VectorU3 BoxU3::Center() const
+{
+	return ((Min + Max) / 2.0f);
+}
+
+
+
+BoxU3::BoxU3(const VectorU3 & min, const VectorU3 & max)
+	: Min(min)
+	, Max(max)
+{ }
+
+
+
+BoxU3 BoxU3::InverseLimit()
+{
+	return BoxU3(
 		VectorU3(0xFFFFFFFF),
 		VectorU3(0x00000000)
-	)
-{ }
-BoxU3::BoxU3(VectorU3 min, VectorU3 max)
-	: Box_3(min, max)
-{ }
+	);
+}
+
+void BoxU3::Consider(const VectorU3 & vec)
+{
+	Min = Min.Min(vec);
+	Max = Max.Max(vec);
+}
 
 
 
-#include "../src/ValueType/Box/__.cpp"
-#include "../src/ValueType/Box/_3.cpp"
-template struct Box__<unsigned int, VectorU3, BoxU3>;
-template struct Box_3<unsigned int, VectorU3, BoxU3>;
+Bool3 BoxU3::IsNormal() const
+{
+	return (Min <= Max);
+}
+//BoxU3 BoxU3::Normalize() const;
+
+
+
+Bool3 BoxU3::ContainsEdge(const VectorU3 & vec) const			{ return (vec == Min) | (vec == Max); }
+Bool3 BoxU3::ContainsInclusive(const VectorU3 & vec) const		{ return (vec >= Min) & (vec <= Max); }
+Bool3 BoxU3::ContainsExclusive(const VectorU3 & vec) const		{ return (vec >  Min) & (vec <  Max); }
+
+Bool3 BoxU3::IntersectsInclusive(const BoxU3 & box) const	{ return (Max >= box.Min) & (Min <= box.Max); }
+Bool3 BoxU3::IntersectsExclusive(const BoxU3 & box) const	{ return (Max >  box.Min) & (Min <  box.Max); }
+
+//BoxU3 BoxU3::OuterBox(const BoxU3 & other) const;
+//BoxU3 BoxU3::InnerBox(const BoxU3 & other) const;

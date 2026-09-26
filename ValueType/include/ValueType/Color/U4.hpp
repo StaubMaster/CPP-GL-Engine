@@ -5,19 +5,18 @@ struct ColorF4;
 
 struct ColorU4
 {
-	unsigned char	R;
-	unsigned char	G;
-	unsigned char	B;
-	unsigned char	A;
+	unsigned char	R = 0;
+	unsigned char	G = 0;
+	unsigned char	B = 0;
+	unsigned char	A = 0;
 
-	~ColorU4();
-	ColorU4();
+	~ColorU4() = default;
+	ColorU4() = default;
+	ColorU4(const ColorU4 & other) = default;
+	ColorU4 & operator=(const ColorU4 & other) = default;
 
 	ColorU4(unsigned char r, unsigned char g, unsigned char b);
 	ColorU4(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-
-	ColorU4(const ColorU4 & other) = default;
-	ColorU4 & operator=(const ColorU4 & other) = default;
 
 	static ColorU4	FromRGBA(unsigned int rgba);
 	unsigned int	ToRGBA() const;

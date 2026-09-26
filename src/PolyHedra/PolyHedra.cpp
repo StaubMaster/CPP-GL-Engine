@@ -23,7 +23,7 @@
 
 BoxF3 PolyHedra::CalcBound() const
 {
-	BoxF3 box;
+	BoxF3 box = BoxF3::InverseLimit();
 	for (unsigned int i = 0; i < Corners.Count(); i++)
 	{
 		box.Consider(Corners[i].Position);

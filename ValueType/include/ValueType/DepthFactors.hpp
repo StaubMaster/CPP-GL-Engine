@@ -4,15 +4,26 @@
 struct DepthFactors
 {
 	private:
-	float Near;
-	float Far;
+	float	Near;
+	float	Far;
 
-	float Diff;
-	float Summ;
-	float Mul2;
+	float	Diff;
+	float	Summ;
+	float	Mul2;
 
-	float Factor0;
-	float Factor1;
+	float	Factor0;
+	float	Factor1;
+
+	private:
+	void	Calculate();
+
+	public:
+	float	GetNear() const;
+	float	GetFar() const;
+
+	public:
+	void	SetNear(float val);
+	void	SetFar(float val);
 
 	public:
 	~DepthFactors() = default;
@@ -22,13 +33,6 @@ struct DepthFactors
 
 	public:
 	DepthFactors(float near, float far);
-
-	private:
-	void	Calc();
-
-	public:
-	void	ChangeNear(float near);
-	void	ChangeFar(float far);
 };
 
 #endif

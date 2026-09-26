@@ -48,7 +48,6 @@
 # include "ValueType/Depth.hpp"
 
 # include "ValueType/RangeF.hpp"
-# include "ValueType/LInter.hpp"
 
 # include "ValueType/Color/U4.hpp"
 # include "ValueType/Color/U4.hpp"
@@ -63,6 +62,5 @@
 
 # include "ValueType/NormalPlaneF3.hpp"
 # include "ValueType/TriangleF3.hpp"
-# include "ValueType/Undex.hpp"
 
 #endif

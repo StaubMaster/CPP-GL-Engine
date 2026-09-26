@@ -10,41 +10,6 @@
 
 
 
-Matrix3x3::~Matrix3x3()
-{ }
-Matrix3x3::Matrix3x3()
-{
-	for (int x = 0; x < 3; x++)
-	{
-		for (int y = 0; y < 3; y++)
-		{
-			Data[x][y] = 0;
-		}
-	}
-}
-
-Matrix3x3::Matrix3x3(const Matrix3x3 & other)
-{
-	for (int x = 0; x < 3; x++)
-	{
-		for (int y = 0; y < 3; y++)
-		{
-			Data[x][y] = other.Data[x][y];
-		}
-	}
-}
-Matrix3x3 & Matrix3x3::operator=(const Matrix3x3 & other)
-{
-	for (int x = 0; x < 3; x++)
-	{
-		for (int y = 0; y < 3; y++)
-		{
-			Data[x][y] = other.Data[x][y];
-		}
-	}
-	return *this;
-}
-
 Matrix3x3::Matrix3x3(	float data00, float data01, float data02,
 						float data10, float data11, float data12,
 						float data20, float data21, float data22)

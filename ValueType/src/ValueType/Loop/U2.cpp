@@ -2,43 +2,46 @@
 
 
 
-LoopU2::LoopU2() :
-	Range()
-{ }
-LoopU2::LoopU2(VectorU2 min, VectorU2 max) :
-	Range(min, max),
-	MinExclude(false),
-	MaxExclude(true)
-{ }
-LoopU2::LoopU2(VectorU2 min, Bool2 minEx, VectorU2 max, Bool2 maxEx) :
-	Range(min, max),
-	MinExclude(minEx),
-	MaxExclude(maxEx)
-{ }
-LoopU2::~LoopU2()
+LoopU2::LoopU2(const VectorU2 & size)
+	: Box(VectorU2(), size)
+	, MinExclude(false)
+	, MaxExclude(true)
 { }
 
-LoopU2::LoopU2(const LoopU2 & other) :
-	Range(other.Range)
+LoopU2::LoopU2(const VectorU2 & min, const VectorU2 & max)
+	: Box(min, max)
+	, MinExclude(false)
+	, MaxExclude(true)
 { }
-LoopU2 & LoopU2::operator=(const LoopU2 & other)
-{
-	Range = other.Range;
-	return *this;
-}
+LoopU2::LoopU2(const VectorU2 & min, const VectorU2 & max, const Bool2 & minEx, const Bool2 & maxEx)
+	: Box(min, max)
+	, MinExclude(minEx)
+	, MaxExclude(maxEx)
+{ }
+
+LoopU2::LoopU2(const BoxU2 & box)
+	: Box(box)
+	, MinExclude(false)
+	, MaxExclude(true)
+{ }
+LoopU2::LoopU2(const BoxU2 & box, const Bool2 & minEx, const Bool2 & maxEx)
+	: Box(box)
+	, MinExclude(minEx)
+	, MaxExclude(maxEx)
+{ }
 
 
 
 VectorU2 LoopU2::Min() const
 {
-	VectorU2 udx(Range.Min);
+	VectorU2 udx(Box.Min);
 	if (MinExclude.GetX()) { udx.X++; }
 	if (MinExclude.GetY()) { udx.Y++; }
 	return udx;
 }
 VectorU2 LoopU2::Max() const
 {
-	VectorU2 udx(Range.Max);
+	VectorU2 udx(Box.Max);
 	if (MaxExclude.GetX()) { udx.X--; }
 	if (MaxExclude.GetY()) { udx.Y--; }
 	return udx;
@@ -46,29 +49,25 @@ VectorU2 LoopU2::Max() const
 
 
 
-Bool2 LoopU2::Check(VectorU2 udx) const
+Bool2 LoopU2::Check(const VectorU2 & udx) const
 {
 	Bool2 min;
-	if (MinExclude.GetX()) { min.SetX(udx.X > Range.Min.X); } else { min.SetX(udx.X >= Range.Min.X); }
-	if (MinExclude.GetY()) { min.SetY(udx.Y > Range.Min.Y); } else { min.SetY(udx.Y >= Range.Min.Y); }
+	if (MinExclude.GetX()) { min.SetX(udx.X > Box.Min.X); } else { min.SetX(udx.X >= Box.Min.X); }
+	if (MinExclude.GetY()) { min.SetY(udx.Y > Box.Min.Y); } else { min.SetY(udx.Y >= Box.Min.Y); }
 
 	Bool2 max;
-	if (MaxExclude.GetX()) { max.SetX(udx.X < Range.Max.X); } else { max.SetX(udx.X <= Range.Max.X); }
-	if (MaxExclude.GetY()) { max.SetY(udx.Y < Range.Max.Y); } else { max.SetY(udx.Y <= Range.Max.Y); }
+	if (MaxExclude.GetX()) { max.SetX(udx.X < Box.Max.X); } else { max.SetX(udx.X <= Box.Max.X); }
+	if (MaxExclude.GetY()) { max.SetY(udx.Y < Box.Max.Y); } else { max.SetY(udx.Y <= Box.Max.Y); }
 
 	return min & max;
 }
 
 
 
-/*	Problem
-Overflow might happen
-check before ++ and --
-*/
 void LoopU2::Next(VectorU2 & udx) const
 {
-	VectorU2	min = Min();
-	VectorU2	max = Max();
+	VectorU2 min = Min();
+	VectorU2 max = Max();
 
 	if (udx.X >= max.X)
 	{
@@ -82,10 +81,16 @@ void LoopU2::Next(VectorU2 & udx) const
 }
 void LoopU2::Prev(VectorU2 & udx) const
 {
-	udx.X--;
-	if (udx.X < Range.Min.X)
+	VectorU2 min = Min();
+	VectorU2 max = Max();
+
+	if (udx.X <= min.X)
 	{
-		udx.X = Range.Max.X;
+		udx.X = max.X;
 		udx.Y--;
+	}
+	else
+	{
+		udx.X--;
 	}
 }

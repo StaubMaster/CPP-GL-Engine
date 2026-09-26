@@ -6,20 +6,19 @@ struct Angle;
 
 struct Matrix2x2
 {
-	public:
-	float Data[2][2];
+	float Data[2][2] = {
+		{ 0.0f, 0.0f, },
+		{ 0.0f, 0.0f, },
+	};
 
-	public:
-	~Matrix2x2();
-	Matrix2x2();
-
-	Matrix2x2(const Matrix2x2 & other);
-	Matrix2x2 & operator=(const Matrix2x2 & other);
+	~Matrix2x2() = default;
+	Matrix2x2() = default;
+	Matrix2x2(const Matrix2x2 & other) = default;
+	Matrix2x2 & operator=(const Matrix2x2 & other) = default;
 
 	Matrix2x2(	float data00, float data01,
 				float data10, float data11);
 
-	public:
 	Matrix2x2	ToTranspose() const;
 	Matrix2x2	operator~() const;
 
@@ -27,7 +26,6 @@ struct Matrix2x2
 
 	static Matrix2x2	Rotation(Angle a);
 
-	public:
 	Matrix2x2	operator*(const Matrix2x2 & other) const;
 	Matrix2x2	operator/(const Matrix2x2 & other) const;
 };

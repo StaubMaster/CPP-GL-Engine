@@ -4,12 +4,11 @@
 struct Bool3
 {
 	private:
-	unsigned char Bits;
+	unsigned char Bits = 0;
+
 	Bool3(unsigned char bits);
-
-
-
 	public:
+
 	bool	GetX() const;
 	bool	GetY() const;
 	bool	GetZ() const;
@@ -18,6 +17,14 @@ struct Bool3
 	void	SetY(bool value);
 	void	SetZ(bool value);
 
+	~Bool3() = default;
+	Bool3() = default;
+	Bool3(const Bool3 & other) = default;
+	Bool3 & operator=(const Bool3 & other) = default;
+
+	Bool3(bool value);
+	Bool3(bool x, bool y, bool z);
+
 	bool	All(bool value) const;
 	bool	Any(bool value) const;
 
@@ -25,19 +32,6 @@ struct Bool3
 
 
 
-	public:
-	~Bool3();
-
-	Bool3();
-	Bool3(bool value);
-	Bool3(bool x, bool y, bool z);
-	
-	Bool3(const Bool3 & other);
-	Bool3 & operator=(const Bool3 & other);
-
-
-
-	public:
 	Bool3 operator!() const;
 	Bool3 operator&(const Bool3 & other) const;
 	Bool3 operator|(const Bool3 & other) const;

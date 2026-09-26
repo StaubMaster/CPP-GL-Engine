@@ -31,6 +31,12 @@ struct Trans3D
 	VectorF3	reverse(const VectorF3 & vec) const;
 
 	Trans3D		forward(const Trans3D & other) const;
+	Trans3D		reverse(const Trans3D & other) const;
+
+
+
+	Trans3D		operator+() const;
+	Trans3D		operator-() const;
 };
 
 

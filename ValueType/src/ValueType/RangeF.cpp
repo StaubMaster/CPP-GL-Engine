@@ -2,16 +2,14 @@
 
 
 
-RangeF::RangeF(float min, float max)
-	: Min(min)
-	, Len(max - min)
-	, Max(max)
-{ }
-
-
-
-float RangeF::GetMin() const { return Min; }
-float RangeF::GetMax() const { return Max; }
+float RangeF::GetMin() const
+{
+	return Min;
+}
+float RangeF::GetMax() const
+{
+	return Max;
+}
 
 void RangeF::SetMin(float min)
 {
@@ -26,7 +24,10 @@ void RangeF::SetMax(float max)
 
 
 
-float RangeF::Length() const { return Len; }
+float RangeF::Length() const
+{
+	return Len;
+}
 
 void RangeF::MinLength(float len)
 {
@@ -38,3 +39,11 @@ void RangeF::MaxLength(float len)
 	Len = len;
 	Min = Max - len;
 }
+
+
+
+RangeF::RangeF(float min, float max)
+	: Min(min)
+	, Len(max - min)
+	, Max(max)
+{ }

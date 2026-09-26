@@ -52,6 +52,5 @@ std::ostream & operator<<(std::ostream & os, const ColorU4 & obj);
 
 std::ostream & operator<<(std::ostream & os, const NormalPlaneF3 & obj);
 std::ostream & operator<<(std::ostream & os, const TriangleF3 & obj);
-std::ostream & operator<<(std::ostream & os, const Undex & obj);
 
 #endif

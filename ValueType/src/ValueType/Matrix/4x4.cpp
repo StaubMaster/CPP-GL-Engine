@@ -10,41 +10,6 @@
 
 
 
-Matrix4x4::~Matrix4x4()
-{ }
-Matrix4x4::Matrix4x4()
-{
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			Data[x][y] = 0;
-		}
-	}
-}
-
-Matrix4x4::Matrix4x4(const Matrix4x4 & other)
-{
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			Data[x][y] = other.Data[x][y];
-		}
-	}
-}
-Matrix4x4 & Matrix4x4::operator=(const Matrix4x4 & other)
-{
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			Data[x][y] = other.Data[x][y];
-		}
-	}
-	return *this;
-}
-
 Matrix4x4::Matrix4x4(	float data00, float data01, float data02, float data03,
 						float data10, float data11, float data12, float data13,
 						float data20, float data21, float data22, float data23,

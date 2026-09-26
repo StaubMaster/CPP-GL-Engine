@@ -7,11 +7,9 @@ struct LineF2;
 
 struct RayF2
 {
-	public:
 	VectorF2	Pos;
 	VectorF2	Dir;
 
-	public:
 	~RayF2() = default;
 	RayF2() = default;
 	RayF2(const RayF2 & other) = default;

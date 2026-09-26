@@ -48,7 +48,6 @@ struct DepthFactors;
 struct Depth;
 
 struct RangeF;
-struct LInter;
 
 struct ColorF4;
 struct ColorU4;
@@ -63,6 +62,5 @@ struct LightSpot;
 
 struct NormalPlaneF3;
 struct TriangleF3;
-struct Undex; // ?
 
 #endif

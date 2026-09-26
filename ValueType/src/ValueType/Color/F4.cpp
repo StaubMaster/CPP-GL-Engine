@@ -2,15 +2,6 @@
 
 
 
-ColorF4::~ColorF4()
-{ }
-ColorF4::ColorF4()
-	: R(0.0f)
-	, G(0.0f)
-	, B(0.0f)
-	, A(0.0f)
-{ }
-
 ColorF4::ColorF4(float r, float g, float b)
 	: R(r)
 	, G(g)

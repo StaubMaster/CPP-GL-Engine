@@ -1,9 +1,13 @@
-#include "ValueType/Intersect.hpp"
-#include "ValueType/_Include.hpp"
+#include "ValueType/Interact/2D.hpp"
+
+#include "ValueType/Vector/F2.hpp"
+
+#include "ValueType/Ray/F2.hpp"
+#include "ValueType/Line/F2.hpp"
 
 
 
-bool IsIntersecting(
+bool Interact2D::Is(
 	const RayF2 & ray,
 	const LineF2 & line
 )
@@ -24,7 +28,7 @@ bool IsIntersecting(
 	return true;
 }
 
-bool IsIntersecting(
+bool Interact2D::Is(
 	const LineF2 & line0,
 	const LineF2 & line1
 )
@@ -47,7 +51,11 @@ bool IsIntersecting(
 	return true;
 }
 
-bool Intersection(const LineF2 & line0, const LineF2 & line1, VectorF2 & ret)
+bool Interact2D::Is(
+	const LineF2 & line0,
+	const LineF2 & line1,
+	VectorF2 & ret
+)
 {
 	VectorF2 diff0 = line0.Target - line0.Origin;
 	VectorF2 perp(-diff0.Y, +diff0.X);

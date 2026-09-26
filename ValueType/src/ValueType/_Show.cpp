@@ -89,15 +89,3 @@ std::ostream & operator<<(std::ostream & os, const TriangleF3 & obj)
 	os << "{ " << obj.A << " | " << obj.B << " | " << obj.C << " }";
 	return os;
 }
-std::ostream & operator<<(std::ostream & os, const Undex & obj)
-{
-	if (obj.IsValid())
-	{
-		os << "[" << obj.Value << "]";
-	}
-	else
-	{
-		os << "[!]";
-	}
-	return os;
-}

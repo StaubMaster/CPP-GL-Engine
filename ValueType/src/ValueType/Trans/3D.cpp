@@ -35,3 +35,17 @@ Trans3D Trans3D::forward(const Trans3D & other) const
 		Rotation.forward(other.Rotation)
 	);
 }
+Trans3D Trans3D::reverse(const Trans3D & other) const
+{
+	return Trans3D(
+		reverse(         other.Position),
+		Rotation.reverse(other.Rotation)
+	);
+}
+
+
+
+
+
+Trans3D		Trans3D::operator+() const { return Trans3D(-Position, -Rotation); }
+Trans3D		Trans3D::operator-() const { return Trans3D(-Position, -Rotation); }

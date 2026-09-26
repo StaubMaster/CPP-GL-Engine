@@ -8,9 +8,17 @@
 float Angle::DegreesToRadians(float val) { return val * (Tau / 360); }
 float Angle::RadiansToDegrees(float val) { return val * (360 / Tau); }
 
-Angle::Angle(float val) :
-	Value(val)
+Angle::Angle(float val)
+	: Value(val)
 { }
+
+float Angle::ToRadians() const { return Value; }
+float Angle::ToDegrees() const { return RadiansToDegrees(Value); }
+
+void Angle::FromRadians(float val) { Value = val; }
+void Angle::FromDegrees(float val) { Value = DegreesToRadians(val); }
+
+
 
 Angle Angle::Radians(float val) { return Angle(val); }
 Angle Angle::Degrees(float val) { return Angle(DegreesToRadians(val)); }
@@ -25,22 +33,19 @@ Angle Angle::PointToY(VectorF2 dir)
 	return -Angle::aTan2(dir.X, dir.Y);
 }
 
-float Angle::ToRadians() const { return Value; }
-float Angle::ToDegrees() const { return RadiansToDegrees(Value); }
 
 
 
 
+Angle Angle::round(Angle size) const { return Angle(roundf(Value / size.Value) * size.Value); }
+Angle Angle::roundC(Angle size) const { return Angle(ceilf(Value / size.Value) * size.Value); }
+Angle Angle::roundF(Angle size) const { return Angle(floorf(Value / size.Value) * size.Value); }
 
 void Angle::clampPI()
 {
 	if (Value > +(Pi / 2)) { Value = +(Pi / 2); }
 	if (Value < -(Pi / 2)) { Value = -(Pi / 2); }
 }
-
-Angle Angle::round(Angle size) const { return Angle(roundf(Value / size.Value) * size.Value); }
-Angle Angle::roundC(Angle size) const { return Angle(ceilf(Value / size.Value) * size.Value); }
-Angle Angle::roundF(Angle size) const { return Angle(floorf(Value / size.Value) * size.Value); }
 
 
 
@@ -84,26 +89,24 @@ VectorF2 Angle::reverse(VectorF2 p) const { reverse(p.X, p.Y); return p; }
 
 
 
-Angle Angle::operator+() const { return Angle(+Value); }
-Angle Angle::operator-() const { return Angle(-Value); }
+Angle		Angle::operator+() const { return Angle(+Value); }
+Angle		Angle::operator-() const { return Angle(-Value); }
 
-Angle Angle::operator+(const Angle & other) const { return Angle(Value + other.Value); }
-Angle Angle::operator-(const Angle & other) const { return Angle(Value - other.Value); }
-Angle Angle::operator*(const Angle & other) const { return Angle(Value * other.Value); }
-Angle Angle::operator/(const Angle & other) const { return Angle(Value / other.Value); }
+Angle		Angle::operator+(const Angle & other) const { return Angle(Value + other.Value); }
+Angle		Angle::operator-(const Angle & other) const { return Angle(Value - other.Value); }
+Angle		Angle::operator*(const Angle & other) const { return Angle(Value * other.Value); }
+Angle		Angle::operator/(const Angle & other) const { return Angle(Value / other.Value); }
 
-Angle & Angle::operator+=(const Angle & other) { Value += other.Value; return *this; }
-Angle & Angle::operator-=(const Angle & other) { Value -= other.Value; return *this; }
-Angle & Angle::operator*=(const Angle & other) { Value *= other.Value; return *this; }
-Angle & Angle::operator/=(const Angle & other) { Value /= other.Value; return *this; }
+Angle &		Angle::operator+=(const Angle & other) { Value += other.Value; return *this; }
+Angle &		Angle::operator-=(const Angle & other) { Value -= other.Value; return *this; }
+Angle &		Angle::operator*=(const Angle & other) { Value *= other.Value; return *this; }
+Angle &		Angle::operator/=(const Angle & other) { Value /= other.Value; return *this; }
 
+Angle &		Angle::operator*=(float f) { Value *= f; return *this; }
+Angle &		Angle::operator/=(float f) { Value /= f; return *this; }
 
+Angle		operator*(Angle a, float f) { a *= f; return a; }
+Angle		operator/(Angle a, float f) { a /= f; return a; }
 
-Angle & Angle::operator*=(float f) { Value *= f; return *this; }
-Angle & Angle::operator/=(float f) { Value /= f; return *this; }
-
-Angle operator*(Angle a, float f) { a *= f; return a; }
-Angle operator/(Angle a, float f) { a /= f; return a; }
-
-Angle operator*(float f, Angle a) { a *= f; return a; }
-Angle operator/(float f, Angle a) { a /= f; return a; }
+Angle		operator*(float f, Angle a) { a *= f; return a; }
+Angle		operator/(float f, Angle a) { a /= f; return a; }

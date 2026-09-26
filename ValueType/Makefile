@@ -60,17 +60,16 @@ FILES := \
 	Color/U4.cpp \
 	Color/F4.cpp \
 \
-	Undex.cpp \
 	Angle.cpp \
 	EulerAngle3D.cpp \
 	DepthFactors.cpp \
 	Depth.cpp \
 	RangeF.cpp \
-	LInter.cpp \
 	TriangleF3.cpp \
 	NormalPlaneF3.cpp \
-	InteractF3.cpp \
-	Intersect.cpp \
+\
+	Interact/2D.cpp \
+	Interact/3D.cpp \
 \
 	_Show.cpp
 

@@ -20,28 +20,27 @@ struct EulerAngle3D
 	EulerAngle3D(const EulerAngle3D & other) = default;
 	EulerAngle3D & operator=(const EulerAngle3D & other) = default;
 
-
-
 	public:
-	EulerAngle3D(Angle z0, Angle x1, Angle y2);
+	EulerAngle3D(const Angle & z0, const Angle & x1, const Angle & y2);
 
 	static EulerAngle3D		Degrees(float z0, float x1, float y2);
 	static EulerAngle3D		Radians(float z0, float x1, float y2);
 
-	static EulerAngle3D		PointToX(VectorF3 dir);
-	static EulerAngle3D		PointToY(VectorF3 dir);
-	static EulerAngle3D		PointToZ(VectorF3 dir);
+	static EulerAngle3D		PointToX(const VectorF3 & vec);
+	static EulerAngle3D		PointToY(const VectorF3 & vec);
+	static EulerAngle3D		PointToZ(const VectorF3 & vec);
 
 
 
 	public:
-	EulerAngle3D	round(Angle size) const;
-	EulerAngle3D	roundC(Angle size) const;
-	EulerAngle3D	roundF(Angle size) const;
+	EulerAngle3D	round( const Angle & size) const;
+	EulerAngle3D	roundC(const Angle & size) const;
+	EulerAngle3D	roundF(const Angle & size) const;
 
 
 
 	public:
+	EulerAngle3D	reverse() const;
 
 	VectorF3		forward(VectorF3 p) const;
 	VectorF3		reverse(VectorF3 p) const;
@@ -49,12 +48,9 @@ struct EulerAngle3D
 	EulerAngle3D	forward(const EulerAngle3D & other) const;
 	EulerAngle3D	reverse(const EulerAngle3D & other) const;
 
-	EulerAngle3D	reverse() const;
-
 
 
 	public:
-
 	EulerAngle3D	operator+() const;
 	EulerAngle3D	operator-() const;
 

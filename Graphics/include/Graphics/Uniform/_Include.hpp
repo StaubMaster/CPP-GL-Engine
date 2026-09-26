@@ -32,7 +32,7 @@
 # include "Graphics/Uniform/Depth.hpp"
 
 # include "Graphics/Uniform/RangeF.hpp"
-# include "Graphics/Uniform/LInter.hpp"
+//# include "Graphics/Uniform/LInter.hpp"
 
 # include "Graphics/Uniform/Light/Base.hpp"
 # include "Graphics/Uniform/Light/Point.hpp"

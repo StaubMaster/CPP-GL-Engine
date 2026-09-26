@@ -11,15 +11,16 @@ struct Trans2D;
 
 struct Matrix3x3
 {
-	public:
-	float Data[3][3];
+	float Data[3][3] = {
+		{ 0.0f, 0.0f, 0.0f, },
+		{ 0.0f, 0.0f, 0.0f, },
+		{ 0.0f, 0.0f, 0.0f, },
+	};
 
-	public:
-	~Matrix3x3();
-	Matrix3x3();
-	
-	Matrix3x3(const Matrix3x3 & other);
-	Matrix3x3 & operator=(const Matrix3x3 & other);
+	~Matrix3x3() = default;
+	Matrix3x3() = default;
+	Matrix3x3(const Matrix3x3 & other) = default;
+	Matrix3x3 & operator=(const Matrix3x3 & other) = default;
 
 	Matrix3x3(	float data00, float data01, float data02,
 				float data10, float data11, float data12,
@@ -40,7 +41,6 @@ struct Matrix3x3
 	static Matrix3x3	RotationZ(Angle a);
 	static Matrix3x3	Rotation(EulerAngle3D a);
 
-	public:
 	Matrix3x3	operator*(const Matrix3x3 & other) const;
 	Matrix3x3	operator/(const Matrix3x3 & other) const;
 };

@@ -7,11 +7,9 @@ struct RayF3;
 
 struct LineF3
 {
-	public:
 	VectorF3	Origin;
 	VectorF3	Target;
 
-	public:
 	~LineF3() = default;
 	LineF3() = default;
 	LineF3(const LineF3 & other) = default;

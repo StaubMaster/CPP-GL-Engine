@@ -2,16 +2,7 @@
 
 
 
-DepthFactors::DepthFactors(float near, float far)
-{
-	Near = near;
-	Far = far;
-	Calc();
-}
-
-
-
-void DepthFactors::Calc()
+void DepthFactors::Calculate()
 {
 	Diff = Far - Near;
 	Summ = Far + Near;
@@ -21,13 +12,33 @@ void DepthFactors::Calc()
 	Factor1 = Mul2 / Diff;
 }
 
-void DepthFactors::ChangeNear(float near)
+
+
+float DepthFactors::GetNear() const
+{
+	return Near;
+}
+float DepthFactors::GetFar() const
+{
+	return Far;
+}
+
+void DepthFactors::SetNear(float near)
 {
 	Near = near;
-	Calc();
+	Calculate();
 }
-void DepthFactors::ChangeFar(float far)
+void DepthFactors::SetFar(float far)
 {
 	Far = far;
-	Calc();
+	Calculate();
+}
+
+
+
+DepthFactors::DepthFactors(float near, float far)
+{
+	Near = near;
+	Far = far;
+	Calculate();
 }

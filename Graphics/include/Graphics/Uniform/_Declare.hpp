@@ -31,7 +31,7 @@ namespace Uniform
 	class Depth;
 
 	class Range;
-	class LInter;
+//	class LInter;
 
 	class LightBase;
 	class LightSolar;

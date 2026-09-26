@@ -2,44 +2,46 @@
 
 
 
-LoopI2::~LoopI2()
+LoopI2::LoopI2(const VectorI2 & size)
+	: Box(VectorI2(), size)
+	, MinExclude(false)
+	, MaxExclude(true)
 { }
 
-LoopI2::LoopI2() :
-	Range()
+LoopI2::LoopI2(const VectorI2 & min, const VectorI2 & max)
+	: Box(min, max)
+	, MinExclude(false)
+	, MaxExclude(true)
 { }
-LoopI2::LoopI2(VectorI2 min, VectorI2 max) :
-	Range(min, max),
-	MinExclude(false),
-	MaxExclude(true)
-{ }
-LoopI2::LoopI2(VectorI2 min, Bool2 minEx, VectorI2 max, Bool2 maxEx) :
-	Range(min, max),
-	MinExclude(minEx),
-	MaxExclude(maxEx)
+LoopI2::LoopI2(const VectorI2 & min, const VectorI2 & max, const Bool2 & minEx, const Bool2 & maxEx)
+	: Box(min, max)
+	, MinExclude(minEx)
+	, MaxExclude(maxEx)
 { }
 
-LoopI2::LoopI2(const LoopI2 & other) :
-	Range(other.Range)
+LoopI2::LoopI2(const BoxI2 & box)
+	: Box(box)
+	, MinExclude(false)
+	, MaxExclude(true)
 { }
-LoopI2 & LoopI2::operator=(const LoopI2 & other)
-{
-	Range = other.Range;
-	return *this;
-}
+LoopI2::LoopI2(const BoxI2 & box, const Bool2 & minEx, const Bool2 & maxEx)
+	: Box(box)
+	, MinExclude(minEx)
+	, MaxExclude(maxEx)
+{ }
 
 
 
 VectorI2 LoopI2::Min() const
 {
-	VectorI2 idx(Range.Min);
+	VectorI2 idx(Box.Min);
 	if (MinExclude.GetX()) { idx.X++; }
 	if (MinExclude.GetY()) { idx.Y++; }
 	return idx;
 }
 VectorI2 LoopI2::Max() const
 {
-	VectorI2 idx(Range.Max);
+	VectorI2 idx(Box.Max);
 	if (MaxExclude.GetX()) { idx.X--; }
 	if (MaxExclude.GetY()) { idx.Y--; }
 	return idx;
@@ -51,15 +53,15 @@ VectorI2 LoopI2::Size() const
 
 
 
-Bool2 LoopI2::Check(VectorI2 idx) const
+Bool2 LoopI2::Check(const VectorI2 & idx) const
 {
 	Bool2 min;
-	if (MinExclude.GetX()) { min.SetX(idx.X > Range.Min.X); } else { min.SetX(idx.X >= Range.Min.X); }
-	if (MinExclude.GetY()) { min.SetY(idx.Y > Range.Min.Y); } else { min.SetY(idx.Y >= Range.Min.Y); }
+	if (MinExclude.GetX()) { min.SetX(idx.X > Box.Min.X); } else { min.SetX(idx.X >= Box.Min.X); }
+	if (MinExclude.GetY()) { min.SetY(idx.Y > Box.Min.Y); } else { min.SetY(idx.Y >= Box.Min.Y); }
 
 	Bool2 max;
-	if (MaxExclude.GetX()) { max.SetX(idx.X < Range.Max.X); } else { max.SetX(idx.X <= Range.Max.X); }
-	if (MaxExclude.GetY()) { max.SetY(idx.Y < Range.Max.Y); } else { max.SetY(idx.Y <= Range.Max.Y); }
+	if (MaxExclude.GetX()) { max.SetX(idx.X < Box.Max.X); } else { max.SetX(idx.X <= Box.Max.X); }
+	if (MaxExclude.GetY()) { max.SetY(idx.Y < Box.Max.Y); } else { max.SetY(idx.Y <= Box.Max.Y); }
 
 	return min & max;
 }
@@ -72,8 +74,8 @@ check before ++ and --
 */
 void LoopI2::Next(VectorI2 & idx) const
 {
-	VectorI2	min = Min();
-	VectorI2	max = Max();
+	VectorI2 min = Min();
+	VectorI2 max = Max();
 
 	if (idx.X >= max.X)
 	{
@@ -87,10 +89,16 @@ void LoopI2::Next(VectorI2 & idx) const
 }
 void LoopI2::Prev(VectorI2 & idx) const
 {
-	idx.X--;
-	if (idx.X < Range.Min.X)
+	VectorI2 min = Min();
+	VectorI2 max = Max();
+
+	if (idx.X <= min.X)
 	{
-		idx.X = Range.Max.X;
+		idx.X = max.X;
 		idx.Y--;
+	}
+	else
+	{
+		idx.X--;
 	}
 }

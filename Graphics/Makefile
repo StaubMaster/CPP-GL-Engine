@@ -36,7 +36,6 @@ FILES += \
 \
 	Uniform/Depth.cpp \
 	Uniform/RangeF.cpp \
-	Uniform/LInter.cpp \
 \
 	Uniform/Light/Base.cpp \
 	Uniform/Light/Point.cpp \

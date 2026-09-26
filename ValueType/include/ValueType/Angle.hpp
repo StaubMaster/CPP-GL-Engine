@@ -17,28 +17,30 @@ struct Angle
 	static constexpr float Half = Pi;
 	static constexpr float Quad = Pi * 0.5f;
 
+	static float	DegreesToRadians(float val);
+	static float	RadiansToDegrees(float val);
+
 
 
 	private:
 	float	Value = 0.0f;
 
-
-
+	Angle(float val);
 	public:
+
+	float	ToRadians() const; // GetRadians
+	float	ToDegrees() const; // GetDegrees
+
+	void	FromRadians(float val); // SetRadians
+	void	FromDegrees(float val); // SetDegrees
+
+
+
 	~Angle() = default;
 	Angle() = default;
 	Angle(const Angle & other) = default;
 	Angle & operator=(const Angle & other) = default;
 
-
-
-	private:
-	static float	DegreesToRadians(float val);
-	static float	RadiansToDegrees(float val);
-
-	Angle(float val);
-
-	public:
 	static Angle	Radians(float val);
 	static Angle	Degrees(float val);
 	static Angle	Section(float val);
@@ -46,21 +48,16 @@ struct Angle
 	static Angle	PointToX(VectorF2 dir);
 	static Angle	PointToY(VectorF2 dir);
 
-	float	ToRadians() const;
-	float	ToDegrees() const;
 
-
-
-	public:
-	void	clampPI();
 
 	Angle	round(Angle size) const;
 	Angle	roundC(Angle size) const;
 	Angle	roundF(Angle size) const;
 
+	void	clampPI();
 
 
-	public:
+
 	float	Sin() const;
 	float	Cos() const;
 	float	Tan() const;
@@ -71,7 +68,6 @@ struct Angle
 
 
 
-	public:
 	void	forward(float & x, float & y) const;
 	void	reverse(float & x, float & y) const;
 
@@ -80,7 +76,6 @@ struct Angle
 
 
 
-	public:
 	Angle		operator+() const;
 	Angle		operator-() const;
 

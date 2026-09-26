@@ -6,17 +6,14 @@
 
 struct LightPoint
 {
-	public:
 	LightBase	Base;
 	VectorF3	Pos;
 
-	public:
 	~LightPoint() = default;
 	LightPoint() = default;
 	LightPoint(const LightPoint & other) = default;
 	LightPoint & operator=(const LightPoint & other) = default;
 
-	public:
 	LightPoint(float intensity, ColorF4 color, VectorF3 pos);
 	LightPoint(LightBase base, VectorF3 pos);
 };

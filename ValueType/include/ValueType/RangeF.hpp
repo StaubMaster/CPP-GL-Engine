@@ -9,15 +9,6 @@ struct RangeF
 	float	Max = 0.0f;
 
 	public:
-	~RangeF() = default;
-	RangeF() = default;
-	RangeF(const RangeF & other) = default;
-	RangeF & operator=(const RangeF & other) = default;
-
-	public:
-	RangeF(float min, float max);
-
-	public:
 	float	GetMin() const;
 	float	GetMax() const;
 
@@ -29,6 +20,15 @@ struct RangeF
 	float	Length() const;
 	void	MinLength(float len);
 	void	MaxLength(float len);
+
+	public:
+	~RangeF() = default;
+	RangeF() = default;
+	RangeF(const RangeF & other) = default;
+	RangeF & operator=(const RangeF & other) = default;
+
+	public:
+	RangeF(float min, float max);
 };
 
 #endif

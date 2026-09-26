@@ -3,7 +3,7 @@
 #include "ValueType/Ray/F2.hpp"
 #include "ValueType/Line/F2.hpp"
 #include "ValueType/Box/F2.hpp"
-#include "ValueType/Intersect.hpp"
+#include "ValueType/Interact/2D.hpp"
 
 
 
@@ -101,7 +101,7 @@ void PolyGon::NewFace(unsigned int c0, unsigned int c1, unsigned int c2)
 
 BoxF2 PolyGon::ToAxisBox() const
 {
-	BoxF2 box;
+	BoxF2 box = BoxF2::InverseLimit();
 	for (unsigned int i = 0; i < Corners.Count(); i++)
 	{
 		box.Consider(Corners[i].Pos);
@@ -151,9 +151,9 @@ unsigned int PolyGon::SumIntersections(RayF2 ray) const
 			VectorF2 corner1 = Corners[face.udx[1]].Pos;
 			VectorF2 corner2 = Corners[face.udx[2]].Pos;
 
-			if (::IsIntersecting(ray, LineF2(corner0, corner1))) { sum++; }
-			if (::IsIntersecting(ray, LineF2(corner1, corner2))) { sum++; }
-			if (::IsIntersecting(ray, LineF2(corner2, corner0))) { sum++; }
+			if (Interact2D::Is(ray, LineF2(corner0, corner1))) { sum++; }
+			if (Interact2D::Is(ray, LineF2(corner1, corner2))) { sum++; }
+			if (Interact2D::Is(ray, LineF2(corner2, corner0))) { sum++; }
 		}
 	}
 	return sum;

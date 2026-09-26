@@ -10,22 +10,23 @@ struct Trans3D;
 
 struct Matrix4x4
 {
-	public:
-	float Data[4][4];
+	float Data[4][4] = {
+		{ 0.0f, 0.0f, 0.0f, 0.0f, },
+		{ 0.0f, 0.0f, 0.0f, 0.0f, },
+		{ 0.0f, 0.0f, 0.0f, 0.0f, },
+		{ 0.0f, 0.0f, 0.0f, 0.0f, },
+	};
 
-	public:
-	~Matrix4x4();
-	Matrix4x4();
-	
-	Matrix4x4(const Matrix4x4 & other);
-	Matrix4x4 & operator=(const Matrix4x4 & other);
+	~Matrix4x4() = default;
+	Matrix4x4() = default;
+	Matrix4x4(const Matrix4x4 & other) = default;
+	Matrix4x4 & operator=(const Matrix4x4 & other) = default;
 
 	Matrix4x4(	float data00, float data01, float data02, float data03,
 				float data10, float data11, float data12, float data13,
 				float data20, float data21, float data22, float data23,
 				float data30, float data31, float data32, float data33);
 
-	public:
 	Matrix4x4	ToTranspose() const;
 	Matrix4x4	operator~() const;
 
@@ -36,7 +37,6 @@ struct Matrix4x4
 	static Matrix4x4	TransformForward(Trans3D t);
 	static Matrix4x4	TransformReverse(Trans3D t);
 
-	public:
 	Matrix4x4	operator*(const Matrix4x4 & other) const;
 	Matrix4x4	operator/(const Matrix4x4 & other) const;
 };

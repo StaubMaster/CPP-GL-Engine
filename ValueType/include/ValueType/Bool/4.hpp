@@ -4,12 +4,11 @@
 struct Bool4
 {
 	private:
-	unsigned char Bits;
+	unsigned char Bits = 0;
+
 	Bool4(unsigned char bits);
-
-
-
 	public:
+
 	bool	GetX() const;
 	bool	GetY() const;
 	bool	GetZ() const;
@@ -20,6 +19,14 @@ struct Bool4
 	void	SetZ(bool value);
 	void	SetW(bool value);
 
+	~Bool4() = default;
+	Bool4() = default;
+	Bool4(const Bool4 & other) = default;
+	Bool4 & operator=(const Bool4 & other) = default;
+
+	Bool4(bool value);
+	Bool4(bool x, bool y, bool z, bool w);
+
 	bool	All(bool value) const;
 	bool	Any(bool value) const;
 
@@ -27,19 +34,6 @@ struct Bool4
 
 
 
-	public:
-	~Bool4();
-
-	Bool4();
-	Bool4(bool value);
-	Bool4(bool x, bool y, bool z, bool w);
-	
-	Bool4(const Bool4 & other);
-	Bool4 & operator=(const Bool4 & other);
-
-
-
-	public:
 	Bool4 operator!() const;
 	Bool4 operator&(const Bool4 & other) const;
 	Bool4 operator|(const Bool4 & other) const;

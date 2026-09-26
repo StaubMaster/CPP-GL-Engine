@@ -5,18 +5,15 @@
 
 struct TriangleF3
 {
-	public:
 	VectorF3	A;
 	VectorF3	B;
 	VectorF3	C;
 
-	public:
 	~TriangleF3() = default;
 	TriangleF3() = default;
 	TriangleF3(const TriangleF3 & other) = default;
 	TriangleF3 & operator=(const TriangleF3 & other) = default;
 
-	public:
 	TriangleF3(const VectorF3 & a, const VectorF3 & b, const VectorF3 & c);
 };
 

@@ -16,7 +16,7 @@ namespace Multiform
 	class Depth;
 	class DepthFactors;
 
-	class LInter;
+//	class LInter;
 	class RangeF;
 
 	class Trans2D;

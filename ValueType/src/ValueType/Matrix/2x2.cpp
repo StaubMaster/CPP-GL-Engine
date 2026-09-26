@@ -4,41 +4,6 @@
 
 
 
-Matrix2x2::~Matrix2x2()
-{ }
-Matrix2x2::Matrix2x2()
-{
-	for (int x = 0; x < 2; x++)
-	{
-		for (int y = 0; y < 2; y++)
-		{
-			Data[x][y] = 0;
-		}
-	}
-}
-
-Matrix2x2::Matrix2x2(const Matrix2x2 & other)
-{
-	for (int x = 0; x < 2; x++)
-	{
-		for (int y = 0; y < 2; y++)
-		{
-			Data[x][y] = other.Data[x][y];
-		}
-	}
-}
-Matrix2x2 & Matrix2x2::operator=(const Matrix2x2 & other)
-{
-	for (int x = 0; x < 2; x++)
-	{
-		for (int y = 0; y < 2; y++)
-		{
-			Data[x][y] = other.Data[x][y];
-		}
-	}
-	return *this;
-}
-
 Matrix2x2::Matrix2x2(	float data00, float data01,
 						float data10, float data11)
 {

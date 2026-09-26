@@ -8,8 +8,6 @@
 
 # include "Generics/Container/Binary.hpp"
 
-# include "ValueType/Undex.hpp"
-
 class PolyGon;
 struct PolyGonObjectData;
 class DirectoryInfo;

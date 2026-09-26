@@ -2,8 +2,8 @@
 
 
 
-Depth::Depth(DepthFactors factors, RangeF range, ColorF4 color) :
-	Factors(factors),
-	Range(range),
-	Color(color)
+Depth::Depth(const DepthFactors & factors, const RangeF & range, const ColorF4 & color)
+	: Factors(factors)
+	, Range(range)
+	, Color(color)
 { }
