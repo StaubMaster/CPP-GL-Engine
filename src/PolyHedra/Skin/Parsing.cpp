@@ -35,13 +35,14 @@ unsigned int Skin::ParsingData::ToVertexIndex(const TextCommand::Args & cmd_args
 
 Skin::ParsingData::~ParsingData()
 { }
-Skin::ParsingData::ParsingData(const FileInfo & file, ::Skin & skin)
+Skin::ParsingData::ParsingData(const FileInfo & file, ::Skin & object, ::PolyHedra * polyHedra)
 	: File(file)
-	, Skin(skin)
+	, Object(object)
+	, PolyHedra(polyHedra)
 	, TextureIndex(0)
 	, TextureVertexIndex(0)
 {
-	Skin.File = File;
+	Object.File = File;
 }
 
 
@@ -100,6 +101,8 @@ void Skin::ParsingData::Parse(const TextCommand::Args & cmd_args)
 
 		else if (name == "multi")			{ Parse_Multi(cmd_args); }
 
+		else if (name == "axisAlign")	{ Parse_AxisAlign(cmd_args); }
+
 		else						{ std::cout << "unknown: " << cmd_args << "\n"; }
 	}
 	catch(std::exception & ex)
@@ -129,21 +132,21 @@ void Skin::ParsingData::Parse_Name(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
 
-	Skin.Name = cmd_args.ToString(0);
+	Object.Name = cmd_args.ToString(0);
 }
 void Skin::ParsingData::Parse_Size(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
 
-	Skin.Size.X = cmd_args.ToUInt32(0);
-	Skin.Size.Y = cmd_args.ToUInt32(1);
+	Object.Size.X = cmd_args.ToUInt32(0);
+	Object.Size.Y = cmd_args.ToUInt32(1);
 }
 void Skin::ParsingData::Parse_Image(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
 
 	FileInfo file(File.Directory().File(cmd_args.ToString(0)));
-	Skin.Images.Insert(file.LoadImage());
+	Object.Images.Insert(file.LoadImage());
 }
 
 void Skin::ParsingData::Parse_t(const TextCommand::Args & cmd_args)
@@ -153,25 +156,25 @@ void Skin::ParsingData::Parse_t(const TextCommand::Args & cmd_args)
 	unsigned int len = cmd_args.Count() / 2;
 	
 	Skin::Corner t[len];
-	unsigned int idx = Skin.Corners.Count();
+	unsigned int idx = Object.Corners.Count();
 
 	for (size_t i = 0; i < len; i++)
 	{
 		t[i].Coord.X = cmd_args.ToFloat(i * 2 + 0);
 		t[i].Coord.Y = cmd_args.ToFloat(i * 2 + 1);
 		t[i].Index = TextureIndex;
-		Skin.Corners.Insert(t[i]);
+		Object.Corners.Insert(t[i]);
 	}
 
 	if (len == 3)
 	{
 		//Skin.Insert_Face3(t[0], t[1], t[2]);
-		Skin.Insert_Face3(idx + 0, idx + 1, idx + 2);
+		Object.Insert_Face3(idx + 0, idx + 1, idx + 2);
 	}
 	else if (len == 4)
 	{
 		//Skin.Insert_Face4(t[0], t[1], t[2], t[3]);
-		Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
+		Object.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
 	}
 }
 
@@ -185,17 +188,17 @@ void Skin::ParsingData::Parse_TextureIndexFace4(const TextCommand::Args & cmd_ar
 	if (!(cmd_args.Count() == 8)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 8"); }
 
 	Skin::Corner t[4];
-	unsigned int idx = Skin.Corners.Count();
+	unsigned int idx = Object.Corners.Count();
 
 	for (unsigned int i = 0; i < 4; i++)
 	{
 		t[i].Coord.X = cmd_args.ToFloat(i * 2 + 0);
 		t[i].Coord.Y = cmd_args.ToFloat(i * 2 + 1);
 		t[i].Index = TextureIndex;
-		Skin.Corners.Insert(t[i]);
+		Object.Corners.Insert(t[i]);
 	}
 
-	Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
+	Object.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
 }
 void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommand::Args & cmd_args)
 {
@@ -210,29 +213,29 @@ void Skin::ParsingData::Parse_TextureIndexQuad(const TextCommand::Args & cmd_arg
 	max.Y = cmd_args.ToFloat(3);
 
 	Skin::Corner t[4];
-	unsigned int idx = Skin.Corners.Count();
+	unsigned int idx = Object.Corners.Count();
 
 	t[0].Coord.X = min.X;
 	t[0].Coord.Y = min.Y;
 	t[0].Index = TextureIndex;
-	Skin.Corners.Insert(t[0]);
+	Object.Corners.Insert(t[0]);
 
 	t[1].Coord.X = min.X;
 	t[1].Coord.Y = max.Y;
 	t[1].Index = TextureIndex;
-	Skin.Corners.Insert(t[1]);
+	Object.Corners.Insert(t[1]);
 
 	t[2].Coord.X = max.X;
 	t[2].Coord.Y = min.Y;
 	t[2].Index = TextureIndex;
-	Skin.Corners.Insert(t[2]);
+	Object.Corners.Insert(t[2]);
 
 	t[3].Coord.X = max.X;
 	t[3].Coord.Y = max.Y;
 	t[3].Index = TextureIndex;
-	Skin.Corners.Insert(t[3]);
+	Object.Corners.Insert(t[3]);
 
-	Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
+	Object.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
 }
 
 void Skin::ParsingData::Parse_Vertex(const TextCommand::Args & cmd_args)
@@ -243,7 +246,7 @@ void Skin::ParsingData::Parse_Vertex(const TextCommand::Args & cmd_args)
 	v.X = cmd_args.ToFloat(0);
 	v.Y = cmd_args.ToFloat(1);
 
-	Skin.Corners.Insert(Skin::Corner(v, TextureIndex));
+	Object.Corners.Insert(Skin::Corner(v, TextureIndex));
 }
 void Skin::ParsingData::Parse_VertexIndex(const TextCommand::Args & cmd_args)
 {
@@ -252,7 +255,7 @@ void Skin::ParsingData::Parse_VertexIndex(const TextCommand::Args & cmd_args)
 	std::string str = cmd_args.ToString(0);
 	if (str == "here")
 	{
-		TextureVertexIndex = Skin.Corners.Count();
+		TextureVertexIndex = Object.Corners.Count();
 	}
 	else
 	{
@@ -271,15 +274,15 @@ void Skin::ParsingData::Parse_VertexFace3(const TextCommand::Args & cmd_args, bo
 
 	if (!f_direction)
 	{
-		Skin.Insert_Face3(t[0], t[1], t[2]);
+		Object.Insert_Face3(t[0], t[1], t[2]);
 	}
 	else
 	{
-		Skin.Insert_Face3(t[2], t[1], t[0]);
+		Object.Insert_Face3(t[2], t[1], t[0]);
 	}
 }
 
-static void Belt_Face(Skin & skin, unsigned int temp[4], bool dir)
+/*static void Belt_Face(Skin & skin, unsigned int temp[4], bool dir)
 {
 	if (!dir)
 	{
@@ -291,7 +294,7 @@ static void Belt_Face(Skin & skin, unsigned int temp[4], bool dir)
 		skin.Insert_Face3(temp[1], temp[2], temp[0]);
 		skin.Insert_Face3(temp[2], temp[1], temp[3]);
 	}
-}
+}*/
 void Skin::ParsingData::Parse_VertexBelt(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure)
 {
 	if (!((cmd_args.Count() % 2) == 0 && cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "(n % 2) == 0 && n >= 4 && n <= 255"); }
@@ -310,7 +313,9 @@ void Skin::ParsingData::Parse_VertexBelt(const TextCommand::Args & cmd_args, boo
 		list1[i] = ToVertexIndex(cmd_args, i1);
 	}
 
-	unsigned int n = len - 1;
+	Object.Belt(len, list0, list1, f_direction, f_closure);
+
+	/*unsigned int n = len - 1;
 
 	for (unsigned int i = 0; i < n; i++)
 	{
@@ -332,7 +337,7 @@ void Skin::ParsingData::Parse_VertexBelt(const TextCommand::Args & cmd_args, boo
 			list1[0],
 		};
 		Belt_Face(Skin, temp, f_direction);
-	}
+	}*/
 }
 
 void Skin::ParsingData::Parse_VertexBand(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure)
@@ -343,7 +348,7 @@ void Skin::ParsingData::Parse_VertexBand(const TextCommand::Args & cmd_args, boo
 	(void)f_closure;
 }
 
-static void Fan_Face(Skin & skin, unsigned int middle, unsigned int blade[2], bool dir, bool mid)
+/*static void Fan_Face(Skin & skin, unsigned int middle, unsigned int blade[2], bool dir, bool mid)
 {
 	if (!dir)
 	{
@@ -367,7 +372,7 @@ static void Fan_Face(Skin & skin, unsigned int middle, unsigned int blade[2], bo
 			skin.Insert_Face3(blade[1], middle, blade[0]);
 		}
 	}
-}
+}*/
 void Skin::ParsingData::Parse_VertexFan(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure, bool f_middle)
 {
 	if (!(cmd_args.Count() >= 3 && cmd_args.Count() <= 255)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3 && n <= 255"); }
@@ -394,6 +399,9 @@ void Skin::ParsingData::Parse_VertexFan(const TextCommand::Args & cmd_args, bool
 		middle = ToVertexIndex(cmd_args, len);
 	}
 
+	Object.Fan(len, middle, blade, f_direction, f_middle, f_closure);
+
+/*
 	unsigned int n = len - 1;
 
 	for (unsigned int i = 0; i < n; i++)
@@ -413,6 +421,7 @@ void Skin::ParsingData::Parse_VertexFan(const TextCommand::Args & cmd_args, bool
 		};
 		Fan_Face(Skin, middle, temp, f_direction, f_middle);
 	}
+*/
 }
 void Skin::ParsingData::Parse_VertexRay(const TextCommand::Args & cmd_args, bool f_accumulate)
 {
@@ -446,7 +455,7 @@ void Skin::ParsingData::Parse_VertexRay(const TextCommand::Args & cmd_args, bool
 
 	for (unsigned int i = 0; i < len; i++)
 	{
-		Skin.Corners.Insert(Skin::Corner(ray.ToPoint(intervals[i]), TextureIndex));
+		Object.Corners.Insert(Skin::Corner(ray.ToPoint(intervals[i]), TextureIndex));
 	}
 }
 
@@ -460,7 +469,7 @@ void Skin::ParsingData::Parse_ColorF_Default(const TextCommand::Args & cmd_args)
 	col.B = cmd_args.ToFloat(2);
 	col.A = cmd_args.ToFloat(3);
 
-	Skin.Color = col;
+	Object.Color = col;
 }
 void Skin::ParsingData::Parse_ColorF(const TextCommand::Args & cmd_args)
 {
@@ -472,7 +481,7 @@ void Skin::ParsingData::Parse_ColorF(const TextCommand::Args & cmd_args)
 	col.B = cmd_args.ToFloat(2);
 	col.A = cmd_args.ToFloat(3);
 
-	Skin.Corners.Insert(Skin::Corner(col));
+	Object.Corners.Insert(Skin::Corner(col));
 }
 
 #include "ValueType/Color/U4.hpp"
@@ -486,7 +495,7 @@ void Skin::ParsingData::Parse_ColorD_Default(const TextCommand::Args & cmd_args)
 	col.B = cmd_args.ToUInt32(2);
 	col.A = cmd_args.ToUInt32(3);
 
-	Skin.Color = col.ToColorF4();
+	Object.Color = col.ToColorF4();
 }
 void Skin::ParsingData::Parse_ColorD(const TextCommand::Args & cmd_args)
 {
@@ -498,7 +507,7 @@ void Skin::ParsingData::Parse_ColorD(const TextCommand::Args & cmd_args)
 	col.B = cmd_args.ToUInt32(2);
 	col.A = cmd_args.ToUInt32(3);
 
-	Skin.Corners.Insert(Skin::Corner(col.ToColorF4()));
+	Object.Corners.Insert(Skin::Corner(col.ToColorF4()));
 }
 
 /* this is a terrible name
@@ -511,18 +520,92 @@ void Skin::ParsingData::Parse_Multi(const TextCommand::Args & cmd_args)
 	unsigned int n = cmd_args.ToUInt32(1);
 	for (unsigned int i = 0; i < n; i++)
 	{
-		Skin.Faces.Insert(Skin::Face(idx, idx, idx));
+		Object.Faces.Insert(Skin::Face(idx, idx, idx));
 	}
 }
 
 
 
-Skin * Skin::Load(const FileInfo & file)
+#include "PolyHedra/PolyHedra.hpp"
+#include "PolyHedra/Data.hpp"
+/* take a position and an axis from that position
+align texture to that axis
+
+needs PolyHedra corners
+*/
+/* axis_align
+	origin x y z
+	axis0 x y z scale
+	axis1 x y z scale
+	number of faces
+*/
+void Skin::ParsingData::Parse_AxisAlign(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 12)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 12"); }
+
+	if (PolyHedra == nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "Missing PolyHedra"); }
+
+	VectorF3 origin(
+		cmd_args.ToFloat(0),
+		cmd_args.ToFloat(1),
+		cmd_args.ToFloat(2)
+	);
+
+	VectorF3 axis0(
+		cmd_args.ToFloat(3),
+		cmd_args.ToFloat(4),
+		cmd_args.ToFloat(5)
+	);
+	float scale0 = cmd_args.ToFloat(6);
+
+	VectorF3 axis1(
+		cmd_args.ToFloat(7),
+		cmd_args.ToFloat(8),
+		cmd_args.ToFloat(9)
+	);
+	float scale1 = cmd_args.ToFloat(10);
+
+	unsigned int n = cmd_args.ToUInt32(11);
+
+	axis0 = axis0.normalize();
+	axis1 = axis1.normalize();
+
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int corners_index = Object.Corners.Count();
+		unsigned int face_index = Object.Faces.Count();
+
+		const PolyHedra::Face & face = PolyHedra -> Faces[face_index];
+		const PolyHedra::Corner & corner0 = PolyHedra -> Corners[face.idx[0]];
+		const PolyHedra::Corner & corner1 = PolyHedra -> Corners[face.idx[1]];
+		const PolyHedra::Corner & corner2 = PolyHedra -> Corners[face.idx[2]];
+
+		VectorF2 vec;
+
+		vec.X = axis0.dot(corner0.Position) / scale0;
+		vec.Y = axis1.dot(corner0.Position) / scale1;
+		Object.Insert_Corn(vec, TextureIndex);
+
+		vec.X = axis0.dot(corner1.Position) / scale0;
+		vec.Y = axis1.dot(corner1.Position) / scale1;
+		Object.Insert_Corn(vec, TextureIndex);
+
+		vec.X = axis0.dot(corner2.Position) / scale0;
+		vec.Y = axis1.dot(corner2.Position) / scale1;
+		Object.Insert_Corn(vec, TextureIndex);
+
+		Object.Insert_Face3(corners_index + 0, corners_index + 1, corners_index + 2);
+	}
+}
+
+
+
+Skin * Skin::Load(const FileInfo & file, ::PolyHedra * polyHedra)
 {
 //	std::cout << "Loading Skin File " << '"' << file.Path << '"' << " ..." << '\n';
 
-	::Skin * skin = new Skin();
-	ParsingData data(file, *skin);
+	::Skin * object = new Skin();
+	ParsingData data(file, *object, polyHedra);
 
 	TextCommand::ArgsStream stream(file.LoadText());
 	TextCommand::Args cmd_args;
@@ -531,9 +614,13 @@ Skin * Skin::Load(const FileInfo & file)
 		data.Parse(cmd_args);
 	}
 
-	skin -> Done();
+	object -> Done();
 
 //	std::cout << "Loading Skin File " << '"' << file.Path << '"' << " done" << '\n';
 
-	return skin;
+	return object;
+}
+Skin * Skin::Load(const FileInfo & file)
+{
+	return Load(file, nullptr);
 }

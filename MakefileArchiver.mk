@@ -50,6 +50,13 @@ re:
 
 .PHONY: all clean fclean re
 
+thisclean:
+	@$(call fancyNameTargetEcho,$@)
+	@$(REMOVER) $(FILES_OBJ)
+	@$(REMOVER) $(NAME)
+
+.PHONY: thisclean
+
 ################################################################
 
 final:

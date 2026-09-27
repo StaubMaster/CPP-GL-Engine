@@ -283,7 +283,7 @@ void PolyHedraParser::Check_Type(const TextCommand::Args & cmd_args)
 		throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Invalid Type"); // fatal
 	}
 
-	Object = new PolyHedra();
+	Object = new PolyHedra(); // check that Object exists in all that need it
 	Object -> File = File;
 
 	if (n == 1)
@@ -392,7 +392,7 @@ void PolyHedraParser::New_Skin(const TextCommand::Args & cmd_args)
 
 	FileInfo file(File.Directory().File(cmd_args.ToString(0)));
 	if (!file.Exists()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Bad Skin File"); } // this is not InvalidArgument. this is generic error
-	Object -> Skin = Skin::Load(file);
+	Object -> Skin = Skin::Load(file, Object);
 }
 
 void PolyHedraParser::Change_Default(const TextCommand::Args & cmd_args)

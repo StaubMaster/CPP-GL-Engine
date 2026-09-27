@@ -5,10 +5,13 @@
 
 namespace TextCommand { class Args; };
 
+class PolyHedra;
+
 struct Skin::ParsingData
 {
 	const FileInfo &	File;
-	::Skin &			Skin;
+	::Skin &			Object;
+	::PolyHedra *		PolyHedra = nullptr;
 
 	unsigned int	TextureIndex;
 	unsigned int	TextureVertexIndex;
@@ -16,7 +19,7 @@ struct Skin::ParsingData
 	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const;
 
 	~ParsingData();
-	ParsingData(const FileInfo & file, ::Skin & skin);
+	ParsingData(const FileInfo & file, ::Skin & object, ::PolyHedra * polyHedra);
 
 
 
@@ -51,6 +54,8 @@ struct Skin::ParsingData
 	void	Parse_ColorD(const TextCommand::Args & cmd_args);
 
 	void	Parse_Multi(const TextCommand::Args & cmd_args);
+
+	void	Parse_AxisAlign(const TextCommand::Args & cmd_args);
 };
 
 #endif
