@@ -74,20 +74,21 @@ void Buffer::Uniform::LogInfo(bool self) const
 	Debug::Log << Debug::Tabs << "}\n";
 }
 
+// put in Graphics/VertexArray/
 void VertexArray::Base::LogInfo(bool self) const
 {
-	(void)self;
 	if (self)
 	{
-		Debug::Log << Debug::Tabs << "NSVertexArray\n";
+		Debug::Log << Debug::Tabs << "VertexArray\n";
 		Debug::Log << Debug::Tabs << "{\n";
 		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	if (self)
-	{
+		Debug::Log << Debug::Tabs << "ID " << ID << '\n';
 		Debug::Log << Debug::TabDec;
 		Debug::Log << Debug::Tabs << "}\n";
 		Debug::Log << Debug::Done;
+	}
+	else
+	{
+		Debug::Log << "ID " << ID;
 	}
 }

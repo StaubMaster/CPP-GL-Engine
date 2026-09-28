@@ -31,24 +31,21 @@ void VertexArray::Base::Create()
 {
 	if (ID != 0) { return; }
 
-	Debug::Log << "VertexArray Creating " << ID << " ..." << Debug::Done;
 	ID = GL::CreateVertexArray();
-	Debug::Log << "VertexArray Creating " << ID << " done" << Debug::Done;
 
-	Debug::Log << "Create VertexArray: " << ID << Debug::Done;
-	LogInfo();
+	Debug::Log << "VertexArray::Base: ";
+	LogInfo(false);
+	Debug::Log << " Create" << Debug::Done;
 }
 void VertexArray::Base::Delete()
 {
 	if (ID == 0) { return; }
 
-	Debug::Log << "Delete BufferArray: " << ID << Debug::Done;
-	LogInfo();
+	Debug::Log << "VertexArray::Base: ";
+	LogInfo(false);
+	Debug::Log << " Delete" << Debug::Done;
 
-	Debug::Log << "VertexArray Deleting " << ID << " ..." << Debug::Done;
-	GL::DeleteVertexArray(ID);
-	ID = 0;
-	Debug::Log << "VertexArray Deleting " << ID << " done" << Debug::Done;
+	GL::DeleteVertexArray(ID); ID = 0;
 }
 
 

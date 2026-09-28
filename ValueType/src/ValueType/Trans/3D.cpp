@@ -47,5 +47,5 @@ Trans3D Trans3D::reverse(const Trans3D & other) const
 
 
 
-Trans3D		Trans3D::operator+() const { return Trans3D(-Position, -Rotation); }
+Trans3D		Trans3D::operator+() const { return Trans3D(+Position, +Rotation); }
 Trans3D		Trans3D::operator-() const { return Trans3D(-Position, -Rotation); }

@@ -773,5 +773,14 @@ PolyHedra * PolyHedraParser::Load(const FileInfo & file, const PolyHedraParser *
 	{
 		data.Object -> Done();
 	}
+
+	if (data.Other != nullptr)
+	{
+		if (data.FileCollection == nullptr)
+		{
+			delete data.Other;
+		}
+	}
+
 	return data.Object;
 }
