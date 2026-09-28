@@ -5,7 +5,7 @@
 
 // Skin
 #include "PolyHedra/Skin/Skin.hpp"
-#include "Graphics/Texture/Generate.hpp"
+//#include "Graphics/Texture/Generate.hpp"
 
 // File
 #include "FileInfo.hpp"

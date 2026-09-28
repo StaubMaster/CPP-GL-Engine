@@ -31,9 +31,15 @@ FILES := \
 
 ################################################################
 
+FILES += \
+	../FrameTime.cpp \
+	../Window.cpp \
+
+################################################################
+
 LIBRARYS  := $(NAME)
-INCLUDES  := include/ ../include ../ValueType/include ../Generics/include ../FileManager/include ../OpenGL/include ../Display/include
-ARGUMENTS := 
+INCLUDES  := include/ ../Debug/include ../ValueType/include ../Generics/include ../FileManager/include ../OpenGL/include ../Display/include
+ARGUMENTS := -D ENGINE_DIR='"$(shell pwd)"'
 
 ################################################################
 

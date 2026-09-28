@@ -1,26 +1,21 @@
 
-NAME := Display.a
-FANCY_NAME := Engine/Display
+NAME := Debug.a
+FANCY_NAME := Engine/Debug
 
 ################################################################
 
-DIR_SRC := src/Display/
-DIR_OBJ := obj/Display/
+DIR_SRC := src/
+DIR_OBJ := obj/
 
 ################################################################
 
-FILES := \
-	AspectRatio.cpp \
-	PixelSize.cpp \
-	DisplaySize.cpp \
-	PixelPosition.cpp \
-	DisplayPosition.cpp \
-	NormalPosition.cpp \
+FILES += \
+	Debug.cpp \
 
 ################################################################
 
 LIBRARYS  := $(NAME)
-INCLUDES  := include/ ../ValueType/include/
+INCLUDES  := include/ ../ValueType/include/ ../Generics/include/ ../FileManager/include
 ARGUMENTS := 
 
 ################################################################

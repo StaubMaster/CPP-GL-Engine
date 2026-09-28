@@ -101,7 +101,7 @@ FILES += \
 ################################################################
 
 LIBRARYS  := $(NAME)
-INCLUDES  := include/ ../include/ ../ValueType/include/ ../Generics/include/ ../FileManager/include/ ../OpenGL/include ../Display/include/
+INCLUDES  := include/ ../Debug/include/ ../ValueType/include/ ../Generics/include/ ../FileManager/include/ ../OpenGL/include ../Display/include/
 ARGUMENTS := 
 
 ################################################################
