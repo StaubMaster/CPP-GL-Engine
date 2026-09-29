@@ -1,6 +1,6 @@
 
+FANCY_NAME := Engine
 #NAME := Engine.a
-#FANCY_NAME := Engine
 
 ################################################################
 

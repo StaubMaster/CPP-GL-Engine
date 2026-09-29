@@ -9,8 +9,8 @@
 struct Skin::Corner
 {
 	VectorF2		Coord;
-	unsigned int	Index = 0xFFFFFFFF;
-	ColorF4			Color;
+	unsigned int	Index = 0xFFFFFFFF; // in Face
+	ColorF4			Color; // in Face ?
 
 	~Corner() = default;
 	Corner() = default;
@@ -24,7 +24,6 @@ struct Skin::Corner
 struct Skin::Face
 {
 	unsigned int	idx[3] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-	// Texture Index here ?
 
 	~Face() = default;
 	Face() = default;

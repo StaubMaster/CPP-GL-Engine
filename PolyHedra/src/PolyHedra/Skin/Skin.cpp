@@ -14,9 +14,6 @@
 
 void Skin::Combine(const Skin & other)
 {
-	std::cout << "this  " << Images.Count() << ' ' << Corners.Count() << ' ' << Faces.Count() << '\n';
-	std::cout << "other " << other.Images.Count() << ' ' << other.Corners.Count() << ' ' << other.Faces.Count() << '\n';
-
 	unsigned int image_offset = Images.Count();
 	unsigned int corner_offset = Corners.Count();
 	unsigned int face_offset = Faces.Count();

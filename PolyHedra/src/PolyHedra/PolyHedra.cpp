@@ -105,16 +105,24 @@ void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
 
 	if (other.Skin == nullptr)
 	{
-		std::cout << "other.Skin == null\n";
 		return;
 	}
 	if (Skin == nullptr)
 	{
 		Skin = new ::Skin();
+		Skin -> Size = other.Skin -> Size;
+		// this seems a bit wack ?
+		// have Fixed Size Textures
+		// and maybe a few dynamic sized ?
+		// maybe try to fit the dynamic sizes into the next largest Fixed Size ?
+
+		// also Im starting to think allowing PolyHedra to not have a Skin might be a bit stupid ?
+		// just have it be empty
+		// because in cases like this, where it is combined with another PolyHedra that has a Skin
+		// then this Skin is filled with empty Faces anyway
+		// but combining the Parsing Files would cause Problems with Ambiguity
 	}
 
-	std::cout << "P Faces " << (face_offset) << '\n';
-	std::cout << "S Faces " << (Skin -> Faces.Count()) << '\n';
 	if (face_offset < (Skin -> Faces.Count()))
 	{
 		// Trim
@@ -327,6 +335,8 @@ void PolyHedra::Done()
 	Edges.Trim();
 	Faces.Trim();
 
+	// Face Normals
+	// calculate when Faces are made ?
 	for (unsigned int i = 0; i < Faces.Count(); i++)
 	{
 		Face & face = Faces[i];

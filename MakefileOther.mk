@@ -29,4 +29,8 @@ ifndef BASE_DIR
 $(error missing BASE_DIR)
 endif
 
+ifndef FANCY_NAME
+$(error FANCY_NAME is not set)
+endif
+
 ################################################################
