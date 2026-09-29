@@ -33,7 +33,7 @@ BoxF3 PolyHedra::CalcBound() const
 
 #include "ValueType/Trans/3D.hpp"
 
-void PolyHedra::Combine(const PolyHedra & other)
+/*void PolyHedra::Combine(const PolyHedra & other)
 {
 	unsigned int corner_offset = Corners.Count();
 	for (unsigned int i = 0; i < other.Corners.Count(); i++)
@@ -62,10 +62,12 @@ void PolyHedra::Combine(const PolyHedra & other)
 
 	(void)face_offset;
 	// Skin
-}
+}*/
 void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
 {
 	unsigned int corner_offset = Corners.Count();
+	unsigned int face_offset = Faces.Count();
+
 	for (unsigned int i = 0; i < other.Corners.Count(); i++)
 	{
 		PolyHedra::Corner corner = other.Corners[i];
@@ -76,23 +78,65 @@ void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
 	for (unsigned int i = 0; i < other.Edges.Count(); i++)
 	{
 		PolyHedra::Edge edge = other.Edges[i];
-		edge.idx[0] += corner_offset;
-		edge.idx[1] += corner_offset;
+		for (unsigned int j = 0; j < 2; j++)
+		{
+			if (edge.idx[j] != 0xFFFFFFFF)
+			{
+				edge.idx[j] += corner_offset;
+			}
+		}
 		Edges.Insert(edge);
 	}
 
-	unsigned int face_offset = Faces.Count();
 	for (unsigned int i = 0; i < other.Faces.Count(); i++)
 	{
 		PolyHedra::Face face = other.Faces[i];
-		face.idx[0] += corner_offset;
-		face.idx[1] += corner_offset;
-		face.idx[2] += corner_offset;
+		for (unsigned int j = 0; j < 3; j++)
+		{
+			if (face.idx[j] != 0xFFFFFFFF)
+			{
+				face.idx[j] += corner_offset;
+			}
+		}
 		Faces.Insert(face);
 	}
 
-	(void)face_offset;
-	// Skin
+
+
+	if (other.Skin == nullptr)
+	{
+		std::cout << "other.Skin == null\n";
+		return;
+	}
+	if (Skin == nullptr)
+	{
+		Skin = new ::Skin();
+	}
+
+	std::cout << "P Faces " << (face_offset) << '\n';
+	std::cout << "S Faces " << (Skin -> Faces.Count()) << '\n';
+	if (face_offset < (Skin -> Faces.Count()))
+	{
+		// Trim
+		while (face_offset < (Skin -> Faces.Count()))
+		{
+			Skin -> Faces.RemoveAt(face_offset);
+		}
+	}
+	else if (face_offset > (Skin -> Faces.Count()))
+	{
+		// Pad
+		while (face_offset > (Skin -> Faces.Count()))
+		{
+			Skin -> Faces.Insert(Skin::Face());
+		}
+	}
+	// there should be a Container function for these
+	// TrimLength(unsigned int)
+	// PadLength(unsigned int, const Item & default_item)
+	// ToLength(unsigned int, const Item & default_item)
+
+	Skin -> Combine(*other.Skin);
 }
 
 

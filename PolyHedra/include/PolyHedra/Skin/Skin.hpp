@@ -30,6 +30,9 @@ class Skin
 	Container::Binary<Corner>	Corners;
 	Container::Binary<Face>		Faces;
 
+	public:
+	void	Combine(const Skin & other);
+
 	public: // Information stuff
 	FileInfo	File;
 	std::string	Name;

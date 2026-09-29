@@ -421,7 +421,14 @@ void PolyHedraParser::Change_Offset(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
 
-	VertexOffset = ToVertexIndex(cmd_args, 0);
+	if (cmd_args.ToString(0) == "here")
+	{
+		VertexOffset = Object -> Corners.Count();
+	}
+	else
+	{
+		VertexOffset = ToVertexIndex(cmd_args, 0);
+	}
 }
 
 

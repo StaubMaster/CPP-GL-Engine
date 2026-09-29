@@ -12,6 +12,48 @@
 
 
 
+void Skin::Combine(const Skin & other)
+{
+	std::cout << "this  " << Images.Count() << ' ' << Corners.Count() << ' ' << Faces.Count() << '\n';
+	std::cout << "other " << other.Images.Count() << ' ' << other.Corners.Count() << ' ' << other.Faces.Count() << '\n';
+
+	unsigned int image_offset = Images.Count();
+	unsigned int corner_offset = Corners.Count();
+	unsigned int face_offset = Faces.Count();
+
+	for (unsigned int i = 0; i < other.Images.Count(); i++)
+	{
+		Images.Insert(other.Images[i]);
+	}
+
+	for (unsigned int i = 0; i < other.Corners.Count(); i++)
+	{
+		Skin::Corner corner = other.Corners[i];
+		if (corner.Index != 0xFFFFFFFF)
+		{
+			corner.Index += image_offset;
+		}
+		Corners.Insert(corner);
+	}
+
+	for (unsigned int i = 0; i < other.Faces.Count(); i++)
+	{
+		Skin::Face face = other.Faces[i];
+		for (unsigned int j = 0; j < 3; j++)
+		{
+			if (face.idx[j] != 0xFFFFFFFF)
+			{
+				face.idx[j] += corner_offset;
+			}
+		}
+		Faces.Insert(face);
+	}
+
+	(void)face_offset;
+}
+
+
+
 Skin::Skin()
 	: Size()
 	, Color(1.0f, 1.0f, 1.0f, 1.0f)
