@@ -69,6 +69,7 @@ FILES += \
 	VertexArray/MainInst.cpp \
 	VertexArray/MainElemInst.cpp \
 	VertexArray/Multi.cpp \
+	VertexArray/_Log.cpp \
 
 ################################################################
 
@@ -89,6 +90,7 @@ FILES += \
 	Texture/Base.cpp \
 	Texture/Array2D.cpp \
 	Texture/Generate.cpp \
+	Texture/_Log.cpp \
 
 ################################################################
 

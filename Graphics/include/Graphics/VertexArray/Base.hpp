@@ -40,7 +40,9 @@ class Base
 
 
 	public:
-	void	LogInfo(bool self = true) const;
+	virtual void	LogInfo() const;
+	virtual void	LogLine() const;
+	void			LogLine(const char * str) const;
 };
 };
 

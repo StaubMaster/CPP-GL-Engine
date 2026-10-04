@@ -1,0 +1,62 @@
+
+add swizzles ?
+
+VectorF2
+{
+	VectorF3	GetXYX() const
+	void		SetXYX(const VectorF3 &)
+}
+
+how many combinations are there ?
+
+XX
+XY
+XZ
+XW
+
+YX
+YY
+YZ
+YW
+
+ZX
+ZY
+ZZ
+ZW
+
+WX
+WY
+WZ
+WW
+
+for F2 there are 2^4 = 16
+for F3 there are 3^4 = 81
+for F4 there are 4^4 = 256
+
+I am not doing that
+
+use Enums ?
+
+VectorF2	Swizzle(VectorF2, Axis2D::Abs, Axis2D::Abs)
+VectorF3	Swizzle(VectorF2, Axis2D::Abs, Axis2D::Abs, Axis2D::Abs)
+VectorF4	Swizzle(VectorF2, Axis2D::Abs, Axis2D::Abs, Axis2D::Abs, Axis2D::Abs)
+
+VectorF2	Swizzle(VectorF3, Axis3D::Abs, Axis3D::Abs)
+VectorF3	Swizzle(VectorF3, Axis3D::Abs, Axis3D::Abs, Axis3D::Abs)
+VectorF4	Swizzle(VectorF3, Axis3D::Abs, Axis3D::Abs, Axis3D::Abs, Axis3D::Abs)
+
+VectorF2	Swizzle(VectorF4, Axis4D::Abs, Axis4D::Abs)
+VectorF3	Swizzle(VectorF4, Axis4D::Abs, Axis4D::Abs, Axis4D::Abs)
+VectorF4	Swizzle(VectorF4, Axis4D::Abs, Axis4D::Abs, Axis4D::Abs, Axis4D::Abs)
+
+the Swizzle would need to be done at runtime
+I dont see any good reason you would need to do
+{
+	VectorF3	vec0;
+	VectorF3	vec1 = Swizzle(vec0, Axis3D::Abs::Z, Axis3D::Abs::X, Axis3D::Abs::Y);
+}
+instead of just manually doing
+{
+	VectorF3	vec0;
+	VectorF3	vec1(vec0.Z, vec0.X, vec0.Y);
+}

@@ -11,34 +11,31 @@ namespace Multiform { class Base; };
 namespace Uniform
 {
 class Base;
-class FloatNBase;
-class UIntNBase;
 class Buffer;
 class Layout
 {
-	public:
-	void	LogInfo() const;
-
 	private:
-	Container::Binary<Uniform::Base*>	Uniforms;
+	Container::Binary<Base*>	Uniforms;
 	public:
 	bool	IsDynamic = false; // delete with Shader
 	public:
 	void	Clear();
-	void	Put(Uniform::Base & uniform);
-	void	Put(Uniform::Base * uniform);
+	void	Put(Base & uniform);
+	void	Put(Base * uniform);
 
+	private:
+	::Shader::Base *	Shader = nullptr;
 	public:
-	::Shader::Base *	Shader;
-	// AssignShader() ?
+	void	AssignShader(::Shader::Base & shader);
+	//void	AssignShader(::Shader::Base * shader);
 
 	public:
 	virtual ~Layout();
-	Layout();
-	Layout(Shader::Base & shader);
-
-	Layout(const Layout & other);
+	Layout() = default;
+	Layout(const Layout & other) = default;
 	Layout & operator=(const Layout & other) = delete;
+
+	Layout(Shader::Base & shader);
 
 	public:
 	bool	IsBound() const;
@@ -53,6 +50,12 @@ class Layout
 
 	public:
 	void	Bind(Buffer & uniform, GL::BlockBinding binding);
+
+
+
+	public:
+	void	LogInfo() const;
+	void	LogLine() const;
 };
 };
 

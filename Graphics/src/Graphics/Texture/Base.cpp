@@ -1,29 +1,10 @@
 #include "Graphics/Texture/Base.hpp"
 #include "ValueType/Vector/U3.hpp"
 #include "OpenGL.hpp"
-#include <sstream>
 
-#include "Debug.hpp"
-#include "ValueType/_Show.hpp"
-#include <iostream>
+
 
 GL::TextureID Texture::Base::None = 0;
-
-void Texture::Base::LogInfo(bool self) const
-{
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Texture Info\n";
-		Debug::Log << Debug::TabInc;
-	}
-	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	Debug::Log << Debug::Tabs << "Target " << Target << '\n';
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}
-}
 
 
 
@@ -31,19 +12,6 @@ Texture::Base::Base(GL::TextureTarget target) :
 	Target(target),
 	ID(None)
 { }
-Texture::Base::~Base()
-{ }
-
-Texture::Base::Base(const Base & other) :
-	Target(other.Target),
-	ID(other.ID)
-{ }
-Texture::Base & Texture::Base::operator=(const Base & other)
-{
-	ID = other.ID;
-	Target = other.Target;
-	return *this;
-}
 
 
 
@@ -78,20 +46,19 @@ void Texture::Base::BindNone(GL::TextureTarget target)
 
 void Texture::Base::Create()
 {
-	if (ID != None) { return; }
+	if (Exists()) { return; }
 
-	Debug::Log << "Texture::Base Creating " << ID << " ..." << Debug::Done;
 	ID = GL::CreateTexture();
-	Debug::Log << "Texture::Base Creating " << ID << " done" << Debug::Done;
+
+	LogLine("[Create]");
 }
 void Texture::Base::Delete()
 {
-	if (ID == None) { return; }
+	if (!Exists()) { return; }
 
-	Debug::Log << "Texture::Base Deleting " << ID << " ..." << Debug::Done;
-	GL::DeleteTexture(ID);
-	ID = 0;
-	Debug::Log << "Texture::Base Deleting " << ID << " done" << Debug::Done;
+	LogLine("[Delete]");
+
+	GL::DeleteTexture(ID); ID = 0;
 }
 
 

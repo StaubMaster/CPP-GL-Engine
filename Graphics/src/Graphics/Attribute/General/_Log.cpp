@@ -71,3 +71,12 @@ void Attribute::Layout::LogInfo() const
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "}\n";
 }
+void Attribute::Layout::LogLine() const
+{
+	Debug::Log << "Attribute::Layout ";
+	Debug::Log << "{ ";
+	Debug::Log << "Divisor: " << Divisor << ' ';
+	Debug::Log << "Stride: " << Stride << ' ';
+	Debug::Log << "Attributes[" << Attributes.Count() << "] ";
+	Debug::Log << "}";
+}

@@ -77,11 +77,6 @@ class Base
 
 
 	public:
-	void	LogInfo(bool self = true, bool log = false) const;
-
-
-
-	public:
 	class ECompileLog : public std::exception
 	{
 		private:
@@ -94,6 +89,13 @@ class Base
 		public:
 		const char * what() const throw();
 	};
+
+
+
+	public:
+	void	LogInfo() const;
+	void	LogLine() const;
+	void	LogLine(const char * str) const;
 };
 };
 

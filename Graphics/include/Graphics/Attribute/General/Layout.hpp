@@ -10,9 +10,6 @@ namespace Attribute
 class Base;
 class Layout
 {
-	public:
-	void	LogInfo() const;
-
 	private:
 	Container::Binary<Attribute::Base*>		Attributes;
 	public:
@@ -40,6 +37,10 @@ class Layout
 
 	public:
 	void	CalcStride();
+
+	public:
+	void	LogInfo() const;
+	void	LogLine() const;
 };
 };
 

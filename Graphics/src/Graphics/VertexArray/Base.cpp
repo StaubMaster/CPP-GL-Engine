@@ -24,26 +24,19 @@ void VertexArray::Base::BindNone()
 
 
 
-#include "Debug.hpp"
-#include <sstream>
-
 void VertexArray::Base::Create()
 {
-	if (ID != 0) { return; }
+	if (Exists()) { return; }
 
 	ID = GL::CreateVertexArray();
 
-	Debug::Log << "VertexArray::Base: ";
-	LogInfo(false);
-	Debug::Log << " Create" << Debug::Done;
+	LogLine("[Create]");
 }
 void VertexArray::Base::Delete()
 {
-	if (ID == 0) { return; }
+	if (!Exists()) { return; }
 
-	Debug::Log << "VertexArray::Base: ";
-	LogInfo(false);
-	Debug::Log << " Delete" << Debug::Done;
+	LogLine("[Delete]");
 
 	GL::DeleteVertexArray(ID); ID = 0;
 }

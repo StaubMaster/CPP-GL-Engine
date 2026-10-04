@@ -26,23 +26,6 @@ Shader::Base::~Base()
 		}
 	}
 }
-/*Shader::Base::Base()
-	: ID(0)
-	, Code()
-	, Layout(nullptr)
-{ }*/
-/*Shader::Base::Base(const Shader::Base & other)
-	: ID(other.ID)
-	, Code(other.Code)
-	, Layout(other.Layout)
-{ }*/
-/*Shader::Base & Shader::Base::operator=(const Shader::Base & other)
-{
-	ID = other.ID;
-	Code = other.Code;
-	Layout = other.Layout;
-	return *this;
-}*/
 
 
 
@@ -96,15 +79,11 @@ bool Shader::Base::Exists() const
 }
 void Shader::Base::Delete()
 {
-	if (ID == 0) { return; }
+	if (!Exists()) { return; }
 
-	Debug::Log << "Delete Shader: " << ID << Debug::Done;
-	LogInfo();
+	LogLine("[Delete]");
 
-	Debug::Log << "Shader::Base Deleting " << ID << " ..." << Debug::Done;
-	GL::DeleteProgram(ID);
-	ID = 0;
-	Debug::Log << "Shader::Base Deleting " << ID << " done" << Debug::Done;
+	GL::DeleteProgram(ID); ID = 0;
 
 	if (Layout != nullptr)
 	{
@@ -113,9 +92,8 @@ void Shader::Base::Delete()
 }
 void Shader::Base::Create()
 {
-	if (ID != 0) { return; }
+	if (Exists()) { return; }
 
-	Debug::Log << "Shader::Base Creating " << ID << " ..." << Debug::Done;
 	ID = GL::CreateProgram();
 
 	Shader::Code::Compile(Code);
@@ -150,15 +128,12 @@ void Shader::Base::Create()
 		throw ECompileLog(log);
 	}*/
 
-	//Debug::Log << "Shader::Base Creating " << ID << " done" << Debug::Done;
-
 	if (Layout != nullptr)
 	{
 		Layout -> Find();
 	}
 
-	Debug::Log << "Create Shader: " << ID << Debug::Done;
-	LogInfo(true, true);
+	LogLine("[Create]");
 }
 
 void Shader::Base::Change(const Container::Array<Shader::Code> & code)
@@ -197,14 +172,14 @@ void Shader::Base::Change(std::initializer_list<FileInfo> files)
 void Shader::Base::AssignLayout(Uniform::Layout & layout)
 {
 	Layout = &layout;
-	layout.Shader = this;
+	layout.AssignShader(*this);
 }
 void Shader::Base::AssignLayout(Uniform::Layout * layout)
 {
 	Layout = layout;
 	if (layout != nullptr)
 	{
-		layout -> Shader = this;
+		layout -> AssignShader(*this);
 	}
 }
 

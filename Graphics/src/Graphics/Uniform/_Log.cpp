@@ -117,3 +117,10 @@ void Uniform::Layout::LogInfo() const
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "}\n";
 }
+void Uniform::Layout::LogLine() const
+{
+	Debug::Log << "Uniform::Layout ";
+	Debug::Log << "{ ";
+	Debug::Log << "Uniforms[" << Uniforms.Count() << "] ";
+	Debug::Log << "}";
+}

@@ -1,5 +1,5 @@
-#include "OpenGL.hpp"
 #include "Debug.hpp"
+#include "OpenGL.hpp"
 #include <sstream>
 
 #include "Graphics/Shader/Base.hpp"
@@ -10,14 +10,12 @@
 
 
 
-void Shader::Base::LogInfo(bool self, bool log) const
+void Shader::Base::LogInfo() const
 {
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Shader Info\n";
-		Debug::Log << Debug::Tabs << "{\n";
-		Debug::Log << Debug::TabInc;
-	}
+	Debug::Log << Debug::Tabs << "Shader::Base\n";
+	Debug::Log << Debug::Tabs << "{\n";
+	Debug::Log << Debug::TabInc;
+
 	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
 
 	Debug::Log << Debug::Tabs << "Code[" << Code.Length() << "]\n";
@@ -41,7 +39,7 @@ void Shader::Base::LogInfo(bool self, bool log) const
 		{
 			int len = GL::GetProgramiv(ID, GL::ShaderProgramParameterName::InfoLogLength);
 			Debug::Log << Debug::Tabs << "InfoLog: " << len << '\n';
-			if (log && len != 0)
+			if (len != 0)
 			{
 				char str[len];
 				GL::GetProgramInfoLog(ID, len, len, str);
@@ -59,13 +57,38 @@ void Shader::Base::LogInfo(bool self, bool log) const
 		}
 	}
 
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Tabs << "}\n";
-		Debug::Log << Debug::Done;
-	}
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "}\n";
+	Debug::Log << Debug::Done;
 }
+void Shader::Base::LogLine() const
+{
+	Debug::Log << "Shader::Base ";
+	Debug::Log << "{ ";
+	Debug::Log << "ID: " << ID << ' ';
+	Debug::Log << "Code[" << Code.Length() << "] ";
+	Debug::Log << "Layout: ";
+	if (Layout != nullptr)
+	{
+		Layout -> LogLine();
+	}
+	else
+	{
+		Debug::Log << "Missing";
+	}
+	Debug::Log << ' ';
+	// InfoLog: [#]
+	// Status: #
+	Debug::Log << "}";
+}
+void Shader::Base::LogLine(const char * str) const
+{
+	Debug::Log << str << ' ';
+	LogLine();
+	Debug::Log << Debug::Done;
+}
+
+
 
 void Shader::Code::LogInfo(bool self, bool log) const
 {

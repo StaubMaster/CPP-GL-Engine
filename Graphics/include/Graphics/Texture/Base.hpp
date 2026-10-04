@@ -19,20 +19,18 @@ class Base
 
 	protected:
 	public:
-	GL::TextureTarget	Target;
-	GL::TextureID		ID;
-
-	public:
-	virtual void LogInfo(bool self = true) const;
+	GL::TextureTarget	Target = (GL::TextureTarget)0;
+	GL::TextureID		ID = None;
 
 
 
 	public:
-	virtual ~Base();
+	virtual ~Base() = default;
 	Base() = delete;
+	Base(const Base & other)  = default;
+	Base & operator=(const Base & other)  = default;
+
 	Base(GL::TextureTarget target);
-	Base(const Base & other);
-	Base & operator=(const Base & other);
 
 
 
@@ -93,6 +91,13 @@ class Base
 	public:
 	void	Full3D(VectorU3 size, const ColorU4 * data);
 	void	Part3D(VectorU3 size, VectorU3 offset, const ColorU4 * data);
+
+
+
+	public:
+	virtual void	LogInfo() const;
+	virtual void	LogLine() const;
+	void			LogLine(const char * str) const;
 };
 };
 

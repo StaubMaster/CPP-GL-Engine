@@ -24,9 +24,9 @@ void Buffer::Base::Create()
 {
 	if (Exists()) { return; }
 
-	//Debug::Log << "Buffer::Base Creating " << ID << " ..." << Debug::Done;
 	ID = GL::CreateBuffer();
-	//Debug::Log << "Buffer::Base Creating " << ID << " done" << Debug::Done;
+
+	LogLine("[Create]");
 
 	DataWant = false;
 	DataHave = false;
@@ -35,10 +35,9 @@ void Buffer::Base::Delete()
 {
 	if (!Exists()) { return; }
 
-	//Debug::Log << "Buffer::Base Deleting " << ID << " ..." << Debug::Done;
-	GL::DeleteBuffer(ID);
-	ID = 0;
-	//Debug::Log << "Buffer::Base Deleting " << ID << " done" << Debug::Done;
+	LogLine("[Delete]");
+
+	GL::DeleteBuffer(ID); ID = 0;
 }
 
 

@@ -9,29 +9,34 @@
 
 #include "Graphics/Attribute/General/Layout.hpp"
 
-#include "Graphics/VertexArray/Base.hpp"
 
 
-
-void Buffer::Base::LogInfo(bool self) const
+void Buffer::Base::LogInfo() const
 {
-	(void)self;
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "Buffer Info\n";
-		Debug::Log << Debug::TabInc;
-	}
+	Debug::Log << Debug::Tabs << "Buffer::Base\n";
+	Debug::Log << Debug::Tabs << "{\n";
+	Debug::Log << Debug::TabInc;
 	Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-	if (self)
-	{
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Done;
-	}
+	Debug::Log << Debug::TabDec;
+	Debug::Log << Debug::Tabs << "}\n";
+	Debug::Log << Debug::Done;
+}
+void Buffer::Base::LogLine() const
+{
+	Debug::Log << "Buffer::Base" << ' ';
+	Debug::Log << "{" << ' ';
+	Debug::Log << "ID " << ID << ' ';
+	Debug::Log << "}";
+}
+void Buffer::Base::LogLine(const char * str) const
+{
+	Debug::Log << str << ' ';
+	LogLine();
+	Debug::Log << Debug::Done;
 }
 
-void Buffer::Array::LogInfo(bool self) const
+void Buffer::Array::LogInfo() const
 {
-	(void)self;
 	Debug::Log << Debug::Tabs << "Buffer::Array\n";
 	Debug::Log << Debug::Tabs << "{\n";
 	Debug::Log << Debug::TabInc;
@@ -47,11 +52,29 @@ void Buffer::Array::LogInfo(bool self) const
 	}*/
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "}\n";
+	Debug::Log << Debug::Done;
+}
+void Buffer::Array::LogLine() const
+{
+	Debug::Log << "Buffer::Array ";
+	Debug::Log << "{ ";
+	Debug::Log << "ID: " << ID << ' ';
+	Debug::Log << "Usade: " << Usage << ' ';
+	Debug::Log << "Layout: ";
+	if (Layout != nullptr)
+	{
+		Layout -> LogLine();
+	}
+	else
+	{
+		Debug::Log << "Missing";
+	}
+	Debug::Log << ' ';
+	Debug::Log << "}";
 }
 
-void Buffer::Element::LogInfo(bool self) const
+void Buffer::Element::LogInfo() const
 {
-	(void)self;
 	Debug::Log << Debug::Tabs << "Buffer::Element\n";
 	Debug::Log << Debug::Tabs << "{\n";
 	Debug::Log << Debug::TabInc;
@@ -60,11 +83,20 @@ void Buffer::Element::LogInfo(bool self) const
 	Debug::Log << Debug::Tabs << "IndexType: " << IndexType << '\n';
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "}\n";
+	Debug::Log << Debug::Done;
+}
+void Buffer::Element::LogLine() const
+{
+	Debug::Log << "Buffer::Element ";
+	Debug::Log << "{ ";
+	Debug::Log << "ID: " << ID << ' ';
+	Debug::Log << "Usade: " << Usage << ' ';
+	Debug::Log << "IndexType: " << IndexType << ' ';
+	Debug::Log << "}";
 }
 
-void Buffer::Uniform::LogInfo(bool self) const
+void Buffer::Uniform::LogInfo() const
 {
-	(void)self;
 	Debug::Log << Debug::Tabs << "Buffer::Uniform\n";
 	Debug::Log << Debug::Tabs << "{\n";
 	Debug::Log << Debug::TabInc;
@@ -72,23 +104,13 @@ void Buffer::Uniform::LogInfo(bool self) const
 	Debug::Log << Debug::Tabs << "Usade: " << Usage << '\n';
 	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "}\n";
+	Debug::Log << Debug::Done;
 }
-
-// put in Graphics/VertexArray/
-void VertexArray::Base::LogInfo(bool self) const
+void Buffer::Uniform::LogLine() const
 {
-	if (self)
-	{
-		Debug::Log << Debug::Tabs << "VertexArray\n";
-		Debug::Log << Debug::Tabs << "{\n";
-		Debug::Log << Debug::TabInc;
-		Debug::Log << Debug::Tabs << "ID " << ID << '\n';
-		Debug::Log << Debug::TabDec;
-		Debug::Log << Debug::Tabs << "}\n";
-		Debug::Log << Debug::Done;
-	}
-	else
-	{
-		Debug::Log << "ID " << ID;
-	}
+	Debug::Log << "Buffer::Uniform ";
+	Debug::Log << "{ ";
+	Debug::Log << "ID: " << ID << ' ';
+	Debug::Log << "Usade: " << Usage << ' ';
+	Debug::Log << "}";
 }

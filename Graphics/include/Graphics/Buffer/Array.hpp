@@ -39,7 +39,8 @@ class Array : public Base
 
 
 	public:
-	void	LogInfo(bool self = true) const override;
+	void	LogInfo() const override;
+	void	LogLine() const override;
 };
 };
 
