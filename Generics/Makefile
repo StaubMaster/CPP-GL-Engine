@@ -11,6 +11,9 @@ DIR_OBJ := obj/Generics/
 
 FILES := \
 	Container/Void.cpp \
+	Container/Exception.cpp \
+\
+	Function/Exception.cpp \
 
 ################################################################
 

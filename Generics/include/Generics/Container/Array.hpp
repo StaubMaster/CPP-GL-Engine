@@ -182,6 +182,7 @@ template<typename TypeItem> struct Array
 		mNew(len);
 		mCopy(temp);
 	}
+	public: // used for Binary.ToArray()
 	void	AssignLength(unsigned long len)
 	{
 		mLength = len;

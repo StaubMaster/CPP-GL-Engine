@@ -2,32 +2,35 @@
 # define GENERIC_FUNCTION_OBJECT_FUNCTION_HPP
 
 # include "Base.hpp"
+# include "Exception.hpp"
 
+namespace Function
+{
 template<typename ObjectType, typename ReturnType, typename ... Arguments>
-struct ObjectFunction : public BaseFunction<ReturnType, Arguments ...>
+struct Object : public Base<ReturnType, Arguments ...>
 {
 	typedef ReturnType (ObjectType::*FunctionType)(Arguments ...);
 
 	private:
-	ObjectType *	Object = nullptr;
-	FunctionType	Function = nullptr;
+	ObjectType *	mObject = nullptr;
+	FunctionType	mFunction = nullptr;
 
 	public:
-	~ObjectFunction() = default;
-	ObjectFunction() = default;
-	ObjectFunction(const ObjectFunction & other) = default;
-	ObjectFunction & operator=(const ObjectFunction & other) = default;
+	~Object() = default;
+	Object() = default;
+	Object(const Object & other) = default;
+	Object & operator=(const Object & other) = default;
 
 	public:
 	bool CanInvoke() const override
 	{
-		return ((Object != nullptr) && (Function != nullptr));
+		return ((mObject != nullptr) && (mFunction != nullptr));
 	}
 	ReturnType Invoke(Arguments ... args) const override
 	{
-		if (Object == nullptr) { throw "Object is null"; }
-		if (Function == nullptr) { throw "Function is null"; }
-		return (*Object.*Function)(args ...);
+		if (mObject == nullptr) { throw Exception::MissingObject(); }
+		if (mFunction == nullptr) { throw Exception::MissingFunction(); }
+		return (*mObject.*mFunction)(args ...);
 	}
 	ReturnType operator()(Arguments ... args) const override
 	{
@@ -35,25 +38,49 @@ struct ObjectFunction : public BaseFunction<ReturnType, Arguments ...>
 	}
 
 	public:
-	ObjectFunction(ObjectType * obj, FunctionType func)
-		: BaseFunction<ReturnType, Arguments ...>()
-		, Object(obj)
-		, Function(func)
+	Object(ObjectType * obj, FunctionType func)
+		: Base<ReturnType, Arguments ...>()
+		, mObject(obj)
+		, mFunction(func)
 	{ }
-	void Assign(ObjectType * obj, FunctionType func)
-	{
-		Object = obj;
-		Function = func;
-	}
+	Object(ObjectType & obj, FunctionType func)
+		: Base<ReturnType, Arguments ...>()
+		, mObject(&obj)
+		, mFunction(func)
+	{ }
+
+	public:
 	void Assign(ObjectType * obj)
 	{
-		Object = obj;
+		mObject = obj;
+	}
+	void Assign(ObjectType & obj)
+	{
+		mObject = &obj;
 	}
 	void Assign(FunctionType func)
 	{
-		Function = func;
+		mFunction = func;
 	}
+
+	public:
+	void Assign(ObjectType * obj, FunctionType func)
+	{
+		Assign(obj);
+		Assign(func);
+	}
+	void Assign(ObjectType & obj, FunctionType func)
+	{
+		Assign(obj);
+		Assign(func);
+	}
+
+	public:
 	void operator=(ObjectType * obj)
+	{
+		Assign(obj);
+	}
+	void operator=(ObjectType & obj)
 	{
 		Assign(obj);
 	}
@@ -61,6 +88,7 @@ struct ObjectFunction : public BaseFunction<ReturnType, Arguments ...>
 	{
 		Assign(func);
 	}
+};
 };
 
 #endif

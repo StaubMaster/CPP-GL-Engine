@@ -1,18 +1,24 @@
-#ifndef  GENERIC_FUNCTION_BASE_FUNCTION_HPP
-# define GENERIC_FUNCTION_BASE_FUNCTION_HPP
+#ifndef  FUNCTION_BASE_HPP
+# define FUNCTION_BASE_HPP
 
-template<typename ReturnType, typename ... Arguments>
-struct BaseFunction
+namespace Function
 {
-	virtual ~BaseFunction() = default;
-	BaseFunction() = default;
+template<typename ReturnType, typename ... Arguments>
+struct Base
+{
+	public:
+	virtual ~Base() = default;
+	Base() = default;
+	Base(const Base & other) = default;
+	Base & operator=(const Base & other) = default;
 
-	BaseFunction(const BaseFunction & other) = default;
-	BaseFunction & operator=(const BaseFunction & other) = default;
+	// Clear
 
+	public:
 	virtual bool		CanInvoke() const = 0;
 	virtual ReturnType	Invoke(Arguments ... args) const = 0;
 	virtual ReturnType	operator()(Arguments ... args) const = 0;
+};
 };
 
 #endif

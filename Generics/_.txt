@@ -1,0 +1,31 @@
+
+some similar stuff
+
+Array
+Array2D
+Array3D
+
+make Base ?
+
+
+
+Convert between Types ?
+{
+	Array<A> containerA;
+	Array<B> containerB;
+	containerB = containerA.Convert<B>();
+}
+
+
+
+
+
+UniqueObject<TypeObject>
+SharedObject<TypeObject>
+
+Base things to use in places
+like the ThreadGuards
+
+SharedArray<> ?
+for ArrayBase
+thats just what the Current Array is ?

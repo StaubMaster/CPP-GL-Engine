@@ -43,10 +43,10 @@ class Window
 	ColorF4			DefaultColor;
 
 	public:
-	FunctionPointer<>				CallBack_Init;
-	FunctionPointer<>				CallBack_Free;
-	FunctionPointer<DisplaySize>	CallBack_Resize;
-	FunctionPointer<::FrameTime>	CallBack_Frame;
+	Function::Pointer<>				CallBack_Init;
+	Function::Pointer<>				CallBack_Free;
+	Function::Pointer<DisplaySize>	CallBack_Resize;
+	Function::Pointer<::FrameTime>	CallBack_Frame;
 
 	public:
 	::KeyBoardManager	KeyBoardManager;

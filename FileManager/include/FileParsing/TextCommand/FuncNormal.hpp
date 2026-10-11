@@ -10,7 +10,7 @@ namespace TextCommand
 {
 struct FuncNormal : public Func
 {
-	FunctionPointer<const Args &>	Function;
+	Function::Pointer<const Args &>		Function;
 
 	~FuncNormal();
 	template<typename ObjectType> FuncNormal(

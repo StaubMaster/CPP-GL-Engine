@@ -39,7 +39,7 @@ struct PolyHedraParser : public TextCommand::Loop
 	CommandFlags	DefaultFlags;
 	struct CommandFlagsFunc : public TextCommand::Func
 	{
-		FunctionPointer<const TextCommand::Args &, const CommandFlags &>		Function;
+		Function::Pointer<const TextCommand::Args &, const CommandFlags &>		Function;
 
 		~CommandFlagsFunc();
 		template<typename ObjectType> CommandFlagsFunc(

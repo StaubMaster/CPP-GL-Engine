@@ -1,31 +1,34 @@
-#ifndef  GENERIC_FUNCTION_STATIC_FUNCTION_HPP
-# define GENERIC_FUNCTION_STATIC_FUNCTION_HPP
+#ifndef  FUNCTION_STATIC_HPP
+# define FUNCTION_STATIC_HPP
 
 # include "Base.hpp"
+# include "Exception.hpp"
 
+namespace Function
+{
 template<typename ReturnType, typename ... Arguments>
-struct StaticFunction : public BaseFunction<ReturnType, Arguments ...>
+struct Static : public Base<ReturnType, Arguments ...>
 {
 	typedef ReturnType (*FunctionType)(Arguments ...);
 
 	private:
-	FunctionType	Function = nullptr;
+	FunctionType	mFunction = nullptr;
 
 	public:
-	~StaticFunction() = default;
-	StaticFunction() = default;
-	StaticFunction(const StaticFunction & other) = default;
-	StaticFunction & operator=(const StaticFunction & other) = default;
+	~Static() = default;
+	Static() = default;
+	Static(const Static & other) = default;
+	Static & operator=(const Static & other) = default;
 
 	public:
 	bool CanInvoke() const override
 	{
-		return (Function != nullptr);
+		return (mFunction != nullptr);
 	}
 	ReturnType Invoke(Arguments ... args) const override
 	{
-		if (Function == nullptr) { throw "Function is null"; }
-		return Function(args ...);
+		if (mFunction == nullptr) { throw Exception::MissingFunction(); }
+		return mFunction(args ...);
 	}
 	ReturnType operator()(Arguments ... args) const override
 	{
@@ -33,18 +36,23 @@ struct StaticFunction : public BaseFunction<ReturnType, Arguments ...>
 	}
 
 	public:
-	StaticFunction(FunctionType func)
-		: BaseFunction<ReturnType, Arguments ...>()
-		, Function(func)
+	Static(FunctionType func)
+		: Base<ReturnType, Arguments ...>()
+		, mFunction(func)
 	{ }
+
+	public:
 	void Assign(FunctionType func)
 	{
-		Function = func;
+		mFunction = func;
 	}
+
+	public:
 	void operator=(FunctionType func)
 	{
 		Assign(func);
 	}
+};
 };
 
 #endif

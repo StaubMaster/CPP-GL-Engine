@@ -25,10 +25,10 @@ struct MouseManager
 	const MouseState & operator[](const MouseButtons & button) const;
 
 	public:
-	FunctionPointer<ClickArgs>		Callback_ClickEvent;
-	FunctionPointer<MoveArgs>		Callback_MoveEvent;
-	FunctionPointer<DragArgs>		Callback_DragEvent;
-	FunctionPointer<ScrollArgs>		Callback_ScrollEvent;
+	Function::Pointer<ClickArgs>	Callback_ClickEvent;
+	Function::Pointer<MoveArgs>		Callback_MoveEvent;
+	Function::Pointer<DragArgs>		Callback_DragEvent;
+	Function::Pointer<ScrollArgs>	Callback_ScrollEvent;
 
 	public:
 	~MouseManager();
@@ -42,8 +42,8 @@ struct MouseManager
 	void	CursorModeFree();
 	void	CursorModeToggle();
 	
-	DisplayPosition	CursorPosition() const;
-	void			CursorPositionTick();
+	DisplayPosition		CursorPosition() const;
+	void				CursorPositionTick();
 
 	public:
 	void	Tick();

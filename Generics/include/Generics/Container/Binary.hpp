@@ -1,11 +1,13 @@
 #ifndef  CONTAINER_BINARY_HPP
 # define CONTAINER_BINARY_HPP
 
+// the name "Binary" implies that this has something to do with a Executable
+// or with raw Data
+
 # include "Array.hpp"
 
 namespace Container
 {
-// calling this a Binary sounds like this is an executable file
 template<typename TypeItem> struct Binary
 {
 	private:
@@ -33,6 +35,7 @@ template<typename TypeItem> struct Binary
 	public:
 	Array<TypeItem>		ToArray() const
 	{
+		// have a static function for this ?
 		Array<TypeItem> array = mData;
 		array.AssignLength(mUsed);
 		return array;

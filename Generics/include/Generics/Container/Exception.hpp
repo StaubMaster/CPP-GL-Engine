@@ -7,7 +7,10 @@ namespace Container
 {
 namespace Exception
 {
-class InvalidIndex : public std::exception { const char * what() const noexcept { return "Index invalid."; } };
+class InvalidIndex : public std::exception
+{
+	const char * what() const noexcept;
+};
 };
 };
 

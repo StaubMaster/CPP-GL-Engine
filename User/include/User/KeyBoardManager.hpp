@@ -23,8 +23,8 @@ struct KeyBoardManager
 	const KeyState & operator[](const Keys & key) const;
 
 	public:
-	FunctionPointer<KeyArgs>		CallBack_KeyEvent;
-	FunctionPointer<TextArgs>		CallBack_TextEvent;
+	Function::Pointer<KeyArgs>		CallBack_KeyEvent;
+	Function::Pointer<TextArgs>		CallBack_TextEvent;
 
 	public:
 	~KeyBoardManager();
