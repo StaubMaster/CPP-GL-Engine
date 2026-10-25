@@ -7,12 +7,12 @@
 
 struct KeyArgs
 {
-	::Modifier	Mods;
-	::Action	Action;
 	::Keys		Key;
 	int			Scancode;
+	::Action	Action;
+	::Modifier	Mods;
 
-	KeyArgs(int keycode, int scancode, int action, int mods);
+	KeyArgs(::Keys keycode, int scancode, ::Action action, ::Modifier mods);
 };
 
 #endif

@@ -26,11 +26,10 @@ class Window
 {
 	private:
 	static GLFWwindow * NormalWindow();
-	void MakeCallbacks();
-	void MakeUserParemeters();
+	void	MakeCallbacks();
 
 	public:
-	GLFWwindow * glfw_window;
+	GLFWwindow *	glfw_window = nullptr;
 
 	private:
 	bool				LoopIsDone;
@@ -52,8 +51,8 @@ class Window
 	::KeyBoardManager	KeyBoardManager;
 	::MouseManager		MouseManager;
 
-	const MouseState & operator[](const MouseButtons & button) const;
-	const KeyState & operator[](const Keys & key) const;
+	const MouseState &	operator[](const MouseButtons & button) const;
+	const KeyState &	operator[](const Keys & key) const;
 
 	public:
 	~Window();
@@ -101,8 +100,6 @@ class Window
 
 	private:
 	void	RunGL_Setup();
-	void	Run_Init();
-	void	Run_Free();
 
 	public:
 	void	ExitLoop();

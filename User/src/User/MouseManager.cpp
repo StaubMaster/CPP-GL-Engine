@@ -19,7 +19,6 @@ const MouseState & MouseManager::operator[](const MouseButtons & button) const
 
 
 
-MouseManager::~MouseManager() { }
 MouseManager::MouseManager(Window & win)
 	: window(win)
 	, MouseStates{
@@ -68,10 +67,9 @@ DisplayPosition MouseManager::CursorPosition() const
 {
 	double x, y;
 	glfwGetCursorPos(window.glfw_window, &x, &y);
-	//return DisplayPosition::FromWindowCorner(VectorF2(x, y), window.Size);
 	return window.Size.PosFromWindowFull(VectorF2(x, y));
 }
-void MouseManager::CursorPositionTick()
+void MouseManager::CursorPositionPutCenter()
 {
 	if (CursorModeIsLocked())
 	{
@@ -87,8 +85,9 @@ void MouseManager::Tick()
 	{
 		MouseStates[i].Tick();
 	}
+	Scroll = VectorF2();
 }
-void MouseManager::Update(MouseButtons button, Action action)
+void MouseManager::UpdateClick(MouseButtons button, Action action, Modifier mods)
 {
 	for (unsigned int i = 0; i < StateNum; i++)
 	{
@@ -97,46 +96,26 @@ void MouseManager::Update(MouseButtons button, Action action)
 			MouseStates[i].Update(CursorPosition(), action);
 		}
 	}
+
+	Callback_ClickEvent.TryInvoke(ClickArgs(button, action, mods, CursorPosition()));
 }
-
-
-
-void MouseManager::Invoke_ClickEvent(int button, int action, int mods)
+void MouseManager::UpdateScroll(VectorF2 scroll)
 {
-	Update((MouseButtons)button, (Action)action);
+	Scroll += scroll;
 
-	//Callback_ClickEvent(ClickArgs((Modifier)mods, (Action)action, (MouseButtons)button, CursorPosition()));
-	Callback_ClickEvent.TryInvoke(ClickArgs(mods, action, button, CursorPosition()));
-
-	for (unsigned int i = 0; i < StateNum; i++)
-	{
-		MouseState & state = MouseStates[i];
-		if (state.State == State::Release)
-		{
-			if (state.IsDragging)
-			{
-				state.IsDragging = false;
-				//DragArgs args;
-				//args.Button = MouseStates[i].Button;
-				//args.Action = Action::Release;
-				//args.Position = MouseStates[i].LastReleasePosition;
-				//Callback_DragEvent(args);
-				Callback_DragEvent.TryInvoke(DragArgs(Modifier::None, Action::Release, state.Button, state.LastReleasePosition));
-			}
-		}
-	}
+	Callback_ScrollEvent.TryInvoke(ScrollArgs(scroll, Modifier::None, CursorPosition()));
 }
-void MouseManager::Invoke_ScrollEvent(float offset_x, float offset_y)
+void MouseManager::UpdateMove(VectorF2 pos)
 {
-	Callback_ScrollEvent.TryInvoke(ScrollArgs(Modifier::None, offset_x, offset_y, CursorPosition()));
+	DisplayPosition display_pos = window.Size.PosFromWindowFull(pos);
+
+	Callback_MoveEvent.TryInvoke(MoveArgs(display_pos));
+
+	UpdateDrag(pos);
 }
-void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
+void MouseManager::UpdateDrag(VectorF2 pos)
 {
-	//DisplayPosition pos = DisplayPosition::FromWindowCorner(VectorF2(x_pos, y_pos), window.Size);
-	DisplayPosition pos = window.Size.PosFromWindowFull(VectorF2(x_pos, y_pos));
-
-	Callback_MoveEvent.TryInvoke(MoveArgs(pos));
-
+	DisplayPosition display_pos = window.Size.PosFromWindowFull(pos);
 	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		MouseState & state = MouseStates[i];
@@ -145,12 +124,28 @@ void MouseManager::Invoke_MoveEvent(double x_pos, double y_pos)
 			if (!state.IsDragging)
 			{
 				state.IsDragging = true;
-				Callback_DragEvent.TryInvoke(DragArgs(Modifier::None, Action::Press, state.Button, state.LastPressPosition));
+				Callback_DragEvent.TryInvoke(DragArgs(state.Button, Action::Press, Modifier::None, state.LastPressPosition));
 			}
 			if (state.IsDragging)
 			{
-				Callback_DragEvent.TryInvoke(DragArgs(Modifier::None, Action::Repeat, state.Button, pos));
+				Callback_DragEvent.TryInvoke(DragArgs(state.Button, Action::Repeat, Modifier::None, display_pos));
 			}
 		}
 	}
+	// no Drag Release
+}
+
+
+
+void MouseManager::UpdateClick(int button, int action, int mods)
+{
+	UpdateClick((MouseButtons)button, (Action)action, (Modifier)mods);
+}
+void MouseManager::UpdateScroll(float offset_x, float offset_y)
+{
+	UpdateScroll(VectorF2(offset_x, offset_y));
+}
+void MouseManager::UpdateMove(double x_pos, double y_pos)
+{
+	UpdateMove(VectorF2(x_pos, y_pos));
 }

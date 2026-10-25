@@ -7,15 +7,15 @@
 
 # include "Display/DisplayPosition.hpp"
 
+# include "ValueType/Vector/F2.hpp"
+
 struct ScrollArgs
 {
+	VectorF2			Value;
 	::Modifier			Mods;
-
-	float				X;
-	float				Y;
 	DisplayPosition		Position;
 
-	ScrollArgs(::Modifier mods, float x, float y, DisplayPosition position);
+	ScrollArgs(VectorF2 value, ::Modifier mods, DisplayPosition position);
 };
 
 #endif

@@ -1,10 +1,6 @@
 #include "User/KeyState.hpp"
 
-/*struct KeyState
-{
-	::Keys	Key;
-	::State	State;
-};*/
+
 
 KeyState::KeyState(::Keys key)
 	: Key(key)

@@ -2,9 +2,9 @@
 
 
 
-ClickArgs::ClickArgs(int mods, int action, int button, DisplayPosition position)
-	: Mods((::Modifier)mods)
-	, Action((::Action)action)
-	, Button((::MouseButtons)button)
+ClickArgs::ClickArgs(::MouseButtons button, ::Action action, ::Modifier mods, DisplayPosition position)
+	: Button(button)
+	, Action(action)
+	, Mods(mods)
 	, Position(position)
 { }

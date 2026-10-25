@@ -2,9 +2,9 @@
 
 
 
-DragArgs::DragArgs(::Modifier mods, ::Action action, ::MouseButtons button, DisplayPosition pos)
-	: Mods(mods)
+DragArgs::DragArgs(::MouseButtons button, ::Action action, ::Modifier mods, DisplayPosition pos)
+	: Button(button)
 	, Action(action)
-	, Button(button)
+	, Mods(mods)
 	, Position(pos)
 { }

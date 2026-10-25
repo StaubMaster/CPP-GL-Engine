@@ -3,7 +3,7 @@
 
 struct TextArgs
 {
-	unsigned int Codepoint;
+	unsigned int	Codepoint;
 
 	TextArgs(unsigned int codepoint);
 };

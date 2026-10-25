@@ -18,8 +18,10 @@ struct MouseManager
 	static const unsigned int StateNum = 8;
 
 	private:
-	Window & window;
-	MouseState MouseStates[StateNum];
+	Window &	window;
+	MouseState	MouseStates[StateNum];
+	public:
+	VectorF2	Scroll;
 
 	public:
 	const MouseState & operator[](const MouseButtons & button) const;
@@ -31,28 +33,36 @@ struct MouseManager
 	Function::Pointer<ScrollArgs>	Callback_ScrollEvent;
 
 	public:
-	~MouseManager();
-	MouseManager(Window & win);
+	~MouseManager() = default;
+	MouseManager() = delete;
 	MouseManager(const MouseManager & other) = delete;
 	MouseManager & operator=(const MouseManager & other) = delete;
+	public:
+	MouseManager(Window & win);
 
 	public:
 	bool	CursorModeIsLocked() const;
 	void	CursorModeLock();
 	void	CursorModeFree();
 	void	CursorModeToggle();
-	
+
+	public:
 	DisplayPosition		CursorPosition() const;
-	void				CursorPositionTick();
+	void				CursorPositionPutCenter();
 
 	public:
 	void	Tick();
-	void	Update(MouseButtons button, Action action);
+
+	private:
+	void	UpdateClick(MouseButtons button, Action action, Modifier mods);
+	void	UpdateScroll(VectorF2 scroll);
+	void	UpdateMove(VectorF2 pos);
+	void	UpdateDrag(VectorF2 pos);
 
 	public:
-	void	Invoke_ClickEvent(int button, int action, int mods);
-	void	Invoke_ScrollEvent(float offset_x, float offset_y);
-	void	Invoke_MoveEvent(double x_pos, double y_pos);
+	void	UpdateClick(int button, int action, int mods);
+	void	UpdateScroll(float offset_x, float offset_y);
+	void	UpdateMove(double x_pos, double y_pos);
 };
 
 #endif

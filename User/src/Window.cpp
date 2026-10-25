@@ -63,25 +63,7 @@ void Window::MakeCallbacks()
 	glfwSetScrollCallback(glfw_window, Callback_GLFW_CursorScroll);
 	glfwSetCursorPosCallback(glfw_window, Callback_GLFW_CursorMove);
 }
-void Window::MakeUserParemeters()
-{
-	Debug::Log << Debug::Tabs << "MakeUserParemeters" << "  ....  " << Debug::Done;
 
-	// these arent all Keys that openGL provides
-	// maybe just put all keys in one list, instead of subLists
-	// it's < 400 keys so a for loop that checks and int should be fine
-	//KeyBoardManager.Keys.KeyArrays[0] = UserParameter::KeyBoard::KeyRange1(32, 32);		//	Space
-	//KeyBoardManager.Keys.KeyArrays[1] = UserParameter::KeyBoard::KeyRange1(48, 57);		//	Numbers
-	//KeyBoardManager.Keys.KeyArrays[2] = UserParameter::KeyBoard::KeyRange1(65, 90);		//	Letters
-	//KeyBoardManager.Keys.KeyArrays[3] = UserParameter::KeyBoard::KeyRange1(256, 269);	//	Control0
-	//KeyBoardManager.Keys.KeyArrays[4] = UserParameter::KeyBoard::KeyRange1(290, 314);	//	Function
-	//KeyBoardManager.Keys.KeyArrays[5] = UserParameter::KeyBoard::KeyRange1(320, 336);	//	KeyPad
-	//KeyBoardManager.Keys.KeyArrays[6] = UserParameter::KeyBoard::KeyRange1(340, 348);	//	Control1
-
-	//MouseManager.Buttons = UserParameter::Mouse::ButtonRange(0, 5);
-
-	Debug::Log << Debug::Tabs << "MakeUserParemeters" << "  done  " << Debug::Done;
-}
 
 
 const MouseState & Window::operator[](const MouseButtons & button) const
@@ -114,9 +96,6 @@ Window::Window()
 {
 	Debug::Log << Debug::Tabs << "  ++++  " << "Window" << "  ....  " << Debug::Done;
 	Debug::Log << Debug::Tabs << "Engine Dir: " << ENGINE_DIR << Debug::Done;
-	Debug::Log << Debug::TabInc;
-	MakeUserParemeters();
-	Debug::Log << Debug::TabDec;
 	Debug::Log << Debug::Tabs << "  ++++  " << "Window" << "  done  " << Debug::Done;
 }
 
@@ -132,9 +111,7 @@ Window::Window(const Window & other)
 	, CallBack_Frame(other.CallBack_Frame)
 	, KeyBoardManager(*this)
 	, MouseManager(*this)
-{
-	MakeUserParemeters();
-}
+{ }
 Window & Window::operator=(const Window & other)
 {
 	glfw_window = other.glfw_window;
@@ -156,6 +133,7 @@ bool Window::Exists() const
 }
 void Window::Create()
 {
+	if (Exists()) { return; }
 	Debug::Log << Debug::Tabs << "Window::Create()" << "  ....  " << Debug::Done;
 	Debug::Log << Debug::TabInc;
 	glfw_window = NormalWindow();
@@ -166,6 +144,7 @@ void Window::Create()
 }
 void Window::Delete()
 {
+	if (!Exists()) { return; }
 	Debug::Log << Debug::Tabs << "Window::Delete()" << "  ....  " << Debug::Done;
 	Debug::Log << Debug::TabInc;
 	glfwDestroyWindow(glfw_window);
@@ -195,6 +174,8 @@ void Window::UpdateSize()
 	bufSize = VectorF2(w, h);
 
 	Size.Change(winSize, bufSize);
+
+	CallBack_Resize.TryInvoke(Size);
 }
 
 
@@ -209,32 +190,32 @@ void Window::Callback_GLFW_Error(int error, const char * description)
 void Window::Callback_GLFW_Resize(GLFWwindow * window, int w, int h)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_GLFW_Resize(w, h);
+	if (win != nullptr) { win -> Callback_GLFW_Resize(w, h); }
 }
 void Window::Callback_GLFW_CursorClick(GLFWwindow * window, int button, int action, int mods)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_GLFW_CursorClick(button, action, mods);
+	if (win != nullptr) { win -> Callback_GLFW_CursorClick(button, action, mods); }
 }
 void Window::Callback_GLFW_CursorScroll(GLFWwindow * window, double xOffset, double yOffset)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_GLFW_CursorScroll(xOffset, yOffset);
+	if (win != nullptr) { win -> Callback_GLFW_CursorScroll(xOffset, yOffset); }
 }
 void Window::Callback_GLFW_CursorMove(GLFWwindow * window, double xPos, double yPos)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_GLFW_CursorMove(xPos, yPos);
+	if (win != nullptr) { win -> Callback_GLFW_CursorMove(xPos, yPos); }
 }
 void Window::Callback_GLFW_Key(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_GLFW_Key(key, scancode, action, mods);
+	if (win != nullptr) { win -> Callback_GLFW_Key(key, scancode, action, mods); }
 }
 void Window::Callback_GLFW_Text(GLFWwindow * window, unsigned int codepoint)
 {
 	Window * win = ((Window *)glfwGetWindowUserPointer(window));
-	win -> Callback_GLFW_Text(codepoint);
+	if (win != nullptr) { win -> Callback_GLFW_Text(codepoint); }
 }
 
 
@@ -243,19 +224,18 @@ void Window::Callback_GLFW_Resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
 	UpdateSize();
-	CallBack_Resize.TryInvoke(Size);
 }
 void Window::Callback_GLFW_CursorClick(int button, int action, int mods)
 {
-	MouseManager.Invoke_ClickEvent(button, action, mods);
+	MouseManager.UpdateClick(button, action, mods);
 }
 void Window::Callback_GLFW_CursorScroll(double xOffset, double yOffset)
 {
-	MouseManager.Invoke_ScrollEvent(xOffset, yOffset);
+	MouseManager.UpdateScroll(xOffset, yOffset);
 }
 void Window::Callback_GLFW_CursorMove(double xPos, double yPos)
 {
-	MouseManager.Invoke_MoveEvent(xPos, yPos);
+	MouseManager.UpdateMove(xPos, yPos);
 }
 void Window::Callback_GLFW_Key(int key, int scancode, int action, int mods)
 {
@@ -273,12 +253,12 @@ void Window::Callback_GLFW_Text(unsigned int codepoint)
 VectorF3 Window::MoveFromKeys() const
 {
 	VectorF3 move;
-	if (KeyBoardManager[Keys::A].State == State::Down)				{ move.X -= 1; }
-	if (KeyBoardManager[Keys::D].State == State::Down)				{ move.X += 1; }
-	if (KeyBoardManager[Keys::S].State == State::Down)				{ move.Z -= 1; }
-	if (KeyBoardManager[Keys::W].State == State::Down)				{ move.Z += 1; }
-	if (KeyBoardManager[Keys::Space].State == State::Down)			{ move.Y += 1; }
-	if (KeyBoardManager[Keys::LeftShift].State == State::Down)		{ move.Y -= 1; }
+	if (KeyBoardManager[Keys::A			].State == State::Down) { move.X -= 1; }
+	if (KeyBoardManager[Keys::D			].State == State::Down) { move.X += 1; }
+	if (KeyBoardManager[Keys::LeftShift	].State == State::Down) { move.Y -= 1; }
+	if (KeyBoardManager[Keys::Space		].State == State::Down) { move.Y += 1; }
+	if (KeyBoardManager[Keys::S			].State == State::Down) { move.Z -= 1; }
+	if (KeyBoardManager[Keys::W			].State == State::Down) { move.Z += 1; }
 	return move;
 }
 EulerAngle3D Window::SpinFromCursor() const
@@ -311,24 +291,6 @@ void Window::RunGL_Setup()
 	GL::DepthRange(0, 1);
 	GL::ClearDepth(1.0f);
 }
-void Window::Run_Init()
-{
-	if (CallBack_Init.CanInvoke())
-	{
-		Debug::Log << "Window Init() ..." << Debug::Done;
-		CallBack_Init();
-		std::cout << "Window:Run_Init():" << __LINE__ << '\n';
-	}
-}
-void Window::Run_Free()
-{
-	if (CallBack_Free.CanInvoke())
-	{
-		Debug::Log << "Window Free() ..." << Debug::Done;
-		CallBack_Free();
-		Debug::Log << "Window Free() done" << Debug::Done;
-	}
-}
 
 
 
@@ -340,63 +302,54 @@ void Window::RunLoop()
 {
 	try
 	{
-		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		RunGL_Setup();
-		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
-		Run_Init();
-		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
+		CallBack_Init.TryInvoke();
 		UpdateSize();
-		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
-		CallBack_Resize.TryInvoke(Size);
-		//std::cout << "Window:RunLoop():" << __LINE__ << '\n';
 		FrameTime.TimeNow = glfwGetTime();
 		LoopIsDone = false;
+
+		// do loop stuff outside of Window ?
+		// use chrono and wait
 		Debug::Log << "Window Loop ..." << Debug::Done;
 		std::cout << "Window Loop ..." << '\n';
 		while (!LoopIsDone)
 		{
-			//std::cout << "Window:" << __LINE__ << '\n';
 			FrameTime.Update(glfwGetTime());
-			//std::cout << "Window:" << __LINE__ << '\n';
 			if (FrameTime.Ready)
 			{
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				KeyBoardManager.Tick();
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				MouseManager.Tick();
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
 				glfwPollEvents();
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
-				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, 1.0f);
+
+				// do Clear in Frame() ?
+				GL::ClearColor(DefaultColor.R, DefaultColor.G, DefaultColor.B, DefaultColor.A);
 				GL::Clear(GL::ClearMask::ColorBufferBit | GL::ClearMask::DepthBufferBit);
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
-				CallBack_Frame(FrameTime);
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
+
+				CallBack_Frame.TryInvoke(FrameTime);
 				glfwSwapBuffers(glfw_window);
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
-				MouseManager.CursorPositionTick();
-				//std::cout << "Window:Ready:" << __LINE__ << '\n';
+
+				MouseManager.CursorPositionPutCenter();
+
+
 				FrameTime.Ready = false;
 				FrameTime.Number++;
 			}
-			//std::cout << "Window:" << __LINE__ << '\n';
 			if (FrameTime.Number == FrameNumberTerminate)
 			{
 				LoopIsDone = true;
 			}
-			//std::cout << "Window:" << __LINE__ << '\n';
 			if (glfwWindowShouldClose(glfw_window))
 			{
 				LoopIsDone = true;
 			}
-			//std::cout << "Window:" << __LINE__ << '\n';
 		}
 		Debug::Log << "Window Loop done" << Debug::Done;
 		std::cout << "Window Loop done" << '\n';
 	}
-	catch (std::exception & ex)	{ std::cerr << "Exception: " << ex.what() << '\n'; }
-	catch (std::string & str)	{ std::cerr << "std::string Exception: "<< str << '\n'; }
-	catch (const char * str)	{ std::cerr << "const char * Exception: "<< str << '\n'; }
-	catch (...)					{ std::cerr << "Unknown Exception\n"; }
-	Run_Free();
+	catch (std::exception & ex)	{ std::cerr << "Window Exception: " << ex.what() << '\n'; }
+	catch (std::string & str)	{ std::cerr << "Window Exception: std::string: "<< str << '\n'; }
+	catch (const char * str)	{ std::cerr << "Window Exception: const char *: "<< str << '\n'; }
+	catch (...)					{ std::cerr << "Winwow Exception: unknown\n"; }
+
+	CallBack_Free.TryInvoke();
 }

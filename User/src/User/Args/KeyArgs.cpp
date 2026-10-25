@@ -2,9 +2,9 @@
 
 
 
-KeyArgs::KeyArgs(int keycode, int scancode, int action, int mods)
-	: Mods((::Modifier)mods)
-	, Action((::Action)action)
-	, Key((::Keys)keycode)
+KeyArgs::KeyArgs(::Keys keycode, int scancode, ::Action action, ::Modifier mods)
+	: Key(keycode)
 	, Scancode(scancode)
+	, Action(action)
+	, Mods(mods)
 { }

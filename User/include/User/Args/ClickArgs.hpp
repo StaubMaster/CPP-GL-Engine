@@ -9,13 +9,13 @@
 
 struct ClickArgs
 {
-	::Modifier			Mods;
-	::Action			Action;
 	::MouseButtons		Button;
+	::Action			Action;
+	::Modifier			Mods;
 
 	DisplayPosition		Position;
 
-	ClickArgs(int mods, int action, int button, DisplayPosition position);
+	ClickArgs(::MouseButtons button, ::Action action, ::Modifier mods, DisplayPosition position);
 };
 
 #endif

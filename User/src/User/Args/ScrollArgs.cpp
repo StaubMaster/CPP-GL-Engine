@@ -2,9 +2,8 @@
 
 
 
-ScrollArgs::ScrollArgs(::Modifier mods, float x, float y, DisplayPosition position)
-	: Mods(mods)
-	, X(x)
-	, Y(y)
+ScrollArgs::ScrollArgs(VectorF2 value, ::Modifier mods, DisplayPosition position)
+	: Value(value)
+	, Mods(mods)
 	, Position(position)
 { }
