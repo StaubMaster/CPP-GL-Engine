@@ -2,11 +2,6 @@
 
 
 
-TextCommand::FuncNormal::~FuncNormal()
-{ }
-
-
-
 bool TextCommand::FuncNormal::TryInvoke(const Args & cmd_args) const
 {
 	if (Name == cmd_args.Name())

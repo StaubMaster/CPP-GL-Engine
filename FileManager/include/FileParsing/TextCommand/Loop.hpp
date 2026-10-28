@@ -13,11 +13,16 @@ class Func;
 // seperate FuncSelector
 struct Loop
 {
-	unsigned int	ExceptionCount = 0;
-
 	FileInfo	File;
 
-	Container::Binary<TextCommand::Func*>	Commands;
+	unsigned int	ExceptionCount = 0;
+
+	Container::Binary<TextCommand::Func *>	Commands;
+
+	~Loop();
+	Loop() = default;
+	Loop(const Loop & other) = delete;
+	Loop & operator=(const Loop & other) = delete;
 
 	void	Clear();
 

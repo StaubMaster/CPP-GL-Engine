@@ -29,7 +29,7 @@ PolyHedra * PolyHedraGenerate::RegularTetraHedron(float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	//polyhedra -> Name = "TetraHedron";
-	polyhedra -> File = "::TetraHedron::"; // put () with parameters ?
+	//polyhedra -> File = "::TetraHedron::"; // put () with parameters ?
 
 	polyhedra -> Insert_Corn(-scale, -scale, -scale);
 	polyhedra -> Insert_Corn(+scale, +scale, -scale);
@@ -90,7 +90,7 @@ PolyHedra * PolyHedraGenerate::RegularHexaHedron(float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	//polyhedra -> Name = "HexaHedron";
-	polyhedra -> File = "::HexaHedron::"; // put () with parameters ?
+	//polyhedra -> File = "::HexaHedron::"; // put () with parameters ?
 
 	polyhedra -> Insert_Corn(-scale, -scale, -scale);
 	polyhedra -> Insert_Corn(+scale, -scale, -scale);
@@ -208,7 +208,7 @@ PolyHedra * PolyHedraGenerate::ConeZ(int segments, float height, float radius)
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	//polyhedra -> Name = "ConeZ";
-	polyhedra -> File = "::ConeZ::"; // put () with parameters ?
+	//polyhedra -> File = "::ConeZ::"; // put () with parameters ?
 
 	::Skin * skin = new ::Skin();
 	skin -> Size = VectorU2(8, 4);
@@ -265,7 +265,7 @@ PolyHedra * PolyHedraGenerate::SphereY(unsigned int ring, unsigned int seg, floa
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	//polyhedra -> Name = "SpherePolarY";
-	polyhedra -> File = "::SpherePolarY::";
+	//polyhedra -> File = "::SpherePolarY::";
 
 	unsigned int pole_idx;
 	unsigned int ring_0_idx;
@@ -337,7 +337,7 @@ PolyHedra * PolyHedraGenerate::TorusY(unsigned int seg0, float radius0, unsigned
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	//polyhedra -> Name = "TorusY";
-	polyhedra -> File = "::TorusY::";
+	//polyhedra -> File = "::TorusY::";
 
 	EulerAngle3D angle0;
 	EulerAngle3D angle1;
@@ -379,7 +379,7 @@ PolyHedra * PolyHedraGenerate::ImageQuad(Image img, float scale)
 {
 	PolyHedra * polyhedra = new PolyHedra();
 	//polyhedra -> Name = "DuoHedra";
-	polyhedra -> File = "::DuoHedra::"; // put () with parameters ?
+	//polyhedra -> File = "::DuoHedra::"; // put () with parameters ?
 
 	polyhedra -> Insert_Corn(-scale, -scale, 0);
 	polyhedra -> Insert_Corn(-scale, +scale, 0);
@@ -419,7 +419,7 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 
 	PolyHedra * polyhedra = new PolyHedra();
 	//polyhedra -> Name = "FramedImage";
-	polyhedra -> File = "::FramedImage::"; // put () with parameters ?
+	//polyhedra -> File = "::FramedImage::"; // put () with parameters ?
 
 	::Skin * skin = new ::Skin();
 	skin -> Size = img.Size();

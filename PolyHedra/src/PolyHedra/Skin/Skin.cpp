@@ -109,13 +109,11 @@ void Skin::Belt_Face(unsigned int temp[4], bool f_direction)
 {
 	if (!f_direction)
 	{
-		Insert_Face3(temp[0], temp[2], temp[1]);
-		Insert_Face3(temp[3], temp[1], temp[2]);
+		Insert_Face4(temp[0], temp[1], temp[2], temp[3]);
 	}
 	else
 	{
-		Insert_Face3(temp[1], temp[2], temp[0]);
-		Insert_Face3(temp[2], temp[1], temp[3]);
+		Insert_Face4(temp[3], temp[2], temp[1], temp[0]);
 	}
 }
 void Skin::Belt(unsigned int len, unsigned int list0[], unsigned int list1[], bool f_direction, bool f_closed)
@@ -151,22 +149,22 @@ void Skin::Fan_Face(unsigned int middle, unsigned int blade[2], bool f_direction
 	{
 		if (!f_middle)
 		{
-			Insert_Face3(blade[1], middle, blade[0]);
+			Insert_Face3(blade[0], middle, blade[1]);
 		}
 		else
 		{
-			Insert_Face3(blade[0], middle, blade[1]);
+			Insert_Face3(blade[1], middle, blade[0]);
 		}
 	}
 	else
 	{
 		if (!f_middle)
 		{
-			Insert_Face3(blade[0], middle, blade[1]);
+			Insert_Face3(blade[1], middle, blade[0]);
 		}
 		else
 		{
-			Insert_Face3(blade[1], middle, blade[0]);
+			Insert_Face3(blade[0], middle, blade[1]);
 		}
 	}
 }

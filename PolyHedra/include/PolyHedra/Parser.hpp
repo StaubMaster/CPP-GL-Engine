@@ -19,6 +19,9 @@
 
 namespace TextCommand { class Args; };
 
+struct PolyHedraEntry;
+class PolyHedraManager;
+
 struct PolyHedraParser : public TextCommand::Loop
 {
 	struct CommandFlags
@@ -37,6 +40,7 @@ struct PolyHedraParser : public TextCommand::Loop
 		unsigned int	Parse(const std::string & name);
 	};
 	CommandFlags	DefaultFlags;
+
 	struct CommandFlagsFunc : public TextCommand::Func
 	{
 		Function::Pointer<const TextCommand::Args &, const CommandFlags &>		Function;
@@ -70,25 +74,20 @@ struct PolyHedraParser : public TextCommand::Loop
 
 
 	public:
-	PolyHedra *		Object = nullptr;
+	PolyHedra *							Object = nullptr;
+	const PolyHedraParser *				Parser = nullptr;
+	PolyHedraManager *					Manager = nullptr;
+	PolyHedraEntry *					Entry = nullptr;
 
-	unsigned int	NormalGroup = 0xFFFFFFFF;
-
-	const PolyHedraParser *		Parser = nullptr;
-
-	PolyHedraFileCollection *	FileCollection = nullptr;
-
-	Trans3D		Trans;
-
-	const PolyHedra *	Other = nullptr;
-
-	unsigned int	VertexOffset;
+	unsigned int	VertexOffset = 0;
 	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const;
 
 
 
 	~PolyHedraParser();
-	PolyHedraParser(const PolyHedraParser * parser, PolyHedraFileCollection * file_collection);
+	PolyHedraParser() = delete;
+
+	PolyHedraParser(const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry);
 
 
 
@@ -115,11 +114,17 @@ struct PolyHedraParser : public TextCommand::Loop
 	void	Place_Band(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 	void	Place_Fan(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 
+	unsigned int	NormalGroup = 0xFFFFFFFF;
 	void	Normal_Change(const TextCommand::Args & cmd_args);
 
+	Trans3D		Trans;
 	void	Trans_Zero(const TextCommand::Args & cmd_args);
 	void	Trans_ChangePos(const TextCommand::Args & cmd_args);
 	void	Trans_ChangeRot(const TextCommand::Args & cmd_args);
+
+	const PolyHedra *	Other = nullptr;
+	void	Other_Check(const TextCommand::Args & cmd_args);
+	void	Other_Clear();
 
 	void	Other_File(const TextCommand::Args & cmd_args);
 	void	Other_Static(const TextCommand::Args & cmd_args);
@@ -127,7 +132,7 @@ struct PolyHedraParser : public TextCommand::Loop
 
 
 
-	static PolyHedra * Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraFileCollection * file_collection);
+	static PolyHedra * Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry);
 };
 
 #endif

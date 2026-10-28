@@ -2,8 +2,6 @@
 
 
 
-TextCommand::Func::~Func()
-{ }
 TextCommand::Func::Func(std::string name)
 	: Name(name)
 { }

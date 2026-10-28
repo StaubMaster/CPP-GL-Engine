@@ -1,7 +1,7 @@
 #include "PolyHedra/Parser.hpp"
 #include "PolyHedra/Data.hpp"
 #include "PolyHedra/Generate.hpp"
-#include "PolyHedra/FileCollection.hpp"
+#include "PolyHedra/Manager.hpp"
 
 // Skin
 #include "PolyHedra/Skin/Skin.hpp"
@@ -160,8 +160,8 @@ void PolyHedraParser::CommandsNormal()
 
 /* make variables more general
 varFloat "name" {value}
-var float "name" {value}
-currently only floats are used
+var "type" "name" {value}
+currently only type:"float" is used
 */
 void PolyHedraParser::PutVariable(const TextCommand::Args & cmd_args)
 {
@@ -214,14 +214,13 @@ unsigned int PolyHedraParser::ToVertexIndex(const TextCommand::Args & cmd_args, 
 
 PolyHedraParser::~PolyHedraParser()
 {
-	Clear(); //CommandsClear();
+	Other_Clear();
 }
-PolyHedraParser::PolyHedraParser(const PolyHedraParser * parser, PolyHedraFileCollection * file_collection)
+PolyHedraParser::PolyHedraParser(const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry)
 	: TextCommand::Loop()
-	, DefaultFlags()
 	, Parser(parser)
-	, FileCollection(file_collection)
-	, VertexOffset(0)
+	, Manager(manager)
+	, Entry(entry)
 {
 	CommandsDefault();
 	CommandsLegacy();
@@ -284,7 +283,11 @@ void PolyHedraParser::Check_Type(const TextCommand::Args & cmd_args)
 	}
 
 	Object = new PolyHedra(); // check that Object exists in all that need it
-	Object -> File = File;
+	if (Entry != nullptr)
+	{
+		Entry -> File = File;
+		Entry -> Object = Object;
+	}
 
 	if (n == 1)
 	{
@@ -343,9 +346,12 @@ void PolyHedraParser::Check_Parameter(const TextCommand::Args & cmd_args)
 	unsigned int n = cmd_args.Count();
 	if (!(n == 1 || n == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2"); }
 
-	if (Object -> Parameters == nullptr)
+	if (Entry != nullptr)
 	{
-		Object -> Parameters = new ParsingVariable::FloatMemory();
+		if (Entry -> Parameters == nullptr)
+		{
+			Entry -> Parameters = new ParsingVariable::FloatMemory();
+		}
 	}
 
 	std::string name = cmd_args.ToString(0);
@@ -362,7 +368,10 @@ void PolyHedraParser::Check_Parameter(const TextCommand::Args & cmd_args)
 			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parameter"); // fatal
 		}
 		VariableFloats.Put(var -> Name, var -> Value);
-		Object -> Parameters -> Put(var -> Name, var -> Value);
+		if (Entry != nullptr)
+		{
+			Entry -> Parameters -> Put(var -> Name, var -> Value);
+		}
 	}
 	else if (n == 2)
 	{
@@ -370,7 +379,10 @@ void PolyHedraParser::Check_Parameter(const TextCommand::Args & cmd_args)
 		if (var != nullptr)
 		{
 			VariableFloats.Put(var -> Name, var -> Value);
-			Object -> Parameters -> Put(var -> Name, var -> Value);
+			if (Entry != nullptr)
+			{
+				Entry -> Parameters -> Put(var -> Name, var -> Value);
+			}
 		}
 		else
 		{
@@ -721,37 +733,49 @@ void PolyHedraParser::Trans_ChangeRot(const TextCommand::Args & cmd_args)
 	Trans.Rotation.Y2 = Angle::Degrees(cmd_args.ToFloat(2));
 }
 
-void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
+void PolyHedraParser::Other_Check(const TextCommand::Args & cmd_args)
 {
-	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
-
+	if (Other == nullptr)
+	{
+		throw TextCommand::Exception::InvalidState(cmd_args, "Other Missing");
+	}
+}
+void PolyHedraParser::Other_Clear()
+{
 	if (Other != nullptr)
 	{
-		if (FileCollection == nullptr)
+		if (Manager == nullptr)
 		{
 			delete Other;
 		}
 		Other = nullptr;
 	}
+}
+void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+
+	Other_Clear();
 
 	FileInfo file = File.Directory().File(cmd_args.ToString(0).c_str());
 	if (!file.Exists()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Bad PolyHedra File"); } // this is not InvalidArgument. this is generic error
 
-	if (FileCollection == nullptr)
+	if (Manager == nullptr)
 	{
-		Other = PolyHedraParser::Load(file, this, nullptr);
+		Other = PolyHedraParser::Load(file, this, nullptr, nullptr);
 	}
 	else
 	{
-		Other = FileCollection -> FindMake(file, *this);
+		Other = Manager -> Take(file, *this);
 	}
 	//Other = PolyHedraParser::Load(file, this, nullptr);
 }
+
 void PolyHedraParser::Other_Static(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
 
-	if (Other == nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "Other Missing"); }
+	Other_Check(cmd_args);
 
 	Object -> Combine(*Other, Trans);
 }
@@ -759,7 +783,7 @@ void PolyHedraParser::Other_Dynamic(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
 
-	if (Other == nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "Other Missing"); }
+	Other_Check(cmd_args);
 
 	PolyHedra::TransPolyHedra trans_polyhedra;
 	trans_polyhedra.Object = Other;
@@ -769,9 +793,9 @@ void PolyHedraParser::Other_Dynamic(const TextCommand::Args & cmd_args)
 
 
 
-PolyHedra * PolyHedraParser::Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraFileCollection * file_collection)
+PolyHedra * PolyHedraParser::Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry)
 {
-	PolyHedraParser data(parser, file_collection);
+	PolyHedraParser data(parser, manager, entry);
 	data.File = file;
 //	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
 	data.ParseFile();
@@ -779,14 +803,6 @@ PolyHedra * PolyHedraParser::Load(const FileInfo & file, const PolyHedraParser *
 	if (data.Object != nullptr)
 	{
 		data.Object -> Done();
-	}
-
-	if (data.Other != nullptr)
-	{
-		if (data.FileCollection == nullptr)
-		{
-			delete data.Other;
-		}
 	}
 
 	return data.Object;

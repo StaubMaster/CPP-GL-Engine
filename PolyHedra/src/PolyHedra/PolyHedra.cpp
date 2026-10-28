@@ -153,7 +153,7 @@ std::string PolyHedra::ToInfo() const
 {
 	std::stringstream ss;
 
-	ss << "File: " << File.Path << '\n';
+//	ss << "File: " << File.Path << '\n';
 	ss << "IsAutomatic: " << IsAutomatic << '\n';
 
 	ss << "PolyHedra Count Vertex: " << Corners.Count() << '\n';
@@ -163,7 +163,7 @@ std::string PolyHedra::ToInfo() const
 	ss << "PolyHedra Bound Limit: " << bound << '\n';
 	ss << "PolyHedra Bound Size: " << bound.Size() << '\n';
 
-	if (Parameters != nullptr)
+	/*if (Parameters != nullptr)
 	{
 		const Container::Binary<ParsingVariable::Float> & vars = Parameters -> Variables;
 		ss << "Parameters[" << vars.Count() << "]\n";
@@ -174,7 +174,7 @@ std::string PolyHedra::ToInfo() const
 			ss << "  " << var.Name << ": " << var.Value << '\n';
 		}
 		ss << "]\n";
-	}
+	}*/
 
 	return ss.str();
 }
@@ -190,7 +190,7 @@ PolyHedra::PolyHedra()
 	, Edges()
 	, Faces()
 	, Skin(nullptr)
-	, File()
+//	, File()
 { }
 
 
@@ -245,13 +245,11 @@ void PolyHedra::Belt_Face(unsigned int temp[4], bool f_direction, unsigned int n
 {
 	if (!f_direction)
 	{
-		Insert_Face3(temp[0], temp[2], temp[1], normal_group);
-		Insert_Face3(temp[3], temp[1], temp[2], normal_group);
+		Insert_Face4(temp[0], temp[1], temp[2], temp[3], normal_group);
 	}
 	else
 	{
-		Insert_Face3(temp[1], temp[2], temp[0], normal_group);
-		Insert_Face3(temp[2], temp[1], temp[3], normal_group);
+		Insert_Face4(temp[3], temp[2], temp[1], temp[0], normal_group);
 	}
 }
 void PolyHedra::Belt(unsigned int len, unsigned int list0[], unsigned int list1[], bool f_direction, bool f_closed, unsigned int normal_group)
@@ -287,22 +285,22 @@ void PolyHedra::Fan_Face(unsigned int middle, unsigned int blade[2], bool f_dire
 	{
 		if (!f_middle)
 		{
-			Insert_Face3(blade[1], middle, blade[0], normal_group);
+			Insert_Face3(blade[0], middle, blade[1], normal_group);
 		}
 		else
 		{
-			Insert_Face3(blade[0], middle, blade[1], normal_group);
+			Insert_Face3(blade[1], middle, blade[0], normal_group);
 		}
 	}
 	else
 	{
 		if (!f_middle)
 		{
-			Insert_Face3(blade[0], middle, blade[1], normal_group);
+			Insert_Face3(blade[1], middle, blade[0], normal_group);
 		}
 		else
 		{
-			Insert_Face3(blade[1], middle, blade[0], normal_group);
+			Insert_Face3(blade[0], middle, blade[1], normal_group);
 		}
 	}
 }

@@ -8,6 +8,16 @@
 
 
 
+TextCommand::Loop::~Loop()
+{
+	for (unsigned int i = 0; i < Commands.Count(); i++)
+	{
+		delete Commands[i];
+	}
+}
+
+
+
 void TextCommand::Loop::Clear()
 {
 	for (unsigned int i = 0; i < Commands.Count(); i++)
@@ -16,7 +26,6 @@ void TextCommand::Loop::Clear()
 	}
 	Commands.Clear();
 }
-
 void TextCommand::Loop::Parse(const TextCommand::Args & cmd_args)
 {
 	try
@@ -39,9 +48,9 @@ void TextCommand::Loop::Parse(const TextCommand::Args & cmd_args)
 	{
 		if (ExceptionCount == 0)
 		{
-			std::cout << "Exception in " << File.Path << '\n';
+			std::cerr << "Exception in " << File.Path << '\n';
 		}
-		std::cout << ex.what() << " caused by " << cmd_args << '\n';
+		std::cerr << ex.what() << " caused by " << cmd_args << '\n';
 		ExceptionCount++;
 	}
 }

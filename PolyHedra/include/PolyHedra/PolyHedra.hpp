@@ -11,8 +11,6 @@ class Skin;
 
 struct BoxF3;
 
-namespace ParsingVariable { struct FloatMemory; }
-
 //struct Trans3D;
 # include "ValueType/Trans/3D.hpp"
 
@@ -51,16 +49,10 @@ class PolyHedra
 	Container::Binary<TransPolyHedra>	OtherDynamic;
 
 	public:
-	FileInfo	File;
+	bool	IsAutomatic = false; // store in Manager::Entry ?
 
 	public:
-	bool	IsAutomatic = false;
-
-	public:
-	ParsingVariable::FloatMemory *	Parameters = nullptr;
-
-	public:
-	std::string		ToInfo() const;
+	std::string		ToInfo() const; // put in Manager::Entry ?
 
 	public:
 	~PolyHedra();

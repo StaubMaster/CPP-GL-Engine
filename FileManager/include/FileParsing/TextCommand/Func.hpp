@@ -10,7 +10,11 @@ struct Func
 {
 	std::string		Name;
 
-	virtual ~Func();
+	virtual ~Func() = default;
+	Func() = delete;
+	Func(const Func & other) = delete;
+	Func & operator=(const Func & other) = delete;
+
 	Func(std::string name);
 
 	virtual bool	TryInvoke(const Args & cmd_args) const = 0;

@@ -12,7 +12,11 @@ struct FuncNormal : public Func
 {
 	Function::Pointer<const Args &>		Function;
 
-	~FuncNormal();
+	~FuncNormal() = default;
+	FuncNormal() = delete;
+	FuncNormal(const FuncNormal & other) = delete;
+	FuncNormal & operator=(const FuncNormal & other) = delete;
+
 	template<typename ObjectType> FuncNormal(
 		std::string name,
 		ObjectType * obj,

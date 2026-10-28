@@ -16,8 +16,8 @@ FILES := \
 FILES += \
 	Data.cpp \
 	PolyHedra.cpp \
-	FileCollection.cpp \
 	Parser.cpp \
+	Manager.cpp \
 	Generate.cpp \
 \
 	Skin/Data.cpp \
