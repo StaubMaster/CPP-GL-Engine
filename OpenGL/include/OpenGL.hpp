@@ -19,7 +19,9 @@ namespace GL
 	float	GetFloatv(ParameterName pname);
 	int		GetIntegerv(ParameterName pname);
 
-	//	void	GetInteger64v(ParameterName pname, GLint64 & data);
+	void	GetIntegerv(ParameterName pname, int * data);
+
+//	void	GetInteger64v(ParameterName pname, GLint64 & data);
 //	void	GetBooleani_v(GLenum target, GLuint index, GLboolean & data);
 //	void	GetIntegeri_v(GLenum target, GLuint index, GLint & data);
 //	void	GetInteger64i_v(GLenum target, GLuint index, GLint64 & data);

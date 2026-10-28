@@ -51,13 +51,15 @@
 //	General
 GL::Error GL::GetError() { return (GL::Error)glGetError(); }
 
-//void GL::GetBooleanv(ParameterName pname, bool & data) { glGetBooleanv((unsigned int)pname, &data); }
+void GL::GetBooleanv(ParameterName pname, bool & data) { glGetBooleanv((unsigned int)pname, (unsigned char *)&data); }
 void GL::GetFloatv(ParameterName pname, float & data) { glGetFloatv((unsigned int)pname, &data); }
 void GL::GetIntegerv(ParameterName pname, int & data) { glGetIntegerv((unsigned int)pname, &data); }
 
-//bool GL::GetBooleanv(ParameterName pname) { bool val; GetBooleanv(pname, val); return val; }
+bool GL::GetBooleanv(ParameterName pname) { bool val; GetBooleanv(pname, val); return val; }
 float GL::GetFloatv(ParameterName pname) { float val; GetFloatv(pname, val); return val; }
 int GL::GetIntegerv(ParameterName pname) { int val; GetIntegerv(pname, val); return val; }
+
+void GL::GetIntegerv(ParameterName pname, int * data) { glGetIntegerv((unsigned int)pname, data); }
 
 void GL::Enable(Capability cap) { glEnable((unsigned int)cap); }
 void GL::Disable(Capability cap) { glDisable((unsigned int)cap); }
