@@ -29,42 +29,6 @@ class PolyHedra
 	Container::Binary<Face>		Faces;
 
 	public:
-	BoxF3	CalcBound() const; // LimitBox()
-	// LimitDist()
-	// CenterAverage()
-
-	public:
-	void	Combine(const PolyHedra & other);
-	void	Combine(const PolyHedra & other, const Trans3D & trans);
-
-	public:
-	::Skin *	Skin = nullptr;
-
-	public:
-	struct TransPolyHedra
-	{
-		const PolyHedra *	Object;
-		Trans3D				Trans;
-	};
-	Container::Binary<TransPolyHedra>	OtherDynamic;
-
-	public:
-	bool	IsAutomatic = false; // store in Manager::Entry ?
-
-	public:
-	std::string		ToInfo() const; // put in Manager::Entry ?
-
-	public:
-	~PolyHedra();
-	PolyHedra();
-
-	public:
-	PolyHedra(const PolyHedra & other) = delete;
-	PolyHedra & operator=(const PolyHedra & other) = delete;
-
-
-
-	public:
 	void	Insert_Corn(float x, float y, float z);
 	void	Insert_Corn(VectorF3 vec);
 
@@ -84,6 +48,75 @@ class PolyHedra
 
 	public:
 	void	Done();
+
+	public:
+	BoxF3	CalcBound() const; // LimitBox()
+	// LimitDist()
+	// CenterAverage()
+
+	public:
+	void	Combine(const PolyHedra & other);
+	void	Combine(const PolyHedra & other, const Trans3D & trans);
+
+	public:
+	::Skin *	Skin = nullptr;
+	// combine Skin into PolyHedra ?
+	/*
+		how to apply Skin afterwards ?
+		Skin data is generally seperate but synced with PolyHedra Data
+		how to make sure they stay synced
+	*/
+
+	public:
+	// store this in PolyHedraEntry ?
+	/* this is bad here
+		PolyHedra should just be static geometry Data
+		make something else that contains multiple PolyHedras relative to eachother
+	*/
+	struct PolyHedraOther
+	{
+		const PolyHedra *	Object;
+		Trans3D				Trans; // Matrix ?
+	};
+	Container::Binary<PolyHedraOther>	Others;
+	void	OthersCombine()
+	{
+
+	}
+	/* store static Other PolyHedra
+		only combine them when Buffer is made
+		not combining them means less space is taken if same PolyHedra us used multiple times
+		and they can be more reasily changed in Editor
+		make a function that .Combines all static Others
+
+		are dynamics even needed then ?
+		just have a Container of Other
+	*/
+	/* what about Parameter Files
+		files that make Geometry based on Parameters
+		and then a Skin is applied afterwards
+		how to apply Skin to Other ?
+
+		"Skin" applys Skin File to this
+		make "otherSkin" that applys Skin to other
+
+		what if I want to put the same Geometry with different Skins ?
+		"otherPut" puts other in Container
+	*/
+
+	public:
+	bool	IsAutomatic = false; // store in Manager::Entry ?
+
+	public:
+	std::string		ToInfo() const; // put in Manager::Entry ?
+
+	public:
+	~PolyHedra();
+	PolyHedra();
+
+	public:
+	PolyHedra(const PolyHedra & other) = delete;
+	PolyHedra & operator=(const PolyHedra & other) = delete;
 };
 
 #endif

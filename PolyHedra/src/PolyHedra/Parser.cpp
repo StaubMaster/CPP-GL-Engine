@@ -152,8 +152,8 @@ void PolyHedraParser::CommandsNormal()
 	Commands.Insert(new TextCommand::FuncNormal("TransRot",			this, &PolyHedraParser::Trans_ChangeRot));
 
 	Commands.Insert(new TextCommand::FuncNormal("OtherFile",		this, &PolyHedraParser::Other_File));
-	Commands.Insert(new TextCommand::FuncNormal("OtherStatic",		this, &PolyHedraParser::Other_Static));
-	Commands.Insert(new TextCommand::FuncNormal("OtherDynamic",		this, &PolyHedraParser::Other_Dynamic));
+	Commands.Insert(new TextCommand::FuncNormal("OtherCombine",		this, &PolyHedraParser::Other_Combine));
+	Commands.Insert(new TextCommand::FuncNormal("OtherPut",			this, &PolyHedraParser::Other_Put));
 }
 
 
@@ -771,7 +771,7 @@ void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
 	//Other = PolyHedraParser::Load(file, this, nullptr);
 }
 
-void PolyHedraParser::Other_Static(const TextCommand::Args & cmd_args)
+void PolyHedraParser::Other_Combine(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
 
@@ -779,16 +779,33 @@ void PolyHedraParser::Other_Static(const TextCommand::Args & cmd_args)
 
 	Object -> Combine(*Other, Trans);
 }
-void PolyHedraParser::Other_Dynamic(const TextCommand::Args & cmd_args)
+void PolyHedraParser::Other_Put(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
 
 	Other_Check(cmd_args);
 
-	PolyHedra::TransPolyHedra trans_polyhedra;
-	trans_polyhedra.Object = Other;
-	trans_polyhedra.Trans = Trans;
-	Object -> OtherDynamic.Insert(trans_polyhedra);
+	if (Manager != nullptr)
+	{
+		PolyHedra::PolyHedraOther polyhedra_other;
+		polyhedra_other.Object = Other;
+		polyhedra_other.Trans = Trans;
+		Object -> Others.Insert(polyhedra_other);
+	}
+	else
+	{
+		Object -> Combine(*Other, Trans);
+	}
+}
+
+
+
+void PolyHedraParser::Done()
+{
+	if (Object != nullptr)
+	{
+		Object -> Done();
+	}
 }
 
 
@@ -800,10 +817,6 @@ PolyHedra * PolyHedraParser::Load(const FileInfo & file, const PolyHedraParser *
 //	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
 	data.ParseFile();
 //	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " done" << '\n';
-	if (data.Object != nullptr)
-	{
-		data.Object -> Done();
-	}
-
+	data.Done();
 	return data.Object;
 }

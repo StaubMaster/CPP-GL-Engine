@@ -1,0 +1,25 @@
+
+make smarter
+like Image
+
+
+
+Image only has 1 Container
+this has multiple
+
+there should never be a case where 2 PolyHedras should never have the same Corners Container but a difffernt Container for the others
+that mix should never happen
+
+or maybe put all that into a struct
+that is then smart
+
+
+
+make a base thing for "smart stuff"
+or just use that std stuff
+
+but I dont like the std stuff
+some of the function names are weird
+some of the behaviour is weird
+
+but making it myself also seems stupid ?

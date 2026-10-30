@@ -127,12 +127,12 @@ struct PolyHedraParser : public TextCommand::Loop
 	void	Other_Clear();
 
 	void	Other_File(const TextCommand::Args & cmd_args);
-	void	Other_Static(const TextCommand::Args & cmd_args);
-	void	Other_Dynamic(const TextCommand::Args & cmd_args);
+	void	Other_Combine(const TextCommand::Args & cmd_args);
+	void	Other_Put(const TextCommand::Args & cmd_args);
 
+	void	Done();
 
-
-	static PolyHedra * Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry);
+	static PolyHedra *	Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry);
 };
 
 #endif
