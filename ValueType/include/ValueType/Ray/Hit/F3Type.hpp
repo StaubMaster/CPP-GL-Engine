@@ -20,8 +20,21 @@ struct RayHitF3Type : public RayHitF3
 		: RayHitF3()
 		, Data(data)
 	{ }
+	RayHitF3Type(const RayHitF3 & other, TypeData data)
+		: RayHitF3(other)
+		, Data(data)
+	{ }
 
 	public:
+	bool	Consider(const RayHitF3Type & other)
+	{
+		if (RayHitF3::Consider(other))
+		{
+			Data = other.Data;
+			return true;
+		}
+		return false;
+	}
 	bool	Consider(const RayHitF3 & other, TypeData data)
 	{
 		if (RayHitF3::Consider(other))
