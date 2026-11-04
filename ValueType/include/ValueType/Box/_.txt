@@ -1,0 +1,7 @@
+
+Vector Clamp(Vector)
+Vector Modulate(Vector)
+
+Vector Normalize(Vector)
+DeNormalize
+Normalize
