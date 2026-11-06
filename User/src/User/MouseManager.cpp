@@ -119,20 +119,31 @@ void MouseManager::UpdateDrag(VectorF2 pos)
 	for (unsigned int i = 0; i < StateNum; i++)
 	{
 		MouseState & state = MouseStates[i];
-		if (state.State == State::Down)
+		if (state.State == State::Down) // or Press
 		{
 			if (!state.IsDragging)
 			{
 				state.IsDragging = true;
 				Callback_DragEvent.TryInvoke(DragArgs(state.Button, Action::Press, Modifier::None, state.LastPressPosition));
 			}
-			if (state.IsDragging)
+			else
 			{
 				Callback_DragEvent.TryInvoke(DragArgs(state.Button, Action::Repeat, Modifier::None, display_pos));
 			}
 		}
+		if (state.State == State::Up) // or Release
+		{
+			if (!state.IsDragging)
+			{
+				//Callback_MoveEvent.TryInvoke(MoveArgs(display_pos));
+			}
+			else
+			{
+				state.IsDragging = false;
+				Callback_DragEvent.TryInvoke(DragArgs(state.Button, Action::Release, Modifier::None, state.LastReleasePosition));
+			}
+		}
 	}
-	// no Drag Release
 }
 
 
