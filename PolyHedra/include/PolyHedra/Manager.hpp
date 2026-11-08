@@ -22,8 +22,11 @@ struct PolyHedraEntry
 
 class PolyHedraManager
 {
-	private:
+	private: public:
 	Container::Binary<PolyHedraEntry>	Entrys;
+
+	public:
+	void	Clear();
 
 	public:
 	PolyHedra *		Find(const FileInfo & file) const;

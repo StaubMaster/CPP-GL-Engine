@@ -132,10 +132,10 @@ void PolyHedraParser::CommandsNormal()
 	Commands.Insert(new TextCommand::FuncNormal("default",		this, &PolyHedraParser::Change_Default));
 	Commands.Insert(new TextCommand::FuncNormal("offset",		this, &PolyHedraParser::Change_Offset));
 	Commands.Insert(new TextCommand::FuncNormal("index",		this, &PolyHedraParser::Legacy_Offset2)); // this is kind of Lecagy ?
-	
+
 	Commands.Insert(new TextCommand::FuncNormal("vertex",		this, &PolyHedraParser::Place_Vertex));
 	Commands.Insert(new CommandFlagsFunc(		"circle",		this, &PolyHedraParser::Place_Circle));
-	
+
 	Commands.Insert(new CommandFlagsFunc("face",	this, &PolyHedraParser::Place_Face));
 	Commands.Insert(new CommandFlagsFunc("belt",	this, &PolyHedraParser::Place_Belt));
 	Commands.Insert(new CommandFlagsFunc("band",	this, &PolyHedraParser::Place_Band));
@@ -768,7 +768,6 @@ void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
 	{
 		Other = Manager -> Take(file, *this);
 	}
-	//Other = PolyHedraParser::Load(file, this, nullptr);
 }
 
 void PolyHedraParser::Other_Combine(const TextCommand::Args & cmd_args)

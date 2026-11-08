@@ -56,7 +56,7 @@ PolyHedra * PolyHedraManager::Take(const FileInfo & file)
 PolyHedra * PolyHedraManager::Take(const FileInfo & file, const PolyHedraParser & parser)
 {
 	PolyHedra * object = Find(file);
-	if (object == nullptr)
+	if (object != nullptr)
 	{
 		return object;
 	}
