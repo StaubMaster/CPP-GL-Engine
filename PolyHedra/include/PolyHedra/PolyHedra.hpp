@@ -79,10 +79,7 @@ class PolyHedra
 		Trans3D				Trans; // Matrix ?
 	};
 	Container::Binary<PolyHedraOther>	Others;
-	void	OthersCombine()
-	{
-
-	}
+	void	OthersCombine() { } // why is this in the Header ?
 	/* store static Other PolyHedra
 		only combine them when Buffer is made
 		not combining them means less space is taken if same PolyHedra us used multiple times
