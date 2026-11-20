@@ -3,12 +3,16 @@
 
 
 
-void PolyHedraEntry::Load(PolyHedraManager & manager)
+PolyHedraEntry::PolyHedraEntry(PolyHedraManager & manager)
+	: Manager(manager)
+{ }
+
+void PolyHedraEntry::Load()
 {
 	if (Data != nullptr)
 	{
 		delete Data;
 	}
 
-	Data = PolyHedraParser::Load(File, nullptr, &manager, this);
+	Data = PolyHedraParser::Load(File, &Manager);
 }

@@ -19,7 +19,6 @@
 
 namespace TextCommand { class Args; };
 
-struct PolyHedraEntry;
 class PolyHedraManager;
 
 /* other
@@ -68,8 +67,9 @@ struct PolyHedraParser : public TextCommand::Loop
 	// each Command takes different Flags
 
 	void	CommandsDefault();
-	void	CommandsNormal();
 	void	CommandsLegacy();
+	void	CommandsNormal();
+	//		CommandsParameter();
 
 
 
@@ -82,10 +82,9 @@ struct PolyHedraParser : public TextCommand::Loop
 
 
 	public:
-	PolyHedra *							Object = nullptr;
-	const PolyHedraParser *				Parser = nullptr;
-	PolyHedraManager *					Manager = nullptr;
-	PolyHedraEntry *					Entry = nullptr;
+	PolyHedra *					Object = nullptr;
+	const PolyHedraParser *		Parser = nullptr; // only need Variables
+	PolyHedraManager *			Manager = nullptr;
 
 	unsigned int	VertexOffset = 0;
 	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const;
@@ -93,16 +92,12 @@ struct PolyHedraParser : public TextCommand::Loop
 
 
 	~PolyHedraParser();
-	PolyHedraParser() = delete;
-
-	PolyHedraParser(const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry);
+	PolyHedraParser();
 
 
 
 	void	Check_Type(const TextCommand::Args & cmd_args);
 	void	Change_Format(const TextCommand::Args & cmd_args);
-
-	void	Check_Parameter(const TextCommand::Args & cmd_args);
 
 	void	New_Skin(const TextCommand::Args & cmd_args);
 
@@ -125,6 +120,9 @@ struct PolyHedraParser : public TextCommand::Loop
 	unsigned int	NormalGroup = 0xFFFFFFFF;
 	void	Normal_Change(const TextCommand::Args & cmd_args);
 
+	void	Parameter_Check(const TextCommand::Args & cmd_args);
+	void	Parameter_File(const TextCommand::Args & cmd_args);
+
 	Trans3D		Trans;
 	void	Trans_Zero(const TextCommand::Args & cmd_args);
 	void	Trans_ChangePos(const TextCommand::Args & cmd_args);
@@ -140,7 +138,7 @@ struct PolyHedraParser : public TextCommand::Loop
 
 	void	Done();
 
-	static PolyHedra *	Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry);
+	static PolyHedra *	Load(const FileInfo & file, PolyHedraManager * manager);
 };
 
 #endif

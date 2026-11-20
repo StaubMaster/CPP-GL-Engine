@@ -144,9 +144,11 @@ void PolyHedraParser::CommandsNormal()
 
 	Commands.Insert(new TextCommand::FuncNormal("normal",		this, &PolyHedraParser::Normal_Change));
 
-	Commands.Insert(new TextCommand::FuncNormal("param",		this, &PolyHedraParser::Check_Parameter));
 	Commands.Insert(new TextCommand::FuncNormal("varFloat",		this, &PolyHedraParser::PutFloat));
 	Commands.Insert(new TextCommand::FuncNormal("var",			this, &PolyHedraParser::PutVariable));
+
+	Commands.Insert(new TextCommand::FuncNormal("param",		this, &PolyHedraParser::Parameter_Check));
+	Commands.Insert(new TextCommand::FuncNormal("paramFile",	this, &PolyHedraParser::Parameter_File));
 
 	Commands.Insert(new TextCommand::FuncNormal("TransZero",		this, &PolyHedraParser::Trans_Zero));
 	Commands.Insert(new TextCommand::FuncNormal("TransPos",			this, &PolyHedraParser::Trans_ChangePos));
@@ -219,11 +221,8 @@ PolyHedraParser::~PolyHedraParser()
 {
 	Other_Clear();
 }
-PolyHedraParser::PolyHedraParser(const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry)
+PolyHedraParser::PolyHedraParser()
 	: TextCommand::Loop()
-	, Parser(parser)
-	, Manager(manager)
-	, Entry(entry)
 {
 	CommandsDefault();
 	CommandsLegacy();
@@ -285,37 +284,45 @@ void PolyHedraParser::Check_Type(const TextCommand::Args & cmd_args)
 		throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Invalid Type"); // fatal
 	}
 
-	Object = new PolyHedra(); // check that Object exists in all that need it
-	if (Entry != nullptr)
+	if (Parser == nullptr)
 	{
-		Entry -> File = File;
-		Entry -> Data = Object;
-	}
-
-	if (n == 1)
-	{
-		Object -> IsAutomatic = false;
-	}
-	else if (n == 2)
-	{
-		std::string type = cmd_args.ToString(1);
-		if (type == "Manual")
+		if (Object != nullptr)
+		{
+			throw TextCommand::Exception::InvalidState(cmd_args, "Object already exists");
+		}
+		Object = new PolyHedra(); // check that Object exists in all that need it
+		if (n == 1)
 		{
 			Object -> IsAutomatic = false;
 		}
-		else if (type == "Automatic")
+		else if (n == 2)
 		{
-			Object -> IsAutomatic = true;
+			std::string type = cmd_args.ToString(1);
+			if (type == "Manual")
+			{
+				Object -> IsAutomatic = false;
+			}
+			else if (type == "Automatic")
+			{
+				Object -> IsAutomatic = true;
+			}
+			else
+			{
+				throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Invalid Type"); // fatal ? or default to Manual ?
+			}
 		}
-		else
+		/*else
 		{
-			throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Invalid Type"); // fatal ? or default to Manual ?
+			throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2");
+		}*/
+	}
+	else
+	{
+		if (Object == nullptr)
+		{
+			throw TextCommand::Exception::InvalidState(cmd_args, "missing Object");
 		}
 	}
-	/*else
-	{
-		throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2");
-	}*/
 }
 void PolyHedraParser::Change_Format(const TextCommand::Args & cmd_args)
 {
@@ -342,60 +349,6 @@ void PolyHedraParser::Change_Format(const TextCommand::Args & cmd_args)
 	{
 		throw TextCommand::Exception::InvalidArgument(cmd_args, 0);
 	}
-}
-
-void PolyHedraParser::Check_Parameter(const TextCommand::Args & cmd_args)
-{
-	unsigned int n = cmd_args.Count();
-	if (!(n == 1 || n == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2"); }
-
-	/*if (Entry != nullptr)
-	{
-		if (Entry -> Parameters == nullptr)
-		{
-			Entry -> Parameters = new ParsingVariable::FloatMemory();
-		}
-	}*/
-
-	std::string name = cmd_args.ToString(0);
-
-	if (n == 1)
-	{
-		if (Parser == nullptr)
-		{
-			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parser for Parameters"); // fatal
-		}
-		const ParsingVariable::Float * var = Parser -> VariableFloats.Find(name);
-		if (var == nullptr)
-		{
-			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parameter"); // fatal
-		}
-		VariableFloats.Put(var -> Name, var -> Value);
-		/*if (Entry != nullptr)
-		{
-			Entry -> Parameters -> Put(var -> Name, var -> Value);
-		}*/
-	}
-	else if (n == 2)
-	{
-		const ParsingVariable::Float * var = Parser -> VariableFloats.Find(name);
-		if (var != nullptr)
-		{
-			VariableFloats.Put(var -> Name, var -> Value);
-			/*if (Entry != nullptr)
-			{
-				Entry -> Parameters -> Put(var -> Name, var -> Value);
-			}*/
-		}
-		else
-		{
-			VariableFloats.Put(name, cmd_args.ToFloat(1));
-		}
-	}
-	/*else
-	{
-		throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2");
-	}*/
 }
 
 void PolyHedraParser::New_Skin(const TextCommand::Args & cmd_args)
@@ -713,6 +666,60 @@ void PolyHedraParser::Normal_Change(const TextCommand::Args & cmd_args)
 	}
 }
 
+void PolyHedraParser::Parameter_Check(const TextCommand::Args & cmd_args)
+{
+	unsigned int n = cmd_args.Count();
+	if (!(n == 1 || n == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2"); }
+
+	std::string name = cmd_args.ToString(0);
+
+	if (n == 1)
+	{
+		if (Parser == nullptr)
+		{
+			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parser for Parameters"); // fatal
+		}
+		const ParsingVariable::Float * var = Parser -> VariableFloats.Find(name);
+		if (var == nullptr)
+		{
+			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parameter"); // fatal
+		}
+		VariableFloats.Put(var -> Name, var -> Value);
+	}
+	else if (n == 2)
+	{
+		const ParsingVariable::Float * var = Parser -> VariableFloats.Find(name);
+		if (var != nullptr)
+		{
+			VariableFloats.Put(var -> Name, var -> Value);
+		}
+		else
+		{
+			VariableFloats.Put(name, cmd_args.ToFloat(1));
+		}
+	}
+	/*else
+	{
+		throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2");
+	}*/
+}
+void PolyHedraParser::Parameter_File(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+
+	FileInfo file = File.Directory().File(cmd_args.ToString(0).c_str());
+	if (!file.Exists()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Bad PolyHedra File"); } // this is not InvalidArgument. this is generic error
+
+	PolyHedraParser parser;
+	parser.File = file;
+	parser.Parser = this;
+	parser.Object = Object;
+	//	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
+	parser.ParseFile();
+	//	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " done" << '\n';
+	parser.Done();
+}
+
 void PolyHedraParser::Trans_Zero(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
@@ -765,7 +772,7 @@ void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
 
 	if (Manager == nullptr)
 	{
-		Other = PolyHedraParser::Load(file, this, nullptr, nullptr);
+		Other = PolyHedraParser::Load(file, nullptr);
 	}
 	else
 	{
@@ -800,25 +807,27 @@ void PolyHedraParser::Other_Put(const TextCommand::Args & cmd_args)
 	}
 }
 
-
-
 void PolyHedraParser::Done()
 {
-	if (Object != nullptr)
+	if (Parser == nullptr)
 	{
-		Object -> Done();
+		if (Object != nullptr)
+		{
+			Object -> Done();
+		}
 	}
 }
 
 
 
-PolyHedra * PolyHedraParser::Load(const FileInfo & file, const PolyHedraParser * parser, PolyHedraManager * manager, PolyHedraEntry * entry)
+PolyHedra * PolyHedraParser::Load(const FileInfo & file, PolyHedraManager * manager)
 {
-	PolyHedraParser data(parser, manager, entry);
-	data.File = file;
+	PolyHedraParser parser;
+	parser.File = file;
+	parser.Manager = manager;
 //	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " ..." << '\n';
-	data.ParseFile();
+	parser.ParseFile();
 //	std::cout << "Loading PolyHedra File " << '"' << file.Path << '"' << " done" << '\n';
-	data.Done();
-	return data.Object;
+	parser.Done();
+	return parser.Object;
 }

@@ -9,10 +9,13 @@ class PolyHedraManager;
 struct PolyHedraEntry
 {
 	// Name
-	FileInfo		File;
-	PolyHedra *		Data = nullptr;
+	FileInfo			File;
+	PolyHedra *			Data = nullptr;
 
-	void	Load(PolyHedraManager & manager);
+	PolyHedraManager &	Manager;
+	PolyHedraEntry(PolyHedraManager & manager);
+
+	void	Load();
 };
 
 #endif

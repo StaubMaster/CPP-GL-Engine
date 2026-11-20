@@ -17,9 +17,9 @@ void PolyHedraManager::Clear()
 
 PolyHedraEntry * PolyHedraManager::Make(const FileInfo & file)
 {
-	PolyHedraEntry * entry = new PolyHedraEntry();
+	PolyHedraEntry * entry = new PolyHedraEntry(*this);
 	entry -> File = file;
-	entry -> Load(*this);
+	entry -> Load();
 	//PolyHedra * object = PolyHedraParser::Load(file, nullptr, this, entry); // do Loading in Entry ?. have Manager Pointer in Entry
 	//if (object == nullptr)
 	if (entry -> Data == nullptr)
