@@ -1,6 +1,7 @@
 #include "PolyHedra/Parser.hpp"
 #include "PolyHedra/Data.hpp"
 #include "PolyHedra/Generate.hpp"
+#include "PolyHedra/Entry.hpp"
 #include "PolyHedra/Manager.hpp"
 
 // Skin
@@ -167,6 +168,8 @@ void PolyHedraParser::PutVariable(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
 
+	// make Sub Commands
+	// put in TextCommand::Args
 	if (cmd_args.ToString(0) == "float")
 	{
 		VariableFloats.Put(cmd_args.ToString(1), cmd_args.ToFloat(2));
@@ -286,7 +289,7 @@ void PolyHedraParser::Check_Type(const TextCommand::Args & cmd_args)
 	if (Entry != nullptr)
 	{
 		Entry -> File = File;
-		Entry -> Object = Object;
+		Entry -> Data = Object;
 	}
 
 	if (n == 1)
@@ -346,13 +349,13 @@ void PolyHedraParser::Check_Parameter(const TextCommand::Args & cmd_args)
 	unsigned int n = cmd_args.Count();
 	if (!(n == 1 || n == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2"); }
 
-	if (Entry != nullptr)
+	/*if (Entry != nullptr)
 	{
 		if (Entry -> Parameters == nullptr)
 		{
 			Entry -> Parameters = new ParsingVariable::FloatMemory();
 		}
-	}
+	}*/
 
 	std::string name = cmd_args.ToString(0);
 
@@ -368,10 +371,10 @@ void PolyHedraParser::Check_Parameter(const TextCommand::Args & cmd_args)
 			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parameter"); // fatal
 		}
 		VariableFloats.Put(var -> Name, var -> Value);
-		if (Entry != nullptr)
+		/*if (Entry != nullptr)
 		{
 			Entry -> Parameters -> Put(var -> Name, var -> Value);
-		}
+		}*/
 	}
 	else if (n == 2)
 	{
@@ -379,10 +382,10 @@ void PolyHedraParser::Check_Parameter(const TextCommand::Args & cmd_args)
 		if (var != nullptr)
 		{
 			VariableFloats.Put(var -> Name, var -> Value);
-			if (Entry != nullptr)
+			/*if (Entry != nullptr)
 			{
 				Entry -> Parameters -> Put(var -> Name, var -> Value);
-			}
+			}*/
 		}
 		else
 		{
@@ -766,7 +769,7 @@ void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
 	}
 	else
 	{
-		Other = Manager -> Take(file, *this);
+		Other = Manager -> Take_Data(file);
 	}
 }
 

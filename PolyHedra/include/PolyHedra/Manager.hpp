@@ -1,46 +1,55 @@
 #ifndef  POLYHEDRA_MANAGER_HPP
 # define POLYHEDRA_MANAGER_HPP
 
-# include "FileInfo.hpp"
+//# include "FileInfo.hpp"
+class FileInfo;
 
 # include "Generics/Container/Binary.hpp"
 
 class PolyHedra;
-struct PolyHedraParser;
-
-namespace ParsingVariable { struct FloatMemory; };
+//struct PolyHedraParser;
+struct PolyHedraEntry;
 
 # include <iosfwd>
-
-struct PolyHedraEntry
-{
-	// Name
-	FileInfo		File;
-	PolyHedra *		Object = nullptr; // Data
-	ParsingVariable::FloatMemory *	Parameters = nullptr;
-};
 
 class PolyHedraManager
 {
 	private: public:
-	Container::Binary<PolyHedraEntry>	Entrys;
+	Container::Binary<PolyHedraEntry *>		Entrys;
 
 	public:
 	void	Clear();
 
-	public:
-	PolyHedra *		Find(const FileInfo & file) const;
+	private:	PolyHedraEntry *	Make(const FileInfo & file);
+	public:		PolyHedraEntry *	Find(const FileInfo & file) const;
+	public:		PolyHedraEntry *	Take(const FileInfo & file);
 
-	private:
-	PolyHedra *		Make(const FileInfo & file);
-	PolyHedra *		Make(const FileInfo & file, const PolyHedraParser & parser);
+	public:		PolyHedraEntry *	Find(const PolyHedra * polyhedra) const;
 
-	public:
-	PolyHedra *		Take(const FileInfo & file);
-	PolyHedra *		Take(const FileInfo & file, const PolyHedraParser & parser);
+	public:		PolyHedra *		Find_Data(const FileInfo & file) const;
+	public:		PolyHedra *		Take_Data(const FileInfo & file);
 
 	public:
 	void	ToInfo(std::ostream & s) const;
+
+
+
+	public:
+	static PolyHedraManager *	Current_;
+	static PolyHedraManager &	Current();
+	static bool		CheckCurrent();
+	static void		ClearCurrent();
+	bool	IsCurrent() const;
+	void	MakeCurrent();
+
+	public:
+	static PolyHedraEntry *		sFind(const FileInfo & file);
+	static PolyHedraEntry *		sTake(const FileInfo & file);
+
+	static PolyHedraEntry *		sFind(const PolyHedra * polyhedra);
+
+	static PolyHedra *			sFind_Data(const FileInfo & file);
+	static PolyHedra *			sTake_Data(const FileInfo & file);
 };
 
 #endif

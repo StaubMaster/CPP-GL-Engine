@@ -22,6 +22,14 @@ namespace TextCommand { class Args; };
 struct PolyHedraEntry;
 class PolyHedraManager;
 
+/* other
+	OtherFile loads full PolyHedras (possibly with the Manager)
+
+	Parameter Files should not be stored in Manager, and they need the Parent Parser
+	so they need to be loaded directly from here
+	make a different Command for this
+	maybe just ParamFile
+*/
 struct PolyHedraParser : public TextCommand::Loop
 {
 	struct CommandFlags

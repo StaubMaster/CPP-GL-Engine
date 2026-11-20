@@ -17,6 +17,7 @@ FILES += \
 	Data.cpp \
 	PolyHedra.cpp \
 	Parser.cpp \
+	Entry.cpp \
 	Manager.cpp \
 	Generate.cpp \
 \

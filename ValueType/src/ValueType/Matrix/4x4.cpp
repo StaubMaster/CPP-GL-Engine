@@ -70,18 +70,18 @@ Matrix4x4 Matrix4x4::Identity()
 	return mat;
 }
 
-Matrix4x4 Matrix4x4::Position(VectorF3 p)
+Matrix4x4 Matrix4x4::Position(const VectorF3 & vec)
 {
 	return Matrix4x4(
-		1, 0, 0, p.X,
-		0, 1, 0, p.Y,
-		0, 0, 1, p.Z,
+		1, 0, 0, vec.X,
+		0, 1, 0, vec.Y,
+		0, 0, 1, vec.Z,
 		0, 0, 0, 1
 	);
 }
-Matrix4x4 Matrix4x4::Rotation(EulerAngle3D a)
+Matrix4x4 Matrix4x4::Rotation(const EulerAngle3D & ang)
 {
-	Matrix3x3 mat = Matrix3x3::Rotation(a);
+	Matrix3x3 mat = Matrix3x3::Rotation(ang);
 	return Matrix4x4(
 		mat.Data[0][0], mat.Data[0][1], mat.Data[0][2], 0,
 		mat.Data[1][0], mat.Data[1][1], mat.Data[1][2], 0,
@@ -89,19 +89,28 @@ Matrix4x4 Matrix4x4::Rotation(EulerAngle3D a)
 		0, 0, 0, 1
 	);
 }
-Matrix4x4 Matrix4x4::TransformForward(Trans3D t)
+Matrix4x4 Matrix4x4::TransformForward(const Trans3D & trans)
 {
 	Matrix4x4 mat = Matrix4x4::Identity();
-	mat = mat * Matrix4x4::Position(+t.Position);
-	mat = mat * Matrix4x4::Rotation(t.Rotation);
+	mat = mat * Matrix4x4::Position(+trans.Position);
+	mat = mat * Matrix4x4::Rotation(trans.Rotation);
 	return mat;
 }
-Matrix4x4 Matrix4x4::TransformReverse(Trans3D t)
+Matrix4x4 Matrix4x4::TransformReverse(const Trans3D & trans)
 {
 	Matrix4x4 mat = Matrix4x4::Identity();
-	mat = mat * Matrix4x4::Position(-t.Position);
-	mat = mat / Matrix4x4::Rotation(t.Rotation);
+	mat = mat * Matrix4x4::Position(-trans.Position);
+	mat = mat / Matrix4x4::Rotation(trans.Rotation);
 	return ~mat;
+}
+Matrix4x4 Matrix4x4::Scale(const VectorF3 & vec)
+{
+	return Matrix4x4(
+		vec.X, 0    , 0    , 0,
+		0    , vec.X, 0    , 0,
+		0    , 0    , vec.X, 0,
+		0    , 0    , 0    , 1
+	);
 }
 
 

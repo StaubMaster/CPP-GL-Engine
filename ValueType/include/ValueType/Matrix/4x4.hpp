@@ -32,20 +32,21 @@ struct Matrix4x4
 
 	static Matrix4x4	Identity();
 
-	static Matrix4x4	Position(VectorF3 p);
-	static Matrix4x4	Rotation(EulerAngle3D a);
-	static Matrix4x4	TransformForward(Trans3D t);
-	static Matrix4x4	TransformReverse(Trans3D t);
+	static Matrix4x4	Position(const VectorF3 & vec);
+	static Matrix4x4	Rotation(const EulerAngle3D & ang);
+	static Matrix4x4	TransformForward(const Trans3D & trans);
+	static Matrix4x4	TransformReverse(const Trans3D & trans);
+	static Matrix4x4	Scale(const VectorF3 & vec);
 
 	Matrix4x4	operator*(const Matrix4x4 & other) const;
 	Matrix4x4	operator/(const Matrix4x4 & other) const;
 };
 
-VectorF4	operator*(const VectorF4 & p, const Matrix4x4 & mat);
-VectorF4	operator/(const VectorF4 & p, const Matrix4x4 & mat);
+VectorF4	operator*(const VectorF4 & vec, const Matrix4x4 & mat);
+VectorF4	operator/(const VectorF4 & vec, const Matrix4x4 & mat);
 
-VectorF3	operator*(const VectorF3 & p, const Matrix4x4 & mat);
-VectorF3	operator/(const VectorF3 & p, const Matrix4x4 & mat);
+VectorF3	operator*(const VectorF3 & vec, const Matrix4x4 & mat);
+VectorF3	operator/(const VectorF3 & vec, const Matrix4x4 & mat);
 
 //VectorF4 operator*(const Matrix4x4 & mat, const VectorF4 & p);
 //VectorF4 operator/(const Matrix4x4 & mat, const VectorF4 & p);

@@ -1,14 +1,11 @@
 #ifndef  CONTAINER_BINARY_HPP
 # define CONTAINER_BINARY_HPP
 
-// the name "Binary" implies that this has something to do with a Executable
-// or with raw Data
-
 # include "Array.hpp"
 
 namespace Container
 {
-template<typename TypeItem> struct Binary
+template<typename TypeItem> struct Binary // rename
 {
 	private:
 	Array<TypeItem>		mData;
@@ -140,6 +137,8 @@ template<typename TypeItem> struct Binary
 		}
 		mUsed = newCount;
 	}
+	// RemoveAny(Item)
+	// RemoveAll(Item)
 };
 };
 
