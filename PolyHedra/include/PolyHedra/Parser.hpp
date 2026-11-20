@@ -8,6 +8,7 @@
 
 # include "FileParsing/TextCommand/Func.hpp"
 # include "FileParsing/TextCommand/Loop.hpp"
+namespace TextCommand { class Args; };
 
 # include "Generics/Container/Binary.hpp"
 # include "Generics/Function/Pointer.hpp"
@@ -17,18 +18,8 @@
 
 # include <string>
 
-namespace TextCommand { class Args; };
-
 class PolyHedraManager;
 
-/* other
-	OtherFile loads full PolyHedras (possibly with the Manager)
-
-	Parameter Files should not be stored in Manager, and they need the Parent Parser
-	so they need to be loaded directly from here
-	make a different Command for this
-	maybe just ParamFile
-*/
 struct PolyHedraParser : public TextCommand::Loop
 {
 	struct CommandFlags
@@ -79,6 +70,8 @@ struct PolyHedraParser : public TextCommand::Loop
 	float	ToFloat(std::string str) const;
 	float	ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const;
 
+	/* IndexArray Variables
+	*/
 
 
 	public:

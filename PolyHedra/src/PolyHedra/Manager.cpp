@@ -78,6 +78,15 @@ PolyHedra * PolyHedraManager::Take_Data(const FileInfo & file)
 	return nullptr;
 }
 
+PolyHedraManager::~PolyHedraManager()
+{
+	if (IsCurrent()) { ClearCurrent(); }
+}
+PolyHedraManager::PolyHedraManager()
+{
+	if (!CheckCurrent()) { MakeCurrent(); }
+}
+
 #include <iostream>
 void PolyHedraManager::ToInfo(std::ostream & s) const
 {

@@ -30,6 +30,10 @@ class PolyHedraManager
 	public:		PolyHedra *		Take_Data(const FileInfo & file);
 
 	public:
+	~PolyHedraManager();
+	PolyHedraManager();
+
+	public:
 	void	ToInfo(std::ostream & s) const;
 
 
