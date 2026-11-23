@@ -3,44 +3,20 @@
 
 # include <string>
 
-# include "Generics/Container/Binary.hpp"
+struct VariableMemory;
 
 namespace ParsingVariable
 {
-	struct Float
-	{
-		std::string		Name;
-		float			Value;
+namespace Float
+{
+	bool	IsLiteral(const std::string & str);
+	float	ParseLiteral(std::string str);
 
-		~Float() = default;
-		Float() = default;
-		Float(const Float & other) = default;
-		Float & operator=(const Float & other) = default;
+	char	SignTake(std::string & str);
+	float	SignPut(float value, char sign);
 
-		Float(std::string name, float value);
-
-		static bool		IsLiteral(std::string str);
-		static float	ParseLiteral(std::string str);
-
-		static char		SignTake(std::string & str);
-		static float	SignPut(float value, char sign);
-	};
-
-	struct FloatMemory
-	{
-		Container::Binary<Float>	Variables;
-
-		~FloatMemory() = default;
-		FloatMemory() = default;
-		FloatMemory(const FloatMemory & other) = default;
-		FloatMemory & operator=(const FloatMemory & other) = default;
-
-				Float *		Find(std::string name);
-		const	Float *		Find(std::string name) const;
-
-		void	Put(std::string name, float value);
-		float	To(std::string str) const;
-	};
+	float	Parse(const VariableMemory & vars, std::string str);
+};
 };
 
 #endif

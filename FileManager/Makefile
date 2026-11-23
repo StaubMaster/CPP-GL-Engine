@@ -46,6 +46,9 @@ FILES := \
 	FileParsing/TextCommand/FuncNormal.cpp \
 	FileParsing/TextCommand/Loop.cpp \
 \
+	FileParsing/Variables/Entry.cpp \
+	FileParsing/Variables/Memory.cpp \
+	FileParsing/Variables/Exception.cpp \
 	FileParsing/Variables/Float.cpp \
 \
 	FileFormat/PNG/ErrorDetection.cpp \

@@ -1,0 +1,27 @@
+
+make arrays more general
+isntead of being a generic type
+make them explicitly handled
+
+
+
+for now, just make getting an item out of an array generic
+
+type Get<type>(name)
+{
+	if (name ends with "[#]")
+	{
+		index = #;
+		remove "[#]" from name
+		type[] arr = Get(name);
+		return arr[index];
+	}
+	else
+	{
+		entry_base = Find(name);
+		entry_type = <type>(entry_base)
+		if (entry_base == null)		{ throw not found; }
+		if (entry_type == null)		{ throw incorrent type; }
+		return entry_type.Data;
+	}
+}

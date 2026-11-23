@@ -2,12 +2,7 @@
 
 
 
-ParsingVariable::Float::Float(std::string name, float value)
-	: Name(name)
-	, Value(value)
-{ }
-
-bool ParsingVariable::Float::IsLiteral(std::string str)
+bool ParsingVariable::Float::IsLiteral(const std::string & str)
 {
 	// only a partial check for now
 
@@ -60,46 +55,15 @@ float ParsingVariable::Float::SignPut(float value, char sign)
 	return value;
 }
 
-
-
-ParsingVariable::Float * ParsingVariable::FloatMemory::Find(std::string name)
+#include "FileParsing/Variables/Memory.hpp"
+float ParsingVariable::Float::Parse(const VariableMemory & vars, std::string str)
 {
-	for (unsigned int i = 0; i < Variables.Count(); i++)
+	if (ParsingVariable::Float::IsLiteral(str))
 	{
-		if (Variables[i].Name == name)
-		{
-			return &Variables[i];
-		}
+		return ParsingVariable::Float::ParseLiteral(str);
 	}
-	return nullptr;
-}
-const ParsingVariable::Float * ParsingVariable::FloatMemory::Find(std::string name) const
-{
-	for (unsigned int i = 0; i < Variables.Count(); i++)
-	{
-		if (Variables[i].Name == name)
-		{
-			return &Variables[i];
-		}
-	}
-	return nullptr;
-}
-
-void ParsingVariable::FloatMemory::Put(std::string name, float value)
-{
-	Float * var = Find(name);
-	if (var != nullptr)
-	{
-		var -> Value = value;
-	}
-	else
-	{
-		Variables.Insert(Float(name, value));
-	}
-}
-float ParsingVariable::FloatMemory::To(std::string str) const
-{
-	const Float * var = Find(str);
-	if (var == nullptr) { return 0.0f; } // return NaN ?
-	return var -> Value;
+	char sign = ParsingVariable::Float::SignTake(str);
+	float value;
+	vars.Get(str, value);
+	return ParsingVariable::Float::SignPut(value, sign);
 }

@@ -4,7 +4,7 @@
 # include "PolyHedra/PolyHedra.hpp"
 
 # include "FileInfo.hpp"
-# include "FileParsing/Variables/Float.hpp"
+# include "FileParsing/Variables/Memory.hpp"
 
 # include "FileParsing/TextCommand/Func.hpp"
 # include "FileParsing/TextCommand/Loop.hpp"
@@ -17,6 +17,8 @@ namespace TextCommand { class Args; };
 # include "ValueType/Trans/3D.hpp"
 
 # include <string>
+
+# include "TextExceptionBase.hpp"
 
 class PolyHedraManager;
 
@@ -64,23 +66,29 @@ struct PolyHedraParser : public TextCommand::Loop
 
 
 
-	ParsingVariable::FloatMemory	VariableFloats;
+	VariableMemory		Variables;
+
 	void	PutVariable(const TextCommand::Args & cmd_args);
-	void	PutFloat(const TextCommand::Args & cmd_args);
-	float	ToFloat(std::string str) const;
+
 	float	ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const;
 
-	/* IndexArray Variables
+	unsigned int	VertexOffset = 0;
+	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int idx) const;
+	/* ToVertex
+		Literal
+		index Variable
+		index[] Variable with index ?
 	*/
 
+	// store this in a variable called "return" ?
+	unsigned int					VariableIndexReturn;
+	Container::Array<unsigned int>	VariableIndexArrayReturn;
 
-	public:
+
+
 	PolyHedra *					Object = nullptr;
 	const PolyHedraParser *		Parser = nullptr; // only need Variables
 	PolyHedraManager *			Manager = nullptr;
-
-	unsigned int	VertexOffset = 0;
-	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const;
 
 
 
@@ -109,6 +117,11 @@ struct PolyHedraParser : public TextCommand::Loop
 	void	Place_Belt(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 	void	Place_Band(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 	void	Place_Fan(const TextCommand::Args & cmd_args, const CommandFlags & flags);
+
+	//void	Place_IndexArray_Face(const TextCommand::Args & cmd_args, const CommandFlags & flags);
+	void	Place_IndexArray_Belt(const TextCommand::Args & cmd_args, const CommandFlags & flags);
+	void	Place_IndexArray_Band(const TextCommand::Args & cmd_args, const CommandFlags & flags);
+	void	Place_IndexArray_Fan(const TextCommand::Args & cmd_args, const CommandFlags & flags);
 
 	unsigned int	NormalGroup = 0xFFFFFFFF;
 	void	Normal_Change(const TextCommand::Args & cmd_args);

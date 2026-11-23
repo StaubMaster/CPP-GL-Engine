@@ -15,6 +15,7 @@
 #include "FileParsing/TextCommand/ArgsStream.hpp"
 #include "FileParsing/TextCommand/Exceptions.hpp"
 #include "FileParsing/TextCommand/FuncNormal.hpp"
+#include "FileParsing/Variables/Float.hpp"
 
 // ValueType
 #include "ValueType/Vector/F3.hpp"
@@ -132,7 +133,8 @@ void PolyHedraParser::CommandsNormal()
 {
 	Commands.Insert(new TextCommand::FuncNormal("default",		this, &PolyHedraParser::Change_Default));
 	Commands.Insert(new TextCommand::FuncNormal("offset",		this, &PolyHedraParser::Change_Offset));
-	Commands.Insert(new TextCommand::FuncNormal("index",		this, &PolyHedraParser::Legacy_Offset2)); // this is kind of Lecagy ?
+
+	Commands.Insert(new TextCommand::FuncNormal("var",			this, &PolyHedraParser::PutVariable));
 
 	Commands.Insert(new TextCommand::FuncNormal("vertex",		this, &PolyHedraParser::Place_Vertex));
 	Commands.Insert(new CommandFlagsFunc(		"circle",		this, &PolyHedraParser::Place_Circle));
@@ -142,10 +144,11 @@ void PolyHedraParser::CommandsNormal()
 	Commands.Insert(new CommandFlagsFunc("band",	this, &PolyHedraParser::Place_Band));
 	Commands.Insert(new CommandFlagsFunc("fan",		this, &PolyHedraParser::Place_Fan));
 
-	Commands.Insert(new TextCommand::FuncNormal("normal",		this, &PolyHedraParser::Normal_Change));
+	Commands.Insert(new CommandFlagsFunc("beltI",	this, &PolyHedraParser::Place_IndexArray_Belt));
+	Commands.Insert(new CommandFlagsFunc("bandI",	this, &PolyHedraParser::Place_IndexArray_Band));
+	Commands.Insert(new CommandFlagsFunc("fanI",	this, &PolyHedraParser::Place_IndexArray_Fan));
 
-	Commands.Insert(new TextCommand::FuncNormal("varFloat",		this, &PolyHedraParser::PutFloat));
-	Commands.Insert(new TextCommand::FuncNormal("var",			this, &PolyHedraParser::PutVariable));
+	Commands.Insert(new TextCommand::FuncNormal("normal",		this, &PolyHedraParser::Normal_Change));
 
 	Commands.Insert(new TextCommand::FuncNormal("param",		this, &PolyHedraParser::Parameter_Check));
 	Commands.Insert(new TextCommand::FuncNormal("paramFile",	this, &PolyHedraParser::Parameter_File));
@@ -161,58 +164,97 @@ void PolyHedraParser::CommandsNormal()
 
 
 
-/* make variables more general
-varFloat "name" {value}
-var "type" "name" {value}
-currently only type:"float" is used
-*/
 void PolyHedraParser::PutVariable(const TextCommand::Args & cmd_args)
 {
-	if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
-
 	// make Sub Commands
 	// put in TextCommand::Args
-	if (cmd_args.ToString(0) == "float")
+	if (!(cmd_args.Count() >= 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 2"); }
+	std::string type = cmd_args.ToString(0);
+	std::string name = cmd_args.ToString(1);
+	if (type == "_")
 	{
-		VariableFloats.Put(cmd_args.ToString(1), cmd_args.ToFloat(2));
-	}
-	throw TextCommand::Exception::InvalidArgument(cmd_args, 0);
-}
-void PolyHedraParser::PutFloat(const TextCommand::Args & cmd_args)
-{
-	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
-
-	VariableFloats.Put(cmd_args.ToString(0), cmd_args.ToFloat(1));
-}
-float PolyHedraParser::ToFloat(std::string str) const
-{
-	if (ParsingVariable::Float::IsLiteral(str))
-	{
-		return ParsingVariable::Float::ParseLiteral(str);
-	}
-	char sign = ParsingVariable::Float::SignTake(str);
-	float value = VariableFloats.To(str);
-	return ParsingVariable::Float::SignPut(value, sign);
-}
-float PolyHedraParser::ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const
-{
-	return ToFloat(cmd_args.ToString(idx));
-}
-
-
-
-unsigned int PolyHedraParser::ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const
-{
-	std::string str = cmd_args.ToString(arg_idx);
-	// check for len == 0 ?
-	if (str[0] == '+' || str[0] == '-')
-	{
-		return VertexOffset + cmd_args.ToInt32(arg_idx);
+		if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
+		// remove Variable
 	}
 	else
 	{
-		return cmd_args.ToUInt32(arg_idx);
+		if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
+		if (cmd_args.ToString(2) == "return")
+		{
+			if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
+			     if (type == "float")	{ }
+			else if (type == "index")	{ Variables.Set(name, VariableIndexReturn); }
+			else if (type == "index[]")	{ Variables.Set(name, VariableIndexArrayReturn); }
+		}
+		else
+		{
+			if (type == "float")
+			{
+				if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
+				Variables.Set(name, cmd_args.ToFloat(2));
+			}
+			else if (type == "index")
+			{
+				if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
+				Variables.Set(name, ToVertexIndex(cmd_args, 2));
+			}
+			else if (type == "index[]")
+			{
+				if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
+				Container::Array<unsigned int> data(cmd_args.Count() - 2);
+				for (unsigned int i = 0; i < data.Length(); i++)
+				{
+					data[i] = ToVertexIndex(cmd_args, i + 2);
+				}
+				Variables.Set(name, data);
+			}
+		}
 	}
+}
+
+float PolyHedraParser::ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const
+{
+	return ParsingVariable::Float::Parse(Variables, cmd_args.ToString(idx));
+}
+
+unsigned int PolyHedraParser::ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int idx) const
+{
+	/* Value from Variable
+		if only Sign and Digits
+			Parse Literal
+		else
+			get Variable ?
+			normal Variable is find
+			how to get Array Variable ?
+			Array Index needs to be static (raw text only)
+			check if name ends with { '[' Digits ']' }
+			then take that
+	*/
+
+	std::string str = cmd_args.ToString(idx);
+	// check for len == 0 ?
+	if (str[0] == '+' || str[0] == '-')
+	{
+		return VertexOffset + cmd_args.ToInt32(idx);
+	}
+	else
+	{
+		return cmd_args.ToUInt32(idx);
+	}
+}
+
+__attribute__((unused)) static void Display_Data(const char * name, const Container::Array<unsigned int> & data)
+{
+	std::cout << name;
+	std::cout << " [ ";
+	for (unsigned int i = 0; i < data.Length(); i++)
+	{
+		if (i != 0) { std::cout << " , "; }
+		std::cout << data[i];
+	}
+	std::cout << " ] ";
+	std::cout << data.Length();;
+	std::cout << '\n';
 }
 
 
@@ -506,6 +548,7 @@ void PolyHedraParser::Place_Vertex(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
 
+	VariableIndexReturn = Object -> Corners.Count();
 	Object -> Insert_Corn(
 		ToFloat(cmd_args, 0),
 		ToFloat(cmd_args, 1),
@@ -545,6 +588,8 @@ void PolyHedraParser::Place_Circle(const TextCommand::Args & cmd_args, const Com
 	EulerAngle3D angle = EulerAngle3D::PointToZ(normal);
 	Angle offset = Angle::Degrees(cmd_args.ToFloat(10));
 
+	VariableIndexArrayReturn.NewLength(step_num, 0xFFFFFFFF);
+	unsigned int o = Object -> Corners.Count();
 	for (int i = 0; i < step_num; i++)
 	{
 		if (!flags.Direction)
@@ -555,6 +600,7 @@ void PolyHedraParser::Place_Circle(const TextCommand::Args & cmd_args, const Com
 		{
 			angle.Z0 = (step * (step_off - i)) + offset;
 		}
+		VariableIndexArrayReturn[i] = o + i;
 		Object -> Insert_Corn(angle.forward(radius) + center);
 	}
 }
@@ -652,6 +698,57 @@ void PolyHedraParser::Place_Fan(const TextCommand::Args & cmd_args, const Comman
 	Object -> Fan(len, middle, blade, flags.Direction, flags.Middle, flags.Closed, NormalGroup);
 }
 
+void PolyHedraParser::Place_IndexArray_Belt(const TextCommand::Args & cmd_args, const CommandFlags & flags)
+{
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
+
+	Container::Array<unsigned int> list0;
+	Container::Array<unsigned int> list1;
+
+	Variables.Get(cmd_args.ToString(0), list0);
+	Variables.Get(cmd_args.ToString(1), list1);
+
+	if (list0.IsNull()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Index Array Variable is Empty"); }
+	if (list1.IsNull()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 1, "Index Array Variable is Empty"); }
+
+	if (list0.Length() != list1.Length()) { throw TextCommand::Exception::InvalidState(cmd_args, "Index Variables have different length"); }
+	unsigned int len = list0.Length();
+
+	Object -> Belt(len, list0.Memory(), list1.Memory(), flags.Direction, flags.Closed, NormalGroup);
+}
+void PolyHedraParser::Place_IndexArray_Band(const TextCommand::Args & cmd_args, const CommandFlags & flags)
+{
+	throw TextCommand::Exception::NotImplemented(cmd_args);
+	(void)cmd_args;
+	(void)flags;
+}
+void PolyHedraParser::Place_IndexArray_Fan(const TextCommand::Args & cmd_args, const CommandFlags & flags)
+{
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
+
+	unsigned int middle;
+	Container::Array<unsigned int> blade;
+
+	if (!flags.Middle)
+	{
+		Variables.Get(cmd_args.ToString(0), middle);
+		Variables.Get(cmd_args.ToString(1), blade);
+	}
+	else
+	{
+		Variables.Get(cmd_args.ToString(0), blade);
+		Variables.Get(cmd_args.ToString(1), middle);
+	}
+
+	if (blade.IsNull()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 1, "Index Array Variable is Empty"); }
+
+	unsigned int len = blade.Length();
+
+	Object -> Fan(len, middle, blade.Memory(), flags.Direction, flags.Middle, flags.Closed, NormalGroup);
+}
+
+
+
 void PolyHedraParser::Normal_Change(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 0 || cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0 || n == 1"); }
@@ -679,29 +776,25 @@ void PolyHedraParser::Parameter_Check(const TextCommand::Args & cmd_args)
 		{
 			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parser for Parameters"); // fatal
 		}
-		const ParsingVariable::Float * var = Parser -> VariableFloats.Find(name);
+		const VariableEntryType<float> * var = dynamic_cast<const VariableEntryType<float> *>(Parser -> Variables.Find(name));
 		if (var == nullptr)
 		{
 			throw TextCommand::Exception::InvalidState(cmd_args, "Missing Parameter"); // fatal
 		}
-		VariableFloats.Put(var -> Name, var -> Value);
+		Variables.Set(var -> Name, var -> Data);
 	}
 	else if (n == 2)
 	{
-		const ParsingVariable::Float * var = Parser -> VariableFloats.Find(name);
+		const VariableEntryType<float> * var = dynamic_cast<const VariableEntryType<float> *>(Parser -> Variables.Find(name));
 		if (var != nullptr)
 		{
-			VariableFloats.Put(var -> Name, var -> Value);
+			Variables.Set(var -> Name, var -> Data);
 		}
 		else
 		{
-			VariableFloats.Put(name, cmd_args.ToFloat(1));
+			Variables.Set(name, cmd_args.ToFloat(1));
 		}
 	}
-	/*else
-	{
-		throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1 || n == 2");
-	}*/
 }
 void PolyHedraParser::Parameter_File(const TextCommand::Args & cmd_args)
 {
