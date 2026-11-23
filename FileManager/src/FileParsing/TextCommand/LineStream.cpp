@@ -17,7 +17,7 @@ bool LineStream::Continue(std::string & line)
 	if (_Stream.good())
 	{
 		std::getline(_Stream, line, '\n');
-		line = StringHelp::RemoveFromString(line, StringHelp::CharPallet("\n\r"));
+		line = StringHelp::CutAll(line, StringHelp::CharPallet("\n\r"));
 		return true;
 	}
 	return false;

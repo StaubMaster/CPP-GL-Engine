@@ -28,8 +28,8 @@ static void Split(const FileInfo & file, ObjectType & object, void (ObjectType::
 	std::string segment;
 	while (std::getline(stream, segment, '\n'))
 	{
-		segment = StringHelp::RemoveFromString(segment, StringHelp::CharPallet("\n\r"));
-		segment = StringHelp::RemoveFromString(segment, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
+		segment = StringHelp::CutAll(segment, StringHelp::CharPallet("\n\r"));
+		segment = StringHelp::CutAllPairsInEx(segment, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
 		(object.*func)(LineCommand(segment));
 	}
 }
@@ -41,8 +41,8 @@ static ObjectType * Split(const FileInfo & file, ObjectType * object, ObjectType
 	std::string segment;
 	while (std::getline(stream, segment, '\n'))
 	{
-		segment = StringHelp::RemoveFromString(segment, StringHelp::CharPallet("\n\r"));
-		segment = StringHelp::RemoveFromString(segment, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
+		segment = StringHelp::CutAll(segment, StringHelp::CharPallet("\n\r"));
+		segment = StringHelp::CutAllPairsInEx(segment, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
 		object = (*func)(object, LineCommand(segment));
 	}
 	return object;

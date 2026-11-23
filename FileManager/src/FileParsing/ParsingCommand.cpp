@@ -8,7 +8,7 @@ ParsingCommand::ParsingCommand(std::string text)
 	std::string seg;
 	while (std::getline(ss, seg, ' '))
 	{
-		seg = StringHelp::RemoveFromString(seg, StringHelp::CharPallet(" \t"));
+		seg = StringHelp::CutAll(seg, StringHelp::CharPallet(" \t"));
 		Segments.push_back(seg);
 	}
 }
@@ -109,8 +109,8 @@ void ParsingCommand::SplitFileIntoCommands(EnvironmentData & data)
 	std::string seg;
 	while (std::getline(ss, seg, '\n'))
 	{
-		seg = StringHelp::RemoveFromString(seg, StringHelp::CharPallet("\n\r"));
-		seg = StringHelp::RemoveFromString(seg, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
+		seg = StringHelp::CutAll(seg, StringHelp::CharPallet("\n\r"));
+		seg = StringHelp::CutAllPairsInEx(seg, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
 		data.Parse(ParsingCommand(seg));
 	}
 }

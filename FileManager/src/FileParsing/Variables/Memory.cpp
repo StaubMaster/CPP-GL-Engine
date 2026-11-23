@@ -1,4 +1,5 @@
 #include "FileParsing/Variables/Memory.hpp"
+#include "FileParsing/StringHelp.hpp"
 
 
 

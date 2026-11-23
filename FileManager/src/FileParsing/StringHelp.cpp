@@ -4,30 +4,22 @@
 
 StringHelp::CharPallet::CharPallet(const char * pallet)
 {
-	Pallet = pallet;
-	Count = 0;
-	while (Pallet[Count] != '\0') { Count++; }
+	Characters = pallet;
+	Count = 0; while (Characters[Count] != '\0') { Count++; }
 }
-
-bool StringHelp::CharPallet::Check(const char & c) const
+bool StringHelp::CharPallet::Check(char c) const
 {
-	for (unsigned int i = 0; i < Count; i++)
+	for (size_t i = 0; i < Count; i++)
 	{
-		if (Pallet[i] == c) { return true; }
+		if (Characters[i] == c) { return true; }
 	}
 	return false;
 }
-
-
-
-
-
-size_t StringHelp::FindNextAny(const std::string & str, size_t idx, const CharPallet & pallet)
+size_t StringHelp::CharPallet::FindNext(const std::string & str, size_t idx) const
 {
 	while (idx < str.length())
 	{
-		const char & c = str[idx];
-		if (pallet.Check(c))
+		if (Check(str[idx]))
 		{
 			return idx;
 		}
@@ -35,55 +27,119 @@ size_t StringHelp::FindNextAny(const std::string & str, size_t idx, const CharPa
 	}
 	return std::string::npos;
 }
-
-std::string StringHelp::RemoveFromString(const std::string & str, const CharPallet & pallet)
+size_t StringHelp::CharPallet::FindPrev(const std::string & str) const
 {
-	std::string s = "";
-
-	size_t idx0 = 0;
-	size_t idx1 = FindNextAny(str, idx0, pallet);
-	while (idx1 != std::string::npos)
+	size_t idx = str.length() - 1;
+	while (idx < str.length())
 	{
-		s += CutInEx(str, idx0, idx1);
-		idx0 = idx1 + 1;
-		idx1 = FindNextAny(str, idx0, pallet);
+		if (Check(str[idx]))
+		{
+			return idx;
+		}
+		idx--;
 	}
-	s += CutInEx(str, idx0, str.length());
+	return std::string::npos;
+}
 
+
+
+StringHelp::Section::Section(const size_t & off, const size_t & len)
+	: Offset(off)
+	, Length(len)
+{ }
+std::string StringHelp::Section::SubString(const std::string & str) const
+{
+	return str.substr(Offset, Length);
+}
+std::string StringHelp::Section::Erase(const std::string & str) const
+{
+	std::string str_copy(str);
+	return str_copy.erase(Offset, Length);
+}
+
+StringHelp::Range::Range(const size_t & idx0, const size_t & idx1)
+	: Index0(idx0)
+	, Index1(idx1)
+{ }
+StringHelp::Section StringHelp::Range::Inclusive() const
+{
+	return Section(Index0, (Index1 - Index0) + 1);
+}
+StringHelp::Section StringHelp::Range::Exclusive() const
+{
+	return Section(Index0 + 1, (Index1 - Index0) - 1);
+}
+//std::string StringHelp::Range::CutInIn(const std::string & str) const { }
+std::string StringHelp::Range::CutInEx(const std::string & str) const
+{
+	if (Index0 == std::string::npos) { return std::string(); }
+	if (Index1 == std::string::npos) { return str.substr(Index0); }
+	return str.substr(Index0, Index1 - Index0);
+}
+//std::string StringHelp::Range::CutExEx(const std::string & str) const { }
+
+StringHelp::Range StringHelp::FindNextPair(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1, size_t idx)
+{
+	Range range;
+	for (; idx < str.length(); idx++)
+	{
+		if (range.Index0 != std::string::npos) { if (pallet0.Check(str[idx])) { range.Index0 = idx; } }
+		if (range.Index1 != std::string::npos) { if (pallet1.Check(str[idx])) { range.Index1 = idx; } }
+		if (range.Index0 != std::string::npos && range.Index1 != std::string::npos) { break; }
+	}
+	return range;
+}
+StringHelp::Range StringHelp::FindPrevPair(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1)
+{
+	Range range;
+	for (size_t i = str.length() - 1; i < str.length(); i--)
+	{
+		if (range.Index0 != std::string::npos) { if (pallet0.Check(str[i])) { range.Index0 = i; } }
+		if (range.Index1 != std::string::npos) { if (pallet1.Check(str[i])) { range.Index1 = i; } }
+		if (range.Index0 != std::string::npos && range.Index1 != std::string::npos) { break; }
+	}
+	return range;
+}
+
+std::string StringHelp::CutAll(const std::string & str, const CharPallet & pallet)
+{
+	Range range;
+	range.Index0 = 0;
+	range.Index1 = pallet.FindNext(str, range.Index0);
+
+	std::string s = "";
+	while (range.Index1 != std::string::npos)
+	{
+		s += range.CutInEx(str);
+		range.Index0 = range.Index1 + 1;
+		range.Index1 = pallet.FindNext(str, range.Index0);
+	}
+	s += range.CutInEx(str);
 	return s;
 }
 
-std::string StringHelp::RemoveFromString(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1)
+std::string StringHelp::CutAllPairsInEx(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1)
 {
-	std::string s = "";
+	Range range;
+	range.Index0 = 0;
+	range.Index1 = pallet0.FindNext(str, range.Index0);
 
-	size_t idx0 = 0;
-	size_t idx1 = FindNextAny(str, idx0, pallet0);
-	if (idx1 == std::string::npos)
+	std::string s;
+	while (range.Index1 != std::string::npos)
 	{
-		s += CutInEx(str, idx0, str.length());
-	}
-	while (idx1 != std::string::npos)
-	{
-		s += CutInEx(str, idx0, idx1);
-		idx0 = FindNextAny(str, idx1, pallet1);
-		if (idx0 == std::string::npos)
+		s += range.CutInEx(str);
+		range.Index0 = pallet1.FindNext(str, range.Index1);
+		if (range.Index0 == std::string::npos)
 		{
 			break;
 		}
-		idx0++;
-		idx1 = FindNextAny(str, idx0, pallet0);
-		if (idx1 == std::string::npos)
+		range.Index0++;
+		range.Index1 = pallet0.FindNext(str, range.Index0);
+		if (range.Index1 == std::string::npos)
 		{
-			s += CutInEx(str, idx0, str.length());
 			break;
 		}
 	}
-
+	s += range.CutInEx(str);
 	return s;
-}
-
-std::string StringHelp::CutInEx(const std::string & str, size_t idx0, size_t idx1)
-{
-	return str.substr(idx0, idx1 - idx0);
 }

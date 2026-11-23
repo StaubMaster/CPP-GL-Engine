@@ -11,7 +11,7 @@ LineCommand::LineCommand(std::string text)
 		std::string segment;
 		while (std::getline(stream, segment, ' '))
 		{
-			segment = StringHelp::RemoveFromString(segment, StringHelp::CharPallet(" \t"));
+			segment = StringHelp::CutAll(segment, StringHelp::CharPallet(" \t"));
 			segments.push_back(segment);
 		}
 	}

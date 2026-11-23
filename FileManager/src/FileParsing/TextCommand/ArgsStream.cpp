@@ -19,7 +19,7 @@ bool TextCommand::ArgsStream::Continue(Args & cmd_args)
 	std::string line;
 	if (_Stream.Continue(line))
 	{
-		line = StringHelp::RemoveFromString(line, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
+		line = StringHelp::CutAllPairsInEx(line, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
 		// split line into multiple commands based on ';'
 		cmd_args.Split(line);
 		return true;

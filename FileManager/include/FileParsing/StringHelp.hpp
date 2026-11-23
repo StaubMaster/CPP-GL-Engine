@@ -7,20 +7,54 @@ namespace StringHelp
 {
 	struct CharPallet
 	{
-		unsigned int Count;
-		const char * Pallet;
-
+		size_t			Count;
+		const char *	Characters;
 		CharPallet(const char * pallet);
+		bool	Check(char c) const;
+		size_t	FindNext(const std::string & str, size_t idx) const;
+		size_t	FindPrev(const std::string & str) const;
+	};
+	/*struct CharPair
+	{
+		CharPallet	Pallet0;
+		CharPallet	Pallet1;
+	};*/
 
-		bool Check(const char & c) const;
+	struct Section
+	{
+		size_t	Offset = 0;
+		size_t	Length = std::string::npos;
+		~Section() = default;
+		Section() = default;
+		Section(const Section & other) = default;
+		Section & operator=(const Section & other) = default;
+		Section(const size_t & off, const size_t & len);
+		std::string		SubString(const std::string & str) const;
+		std::string		Erase(const std::string & str) const;
+	};
+	struct Range
+	{
+		size_t	Index0 = std::string::npos;
+		size_t	Index1 = std::string::npos;
+		~Range() = default;
+		Range() = default;
+		Range(const Range & other) = default;
+		Range & operator=(const Range & other) = default;
+		Range(const size_t & idx0, const size_t & idx1);
+		Section		Inclusive() const; // including the Boundary Characters
+		Section		Exclusive() const; // excluding the Boundary Characters
+		std::string	CutInIn(const std::string & str) const;
+		std::string	CutInEx(const std::string & str) const;
+		std::string	CutExEx(const std::string & str) const;
 	};
 
-	size_t FindNextAny(const std::string & str, size_t idx, const CharPallet & pallet);
+	Range		FindNextPair(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1, size_t idx = 0);
+	Range		FindPrevPair(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1);
 
-	std::string RemoveFromString(const std::string & str, const CharPallet & pallet);
-	std::string RemoveFromString(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1);
+	// remove every instance of these characters
+	std::string		CutAll(const std::string & str, const CharPallet & pallet);
 
-	std::string CutInEx(const std::string & str, size_t idx0, size_t idx1);
+	std::string		CutAllPairsInEx(const std::string & str, const CharPallet & pallet0, const CharPallet & pallet1);
 };
 
 
