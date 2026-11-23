@@ -25,3 +25,8 @@ type Get<type>(name)
 		return entry_type.Data;
 	}
 }
+this causes a recursive template
+only allow 1 array depth for now
+
+split name and index stuff once
+make an array of indexes

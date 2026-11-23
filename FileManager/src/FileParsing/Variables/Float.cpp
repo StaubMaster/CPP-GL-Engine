@@ -62,8 +62,11 @@ float ParsingVariable::Float::Parse(const VariableMemory & vars, std::string str
 	{
 		return ParsingVariable::Float::ParseLiteral(str);
 	}
-	char sign = ParsingVariable::Float::SignTake(str);
-	float value;
-	vars.Get(str, value);
-	return ParsingVariable::Float::SignPut(value, sign);
+	else
+	{
+		char sign = ParsingVariable::Float::SignTake(str);
+		float value;
+		vars.Get(str, value);
+		return ParsingVariable::Float::SignPut(value, sign);
+	}
 }

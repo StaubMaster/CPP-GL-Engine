@@ -217,29 +217,46 @@ float PolyHedraParser::ToFloat(const TextCommand::Args & cmd_args, unsigned int 
 	return ParsingVariable::Float::Parse(Variables, cmd_args.ToString(idx));
 }
 
+static bool IsLiteralVertexIndex(const std::string & str)
+{
+	char c;
+
+	if (str.size() == 0) { return false; }
+	c = str[0];
+
+	if (c == '+' || c == '-')
+	{
+		if (str.size() == 1) { return false; }
+		c = str[1];
+	}
+
+	if (c >= '0' && c <= '9')
+	{
+		return true;
+	}
+
+	return false;
+}
 unsigned int PolyHedraParser::ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int idx) const
 {
-	/* Value from Variable
-		if only Sign and Digits
-			Parse Literal
-		else
-			get Variable ?
-			normal Variable is find
-			how to get Array Variable ?
-			Array Index needs to be static (raw text only)
-			check if name ends with { '[' Digits ']' }
-			then take that
-	*/
-
 	std::string str = cmd_args.ToString(idx);
-	// check for len == 0 ?
-	if (str[0] == '+' || str[0] == '-')
+	if (IsLiteralVertexIndex(str))
 	{
-		return VertexOffset + cmd_args.ToInt32(idx);
+		// check for len == 0 ?
+		if (str[0] == '+' || str[0] == '-')
+		{
+			return VertexOffset + cmd_args.ToInt32(idx);
+		}
+		else
+		{
+			return cmd_args.ToUInt32(idx);
+		}
 	}
 	else
 	{
-		return cmd_args.ToUInt32(idx);
+		unsigned int value;
+		Variables.Get(str, value);
+		return value;
 	}
 }
 

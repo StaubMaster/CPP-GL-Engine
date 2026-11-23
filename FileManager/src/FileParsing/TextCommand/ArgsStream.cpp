@@ -20,6 +20,7 @@ bool TextCommand::ArgsStream::Continue(Args & cmd_args)
 	if (_Stream.Continue(line))
 	{
 		line = StringHelp::RemoveFromString(line, StringHelp::CharPallet("#"), StringHelp::CharPallet("\n"));
+		// split line into multiple commands based on ';'
 		cmd_args.Split(line);
 		return true;
 	}
