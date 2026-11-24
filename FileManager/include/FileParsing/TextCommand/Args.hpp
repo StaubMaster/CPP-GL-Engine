@@ -2,16 +2,14 @@
 # define TEXT_COMMAND_ARGS_HPP
 
 # include <string>
-# include <vector>
-# include <iosfwd>
+# include "Generics/Container/Array.hpp"
 
 namespace TextCommand
 {
 class Args
 {
 	private:
-	unsigned int	_Count;
-	std::string *	_Segments;
+	Container::Array<std::string>	Segments;
 
 	public:
 	bool			Empty() const;
@@ -25,16 +23,18 @@ class Args
 	float			ToFloat(unsigned int idx) const;
 
 	public:
-	~Args();
-	Args();
-	Args(const Args & other);
-	Args & operator=(const Args & other);
+	~Args() = default;
+	Args() = default;
+	Args(const Args & other) = default;
+	Args & operator=(const Args & other) = default;
 
 	public:
 	void	Split(const std::string & str);
+	Args	Split(unsigned int idx) const;
 };
 };
 
+# include <iosfwd>
 std::ostream &	operator<<(std::ostream & o, const TextCommand::Args & obj);
 
 #endif

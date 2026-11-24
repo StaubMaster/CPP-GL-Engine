@@ -3,13 +3,10 @@
 
 #include <string>
 
-namespace StringHelp
+/*struct CharPair
 {
-	/*struct CharPair
-	{
-		CharPallet	Pallet0;
-		CharPallet	Pallet1;
-	};*/
-};
+	CharPallet	Pallet0;
+	CharPallet	Pallet1;
+};*/
 
 #endif

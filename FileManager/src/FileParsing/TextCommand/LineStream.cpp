@@ -1,5 +1,5 @@
 #include "FileParsing/TextCommand/LineStream.hpp"
-#include "FileParsing/StringHelp/General.hpp"
+#include "FileParsing/StringHelp/.hpp"
 #include "FileParsing/StringHelp/CharPallet.hpp"
 #include <string>
 
@@ -18,7 +18,7 @@ bool LineStream::Continue(std::string & line)
 	if (_Stream.good())
 	{
 		std::getline(_Stream, line, '\n');
-		line = StringHelp::CutAll(line, StringHelp::CharPallet("\n\r"));
+		line = CharPallet("\n\r").Erase(line); // maybe replace with ' ' ?
 		return true;
 	}
 	return false;

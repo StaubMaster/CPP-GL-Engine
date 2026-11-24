@@ -23,9 +23,9 @@ FILES := \
 \
 	FileParsing/StringHelp/CharPallet.cpp \
 	FileParsing/StringHelp/CharPair.cpp \
-	FileParsing/StringHelp/Section.cpp \
-	FileParsing/StringHelp/Range.cpp \
-	FileParsing/StringHelp/General.cpp \
+	FileParsing/StringHelp/StringSection.cpp \
+	FileParsing/StringHelp/StringRange.cpp \
+	FileParsing/StringHelp/.cpp \
 \
 	FileParsing/ByteBlock.cpp \
 \

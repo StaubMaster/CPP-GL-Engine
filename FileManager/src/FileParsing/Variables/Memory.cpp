@@ -1,7 +1,7 @@
 #include "FileParsing/Variables/Memory.hpp"
-#include "FileParsing/StringHelp/General.hpp"
+#include "FileParsing/StringHelp/.hpp"
 #include "FileParsing/StringHelp/CharPallet.hpp"
-#include "FileParsing/StringHelp/Range.hpp"
+#include "FileParsing/StringHelp/StringRange.hpp"
 
 
 
@@ -27,7 +27,7 @@ VariableEntryBase * VariableMemory::Find(const std::string & name) const
 
 bool VariableMemory::CheckIndex(std::string & name, unsigned int & idx)
 {
-	StringHelp::Range range = StringHelp::FindPrevPair(name, StringHelp::CharPallet("["), StringHelp::CharPallet("]"));
+	StringRange range = StringHelp::FindPrevPair(name, CharPallet("["), CharPallet("]"));
 
 	if (range.Index0 == std::string::npos || range.Index1 == std::string::npos)
 	{
@@ -39,7 +39,7 @@ bool VariableMemory::CheckIndex(std::string & name, unsigned int & idx)
 		return false;
 	}
 
-	std::string idx_str = range.CutExEx(name);
+	std::string idx_str = range.LeaveExEx(name);
 	name = range.EraseInIn(name);
 	idx = std::stoul(idx_str);
 

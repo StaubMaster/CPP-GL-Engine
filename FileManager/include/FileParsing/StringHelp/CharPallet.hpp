@@ -3,25 +3,36 @@
 
 #include <string>
 
-namespace StringHelp
+namespace Container
 {
-	struct CharPallet
-	{
-		size_t			Count = 0;
-		const char *	Characters = nullptr;
+template<typename TypeItem> struct Array;
+};
 
-		~CharPallet() = default;
-		CharPallet() = default;
-		CharPallet(const CharPallet & other) = default;
-		CharPallet & operator=(const CharPallet & other) = default;
+struct CharPallet
+{
+	std::string		Pallet;
 
-		CharPallet(const char * pallet);
+	~CharPallet() = default;
+	CharPallet() = default;
+	CharPallet(const CharPallet & other) = default;
+	CharPallet & operator=(const CharPallet & other) = default;
 
-		bool	Check(char c) const;
+	CharPallet(char pallet);
+	CharPallet(const char * pallet);
+	CharPallet(const std::string & pallet);
 
-		size_t	FindNext(const std::string & str, size_t idx) const;
-		size_t	FindPrev(const std::string & str) const;
-	};
+	bool	Check(char c) const;
+
+	size_t	FindNext(const std::string & str, size_t idx) const;
+	size_t	FindPrev(const std::string & str) const;
+
+	size_t	FindNextNot(const std::string & str, size_t idx) const;
+	size_t	FindPrevNot(const std::string & str) const;
+
+	std::string		Leave(const std::string & str) const;
+	std::string		Erase(const std::string & str) const;
+
+	Container::Array<std::string>	EraseSplit(const std::string & str) const;
 };
 
 #endif
