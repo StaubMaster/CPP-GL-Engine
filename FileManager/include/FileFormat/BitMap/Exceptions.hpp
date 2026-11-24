@@ -1,25 +1,25 @@
 #ifndef  BITMAP_EXCEPTIONS_HPP
 # define BITMAP_EXCEPTIONS_HPP
 
-# include "FileParsing/ExceptionBase.hpp"
+# include "TextExceptionBase.hpp"
 # include "uint.hpp"
 
 namespace BitMap
 {
 	namespace Exceptions
 	{
-		class UnknownSignature : public ExceptionBase
+		class UnknownSignature : public TextExceptionBase
 		{
 			public:
 			UnknownSignature();
 		};
 
-		class UnknownHeader : public ExceptionBase
+		class UnknownHeader : public TextExceptionBase
 		{
 			public:
 			UnknownHeader();
 		};
-		class UnknownHeaderValue : public ExceptionBase
+		class UnknownHeaderValue : public TextExceptionBase
 		{
 			public:
 			UnknownHeaderValue(const char * name, const char * val);

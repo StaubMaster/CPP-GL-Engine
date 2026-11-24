@@ -1,5 +1,6 @@
 #include "FileParsing/TextCommand/LineStream.hpp"
-#include "FileParsing/StringHelp.hpp"
+#include "FileParsing/StringHelp/General.hpp"
+#include "FileParsing/StringHelp/CharPallet.hpp"
 #include <string>
 
 #include <iostream>

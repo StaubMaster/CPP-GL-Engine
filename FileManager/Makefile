@@ -21,6 +21,12 @@ FILES := \
 	TextExceptionBase.cpp \
 	FileExceptions.cpp \
 \
+	FileParsing/StringHelp/CharPallet.cpp \
+	FileParsing/StringHelp/CharPair.cpp \
+	FileParsing/StringHelp/Section.cpp \
+	FileParsing/StringHelp/Range.cpp \
+	FileParsing/StringHelp/General.cpp \
+\
 	FileParsing/ByteBlock.cpp \
 \
 	FileParsing/ByteStreamBase.cpp \
@@ -31,12 +37,7 @@ FILES := \
 	FileParsing/BitStreamBase.cpp \
 	FileParsing/BitStreamGetter.cpp \
 \
-	FileParsing/LineCommand.cpp \
 	FileParsing/DebugManager.cpp \
-	FileParsing/StringHelp.cpp \
-	FileParsing/ExceptionBase.cpp \
-	FileParsing/CountCheck.cpp \
-	FileParsing/ParsingCommand.cpp \
 \
 	FileParsing/TextCommand/LineStream.cpp \
 	FileParsing/TextCommand/Exceptions.cpp \

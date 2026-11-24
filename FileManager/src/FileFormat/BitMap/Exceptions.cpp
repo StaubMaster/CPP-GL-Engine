@@ -4,7 +4,7 @@
 
 
 BitMap::Exceptions::UnknownSignature::UnknownSignature()
-	: ExceptionBase()
+	: TextExceptionBase()
 {
 	Text = "BitMap: Unknown Signature.";
 }
@@ -12,7 +12,7 @@ BitMap::Exceptions::UnknownSignature::UnknownSignature()
 
 
 BitMap::Exceptions::UnknownHeader::UnknownHeader()
-	: ExceptionBase()
+	: TextExceptionBase()
 {
 	Text = "BitMap: Unknown Header.";
 }
@@ -20,35 +20,35 @@ BitMap::Exceptions::UnknownHeader::UnknownHeader()
 
 
 BitMap::Exceptions::UnknownHeaderValue::UnknownHeaderValue(const char * name, const char * val)
-	: ExceptionBase()
+	: TextExceptionBase()
 {
 	std::ostringstream ss("BitMap: UnknownHeaderValue: ");
 	ss << name << ": " << val << ".";
 	Text = ss.str();
 }
 BitMap::Exceptions::UnknownHeaderValue::UnknownHeaderValue(const char * name, uint8 val)
-	: ExceptionBase()
+	: TextExceptionBase()
 {
 	std::ostringstream ss("BitMap: UnknownHeaderValue: ");
 	ss << name << ": " << val << ".";
 	Text = ss.str();
 }
 BitMap::Exceptions::UnknownHeaderValue::UnknownHeaderValue(const char * name, uint16 val)
-	: ExceptionBase()
+	: TextExceptionBase()
 {
 	std::ostringstream ss("BitMap: UnknownHeaderValue: ");
 	ss << name << ": " << val << ".";
 	Text = ss.str();
 }
 BitMap::Exceptions::UnknownHeaderValue::UnknownHeaderValue(const char * name, uint32 val)
-	: ExceptionBase()
+	: TextExceptionBase()
 {
 	std::ostringstream ss("BitMap: UnknownHeaderValue: ");
 	ss << name << ": " << val << ".";
 	Text = ss.str();
 }
 BitMap::Exceptions::UnknownHeaderValue::UnknownHeaderValue(const char * name, uint64 val)
-	: ExceptionBase()
+	: TextExceptionBase()
 {
 	std::ostringstream ss("BitMap: UnknownHeaderValue: ");
 	ss << name << ": " << val << ".";

@@ -3,7 +3,6 @@
 
 # include "uint.hpp"
 # include "FileParsing/ByteBlock.hpp"
-# include "FileParsing/ExceptionBase.hpp"
 
 # include <exception>
 # include <string>
