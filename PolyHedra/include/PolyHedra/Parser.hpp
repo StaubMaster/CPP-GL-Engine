@@ -67,9 +67,7 @@ struct PolyHedraParser : public TextCommand::Loop
 
 
 	VariableMemory		Variables;
-
 	void	PutVariable(const TextCommand::Args & cmd_args);
-
 	float	ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const;
 
 	unsigned int	VertexOffset = 0;
@@ -129,12 +127,12 @@ struct PolyHedraParser : public TextCommand::Loop
 	void	Parameter_Check(const TextCommand::Args & cmd_args);
 	void	Parameter_File(const TextCommand::Args & cmd_args);
 
-	Trans3D		Trans;
+	Trans3D		Trans; // handle this as Variables ?
 	void	Trans_Zero(const TextCommand::Args & cmd_args);
 	void	Trans_ChangePos(const TextCommand::Args & cmd_args);
 	void	Trans_ChangeRot(const TextCommand::Args & cmd_args);
 
-	const PolyHedra *	Other = nullptr;
+	const PolyHedra *	Other = nullptr; // handle this as Variables ?
 	void	Other_Check(const TextCommand::Args & cmd_args);
 	void	Other_Clear();
 
