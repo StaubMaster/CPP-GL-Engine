@@ -134,7 +134,7 @@ void PolyHedraParser::CommandsNormal()
 	Commands.Insert(new TextCommand::FuncNormal("default",		this, &PolyHedraParser::Change_Default));
 	Commands.Insert(new TextCommand::FuncNormal("offset",		this, &PolyHedraParser::Change_Offset));
 
-	Commands.Insert(new TextCommand::FuncNormal("var",			this, &PolyHedraParser::PutVariable));
+	Commands.Insert(new TextCommand::FuncNormal("var",			this, &PolyHedraParser::Change_Variable));
 
 	Commands.Insert(new TextCommand::FuncNormal("vertex",		this, &PolyHedraParser::Place_Vertex));
 	Commands.Insert(new CommandFlagsFunc(		"circle",		this, &PolyHedraParser::Place_Circle));
@@ -153,13 +153,8 @@ void PolyHedraParser::CommandsNormal()
 	Commands.Insert(new TextCommand::FuncNormal("param",		this, &PolyHedraParser::Parameter_Check));
 	Commands.Insert(new TextCommand::FuncNormal("paramFile",	this, &PolyHedraParser::Parameter_File));
 
-	Commands.Insert(new TextCommand::FuncNormal("TransZero",		this, &PolyHedraParser::Trans_Zero));
-	Commands.Insert(new TextCommand::FuncNormal("TransPos",			this, &PolyHedraParser::Trans_ChangePos));
-	Commands.Insert(new TextCommand::FuncNormal("TransRot",			this, &PolyHedraParser::Trans_ChangeRot));
-
-	Commands.Insert(new TextCommand::FuncNormal("OtherFile",		this, &PolyHedraParser::Other_File));
-	Commands.Insert(new TextCommand::FuncNormal("OtherCombine",		this, &PolyHedraParser::Other_Combine));
-	Commands.Insert(new TextCommand::FuncNormal("OtherPut",			this, &PolyHedraParser::Other_Put));
+	Commands.Insert(new TextCommand::FuncNormal("PolyHedraCombine",		this, &PolyHedraParser::PolyHedra_Combine));
+	Commands.Insert(new TextCommand::FuncNormal("PolyHedraPut",			this, &PolyHedraParser::PolyHedra_Put));
 }
 
 
@@ -172,73 +167,89 @@ static void CheckThrow(const TextCommand::Args & cmd_args, bool check, const cha
 	}
 }
 
-void PolyHedraParser::PutVariable(const TextCommand::Args & cmd_args)
+void PolyHedraParser::Change_Variable(const TextCommand::Args & cmd_args)
 {
 	CheckThrow(cmd_args, cmd_args.Count() >= 2, "n >= 2");
-	//if (!(cmd_args.Count() >= 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 2"); }
+	//std::cout << "var:: " << cmd_args.Split(0) << '\n';
 	std::string type = cmd_args.ToString(0);
 	std::string name = cmd_args.ToString(1);
-	/*{
-		std::cout << "var:: " << cmd_args.Split(0) << '\n';
-		std::cout << "float:: " << cmd_args.Split(1) << '\n';
-	}*/
-	if (type == "_")
+	// split type check into CommandDecider ?
+	// also handle array as a variant of the normal type
+
+	if (type == "~")
 	{
 		CheckThrow(cmd_args, cmd_args.Count() == 2, "n == 2");
-		//if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
 		// remove Variable
 	}
 	else if (type == "float")
 	{
 		CheckThrow(cmd_args, cmd_args.Count() == 3, "n == 3");
-		//if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
-		if (cmd_args.ToString(2) == "return")
+		/*if (cmd_args.ToString(2) == "return")
 		{ }
-		else
+		else*/
 		{
-			Variables.Set(name, cmd_args.ToFloat(2));
+			Variables.Set(name, ToVariable<float>(cmd_args, 2));
 		}
 	}
 	else if (type == "index")
 	{
 		CheckThrow(cmd_args, cmd_args.Count() == 3, "n == 3");
-		//if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
 		if (cmd_args.ToString(2) == "return")
 		{
 			Variables.Set(name, VariableIndexReturn);
 		}
 		else
 		{
-			Variables.Set(name, ToVertexIndex(cmd_args, 2));
+			Variables.Set(name, ToVariable<unsigned int>(cmd_args, 2));
 		}
 	}
 	else if (type == "index[]")
 	{
 		CheckThrow(cmd_args, cmd_args.Count() >= 3, "n >= 3");
-		//if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
 		if (cmd_args.ToString(2) == "return")
 		{
 			CheckThrow(cmd_args, cmd_args.Count() == 3, "n == 3");
-			//if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
 			Variables.Set(name, VariableIndexArrayReturn);
 		}
 		else
 		{
 			CheckThrow(cmd_args, cmd_args.Count() >= 3, "n >= 3");
-			//if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
 			Container::Array<unsigned int> data(cmd_args.Count() - 2);
 			for (unsigned int i = 0; i < data.Length(); i++)
 			{
-				data[i] = ToVertexIndex(cmd_args, i + 2);
+				data[i] = ToVariable<unsigned int>(cmd_args, i + 2);
 			}
 			Variables.Set(name, data);
 		}
 	}
-}
+	else if (type == "Trans3D")
+	{
+		CheckThrow(cmd_args, cmd_args.Count() == 8, "n == 8");
+		Trans3D trans(
+			VectorF3(
+				ToVariable<float>(cmd_args, 2),
+				ToVariable<float>(cmd_args, 3),
+				ToVariable<float>(cmd_args, 4)
+			),
+			EulerAngle3D::Degrees(
+				ToVariable<float>(cmd_args, 5),
+				ToVariable<float>(cmd_args, 6),
+				ToVariable<float>(cmd_args, 7)
+			)
+		);
+		Variables.Set(name, trans);
+	}
+	else if (type == "PolyHedra")
+	{
+		CheckThrow(cmd_args, cmd_args.Count() == 3, "n == 3");
+		if (Manager == nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "Manager missing for polyhedra Variable"); }
 
-float PolyHedraParser::ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const
-{
-	return ParsingVariable::Float::Parse(Variables, cmd_args.ToString(idx));
+		FileInfo file = File.Directory().File(cmd_args.ToString(2).c_str());
+		if (!file.Exists()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Bad PolyHedra File"); } // this is not InvalidArgument. this is generic error
+
+		PolyHedra * polyhedra  = Manager -> Take_Data(file);
+		Variables.Set(name, polyhedra);
+	}
 }
 
 static bool IsLiteralVertexIndex(const std::string & str)
@@ -261,7 +272,12 @@ static bool IsLiteralVertexIndex(const std::string & str)
 
 	return false;
 }
-unsigned int PolyHedraParser::ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int idx) const
+
+template<> void PolyHedraParser::ToVariable<float>(const TextCommand::Args & cmd_args, unsigned int idx, float & data) const
+{
+	data = ParsingVariable::Float::Parse(Variables, cmd_args.ToString(idx));
+}
+template<> void PolyHedraParser::ToVariable<unsigned int>(const TextCommand::Args & cmd_args, unsigned int idx, unsigned int & data) const
 {
 	std::string str = cmd_args.ToString(idx);
 	if (IsLiteralVertexIndex(str))
@@ -269,20 +285,30 @@ unsigned int PolyHedraParser::ToVertexIndex(const TextCommand::Args & cmd_args, 
 		// check for len == 0 ?
 		if (str[0] == '+' || str[0] == '-')
 		{
-			return VertexOffset + cmd_args.ToInt32(idx);
+			data = VertexOffset + cmd_args.ToInt32(idx);
 		}
 		else
 		{
-			return cmd_args.ToUInt32(idx);
+			data = cmd_args.ToUInt32(idx);
 		}
 	}
 	else
 	{
-		unsigned int value;
-		Variables.Get(str, value);
-		return value;
+		Variables.Get(str, data);
 	}
 }
+template<> void PolyHedraParser::ToVariable<Trans3D>(const TextCommand::Args & cmd_args, unsigned int idx, Trans3D & data) const
+{
+	std::string str = cmd_args.ToString(idx);
+	Variables.Get(str, data);
+}
+template<> void PolyHedraParser::ToVariable<PolyHedra *>(const TextCommand::Args & cmd_args, unsigned int idx, PolyHedra * & data) const
+{
+	std::string str = cmd_args.ToString(idx);
+	Variables.Get(str, data);
+}
+
+
 
 __attribute__((unused)) static void Display_Data(const char * name, const Container::Array<unsigned int> & data)
 {
@@ -301,9 +327,7 @@ __attribute__((unused)) static void Display_Data(const char * name, const Contai
 
 
 PolyHedraParser::~PolyHedraParser()
-{
-	Other_Clear();
-}
+{ }
 PolyHedraParser::PolyHedraParser()
 	: TextCommand::Loop()
 {
@@ -478,7 +502,7 @@ void PolyHedraParser::Change_Offset(const TextCommand::Args & cmd_args)
 	}
 	else
 	{
-		VertexOffset = ToVertexIndex(cmd_args, 0);
+		VertexOffset = ToVariable<unsigned int>(cmd_args, 0);
 	}
 }
 
@@ -591,9 +615,9 @@ void PolyHedraParser::Place_Vertex(const TextCommand::Args & cmd_args)
 
 	VariableIndexReturn = Object -> Corners.Count();
 	Object -> Insert_Corn(
-		ToFloat(cmd_args, 0),
-		ToFloat(cmd_args, 1),
-		ToFloat(cmd_args, 2)
+		ToVariable<float>(cmd_args, 0),
+		ToVariable<float>(cmd_args, 1),
+		ToVariable<float>(cmd_args, 2)
 	);
 }
 void PolyHedraParser::Place_Circle(const TextCommand::Args & cmd_args, const CommandFlags & flags)
@@ -605,20 +629,20 @@ void PolyHedraParser::Place_Circle(const TextCommand::Args & cmd_args, const Com
 	int step_off = cmd_args.ToInt32(2);
 
 	VectorF3 center(
-		ToFloat(cmd_args, 3),
-		ToFloat(cmd_args, 4),
-		ToFloat(cmd_args, 5)
+		ToVariable<float>(cmd_args, 3),
+		ToVariable<float>(cmd_args, 4),
+		ToVariable<float>(cmd_args, 5)
 	);
 	VectorF3 radius(
-		ToFloat(cmd_args, 6),
+		ToVariable<float>(cmd_args, 6),
 		0,
 		0
 	);
 
 	VectorF3 normal(
-		cmd_args.ToFloat(7),
-		cmd_args.ToFloat(8),
-		cmd_args.ToFloat(9)
+		ToVariable<float>(cmd_args, 7),
+		ToVariable<float>(cmd_args, 8),
+		ToVariable<float>(cmd_args, 9)
 	);
 
 	/*if (flags.Direction)
@@ -627,7 +651,7 @@ void PolyHedraParser::Place_Circle(const TextCommand::Args & cmd_args, const Com
 	}*/
 
 	EulerAngle3D angle = EulerAngle3D::PointToZ(normal);
-	Angle offset = Angle::Degrees(cmd_args.ToFloat(10));
+	Angle offset = Angle::Degrees(ToVariable<float>(cmd_args, 10));
 
 	VariableIndexArrayReturn.NewLength(step_num, 0xFFFFFFFF);
 	unsigned int o = Object -> Corners.Count();
@@ -658,7 +682,7 @@ void PolyHedraParser::Place_Face(const TextCommand::Args & cmd_args, const Comma
 
 	for (unsigned int i = 0; i < len; i++)
 	{
-		idx[i] = ToVertexIndex(cmd_args, i);
+		idx[i] = ToVariable<unsigned int>(cmd_args, i);
 	}
 
 	if (len == 3)
@@ -698,8 +722,8 @@ void PolyHedraParser::Place_Belt(const TextCommand::Args & cmd_args, const Comma
 		unsigned int i0 = i;
 		unsigned int i1 = i + len;
 
-		list0[i] = ToVertexIndex(cmd_args, i0);
-		list1[i] = ToVertexIndex(cmd_args, i1);
+		list0[i] = ToVariable<unsigned int>(cmd_args, i0);
+		list1[i] = ToVariable<unsigned int>(cmd_args, i1);
 	}
 
 	Object -> Belt(len, list0, list1, flags.Direction, flags.Closed, NormalGroup);
@@ -721,19 +745,19 @@ void PolyHedraParser::Place_Fan(const TextCommand::Args & cmd_args, const Comman
 
 	if (!flags.Middle)
 	{
-		middle = ToVertexIndex(cmd_args, 0);
+		middle = ToVariable<unsigned int>(cmd_args, 0);
 		for (unsigned int i = 0; i < len; i++)
 		{
-			blade[i] = ToVertexIndex(cmd_args, i + 1);
+			blade[i] = ToVariable<unsigned int>(cmd_args, i + 1);
 		}
 	}
 	else
 	{
 		for (unsigned int i = 0; i < len; i++)
 		{
-			blade[i] = ToVertexIndex(cmd_args, i);
+			blade[i] = ToVariable<unsigned int>(cmd_args, i);
 		}
-		middle = ToVertexIndex(cmd_args, len);
+		middle = ToVariable<unsigned int>(cmd_args, len);
 	}
 
 	Object -> Fan(len, middle, blade, flags.Direction, flags.Middle, flags.Closed, NormalGroup);
@@ -804,6 +828,7 @@ void PolyHedraParser::Normal_Change(const TextCommand::Args & cmd_args)
 	}
 }
 
+// Parameters should check Type
 void PolyHedraParser::Parameter_Check(const TextCommand::Args & cmd_args)
 {
 	unsigned int n = cmd_args.Count();
@@ -854,91 +879,21 @@ void PolyHedraParser::Parameter_File(const TextCommand::Args & cmd_args)
 	parser.Done();
 }
 
-void PolyHedraParser::Trans_Zero(const TextCommand::Args & cmd_args)
+void PolyHedraParser::PolyHedra_Combine(const TextCommand::Args & cmd_args)
 {
-	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
 
-	Trans = Trans3D();
+	Object -> Combine(*ToVariable<PolyHedra*>(cmd_args, 0), ToVariable<Trans3D>(cmd_args, 1));
 }
-void PolyHedraParser::Trans_ChangePos(const TextCommand::Args & cmd_args)
-{
-	if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
-
-	Trans.Position.X = cmd_args.ToFloat(0);
-	Trans.Position.Y = cmd_args.ToFloat(1);
-	Trans.Position.Z = cmd_args.ToFloat(2);
-}
-void PolyHedraParser::Trans_ChangeRot(const TextCommand::Args & cmd_args)
-{
-	if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
-
-	Trans.Rotation.Z0 = Angle::Degrees(cmd_args.ToFloat(0));
-	Trans.Rotation.X1 = Angle::Degrees(cmd_args.ToFloat(1));
-	Trans.Rotation.Y2 = Angle::Degrees(cmd_args.ToFloat(2));
-}
-
-void PolyHedraParser::Other_Check(const TextCommand::Args & cmd_args)
-{
-	if (Other == nullptr)
-	{
-		throw TextCommand::Exception::InvalidState(cmd_args, "Other Missing");
-	}
-}
-void PolyHedraParser::Other_Clear()
-{
-	if (Other != nullptr)
-	{
-		if (Manager == nullptr)
-		{
-			delete Other;
-		}
-		Other = nullptr;
-	}
-}
-void PolyHedraParser::Other_File(const TextCommand::Args & cmd_args)
+void PolyHedraParser::PolyHedra_Put(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+	if (Manager == nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "Manager missing for Other"); }
 
-	Other_Clear();
-
-	FileInfo file = File.Directory().File(cmd_args.ToString(0).c_str());
-	if (!file.Exists()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Bad PolyHedra File"); } // this is not InvalidArgument. this is generic error
-
-	if (Manager == nullptr)
-	{
-		Other = PolyHedraParser::Load(file, nullptr);
-	}
-	else
-	{
-		Other = Manager -> Take_Data(file);
-	}
-}
-
-void PolyHedraParser::Other_Combine(const TextCommand::Args & cmd_args)
-{
-	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
-
-	Other_Check(cmd_args);
-
-	Object -> Combine(*Other, Trans);
-}
-void PolyHedraParser::Other_Put(const TextCommand::Args & cmd_args)
-{
-	if (!(cmd_args.Count() == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 0"); }
-
-	Other_Check(cmd_args);
-
-	if (Manager != nullptr)
-	{
-		PolyHedra::PolyHedraOther polyhedra_other;
-		polyhedra_other.Object = Other;
-		polyhedra_other.Trans = Trans;
-		Object -> Others.Insert(polyhedra_other);
-	}
-	else
-	{
-		Object -> Combine(*Other, Trans);
-	}
+	PolyHedra::PolyHedraOther polyhedra_other;
+	polyhedra_other.Object = ToVariable<PolyHedra*>(cmd_args, 0);
+	polyhedra_other.Trans = ToVariable<Trans3D>(cmd_args, 1);
+	Object -> Others.Insert(polyhedra_other);
 }
 
 void PolyHedraParser::Done()

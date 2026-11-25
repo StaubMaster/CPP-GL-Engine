@@ -57,6 +57,25 @@ struct PolyHedraParser : public TextCommand::Loop
 	
 		bool	TryInvoke(const TextCommand::Args & cmd_args) const override;
 	};
+	/* Flag Combinations
+		1 Flags: 6
+			< >
+			{ }
+			0 1
+		2 Flags: 12
+			<{ >{
+			<} >}
+			<0 >0
+			<1 >1
+			{0 }0
+			{1 }1
+		3 Flags: 8
+			<{0 >{0
+			<}0 >}0
+			<{1 >{1
+			<}1 >}1
+		Total Flags: 26
+	*/
 	// each Command takes different Flags
 
 	void	CommandsDefault();
@@ -67,20 +86,21 @@ struct PolyHedraParser : public TextCommand::Loop
 
 
 	VariableMemory		Variables;
-	void	PutVariable(const TextCommand::Args & cmd_args);
-	float	ToFloat(const TextCommand::Args & cmd_args, unsigned int idx) const;
 
-	unsigned int	VertexOffset = 0;
-	unsigned int	ToVertexIndex(const TextCommand::Args & cmd_args, unsigned int idx) const;
-	/* ToVertex
-		Literal
-		index Variable
-		index[] Variable with index ?
-	*/
-
-	// store this in a variable called "return" ?
+	// store these in a variable called "return" ?
 	unsigned int					VariableIndexReturn;
 	Container::Array<unsigned int>	VariableIndexArrayReturn;
+
+	void	Change_Variable(const TextCommand::Args & cmd_args);
+
+	unsigned int	VertexOffset = 0;
+	template<typename Type> void	ToVariable(const TextCommand::Args & cmd_args, unsigned int idx, Type & data) const;
+	template<typename Type> Type	ToVariable(const TextCommand::Args & cmd_args, unsigned int idx) const
+	{
+		Type data;
+		ToVariable(cmd_args, idx, data);
+		return data;
+	}
 
 
 
@@ -124,21 +144,12 @@ struct PolyHedraParser : public TextCommand::Loop
 	unsigned int	NormalGroup = 0xFFFFFFFF;
 	void	Normal_Change(const TextCommand::Args & cmd_args);
 
+	// Parameters should check Type
 	void	Parameter_Check(const TextCommand::Args & cmd_args);
 	void	Parameter_File(const TextCommand::Args & cmd_args);
 
-	Trans3D		Trans; // handle this as Variables ?
-	void	Trans_Zero(const TextCommand::Args & cmd_args);
-	void	Trans_ChangePos(const TextCommand::Args & cmd_args);
-	void	Trans_ChangeRot(const TextCommand::Args & cmd_args);
-
-	const PolyHedra *	Other = nullptr; // handle this as Variables ?
-	void	Other_Check(const TextCommand::Args & cmd_args);
-	void	Other_Clear();
-
-	void	Other_File(const TextCommand::Args & cmd_args);
-	void	Other_Combine(const TextCommand::Args & cmd_args);
-	void	Other_Put(const TextCommand::Args & cmd_args);
+	void	PolyHedra_Combine(const TextCommand::Args & cmd_args);
+	void	PolyHedra_Put(const TextCommand::Args & cmd_args);
 
 	void	Done();
 
