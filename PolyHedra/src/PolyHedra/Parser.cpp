@@ -164,50 +164,74 @@ void PolyHedraParser::CommandsNormal()
 
 
 
+static void CheckThrow(const TextCommand::Args & cmd_args, bool check, const char * str)
+{
+	if (!check)
+	{
+		throw TextCommand::Exception::InvalidArgumentCount(cmd_args, str);
+	}
+}
+
 void PolyHedraParser::PutVariable(const TextCommand::Args & cmd_args)
 {
-	// make Sub Commands
-	// put in TextCommand::Args
-	if (!(cmd_args.Count() >= 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 2"); }
+	CheckThrow(cmd_args, cmd_args.Count() >= 2, "n >= 2");
+	//if (!(cmd_args.Count() >= 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 2"); }
 	std::string type = cmd_args.ToString(0);
 	std::string name = cmd_args.ToString(1);
+	/*{
+		std::cout << "var:: " << cmd_args.Split(0) << '\n';
+		std::cout << "float:: " << cmd_args.Split(1) << '\n';
+	}*/
 	if (type == "_")
 	{
-		if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
+		CheckThrow(cmd_args, cmd_args.Count() == 2, "n == 2");
+		//if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
 		// remove Variable
 	}
-	else
+	else if (type == "float")
 	{
-		if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
+		CheckThrow(cmd_args, cmd_args.Count() == 3, "n == 3");
+		//if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
+		if (cmd_args.ToString(2) == "return")
+		{ }
+		else
+		{
+			Variables.Set(name, cmd_args.ToFloat(2));
+		}
+	}
+	else if (type == "index")
+	{
+		CheckThrow(cmd_args, cmd_args.Count() == 3, "n == 3");
+		//if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
 		if (cmd_args.ToString(2) == "return")
 		{
-			if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
-			     if (type == "float")	{ }
-			else if (type == "index")	{ Variables.Set(name, VariableIndexReturn); }
-			else if (type == "index[]")	{ Variables.Set(name, VariableIndexArrayReturn); }
+			Variables.Set(name, VariableIndexReturn);
 		}
 		else
 		{
-			if (type == "float")
+			Variables.Set(name, ToVertexIndex(cmd_args, 2));
+		}
+	}
+	else if (type == "index[]")
+	{
+		CheckThrow(cmd_args, cmd_args.Count() >= 3, "n >= 3");
+		//if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
+		if (cmd_args.ToString(2) == "return")
+		{
+			CheckThrow(cmd_args, cmd_args.Count() == 3, "n == 3");
+			//if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
+			Variables.Set(name, VariableIndexArrayReturn);
+		}
+		else
+		{
+			CheckThrow(cmd_args, cmd_args.Count() >= 3, "n >= 3");
+			//if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
+			Container::Array<unsigned int> data(cmd_args.Count() - 2);
+			for (unsigned int i = 0; i < data.Length(); i++)
 			{
-				if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
-				Variables.Set(name, cmd_args.ToFloat(2));
+				data[i] = ToVertexIndex(cmd_args, i + 2);
 			}
-			else if (type == "index")
-			{
-				if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
-				Variables.Set(name, ToVertexIndex(cmd_args, 2));
-			}
-			else if (type == "index[]")
-			{
-				if (!(cmd_args.Count() >= 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3"); }
-				Container::Array<unsigned int> data(cmd_args.Count() - 2);
-				for (unsigned int i = 0; i < data.Length(); i++)
-				{
-					data[i] = ToVertexIndex(cmd_args, i + 2);
-				}
-				Variables.Set(name, data);
-			}
+			Variables.Set(name, data);
 		}
 	}
 }
