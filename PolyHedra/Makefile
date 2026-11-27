@@ -14,13 +14,14 @@ FILES := \
 ################################################################
 
 FILES += \
-	PolyHedra.cpp \
-	Parser.cpp \
+	Skin.cpp \
+	Flesh.cpp \
+	_.cpp \
+	\
 	Entry.cpp \
 	Manager.cpp \
 	Generate.cpp \
-\
-	Skin/Skin.cpp \
+	Parser.cpp \
 
 ################################################################
 

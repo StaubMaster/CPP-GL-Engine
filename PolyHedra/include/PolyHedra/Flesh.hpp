@@ -1,18 +1,14 @@
-#ifndef  POLYHEDRA_HPP
-# define POLYHEDRA_HPP
-
-# include "ValueType/Vector/F3.hpp"
+#ifndef  POLYHEDRA_FLESH_HPP
+# define POLYHEDRA_FLESH_HPP
 
 # include "Generics/Container/Binary.hpp"
 
-# include "PolyHedra/Skin/Skin.hpp"
+# include "ValueType/Vector/F3.hpp"
 
 struct BoxF3;
 struct Trans3D;
 
-# include <string>
-
-class PolyHedra
+class PolyHedraFlesh
 {
 	public:
 	struct Corner
@@ -82,45 +78,28 @@ class PolyHedra
 	void	Fan(unsigned int len, unsigned int middle, unsigned int blade[], bool f_direction, bool f_middle, bool f_closed, unsigned int normal_group);
 
 	public:
-	void	Done();
+	void	TrimData();
+
+
 
 	public:
-	BoxF3	CalcBound() const; // LimitBox()
-	// LimitDist()
-	// CenterAverage()
+	//void	Combine(const PolyHedraFlesh & other);
+	void	Combine(const PolyHedraFlesh & other, const Trans3D & trans);
+
+
 
 	public:
-	void	Combine(const PolyHedra & other);
-	void	Combine(const PolyHedra & other, const Trans3D & trans);
+	BoxF3	LimitBox() const;
+	//float	LimitDist() const;
+	//VectorF3	CenterAverage() const;
+
+
 
 	public:
-	::Skin	Skin;
-
-	public:
-	// store this in PolyHedraEntry ?
-	/* this is bad here
-		PolyHedra should just be static geometry Data
-		make something else that contains multiple PolyHedras relative to eachother
-	*/
-	/*struct PolyHedraOther
-	{
-		const PolyHedra *	Object;
-		Trans3D				Trans; // Matrix ?
-	};
-	Container::Binary<PolyHedraOther>	Others;*/
-	//void	OthersCombine() { } // why is this in the Header ?
-
-	public:
-	bool	IsAutomatic = false; // store in Manager::Entry ?
-
-	public:
-	std::string		ToInfo() const; // put in Manager::Entry ?
-
-	public:
-	~PolyHedra() = default;
-	PolyHedra() = default;
-	PolyHedra(const PolyHedra & other) = delete;
-	PolyHedra & operator=(const PolyHedra & other) = delete;
+	~PolyHedraFlesh() = default;
+	PolyHedraFlesh() = default;
+	PolyHedraFlesh(const PolyHedraFlesh & other) = delete;
+	PolyHedraFlesh & operator=(const PolyHedraFlesh & other) = delete;
 };
 
 #endif

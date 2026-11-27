@@ -1,7 +1,7 @@
 #include "PolyHedra/Manager.hpp"
 #include "PolyHedra/Entry.hpp"
-#include "PolyHedra/PolyHedra.hpp"
 #include "PolyHedra/Parser.hpp"
+#include "PolyHedra/.hpp"
 
 
 

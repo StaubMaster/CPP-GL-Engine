@@ -1,5 +1,5 @@
-#ifndef  SKIN_HPP
-# define SKIN_HPP
+#ifndef  POLYHEDRA_SKIN_HPP
+# define POLYHEDRA_SKIN_HPP
 
 # include "ValueType/Vector/U2.hpp"
 # include "ValueType/Vector/F2.hpp"
@@ -12,7 +12,7 @@ namespace Texture { class Array2D; };
 
 class PolyHedra;
 
-class Skin
+class PolyHedraSkin
 {
 	public:
 	struct Corner
@@ -52,21 +52,6 @@ class Skin
 	ColorF4						Color;
 
 	public:
-	~Skin() = default;
-	//Skin() = default;
-	Skin(); // only needed for Color
-	Skin(const Skin & other) = delete;
-	Skin & operator=(const Skin & other) = delete;
-
-	public:
-	Texture::Array2D	ToTexture() const;
-
-	public:
-	void	Combine(const Skin & other);
-
-
-
-	public:
 	void	Insert_Corn(float x, float y, unsigned int texture_idx);
 	void	Insert_Corn(VectorF2 vec, unsigned int texture_idx);
 
@@ -83,10 +68,23 @@ class Skin
 	void	Fan(unsigned int len, unsigned int middle, unsigned int blade[], bool f_direction, bool f_middle, bool f_closed);
 
 	public:
-	void	Done();
+	void	TrimData();
 
 	public:
-	struct ParsingData;
+	void	Combine(const PolyHedraSkin & other);
+
+
+
+	public:
+	Texture::Array2D	ToTexture() const;
+
+
+
+	public:
+	~PolyHedraSkin() = default;
+	PolyHedraSkin(); // only needed for Color
+	PolyHedraSkin(const PolyHedraSkin & other) = delete;
+	PolyHedraSkin & operator=(const PolyHedraSkin & other) = delete;
 };
 
 #endif
