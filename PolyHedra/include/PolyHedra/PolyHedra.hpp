@@ -1,27 +1,61 @@
 #ifndef  POLYHEDRA_HPP
 # define POLYHEDRA_HPP
 
+# include "ValueType/Vector/F3.hpp"
+
 # include "Generics/Container/Binary.hpp"
-
-# include "FileInfo.hpp"
-
-# include <string>
 
 # include "PolyHedra/Skin/Skin.hpp"
 
 struct BoxF3;
+struct Trans3D;
 
-//struct Trans3D;
-# include "ValueType/Trans/3D.hpp"
-
-class PolyHedraFileCollection;
+# include <string>
 
 class PolyHedra
 {
 	public:
-	struct Corner;
-	struct Face;
-	struct Edge;
+	struct Corner
+	{
+		VectorF3	Position;
+
+		~Corner() = default;
+		Corner() = default;
+		Corner(const Corner & other) = default;
+		Corner & operator=(const Corner & other) = default;
+
+		Corner(VectorF3 pos);
+		Corner(float x, float y, float z);
+	};
+	struct Face
+	{
+		unsigned int	idx[3] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+		unsigned int	NormalGroup = 0xFFFFFFFF;
+		VectorF3		Normal; // Calculate when Buffer is made ?
+
+		bool	Check(unsigned int count) const;
+
+		~Face() = default;
+		Face() = default;
+		Face(const Face & other) = default;
+		Face & operator=(const Face & other) = default;
+
+		Face(unsigned int idx0, unsigned int idx1, unsigned int idx2);
+		Face(unsigned int idx0, unsigned int idx1, unsigned int idx2, unsigned int normal_group);
+	};
+	struct Edge
+	{
+		unsigned int	idx[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
+
+		bool	Check(unsigned int count) const;
+
+		~Edge() = default;
+		Edge() = default;
+		Edge(const Edge & other) = default;
+		Edge & operator=(const Edge & other) = default;
+
+		Edge(unsigned int idx0, unsigned int idx1);
+	};
 
 	public:
 	Container::Binary<Corner>	Corners;
@@ -37,6 +71,7 @@ class PolyHedra
 	void	Insert_Face3(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int normal_group);
 	void	Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3);
 	void	Insert_Face4(unsigned int corn0, unsigned int corn1, unsigned int corn2, unsigned int corn3, unsigned int normal_group);
+	// take (unsigend int corn[n])
 
 	public:
 	void	Belt_Face(unsigned int temp[4], bool f_direction, unsigned int normal_group);
@@ -67,33 +102,13 @@ class PolyHedra
 		PolyHedra should just be static geometry Data
 		make something else that contains multiple PolyHedras relative to eachother
 	*/
-	struct PolyHedraOther
+	/*struct PolyHedraOther
 	{
 		const PolyHedra *	Object;
 		Trans3D				Trans; // Matrix ?
 	};
-	Container::Binary<PolyHedraOther>	Others;
-	void	OthersCombine() { } // why is this in the Header ?
-	/* store static Other PolyHedra
-		only combine them when Buffer is made
-		not combining them means less space is taken if same PolyHedra us used multiple times
-		and they can be more reasily changed in Editor
-		make a function that .Combines all static Others
-
-		are dynamics even needed then ?
-		just have a Container of Other
-	*/
-	/* what about Parameter Files
-		files that make Geometry based on Parameters
-		and then a Skin is applied afterwards
-		how to apply Skin to Other ?
-
-		"Skin" applys Skin File to this
-		make "otherSkin" that applys Skin to other
-
-		what if I want to put the same Geometry with different Skins ?
-		"otherPut" puts other in Container
-	*/
+	Container::Binary<PolyHedraOther>	Others;*/
+	//void	OthersCombine() { } // why is this in the Header ?
 
 	public:
 	bool	IsAutomatic = false; // store in Manager::Entry ?
@@ -102,10 +117,8 @@ class PolyHedra
 	std::string		ToInfo() const; // put in Manager::Entry ?
 
 	public:
-	~PolyHedra();
-	PolyHedra();
-
-	public:
+	~PolyHedra() = default;
+	PolyHedra() = default;
 	PolyHedra(const PolyHedra & other) = delete;
 	PolyHedra & operator=(const PolyHedra & other) = delete;
 };

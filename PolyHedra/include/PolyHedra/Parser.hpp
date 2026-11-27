@@ -117,6 +117,7 @@ struct PolyHedraParser : public TextCommand::Loop
 
 	void	Check_Type(const TextCommand::Args & cmd_args);
 	void	Change_Format(const TextCommand::Args & cmd_args);
+	// Format: Verbose		full function name
 
 	void	New_Skin(const TextCommand::Args & cmd_args);
 
@@ -149,7 +150,7 @@ struct PolyHedraParser : public TextCommand::Loop
 	void	Parameter_File(const TextCommand::Args & cmd_args);
 
 	void	PolyHedra_Combine(const TextCommand::Args & cmd_args);
-	void	PolyHedra_Put(const TextCommand::Args & cmd_args);
+	//void	PolyHedra_Put(const TextCommand::Args & cmd_args);
 
 
 
@@ -164,7 +165,7 @@ struct PolyHedraParser : public TextCommand::Loop
 	void	Skin_Parse_Type(const TextCommand::Args & cmd_args);
 	void	Skin_Parse_Format(const TextCommand::Args & cmd_args);
 
-	void	Skin_Parse_Name(const TextCommand::Args & cmd_args);
+	//void	Skin_Parse_Name(const TextCommand::Args & cmd_args);
 	void	Skin_Parse_Size(const TextCommand::Args & cmd_args);
 	void	Skin_Parse_Image(const TextCommand::Args & cmd_args);
 

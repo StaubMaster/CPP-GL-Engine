@@ -6,14 +6,16 @@
 class PolyHedra;
 class PolyHedraManager;
 
+# include <string>
+
 struct PolyHedraEntry
 {
+	PolyHedraManager &	Manager;
+	PolyHedraEntry(PolyHedraManager & manager);
+
 	// Name
 	FileInfo			File;
 	PolyHedra *			Data = nullptr;
-
-	PolyHedraManager &	Manager;
-	PolyHedraEntry(PolyHedraManager & manager);
 
 	void	Load();
 };

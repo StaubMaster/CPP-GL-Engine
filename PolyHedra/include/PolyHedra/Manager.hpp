@@ -7,7 +7,6 @@ class FileInfo;
 # include "Generics/Container/Binary.hpp"
 
 class PolyHedra;
-//struct PolyHedraParser;
 struct PolyHedraEntry;
 
 # include <iosfwd>

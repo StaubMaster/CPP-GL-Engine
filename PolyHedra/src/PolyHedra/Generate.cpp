@@ -1,9 +1,6 @@
 #include "PolyHedra/Generate.hpp"
 #include "PolyHedra/PolyHedra.hpp"
-#include "PolyHedra/Data.hpp"
-
 #include "PolyHedra/Skin/Skin.hpp"
-#include "PolyHedra/Skin/Data.hpp"
 
 #include "Graphics/Texture/Generate.hpp"
 

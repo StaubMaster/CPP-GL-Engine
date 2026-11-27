@@ -1,5 +1,4 @@
 #include "PolyHedra/Parser.hpp"
-#include "PolyHedra/Data.hpp"
 #include "PolyHedra/Generate.hpp"
 #include "PolyHedra/Entry.hpp"
 #include "PolyHedra/Manager.hpp"
@@ -154,7 +153,7 @@ void PolyHedraParser::CommandsNormal()
 	Commands.Insert(new TextCommand::FuncNormal("paramFile",	this, &PolyHedraParser::Parameter_File));
 
 	Commands.Insert(new TextCommand::FuncNormal("PolyHedraCombine",		this, &PolyHedraParser::PolyHedra_Combine));
-	Commands.Insert(new TextCommand::FuncNormal("PolyHedraPut",			this, &PolyHedraParser::PolyHedra_Put));
+	//Commands.Insert(new TextCommand::FuncNormal("PolyHedraPut",			this, &PolyHedraParser::PolyHedra_Put));
 }
 
 
@@ -899,7 +898,7 @@ void PolyHedraParser::PolyHedra_Combine(const TextCommand::Args & cmd_args)
 
 	Object -> Combine(*ToVariable<PolyHedra*>(cmd_args, 0), ToVariable<Trans3D>(cmd_args, 1));
 }
-void PolyHedraParser::PolyHedra_Put(const TextCommand::Args & cmd_args)
+/*void PolyHedraParser::PolyHedra_Put(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
 	if (Manager == nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "Manager missing for Other"); }
@@ -908,14 +907,13 @@ void PolyHedraParser::PolyHedra_Put(const TextCommand::Args & cmd_args)
 	polyhedra_other.Object = ToVariable<PolyHedra*>(cmd_args, 0);
 	polyhedra_other.Trans = ToVariable<Trans3D>(cmd_args, 1);
 	Object -> Others.Insert(polyhedra_other);
-}
+}*/
 
 
 
-#include "PolyHedra/Skin/Data.hpp"
 void PolyHedraParser::CommandsSkin()
 {
-	Commands.Insert(new TextCommand::FuncNormal("Name",	this, &PolyHedraParser::Skin_Parse_Name));
+	//Commands.Insert(new TextCommand::FuncNormal("Name",	this, &PolyHedraParser::Skin_Parse_Name));
 	Commands.Insert(new TextCommand::FuncNormal("Size",	this, &PolyHedraParser::Skin_Parse_Size));
 	Commands.Insert(new TextCommand::FuncNormal("Img",	this, &PolyHedraParser::Skin_Parse_Image));
 
@@ -1011,12 +1009,12 @@ void PolyHedraParser::Skin_Parse_Format(const TextCommand::Args & cmd_args)
 	if (cmd_args.ToString(0) != "S_2025_10_27") { throw TextCommand::Exception::InvalidArgument(cmd_args, 0); }
 }
 
-void PolyHedraParser::Skin_Parse_Name(const TextCommand::Args & cmd_args)
+/*void PolyHedraParser::Skin_Parse_Name(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
 
 	Object -> Skin.Name = cmd_args.ToString(0);
-}
+}*/
 void PolyHedraParser::Skin_Parse_Size(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
@@ -1430,8 +1428,6 @@ void PolyHedraParser::Skin_Parse_Multi(const TextCommand::Args & cmd_args)
 	}
 }
 
-#include "PolyHedra/PolyHedra.hpp"
-#include "PolyHedra/Data.hpp"
 /* take a position and an axis from that position
 align texture to that axis
 

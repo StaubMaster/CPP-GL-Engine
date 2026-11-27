@@ -4,29 +4,7 @@ change PolyHedra/include/Polyhedra/Polyhedra.hpp to PolyHedra/include/Polyhedra/
 
 
 
-Parsing
-	remove .skin Parsing, put into .polyhedra Parsing
-	"Format Skin" in .polyhedra should Parse .skin Commands
-
-
-
-make Skin no longer a seperate Object
-
-
-
-PolyHedra
-	should just be the Grometry Data stuff
-	can parse other PolyHedra to combine, but no dynamic stuff
-	dynamic stuff should be a different thing
-
-PolySoma
-	multiple dynamic PolyHedra
-	can include other PolySoma
-	can put other PolySoma at a relative Orientation to the Parent ?
-
-
-
-maybe make a "Format Explicite"
+maybe make a "Format Verbose"
 where you specify the full function name
 
 

@@ -1,23 +1,43 @@
 #include "PolyHedra/PolyHedra.hpp"
-#include "PolyHedra/Data.hpp"
-
 #include "PolyHedra/Skin/Skin.hpp"
-#include "PolyHedra/Skin/Data.hpp"
 
-#include "ValueType/Box/F3.hpp"
 
-#include "Graphics/Texture/Generate.hpp"
-#include "Image.hpp"
 
-#include "Generics/Container/Array.hpp"
+PolyHedra::Corner::Corner(VectorF3 pos)
+	: Position(pos)
+{ }
+PolyHedra::Corner::Corner(float x, float y, float z)
+	: Position(x, y, z)
+{ }
 
-#include "FileParsing/Variables/Float.hpp"
 
-//#include "FileInfo.hpp"
 
-#include <sstream>
-#include <iostream>
-#include "ValueType/_Show.hpp"
+bool PolyHedra::Face::Check(unsigned int count) const
+{
+	return (idx[0] < count &&
+			idx[1] < count &&
+			idx[2] < count);
+}
+PolyHedra::Face::Face(unsigned int idx0, unsigned int idx1, unsigned int idx2)
+	: idx{ idx0, idx1, idx2 }
+	, Normal()
+{ }
+PolyHedra::Face::Face(unsigned int idx0, unsigned int idx1, unsigned int idx2, unsigned int normal_group)
+	: idx{ idx0, idx1, idx2 }
+	, NormalGroup(normal_group)
+	, Normal()
+{ }
+
+
+
+bool PolyHedra::Edge::Check(unsigned int count) const
+{
+	return (idx[0] < count &&
+			idx[1] < count);
+}
+PolyHedra::Edge::Edge(unsigned int idx0, unsigned int idx1)
+	: idx{ idx0, idx1 }
+{ }
 
 
 
@@ -184,6 +204,7 @@ void PolyHedra::Done()
 
 
 
+#include "ValueType/Box/F3.hpp"
 BoxF3 PolyHedra::CalcBound() const
 {
 	BoxF3 box = BoxF3::InverseLimit();
@@ -217,7 +238,7 @@ BoxF3 PolyHedra::CalcBound() const
 	for (unsigned int i = 0; i < other.Faces.Count(); i++)
 	{
 		PolyHedra::Face face = other.Faces[i];
-		face.idx[0] += corner_offset;
+		face.idx[0] += corner_offset;z
 		face.idx[1] += corner_offset;
 		face.idx[2] += corner_offset;
 		Faces.Insert(face);
@@ -312,6 +333,9 @@ void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
 
 
 
+#include <sstream>
+#include <iostream>
+#include "ValueType/_Show.hpp"
 std::string PolyHedra::ToInfo() const
 {
 	std::stringstream ss;
@@ -326,32 +350,5 @@ std::string PolyHedra::ToInfo() const
 	ss << "PolyHedra Bound Limit: " << bound << '\n';
 	ss << "PolyHedra Bound Size: " << bound.Size() << '\n';
 
-	/*if (Parameters != nullptr)
-	{
-		const Container::Binary<ParsingVariable::Float> & vars = Parameters -> Variables;
-		ss << "Parameters[" << vars.Count() << "]\n";
-		ss << "[\n";
-		for (unsigned int i = 0; i < vars.Count(); i++)
-		{
-			const ParsingVariable::Float & var = vars[i];
-			ss << "  " << var.Name << ": " << var.Value << '\n';
-		}
-		ss << "]\n";
-	}*/
-
 	return ss.str();
 }
-
-
-
-PolyHedra::~PolyHedra()
-{
-	//delete Skin;
-}
-PolyHedra::PolyHedra()
-	: Corners()
-	, Edges()
-	, Faces()
-	//, Skin(nullptr)
-//	, File()
-{ }
