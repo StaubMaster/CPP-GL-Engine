@@ -75,7 +75,8 @@ void PolyHedra::Belt_Face(unsigned int temp[4], bool f_direction, unsigned int n
 	}
 	else
 	{
-		Insert_Face4(temp[3], temp[2], temp[1], temp[0], normal_group);
+		//Insert_Face4(temp[3], temp[2], temp[1], temp[0], normal_group);
+		Insert_Face4(temp[0], temp[2], temp[1], temp[3], normal_group);
 	}
 }
 void PolyHedra::Belt(unsigned int len, unsigned int list0[], unsigned int list1[], bool f_direction, bool f_closed, unsigned int normal_group)
@@ -265,11 +266,11 @@ void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
 
 
 
-	if (other.Skin == nullptr)
+	/*if (other.Skin == nullptr)
 	{
 		return;
-	}
-	if (Skin == nullptr)
+	}*/
+	/*if (Skin == nullptr)
 	{
 		Skin = new ::Skin();
 		Skin -> Size = other.Skin -> Size;
@@ -283,22 +284,22 @@ void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
 		// because in cases like this, where it is combined with another PolyHedra that has a Skin
 		// then this Skin is filled with empty Faces anyway
 		// but combining the Parsing Files would cause Problems with Ambiguity
-	}
+	}*/
 
-	if (face_offset < (Skin -> Faces.Count()))
+	if (face_offset < (Skin.Faces.Count()))
 	{
 		// Trim
-		while (face_offset < (Skin -> Faces.Count()))
+		while (face_offset < (Skin.Faces.Count()))
 		{
-			Skin -> Faces.RemoveAt(face_offset);
+			Skin.Faces.RemoveAt(face_offset);
 		}
 	}
-	else if (face_offset > (Skin -> Faces.Count()))
+	else if (face_offset > (Skin.Faces.Count()))
 	{
 		// Pad
-		while (face_offset > (Skin -> Faces.Count()))
+		while (face_offset > (Skin.Faces.Count()))
 		{
-			Skin -> Faces.Insert(Skin::Face());
+			Skin.Faces.Insert(Skin::Face());
 		}
 	}
 	// there should be a Container function for these
@@ -306,7 +307,7 @@ void PolyHedra::Combine(const PolyHedra & other, const Trans3D & trans)
 	// PadLength(unsigned int, const Item & default_item)
 	// ToLength(unsigned int, const Item & default_item)
 
-	Skin -> Combine(*other.Skin);
+	Skin.Combine(other.Skin);
 }
 
 
@@ -345,12 +346,12 @@ std::string PolyHedra::ToInfo() const
 
 PolyHedra::~PolyHedra()
 {
-	delete Skin;
+	//delete Skin;
 }
 PolyHedra::PolyHedra()
 	: Corners()
 	, Edges()
 	, Faces()
-	, Skin(nullptr)
+	//, Skin(nullptr)
 //	, File()
 { }

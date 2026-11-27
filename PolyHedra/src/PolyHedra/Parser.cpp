@@ -452,22 +452,36 @@ void PolyHedraParser::Change_Format(const TextCommand::Args & cmd_args)
 	{
 		CommandsNormal();
 	}
+	else if (format == "Skin" || format == "S_2025_10_27")
+	{
+		//if (Object -> Skin != nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "PolyHedra already has Skin"); }
+		//Object -> Skin = new Skin();
+		CommandsSkin();
+	}
 	else
 	{
 		throw TextCommand::Exception::InvalidArgument(cmd_args, 0);
 	}
 }
 
+//#include "PolyHedra/Skin/Parsing.hpp"
 void PolyHedraParser::New_Skin(const TextCommand::Args & cmd_args)
 {
 	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
 	//Debug::Log << cmd << Debug::Done;
-	
-	if (Object -> Skin != nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "PolyHedra already has Skin"); }
+
+	//if (Object -> Skin != nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "PolyHedra already has Skin"); }
 
 	FileInfo file(File.Directory().File(cmd_args.ToString(0)));
 	if (!file.Exists()) { throw TextCommand::Exception::InvalidArgument(cmd_args, 0, "Bad Skin File"); } // this is not InvalidArgument. this is generic error
-	Object -> Skin = Skin::Load(file, Object);
+
+	PolyHedraParser parser;
+	parser.File = file;
+	parser.Manager = Manager;
+	parser.Object = Object;
+	parser.ParseFile();
+
+	//Skin::ParsingData::Load(file, *(Object -> Skin), Object);
 }
 
 void PolyHedraParser::Change_Default(const TextCommand::Args & cmd_args)
@@ -895,6 +909,600 @@ void PolyHedraParser::PolyHedra_Put(const TextCommand::Args & cmd_args)
 	polyhedra_other.Trans = ToVariable<Trans3D>(cmd_args, 1);
 	Object -> Others.Insert(polyhedra_other);
 }
+
+
+
+#include "PolyHedra/Skin/Data.hpp"
+void PolyHedraParser::CommandsSkin()
+{
+	Commands.Insert(new TextCommand::FuncNormal("Name",	this, &PolyHedraParser::Skin_Parse_Name));
+	Commands.Insert(new TextCommand::FuncNormal("Size",	this, &PolyHedraParser::Skin_Parse_Size));
+	Commands.Insert(new TextCommand::FuncNormal("Img",	this, &PolyHedraParser::Skin_Parse_Image));
+
+	Commands.Insert(new TextCommand::FuncNormal("t",		this, &PolyHedraParser::Skin_Parse_t));
+	Commands.Insert(new TextCommand::FuncNormal("TexI",		this, &PolyHedraParser::Skin_Parse_TextureIndex));
+	Commands.Insert(new TextCommand::FuncNormal("TexI4",	this, &PolyHedraParser::Skin_Parse_TextureIndexFace4));
+	Commands.Insert(new TextCommand::FuncNormal("TexIQ",	this, &PolyHedraParser::Skin_Parse_TextureIndexQuad));
+
+	Commands.Insert(new TextCommand::FuncNormal("vertex",	this, &PolyHedraParser::Skin_Parse_Vertex));
+	Commands.Insert(new TextCommand::FuncNormal("vIndex",	this, &PolyHedraParser::Skin_Parse_VertexIndex));
+	//Commands.Insert(new TextCommand::FuncNormal("vFace<",	this, &PolyHedraParser::Skin_Parse_VertexFace3, false));
+	//Commands.Insert(new TextCommand::FuncNormal("VFace>",	this, &PolyHedraParser::Skin_Parse_VertexFace3, true));
+	Commands.Insert(new TextCommand::FuncNormal("vFace<",	this, &PolyHedraParser::Skin_Parse_VertexFace3_F));
+	Commands.Insert(new TextCommand::FuncNormal("VFace>",	this, &PolyHedraParser::Skin_Parse_VertexFace3_T));
+
+	//Commands.Insert(new TextCommand::FuncNormal("belt{0",	this, &PolyHedraParser::Skin_Parse_VertexBelt, false, false);)
+	//Commands.Insert(new TextCommand::FuncNormal("belt}0",	this, &PolyHedraParser::Skin_Parse_VertexBelt, true, false);)
+	//Commands.Insert(new TextCommand::FuncNormal("belt{1",	this, &PolyHedraParser::Skin_Parse_VertexBelt, false, true);)
+	//Commands.Insert(new TextCommand::FuncNormal("belt}1",	this, &PolyHedraParser::Skin_Parse_VertexBelt, true, true);)
+	Commands.Insert(new TextCommand::FuncNormal("belt{0",	this, &PolyHedraParser::Skin_Parse_VertexBelt_FF));
+	Commands.Insert(new TextCommand::FuncNormal("belt}0",	this, &PolyHedraParser::Skin_Parse_VertexBelt_TF));
+	Commands.Insert(new TextCommand::FuncNormal("belt{1",	this, &PolyHedraParser::Skin_Parse_VertexBelt_FT));
+	Commands.Insert(new TextCommand::FuncNormal("belt}1",	this, &PolyHedraParser::Skin_Parse_VertexBelt_TT));
+
+	//Commands.Insert(new TextCommand::FuncNormal("band{0",	this, &PolyHedraParser::Skin_Parse_VertexBand, false, false));
+	//Commands.Insert(new TextCommand::FuncNormal("band}0",	this, &PolyHedraParser::Skin_Parse_VertexBand, true, false));
+	//Commands.Insert(new TextCommand::FuncNormal("band{1",	this, &PolyHedraParser::Skin_Parse_VertexBand, false, true));
+	//Commands.Insert(new TextCommand::FuncNormal("band}1",	this, &PolyHedraParser::Skin_Parse_VertexBand, true, true));
+	Commands.Insert(new TextCommand::FuncNormal("band{0",	this, &PolyHedraParser::Skin_Parse_VertexBand_FF));
+	Commands.Insert(new TextCommand::FuncNormal("band}0",	this, &PolyHedraParser::Skin_Parse_VertexBand_TF));
+	Commands.Insert(new TextCommand::FuncNormal("band{1",	this, &PolyHedraParser::Skin_Parse_VertexBand_FT));
+	Commands.Insert(new TextCommand::FuncNormal("band}1",	this, &PolyHedraParser::Skin_Parse_VertexBand_TT));
+
+	//Commands.Insert(new TextCommand::FuncNormal("fan<{0",	this, &PolyHedraParser::Skin_Parse_VertexFan, false, false, false));
+	//Commands.Insert(new TextCommand::FuncNormal("fan<}0",	this, &PolyHedraParser::Skin_Parse_VertexFan, true, false, false));
+	//Commands.Insert(new TextCommand::FuncNormal("fan<{1",	this, &PolyHedraParser::Skin_Parse_VertexFan, false, true, false));
+	//Commands.Insert(new TextCommand::FuncNormal("fan<}1",	this, &PolyHedraParser::Skin_Parse_VertexFan, true, true, false));
+	//Commands.Insert(new TextCommand::FuncNormal("fan>{0",	this, &PolyHedraParser::Skin_Parse_VertexFan, false, false, true));
+	//Commands.Insert(new TextCommand::FuncNormal("fan>}0",	this, &PolyHedraParser::Skin_Parse_VertexFan, true, false, true));
+	//Commands.Insert(new TextCommand::FuncNormal("fan>{1",	this, &PolyHedraParser::Skin_Parse_VertexFan, false, true, true));
+	//Commands.Insert(new TextCommand::FuncNormal("fan>}1",	this, &PolyHedraParser::Skin_Parse_VertexFan, true, true, true));
+	Commands.Insert(new TextCommand::FuncNormal("fan<{0",	this, &PolyHedraParser::Skin_Parse_VertexFan_FFF));
+	Commands.Insert(new TextCommand::FuncNormal("fan<}0",	this, &PolyHedraParser::Skin_Parse_VertexFan_TFF));
+	Commands.Insert(new TextCommand::FuncNormal("fan<{1",	this, &PolyHedraParser::Skin_Parse_VertexFan_FTF));
+	Commands.Insert(new TextCommand::FuncNormal("fan<}1",	this, &PolyHedraParser::Skin_Parse_VertexFan_TTF));
+	Commands.Insert(new TextCommand::FuncNormal("fan>{0",	this, &PolyHedraParser::Skin_Parse_VertexFan_FFT));
+	Commands.Insert(new TextCommand::FuncNormal("fan>}0",	this, &PolyHedraParser::Skin_Parse_VertexFan_TFT));
+	Commands.Insert(new TextCommand::FuncNormal("fan>{1",	this, &PolyHedraParser::Skin_Parse_VertexFan_FTT));
+	Commands.Insert(new TextCommand::FuncNormal("fan>}1",	this, &PolyHedraParser::Skin_Parse_VertexFan_TTT));
+
+	//Commands.Insert(new TextCommand::FuncNormal("rayT",		this, &PolyHedraParser::Skin_Parse_VertexRay, false));
+	//Commands.Insert(new TextCommand::FuncNormal("rayA",		this, &PolyHedraParser::Skin_Parse_VertexRay, true));
+	Commands.Insert(new TextCommand::FuncNormal("rayT",			this, &PolyHedraParser::Skin_Parse_VertexRay_F));
+	Commands.Insert(new TextCommand::FuncNormal("rayA",			this, &PolyHedraParser::Skin_Parse_VertexRay_T));
+
+	Commands.Insert(new TextCommand::FuncNormal("colFdefault",	this, &PolyHedraParser::Skin_Parse_ColorF_Default));
+	Commands.Insert(new TextCommand::FuncNormal("colF",			this, &PolyHedraParser::Skin_Parse_ColorF));
+
+	Commands.Insert(new TextCommand::FuncNormal("colDdefault",	this, &PolyHedraParser::Skin_Parse_ColorD_Default));
+	Commands.Insert(new TextCommand::FuncNormal("colD",			this, &PolyHedraParser::Skin_Parse_ColorD));
+
+	Commands.Insert(new TextCommand::FuncNormal("multi",		this, &PolyHedraParser::Skin_Parse_Multi));
+
+	Commands.Insert(new TextCommand::FuncNormal("axisAlign",	this, &PolyHedraParser::Skin_Parse_AxisAlign));
+}
+
+unsigned int PolyHedraParser::ToTextureVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const
+{
+	std::string str = cmd_args.ToString(arg_idx);
+	if (str[0] == '+' || str[0] == '-')
+	{
+		return TextureVertexIndex + cmd_args.ToInt32(arg_idx);
+	}
+	else
+	{
+		return cmd_args.ToUInt32(arg_idx);
+	}
+}
+
+void PolyHedraParser::Skin_Parse_Type(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+	if (cmd_args.ToString(0) == "Skin")
+	{
+		return;
+	}
+	throw TextCommand::Exception::InvalidArgument(cmd_args, 0);
+}
+void PolyHedraParser::Skin_Parse_Format(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+
+	if (cmd_args.ToString(0) != "S_2025_10_27") { throw TextCommand::Exception::InvalidArgument(cmd_args, 0); }
+}
+
+void PolyHedraParser::Skin_Parse_Name(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+
+	Object -> Skin.Name = cmd_args.ToString(0);
+}
+void PolyHedraParser::Skin_Parse_Size(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
+
+	Object -> Skin.Size.X = cmd_args.ToUInt32(0);
+	Object -> Skin.Size.Y = cmd_args.ToUInt32(1);
+}
+void PolyHedraParser::Skin_Parse_Image(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+
+	FileInfo file(File.Directory().File(cmd_args.ToString(0)));
+	Object -> Skin.Images.Insert(file.LoadImage());
+}
+
+void PolyHedraParser::Skin_Parse_t(const TextCommand::Args & cmd_args)
+{
+	if (!((cmd_args.Count() % 2) == 0)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "(n % 2) == 0"); }
+
+	unsigned int len = cmd_args.Count() / 2;
+
+	Skin::Corner t[len];
+	unsigned int idx = Object -> Skin.Corners.Count();
+
+	for (size_t i = 0; i < len; i++)
+	{
+		t[i].Coord.X = cmd_args.ToFloat(i * 2 + 0);
+		t[i].Coord.Y = cmd_args.ToFloat(i * 2 + 1);
+		t[i].Index = TextureIndex;
+		Object -> Skin.Corners.Insert(t[i]);
+	}
+
+	if (len == 3)
+	{
+		//Skin.Insert_Face3(t[0], t[1], t[2]);
+		Object -> Skin.Insert_Face3(idx + 0, idx + 1, idx + 2);
+	}
+	else if (len == 4)
+	{
+		//Skin.Insert_Face4(t[0], t[1], t[2], t[3]);
+		Object -> Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
+	}
+}
+
+void PolyHedraParser::Skin_Parse_TextureIndex(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+	TextureIndex = cmd_args.ToUInt32(0);
+}
+void PolyHedraParser::Skin_Parse_TextureIndexFace4(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 8)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 8"); }
+
+	Skin::Corner t[4];
+	unsigned int idx = Object -> Skin.Corners.Count();
+
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		t[i].Coord.X = cmd_args.ToFloat(i * 2 + 0);
+		t[i].Coord.Y = cmd_args.ToFloat(i * 2 + 1);
+		t[i].Index = TextureIndex;
+		Object -> Skin.Corners.Insert(t[i]);
+	}
+
+	Object -> Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
+}
+void PolyHedraParser::Skin_Parse_TextureIndexQuad(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 4"); }
+
+	VectorF2	min;
+	min.X = cmd_args.ToFloat(0);
+	min.Y = cmd_args.ToFloat(1);
+
+	VectorF2	max;
+	max.X = cmd_args.ToFloat(2);
+	max.Y = cmd_args.ToFloat(3);
+
+	Skin::Corner t[4];
+	unsigned int idx = Object -> Skin.Corners.Count();
+
+	t[0].Coord.X = min.X;
+	t[0].Coord.Y = min.Y;
+	t[0].Index = TextureIndex;
+	Object -> Skin.Corners.Insert(t[0]);
+
+	t[1].Coord.X = min.X;
+	t[1].Coord.Y = max.Y;
+	t[1].Index = TextureIndex;
+	Object -> Skin.Corners.Insert(t[1]);
+
+	t[2].Coord.X = max.X;
+	t[2].Coord.Y = min.Y;
+	t[2].Index = TextureIndex;
+	Object -> Skin.Corners.Insert(t[2]);
+
+	t[3].Coord.X = max.X;
+	t[3].Coord.Y = max.Y;
+	t[3].Index = TextureIndex;
+	Object -> Skin.Corners.Insert(t[3]);
+
+	Object -> Skin.Insert_Face4(idx + 0, idx + 1, idx + 2, idx + 3);
+}
+
+void PolyHedraParser::Skin_Parse_Vertex(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
+
+	VectorF2 v;
+	v.X = cmd_args.ToFloat(0);
+	v.Y = cmd_args.ToFloat(1);
+
+	Object -> Skin.Corners.Insert(Skin::Corner(v, TextureIndex));
+}
+void PolyHedraParser::Skin_Parse_VertexIndex(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 1)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 1"); }
+
+	std::string str = cmd_args.ToString(0);
+	if (str == "here")
+	{
+		TextureVertexIndex = Object -> Skin.Corners.Count();
+	}
+	else
+	{
+		TextureVertexIndex = ToTextureVertexIndex(cmd_args, 0);
+	}
+}
+
+void PolyHedraParser::Skin_Parse_VertexFace3_F(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFace3(cmd_args, false); }
+void PolyHedraParser::Skin_Parse_VertexFace3_T(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFace3(cmd_args, true); }
+void PolyHedraParser::Skin_Parse_VertexFace3(const TextCommand::Args & cmd_args, bool f_direction)
+{
+	if (!(cmd_args.Count() == 3)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 3"); }
+
+	unsigned int t[3];
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		t[i] = ToTextureVertexIndex(cmd_args, i);
+	}
+
+	if (!f_direction)
+	{
+		Object -> Skin.Insert_Face3(t[0], t[1], t[2]);
+	}
+	else
+	{
+		Object -> Skin.Insert_Face3(t[2], t[1], t[0]);
+	}
+}
+
+/*static void Belt_Face(Skin & skin, unsigned int temp[4], bool dir)
+{
+	if (!dir)
+	{
+		skin.Insert_Face3(temp[0], temp[2], temp[1]);
+		skin.Insert_Face3(temp[3], temp[1], temp[2]);
+	}
+	else
+	{
+		skin.Insert_Face3(temp[1], temp[2], temp[0]);
+		skin.Insert_Face3(temp[2], temp[1], temp[3]);
+	}
+}*/
+void PolyHedraParser::Skin_Parse_VertexBelt_FF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBelt(cmd_args, false, false); }
+void PolyHedraParser::Skin_Parse_VertexBelt_TF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBelt(cmd_args, true, false); }
+void PolyHedraParser::Skin_Parse_VertexBelt_FT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBelt(cmd_args, false, true); }
+void PolyHedraParser::Skin_Parse_VertexBelt_TT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBelt(cmd_args, true, true); }
+void PolyHedraParser::Skin_Parse_VertexBelt(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure)
+{
+	if (!((cmd_args.Count() % 2) == 0 && cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "(n % 2) == 0 && n >= 4 && n <= 255"); }
+
+	unsigned int len = cmd_args.Count() / 2;
+
+	unsigned int list0[len];
+	unsigned int list1[len];
+
+	for (unsigned int i = 0; i < len; i++)
+	{
+		unsigned int i0 = i;
+		unsigned int i1 = i + len;
+
+		list0[i] = ToTextureVertexIndex(cmd_args, i0);
+		list1[i] = ToTextureVertexIndex(cmd_args, i1);
+	}
+
+	Object -> Skin.Belt(len, list0, list1, f_direction, f_closure);
+
+	/*unsigned int n = len - 1;
+
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int temp[4] = {
+			list0[i + 0],
+			list0[i + 1],
+			list1[i + 0],
+			list1[i + 1],
+		};
+		Belt_Face(Skin, temp, f_direction);
+	}
+
+	if (f_closure)
+	{
+		unsigned int temp[4] = {
+			list0[n],
+			list0[0],
+			list1[n],
+			list1[0],
+		};
+		Belt_Face(Skin, temp, f_direction);
+	}*/
+}
+
+void PolyHedraParser::Skin_Parse_VertexBand_FF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBand(cmd_args, false, false); }
+void PolyHedraParser::Skin_Parse_VertexBand_TF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBand(cmd_args, true, false); }
+void PolyHedraParser::Skin_Parse_VertexBand_FT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBand(cmd_args, false, true); }
+void PolyHedraParser::Skin_Parse_VertexBand_TT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexBand(cmd_args, true, true); }
+void PolyHedraParser::Skin_Parse_VertexBand(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure)
+{
+	throw TextCommand::Exception::NotImplemented(cmd_args);
+	(void)cmd_args;
+	(void)f_direction;
+	(void)f_closure;
+}
+
+/*static void Fan_Face(Skin & skin, unsigned int middle, unsigned int blade[2], bool dir, bool mid)
+{
+	if (!dir)
+	{
+		if (!mid)
+		{
+			skin.Insert_Face3(blade[1], middle, blade[0]);
+		}
+		else
+		{
+			skin.Insert_Face3(blade[0], middle, blade[1]);
+		}
+	}
+	else
+	{
+		if (!mid)
+		{
+			skin.Insert_Face3(blade[0], middle, blade[1]);
+		}
+		else
+		{
+			skin.Insert_Face3(blade[1], middle, blade[0]);
+		}
+	}
+}*/
+void PolyHedraParser::Skin_Parse_VertexFan_FFF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, false, false, false); }
+void PolyHedraParser::Skin_Parse_VertexFan_TFF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, true, false, false); }
+void PolyHedraParser::Skin_Parse_VertexFan_FTF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, false, true, false); }
+void PolyHedraParser::Skin_Parse_VertexFan_TTF(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, true, true, false); }
+void PolyHedraParser::Skin_Parse_VertexFan_FFT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, false, false, true); }
+void PolyHedraParser::Skin_Parse_VertexFan_TFT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, true, false, true); }
+void PolyHedraParser::Skin_Parse_VertexFan_FTT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, false, true, true); }
+void PolyHedraParser::Skin_Parse_VertexFan_TTT(const TextCommand::Args & cmd_args) { Skin_Parse_VertexFan(cmd_args, true, true, true); }
+void PolyHedraParser::Skin_Parse_VertexFan(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure, bool f_middle)
+{
+	if (!(cmd_args.Count() >= 3 && cmd_args.Count() <= 255)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 3 && n <= 255"); }
+
+	unsigned int len = cmd_args.Count() - 1;
+
+	unsigned int middle;
+	unsigned int blade[len];
+
+	if (!f_middle)
+	{
+		middle = ToTextureVertexIndex(cmd_args, 0);
+		for (unsigned int i = 0; i < len; i++)
+		{
+			blade[i] = ToTextureVertexIndex(cmd_args, i + 1);
+		}
+	}
+	else
+	{
+		for (unsigned int i = 0; i < len; i++)
+		{
+			blade[i] = ToTextureVertexIndex(cmd_args, i);
+		}
+		middle = ToTextureVertexIndex(cmd_args, len);
+	}
+
+	Object -> Skin.Fan(len, middle, blade, f_direction, f_middle, f_closure);
+
+/*
+	unsigned int n = len - 1;
+
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int temp[2] = {
+			blade[i + 0],
+			blade[i + 1],
+		};
+		Fan_Face(Skin, middle, temp, f_direction, f_middle);
+	}
+
+	if (f_closure)
+	{
+		unsigned int temp[2] = {
+			blade[n],
+			blade[0],
+		};
+		Fan_Face(Skin, middle, temp, f_direction, f_middle);
+	}
+*/
+}
+
+#include "ValueType/Ray/F2.hpp"
+void PolyHedraParser::Skin_Parse_VertexRay_F(const TextCommand::Args & cmd_args) { Skin_Parse_VertexRay(cmd_args, false); }
+void PolyHedraParser::Skin_Parse_VertexRay_T(const TextCommand::Args & cmd_args) { Skin_Parse_VertexRay(cmd_args, true); }
+void PolyHedraParser::Skin_Parse_VertexRay(const TextCommand::Args & cmd_args, bool f_accumulate)
+{
+	if (!(cmd_args.Count() >= 4 && cmd_args.Count() <= 255)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n >= 4 && n <= 255"); }
+
+	unsigned int len = cmd_args.Count() - 4;
+
+	RayF2 ray;
+	ray.Pos.X = cmd_args.ToFloat(0);
+	ray.Pos.Y = cmd_args.ToFloat(1);
+	ray.Dir.X = cmd_args.ToFloat(2);
+	ray.Dir.Y = cmd_args.ToFloat(3);
+
+	float intervals[len];
+	if (!f_accumulate)
+	{
+		for (unsigned int i = 0; i < len; i++)
+		{
+			intervals[i] = cmd_args.ToFloat(i + 4);
+		}
+	}
+	else
+	{
+		float sum = 0.0f;
+		for (unsigned int i = 0; i < len; i++)
+		{
+			sum += cmd_args.ToFloat(i + 4);
+			intervals[i] = sum;
+		}
+	}
+
+	for (unsigned int i = 0; i < len; i++)
+	{
+		Object -> Skin.Corners.Insert(Skin::Corner(ray.ToPoint(intervals[i]), TextureIndex));
+	}
+}
+
+void PolyHedraParser::Skin_Parse_ColorF_Default(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 4"); }
+
+	ColorF4 col;
+	col.R = cmd_args.ToFloat(0);
+	col.G = cmd_args.ToFloat(1);
+	col.B = cmd_args.ToFloat(2);
+	col.A = cmd_args.ToFloat(3);
+
+	Object -> Skin.Color = col;
+}
+void PolyHedraParser::Skin_Parse_ColorF(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 4"); }
+
+	ColorF4 col;
+	col.R = cmd_args.ToFloat(0);
+	col.G = cmd_args.ToFloat(1);
+	col.B = cmd_args.ToFloat(2);
+	col.A = cmd_args.ToFloat(3);
+
+	Object -> Skin.Corners.Insert(Skin::Corner(col));
+}
+
+#include "ValueType/Color/U4.hpp"
+void PolyHedraParser::Skin_Parse_ColorD_Default(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 4"); }
+
+	ColorU4 col;
+	col.R = cmd_args.ToUInt32(0);
+	col.G = cmd_args.ToUInt32(1);
+	col.B = cmd_args.ToUInt32(2);
+	col.A = cmd_args.ToUInt32(3);
+
+	Object -> Skin.Color = col.ToColorF4();
+}
+void PolyHedraParser::Skin_Parse_ColorD(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 4)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 4"); }
+
+	ColorU4 col;
+	col.R = cmd_args.ToUInt32(0);
+	col.G = cmd_args.ToUInt32(1);
+	col.B = cmd_args.ToUInt32(2);
+	col.A = cmd_args.ToUInt32(3);
+
+	Object -> Skin.Corners.Insert(Skin::Corner(col.ToColorF4()));
+}
+
+/* this is a terrible name
+*/
+void PolyHedraParser::Skin_Parse_Multi(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 2)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 2"); }
+
+	unsigned int idx = ToTextureVertexIndex(cmd_args, 0);
+	unsigned int n = cmd_args.ToUInt32(1);
+	for (unsigned int i = 0; i < n; i++)
+	{
+		Object -> Skin.Faces.Insert(Skin::Face(idx, idx, idx));
+	}
+}
+
+#include "PolyHedra/PolyHedra.hpp"
+#include "PolyHedra/Data.hpp"
+/* take a position and an axis from that position
+align texture to that axis
+
+needs PolyHedra corners
+*/
+/* axis_align
+	origin x y z
+	axis0 x y z scale
+	axis1 x y z scale
+	number of faces
+*/
+void PolyHedraParser::Skin_Parse_AxisAlign(const TextCommand::Args & cmd_args)
+{
+	if (!(cmd_args.Count() == 12)) { throw TextCommand::Exception::InvalidArgumentCount(cmd_args, "n == 12"); }
+
+	if (Object == nullptr) { throw TextCommand::Exception::InvalidState(cmd_args, "Missing PolyHedra"); }
+
+	VectorF3 origin(
+		cmd_args.ToFloat(0),
+		cmd_args.ToFloat(1),
+		cmd_args.ToFloat(2)
+	);
+
+	VectorF3 axis0(
+		cmd_args.ToFloat(3),
+		cmd_args.ToFloat(4),
+		cmd_args.ToFloat(5)
+	);
+	float scale0 = cmd_args.ToFloat(6);
+
+	VectorF3 axis1(
+		cmd_args.ToFloat(7),
+		cmd_args.ToFloat(8),
+		cmd_args.ToFloat(9)
+	);
+	float scale1 = cmd_args.ToFloat(10);
+
+	unsigned int n = cmd_args.ToUInt32(11);
+
+	axis0 = axis0.normalize();
+	axis1 = axis1.normalize();
+
+	for (unsigned int i = 0; i < n; i++)
+	{
+		unsigned int corners_index = Object -> Skin.Corners.Count();
+		unsigned int face_index = Object -> Skin.Faces.Count();
+
+		const PolyHedra::Face & face = Object -> Faces[face_index];
+		const PolyHedra::Corner & corner0 = Object -> Corners[face.idx[0]];
+		const PolyHedra::Corner & corner1 = Object -> Corners[face.idx[1]];
+		const PolyHedra::Corner & corner2 = Object -> Corners[face.idx[2]];
+
+		VectorF2 vec;
+
+		vec.X = axis0.dot(corner0.Position) / scale0;
+		vec.Y = axis1.dot(corner0.Position) / scale1;
+		Object -> Skin.Insert_Corn(vec, TextureIndex);
+
+		vec.X = axis0.dot(corner1.Position) / scale0;
+		vec.Y = axis1.dot(corner1.Position) / scale1;
+		Object -> Skin.Insert_Corn(vec, TextureIndex);
+
+		vec.X = axis0.dot(corner2.Position) / scale0;
+		vec.Y = axis1.dot(corner2.Position) / scale1;
+		Object -> Skin.Insert_Corn(vec, TextureIndex);
+
+		Object -> Skin.Insert_Face3(corners_index + 0, corners_index + 1, corners_index + 2);
+	}
+}
+
+
 
 void PolyHedraParser::Done()
 {

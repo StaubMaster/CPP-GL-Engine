@@ -67,11 +67,8 @@ class Skin
 	public:
 	void	Done();
 
-	private:
-	struct ParsingData;
 	public:
-	static Skin *	Load(const FileInfo & file, ::PolyHedra * polyHedra);
-	static Skin *	Load(const FileInfo & file);
+	struct ParsingData;
 };
 
 #endif

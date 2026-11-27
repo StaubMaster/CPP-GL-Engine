@@ -7,7 +7,7 @@ namespace TextCommand { class Args; };
 
 class PolyHedra;
 
-struct Skin::ParsingData
+/*struct Skin::ParsingData
 {
 	const FileInfo &	File;
 	::Skin &			Object;
@@ -38,7 +38,7 @@ struct Skin::ParsingData
 	void	Parse_TextureIndexQuad(const TextCommand::Args & cmd_args);
 
 	void	Parse_Vertex(const TextCommand::Args & cmd_args);			// VertexCoord()
-	void	Parse_VertexIndex(const TextCommand::Args & cmd_args);	// VertexOffset()
+	void	Parse_VertexIndex(const TextCommand::Args & cmd_args);		// VertexOffset()
 
 	void	Parse_VertexFace3(const TextCommand::Args & cmd_args, bool f_direction);
 	void	Parse_VertexBelt(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure);
@@ -56,6 +56,10 @@ struct Skin::ParsingData
 	void	Parse_Multi(const TextCommand::Args & cmd_args);
 
 	void	Parse_AxisAlign(const TextCommand::Args & cmd_args);
-};
+
+
+
+	static void		Load(const FileInfo & file, Skin & skin, ::PolyHedra * polyHedra);
+};*/
 
 #endif

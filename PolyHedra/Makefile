@@ -23,7 +23,6 @@ FILES += \
 \
 	Skin/Data.cpp \
 	Skin/Skin.cpp \
-	Skin/Parsing.cpp \
 
 ################################################################
 

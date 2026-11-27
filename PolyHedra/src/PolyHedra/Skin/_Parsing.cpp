@@ -600,13 +600,11 @@ void Skin::ParsingData::Parse_AxisAlign(const TextCommand::Args & cmd_args)
 
 
 
-Skin * Skin::Load(const FileInfo & file, ::PolyHedra * polyHedra)
+void Skin::ParsingData::Load(const FileInfo & file, Skin & skin, ::PolyHedra * polyHedra)
 {
-//	std::cout << "Loading Skin File " << '"' << file.Path << '"' << " ..." << '\n';
+	//std::cout << "Loading Skin File " << '"' << file.Path << '"' << " ..." << '\n';
 
-	::Skin * object = new Skin();
-	ParsingData data(file, *object, polyHedra);
-
+	ParsingData data(file, skin, polyHedra);
 	TextCommand::ArgsStream stream(file.LoadText());
 	TextCommand::Args cmd_args;
 	while (stream.Continue(cmd_args))
@@ -614,13 +612,7 @@ Skin * Skin::Load(const FileInfo & file, ::PolyHedra * polyHedra)
 		data.Parse(cmd_args);
 	}
 
-	object -> Done();
+	skin.Done();
 
-//	std::cout << "Loading Skin File " << '"' << file.Path << '"' << " done" << '\n';
-
-	return object;
-}
-Skin * Skin::Load(const FileInfo & file)
-{
-	return Load(file, nullptr);
+	//std::cout << "Loading Skin File " << '"' << file.Path << '"' << " done" << '\n';
 }

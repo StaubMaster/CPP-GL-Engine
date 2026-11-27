@@ -151,6 +151,74 @@ struct PolyHedraParser : public TextCommand::Loop
 	void	PolyHedra_Combine(const TextCommand::Args & cmd_args);
 	void	PolyHedra_Put(const TextCommand::Args & cmd_args);
 
+
+
+	void	CommandsSkin();
+
+	unsigned int	TextureIndex;
+	unsigned int	TextureVertexIndex;
+
+	unsigned int	ToTextureVertexIndex(const TextCommand::Args & cmd_args, unsigned int arg_idx) const;
+
+	void	Skin_Parse(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_Type(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_Format(const TextCommand::Args & cmd_args);
+
+	void	Skin_Parse_Name(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_Size(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_Image(const TextCommand::Args & cmd_args);
+
+	void	Skin_Parse_t(const TextCommand::Args & cmd_args);
+
+	void	Skin_Parse_TextureIndex(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_TextureIndexFace4(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_TextureIndexQuad(const TextCommand::Args & cmd_args);
+
+	void	Skin_Parse_Vertex(const TextCommand::Args & cmd_args);			// VertexCoord()
+	void	Skin_Parse_VertexIndex(const TextCommand::Args & cmd_args);	// VertexOffset()
+
+	void	Skin_Parse_VertexFace3_F(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFace3_T(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFace3(const TextCommand::Args & cmd_args, bool f_direction);
+
+	void	Skin_Parse_VertexBelt_FF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBelt_TF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBelt_FT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBelt_TT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBelt(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure);
+
+	void	Skin_Parse_VertexBand_FF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBand_TF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBand_FT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBand_TT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexBand(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure);
+
+	void	Skin_Parse_VertexFan_FFF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan_TFF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan_FTF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan_TTF(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan_FFT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan_TFT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan_FTT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan_TTT(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexFan(const TextCommand::Args & cmd_args, bool f_direction, bool f_closure, bool f_middle);
+
+	void	Skin_Parse_VertexRay_F(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexRay_T(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_VertexRay(const TextCommand::Args & cmd_args, bool f_accumulate);
+
+	void	Skin_Parse_ColorF_Default(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_ColorF(const TextCommand::Args & cmd_args);
+
+	void	Skin_Parse_ColorD_Default(const TextCommand::Args & cmd_args);
+	void	Skin_Parse_ColorD(const TextCommand::Args & cmd_args);
+
+	void	Skin_Parse_Multi(const TextCommand::Args & cmd_args);
+
+	void	Skin_Parse_AxisAlign(const TextCommand::Args & cmd_args);
+
+
+
 	void	Done();
 
 	static PolyHedra *	Load(const FileInfo & file, PolyHedraManager * manager);

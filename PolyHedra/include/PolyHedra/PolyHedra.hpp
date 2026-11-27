@@ -7,7 +7,7 @@
 
 # include <string>
 
-class Skin;
+# include "PolyHedra/Skin/Skin.hpp"
 
 struct BoxF3;
 
@@ -59,13 +59,7 @@ class PolyHedra
 	void	Combine(const PolyHedra & other, const Trans3D & trans);
 
 	public:
-	::Skin *	Skin = nullptr;
-	// combine Skin into PolyHedra ?
-	/*
-		how to apply Skin afterwards ?
-		Skin data is generally seperate but synced with PolyHedra Data
-		how to make sure they stay synced
-	*/
+	::Skin	Skin;
 
 	public:
 	// store this in PolyHedraEntry ?

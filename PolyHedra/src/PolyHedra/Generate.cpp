@@ -43,7 +43,7 @@ PolyHedra * PolyHedraGenerate::RegularTetraHedron(float scale)
 
 
 
-	::Skin * skin = new ::Skin();
+	::Skin * skin = &(polyhedra -> Skin); //::Skin * skin = new ::Skin();
 	skin -> Size = VectorU2(8, 4);
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
@@ -81,7 +81,7 @@ PolyHedra * PolyHedraGenerate::RegularTetraHedron(float scale)
 	skin -> Done();
 
 
-	polyhedra -> Skin = skin;
+	//polyhedra -> Skin = skin;
 	polyhedra -> Done();
 	return polyhedra;
 }
@@ -112,7 +112,7 @@ PolyHedra * PolyHedraGenerate::RegularHexaHedron(float scale)
 
 
 
-	::Skin * skin = new ::Skin();
+	::Skin * skin = &(polyhedra -> Skin); //::Skin * skin = new ::Skin();
 	skin -> Size = VectorU2(8, 4);
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
@@ -196,7 +196,7 @@ PolyHedra * PolyHedraGenerate::RegularHexaHedron(float scale)
 
 	skin -> Done();
 
-	polyhedra -> Skin = skin;
+	//polyhedra -> Skin = skin;
 	polyhedra -> Done();
 
 	return polyhedra;
@@ -210,7 +210,7 @@ PolyHedra * PolyHedraGenerate::ConeZ(int segments, float height, float radius)
 	//polyhedra -> Name = "ConeZ";
 	//polyhedra -> File = "::ConeZ::"; // put () with parameters ?
 
-	::Skin * skin = new ::Skin();
+	::Skin * skin = &(polyhedra -> Skin); //::Skin * skin = new ::Skin();
 	skin -> Size = VectorU2(8, 4);
 	skin -> Images.Insert(Texture::Generate::Orientation3D());
 
@@ -256,7 +256,7 @@ PolyHedra * PolyHedraGenerate::ConeZ(int segments, float height, float radius)
 	}
 
 	skin -> Done();
-	polyhedra -> Skin = skin;
+	//polyhedra -> Skin = skin;
 	polyhedra -> Done();
 	return polyhedra;
 }
@@ -390,7 +390,7 @@ PolyHedra * PolyHedraGenerate::ImageQuad(Image img, float scale)
 
 
 
-	::Skin * skin = new ::Skin();
+	::Skin * skin = &(polyhedra -> Skin); //::Skin * skin = new ::Skin();
 	skin -> Size = img.Size();
 	skin -> Images.Insert(img);
 
@@ -408,7 +408,7 @@ PolyHedra * PolyHedraGenerate::ImageQuad(Image img, float scale)
 
 	skin -> Done();
 
-	polyhedra -> Skin = skin;
+	//polyhedra -> Skin = skin;
 	polyhedra -> Done();
 	return polyhedra;
 }
@@ -421,7 +421,7 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 	//polyhedra -> Name = "FramedImage";
 	//polyhedra -> File = "::FramedImage::"; // put () with parameters ?
 
-	::Skin * skin = new ::Skin();
+	::Skin * skin = &(polyhedra -> Skin); //::Skin * skin = new ::Skin();
 	skin -> Size = img.Size();
 	skin -> Images.Insert(img);
 	skin -> Images.Insert(Texture::Generate::Wood16x16());
@@ -720,7 +720,7 @@ PolyHedra * PolyHedraGenerate::ImageFramed(Image img, float img_scale)
 	skin -> Insert_Face4(texMiddleInnY[0], texMiddleInnY[1], texMiddleInnY[2], texMiddleInnY[3]);
 
 	skin -> Done();
-	polyhedra -> Skin = skin;
+	//polyhedra -> Skin = skin;
 	Debug::Log << "Polyhedra: Generate: FramedImage: (" << img.W() << "x" << img.H() << ") done" << Debug::Done;
 	polyhedra -> Done();
 	return polyhedra;
